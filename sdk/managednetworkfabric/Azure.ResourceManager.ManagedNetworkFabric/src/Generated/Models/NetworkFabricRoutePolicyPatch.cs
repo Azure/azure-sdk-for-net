@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,10 +14,21 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
     /// <summary> The Route Policy patch resource definition. </summary>
     public partial class NetworkFabricRoutePolicyPatch : NetworkRackPatch
     {
-        /// <summary> Initializes a new instance of NetworkFabricRoutePolicyPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkFabricRoutePolicyPatch"/>. </summary>
         public NetworkFabricRoutePolicyPatch()
         {
             Statements = new ChangeTrackingList<RoutePolicyStatementProperties>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="NetworkFabricRoutePolicyPatch"/>. </summary>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="defaultAction"> Default action that needs to be applied when no condition is matched. Example: Permit | Deny. </param>
+        /// <param name="statements"> Route Policy statements. </param>
+        internal NetworkFabricRoutePolicyPatch(IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData, CommunityActionType? defaultAction, IList<RoutePolicyStatementProperties> statements) : base(tags, serializedAdditionalRawData)
+        {
+            DefaultAction = defaultAction;
+            Statements = statements;
         }
 
         /// <summary> Default action that needs to be applied when no condition is matched. Example: Permit | Deny. </summary>

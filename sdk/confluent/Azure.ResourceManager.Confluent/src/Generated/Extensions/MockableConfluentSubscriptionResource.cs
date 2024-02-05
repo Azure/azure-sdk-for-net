@@ -60,15 +60,19 @@ namespace Azure.ResourceManager.Confluent.Mocking
         /// <term>Operation Id</term>
         /// <description>MarketplaceAgreements_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-12-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ConfluentAgreement" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="ConfluentAgreement"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ConfluentAgreement> GetMarketplaceAgreementsAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => MarketplaceAgreementsRestClient.CreateListRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => MarketplaceAgreementsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, ConfluentAgreement.DeserializeConfluentAgreement, MarketplaceAgreementsClientDiagnostics, Pipeline, "MockableConfluentSubscriptionResource.GetMarketplaceAgreements", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => ConfluentAgreement.DeserializeConfluentAgreement(e), MarketplaceAgreementsClientDiagnostics, Pipeline, "MockableConfluentSubscriptionResource.GetMarketplaceAgreements", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -82,15 +86,19 @@ namespace Azure.ResourceManager.Confluent.Mocking
         /// <term>Operation Id</term>
         /// <description>MarketplaceAgreements_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-12-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ConfluentAgreement" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ConfluentAgreement"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ConfluentAgreement> GetMarketplaceAgreements(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => MarketplaceAgreementsRestClient.CreateListRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => MarketplaceAgreementsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, ConfluentAgreement.DeserializeConfluentAgreement, MarketplaceAgreementsClientDiagnostics, Pipeline, "MockableConfluentSubscriptionResource.GetMarketplaceAgreements", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => ConfluentAgreement.DeserializeConfluentAgreement(e), MarketplaceAgreementsClientDiagnostics, Pipeline, "MockableConfluentSubscriptionResource.GetMarketplaceAgreements", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -103,6 +111,10 @@ namespace Azure.ResourceManager.Confluent.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>MarketplaceAgreements_Create</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-12-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -135,6 +147,10 @@ namespace Azure.ResourceManager.Confluent.Mocking
         /// <term>Operation Id</term>
         /// <description>MarketplaceAgreements_Create</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-12-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="body"> Confluent Marketplace Agreement resource. </param>
@@ -166,10 +182,18 @@ namespace Azure.ResourceManager.Confluent.Mocking
         /// <term>Operation Id</term>
         /// <description>Organization_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ConfluentOrganizationResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ConfluentOrganizationResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="ConfluentOrganizationResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ConfluentOrganizationResource> GetConfluentOrganizationsAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ConfluentOrganizationOrganizationRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
@@ -188,10 +212,18 @@ namespace Azure.ResourceManager.Confluent.Mocking
         /// <term>Operation Id</term>
         /// <description>Organization_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ConfluentOrganizationResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ConfluentOrganizationResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ConfluentOrganizationResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ConfluentOrganizationResource> GetConfluentOrganizations(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ConfluentOrganizationOrganizationRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);

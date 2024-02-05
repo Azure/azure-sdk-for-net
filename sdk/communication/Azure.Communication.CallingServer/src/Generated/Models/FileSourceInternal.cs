@@ -13,7 +13,7 @@ namespace Azure.Communication.CallingServer
     /// <summary> The FileSource. </summary>
     internal partial class FileSourceInternal
     {
-        /// <summary> Initializes a new instance of FileSourceInternal. </summary>
+        /// <summary> Initializes a new instance of <see cref="FileSourceInternal"/>. </summary>
         /// <param name="uri"> Uri for the audio file to be played. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="uri"/> is null. </exception>
         public FileSourceInternal(string uri)

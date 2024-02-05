@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,22 +14,56 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// <summary> Azure VM workload-specific additional information for job. </summary>
     public partial class WorkloadBackupJobExtendedInfo
     {
-        /// <summary> Initializes a new instance of WorkloadBackupJobExtendedInfo. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="WorkloadBackupJobExtendedInfo"/>. </summary>
         public WorkloadBackupJobExtendedInfo()
         {
             TasksList = new ChangeTrackingList<WorkloadBackupJobTaskDetails>();
             PropertyBag = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of WorkloadBackupJobExtendedInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="WorkloadBackupJobExtendedInfo"/>. </summary>
         /// <param name="tasksList"> List of tasks for this job. </param>
         /// <param name="propertyBag"> Job properties. </param>
         /// <param name="dynamicErrorMessage"> Non localized error message on job execution. </param>
-        internal WorkloadBackupJobExtendedInfo(IList<WorkloadBackupJobTaskDetails> tasksList, IDictionary<string, string> propertyBag, string dynamicErrorMessage)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal WorkloadBackupJobExtendedInfo(IList<WorkloadBackupJobTaskDetails> tasksList, IDictionary<string, string> propertyBag, string dynamicErrorMessage, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             TasksList = tasksList;
             PropertyBag = propertyBag;
             DynamicErrorMessage = dynamicErrorMessage;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> List of tasks for this job. </summary>

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,20 +14,53 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> Information about a specific patch that was encountered during an installation action. </summary>
     public partial class PatchInstallationDetail
     {
-        /// <summary> Initializes a new instance of PatchInstallationDetail. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="PatchInstallationDetail"/>. </summary>
         internal PatchInstallationDetail()
         {
             Classifications = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of PatchInstallationDetail. </summary>
+        /// <summary> Initializes a new instance of <see cref="PatchInstallationDetail"/>. </summary>
         /// <param name="patchId"> A unique identifier for the patch. </param>
         /// <param name="name"> The friendly name of the patch. </param>
         /// <param name="version"> The version string of the package. It may conform to Semantic Versioning. Only applies to Linux. </param>
         /// <param name="kbId"> The KBID of the patch. Only applies to Windows patches. </param>
         /// <param name="classifications"> The classification(s) of the patch as provided by the patch publisher. </param>
         /// <param name="installationState"> The state of the patch after the installation operation completed. </param>
-        internal PatchInstallationDetail(string patchId, string name, string version, string kbId, IReadOnlyList<string> classifications, PatchInstallationState? installationState)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal PatchInstallationDetail(string patchId, string name, string version, string kbId, IReadOnlyList<string> classifications, PatchInstallationState? installationState, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             PatchId = patchId;
             Name = name;
@@ -34,6 +68,7 @@ namespace Azure.ResourceManager.Compute.Models
             KbId = kbId;
             Classifications = classifications;
             InstallationState = installationState;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> A unique identifier for the patch. </summary>

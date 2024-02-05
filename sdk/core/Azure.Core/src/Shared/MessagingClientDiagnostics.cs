@@ -47,7 +47,7 @@ namespace Azure.Core.Shared
             _messagingSystem = messagingSystem;
             _fullyQualifiedNamespace = fullyQualifiedNamespace;
             _entityPath = entityPath;
-            _scopeFactory = new DiagnosticScopeFactory(clientNamespace, resourceProviderNamespace, true, false);
+            _scopeFactory = new DiagnosticScopeFactory(clientNamespace, resourceProviderNamespace, true, false, false);
         }
 
         /// <summary>

@@ -64,7 +64,7 @@ namespace Azure.Storage.DataMovement.Files.Shares
 
         protected override StorageResourceCheckpointData GetDestinationCheckpointData()
         {
-            return new ShareFileDestinationCheckpointData(null, null);
+            return new ShareFileDestinationCheckpointData(null, null, null, null);
         }
 
         protected override async Task CreateIfNotExistsAsync(CancellationToken cancellationToken = default)

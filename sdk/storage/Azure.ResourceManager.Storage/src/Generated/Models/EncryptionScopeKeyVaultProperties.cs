@@ -6,26 +6,61 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Storage.Models
 {
     /// <summary> The key vault properties for the encryption scope. This is a required field if encryption scope 'source' attribute is set to 'Microsoft.KeyVault'. </summary>
     public partial class EncryptionScopeKeyVaultProperties
     {
-        /// <summary> Initializes a new instance of EncryptionScopeKeyVaultProperties. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="EncryptionScopeKeyVaultProperties"/>. </summary>
         public EncryptionScopeKeyVaultProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of EncryptionScopeKeyVaultProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="EncryptionScopeKeyVaultProperties"/>. </summary>
         /// <param name="keyUri"> The object identifier for a key vault key object. When applied, the encryption scope will use the key referenced by the identifier to enable customer-managed key support on this encryption scope. </param>
         /// <param name="currentVersionedKeyIdentifier"> The object identifier of the current versioned Key Vault Key in use. </param>
         /// <param name="lastKeyRotationTimestamp"> Timestamp of last rotation of the Key Vault Key. </param>
-        internal EncryptionScopeKeyVaultProperties(Uri keyUri, string currentVersionedKeyIdentifier, DateTimeOffset? lastKeyRotationTimestamp)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal EncryptionScopeKeyVaultProperties(Uri keyUri, string currentVersionedKeyIdentifier, DateTimeOffset? lastKeyRotationTimestamp, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             KeyUri = keyUri;
             CurrentVersionedKeyIdentifier = currentVersionedKeyIdentifier;
             LastKeyRotationTimestamp = lastKeyRotationTimestamp;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The object identifier for a key vault key object. When applied, the encryption scope will use the key referenced by the identifier to enable customer-managed key support on this encryption scope. </summary>

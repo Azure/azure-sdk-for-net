@@ -5,17 +5,52 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> The configuration settings of the token store. </summary>
     public partial class AppServiceTokenStore
     {
-        /// <summary> Initializes a new instance of AppServiceTokenStore. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AppServiceTokenStore"/>. </summary>
         public AppServiceTokenStore()
         {
         }
 
-        /// <summary> Initializes a new instance of AppServiceTokenStore. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppServiceTokenStore"/>. </summary>
         /// <param name="isEnabled">
         /// &lt;code&gt;true&lt;/code&gt; to durably store platform-specific security tokens that are obtained during login flows; otherwise, &lt;code&gt;false&lt;/code&gt;.
         ///  The default is &lt;code&gt;false&lt;/code&gt;.
@@ -26,12 +61,14 @@ namespace Azure.ResourceManager.AppService.Models
         /// </param>
         /// <param name="fileSystem"> The configuration settings of the storage of the tokens if a file system is used. </param>
         /// <param name="azureBlobStorage"> The configuration settings of the storage of the tokens if blob storage is used. </param>
-        internal AppServiceTokenStore(bool? isEnabled, double? tokenRefreshExtensionHours, FileSystemTokenStore fileSystem, AppServiceBlobStorageTokenStore azureBlobStorage)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AppServiceTokenStore(bool? isEnabled, double? tokenRefreshExtensionHours, FileSystemTokenStore fileSystem, AppServiceBlobStorageTokenStore azureBlobStorage, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             IsEnabled = isEnabled;
             TokenRefreshExtensionHours = tokenRefreshExtensionHours;
             FileSystem = fileSystem;
             AzureBlobStorage = azureBlobStorage;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary>

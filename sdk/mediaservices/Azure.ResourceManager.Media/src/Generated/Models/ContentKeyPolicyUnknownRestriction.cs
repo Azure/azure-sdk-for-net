@@ -5,20 +5,24 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Media.Models
 {
     /// <summary> Represents a ContentKeyPolicyRestriction that is unavailable in the current API version. </summary>
     public partial class ContentKeyPolicyUnknownRestriction : ContentKeyPolicyRestriction
     {
-        /// <summary> Initializes a new instance of ContentKeyPolicyUnknownRestriction. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContentKeyPolicyUnknownRestriction"/>. </summary>
         public ContentKeyPolicyUnknownRestriction()
         {
             OdataType = "#Microsoft.Media.ContentKeyPolicyUnknownRestriction";
         }
 
-        /// <summary> Initializes a new instance of ContentKeyPolicyUnknownRestriction. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContentKeyPolicyUnknownRestriction"/>. </summary>
         /// <param name="odataType"> The discriminator for derived types. </param>
-        internal ContentKeyPolicyUnknownRestriction(string odataType) : base(odataType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ContentKeyPolicyUnknownRestriction(string odataType, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(odataType, serializedAdditionalRawData)
         {
             OdataType = odataType ?? "#Microsoft.Media.ContentKeyPolicyUnknownRestriction";
         }

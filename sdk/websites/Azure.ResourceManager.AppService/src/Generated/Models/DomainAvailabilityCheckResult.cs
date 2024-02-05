@@ -5,25 +5,62 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Domain availability check result. </summary>
     public partial class DomainAvailabilityCheckResult
     {
-        /// <summary> Initializes a new instance of DomainAvailabilityCheckResult. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DomainAvailabilityCheckResult"/>. </summary>
         internal DomainAvailabilityCheckResult()
         {
         }
 
-        /// <summary> Initializes a new instance of DomainAvailabilityCheckResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="DomainAvailabilityCheckResult"/>. </summary>
         /// <param name="name"> Name of the domain. </param>
         /// <param name="isAvailable"> &lt;code&gt;true&lt;/code&gt; if domain can be purchased using CreateDomain API; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
         /// <param name="domainType"> Valid values are Regular domain: Azure will charge the full price of domain registration, SoftDeleted: Purchasing this domain will simply restore it and this operation will not cost anything. </param>
-        internal DomainAvailabilityCheckResult(string name, bool? isAvailable, AppServiceDomainType? domainType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DomainAvailabilityCheckResult(string name, bool? isAvailable, AppServiceDomainType? domainType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             IsAvailable = isAvailable;
             DomainType = domainType;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Name of the domain. </summary>

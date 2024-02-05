@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Media.Models
@@ -13,7 +14,39 @@ namespace Azure.ResourceManager.Media.Models
     /// <summary> Describes the properties of a TransformOutput, which are the rules to be applied while generating the desired output. </summary>
     public partial class MediaTransformOutput
     {
-        /// <summary> Initializes a new instance of MediaTransformOutput. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="MediaTransformOutput"/>. </summary>
         /// <param name="preset">
         /// Preset that describes the operations that will be used to modify, transcode, or extract insights from the source file to generate the output.
         /// Please note <see cref="MediaTransformPreset"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
@@ -27,7 +60,7 @@ namespace Azure.ResourceManager.Media.Models
             Preset = preset;
         }
 
-        /// <summary> Initializes a new instance of MediaTransformOutput. </summary>
+        /// <summary> Initializes a new instance of <see cref="MediaTransformOutput"/>. </summary>
         /// <param name="onError"> A Transform can define more than one outputs. This property defines what the service should do when one output fails - either continue to produce other outputs, or, stop the other outputs. The overall Job state will not reflect failures of outputs that are specified with 'ContinueJob'. The default is 'StopProcessingJob'. </param>
         /// <param name="relativePriority"> Sets the relative priority of the TransformOutputs within a Transform. This sets the priority that the service uses for processing TransformOutputs. The default priority is Normal. </param>
         /// <param name="preset">
@@ -35,11 +68,18 @@ namespace Azure.ResourceManager.Media.Models
         /// Please note <see cref="MediaTransformPreset"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="AudioAnalyzerPreset"/>, <see cref="BuiltInStandardEncoderPreset"/>, <see cref="StandardEncoderPreset"/> and <see cref="VideoAnalyzerPreset"/>.
         /// </param>
-        internal MediaTransformOutput(MediaTransformOnErrorType? onError, MediaJobPriority? relativePriority, MediaTransformPreset preset)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MediaTransformOutput(MediaTransformOnErrorType? onError, MediaJobPriority? relativePriority, MediaTransformPreset preset, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             OnError = onError;
             RelativePriority = relativePriority;
             Preset = preset;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MediaTransformOutput"/> for deserialization. </summary>
+        internal MediaTransformOutput()
+        {
         }
 
         /// <summary> A Transform can define more than one outputs. This property defines what the service should do when one output fails - either continue to produce other outputs, or, stop the other outputs. The overall Job state will not reflect failures of outputs that are specified with 'ContinueJob'. The default is 'StopProcessingJob'. </summary>

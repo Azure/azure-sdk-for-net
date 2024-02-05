@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// </summary>
     public partial class ImageInstanceSegmentation : AutoMLVertical
     {
-        /// <summary> Initializes a new instance of ImageInstanceSegmentation. </summary>
+        /// <summary> Initializes a new instance of <see cref="ImageInstanceSegmentation"/>. </summary>
         /// <param name="trainingData"> [Required] Training data input. </param>
         /// <param name="limitSettings"> [Required] Limit settings for the AutoML job. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="trainingData"/> or <paramref name="limitSettings"/> is null. </exception>
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             TaskType = TaskType.ImageInstanceSegmentation;
         }
 
-        /// <summary> Initializes a new instance of ImageInstanceSegmentation. </summary>
+        /// <summary> Initializes a new instance of <see cref="ImageInstanceSegmentation"/>. </summary>
         /// <param name="logVerbosity"> Log verbosity for the job. </param>
         /// <param name="targetColumnName">
         /// Target column name: This is prediction values column.
@@ -39,6 +39,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// </param>
         /// <param name="taskType"> [Required] Task type for AutoMLJob. </param>
         /// <param name="trainingData"> [Required] Training data input. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="primaryMetric"> Primary metric to optimize for this task. </param>
         /// <param name="modelSettings"> Settings used for training the model. </param>
         /// <param name="searchSpace"> Search space for sampling different combinations of models and their hyperparameters. </param>
@@ -50,7 +51,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// Values between (0.0 , 1.0)
         /// Applied when validation dataset is not provided.
         /// </param>
-        internal ImageInstanceSegmentation(MachineLearningLogVerbosity? logVerbosity, string targetColumnName, TaskType taskType, MachineLearningTableJobInput trainingData, InstanceSegmentationPrimaryMetric? primaryMetric, ImageModelSettingsObjectDetection modelSettings, IList<ImageModelDistributionSettingsObjectDetection> searchSpace, ImageLimitSettings limitSettings, ImageSweepSettings sweepSettings, MachineLearningTableJobInput validationData, double? validationDataSize) : base(logVerbosity, targetColumnName, taskType, trainingData)
+        internal ImageInstanceSegmentation(MachineLearningLogVerbosity? logVerbosity, string targetColumnName, TaskType taskType, MachineLearningTableJobInput trainingData, IDictionary<string, BinaryData> serializedAdditionalRawData, InstanceSegmentationPrimaryMetric? primaryMetric, ImageModelSettingsObjectDetection modelSettings, IList<ImageModelDistributionSettingsObjectDetection> searchSpace, ImageLimitSettings limitSettings, ImageSweepSettings sweepSettings, MachineLearningTableJobInput validationData, double? validationDataSize) : base(logVerbosity, targetColumnName, taskType, trainingData, serializedAdditionalRawData)
         {
             PrimaryMetric = primaryMetric;
             ModelSettings = modelSettings;
@@ -60,6 +61,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
             ValidationData = validationData;
             ValidationDataSize = validationDataSize;
             TaskType = taskType;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ImageInstanceSegmentation"/> for deserialization. </summary>
+        internal ImageInstanceSegmentation()
+        {
         }
 
         /// <summary> Primary metric to optimize for this task. </summary>

@@ -6,7 +6,8 @@ Run `dotnet build /t:GenerateCode` to generate code.
 
 azure-arm: true
 namespace: Azure.ResourceManager.ConnectedVMwarevSphere
-require: https://github.com/Azure/azure-rest-api-specs/blob/58891380ba22c3565ca884dee3831445f638b545/specification/connectedvmware/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/5775c90db370eb73a5cd7ccb36e16c34630a5c8c/specification/connectedvmware/resource-manager/readme.md
+#tag: package-2023-10
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
@@ -15,6 +16,10 @@ sample-gen:
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
+use-model-reader-writer: true
+
+#mgmt-debug:
+#  show-serialized-names: true
 
 format-by-name-rules:
   'tenantId': 'uuid'
@@ -47,11 +52,44 @@ acronym-mapping:
   Etag: ETag|etag
 
 rename-mapping:
-  Identity: VMWareIdentity
-  Datastore: VMwareDatastore
   Cluster: VMwareCluster
+  ClustersList: VMwareClusterListResult
+  Datastore: VMwareDatastore
+  DatastoresList: VMwareDatastoreListResult
+  DiskMode: VMwareDiskMode
+  DiskType: VMwareDiskType
+  FirmwareType: VMwareFirmwareType
+  GuestAgent: VmInstanceGuestAgent
+  GuestAgentList: VmInstanceGuestAgentListResult
+  GuestCredential: VmInstanceGuestCredential
+  HardwareProfile: VmInstanceHardwareProfile
   Host: VMwareHost
-  MachineExtension.properties.type: MachineExtensionType
-  MachineExtensionUpdate.properties.type: MachineExtensionType
-  StatusLevelTypes: MachineExtensionStatusLevelType # TODO - needs future refinement since we might need change the name of resource MachineExtension
+  HostsList: VMwareHostListResult
+  InfrastructureProfile: VCenterInfrastructureProfile
+  InventoryItem: VCenterInventoryItem
+  InventoryItemsList: VCenterInventoryItemListResult
+  InventoryType: VCenterInventoryType
+  NetworkInterface: VMwareNetworkInterface
+  NetworkInterfaceUpdate: VMwareNetworkInterfaceUpdate
+  NetworkProfile: VMwareNetworkProfile
+  NetworkProfileUpdate: VMwareNetworkProfileUpdate
+  NICType: VMwareNicType
+  OsType: VMwareOsType
+  ProvisioningAction: GuestAgentProvisioningAction
+  ProvisioningState: VMwareResourceProvisioningState
+  ResourcePatch: VMwareResourcePatchContent
+  ResourcePool: VMwareResourcePool
+  ResourcePoolsList: VMwareResourcePoolListResult
+  ResourceStatus: VMwareResourceStatus
+  StorageProfile: VMwareStorageProfile
+  VCenter: VMwareVCenter
+  VCentersList: VMwareVCenterListResult
+  VirtualDisk: VMwareVirtualDisk
+  VirtualDiskUpdate: VMwareVirtualDiskUpdate
+  VirtualMachineInstance: VMwareVmInstance
+  VirtualMachineInstancesList: VMwareVmInstanceListResult
+  VirtualMachineTemplate: VMwareVmTemplate
+  VirtualMachineTemplatesList: VMwareVmTemplateListResult
+  VirtualNetwork: VMwareVirtualNetwork
+  VirtualNetworksList: VMwareVirtualNetworkListResult
 ```

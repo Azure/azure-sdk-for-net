@@ -13,13 +13,13 @@ namespace Azure.IoT.TimeSeriesInsights
     /// <summary> Definition of how time series hierarchy tree levels are created. </summary>
     public partial class TimeSeriesHierarchySource
     {
-        /// <summary> Initializes a new instance of TimeSeriesHierarchySource. </summary>
+        /// <summary> Initializes a new instance of <see cref="TimeSeriesHierarchySource"/>. </summary>
         public TimeSeriesHierarchySource()
         {
             InstanceFieldNames = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of TimeSeriesHierarchySource. </summary>
+        /// <summary> Initializes a new instance of <see cref="TimeSeriesHierarchySource"/>. </summary>
         /// <param name="instanceFieldNames"> List of instance field names that must be set in all time series instances that belong to this hierarchy. The order of the instance fields defines the levels in the hierarchy. </param>
         internal TimeSeriesHierarchySource(IList<string> instanceFieldNames)
         {

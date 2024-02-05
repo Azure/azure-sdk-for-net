@@ -14,13 +14,45 @@ namespace Azure.ResourceManager.Reservations.Models
     /// <summary> The request for reservation purchase. </summary>
     public partial class ReservationPurchaseContent
     {
-        /// <summary> Initializes a new instance of ReservationPurchaseContent. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ReservationPurchaseContent"/>. </summary>
         public ReservationPurchaseContent()
         {
             AppliedScopes = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of ReservationPurchaseContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="ReservationPurchaseContent"/>. </summary>
         /// <param name="sku"> The name of sku. </param>
         /// <param name="location"> The Azure region where the reserved resource lives. </param>
         /// <param name="reservedResourceType"> The type of the resource that is being reserved. </param>
@@ -35,7 +67,8 @@ namespace Azure.ResourceManager.Reservations.Models
         /// <param name="isRenewEnabled"> Setting this to true will automatically purchase a new reservation on the expiration date time. </param>
         /// <param name="reservedResourceProperties"> Properties specific to each reserved resource type. Not required if not applicable. </param>
         /// <param name="reviewOn"> This is the date-time when the Azure hybrid benefit needs to be reviewed. </param>
-        internal ReservationPurchaseContent(ReservationsSkuName sku, AzureLocation? location, ReservedResourceType? reservedResourceType, ResourceIdentifier billingScopeId, ReservationTerm? term, ReservationBillingPlan? billingPlan, int? quantity, string displayName, AppliedScopeType? appliedScopeType, IList<string> appliedScopes, AppliedScopeProperties appliedScopeProperties, bool? isRenewEnabled, PurchaseRequestPropertiesReservedResourceProperties reservedResourceProperties, DateTimeOffset? reviewOn)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ReservationPurchaseContent(ReservationsSkuName sku, AzureLocation? location, ReservedResourceType? reservedResourceType, ResourceIdentifier billingScopeId, ReservationTerm? term, ReservationBillingPlan? billingPlan, int? quantity, string displayName, AppliedScopeType? appliedScopeType, IList<string> appliedScopes, AppliedScopeProperties appliedScopeProperties, bool? isRenewEnabled, PurchaseRequestPropertiesReservedResourceProperties reservedResourceProperties, DateTimeOffset? reviewOn, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Sku = sku;
             Location = location;
@@ -51,6 +84,7 @@ namespace Azure.ResourceManager.Reservations.Models
             IsRenewEnabled = isRenewEnabled;
             ReservedResourceProperties = reservedResourceProperties;
             ReviewOn = reviewOn;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The name of sku. </summary>

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 
 namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
@@ -12,12 +13,18 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
     /// <summary> The UnknownWorkflowModelCustomProperties. </summary>
     internal partial class UnknownWorkflowModelCustomProperties : WorkflowModelCustomProperties
     {
-        /// <summary> Initializes a new instance of UnknownWorkflowModelCustomProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnknownWorkflowModelCustomProperties"/>. </summary>
         /// <param name="instanceType"> Gets or sets the instance type. </param>
         /// <param name="affectedObjectDetails"> Gets or sets any custom properties of the affected object. </param>
-        internal UnknownWorkflowModelCustomProperties(string instanceType, IReadOnlyDictionary<string, string> affectedObjectDetails) : base(instanceType, affectedObjectDetails)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal UnknownWorkflowModelCustomProperties(string instanceType, IReadOnlyDictionary<string, string> affectedObjectDetails, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(instanceType, affectedObjectDetails, serializedAdditionalRawData)
         {
             InstanceType = instanceType ?? "Unknown";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="UnknownWorkflowModelCustomProperties"/> for deserialization. </summary>
+        internal UnknownWorkflowModelCustomProperties()
+        {
         }
     }
 }

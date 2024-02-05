@@ -6,25 +6,27 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> Sweep Job limit class. </summary>
     public partial class MachineLearningSweepJobLimits : MachineLearningJobLimits
     {
-        /// <summary> Initializes a new instance of MachineLearningSweepJobLimits. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningSweepJobLimits"/>. </summary>
         public MachineLearningSweepJobLimits()
         {
             JobLimitsType = JobLimitsType.Sweep;
         }
 
-        /// <summary> Initializes a new instance of MachineLearningSweepJobLimits. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningSweepJobLimits"/>. </summary>
         /// <param name="jobLimitsType"> [Required] JobLimit type. </param>
         /// <param name="timeout"> The max run duration in ISO 8601 format, after which the job will be cancelled. Only supports duration with precision as low as Seconds. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="maxConcurrentTrials"> Sweep Job max concurrent trials. </param>
         /// <param name="maxTotalTrials"> Sweep Job max total trials. </param>
         /// <param name="trialTimeout"> Sweep Job Trial timeout value. </param>
-        internal MachineLearningSweepJobLimits(JobLimitsType jobLimitsType, TimeSpan? timeout, int? maxConcurrentTrials, int? maxTotalTrials, TimeSpan? trialTimeout) : base(jobLimitsType, timeout)
+        internal MachineLearningSweepJobLimits(JobLimitsType jobLimitsType, TimeSpan? timeout, IDictionary<string, BinaryData> serializedAdditionalRawData, int? maxConcurrentTrials, int? maxTotalTrials, TimeSpan? trialTimeout) : base(jobLimitsType, timeout, serializedAdditionalRawData)
         {
             MaxConcurrentTrials = maxConcurrentTrials;
             MaxTotalTrials = maxTotalTrials;

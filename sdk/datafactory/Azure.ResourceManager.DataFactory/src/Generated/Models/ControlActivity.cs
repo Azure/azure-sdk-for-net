@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// </summary>
     public partial class ControlActivity : PipelineActivity
     {
-        /// <summary> Initializes a new instance of ControlActivity. </summary>
+        /// <summary> Initializes a new instance of <see cref="ControlActivity"/>. </summary>
         /// <param name="name"> Activity name. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public ControlActivity(string name) : base(name)
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             ActivityType = "Container";
         }
 
-        /// <summary> Initializes a new instance of ControlActivity. </summary>
+        /// <summary> Initializes a new instance of <see cref="ControlActivity"/>. </summary>
         /// <param name="name"> Activity name. </param>
         /// <param name="activityType"> Type of activity. </param>
         /// <param name="description"> Activity description. </param>
@@ -40,6 +40,11 @@ namespace Azure.ResourceManager.DataFactory.Models
         internal ControlActivity(string name, string activityType, string description, PipelineActivityState? state, ActivityOnInactiveMarkAs? onInactiveMarkAs, IList<PipelineActivityDependency> dependsOn, IList<PipelineActivityUserProperty> userProperties, IDictionary<string, BinaryData> additionalProperties) : base(name, activityType, description, state, onInactiveMarkAs, dependsOn, userProperties, additionalProperties)
         {
             ActivityType = activityType ?? "Container";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ControlActivity"/> for deserialization. </summary>
+        internal ControlActivity()
+        {
         }
     }
 }

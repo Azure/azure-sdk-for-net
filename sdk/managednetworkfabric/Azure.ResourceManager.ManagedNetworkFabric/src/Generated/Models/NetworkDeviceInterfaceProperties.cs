@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,21 +14,55 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
     /// <summary> Network device interface properties. </summary>
     public partial class NetworkDeviceInterfaceProperties
     {
-        /// <summary> Initializes a new instance of NetworkDeviceInterfaceProperties. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="NetworkDeviceInterfaceProperties"/>. </summary>
         public NetworkDeviceInterfaceProperties()
         {
             SupportedConnectorTypes = new ChangeTrackingList<SupportedConnectorProperties>();
         }
 
-        /// <summary> Initializes a new instance of NetworkDeviceInterfaceProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkDeviceInterfaceProperties"/>. </summary>
         /// <param name="identifier"> Interface identifier. Example: HundredGigE0/0. </param>
         /// <param name="interfaceType"> Interface type. </param>
         /// <param name="supportedConnectorTypes"> List of supported connector types. </param>
-        internal NetworkDeviceInterfaceProperties(string identifier, string interfaceType, IList<SupportedConnectorProperties> supportedConnectorTypes)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal NetworkDeviceInterfaceProperties(string identifier, string interfaceType, IList<SupportedConnectorProperties> supportedConnectorTypes, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Identifier = identifier;
             InterfaceType = interfaceType;
             SupportedConnectorTypes = supportedConnectorTypes;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Interface identifier. Example: HundredGigE0/0. </summary>

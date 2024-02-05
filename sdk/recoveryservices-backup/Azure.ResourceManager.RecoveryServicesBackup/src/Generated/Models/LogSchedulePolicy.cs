@@ -5,21 +5,25 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
     /// <summary> Log policy schedule. </summary>
     public partial class LogSchedulePolicy : BackupSchedulePolicy
     {
-        /// <summary> Initializes a new instance of LogSchedulePolicy. </summary>
+        /// <summary> Initializes a new instance of <see cref="LogSchedulePolicy"/>. </summary>
         public LogSchedulePolicy()
         {
             SchedulePolicyType = "LogSchedulePolicy";
         }
 
-        /// <summary> Initializes a new instance of LogSchedulePolicy. </summary>
+        /// <summary> Initializes a new instance of <see cref="LogSchedulePolicy"/>. </summary>
         /// <param name="schedulePolicyType"> This property will be used as the discriminator for deciding the specific types in the polymorphic chain of types. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="scheduleFrequencyInMins"> Frequency of the log schedule operation of this policy in minutes. </param>
-        internal LogSchedulePolicy(string schedulePolicyType, int? scheduleFrequencyInMins) : base(schedulePolicyType)
+        internal LogSchedulePolicy(string schedulePolicyType, IDictionary<string, BinaryData> serializedAdditionalRawData, int? scheduleFrequencyInMins) : base(schedulePolicyType, serializedAdditionalRawData)
         {
             ScheduleFrequencyInMins = scheduleFrequencyInMins;
             SchedulePolicyType = schedulePolicyType ?? "LogSchedulePolicy";

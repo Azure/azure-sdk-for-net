@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearningCompute.Models
@@ -13,7 +14,39 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
     /// <summary> The Azure service principal used by Kubernetes for configuring load balancers. </summary>
     public partial class ServicePrincipalProperties
     {
-        /// <summary> Initializes a new instance of ServicePrincipalProperties. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ServicePrincipalProperties"/>. </summary>
         /// <param name="clientId"> The service principal client ID. </param>
         /// <param name="secret"> The service principal secret. This is not returned in response of GET/PUT on the resource. To see this please call listKeys. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="clientId"/> or <paramref name="secret"/> is null. </exception>
@@ -24,6 +57,22 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
 
             ClientId = clientId;
             Secret = secret;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ServicePrincipalProperties"/>. </summary>
+        /// <param name="clientId"> The service principal client ID. </param>
+        /// <param name="secret"> The service principal secret. This is not returned in response of GET/PUT on the resource. To see this please call listKeys. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ServicePrincipalProperties(string clientId, string secret, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            ClientId = clientId;
+            Secret = secret;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ServicePrincipalProperties"/> for deserialization. </summary>
+        internal ServicePrincipalProperties()
+        {
         }
 
         /// <summary> The service principal client ID. </summary>

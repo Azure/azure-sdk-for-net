@@ -14,7 +14,7 @@ namespace Azure.Monitor.Query.Models
     /// <summary> Tables are part of the workspace schema, and contain a list of columns and a reference to other relevant metadata items. </summary>
     internal partial class MetadataTable
     {
-        /// <summary> Initializes a new instance of MetadataTable. </summary>
+        /// <summary> Initializes a new instance of <see cref="MetadataTable"/>. </summary>
         /// <param name="id"> The ID of the table. </param>
         /// <param name="name"> The name of the table. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="name"/> is null. </exception>
@@ -27,6 +27,29 @@ namespace Azure.Monitor.Query.Models
             Name = name;
             Labels = new ChangeTrackingList<string>();
             Columns = new ChangeTrackingList<MetadataTableColumnsItem>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MetadataTable"/>. </summary>
+        /// <param name="id"> The ID of the table. </param>
+        /// <param name="name"> The name of the table. </param>
+        /// <param name="description"> The description of the table. </param>
+        /// <param name="timespanColumn"> The column associated with the timespan query parameter for the table. </param>
+        /// <param name="labels"> The user defined labels of the table. </param>
+        /// <param name="tags"> The tags associated with the table. </param>
+        /// <param name="properties"> The properties of the table. </param>
+        /// <param name="columns"> The list of columns defined on the table. </param>
+        /// <param name="related"> The related metadata items for the table. </param>
+        internal MetadataTable(string id, string name, string description, string timespanColumn, IReadOnlyList<string> labels, object tags, object properties, IReadOnlyList<MetadataTableColumnsItem> columns, MetadataTableRelated related)
+        {
+            Id = id;
+            Name = name;
+            Description = description;
+            TimespanColumn = timespanColumn;
+            Labels = labels;
+            Tags = tags;
+            Properties = properties;
+            Columns = columns;
+            Related = related;
         }
 
         /// <summary> The ID of the table. </summary>

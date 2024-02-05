@@ -45,9 +45,12 @@ namespace Azure.ResourceManager.DataLakeAnalytics
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DataLakeAnalyticsAccountResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="DataLakeAnalyticsAccountResource"/> object. </returns>
         public static DataLakeAnalyticsAccountResource GetDataLakeAnalyticsAccountResource(this ArmClient client, ResourceIdentifier id)
         {
+            Argument.AssertNotNull(client, nameof(client));
+
             return GetMockableDataLakeAnalyticsArmClient(client).GetDataLakeAnalyticsAccountResource(id);
         }
 
@@ -61,9 +64,12 @@ namespace Azure.ResourceManager.DataLakeAnalytics
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DataLakeStoreAccountInformationResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="DataLakeStoreAccountInformationResource"/> object. </returns>
         public static DataLakeStoreAccountInformationResource GetDataLakeStoreAccountInformationResource(this ArmClient client, ResourceIdentifier id)
         {
+            Argument.AssertNotNull(client, nameof(client));
+
             return GetMockableDataLakeAnalyticsArmClient(client).GetDataLakeStoreAccountInformationResource(id);
         }
 
@@ -77,9 +83,12 @@ namespace Azure.ResourceManager.DataLakeAnalytics
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DataLakeAnalyticsStorageAccountInformationResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="DataLakeAnalyticsStorageAccountInformationResource"/> object. </returns>
         public static DataLakeAnalyticsStorageAccountInformationResource GetDataLakeAnalyticsStorageAccountInformationResource(this ArmClient client, ResourceIdentifier id)
         {
+            Argument.AssertNotNull(client, nameof(client));
+
             return GetMockableDataLakeAnalyticsArmClient(client).GetDataLakeAnalyticsStorageAccountInformationResource(id);
         }
 
@@ -93,9 +102,12 @@ namespace Azure.ResourceManager.DataLakeAnalytics
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DataLakeAnalyticsStorageContainerResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="DataLakeAnalyticsStorageContainerResource"/> object. </returns>
         public static DataLakeAnalyticsStorageContainerResource GetDataLakeAnalyticsStorageContainerResource(this ArmClient client, ResourceIdentifier id)
         {
+            Argument.AssertNotNull(client, nameof(client));
+
             return GetMockableDataLakeAnalyticsArmClient(client).GetDataLakeAnalyticsStorageContainerResource(id);
         }
 
@@ -109,9 +121,12 @@ namespace Azure.ResourceManager.DataLakeAnalytics
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DataLakeAnalyticsComputePolicyResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="DataLakeAnalyticsComputePolicyResource"/> object. </returns>
         public static DataLakeAnalyticsComputePolicyResource GetDataLakeAnalyticsComputePolicyResource(this ArmClient client, ResourceIdentifier id)
         {
+            Argument.AssertNotNull(client, nameof(client));
+
             return GetMockableDataLakeAnalyticsArmClient(client).GetDataLakeAnalyticsComputePolicyResource(id);
         }
 
@@ -125,9 +140,12 @@ namespace Azure.ResourceManager.DataLakeAnalytics
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DataLakeAnalyticsFirewallRuleResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="DataLakeAnalyticsFirewallRuleResource"/> object. </returns>
         public static DataLakeAnalyticsFirewallRuleResource GetDataLakeAnalyticsFirewallRuleResource(this ArmClient client, ResourceIdentifier id)
         {
+            Argument.AssertNotNull(client, nameof(client));
+
             return GetMockableDataLakeAnalyticsArmClient(client).GetDataLakeAnalyticsFirewallRuleResource(id);
         }
 
@@ -139,9 +157,12 @@ namespace Azure.ResourceManager.DataLakeAnalytics
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         /// <returns> An object representing collection of DataLakeAnalyticsAccountResources and their operations over a DataLakeAnalyticsAccountResource. </returns>
         public static DataLakeAnalyticsAccountCollection GetDataLakeAnalyticsAccounts(this ResourceGroupResource resourceGroupResource)
         {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
             return GetMockableDataLakeAnalyticsResourceGroupResource(resourceGroupResource).GetDataLakeAnalyticsAccounts();
         }
 
@@ -156,6 +177,14 @@ namespace Azure.ResourceManager.DataLakeAnalytics
         /// <term>Operation Id</term>
         /// <description>Accounts_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2016-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataLakeAnalyticsAccountResource"/></description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -165,11 +194,13 @@ namespace Azure.ResourceManager.DataLakeAnalytics
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="accountName"> The name of the Data Lake Analytics account. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="accountName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="accountName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public static async Task<Response<DataLakeAnalyticsAccountResource>> GetDataLakeAnalyticsAccountAsync(this ResourceGroupResource resourceGroupResource, string accountName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
             return await GetMockableDataLakeAnalyticsResourceGroupResource(resourceGroupResource).GetDataLakeAnalyticsAccountAsync(accountName, cancellationToken).ConfigureAwait(false);
         }
 
@@ -184,6 +215,14 @@ namespace Azure.ResourceManager.DataLakeAnalytics
         /// <term>Operation Id</term>
         /// <description>Accounts_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2016-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataLakeAnalyticsAccountResource"/></description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -193,11 +232,13 @@ namespace Azure.ResourceManager.DataLakeAnalytics
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="accountName"> The name of the Data Lake Analytics account. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="accountName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="accountName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public static Response<DataLakeAnalyticsAccountResource> GetDataLakeAnalyticsAccount(this ResourceGroupResource resourceGroupResource, string accountName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
             return GetMockableDataLakeAnalyticsResourceGroupResource(resourceGroupResource).GetDataLakeAnalyticsAccount(accountName, cancellationToken);
         }
 
@@ -212,6 +253,14 @@ namespace Azure.ResourceManager.DataLakeAnalytics
         /// <term>Operation Id</term>
         /// <description>Accounts_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2016-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataLakeAnalyticsAccountResource"/></description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -221,9 +270,12 @@ namespace Azure.ResourceManager.DataLakeAnalytics
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="DataLakeAnalyticsAccountBasic" /> that may take multiple service requests to iterate over. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> An async collection of <see cref="DataLakeAnalyticsAccountBasic"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<DataLakeAnalyticsAccountBasic> GetAccountsAsync(this SubscriptionResource subscriptionResource, SubscriptionResourceGetAccountsOptions options, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
             return GetMockableDataLakeAnalyticsSubscriptionResource(subscriptionResource).GetAccountsAsync(options, cancellationToken);
         }
 
@@ -238,6 +290,14 @@ namespace Azure.ResourceManager.DataLakeAnalytics
         /// <term>Operation Id</term>
         /// <description>Accounts_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2016-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataLakeAnalyticsAccountResource"/></description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -247,9 +307,12 @@ namespace Azure.ResourceManager.DataLakeAnalytics
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="DataLakeAnalyticsAccountBasic" /> that may take multiple service requests to iterate over. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="DataLakeAnalyticsAccountBasic"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<DataLakeAnalyticsAccountBasic> GetAccounts(this SubscriptionResource subscriptionResource, SubscriptionResourceGetAccountsOptions options, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
             return GetMockableDataLakeAnalyticsSubscriptionResource(subscriptionResource).GetAccounts(options, cancellationToken);
         }
 
@@ -264,6 +327,14 @@ namespace Azure.ResourceManager.DataLakeAnalytics
         /// <term>Operation Id</term>
         /// <description>Accounts_CheckNameAvailability</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2016-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataLakeAnalyticsAccountResource"/></description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -274,9 +345,11 @@ namespace Azure.ResourceManager.DataLakeAnalytics
         /// <param name="location"> The resource location without whitespace. </param>
         /// <param name="content"> Parameters supplied to check the Data Lake Analytics account name availability. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="content"/> is null. </exception>
         public static async Task<Response<DataLakeAnalyticsAccountNameAvailabilityResult>> CheckDataLakeAnalyticsAccountNameAvailabilityAsync(this SubscriptionResource subscriptionResource, AzureLocation location, DataLakeAnalyticsAccountNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
             return await GetMockableDataLakeAnalyticsSubscriptionResource(subscriptionResource).CheckDataLakeAnalyticsAccountNameAvailabilityAsync(location, content, cancellationToken).ConfigureAwait(false);
         }
 
@@ -291,6 +364,14 @@ namespace Azure.ResourceManager.DataLakeAnalytics
         /// <term>Operation Id</term>
         /// <description>Accounts_CheckNameAvailability</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2016-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataLakeAnalyticsAccountResource"/></description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -301,9 +382,11 @@ namespace Azure.ResourceManager.DataLakeAnalytics
         /// <param name="location"> The resource location without whitespace. </param>
         /// <param name="content"> Parameters supplied to check the Data Lake Analytics account name availability. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="content"/> is null. </exception>
         public static Response<DataLakeAnalyticsAccountNameAvailabilityResult> CheckDataLakeAnalyticsAccountNameAvailability(this SubscriptionResource subscriptionResource, AzureLocation location, DataLakeAnalyticsAccountNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
             return GetMockableDataLakeAnalyticsSubscriptionResource(subscriptionResource).CheckDataLakeAnalyticsAccountNameAvailability(location, content, cancellationToken);
         }
 
@@ -318,6 +401,10 @@ namespace Azure.ResourceManager.DataLakeAnalytics
         /// <term>Operation Id</term>
         /// <description>Locations_GetCapability</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2016-11-01</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -327,8 +414,11 @@ namespace Azure.ResourceManager.DataLakeAnalytics
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="location"> The resource location without whitespace. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         public static async Task<Response<DataLakeAnalyticsCapabilityInformation>> GetCapabilityLocationAsync(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
             return await GetMockableDataLakeAnalyticsSubscriptionResource(subscriptionResource).GetCapabilityLocationAsync(location, cancellationToken).ConfigureAwait(false);
         }
 
@@ -343,6 +433,10 @@ namespace Azure.ResourceManager.DataLakeAnalytics
         /// <term>Operation Id</term>
         /// <description>Locations_GetCapability</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2016-11-01</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -352,8 +446,11 @@ namespace Azure.ResourceManager.DataLakeAnalytics
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="location"> The resource location without whitespace. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         public static Response<DataLakeAnalyticsCapabilityInformation> GetCapabilityLocation(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
             return GetMockableDataLakeAnalyticsSubscriptionResource(subscriptionResource).GetCapabilityLocation(location, cancellationToken);
         }
     }

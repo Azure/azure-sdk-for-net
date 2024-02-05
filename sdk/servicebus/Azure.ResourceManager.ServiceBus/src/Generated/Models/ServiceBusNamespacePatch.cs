@@ -16,14 +16,46 @@ namespace Azure.ResourceManager.ServiceBus.Models
     /// <summary> Description of a namespace resource. </summary>
     public partial class ServiceBusNamespacePatch : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of ServiceBusNamespacePatch. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ServiceBusNamespacePatch"/>. </summary>
         /// <param name="location"> The location. </param>
         public ServiceBusNamespacePatch(AzureLocation location) : base(location)
         {
             PrivateEndpointConnections = new ChangeTrackingList<ServiceBusPrivateEndpointConnectionData>();
         }
 
-        /// <summary> Initializes a new instance of ServiceBusNamespacePatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceBusNamespacePatch"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -42,7 +74,8 @@ namespace Azure.ResourceManager.ServiceBus.Models
         /// <param name="privateEndpointConnections"> List of private endpoint connections. </param>
         /// <param name="disableLocalAuth"> This property disables SAS authentication for the Service Bus namespace. </param>
         /// <param name="alternateName"> Alternate name for namespace. </param>
-        internal ServiceBusNamespacePatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ServiceBusSku sku, ManagedServiceIdentity identity, string provisioningState, string status, DateTimeOffset? createdOn, DateTimeOffset? updatedOn, string serviceBusEndpoint, string metricId, ServiceBusEncryption encryption, IList<ServiceBusPrivateEndpointConnectionData> privateEndpointConnections, bool? disableLocalAuth, string alternateName) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ServiceBusNamespacePatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ServiceBusSku sku, ManagedServiceIdentity identity, string provisioningState, string status, DateTimeOffset? createdOn, DateTimeOffset? updatedOn, string serviceBusEndpoint, string metricId, ServiceBusEncryption encryption, IList<ServiceBusPrivateEndpointConnectionData> privateEndpointConnections, bool? disableLocalAuth, string alternateName, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             Sku = sku;
             Identity = identity;
@@ -56,6 +89,12 @@ namespace Azure.ResourceManager.ServiceBus.Models
             PrivateEndpointConnections = privateEndpointConnections;
             DisableLocalAuth = disableLocalAuth;
             AlternateName = alternateName;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ServiceBusNamespacePatch"/> for deserialization. </summary>
+        internal ServiceBusNamespacePatch()
+        {
         }
 
         /// <summary> Properties of SKU. </summary>

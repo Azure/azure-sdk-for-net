@@ -15,7 +15,39 @@ namespace Azure.ResourceManager.Logic.Models
     /// <summary> The X12 agreement protocol settings. </summary>
     public partial class X12ProtocolSettings
     {
-        /// <summary> Initializes a new instance of X12ProtocolSettings. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="X12ProtocolSettings"/>. </summary>
         /// <param name="validationSettings"> The X12 validation settings. </param>
         /// <param name="framingSettings"> The X12 framing settings. </param>
         /// <param name="envelopeSettings"> The X12 envelope settings. </param>
@@ -50,7 +82,7 @@ namespace Azure.ResourceManager.Logic.Models
             X12DelimiterOverrides = new ChangeTrackingList<X12DelimiterOverrides>();
         }
 
-        /// <summary> Initializes a new instance of X12ProtocolSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="X12ProtocolSettings"/>. </summary>
         /// <param name="validationSettings"> The X12 validation settings. </param>
         /// <param name="framingSettings"> The X12 framing settings. </param>
         /// <param name="envelopeSettings"> The X12 envelope settings. </param>
@@ -63,7 +95,8 @@ namespace Azure.ResourceManager.Logic.Models
         /// <param name="messageFilterList"> The X12 message filter list. </param>
         /// <param name="schemaReferences"> The X12 schema references. </param>
         /// <param name="x12DelimiterOverrides"> The X12 delimiter override settings. </param>
-        internal X12ProtocolSettings(X12ValidationSettings validationSettings, X12FramingSettings framingSettings, X12EnvelopeSettings envelopeSettings, X12AcknowledgementSettings acknowledgementSettings, X12MessageFilter messageFilter, X12SecuritySettings securitySettings, X12ProcessingSettings processingSettings, IList<X12EnvelopeOverride> envelopeOverrides, IList<X12ValidationOverride> validationOverrides, IList<X12MessageIdentifier> messageFilterList, IList<X12SchemaReference> schemaReferences, IList<X12DelimiterOverrides> x12DelimiterOverrides)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal X12ProtocolSettings(X12ValidationSettings validationSettings, X12FramingSettings framingSettings, X12EnvelopeSettings envelopeSettings, X12AcknowledgementSettings acknowledgementSettings, X12MessageFilter messageFilter, X12SecuritySettings securitySettings, X12ProcessingSettings processingSettings, IList<X12EnvelopeOverride> envelopeOverrides, IList<X12ValidationOverride> validationOverrides, IList<X12MessageIdentifier> messageFilterList, IList<X12SchemaReference> schemaReferences, IList<X12DelimiterOverrides> x12DelimiterOverrides, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ValidationSettings = validationSettings;
             FramingSettings = framingSettings;
@@ -77,6 +110,12 @@ namespace Azure.ResourceManager.Logic.Models
             MessageFilterList = messageFilterList;
             SchemaReferences = schemaReferences;
             X12DelimiterOverrides = x12DelimiterOverrides;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="X12ProtocolSettings"/> for deserialization. </summary>
+        internal X12ProtocolSettings()
+        {
         }
 
         /// <summary> The X12 validation settings. </summary>

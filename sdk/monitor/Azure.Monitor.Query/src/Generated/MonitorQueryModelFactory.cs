@@ -15,7 +15,7 @@ namespace Azure.Monitor.Query.Models
     /// <summary> Model factory for models. </summary>
     public static partial class MonitorQueryModelFactory
     {
-        /// <summary> Initializes a new instance of LogsTableColumn. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.LogsTableColumn"/>. </summary>
         /// <param name="name"> The name of this column. </param>
         /// <param name="type"> The data type of this column. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
@@ -30,99 +30,39 @@ namespace Azure.Monitor.Query.Models
             return new LogsTableColumn(name, type);
         }
 
-        /// <summary> Initializes a new instance of MetricAvailability. </summary>
-        /// <param name="granularity"> the time grain specifies the aggregation interval for the metric. Expressed as a duration 'PT1M', 'P1D', etc. </param>
-        /// <param name="retention"> the retention period for the metric at the specified timegrain.  Expressed as a duration 'PT1M', 'P1D', etc. </param>
-        /// <returns> A new <see cref="Models.MetricAvailability"/> instance for mocking. </returns>
-        public static MetricAvailability MetricAvailability(TimeSpan? granularity = null, TimeSpan? retention = null)
-        {
-            return new MetricAvailability(granularity, retention);
-        }
-
-        /// <summary> Initializes a new instance of MetricResultsResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.MetricsBatchResult"/>. </summary>
         /// <param name="values"> The collection of metric data responses per resource, per metric. </param>
-        /// <returns> A new <see cref="Models.MetricResultsResponse"/> instance for mocking. </returns>
-        public static MetricResultsResponse MetricResultsResponse(IEnumerable<MetricResultsResponseValuesItem> values = null)
+        /// <returns> A new <see cref="Models.MetricsBatchResult"/> instance for mocking. </returns>
+        public static MetricsBatchResult MetricsBatchResult(IEnumerable<MetricsBatchResultValues> values = null)
         {
-            values ??= new List<MetricResultsResponseValuesItem>();
+            values ??= new List<MetricsBatchResultValues>();
 
-            return new MetricResultsResponse(values?.ToList());
+            return new MetricsBatchResult(values?.ToList());
         }
 
-        /// <summary> Initializes a new instance of MetricResultsResponseValuesItem. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.MetricsBatchResultValues"/>. </summary>
         /// <param name="startTime"> The start time, in datetime format, for which the data was retrieved. </param>
         /// <param name="endTime"> The end time, in datetime format, for which the data was retrieved. </param>
         /// <param name="interval"> The interval (window size) for which the metric data was returned in. Follows the IS8601/RFC3339 duration format (e.g. 'P1D' for 1 day). This may be adjusted in the future and returned back from what was originally requested.  This is not present if a metadata request was made. </param>
         /// <param name="namespace"> The namespace of the metrics been queried. </param>
         /// <param name="resourceRegion"> The region of the resource been queried for metrics. </param>
         /// <param name="resourceId"> The resource that has been queried for metrics. </param>
-        /// <param name="value"> The value of the collection. </param>
-        /// <returns> A new <see cref="Models.MetricResultsResponseValuesItem"/> instance for mocking. </returns>
-        public static MetricResultsResponseValuesItem MetricResultsResponseValuesItem(DateTimeOffset startTime = default, DateTimeOffset endTime = default, TimeSpan? interval = null, string @namespace = null, string resourceRegion = null, ResourceIdentifier resourceId = null, IEnumerable<QueryBatchMetric> value = null)
+        /// <param name="metrics"> The value of the collection. </param>
+        /// <returns> A new <see cref="Models.MetricsBatchResultValues"/> instance for mocking. </returns>
+        public static MetricsBatchResultValues MetricsBatchResultValues(DateTimeOffset startTime = default, DateTimeOffset endTime = default, TimeSpan? interval = null, string @namespace = null, AzureLocation resourceRegion = default, ResourceIdentifier resourceId = null, IEnumerable<MetricResult> metrics = null)
         {
-            value ??= new List<QueryBatchMetric>();
+            metrics ??= new List<MetricResult>();
 
-            return new MetricResultsResponseValuesItem(startTime, endTime, interval, @namespace, resourceRegion, resourceId, value?.ToList());
+            return new MetricsBatchResultValues(startTime, endTime, interval, @namespace, resourceRegion, resourceId, metrics?.ToList());
         }
 
-        /// <summary> Initializes a new instance of QueryBatchMetric. </summary>
-        /// <param name="id"> The metric Id. </param>
-        /// <param name="name"> The name and the display name of the metric, i.e. it is localizable string. </param>
-        /// <param name="displayDescription"> Description of this metric. </param>
-        /// <param name="type"> The resource type of the metric resource. </param>
-        /// <param name="unit"> The unit of the metric. </param>
-        /// <param name="timeseries"> The time series returned when a data query is performed. </param>
-        /// <param name="errorCode"> 'Success' or the error details on query failures for this metric. </param>
-        /// <param name="errorMessage"> Error message encountered querying this specific metric. </param>
-        /// <returns> A new <see cref="Models.QueryBatchMetric"/> instance for mocking. </returns>
-        public static QueryBatchMetric QueryBatchMetric(string id = null, QueryBatchLocalizableString name = null, string displayDescription = null, string type = null, QueryBatchMetricUnit unit = default, IEnumerable<QueryBatchTimeSeriesElement> timeseries = null, string errorCode = null, string errorMessage = null)
+        /// <summary> Initializes a new instance of <see cref="Models.MetricAvailability"/>. </summary>
+        /// <param name="granularity"> the time grain specifies the aggregation interval for the metric. Expressed as a duration 'PT1M', 'P1D', etc. </param>
+        /// <param name="retention"> the retention period for the metric at the specified timegrain.  Expressed as a duration 'PT1M', 'P1D', etc. </param>
+        /// <returns> A new <see cref="Models.MetricAvailability"/> instance for mocking. </returns>
+        public static MetricAvailability MetricAvailability(TimeSpan? granularity = null, TimeSpan? retention = null)
         {
-            timeseries ??= new List<QueryBatchTimeSeriesElement>();
-
-            return new QueryBatchMetric(id, name, displayDescription, type, unit, timeseries?.ToList(), errorCode, errorMessage);
-        }
-
-        /// <summary> Initializes a new instance of QueryBatchLocalizableString. </summary>
-        /// <param name="value"> The invariant value. </param>
-        /// <param name="localizedValue"> The display name. </param>
-        /// <returns> A new <see cref="Models.QueryBatchLocalizableString"/> instance for mocking. </returns>
-        public static QueryBatchLocalizableString QueryBatchLocalizableString(string value = null, string localizedValue = null)
-        {
-            return new QueryBatchLocalizableString(value, localizedValue);
-        }
-
-        /// <summary> Initializes a new instance of QueryBatchTimeSeriesElement. </summary>
-        /// <param name="metadatavalues"> The metadata values returned if filter was specified in the call. </param>
-        /// <param name="data"> An array of data points representing the metric values.  This is only returned if a result type of data is specified. </param>
-        /// <returns> A new <see cref="Models.QueryBatchTimeSeriesElement"/> instance for mocking. </returns>
-        public static QueryBatchTimeSeriesElement QueryBatchTimeSeriesElement(IEnumerable<QueryBatchMetadataValue> metadatavalues = null, IEnumerable<QueryBatchMetricValue> data = null)
-        {
-            metadatavalues ??= new List<QueryBatchMetadataValue>();
-            data ??= new List<QueryBatchMetricValue>();
-
-            return new QueryBatchTimeSeriesElement(metadatavalues?.ToList(), data?.ToList());
-        }
-
-        /// <summary> Initializes a new instance of QueryBatchMetadataValue. </summary>
-        /// <param name="name"> The name of the metadata. </param>
-        /// <param name="value"> The value of the metadata. </param>
-        /// <returns> A new <see cref="Models.QueryBatchMetadataValue"/> instance for mocking. </returns>
-        public static QueryBatchMetadataValue QueryBatchMetadataValue(QueryBatchLocalizableString name = null, string value = null)
-        {
-            return new QueryBatchMetadataValue(name, value);
-        }
-
-        /// <summary> Initializes a new instance of QueryBatchMetricValue. </summary>
-        /// <param name="timeStamp"> The timestamp for the metric value in ISO 8601 format. </param>
-        /// <param name="average"> The average value in the time range. </param>
-        /// <param name="minimum"> The least value in the time range. </param>
-        /// <param name="maximum"> The greatest value in the time range. </param>
-        /// <param name="total"> The sum of all of the values in the time range. </param>
-        /// <param name="count"> The number of samples in the time range. Can be used to determine the number of values that contributed to the average value. </param>
-        /// <returns> A new <see cref="Models.QueryBatchMetricValue"/> instance for mocking. </returns>
-        public static QueryBatchMetricValue QueryBatchMetricValue(DateTimeOffset timeStamp = default, double? average = null, double? minimum = null, double? maximum = null, double? total = null, double? count = null)
-        {
-            return new QueryBatchMetricValue(timeStamp, average, minimum, maximum, total, count);
+            return new MetricAvailability(granularity, retention);
         }
     }
 }

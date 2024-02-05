@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.Monitor.Models
     /// <summary> Criterion to filter metrics. </summary>
     public partial class MetricCriteria : MultiMetricCriteria
     {
-        /// <summary> Initializes a new instance of MetricCriteria. </summary>
+        /// <summary> Initializes a new instance of <see cref="MetricCriteria"/>. </summary>
         /// <param name="name"> Name of the criteria. </param>
         /// <param name="metricName"> Name of the metric. </param>
         /// <param name="timeAggregation"> the criteria time aggregation types. </param>
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Monitor.Models
             CriterionType = CriterionType.StaticThresholdCriterion;
         }
 
-        /// <summary> Initializes a new instance of MetricCriteria. </summary>
+        /// <summary> Initializes a new instance of <see cref="MetricCriteria"/>. </summary>
         /// <param name="criterionType"> Specifies the type of threshold criteria. </param>
         /// <param name="name"> Name of the criteria. </param>
         /// <param name="metricName"> Name of the metric. </param>
@@ -47,6 +47,11 @@ namespace Azure.ResourceManager.Monitor.Models
             Operator = @operator;
             Threshold = threshold;
             CriterionType = criterionType;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MetricCriteria"/> for deserialization. </summary>
+        internal MetricCriteria()
+        {
         }
 
         /// <summary> the criteria operator. </summary>

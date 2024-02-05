@@ -20,7 +20,39 @@ namespace Azure.ResourceManager.Marketplace
     /// </summary>
     public partial class PrivateStoreOfferData : ResourceData
     {
-        /// <summary> Initializes a new instance of PrivateStoreOfferData. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="PrivateStoreOfferData"/>. </summary>
         public PrivateStoreOfferData()
         {
             SpecificPlanIdsLimitation = new ChangeTrackingList<string>();
@@ -28,7 +60,7 @@ namespace Azure.ResourceManager.Marketplace
             Plans = new ChangeTrackingList<PrivateStorePlan>();
         }
 
-        /// <summary> Initializes a new instance of PrivateStoreOfferData. </summary>
+        /// <summary> Initializes a new instance of <see cref="PrivateStoreOfferData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -44,7 +76,8 @@ namespace Azure.ResourceManager.Marketplace
         /// <param name="isUpdateSuppressedDueToIdempotence"> Indicating whether the offer was not updated to db (true = not updated). If the allow list is identical to the existed one in db, the offer would not be updated. </param>
         /// <param name="iconFileUris"> Icon File Uris. </param>
         /// <param name="plans"> Offer plans. </param>
-        internal PrivateStoreOfferData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string uniqueOfferId, string offerDisplayName, string publisherDisplayName, ETag? eTag, Guid? privateStoreId, DateTimeOffset? createdOn, DateTimeOffset? modifiedOn, IList<string> specificPlanIdsLimitation, bool? isUpdateSuppressedDueToIdempotence, IDictionary<string, Uri> iconFileUris, IList<PrivateStorePlan> plans) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal PrivateStoreOfferData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string uniqueOfferId, string offerDisplayName, string publisherDisplayName, ETag? eTag, Guid? privateStoreId, DateTimeOffset? createdOn, DateTimeOffset? modifiedOn, IList<string> specificPlanIdsLimitation, bool? isUpdateSuppressedDueToIdempotence, IDictionary<string, Uri> iconFileUris, IList<PrivateStorePlan> plans, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             UniqueOfferId = uniqueOfferId;
             OfferDisplayName = offerDisplayName;
@@ -57,6 +90,7 @@ namespace Azure.ResourceManager.Marketplace
             IsUpdateSuppressedDueToIdempotence = isUpdateSuppressedDueToIdempotence;
             IconFileUris = iconFileUris;
             Plans = plans;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Offers unique id. </summary>

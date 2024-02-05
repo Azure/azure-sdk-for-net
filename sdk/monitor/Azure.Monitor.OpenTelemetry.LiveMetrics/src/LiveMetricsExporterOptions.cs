@@ -10,7 +10,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics;
 /// <summary>
 /// Options that allow users to configure the Live Metrics.
 /// </summary>
-internal class LiveMetricsExporterOptions : ClientOptions
+public class LiveMetricsExporterOptions : ClientOptions
 {
     /// <summary>
     /// The Connection String provides users with a single configuration setting to identify the Azure Monitor resource and endpoint.
@@ -23,5 +23,10 @@ internal class LiveMetricsExporterOptions : ClientOptions
     /// <summary>
     /// Enables or disables the Live Metrics feature.
     /// </summary>
-    public bool EnableLiveMetrics { get; set; }
+    public bool EnableLiveMetrics { get; set; } = true;
+
+    /// <summary>
+    /// Get or sets the value of <see cref="TokenCredential" />.
+    /// </summary>
+    public TokenCredential Credential { get; set; }
 }

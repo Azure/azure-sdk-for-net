@@ -5,27 +5,64 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.StorageCache.Models
 {
     /// <summary> Properties pertaining to the Nfs3Target. </summary>
     public partial class Nfs3Target
     {
-        /// <summary> Initializes a new instance of Nfs3Target. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="Nfs3Target"/>. </summary>
         public Nfs3Target()
         {
         }
 
-        /// <summary> Initializes a new instance of Nfs3Target. </summary>
+        /// <summary> Initializes a new instance of <see cref="Nfs3Target"/>. </summary>
         /// <param name="target"> IP address or host name of an NFSv3 host (e.g., 10.0.44.44). </param>
         /// <param name="usageModel"> Identifies the StorageCache usage model to be used for this storage target. </param>
         /// <param name="verificationDelayInSeconds"> Amount of time (in seconds) the cache waits before it checks the back-end storage for file updates. </param>
         /// <param name="writeBackDelayInSeconds"> Amount of time (in seconds) the cache waits after the last file change before it copies the changed file to back-end storage. </param>
-        internal Nfs3Target(string target, string usageModel, int? verificationDelayInSeconds, int? writeBackDelayInSeconds)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal Nfs3Target(string target, string usageModel, int? verificationDelayInSeconds, int? writeBackDelayInSeconds, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Target = target;
             UsageModel = usageModel;
             VerificationDelayInSeconds = verificationDelayInSeconds;
             WriteBackDelayInSeconds = writeBackDelayInSeconds;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> IP address or host name of an NFSv3 host (e.g., 10.0.44.44). </summary>

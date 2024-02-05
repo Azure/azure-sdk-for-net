@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 
 namespace Azure.ResourceManager.EventGrid.Models
@@ -12,12 +13,44 @@ namespace Azure.ResourceManager.EventGrid.Models
     /// <summary> Properties of the Topic Spaces Configuration. </summary>
     public partial class TopicSpacesConfiguration
     {
-        /// <summary> Initializes a new instance of TopicSpacesConfiguration. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="TopicSpacesConfiguration"/>. </summary>
         public TopicSpacesConfiguration()
         {
         }
 
-        /// <summary> Initializes a new instance of TopicSpacesConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="TopicSpacesConfiguration"/>. </summary>
         /// <param name="state"> Indicate if Topic Spaces Configuration is enabled for the namespace. Default is Disabled. </param>
         /// <param name="routeTopicResourceId">
         /// Fully qualified Azure Resource Id for the Event Grid Topic to which events will be routed to from TopicSpaces under a namespace.
@@ -36,7 +69,8 @@ namespace Azure.ResourceManager.EventGrid.Models
         /// Min allowed value is 1 and max allowed value is 100.
         /// </param>
         /// <param name="routingIdentityInfo"> Routing identity info for topic spaces configuration. </param>
-        internal TopicSpacesConfiguration(TopicSpacesConfigurationState? state, string routeTopicResourceId, string hostname, RoutingEnrichments routingEnrichments, ClientAuthenticationSettings clientAuthentication, int? maximumSessionExpiryInHours, int? maximumClientSessionsPerAuthenticationName, RoutingIdentityInfo routingIdentityInfo)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal TopicSpacesConfiguration(TopicSpacesConfigurationState? state, string routeTopicResourceId, string hostname, RoutingEnrichments routingEnrichments, ClientAuthenticationSettings clientAuthentication, int? maximumSessionExpiryInHours, int? maximumClientSessionsPerAuthenticationName, RoutingIdentityInfo routingIdentityInfo, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             State = state;
             RouteTopicResourceId = routeTopicResourceId;
@@ -46,6 +80,7 @@ namespace Azure.ResourceManager.EventGrid.Models
             MaximumSessionExpiryInHours = maximumSessionExpiryInHours;
             MaximumClientSessionsPerAuthenticationName = maximumClientSessionsPerAuthenticationName;
             RoutingIdentityInfo = routingIdentityInfo;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Indicate if Topic Spaces Configuration is enabled for the namespace. Default is Disabled. </summary>

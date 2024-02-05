@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.StorageMover.Models
@@ -13,7 +14,7 @@ namespace Azure.ResourceManager.StorageMover.Models
     /// <summary> The properties of Azure Storage SMB file share endpoint. </summary>
     public partial class AzureStorageSmbFileShareEndpointProperties : EndpointBaseProperties
     {
-        /// <summary> Initializes a new instance of AzureStorageSmbFileShareEndpointProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureStorageSmbFileShareEndpointProperties"/>. </summary>
         /// <param name="storageAccountResourceId"> The Azure Resource ID of the storage account. </param>
         /// <param name="fileShareName"> The name of the Azure Storage file share. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="storageAccountResourceId"/> or <paramref name="fileShareName"/> is null. </exception>
@@ -27,17 +28,23 @@ namespace Azure.ResourceManager.StorageMover.Models
             EndpointType = EndpointType.AzureStorageSmbFileShare;
         }
 
-        /// <summary> Initializes a new instance of AzureStorageSmbFileShareEndpointProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureStorageSmbFileShareEndpointProperties"/>. </summary>
         /// <param name="endpointType"> The Endpoint resource type. </param>
         /// <param name="description"> A description for the Endpoint. </param>
         /// <param name="provisioningState"> The provisioning state of this resource. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="storageAccountResourceId"> The Azure Resource ID of the storage account. </param>
         /// <param name="fileShareName"> The name of the Azure Storage file share. </param>
-        internal AzureStorageSmbFileShareEndpointProperties(EndpointType endpointType, string description, StorageMoverProvisioningState? provisioningState, ResourceIdentifier storageAccountResourceId, string fileShareName) : base(endpointType, description, provisioningState)
+        internal AzureStorageSmbFileShareEndpointProperties(EndpointType endpointType, string description, StorageMoverProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData, ResourceIdentifier storageAccountResourceId, string fileShareName) : base(endpointType, description, provisioningState, serializedAdditionalRawData)
         {
             StorageAccountResourceId = storageAccountResourceId;
             FileShareName = fileShareName;
             EndpointType = endpointType;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AzureStorageSmbFileShareEndpointProperties"/> for deserialization. </summary>
+        internal AzureStorageSmbFileShareEndpointProperties()
+        {
         }
 
         /// <summary> The Azure Resource ID of the storage account. </summary>

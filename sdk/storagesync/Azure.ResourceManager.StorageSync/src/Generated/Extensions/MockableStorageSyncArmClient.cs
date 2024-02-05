@@ -37,11 +37,11 @@ namespace Azure.ResourceManager.StorageSync.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="StorageSyncServiceResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="StorageSyncServiceResource.CreateResourceIdentifier" /> to create a <see cref="StorageSyncServiceResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="StorageSyncServiceResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="StorageSyncServiceResource.CreateResourceIdentifier" /> to create a <see cref="StorageSyncServiceResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="StorageSyncServiceResource" /> object. </returns>
+        /// <returns> Returns a <see cref="StorageSyncServiceResource"/> object. </returns>
         public virtual StorageSyncServiceResource GetStorageSyncServiceResource(ResourceIdentifier id)
         {
             StorageSyncServiceResource.ValidateResourceId(id);
@@ -49,11 +49,11 @@ namespace Azure.ResourceManager.StorageSync.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="StorageSyncPrivateEndpointConnectionResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="StorageSyncPrivateEndpointConnectionResource.CreateResourceIdentifier" /> to create a <see cref="StorageSyncPrivateEndpointConnectionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="StorageSyncPrivateEndpointConnectionResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="StorageSyncPrivateEndpointConnectionResource.CreateResourceIdentifier" /> to create a <see cref="StorageSyncPrivateEndpointConnectionResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="StorageSyncPrivateEndpointConnectionResource" /> object. </returns>
+        /// <returns> Returns a <see cref="StorageSyncPrivateEndpointConnectionResource"/> object. </returns>
         public virtual StorageSyncPrivateEndpointConnectionResource GetStorageSyncPrivateEndpointConnectionResource(ResourceIdentifier id)
         {
             StorageSyncPrivateEndpointConnectionResource.ValidateResourceId(id);
@@ -61,11 +61,11 @@ namespace Azure.ResourceManager.StorageSync.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="StorageSyncGroupResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="StorageSyncGroupResource.CreateResourceIdentifier" /> to create a <see cref="StorageSyncGroupResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="StorageSyncGroupResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="StorageSyncGroupResource.CreateResourceIdentifier" /> to create a <see cref="StorageSyncGroupResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="StorageSyncGroupResource" /> object. </returns>
+        /// <returns> Returns a <see cref="StorageSyncGroupResource"/> object. </returns>
         public virtual StorageSyncGroupResource GetStorageSyncGroupResource(ResourceIdentifier id)
         {
             StorageSyncGroupResource.ValidateResourceId(id);
@@ -73,11 +73,11 @@ namespace Azure.ResourceManager.StorageSync.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="CloudEndpointResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="CloudEndpointResource.CreateResourceIdentifier" /> to create a <see cref="CloudEndpointResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="CloudEndpointResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="CloudEndpointResource.CreateResourceIdentifier" /> to create a <see cref="CloudEndpointResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="CloudEndpointResource" /> object. </returns>
+        /// <returns> Returns a <see cref="CloudEndpointResource"/> object. </returns>
         public virtual CloudEndpointResource GetCloudEndpointResource(ResourceIdentifier id)
         {
             CloudEndpointResource.ValidateResourceId(id);
@@ -85,11 +85,11 @@ namespace Azure.ResourceManager.StorageSync.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="StorageSyncServerEndpointResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="StorageSyncServerEndpointResource.CreateResourceIdentifier" /> to create a <see cref="StorageSyncServerEndpointResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="StorageSyncServerEndpointResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="StorageSyncServerEndpointResource.CreateResourceIdentifier" /> to create a <see cref="StorageSyncServerEndpointResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="StorageSyncServerEndpointResource" /> object. </returns>
+        /// <returns> Returns a <see cref="StorageSyncServerEndpointResource"/> object. </returns>
         public virtual StorageSyncServerEndpointResource GetStorageSyncServerEndpointResource(ResourceIdentifier id)
         {
             StorageSyncServerEndpointResource.ValidateResourceId(id);
@@ -97,11 +97,11 @@ namespace Azure.ResourceManager.StorageSync.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="StorageSyncRegisteredServerResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="StorageSyncRegisteredServerResource.CreateResourceIdentifier" /> to create a <see cref="StorageSyncRegisteredServerResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="StorageSyncRegisteredServerResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="StorageSyncRegisteredServerResource.CreateResourceIdentifier" /> to create a <see cref="StorageSyncRegisteredServerResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="StorageSyncRegisteredServerResource" /> object. </returns>
+        /// <returns> Returns a <see cref="StorageSyncRegisteredServerResource"/> object. </returns>
         public virtual StorageSyncRegisteredServerResource GetStorageSyncRegisteredServerResource(ResourceIdentifier id)
         {
             StorageSyncRegisteredServerResource.ValidateResourceId(id);
@@ -109,11 +109,11 @@ namespace Azure.ResourceManager.StorageSync.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="StorageSyncWorkflowResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="StorageSyncWorkflowResource.CreateResourceIdentifier" /> to create a <see cref="StorageSyncWorkflowResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="StorageSyncWorkflowResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="StorageSyncWorkflowResource.CreateResourceIdentifier" /> to create a <see cref="StorageSyncWorkflowResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="StorageSyncWorkflowResource" /> object. </returns>
+        /// <returns> Returns a <see cref="StorageSyncWorkflowResource"/> object. </returns>
         public virtual StorageSyncWorkflowResource GetStorageSyncWorkflowResource(ResourceIdentifier id)
         {
             StorageSyncWorkflowResource.ValidateResourceId(id);

@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Kusto.Models;
 using Azure.ResourceManager.Models;
@@ -17,12 +19,44 @@ namespace Azure.ResourceManager.Kusto
     /// </summary>
     public partial class KustoManagedPrivateEndpointData : ResourceData
     {
-        /// <summary> Initializes a new instance of KustoManagedPrivateEndpointData. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="KustoManagedPrivateEndpointData"/>. </summary>
         public KustoManagedPrivateEndpointData()
         {
         }
 
-        /// <summary> Initializes a new instance of KustoManagedPrivateEndpointData. </summary>
+        /// <summary> Initializes a new instance of <see cref="KustoManagedPrivateEndpointData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -32,13 +66,15 @@ namespace Azure.ResourceManager.Kusto
         /// <param name="groupId"> The groupId in which the managed private endpoint is created. </param>
         /// <param name="requestMessage"> The user request message. </param>
         /// <param name="provisioningState"> The provisioned state of the resource. </param>
-        internal KustoManagedPrivateEndpointData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ResourceIdentifier privateLinkResourceId, string privateLinkResourceRegion, string groupId, string requestMessage, KustoProvisioningState? provisioningState) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal KustoManagedPrivateEndpointData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ResourceIdentifier privateLinkResourceId, string privateLinkResourceRegion, string groupId, string requestMessage, KustoProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             PrivateLinkResourceId = privateLinkResourceId;
             PrivateLinkResourceRegion = privateLinkResourceRegion;
             GroupId = groupId;
             RequestMessage = requestMessage;
             ProvisioningState = provisioningState;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The ARM resource ID of the resource for which the managed private endpoint is created. </summary>

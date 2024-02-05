@@ -15,7 +15,39 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
     /// <summary> Profile of load based Autoscale. </summary>
     public partial class LoadBasedConfig
     {
-        /// <summary> Initializes a new instance of LoadBasedConfig. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="LoadBasedConfig"/>. </summary>
         /// <param name="minNodes"> User needs to set the minimum number of nodes for load based scaling, the load based scaling will use this to scale up and scale down between minimum and maximum number of nodes. </param>
         /// <param name="maxNodes"> User needs to set the maximum number of nodes for load based scaling, the load based scaling will use this to scale up and scale down between minimum and maximum number of nodes. </param>
         /// <param name="scalingRules"> The scaling rules. </param>
@@ -29,19 +61,26 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             ScalingRules = scalingRules.ToList();
         }
 
-        /// <summary> Initializes a new instance of LoadBasedConfig. </summary>
+        /// <summary> Initializes a new instance of <see cref="LoadBasedConfig"/>. </summary>
         /// <param name="minNodes"> User needs to set the minimum number of nodes for load based scaling, the load based scaling will use this to scale up and scale down between minimum and maximum number of nodes. </param>
         /// <param name="maxNodes"> User needs to set the maximum number of nodes for load based scaling, the load based scaling will use this to scale up and scale down between minimum and maximum number of nodes. </param>
         /// <param name="pollIntervalInSeconds"> User can specify the poll interval, this is the time period (in seconds) after which scaling metrics are polled for triggering a scaling operation. </param>
         /// <param name="cooldownPeriod"> This is a cool down period, this is a time period in seconds, which determines the amount of time that must elapse between a scaling activity started by a rule and the start of the next scaling activity, regardless of the rule that triggers it. The default value is 300 seconds. </param>
         /// <param name="scalingRules"> The scaling rules. </param>
-        internal LoadBasedConfig(int minNodes, int maxNodes, int? pollIntervalInSeconds, int? cooldownPeriod, IList<ScalingRule> scalingRules)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal LoadBasedConfig(int minNodes, int maxNodes, int? pollIntervalInSeconds, int? cooldownPeriod, IList<ScalingRule> scalingRules, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             MinNodes = minNodes;
             MaxNodes = maxNodes;
             PollIntervalInSeconds = pollIntervalInSeconds;
             CooldownPeriod = cooldownPeriod;
             ScalingRules = scalingRules;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="LoadBasedConfig"/> for deserialization. </summary>
+        internal LoadBasedConfig()
+        {
         }
 
         /// <summary> User needs to set the minimum number of nodes for load based scaling, the load based scaling will use this to scale up and scale down between minimum and maximum number of nodes. </summary>

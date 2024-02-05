@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,20 +14,21 @@ namespace Azure.ResourceManager.ResourceMover.Models
     /// <summary> Defines the Sql ElasticPool resource settings. </summary>
     public partial class SqlElasticPoolResourceSettings : MoverResourceSettings
     {
-        /// <summary> Initializes a new instance of SqlElasticPoolResourceSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="SqlElasticPoolResourceSettings"/>. </summary>
         public SqlElasticPoolResourceSettings()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
             ResourceType = "Microsoft.Sql/servers/elasticPools";
         }
 
-        /// <summary> Initializes a new instance of SqlElasticPoolResourceSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="SqlElasticPoolResourceSettings"/>. </summary>
         /// <param name="resourceType"> The resource type. For example, the value can be Microsoft.Compute/virtualMachines. </param>
         /// <param name="targetResourceName"> Gets or sets the target Resource name. </param>
         /// <param name="targetResourceGroupName"> Gets or sets the target resource group name. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="tags"> Gets or sets the Resource tags. </param>
         /// <param name="zoneRedundant"> Defines the zone redundant resource setting. </param>
-        internal SqlElasticPoolResourceSettings(string resourceType, string targetResourceName, string targetResourceGroupName, IDictionary<string, string> tags, ResourceZoneRedundantSetting? zoneRedundant) : base(resourceType, targetResourceName, targetResourceGroupName)
+        internal SqlElasticPoolResourceSettings(string resourceType, string targetResourceName, string targetResourceGroupName, IDictionary<string, BinaryData> serializedAdditionalRawData, IDictionary<string, string> tags, ResourceZoneRedundantSetting? zoneRedundant) : base(resourceType, targetResourceName, targetResourceGroupName, serializedAdditionalRawData)
         {
             Tags = tags;
             ZoneRedundant = zoneRedundant;

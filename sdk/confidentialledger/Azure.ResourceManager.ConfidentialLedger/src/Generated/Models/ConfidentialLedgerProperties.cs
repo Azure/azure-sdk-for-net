@@ -14,14 +14,46 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
     /// <summary> Additional Confidential Ledger properties. </summary>
     public partial class ConfidentialLedgerProperties
     {
-        /// <summary> Initializes a new instance of ConfidentialLedgerProperties. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ConfidentialLedgerProperties"/>. </summary>
         public ConfidentialLedgerProperties()
         {
             AadBasedSecurityPrincipals = new ChangeTrackingList<AadBasedSecurityPrincipal>();
             CertBasedSecurityPrincipals = new ChangeTrackingList<CertBasedSecurityPrincipal>();
         }
 
-        /// <summary> Initializes a new instance of ConfidentialLedgerProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConfidentialLedgerProperties"/>. </summary>
         /// <param name="ledgerName"> Unique name for the Confidential Ledger. </param>
         /// <param name="ledgerUri"> Endpoint for calling Ledger Service. </param>
         /// <param name="identityServiceUri"> Endpoint for accessing network identity. </param>
@@ -31,7 +63,8 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
         /// <param name="provisioningState"> Provisioning state of Ledger Resource. </param>
         /// <param name="aadBasedSecurityPrincipals"> Array of all AAD based Security Principals. </param>
         /// <param name="certBasedSecurityPrincipals"> Array of all cert based Security Principals. </param>
-        internal ConfidentialLedgerProperties(string ledgerName, Uri ledgerUri, Uri identityServiceUri, string ledgerInternalNamespace, ConfidentialLedgerRunningState? runningState, ConfidentialLedgerType? ledgerType, ConfidentialLedgerProvisioningState? provisioningState, IList<AadBasedSecurityPrincipal> aadBasedSecurityPrincipals, IList<CertBasedSecurityPrincipal> certBasedSecurityPrincipals)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ConfidentialLedgerProperties(string ledgerName, Uri ledgerUri, Uri identityServiceUri, string ledgerInternalNamespace, ConfidentialLedgerRunningState? runningState, ConfidentialLedgerType? ledgerType, ConfidentialLedgerProvisioningState? provisioningState, IList<AadBasedSecurityPrincipal> aadBasedSecurityPrincipals, IList<CertBasedSecurityPrincipal> certBasedSecurityPrincipals, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             LedgerName = ledgerName;
             LedgerUri = ledgerUri;
@@ -42,6 +75,7 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
             ProvisioningState = provisioningState;
             AadBasedSecurityPrincipals = aadBasedSecurityPrincipals;
             CertBasedSecurityPrincipals = certBasedSecurityPrincipals;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Unique name for the Confidential Ledger. </summary>

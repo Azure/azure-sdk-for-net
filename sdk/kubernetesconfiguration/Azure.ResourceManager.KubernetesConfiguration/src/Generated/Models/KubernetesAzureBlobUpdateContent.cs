@@ -6,15 +6,73 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.KubernetesConfiguration.Models
 {
     /// <summary> Parameters to reconcile to the AzureBlob source kind type. </summary>
     public partial class KubernetesAzureBlobUpdateContent
     {
-        /// <summary> Initializes a new instance of KubernetesAzureBlobUpdateContent. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="KubernetesAzureBlobUpdateContent"/>. </summary>
         public KubernetesAzureBlobUpdateContent()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="KubernetesAzureBlobUpdateContent"/>. </summary>
+        /// <param name="uri"> The URL to sync for the flux configuration Azure Blob storage account. </param>
+        /// <param name="containerName"> The Azure Blob container name to sync from the url endpoint for the flux configuration. </param>
+        /// <param name="timeoutInSeconds"> The maximum time to attempt to reconcile the cluster Azure Blob source with the remote. </param>
+        /// <param name="syncIntervalInSeconds"> The interval at which to re-reconcile the cluster Azure Blob source with the remote. </param>
+        /// <param name="servicePrincipal"> Parameters to authenticate using Service Principal. </param>
+        /// <param name="accountKey"> The account key (shared key) to access the storage account. </param>
+        /// <param name="sasToken"> The Shared Access token to access the storage container. </param>
+        /// <param name="managedIdentity"> Parameters to authenticate using a Managed Identity. </param>
+        /// <param name="localAuthRef"> Name of a local secret on the Kubernetes cluster to use as the authentication secret rather than the managed or user-provided configuration secrets. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal KubernetesAzureBlobUpdateContent(Uri uri, string containerName, long? timeoutInSeconds, long? syncIntervalInSeconds, KubernetesServicePrincipalUpdateContent servicePrincipal, string accountKey, string sasToken, KubernetesAzureBlobManagedIdentityUpdateContent managedIdentity, string localAuthRef, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Uri = uri;
+            ContainerName = containerName;
+            TimeoutInSeconds = timeoutInSeconds;
+            SyncIntervalInSeconds = syncIntervalInSeconds;
+            ServicePrincipal = servicePrincipal;
+            AccountKey = accountKey;
+            SasToken = sasToken;
+            ManagedIdentity = managedIdentity;
+            LocalAuthRef = localAuthRef;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The URL to sync for the flux configuration Azure Blob storage account. </summary>

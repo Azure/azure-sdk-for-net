@@ -5,20 +5,24 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.HybridNetwork.Models
 {
     /// <summary> Azure Operator Distributed Services image deploy mapping rule profile. </summary>
     public partial class AzureOperatorNexusImageDeployMappingRuleProfile : MappingRuleProfile
     {
-        /// <summary> Initializes a new instance of AzureOperatorNexusImageDeployMappingRuleProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureOperatorNexusImageDeployMappingRuleProfile"/>. </summary>
         public AzureOperatorNexusImageDeployMappingRuleProfile()
         {
         }
 
-        /// <summary> Initializes a new instance of AzureOperatorNexusImageDeployMappingRuleProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureOperatorNexusImageDeployMappingRuleProfile"/>. </summary>
         /// <param name="applicationEnablement"> The application enablement. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="imageMappingRuleProfile"> The vhd mapping rule profile. </param>
-        internal AzureOperatorNexusImageDeployMappingRuleProfile(ApplicationEnablement? applicationEnablement, ImageMappingRuleProfile imageMappingRuleProfile) : base(applicationEnablement)
+        internal AzureOperatorNexusImageDeployMappingRuleProfile(ApplicationEnablement? applicationEnablement, IDictionary<string, BinaryData> serializedAdditionalRawData, ImageMappingRuleProfile imageMappingRuleProfile) : base(applicationEnablement, serializedAdditionalRawData)
         {
             ImageMappingRuleProfile = imageMappingRuleProfile;
         }

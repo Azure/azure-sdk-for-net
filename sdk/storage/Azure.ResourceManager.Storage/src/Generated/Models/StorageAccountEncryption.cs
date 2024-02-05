@@ -5,29 +5,66 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Storage.Models
 {
     /// <summary> The encryption settings on the storage account. </summary>
     public partial class StorageAccountEncryption
     {
-        /// <summary> Initializes a new instance of StorageAccountEncryption. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="StorageAccountEncryption"/>. </summary>
         public StorageAccountEncryption()
         {
         }
 
-        /// <summary> Initializes a new instance of StorageAccountEncryption. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageAccountEncryption"/>. </summary>
         /// <param name="services"> List of services which support encryption. </param>
         /// <param name="keySource"> The encryption keySource (provider). Possible values (case-insensitive):  Microsoft.Storage, Microsoft.Keyvault. </param>
         /// <param name="requireInfrastructureEncryption"> A boolean indicating whether or not the service applies a secondary layer of encryption with platform managed keys for data at rest. </param>
         /// <param name="keyVaultProperties"> Properties provided by key vault. </param>
         /// <param name="encryptionIdentity"> The identity to be used with service-side encryption at rest. </param>
-        internal StorageAccountEncryption(StorageAccountEncryptionServices services, StorageAccountKeySource? keySource, bool? requireInfrastructureEncryption, StorageAccountKeyVaultProperties keyVaultProperties, StorageAccountEncryptionIdentity encryptionIdentity)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal StorageAccountEncryption(StorageAccountEncryptionServices services, StorageAccountKeySource? keySource, bool? requireInfrastructureEncryption, StorageAccountKeyVaultProperties keyVaultProperties, StorageAccountEncryptionIdentity encryptionIdentity, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Services = services;
             KeySource = keySource;
             RequireInfrastructureEncryption = requireInfrastructureEncryption;
             KeyVaultProperties = keyVaultProperties;
             EncryptionIdentity = encryptionIdentity;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> List of services which support encryption. </summary>

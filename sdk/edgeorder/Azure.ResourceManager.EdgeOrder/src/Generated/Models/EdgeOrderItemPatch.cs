@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,11 +14,58 @@ namespace Azure.ResourceManager.EdgeOrder.Models
     /// <summary> Updates order item parameters. </summary>
     public partial class EdgeOrderItemPatch
     {
-        /// <summary> Initializes a new instance of EdgeOrderItemPatch. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="EdgeOrderItemPatch"/>. </summary>
         public EdgeOrderItemPatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
             NotificationEmailList = new ChangeTrackingList<string>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="EdgeOrderItemPatch"/>. </summary>
+        /// <param name="tags"> The list of key value pairs that describe the resource. These tags can be used in viewing and grouping this resource (across resource groups). </param>
+        /// <param name="forwardAddress"> Updates forward shipping address and contact details. </param>
+        /// <param name="preferences"> Customer preference. </param>
+        /// <param name="notificationEmailList"> Additional notification email list. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal EdgeOrderItemPatch(IDictionary<string, string> tags, EdgeOrderItemAddressProperties forwardAddress, OrderItemPreferences preferences, IList<string> notificationEmailList, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Tags = tags;
+            ForwardAddress = forwardAddress;
+            Preferences = preferences;
+            NotificationEmailList = notificationEmailList;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The list of key value pairs that describe the resource. These tags can be used in viewing and grouping this resource (across resource groups). </summary>

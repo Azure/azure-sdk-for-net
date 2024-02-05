@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -18,13 +19,45 @@ namespace Azure.ResourceManager.Peering
     /// </summary>
     public partial class PeeringServiceData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of PeeringServiceData. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="PeeringServiceData"/>. </summary>
         /// <param name="location"> The location. </param>
         public PeeringServiceData(AzureLocation location) : base(location)
         {
         }
 
-        /// <summary> Initializes a new instance of PeeringServiceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="PeeringServiceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -38,7 +71,8 @@ namespace Azure.ResourceManager.Peering
         /// <param name="providerPrimaryPeeringLocation"> The primary peering (Microsoft/service provider) location to be used for customer traffic. </param>
         /// <param name="providerBackupPeeringLocation"> The backup peering (Microsoft/service provider) location to be used for customer traffic. </param>
         /// <param name="logAnalyticsWorkspaceProperties"> The Log Analytics Workspace Properties. </param>
-        internal PeeringServiceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, PeeringServiceSku sku, string peeringServiceLocation, string peeringServiceProvider, PeeringProvisioningState? provisioningState, string providerPrimaryPeeringLocation, string providerBackupPeeringLocation, PeeringLogAnalyticsWorkspaceProperties logAnalyticsWorkspaceProperties) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal PeeringServiceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, PeeringServiceSku sku, string peeringServiceLocation, string peeringServiceProvider, PeeringProvisioningState? provisioningState, string providerPrimaryPeeringLocation, string providerBackupPeeringLocation, PeeringLogAnalyticsWorkspaceProperties logAnalyticsWorkspaceProperties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             Sku = sku;
             PeeringServiceLocation = peeringServiceLocation;
@@ -47,6 +81,12 @@ namespace Azure.ResourceManager.Peering
             ProviderPrimaryPeeringLocation = providerPrimaryPeeringLocation;
             ProviderBackupPeeringLocation = providerBackupPeeringLocation;
             LogAnalyticsWorkspaceProperties = logAnalyticsWorkspaceProperties;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="PeeringServiceData"/> for deserialization. </summary>
+        internal PeeringServiceData()
+        {
         }
 
         /// <summary> The SKU that defines the type of the peering service. </summary>

@@ -5,24 +5,60 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Logic.Models
 {
     /// <summary> The integration service environment properties. </summary>
     public partial class IntegrationServiceEnvironmentProperties
     {
-        /// <summary> Initializes a new instance of IntegrationServiceEnvironmentProperties. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="IntegrationServiceEnvironmentProperties"/>. </summary>
         public IntegrationServiceEnvironmentProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of IntegrationServiceEnvironmentProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="IntegrationServiceEnvironmentProperties"/>. </summary>
         /// <param name="provisioningState"> The provisioning state. </param>
         /// <param name="state"> The integration service environment state. </param>
         /// <param name="integrationServiceEnvironmentId"> Gets the tracking id. </param>
         /// <param name="endpointsConfiguration"> The endpoints configuration. </param>
         /// <param name="networkConfiguration"> The network configuration. </param>
         /// <param name="encryptionConfiguration"> The encryption configuration. </param>
-        internal IntegrationServiceEnvironmentProperties(LogicWorkflowProvisioningState? provisioningState, LogicWorkflowState? state, string integrationServiceEnvironmentId, FlowEndpointsConfiguration endpointsConfiguration, IntegrationServiceNetworkConfiguration networkConfiguration, IntegrationServiceEnvironmenEncryptionConfiguration encryptionConfiguration)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal IntegrationServiceEnvironmentProperties(LogicWorkflowProvisioningState? provisioningState, LogicWorkflowState? state, string integrationServiceEnvironmentId, FlowEndpointsConfiguration endpointsConfiguration, IntegrationServiceNetworkConfiguration networkConfiguration, IntegrationServiceEnvironmenEncryptionConfiguration encryptionConfiguration, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ProvisioningState = provisioningState;
             State = state;
@@ -30,6 +66,7 @@ namespace Azure.ResourceManager.Logic.Models
             EndpointsConfiguration = endpointsConfiguration;
             NetworkConfiguration = networkConfiguration;
             EncryptionConfiguration = encryptionConfiguration;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The provisioning state. </summary>

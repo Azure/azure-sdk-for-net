@@ -8,13 +8,46 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Batch.Models
 {
     /// <summary> The configuration for compute nodes in a pool based on the Azure Virtual Machines infrastructure. </summary>
     public partial class BatchVmConfiguration
     {
-        /// <summary> Initializes a new instance of BatchVmConfiguration. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="BatchVmConfiguration"/>. </summary>
         /// <param name="imageReference"> A reference to an Azure Virtual Machines Marketplace image or the Azure Image resource of a custom Virtual Machine. To get the list of all imageReferences verified by Azure Batch, see the 'List supported node agent SKUs' operation. </param>
         /// <param name="nodeAgentSkuId"> The Batch node agent is a program that runs on each node in the pool, and provides the command-and-control interface between the node and the Batch service. There are different implementations of the node agent, known as SKUs, for different operating systems. You must specify a node agent SKU which matches the selected image reference. To get the list of supported node agent SKUs along with their list of verified image references, see the 'List supported node agent SKUs' operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="imageReference"/> or <paramref name="nodeAgentSkuId"/> is null. </exception>
@@ -29,7 +62,7 @@ namespace Azure.ResourceManager.Batch.Models
             Extensions = new ChangeTrackingList<BatchVmExtension>();
         }
 
-        /// <summary> Initializes a new instance of BatchVmConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="BatchVmConfiguration"/>. </summary>
         /// <param name="imageReference"> A reference to an Azure Virtual Machines Marketplace image or the Azure Image resource of a custom Virtual Machine. To get the list of all imageReferences verified by Azure Batch, see the 'List supported node agent SKUs' operation. </param>
         /// <param name="nodeAgentSkuId"> The Batch node agent is a program that runs on each node in the pool, and provides the command-and-control interface between the node and the Batch service. There are different implementations of the node agent, known as SKUs, for different operating systems. You must specify a node agent SKU which matches the selected image reference. To get the list of supported node agent SKUs along with their list of verified image references, see the 'List supported node agent SKUs' operation. </param>
         /// <param name="windowsConfiguration"> This property must not be specified if the imageReference specifies a Linux OS image. </param>
@@ -46,7 +79,10 @@ namespace Azure.ResourceManager.Batch.Models
         /// <param name="nodePlacementConfiguration"> This configuration will specify rules on how nodes in the pool will be physically allocated. </param>
         /// <param name="extensions"> If specified, the extensions mentioned in this configuration will be installed on each node. </param>
         /// <param name="osDisk"> Contains configuration for ephemeral OSDisk settings. </param>
-        internal BatchVmConfiguration(BatchImageReference imageReference, string nodeAgentSkuId, WindowsConfiguration windowsConfiguration, IList<BatchVmDataDisk> dataDisks, string licenseType, BatchVmContainerConfiguration containerConfiguration, DiskEncryptionConfiguration diskEncryptionConfiguration, NodePlacementConfiguration nodePlacementConfiguration, IList<BatchVmExtension> extensions, OSDisk osDisk)
+        /// <param name="securityProfile"> Specifies the security profile settings for the virtual machine or virtual machine scale set. </param>
+        /// <param name="serviceArtifactReference"> The service artifact reference id in the form of /subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.Compute/galleries/{galleryName}/serviceArtifacts/{serviceArtifactName}/vmArtifactsProfiles/{vmArtifactsProfilesName}. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal BatchVmConfiguration(BatchImageReference imageReference, string nodeAgentSkuId, WindowsConfiguration windowsConfiguration, IList<BatchVmDataDisk> dataDisks, string licenseType, BatchVmContainerConfiguration containerConfiguration, DiskEncryptionConfiguration diskEncryptionConfiguration, NodePlacementConfiguration nodePlacementConfiguration, IList<BatchVmExtension> extensions, BatchOSDisk osDisk, BatchSecurityProfile securityProfile, WritableSubResource serviceArtifactReference, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ImageReference = imageReference;
             NodeAgentSkuId = nodeAgentSkuId;
@@ -58,6 +94,14 @@ namespace Azure.ResourceManager.Batch.Models
             NodePlacementConfiguration = nodePlacementConfiguration;
             Extensions = extensions;
             OSDisk = osDisk;
+            SecurityProfile = securityProfile;
+            ServiceArtifactReference = serviceArtifactReference;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="BatchVmConfiguration"/> for deserialization. </summary>
+        internal BatchVmConfiguration()
+        {
         }
 
         /// <summary> A reference to an Azure Virtual Machines Marketplace image or the Azure Image resource of a custom Virtual Machine. To get the list of all imageReferences verified by Azure Batch, see the 'List supported node agent SKUs' operation. </summary>
@@ -120,16 +164,20 @@ namespace Azure.ResourceManager.Batch.Models
         /// <summary> If specified, the extensions mentioned in this configuration will be installed on each node. </summary>
         public IList<BatchVmExtension> Extensions { get; }
         /// <summary> Contains configuration for ephemeral OSDisk settings. </summary>
-        internal OSDisk OSDisk { get; set; }
-        /// <summary> This property can be used by user in the request to choose which location the operating system should be in. e.g., cache disk space for Ephemeral OS disk provisioning. For more information on Ephemeral OS disk size requirements, please refer to Ephemeral OS disk size requirements for Windows VMs at https://docs.microsoft.com/en-us/azure/virtual-machines/windows/ephemeral-os-disks#size-requirements and Linux VMs at https://docs.microsoft.com/en-us/azure/virtual-machines/linux/ephemeral-os-disks#size-requirements. </summary>
-        public BatchDiffDiskPlacement? EphemeralOSDiskPlacement
+        public BatchOSDisk OSDisk { get; set; }
+        /// <summary> Specifies the security profile settings for the virtual machine or virtual machine scale set. </summary>
+        public BatchSecurityProfile SecurityProfile { get; set; }
+        /// <summary> The service artifact reference id in the form of /subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.Compute/galleries/{galleryName}/serviceArtifacts/{serviceArtifactName}/vmArtifactsProfiles/{vmArtifactsProfilesName}. </summary>
+        internal WritableSubResource ServiceArtifactReference { get; set; }
+        /// <summary> Gets or sets Id. </summary>
+        public ResourceIdentifier ServiceArtifactReferenceId
         {
-            get => OSDisk is null ? default : OSDisk.EphemeralOSDiskPlacement;
+            get => ServiceArtifactReference is null ? default : ServiceArtifactReference.Id;
             set
             {
-                if (OSDisk is null)
-                    OSDisk = new OSDisk();
-                OSDisk.EphemeralOSDiskPlacement = value;
+                if (ServiceArtifactReference is null)
+                    ServiceArtifactReference = new WritableSubResource();
+                ServiceArtifactReference.Id = value;
             }
         }
     }

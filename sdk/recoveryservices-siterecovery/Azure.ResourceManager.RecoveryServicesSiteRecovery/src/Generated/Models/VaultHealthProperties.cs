@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,23 +14,57 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> class to define the health summary of the Vault. </summary>
     public partial class VaultHealthProperties
     {
-        /// <summary> Initializes a new instance of VaultHealthProperties. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="VaultHealthProperties"/>. </summary>
         internal VaultHealthProperties()
         {
             VaultErrors = new ChangeTrackingList<SiteRecoveryHealthError>();
         }
 
-        /// <summary> Initializes a new instance of VaultHealthProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="VaultHealthProperties"/>. </summary>
         /// <param name="vaultErrors"> The list of errors on the vault. </param>
         /// <param name="protectedItemsHealth"> The list of the health detail of the protected items in the vault. </param>
         /// <param name="fabricsHealth"> The list of the health detail of the fabrics in the vault. </param>
         /// <param name="containersHealth"> The list of the health detail of the containers in the vault. </param>
-        internal VaultHealthProperties(IReadOnlyList<SiteRecoveryHealthError> vaultErrors, ResourceHealthSummary protectedItemsHealth, ResourceHealthSummary fabricsHealth, ResourceHealthSummary containersHealth)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal VaultHealthProperties(IReadOnlyList<SiteRecoveryHealthError> vaultErrors, ResourceHealthSummary protectedItemsHealth, ResourceHealthSummary fabricsHealth, ResourceHealthSummary containersHealth, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             VaultErrors = vaultErrors;
             ProtectedItemsHealth = protectedItemsHealth;
             FabricsHealth = fabricsHealth;
             ContainersHealth = containersHealth;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The list of errors on the vault. </summary>

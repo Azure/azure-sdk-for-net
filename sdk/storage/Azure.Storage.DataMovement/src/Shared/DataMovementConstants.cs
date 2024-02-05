@@ -19,6 +19,8 @@ namespace Azure.Storage.DataMovement
         internal const long DefaultInitialTransferSize = 32 * Constants.MB;
         internal const long DefaultChunkSize = 4 * Constants.MB;
 
+        public const char PathForwardSlashDelimiterChar = '/';
+
         internal static class ConcurrencyTuner
         {
             internal const int StandardMultiplier = 2;
@@ -126,8 +128,8 @@ namespace Azure.Storage.DataMovement
             internal const int SourcePathLengthIndex = SourcePathOffsetIndex + IntSizeInBytes;
             internal const int DestinationPathOffsetIndex = SourcePathLengthIndex + IntSizeInBytes;
             internal const int DestinationPathLengthIndex = DestinationPathOffsetIndex + IntSizeInBytes;
-            internal const int OverwriteIndex = DestinationPathLengthIndex + IntSizeInBytes;
-            internal const int InitialTransferSizeIndex = OverwriteIndex + OneByte;
+            internal const int CreatePreferenceIndex = DestinationPathLengthIndex + IntSizeInBytes;
+            internal const int InitialTransferSizeIndex = CreatePreferenceIndex + OneByte;
             internal const int ChunkSizeIndex = InitialTransferSizeIndex + LongSizeInBytes;
             internal const int PriorityIndex = ChunkSizeIndex + LongSizeInBytes;
             internal const int JobPartStatusIndex = PriorityIndex + OneByte;
@@ -138,6 +140,23 @@ namespace Azure.Storage.DataMovement
         {
             internal static readonly string[] CannotOverwrite = { "BlobAlreadyExists", "Cannot overwrite file." };
             internal static readonly string[] AccessDenied = { "AuthenticationFailed", "AuthorizationFailure", "access denied" };
+        }
+
+        internal static class ResourceProperties
+        {
+            internal const string AccessTier = "AccessTier";
+            internal const string BlobType = "BlobType";
+            internal const string CreationTime = "CreationTime";
+            internal const string ContentType = "ContentType";
+            internal const string ContentHash = "ContentHash";
+            internal const string ContentEncoding = "ContentEncoding";
+            internal const string ContentLanguage = "ContentLanguage";
+            internal const string ContentDisposition = "ContentDisposition";
+            internal const string CacheControl = "CacheControl";
+            internal const string ETag = "ETag";
+            internal const string LastModified = "LastModified";
+            internal const string Metadata = "Metadata";
+            internal const string Tags = "Tags";
         }
     }
 }

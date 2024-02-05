@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -18,13 +19,45 @@ namespace Azure.ResourceManager.Workloads
     /// </summary>
     public partial class SapLandscapeMonitorData : ResourceData
     {
-        /// <summary> Initializes a new instance of SapLandscapeMonitorData. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SapLandscapeMonitorData"/>. </summary>
         public SapLandscapeMonitorData()
         {
             TopMetricsThresholds = new ChangeTrackingList<SapLandscapeMonitorMetricThresholds>();
         }
 
-        /// <summary> Initializes a new instance of SapLandscapeMonitorData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SapLandscapeMonitorData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -32,11 +65,13 @@ namespace Azure.ResourceManager.Workloads
         /// <param name="provisioningState"> State of provisioning of the SAP monitor. </param>
         /// <param name="grouping"> Gets or sets the SID groupings by landscape and Environment. </param>
         /// <param name="topMetricsThresholds"> Gets or sets the list Top Metric Thresholds for SAP Landscape Monitor Dashboard. </param>
-        internal SapLandscapeMonitorData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SapLandscapeMonitorProvisioningState? provisioningState, SapLandscapeMonitorPropertiesGrouping grouping, IList<SapLandscapeMonitorMetricThresholds> topMetricsThresholds) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SapLandscapeMonitorData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SapLandscapeMonitorProvisioningState? provisioningState, SapLandscapeMonitorPropertiesGrouping grouping, IList<SapLandscapeMonitorMetricThresholds> topMetricsThresholds, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             ProvisioningState = provisioningState;
             Grouping = grouping;
             TopMetricsThresholds = topMetricsThresholds;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> State of provisioning of the SAP monitor. </summary>

@@ -5,29 +5,66 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Description of an operation available for Microsoft.Web resource provider. </summary>
     public partial class CsmOperationDescription
     {
-        /// <summary> Initializes a new instance of CsmOperationDescription. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="CsmOperationDescription"/>. </summary>
         internal CsmOperationDescription()
         {
         }
 
-        /// <summary> Initializes a new instance of CsmOperationDescription. </summary>
+        /// <summary> Initializes a new instance of <see cref="CsmOperationDescription"/>. </summary>
         /// <param name="name"></param>
         /// <param name="isDataAction"></param>
         /// <param name="display"> Meta data about operation used for display in portal. </param>
         /// <param name="origin"></param>
         /// <param name="properties"> Properties available for a Microsoft.Web resource provider operation. </param>
-        internal CsmOperationDescription(string name, bool? isDataAction, CsmOperationDisplay display, string origin, CsmOperationDescriptionProperties properties)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal CsmOperationDescription(string name, bool? isDataAction, CsmOperationDisplay display, string origin, CsmOperationDescriptionProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             IsDataAction = isDataAction;
             Display = display;
             Origin = origin;
             Properties = properties;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets the name. </summary>

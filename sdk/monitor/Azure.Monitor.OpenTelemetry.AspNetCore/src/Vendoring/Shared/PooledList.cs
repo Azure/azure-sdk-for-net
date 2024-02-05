@@ -14,10 +14,8 @@
 // limitations under the License.
 // </copyright>
 
-using System;
 using System.Buffers;
 using System.Collections;
-using System.Collections.Generic;
 
 namespace OpenTelemetry.Internal;
 

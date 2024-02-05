@@ -5,27 +5,64 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Media.Models
 {
     /// <summary> The streaming endpoint sku capacity. </summary>
     public partial class StreamingEndpointCapacity
     {
-        /// <summary> Initializes a new instance of StreamingEndpointCapacity. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="StreamingEndpointCapacity"/>. </summary>
         internal StreamingEndpointCapacity()
         {
         }
 
-        /// <summary> Initializes a new instance of StreamingEndpointCapacity. </summary>
+        /// <summary> Initializes a new instance of <see cref="StreamingEndpointCapacity"/>. </summary>
         /// <param name="scaleType"></param>
         /// <param name="default"> The streaming endpoint default capacity. </param>
         /// <param name="minimum"> The streaming endpoint minimum capacity. </param>
         /// <param name="maximum"> The streaming endpoint maximum capacity. </param>
-        internal StreamingEndpointCapacity(string scaleType, int? @default, int? minimum, int? maximum)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal StreamingEndpointCapacity(string scaleType, int? @default, int? minimum, int? maximum, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ScaleType = scaleType;
             Default = @default;
             Minimum = minimum;
             Maximum = maximum;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets the scale type. </summary>

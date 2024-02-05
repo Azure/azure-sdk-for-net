@@ -6,48 +6,21 @@
 #nullable disable
 
 using System;
-using Azure.Core;
 
 namespace Azure.Communication.JobRouter
 {
     /// <summary> Request payload for closing jobs. </summary>
     public partial class CloseJobOptions
     {
-        /// <summary> Initializes a new instance of CloseJobOptions. </summary>
-        /// <param name="assignmentId"> The assignment within which the job is to be closed. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="assignmentId"/> is null. </exception>
-        public CloseJobOptions(string assignmentId)
+        /// <summary> Initializes a new instance of <see cref="CloseJobOptions"/>. </summary>
+        /// <param name="dispositionCode"> Indicates the outcome of a job, populate this field with your own custom values. </param>
+        /// <param name="closeAt"> If not provided, worker capacity is released immediately along with a JobClosedEvent notification. If provided, worker capacity is released along with a JobClosedEvent notification at a future time in UTC. </param>
+        /// <param name="note"> A note that will be appended to a job's Notes collection with the current timestamp. </param>
+        internal CloseJobOptions(string dispositionCode, DateTimeOffset closeAt, string note)
         {
-            Argument.AssertNotNull(assignmentId, nameof(assignmentId));
-
-            AssignmentId = assignmentId;
-        }
-
-        /// <summary> Initializes a new instance of CloseJobOptions. </summary>
-        /// <param name="assignmentId"> The assignment within which the job is to be closed. </param>
-        /// <param name="dispositionCode">
-        /// Indicates the outcome of the job, populate this field with your own custom
-        /// values.
-        /// </param>
-        /// <param name="closeAt">
-        /// If not provided, worker capacity is released immediately along with a
-        /// JobClosedEvent notification.
-        /// If provided, worker capacity is released along
-        /// with a JobClosedEvent notification at a future time in UTC.
-        /// </param>
-        /// <param name="note">
-        /// (Optional) A note that will be appended to the jobs' Notes collection with the
-        /// current timestamp.
-        /// </param>
-        internal CloseJobOptions(string assignmentId, string dispositionCode, DateTimeOffset closeAt, string note)
-        {
-            AssignmentId = assignmentId;
             DispositionCode = dispositionCode;
             CloseAt = closeAt;
             Note = note;
         }
-
-        /// <summary> The assignment within which the job is to be closed. </summary>
-        public string AssignmentId { get; }
     }
 }

@@ -56,6 +56,14 @@ namespace Azure.ResourceManager.StorageSync.Mocking
         /// <term>Operation Id</term>
         /// <description>StorageSyncServices_CheckNameAvailability</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="StorageSyncServiceResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="locationName"> The desired region for the name check. </param>
@@ -92,6 +100,14 @@ namespace Azure.ResourceManager.StorageSync.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>StorageSyncServices_CheckNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="StorageSyncServiceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -130,10 +146,18 @@ namespace Azure.ResourceManager.StorageSync.Mocking
         /// <term>Operation Id</term>
         /// <description>StorageSyncServices_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="StorageSyncServiceResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="StorageSyncServiceResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="StorageSyncServiceResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<StorageSyncServiceResource> GetStorageSyncServicesAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => StorageSyncServiceRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
@@ -151,10 +175,18 @@ namespace Azure.ResourceManager.StorageSync.Mocking
         /// <term>Operation Id</term>
         /// <description>StorageSyncServices_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="StorageSyncServiceResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="StorageSyncServiceResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="StorageSyncServiceResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<StorageSyncServiceResource> GetStorageSyncServices(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => StorageSyncServiceRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);

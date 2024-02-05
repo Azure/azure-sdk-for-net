@@ -14,19 +14,53 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
     /// <summary> The properties associated with a private endpoint. </summary>
     public partial class StreamAnalyticsPrivateEndpointProperties
     {
-        /// <summary> Initializes a new instance of StreamAnalyticsPrivateEndpointProperties. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="StreamAnalyticsPrivateEndpointProperties"/>. </summary>
         public StreamAnalyticsPrivateEndpointProperties()
         {
             ManualPrivateLinkServiceConnections = new ChangeTrackingList<StreamAnalyticsPrivateLinkServiceConnection>();
         }
 
-        /// <summary> Initializes a new instance of StreamAnalyticsPrivateEndpointProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="StreamAnalyticsPrivateEndpointProperties"/>. </summary>
         /// <param name="createdOn"> The date when this private endpoint was created. </param>
         /// <param name="manualPrivateLinkServiceConnections"> A list of connections to the remote resource. Immutable after it is set. </param>
-        internal StreamAnalyticsPrivateEndpointProperties(DateTimeOffset? createdOn, IList<StreamAnalyticsPrivateLinkServiceConnection> manualPrivateLinkServiceConnections)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal StreamAnalyticsPrivateEndpointProperties(DateTimeOffset? createdOn, IList<StreamAnalyticsPrivateLinkServiceConnection> manualPrivateLinkServiceConnections, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             CreatedOn = createdOn;
             ManualPrivateLinkServiceConnections = manualPrivateLinkServiceConnections;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The date when this private endpoint was created. </summary>

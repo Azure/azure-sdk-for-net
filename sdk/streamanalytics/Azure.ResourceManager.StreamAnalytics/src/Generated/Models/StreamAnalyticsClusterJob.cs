@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.StreamAnalytics.Models
@@ -12,20 +14,54 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
     /// <summary> A streaming job. </summary>
     public partial class StreamAnalyticsClusterJob
     {
-        /// <summary> Initializes a new instance of StreamAnalyticsClusterJob. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="StreamAnalyticsClusterJob"/>. </summary>
         internal StreamAnalyticsClusterJob()
         {
         }
 
-        /// <summary> Initializes a new instance of StreamAnalyticsClusterJob. </summary>
+        /// <summary> Initializes a new instance of <see cref="StreamAnalyticsClusterJob"/>. </summary>
         /// <param name="id"> Resource ID of the streaming job. </param>
         /// <param name="streamingUnits"> The number of streaming units that are used by the streaming job. </param>
         /// <param name="jobState"> The current execution state of the streaming job. </param>
-        internal StreamAnalyticsClusterJob(ResourceIdentifier id, int? streamingUnits, StreamingJobState? jobState)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal StreamAnalyticsClusterJob(ResourceIdentifier id, int? streamingUnits, StreamingJobState? jobState, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Id = id;
             StreamingUnits = streamingUnits;
             JobState = jobState;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Resource ID of the streaming job. </summary>

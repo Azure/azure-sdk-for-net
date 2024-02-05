@@ -5,21 +5,25 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> This is the OS disk image. </summary>
     public partial class GalleryOSDiskImage : GalleryDiskImage
     {
-        /// <summary> Initializes a new instance of GalleryOSDiskImage. </summary>
+        /// <summary> Initializes a new instance of <see cref="GalleryOSDiskImage"/>. </summary>
         public GalleryOSDiskImage()
         {
         }
 
-        /// <summary> Initializes a new instance of GalleryOSDiskImage. </summary>
+        /// <summary> Initializes a new instance of <see cref="GalleryOSDiskImage"/>. </summary>
         /// <param name="sizeInGB"> This property indicates the size of the VHD to be created. </param>
         /// <param name="hostCaching"> The host caching of the disk. Valid values are 'None', 'ReadOnly', and 'ReadWrite'. </param>
         /// <param name="gallerySource"> The source for the disk image. </param>
-        internal GalleryOSDiskImage(int? sizeInGB, HostCaching? hostCaching, GalleryDiskImageSource gallerySource) : base(sizeInGB, hostCaching, gallerySource)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal GalleryOSDiskImage(int? sizeInGB, HostCaching? hostCaching, GalleryDiskImageSource gallerySource, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(sizeInGB, hostCaching, gallerySource, serializedAdditionalRawData)
         {
         }
     }

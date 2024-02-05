@@ -15,7 +15,7 @@ namespace Azure.Communication.NetworkTraversal
     /// <summary> An instance of a STUN/TURN server with credentials to be used for ICE negotiation. </summary>
     public partial class CommunicationIceServer
     {
-        /// <summary> Initializes a new instance of CommunicationIceServer. </summary>
+        /// <summary> Initializes a new instance of <see cref="CommunicationIceServer"/>. </summary>
         /// <param name="urls"> List of STUN/TURN server URLs. </param>
         /// <param name="username"> User account name which uniquely identifies the credentials. </param>
         /// <param name="credential"> Credential for the server. </param>
@@ -33,7 +33,7 @@ namespace Azure.Communication.NetworkTraversal
             RouteType = routeType;
         }
 
-        /// <summary> Initializes a new instance of CommunicationIceServer. </summary>
+        /// <summary> Initializes a new instance of <see cref="CommunicationIceServer"/>. </summary>
         /// <param name="urls"> List of STUN/TURN server URLs. </param>
         /// <param name="username"> User account name which uniquely identifies the credentials. </param>
         /// <param name="credential"> Credential for the server. </param>

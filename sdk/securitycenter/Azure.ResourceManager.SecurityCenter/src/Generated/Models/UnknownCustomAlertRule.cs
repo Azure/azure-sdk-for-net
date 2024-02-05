@@ -5,19 +5,28 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
     /// <summary> The UnknownCustomAlertRule. </summary>
     internal partial class UnknownCustomAlertRule : CustomAlertRule
     {
-        /// <summary> Initializes a new instance of UnknownCustomAlertRule. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnknownCustomAlertRule"/>. </summary>
         /// <param name="displayName"> The display name of the custom alert. </param>
         /// <param name="description"> The description of the custom alert. </param>
         /// <param name="isEnabled"> Status of the custom alert. </param>
         /// <param name="ruleType"> The type of the custom alert rule. </param>
-        internal UnknownCustomAlertRule(string displayName, string description, bool isEnabled, string ruleType) : base(displayName, description, isEnabled, ruleType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal UnknownCustomAlertRule(string displayName, string description, bool isEnabled, string ruleType, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(displayName, description, isEnabled, ruleType, serializedAdditionalRawData)
         {
             RuleType = ruleType ?? "Unknown";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="UnknownCustomAlertRule"/> for deserialization. </summary>
+        internal UnknownCustomAlertRule()
+        {
         }
     }
 }

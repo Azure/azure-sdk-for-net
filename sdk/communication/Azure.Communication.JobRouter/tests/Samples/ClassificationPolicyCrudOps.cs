@@ -82,7 +82,7 @@ namespace Azure.Communication.JobRouter.Tests.Samples
 
             #region Snippet:Azure_Communication_JobRouter_Tests_Samples_Crud_GetClassificationPolicies
 
-            Pageable<ClassificationPolicy> classificationPolicies = routerAdministrationClient.GetClassificationPolicies();
+            Pageable<ClassificationPolicy> classificationPolicies = routerAdministrationClient.GetClassificationPolicies(cancellationToken: default);
             foreach (Page<ClassificationPolicy> asPage in classificationPolicies.AsPages(pageSizeHint: 10))
             {
                 foreach (ClassificationPolicy? policy in asPage.Values)

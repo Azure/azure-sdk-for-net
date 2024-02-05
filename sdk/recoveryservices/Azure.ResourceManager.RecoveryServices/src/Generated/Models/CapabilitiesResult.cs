@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,18 +14,24 @@ namespace Azure.ResourceManager.RecoveryServices.Models
     /// <summary> Capabilities response for Microsoft.RecoveryServices. </summary>
     public partial class CapabilitiesResult : ResourceCapabilitiesBase
     {
-        /// <summary> Initializes a new instance of CapabilitiesResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="CapabilitiesResult"/>. </summary>
         /// <param name="resourceCapabilitiesBaseType"> Describes the Resource type: Microsoft.RecoveryServices/Vaults. </param>
         public CapabilitiesResult(ResourceType resourceCapabilitiesBaseType) : base(resourceCapabilitiesBaseType)
         {
         }
 
-        /// <summary> Initializes a new instance of CapabilitiesResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="CapabilitiesResult"/>. </summary>
         /// <param name="resourceCapabilitiesBaseType"> Describes the Resource type: Microsoft.RecoveryServices/Vaults. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"> Capabilities properties in response. </param>
-        internal CapabilitiesResult(ResourceType resourceCapabilitiesBaseType, CapabilitiesResultProperties properties) : base(resourceCapabilitiesBaseType)
+        internal CapabilitiesResult(ResourceType resourceCapabilitiesBaseType, IDictionary<string, BinaryData> serializedAdditionalRawData, CapabilitiesResultProperties properties) : base(resourceCapabilitiesBaseType, serializedAdditionalRawData)
         {
             Properties = properties;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="CapabilitiesResult"/> for deserialization. </summary>
+        internal CapabilitiesResult()
+        {
         }
 
         /// <summary> Capabilities properties in response. </summary>

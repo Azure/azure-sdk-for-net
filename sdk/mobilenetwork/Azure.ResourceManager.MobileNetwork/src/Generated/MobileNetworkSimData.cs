@@ -20,7 +20,39 @@ namespace Azure.ResourceManager.MobileNetwork
     /// </summary>
     public partial class MobileNetworkSimData : ResourceData
     {
-        /// <summary> Initializes a new instance of MobileNetworkSimData. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="MobileNetworkSimData"/>. </summary>
         /// <param name="internationalMobileSubscriberIdentity"> The international mobile subscriber identity (IMSI) for the SIM. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="internationalMobileSubscriberIdentity"/> is null. </exception>
         public MobileNetworkSimData(string internationalMobileSubscriberIdentity)
@@ -32,7 +64,7 @@ namespace Azure.ResourceManager.MobileNetwork
             StaticIPConfiguration = new ChangeTrackingList<SimStaticIPProperties>();
         }
 
-        /// <summary> Initializes a new instance of MobileNetworkSimData. </summary>
+        /// <summary> Initializes a new instance of <see cref="MobileNetworkSimData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -49,7 +81,8 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <param name="vendorKeyFingerprint"> The public key fingerprint of the SIM vendor who provided this SIM, if any. </param>
         /// <param name="authenticationKey"> The Ki value for the SIM. </param>
         /// <param name="operatorKeyCode"> The Opc value for the SIM. </param>
-        internal MobileNetworkSimData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, MobileNetworkProvisioningState? provisioningState, MobileNetworkSimState? simState, IReadOnlyDictionary<string, MobileNetworkSiteProvisioningState> siteProvisioningState, string internationalMobileSubscriberIdentity, string integratedCircuitCardIdentifier, string deviceType, WritableSubResource simPolicy, IList<SimStaticIPProperties> staticIPConfiguration, string vendorName, string vendorKeyFingerprint, string authenticationKey, string operatorKeyCode) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MobileNetworkSimData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, MobileNetworkProvisioningState? provisioningState, MobileNetworkSimState? simState, IReadOnlyDictionary<string, MobileNetworkSiteProvisioningState> siteProvisioningState, string internationalMobileSubscriberIdentity, string integratedCircuitCardIdentifier, string deviceType, WritableSubResource simPolicy, IList<SimStaticIPProperties> staticIPConfiguration, string vendorName, string vendorKeyFingerprint, string authenticationKey, string operatorKeyCode, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             ProvisioningState = provisioningState;
             SimState = simState;
@@ -63,6 +96,12 @@ namespace Azure.ResourceManager.MobileNetwork
             VendorKeyFingerprint = vendorKeyFingerprint;
             AuthenticationKey = authenticationKey;
             OperatorKeyCode = operatorKeyCode;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MobileNetworkSimData"/> for deserialization. </summary>
+        internal MobileNetworkSimData()
+        {
         }
 
         /// <summary> The provisioning state of the SIM resource. </summary>

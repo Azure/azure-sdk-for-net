@@ -165,8 +165,8 @@ namespace Azure.ResourceManager.AppPlatform.Samples
                     Key = "xxxx",
                     BindingParameters =
 {
-["apiType"] = BinaryData.FromString("SQL"),
-["databaseName"] = BinaryData.FromString("db1"),
+["apiType"] = BinaryData.FromString("\"SQL\""),
+["databaseName"] = BinaryData.FromString("\"db1\""),
 },
                 },
             };

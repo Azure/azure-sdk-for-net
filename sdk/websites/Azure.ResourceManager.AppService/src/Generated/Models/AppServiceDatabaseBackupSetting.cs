@@ -5,19 +5,54 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Database backup settings. </summary>
     public partial class AppServiceDatabaseBackupSetting
     {
-        /// <summary> Initializes a new instance of AppServiceDatabaseBackupSetting. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AppServiceDatabaseBackupSetting"/>. </summary>
         /// <param name="databaseType"> Database type (e.g. SqlAzure / MySql). </param>
         public AppServiceDatabaseBackupSetting(AppServiceDatabaseType databaseType)
         {
             DatabaseType = databaseType;
         }
 
-        /// <summary> Initializes a new instance of AppServiceDatabaseBackupSetting. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppServiceDatabaseBackupSetting"/>. </summary>
         /// <param name="databaseType"> Database type (e.g. SqlAzure / MySql). </param>
         /// <param name="name"></param>
         /// <param name="connectionStringName">
@@ -25,12 +60,19 @@ namespace Azure.ResourceManager.AppService.Models
         /// This is used during restore with overwrite connection strings options.
         /// </param>
         /// <param name="connectionString"> Contains a connection string to a database which is being backed up or restored. If the restore should happen to a new database, the database name inside is the new one. </param>
-        internal AppServiceDatabaseBackupSetting(AppServiceDatabaseType databaseType, string name, string connectionStringName, string connectionString)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AppServiceDatabaseBackupSetting(AppServiceDatabaseType databaseType, string name, string connectionStringName, string connectionString, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             DatabaseType = databaseType;
             Name = name;
             ConnectionStringName = connectionStringName;
             ConnectionString = connectionString;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AppServiceDatabaseBackupSetting"/> for deserialization. </summary>
+        internal AppServiceDatabaseBackupSetting()
+        {
         }
 
         /// <summary> Database type (e.g. SqlAzure / MySql). </summary>

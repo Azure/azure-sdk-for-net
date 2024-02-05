@@ -7,6 +7,7 @@ azure-arm: true
 library-name: Dns
 namespace: Azure.ResourceManager.Dns
 require: https://github.com/Azure/azure-rest-api-specs/blob/48a49f06399fbdf21f17406b5042f96a5d573bf0/specification/dns/resource-manager/readme.md
+# tag: package-2018-05
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
@@ -17,6 +18,7 @@ skip-csproj: true
 modelerfour:
   flatten-payloads: false
   lenient-model-deduplication: true
+use-model-reader-writer: true
 
 format-by-name-rules:
   'tenantId': 'uuid'

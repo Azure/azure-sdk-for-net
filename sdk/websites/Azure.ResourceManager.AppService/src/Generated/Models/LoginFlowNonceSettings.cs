@@ -5,23 +5,60 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> The configuration settings of the nonce used in the login flow. </summary>
     public partial class LoginFlowNonceSettings
     {
-        /// <summary> Initializes a new instance of LoginFlowNonceSettings. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="LoginFlowNonceSettings"/>. </summary>
         public LoginFlowNonceSettings()
         {
         }
 
-        /// <summary> Initializes a new instance of LoginFlowNonceSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="LoginFlowNonceSettings"/>. </summary>
         /// <param name="validateNonce"> &lt;code&gt;false&lt;/code&gt; if the nonce should not be validated while completing the login flow; otherwise, &lt;code&gt;true&lt;/code&gt;. </param>
         /// <param name="nonceExpirationInterval"> The time after the request is made when the nonce should expire. </param>
-        internal LoginFlowNonceSettings(bool? validateNonce, string nonceExpirationInterval)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal LoginFlowNonceSettings(bool? validateNonce, string nonceExpirationInterval, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ValidateNonce = validateNonce;
             NonceExpirationInterval = nonceExpirationInterval;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> &lt;code&gt;false&lt;/code&gt; if the nonce should not be validated while completing the login flow; otherwise, &lt;code&gt;true&lt;/code&gt;. </summary>

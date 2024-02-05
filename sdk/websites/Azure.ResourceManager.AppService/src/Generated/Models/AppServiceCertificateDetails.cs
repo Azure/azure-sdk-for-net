@@ -6,18 +6,51 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> SSL certificate details. </summary>
     public partial class AppServiceCertificateDetails
     {
-        /// <summary> Initializes a new instance of AppServiceCertificateDetails. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AppServiceCertificateDetails"/>. </summary>
         internal AppServiceCertificateDetails()
         {
         }
 
-        /// <summary> Initializes a new instance of AppServiceCertificateDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppServiceCertificateDetails"/>. </summary>
         /// <param name="version"> Certificate Version. </param>
         /// <param name="serialNumber"> Certificate Serial Number. </param>
         /// <param name="thumbprintString"> Certificate Thumbprint. </param>
@@ -27,7 +60,8 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="signatureAlgorithm"> Certificate Signature algorithm. </param>
         /// <param name="issuer"> Certificate Issuer. </param>
         /// <param name="rawData"> Raw certificate data. </param>
-        internal AppServiceCertificateDetails(int? version, string serialNumber, string thumbprintString, string subject, DateTimeOffset? notBefore, DateTimeOffset? notAfter, string signatureAlgorithm, string issuer, string rawData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AppServiceCertificateDetails(int? version, string serialNumber, string thumbprintString, string subject, DateTimeOffset? notBefore, DateTimeOffset? notAfter, string signatureAlgorithm, string issuer, string rawData, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Version = version;
             SerialNumber = serialNumber;
@@ -38,6 +72,7 @@ namespace Azure.ResourceManager.AppService.Models
             SignatureAlgorithm = signatureAlgorithm;
             Issuer = issuer;
             RawData = rawData;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Certificate Version. </summary>

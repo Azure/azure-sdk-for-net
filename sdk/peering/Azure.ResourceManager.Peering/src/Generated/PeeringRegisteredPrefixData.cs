@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Peering.Models;
@@ -17,12 +19,44 @@ namespace Azure.ResourceManager.Peering
     /// </summary>
     public partial class PeeringRegisteredPrefixData : ResourceData
     {
-        /// <summary> Initializes a new instance of PeeringRegisteredPrefixData. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="PeeringRegisteredPrefixData"/>. </summary>
         public PeeringRegisteredPrefixData()
         {
         }
 
-        /// <summary> Initializes a new instance of PeeringRegisteredPrefixData. </summary>
+        /// <summary> Initializes a new instance of <see cref="PeeringRegisteredPrefixData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -32,13 +66,15 @@ namespace Azure.ResourceManager.Peering
         /// <param name="peeringServicePrefixKey"> The peering service prefix key that is to be shared with the customer. </param>
         /// <param name="errorMessage"> The error message associated with the validation state, if any. </param>
         /// <param name="provisioningState"> The provisioning state of the resource. </param>
-        internal PeeringRegisteredPrefixData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string prefix, PeeringPrefixValidationState? prefixValidationState, string peeringServicePrefixKey, string errorMessage, PeeringProvisioningState? provisioningState) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal PeeringRegisteredPrefixData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string prefix, PeeringPrefixValidationState? prefixValidationState, string peeringServicePrefixKey, string errorMessage, PeeringProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Prefix = prefix;
             PrefixValidationState = prefixValidationState;
             PeeringServicePrefixKey = peeringServicePrefixKey;
             ErrorMessage = errorMessage;
             ProvisioningState = provisioningState;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The customer's prefix from which traffic originates. </summary>

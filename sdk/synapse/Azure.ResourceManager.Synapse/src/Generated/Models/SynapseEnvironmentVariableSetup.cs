@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Synapse.Models
@@ -13,7 +14,7 @@ namespace Azure.ResourceManager.Synapse.Models
     /// <summary> The custom setup of setting environment variable. </summary>
     public partial class SynapseEnvironmentVariableSetup : SynapseCustomSetupBase
     {
-        /// <summary> Initializes a new instance of SynapseEnvironmentVariableSetup. </summary>
+        /// <summary> Initializes a new instance of <see cref="SynapseEnvironmentVariableSetup"/>. </summary>
         /// <param name="variableName"> The name of the environment variable. </param>
         /// <param name="variableValue"> The value of the environment variable. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="variableName"/> or <paramref name="variableValue"/> is null. </exception>
@@ -27,15 +28,21 @@ namespace Azure.ResourceManager.Synapse.Models
             CustomSetupBaseType = "EnvironmentVariableSetup";
         }
 
-        /// <summary> Initializes a new instance of SynapseEnvironmentVariableSetup. </summary>
+        /// <summary> Initializes a new instance of <see cref="SynapseEnvironmentVariableSetup"/>. </summary>
         /// <param name="customSetupBaseType"> The type of custom setup. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="variableName"> The name of the environment variable. </param>
         /// <param name="variableValue"> The value of the environment variable. </param>
-        internal SynapseEnvironmentVariableSetup(string customSetupBaseType, string variableName, string variableValue) : base(customSetupBaseType)
+        internal SynapseEnvironmentVariableSetup(string customSetupBaseType, IDictionary<string, BinaryData> serializedAdditionalRawData, string variableName, string variableValue) : base(customSetupBaseType, serializedAdditionalRawData)
         {
             VariableName = variableName;
             VariableValue = variableValue;
             CustomSetupBaseType = customSetupBaseType ?? "EnvironmentVariableSetup";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SynapseEnvironmentVariableSetup"/> for deserialization. </summary>
+        internal SynapseEnvironmentVariableSetup()
+        {
         }
 
         /// <summary> The name of the environment variable. </summary>

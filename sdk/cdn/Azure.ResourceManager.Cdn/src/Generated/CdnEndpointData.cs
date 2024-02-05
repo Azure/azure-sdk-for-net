@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Cdn.Models;
@@ -18,7 +19,39 @@ namespace Azure.ResourceManager.Cdn
     /// </summary>
     public partial class CdnEndpointData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of CdnEndpointData. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="CdnEndpointData"/>. </summary>
         /// <param name="location"> The location. </param>
         public CdnEndpointData(AzureLocation location) : base(location)
         {
@@ -30,7 +63,7 @@ namespace Azure.ResourceManager.Cdn
             CustomDomains = new ChangeTrackingList<CdnCustomDomainData>();
         }
 
-        /// <summary> Initializes a new instance of CdnEndpointData. </summary>
+        /// <summary> Initializes a new instance of <see cref="CdnEndpointData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -57,7 +90,8 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="customDomains"> The custom domains under the endpoint. </param>
         /// <param name="resourceState"> Resource status of the endpoint. </param>
         /// <param name="provisioningState"> Provisioning status of the endpoint. </param>
-        internal CdnEndpointData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string originPath, IList<string> contentTypesToCompress, string originHostHeader, bool? isCompressionEnabled, bool? isHttpAllowed, bool? isHttpsAllowed, QueryStringCachingBehavior? queryStringCachingBehavior, OptimizationType? optimizationType, string probePath, IList<GeoFilter> geoFilters, EndpointPropertiesUpdateParametersDefaultOriginGroup defaultOriginGroup, IList<UriSigningKey> uriSigningKeys, EndpointDeliveryPolicy deliveryPolicy, EndpointPropertiesUpdateParametersWebApplicationFirewallPolicyLink webApplicationFirewallPolicyLink, string hostName, IList<DeepCreatedOrigin> origins, IList<DeepCreatedOriginGroup> originGroups, IReadOnlyList<CdnCustomDomainData> customDomains, EndpointResourceState? resourceState, CdnEndpointProvisioningState? provisioningState) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal CdnEndpointData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string originPath, IList<string> contentTypesToCompress, string originHostHeader, bool? isCompressionEnabled, bool? isHttpAllowed, bool? isHttpsAllowed, QueryStringCachingBehavior? queryStringCachingBehavior, OptimizationType? optimizationType, string probePath, IList<GeoFilter> geoFilters, EndpointPropertiesUpdateParametersDefaultOriginGroup defaultOriginGroup, IList<UriSigningKey> uriSigningKeys, EndpointDeliveryPolicy deliveryPolicy, EndpointPropertiesUpdateParametersWebApplicationFirewallPolicyLink webApplicationFirewallPolicyLink, string hostName, IList<DeepCreatedOrigin> origins, IList<DeepCreatedOriginGroup> originGroups, IReadOnlyList<CdnCustomDomainData> customDomains, EndpointResourceState? resourceState, CdnEndpointProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             OriginPath = originPath;
             ContentTypesToCompress = contentTypesToCompress;
@@ -79,6 +113,12 @@ namespace Azure.ResourceManager.Cdn
             CustomDomains = customDomains;
             ResourceState = resourceState;
             ProvisioningState = provisioningState;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="CdnEndpointData"/> for deserialization. </summary>
+        internal CdnEndpointData()
+        {
         }
 
         /// <summary> A directory path on the origin that CDN can use to retrieve content from, e.g. contoso.cloudapp.net/originpath. </summary>

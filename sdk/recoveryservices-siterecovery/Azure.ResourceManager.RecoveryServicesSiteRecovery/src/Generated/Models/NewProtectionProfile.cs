@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
@@ -13,7 +14,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> New Protection profile input. </summary>
     public partial class NewProtectionProfile : ProtectionProfileCustomDetails
     {
-        /// <summary> Initializes a new instance of NewProtectionProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="NewProtectionProfile"/>. </summary>
         /// <param name="policyName"> The protection profile input. </param>
         /// <param name="multiVmSyncStatus"> A value indicating whether multi-VM sync has to be enabled. Value should be 'Enabled' or 'Disabled'. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="policyName"/> is null. </exception>
@@ -26,14 +27,15 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             ResourceType = "New";
         }
 
-        /// <summary> Initializes a new instance of NewProtectionProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="NewProtectionProfile"/>. </summary>
         /// <param name="resourceType"> The class type. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="policyName"> The protection profile input. </param>
         /// <param name="recoveryPointHistory"> The duration in minutes until which the recovery points need to be stored. </param>
         /// <param name="crashConsistentFrequencyInMinutes"> The crash consistent snapshot frequency (in minutes). </param>
         /// <param name="appConsistentFrequencyInMinutes"> The app consistent snapshot frequency (in minutes). </param>
         /// <param name="multiVmSyncStatus"> A value indicating whether multi-VM sync has to be enabled. Value should be 'Enabled' or 'Disabled'. </param>
-        internal NewProtectionProfile(string resourceType, string policyName, int? recoveryPointHistory, int? crashConsistentFrequencyInMinutes, int? appConsistentFrequencyInMinutes, SetMultiVmSyncStatus multiVmSyncStatus) : base(resourceType)
+        internal NewProtectionProfile(string resourceType, IDictionary<string, BinaryData> serializedAdditionalRawData, string policyName, int? recoveryPointHistory, int? crashConsistentFrequencyInMinutes, int? appConsistentFrequencyInMinutes, SetMultiVmSyncStatus multiVmSyncStatus) : base(resourceType, serializedAdditionalRawData)
         {
             PolicyName = policyName;
             RecoveryPointHistory = recoveryPointHistory;
@@ -41,6 +43,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             AppConsistentFrequencyInMinutes = appConsistentFrequencyInMinutes;
             MultiVmSyncStatus = multiVmSyncStatus;
             ResourceType = resourceType ?? "New";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="NewProtectionProfile"/> for deserialization. </summary>
+        internal NewProtectionProfile()
+        {
         }
 
         /// <summary> The protection profile input. </summary>

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,21 +14,22 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> Ssis environment. </summary>
     public partial class SsisEnvironment : SsisObjectMetadata
     {
-        /// <summary> Initializes a new instance of SsisEnvironment. </summary>
+        /// <summary> Initializes a new instance of <see cref="SsisEnvironment"/>. </summary>
         internal SsisEnvironment()
         {
             Variables = new ChangeTrackingList<SsisVariable>();
             MetadataType = SsisObjectMetadataType.Environment;
         }
 
-        /// <summary> Initializes a new instance of SsisEnvironment. </summary>
+        /// <summary> Initializes a new instance of <see cref="SsisEnvironment"/>. </summary>
         /// <param name="metadataType"> Type of metadata. </param>
         /// <param name="id"> Metadata id. </param>
         /// <param name="name"> Metadata name. </param>
         /// <param name="description"> Metadata description. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="folderId"> Folder id which contains environment. </param>
         /// <param name="variables"> Variable in environment. </param>
-        internal SsisEnvironment(SsisObjectMetadataType metadataType, long? id, string name, string description, long? folderId, IReadOnlyList<SsisVariable> variables) : base(metadataType, id, name, description)
+        internal SsisEnvironment(SsisObjectMetadataType metadataType, long? id, string name, string description, IDictionary<string, BinaryData> serializedAdditionalRawData, long? folderId, IReadOnlyList<SsisVariable> variables) : base(metadataType, id, name, description, serializedAdditionalRawData)
         {
             FolderId = folderId;
             Variables = variables;

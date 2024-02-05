@@ -66,6 +66,27 @@ namespace Microsoft.Azure.KeyVault.Samples
             }
 
             {
+                #region Snippet:Microsoft_Azure_KeyVault_Secrets_Snippets_MigrationGuide_ListSecretVersions
+                IPage<SecretItem> page = await client.GetSecretVersionsAsync("https://myvault.vault.azure.net", "secret-name");
+                foreach (SecretItem item in page)
+                {
+                    SecretIdentifier secretId = item.Identifier;
+                    SecretBundle secret = await client.GetSecretAsync(secretId.Vault, secretId.Name, secretId.Version);
+                }
+
+                while (page.NextPageLink != null)
+                {
+                    page = await client.GetSecretVersionsNextAsync(page.NextPageLink);
+                    foreach (SecretItem item in page)
+                    {
+                        SecretIdentifier secretId = item.Identifier;
+                        SecretBundle secret = await client.GetSecretAsync(secretId.Vault, secretId.Name, secretId.Version);
+                    }
+                }
+                #endregion Snippet:Microsoft_Azure_KeyVault_Secrets_Snippets_MigrationGuide_ListSecretVersions
+            }
+
+            {
                 #region Snippet:Microsoft_Azure_KeyVault_Secrets_Snippets_MigrationGuide_DeleteSecret
                 // Delete the secret.
                 DeletedSecretBundle deletedSecret = await client.DeleteSecretAsync("https://myvault.vault.azure.net", "secret-name");

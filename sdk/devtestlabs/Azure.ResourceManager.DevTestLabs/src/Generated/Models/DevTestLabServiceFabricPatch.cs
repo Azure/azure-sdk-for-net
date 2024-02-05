@@ -5,13 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.DevTestLabs.Models
 {
     /// <summary> A Service Fabric. </summary>
     public partial class DevTestLabServiceFabricPatch : DevTestLabResourcePatch
     {
-        /// <summary> Initializes a new instance of DevTestLabServiceFabricPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="DevTestLabServiceFabricPatch"/>. </summary>
         public DevTestLabServiceFabricPatch()
+        {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DevTestLabServiceFabricPatch"/>. </summary>
+        /// <param name="tags"> The tags of the resource. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DevTestLabServiceFabricPatch(IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(tags, serializedAdditionalRawData)
         {
         }
     }

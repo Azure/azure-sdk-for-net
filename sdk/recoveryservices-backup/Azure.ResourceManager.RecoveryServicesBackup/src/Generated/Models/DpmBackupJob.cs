@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// <summary> DPM workload-specific job object. </summary>
     public partial class DpmBackupJob : BackupGenericJob
     {
-        /// <summary> Initializes a new instance of DpmBackupJob. </summary>
+        /// <summary> Initializes a new instance of <see cref="DpmBackupJob"/>. </summary>
         public DpmBackupJob()
         {
             ActionsInfo = new ChangeTrackingList<JobSupportedAction>();
@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             JobType = "DpmJob";
         }
 
-        /// <summary> Initializes a new instance of DpmBackupJob. </summary>
+        /// <summary> Initializes a new instance of <see cref="DpmBackupJob"/>. </summary>
         /// <param name="entityFriendlyName"> Friendly name of the entity on which the current job is executing. </param>
         /// <param name="backupManagementType"> Backup management type to execute the current job. </param>
         /// <param name="operation"> The operation name. </param>
@@ -31,6 +31,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="endOn"> The end time. </param>
         /// <param name="activityId"> ActivityId of job. </param>
         /// <param name="jobType"> This property will be used as the discriminator for deciding the specific types in the polymorphic chain of types. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="duration"> Time elapsed for job. </param>
         /// <param name="dpmServerName"> DPM server name managing the backup item or backup job. </param>
         /// <param name="containerName"> Name of cluster/server protecting current backup item, if any. </param>
@@ -39,7 +40,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="actionsInfo"> The state/actions applicable on this job like cancel/retry. </param>
         /// <param name="errorDetails"> The errors. </param>
         /// <param name="extendedInfo"> Additional information for this job. </param>
-        internal DpmBackupJob(string entityFriendlyName, BackupManagementType? backupManagementType, string operation, string status, DateTimeOffset? startOn, DateTimeOffset? endOn, string activityId, string jobType, TimeSpan? duration, string dpmServerName, string containerName, string containerType, string workloadType, IList<JobSupportedAction> actionsInfo, IList<DpmErrorInfo> errorDetails, DpmBackupJobExtendedInfo extendedInfo) : base(entityFriendlyName, backupManagementType, operation, status, startOn, endOn, activityId, jobType)
+        internal DpmBackupJob(string entityFriendlyName, BackupManagementType? backupManagementType, string operation, string status, DateTimeOffset? startOn, DateTimeOffset? endOn, string activityId, string jobType, IDictionary<string, BinaryData> serializedAdditionalRawData, TimeSpan? duration, string dpmServerName, string containerName, string containerType, string workloadType, IList<JobSupportedAction> actionsInfo, IList<DpmErrorInfo> errorDetails, DpmBackupJobExtendedInfo extendedInfo) : base(entityFriendlyName, backupManagementType, operation, status, startOn, endOn, activityId, jobType, serializedAdditionalRawData)
         {
             Duration = duration;
             DpmServerName = dpmServerName;

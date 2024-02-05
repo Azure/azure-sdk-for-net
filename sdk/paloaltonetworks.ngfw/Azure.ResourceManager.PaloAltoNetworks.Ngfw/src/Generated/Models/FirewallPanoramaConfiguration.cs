@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
@@ -13,7 +14,39 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
     /// <summary> Panorama Config. </summary>
     public partial class FirewallPanoramaConfiguration
     {
-        /// <summary> Initializes a new instance of FirewallPanoramaConfiguration. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="FirewallPanoramaConfiguration"/>. </summary>
         /// <param name="configString"> Base64 encoded string representing Panorama parameters to be used by Firewall to connect to Panorama. This string is generated via azure plugin in Panorama. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="configString"/> is null. </exception>
         public FirewallPanoramaConfiguration(string configString)
@@ -23,7 +56,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             ConfigString = configString;
         }
 
-        /// <summary> Initializes a new instance of FirewallPanoramaConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="FirewallPanoramaConfiguration"/>. </summary>
         /// <param name="configString"> Base64 encoded string representing Panorama parameters to be used by Firewall to connect to Panorama. This string is generated via azure plugin in Panorama. </param>
         /// <param name="vmAuthKey"> VM auth key for panorama connectivity. </param>
         /// <param name="panoramaServer"> Primary Panorama Server IP address value in dotted format for IPv4. </param>
@@ -32,7 +65,8 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
         /// <param name="tplName"> Panorama Template Stack to join - (Once configured we can not edit the value). </param>
         /// <param name="cgName"> Panorama Collector Group to join - (Once configured we can not edit the value). </param>
         /// <param name="hostName"> Resource name(may be unique) for PN admin. </param>
-        internal FirewallPanoramaConfiguration(string configString, string vmAuthKey, string panoramaServer, string panoramaServer2, string dgName, string tplName, string cgName, string hostName)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal FirewallPanoramaConfiguration(string configString, string vmAuthKey, string panoramaServer, string panoramaServer2, string dgName, string tplName, string cgName, string hostName, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ConfigString = configString;
             VmAuthKey = vmAuthKey;
@@ -42,6 +76,12 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             TplName = tplName;
             CgName = cgName;
             HostName = hostName;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="FirewallPanoramaConfiguration"/> for deserialization. </summary>
+        internal FirewallPanoramaConfiguration()
+        {
         }
 
         /// <summary> Base64 encoded string representing Panorama parameters to be used by Firewall to connect to Panorama. This string is generated via azure plugin in Panorama. </summary>

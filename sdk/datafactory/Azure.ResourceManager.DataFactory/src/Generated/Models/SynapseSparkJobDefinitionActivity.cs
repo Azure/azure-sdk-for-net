@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> Execute spark job activity. </summary>
     public partial class SynapseSparkJobDefinitionActivity : ExecutionActivity
     {
-        /// <summary> Initializes a new instance of SynapseSparkJobDefinitionActivity. </summary>
+        /// <summary> Initializes a new instance of <see cref="SynapseSparkJobDefinitionActivity"/>. </summary>
         /// <param name="name"> Activity name. </param>
         /// <param name="sparkJob"> Synapse spark job reference. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="sparkJob"/> is null. </exception>
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             ActivityType = "SparkJob";
         }
 
-        /// <summary> Initializes a new instance of SynapseSparkJobDefinitionActivity. </summary>
+        /// <summary> Initializes a new instance of <see cref="SynapseSparkJobDefinitionActivity"/>. </summary>
         /// <param name="name"> Activity name. </param>
         /// <param name="activityType"> Type of activity. </param>
         /// <param name="description"> Activity description. </param>
@@ -79,6 +79,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             TargetSparkConfiguration = targetSparkConfiguration;
             SparkConfig = sparkConfig;
             ActivityType = activityType ?? "SparkJob";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SynapseSparkJobDefinitionActivity"/> for deserialization. </summary>
+        internal SynapseSparkJobDefinitionActivity()
+        {
         }
 
         /// <summary> Synapse spark job reference. </summary>

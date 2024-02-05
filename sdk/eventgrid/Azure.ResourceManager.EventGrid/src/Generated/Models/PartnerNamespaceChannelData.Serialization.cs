@@ -6,6 +6,8 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.EventGrid.Models;
@@ -13,11 +15,39 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.EventGrid
 {
-    public partial class PartnerNamespaceChannelData : IUtf8JsonSerializable
+    public partial class PartnerNamespaceChannelData : IUtf8JsonSerializable, IJsonModel<PartnerNamespaceChannelData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PartnerNamespaceChannelData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<PartnerNamespaceChannelData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<PartnerNamespaceChannelData>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(PartnerNamespaceChannelData)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(ResourceType);
+            }
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            {
+                writer.WritePropertyName("systemData"u8);
+                JsonSerializer.Serialize(writer, SystemData);
+            }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(ChannelType))
@@ -56,11 +86,40 @@ namespace Azure.ResourceManager.EventGrid
                 writer.WriteStringValue(ExpireOnIfNotActivated.Value, "O");
             }
             writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static PartnerNamespaceChannelData DeserializePartnerNamespaceChannelData(JsonElement element)
+        PartnerNamespaceChannelData IJsonModel<PartnerNamespaceChannelData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<PartnerNamespaceChannelData>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(PartnerNamespaceChannelData)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializePartnerNamespaceChannelData(document.RootElement, options);
+        }
+
+        internal static PartnerNamespaceChannelData DeserializePartnerNamespaceChannelData(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -76,6 +135,8 @@ namespace Azure.ResourceManager.EventGrid
             Optional<PartnerNamespaceChannelProvisioningState> provisioningState = default;
             Optional<PartnerTopicReadinessState> readinessState = default;
             Optional<DateTimeOffset> expirationTimeIfNotActivatedUtc = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -173,8 +234,44 @@ namespace Azure.ResourceManager.EventGrid
                     }
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new PartnerNamespaceChannelData(id, name, type, systemData.Value, Optional.ToNullable(channelType), partnerTopicInfo.Value, partnerDestinationInfo.Value, messageForActivation.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(readinessState), Optional.ToNullable(expirationTimeIfNotActivatedUtc));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new PartnerNamespaceChannelData(id, name, type, systemData.Value, Optional.ToNullable(channelType), partnerTopicInfo.Value, partnerDestinationInfo.Value, messageForActivation.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(readinessState), Optional.ToNullable(expirationTimeIfNotActivatedUtc), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<PartnerNamespaceChannelData>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<PartnerNamespaceChannelData>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(PartnerNamespaceChannelData)} does not support '{options.Format}' format.");
+            }
+        }
+
+        PartnerNamespaceChannelData IPersistableModel<PartnerNamespaceChannelData>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<PartnerNamespaceChannelData>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializePartnerNamespaceChannelData(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(PartnerNamespaceChannelData)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<PartnerNamespaceChannelData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

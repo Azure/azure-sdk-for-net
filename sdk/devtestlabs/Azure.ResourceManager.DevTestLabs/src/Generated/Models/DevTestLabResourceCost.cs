@@ -5,17 +5,52 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.DevTestLabs.Models
 {
     /// <summary> The properties of a resource cost item. </summary>
     public partial class DevTestLabResourceCost
     {
-        /// <summary> Initializes a new instance of DevTestLabResourceCost. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DevTestLabResourceCost"/>. </summary>
         internal DevTestLabResourceCost()
         {
         }
 
-        /// <summary> Initializes a new instance of DevTestLabResourceCost. </summary>
+        /// <summary> Initializes a new instance of <see cref="DevTestLabResourceCost"/>. </summary>
         /// <param name="resourceName"> The name of the resource. </param>
         /// <param name="resourceUniqueId"> The unique identifier of the resource. </param>
         /// <param name="resourceCost"> The cost component of the resource cost item. </param>
@@ -25,7 +60,8 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         /// <param name="resourceStatus"> The status of the resource (ex. Active). </param>
         /// <param name="resourceId"> The ID of the resource. </param>
         /// <param name="externalResourceId"> The ID of the external resource. </param>
-        internal DevTestLabResourceCost(string resourceName, string resourceUniqueId, double? resourceCost, string resourceType, string resourceOwner, string resourcePricingTier, string resourceStatus, string resourceId, string externalResourceId)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DevTestLabResourceCost(string resourceName, string resourceUniqueId, double? resourceCost, string resourceType, string resourceOwner, string resourcePricingTier, string resourceStatus, string resourceId, string externalResourceId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ResourceName = resourceName;
             ResourceUniqueId = resourceUniqueId;
@@ -36,6 +72,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             ResourceStatus = resourceStatus;
             ResourceId = resourceId;
             ExternalResourceId = externalResourceId;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The name of the resource. </summary>

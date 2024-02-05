@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,19 +14,53 @@ namespace Azure.ResourceManager.Peering.Models
     /// <summary> The paginated list of RP unbilled prefixes. </summary>
     internal partial class RpUnbilledPrefixListResult
     {
-        /// <summary> Initializes a new instance of RpUnbilledPrefixListResult. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="RpUnbilledPrefixListResult"/>. </summary>
         internal RpUnbilledPrefixListResult()
         {
             Value = new ChangeTrackingList<RoutingPreferenceUnbilledPrefix>();
         }
 
-        /// <summary> Initializes a new instance of RpUnbilledPrefixListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="RpUnbilledPrefixListResult"/>. </summary>
         /// <param name="value"> The list of RP unbilled prefixes. </param>
         /// <param name="nextLink"> The link to fetch the next page of RP unbilled prefixes. </param>
-        internal RpUnbilledPrefixListResult(IReadOnlyList<RoutingPreferenceUnbilledPrefix> value, string nextLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal RpUnbilledPrefixListResult(IReadOnlyList<RoutingPreferenceUnbilledPrefix> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The list of RP unbilled prefixes. </summary>

@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.Resources
 {
     /// <summary>
     /// A Class representing a Tenant along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="TenantResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetTenantResource method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="TenantResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetTenantResource method.
     /// </summary>
     public partial class TenantResource : ArmResource
     {
@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.Resources
         private readonly ClientDiagnostics _providersClientDiagnostics;
         private readonly ProvidersRestOperations _providersRestClient;
         private readonly TenantData _data;
+
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Resources/tenants";
 
         /// <summary> Initializes a new instance of the <see cref="TenantResource"/> class for mocking. </summary>
         protected TenantResource()
@@ -56,9 +59,6 @@ namespace Azure.ResourceManager.Resources
 #endif
         }
 
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Resources/tenants";
-
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
 
@@ -80,13 +80,6 @@ namespace Azure.ResourceManager.Resources
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Gets a collection of GenericResources in the Tenant. </summary>
-        /// <returns> An object representing collection of GenericResources and their operations over a GenericResource. </returns>
-        public virtual GenericResourceCollection GetGenericResources()
-        {
-            return GetCachedClient(client => new GenericResourceCollection(client, Id));
-        }
-
         /// <summary> Gets a collection of TenantPolicyDefinitionResources in the Tenant. </summary>
         /// <returns> An object representing collection of TenantPolicyDefinitionResources and their operations over a TenantPolicyDefinitionResource. </returns>
         public virtual TenantPolicyDefinitionCollection GetTenantPolicyDefinitions()
@@ -104,6 +97,14 @@ namespace Azure.ResourceManager.Resources
         /// <item>
         /// <term>Operation Id</term>
         /// <description>PolicyDefinitions_GetBuiltIn</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="TenantPolicyDefinitionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -127,6 +128,14 @@ namespace Azure.ResourceManager.Resources
         /// <item>
         /// <term>Operation Id</term>
         /// <description>PolicyDefinitions_GetBuiltIn</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="TenantPolicyDefinitionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -158,6 +167,14 @@ namespace Azure.ResourceManager.Resources
         /// <term>Operation Id</term>
         /// <description>PolicySetDefinitions_GetBuiltIn</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="TenantPolicySetDefinitionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="policySetDefinitionName"> The name of the policy set definition to get. </param>
@@ -180,6 +197,14 @@ namespace Azure.ResourceManager.Resources
         /// <item>
         /// <term>Operation Id</term>
         /// <description>PolicySetDefinitions_GetBuiltIn</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="TenantPolicySetDefinitionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -211,6 +236,14 @@ namespace Azure.ResourceManager.Resources
         /// <term>Operation Id</term>
         /// <description>DataPolicyManifests_GetByPolicyMode</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataPolicyManifestResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="policyMode"> The policy mode of the data policy manifest to get. </param>
@@ -234,6 +267,14 @@ namespace Azure.ResourceManager.Resources
         /// <term>Operation Id</term>
         /// <description>DataPolicyManifests_GetByPolicyMode</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataPolicyManifestResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="policyMode"> The policy mode of the data policy manifest to get. </param>
@@ -244,6 +285,13 @@ namespace Azure.ResourceManager.Resources
         public virtual Response<DataPolicyManifestResource> GetDataPolicyManifest(string policyMode, CancellationToken cancellationToken = default)
         {
             return GetDataPolicyManifests().Get(policyMode, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of GenericResources in the Tenant. </summary>
+        /// <returns> An object representing collection of GenericResources and their operations over a GenericResource. </returns>
+        public virtual GenericResourceCollection GetGenericResources()
+        {
+            return GetCachedClient(client => new GenericResourceCollection(client, Id));
         }
 
         /// <summary> Gets a collection of SubscriptionResources in the Tenant. </summary>
@@ -263,6 +311,14 @@ namespace Azure.ResourceManager.Resources
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Subscriptions_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SubscriptionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -287,6 +343,14 @@ namespace Azure.ResourceManager.Resources
         /// <term>Operation Id</term>
         /// <description>Subscriptions_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SubscriptionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
@@ -310,16 +374,24 @@ namespace Azure.ResourceManager.Resources
         /// <term>Operation Id</term>
         /// <description>Providers_ListAtTenantScope</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ResourceProviderResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="expand"> The properties to include in the results. For example, use &amp;$expand=metadata in the query string to retrieve resource provider metadata. To include property aliases in response, use $expand=resourceTypes/aliases. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="TenantResourceProvider" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="TenantResourceProvider"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<TenantResourceProvider> GetTenantResourceProvidersAsync(string expand = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _resourceProviderProvidersRestClient.CreateListAtTenantScopeRequest(expand);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _resourceProviderProvidersRestClient.CreateListAtTenantScopeNextPageRequest(nextLink, expand);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, TenantResourceProvider.DeserializeTenantResourceProvider, _resourceProviderProvidersClientDiagnostics, Pipeline, "TenantResource.GetTenantResourceProviders", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => TenantResourceProvider.DeserializeTenantResourceProvider(e), _resourceProviderProvidersClientDiagnostics, Pipeline, "TenantResource.GetTenantResourceProviders", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -333,16 +405,24 @@ namespace Azure.ResourceManager.Resources
         /// <term>Operation Id</term>
         /// <description>Providers_ListAtTenantScope</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ResourceProviderResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="expand"> The properties to include in the results. For example, use &amp;$expand=metadata in the query string to retrieve resource provider metadata. To include property aliases in response, use $expand=resourceTypes/aliases. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="TenantResourceProvider" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="TenantResourceProvider"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<TenantResourceProvider> GetTenantResourceProviders(string expand = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _resourceProviderProvidersRestClient.CreateListAtTenantScopeRequest(expand);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _resourceProviderProvidersRestClient.CreateListAtTenantScopeNextPageRequest(nextLink, expand);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, TenantResourceProvider.DeserializeTenantResourceProvider, _resourceProviderProvidersClientDiagnostics, Pipeline, "TenantResource.GetTenantResourceProviders", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => TenantResourceProvider.DeserializeTenantResourceProvider(e), _resourceProviderProvidersClientDiagnostics, Pipeline, "TenantResource.GetTenantResourceProviders", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -355,6 +435,10 @@ namespace Azure.ResourceManager.Resources
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Providers_GetAtTenantScope</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -391,6 +475,10 @@ namespace Azure.ResourceManager.Resources
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Providers_GetAtTenantScope</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-01</description>
         /// </item>
         /// </list>
         /// </summary>

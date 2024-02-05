@@ -56,6 +56,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Monitor.OpenTelemetry
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Monitor.OpenTelemetry.LiveMetrics.Tests", "Azure.Monitor.OpenTelemetry.LiveMetrics\tests\Azure.Monitor.OpenTelemetry.LiveMetrics.Tests\Azure.Monitor.OpenTelemetry.LiveMetrics.Tests.csproj", "{EA90D06D-D272-4A65-8DDA-6412B3F14572}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Monitor.OpenTelemetry.LiveMetrics.Demo", "Azure.Monitor.OpenTelemetry.LiveMetrics\tests\Azure.Monitor.OpenTelemetry.LiveMetrics.Demo\Azure.Monitor.OpenTelemetry.LiveMetrics.Demo.csproj", "{945FEC31-100B-410D-81D0-A38830A98B80}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -126,6 +128,10 @@ Global
 		{EA90D06D-D272-4A65-8DDA-6412B3F14572}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EA90D06D-D272-4A65-8DDA-6412B3F14572}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EA90D06D-D272-4A65-8DDA-6412B3F14572}.Release|Any CPU.Build.0 = Release|Any CPU
+		{945FEC31-100B-410D-81D0-A38830A98B80}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{945FEC31-100B-410D-81D0-A38830A98B80}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{945FEC31-100B-410D-81D0-A38830A98B80}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{945FEC31-100B-410D-81D0-A38830A98B80}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

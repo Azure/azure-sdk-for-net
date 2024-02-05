@@ -5,12 +5,15 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> The NumericalDataQualityMetricThreshold. </summary>
     public partial class NumericalDataQualityMetricThreshold : DataQualityMetricThresholdBase
     {
-        /// <summary> Initializes a new instance of NumericalDataQualityMetricThreshold. </summary>
+        /// <summary> Initializes a new instance of <see cref="NumericalDataQualityMetricThreshold"/>. </summary>
         /// <param name="metric"> [Required] The numerical data quality metric to calculate. </param>
         public NumericalDataQualityMetricThreshold(NumericalDataQualityMetric metric)
         {
@@ -18,14 +21,20 @@ namespace Azure.ResourceManager.MachineLearning.Models
             DataType = MonitoringFeatureDataType.Numerical;
         }
 
-        /// <summary> Initializes a new instance of NumericalDataQualityMetricThreshold. </summary>
+        /// <summary> Initializes a new instance of <see cref="NumericalDataQualityMetricThreshold"/>. </summary>
         /// <param name="dataType"> [Required] Specifies the data type of the metric threshold. </param>
         /// <param name="threshold"> The threshold value. If null, a default value will be set depending on the selected metric. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="metric"> [Required] The numerical data quality metric to calculate. </param>
-        internal NumericalDataQualityMetricThreshold(MonitoringFeatureDataType dataType, MonitoringThreshold threshold, NumericalDataQualityMetric metric) : base(dataType, threshold)
+        internal NumericalDataQualityMetricThreshold(MonitoringFeatureDataType dataType, MonitoringThreshold threshold, IDictionary<string, BinaryData> serializedAdditionalRawData, NumericalDataQualityMetric metric) : base(dataType, threshold, serializedAdditionalRawData)
         {
             Metric = metric;
             DataType = dataType;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="NumericalDataQualityMetricThreshold"/> for deserialization. </summary>
+        internal NumericalDataQualityMetricThreshold()
+        {
         }
 
         /// <summary> [Required] The numerical data quality metric to calculate. </summary>

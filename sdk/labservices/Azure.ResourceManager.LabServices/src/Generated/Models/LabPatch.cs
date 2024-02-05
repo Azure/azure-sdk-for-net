@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.LabServices.Models
@@ -12,9 +14,32 @@ namespace Azure.ResourceManager.LabServices.Models
     /// <summary> The lab resource for updates. </summary>
     public partial class LabPatch : LabServicesPatchBaseInfo
     {
-        /// <summary> Initializes a new instance of LabPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="LabPatch"/>. </summary>
         public LabPatch()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="LabPatch"/>. </summary>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="autoShutdownProfile"> The resource auto shutdown configuration for the lab. This controls whether actions are taken on resources that are sitting idle. </param>
+        /// <param name="connectionProfile"> The connection profile for the lab. This controls settings such as web access to lab resources or whether RDP or SSH ports are open. </param>
+        /// <param name="virtualMachineProfile"> The profile used for creating lab virtual machines. </param>
+        /// <param name="securityProfile"> The lab security profile. </param>
+        /// <param name="rosterProfile"> The lab user list management profile. </param>
+        /// <param name="labPlanId"> The ID of the lab plan. Used during resource creation to provide defaults and acts as a permission container when creating a lab via labs.azure.com. Setting a labPlanId on an existing lab provides organization.. </param>
+        /// <param name="title"> The title of the lab. </param>
+        /// <param name="description"> The description of the lab. </param>
+        internal LabPatch(IList<string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData, LabAutoShutdownProfile autoShutdownProfile, LabConnectionProfile connectionProfile, LabVirtualMachineProfile virtualMachineProfile, LabSecurityProfile securityProfile, LabRosterProfile rosterProfile, ResourceIdentifier labPlanId, string title, string description) : base(tags, serializedAdditionalRawData)
+        {
+            AutoShutdownProfile = autoShutdownProfile;
+            ConnectionProfile = connectionProfile;
+            VirtualMachineProfile = virtualMachineProfile;
+            SecurityProfile = securityProfile;
+            RosterProfile = rosterProfile;
+            LabPlanId = labPlanId;
+            Title = title;
+            Description = description;
         }
 
         /// <summary> The resource auto shutdown configuration for the lab. This controls whether actions are taken on resources that are sitting idle. </summary>

@@ -10,12 +10,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> Virtual Network Profile. </summary>
     public partial class VirtualNetworkProfile
     {
-        /// <summary> Initializes a new instance of VirtualNetworkProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualNetworkProfile"/>. </summary>
         public VirtualNetworkProfile()
         {
         }
 
-        /// <summary> Initializes a new instance of VirtualNetworkProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualNetworkProfile"/>. </summary>
         /// <param name="computeSubnetId"> Subnet ID used for computes in workspace. </param>
         internal VirtualNetworkProfile(string computeSubnetId)
         {

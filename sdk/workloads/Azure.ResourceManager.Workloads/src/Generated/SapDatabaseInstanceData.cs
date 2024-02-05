@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -19,14 +20,46 @@ namespace Azure.ResourceManager.Workloads
     /// </summary>
     public partial class SapDatabaseInstanceData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of SapDatabaseInstanceData. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SapDatabaseInstanceData"/>. </summary>
         /// <param name="location"> The location. </param>
         public SapDatabaseInstanceData(AzureLocation location) : base(location)
         {
             VmDetails = new ChangeTrackingList<DatabaseVmDetails>();
         }
 
-        /// <summary> Initializes a new instance of SapDatabaseInstanceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SapDatabaseInstanceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -42,7 +75,8 @@ namespace Azure.ResourceManager.Workloads
         /// <param name="status"> Defines the SAP Instance status. </param>
         /// <param name="provisioningState"> Defines the provisioning states. </param>
         /// <param name="errors"> Defines the errors related to Database resource. </param>
-        internal SapDatabaseInstanceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ResourceIdentifier subnetId, string databaseSid, string databaseType, string ipAddress, SubResource loadBalancerDetails, IReadOnlyList<DatabaseVmDetails> vmDetails, SapVirtualInstanceStatus? status, SapVirtualInstanceProvisioningState? provisioningState, SapVirtualInstanceError errors) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SapDatabaseInstanceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ResourceIdentifier subnetId, string databaseSid, string databaseType, string ipAddress, SubResource loadBalancerDetails, IReadOnlyList<DatabaseVmDetails> vmDetails, SapVirtualInstanceStatus? status, SapVirtualInstanceProvisioningState? provisioningState, SapVirtualInstanceError errors, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             SubnetId = subnetId;
             DatabaseSid = databaseSid;
@@ -53,6 +87,12 @@ namespace Azure.ResourceManager.Workloads
             Status = status;
             ProvisioningState = provisioningState;
             Errors = errors;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SapDatabaseInstanceData"/> for deserialization. </summary>
+        internal SapDatabaseInstanceData()
+        {
         }
 
         /// <summary> Database subnet. </summary>

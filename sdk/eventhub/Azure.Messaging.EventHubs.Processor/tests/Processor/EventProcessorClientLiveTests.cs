@@ -980,7 +980,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             await processor.StartProcessingAsync(cancellationSource.Token);
 
-            await Task.WhenAny(completionSource.Task, Task.Delay(Timeout.Infinite, cancellationSource.Token));
+            await completionSource.Task.AwaitWithCancellation(cancellationSource.Token);
             Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The cancellation token should not have been signaled.");
 
             await processor.StopProcessingAsync(cancellationSource.Token);

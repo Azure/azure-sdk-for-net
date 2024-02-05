@@ -6,25 +6,59 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
     /// <summary> Additional information on Azure IaaS VM specific backup item. </summary>
     public partial class IaasVmProtectedItemExtendedInfo
     {
-        /// <summary> Initializes a new instance of IaasVmProtectedItemExtendedInfo. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="IaasVmProtectedItemExtendedInfo"/>. </summary>
         public IaasVmProtectedItemExtendedInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of IaasVmProtectedItemExtendedInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="IaasVmProtectedItemExtendedInfo"/>. </summary>
         /// <param name="oldestRecoverOn"> The oldest backup copy available for this backup item across all tiers. </param>
         /// <param name="oldestRecoveryPointInVault"> The oldest backup copy available for this backup item in vault tier. </param>
         /// <param name="oldestRecoveryPointInArchive"> The oldest backup copy available for this backup item in archive tier. </param>
         /// <param name="newestRecoveryPointInArchive"> The latest backup copy available for this backup item in archive tier. </param>
         /// <param name="recoveryPointCount"> Number of backup copies available for this backup item. </param>
         /// <param name="isPolicyInconsistent"> Specifies if backup policy associated with the backup item is inconsistent. </param>
-        internal IaasVmProtectedItemExtendedInfo(DateTimeOffset? oldestRecoverOn, DateTimeOffset? oldestRecoveryPointInVault, DateTimeOffset? oldestRecoveryPointInArchive, DateTimeOffset? newestRecoveryPointInArchive, int? recoveryPointCount, bool? isPolicyInconsistent)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal IaasVmProtectedItemExtendedInfo(DateTimeOffset? oldestRecoverOn, DateTimeOffset? oldestRecoveryPointInVault, DateTimeOffset? oldestRecoveryPointInArchive, DateTimeOffset? newestRecoveryPointInArchive, int? recoveryPointCount, bool? isPolicyInconsistent, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             OldestRecoverOn = oldestRecoverOn;
             OldestRecoveryPointInVault = oldestRecoveryPointInVault;
@@ -32,6 +66,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             NewestRecoveryPointInArchive = newestRecoveryPointInArchive;
             RecoveryPointCount = recoveryPointCount;
             IsPolicyInconsistent = isPolicyInconsistent;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The oldest backup copy available for this backup item across all tiers. </summary>

@@ -14,7 +14,39 @@ namespace Azure.ResourceManager.ProviderHub.Models
     /// <summary> The ResourceProviderManifest. </summary>
     public partial class ResourceProviderManifest
     {
-        /// <summary> Initializes a new instance of ResourceProviderManifest. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ResourceProviderManifest"/>. </summary>
         internal ResourceProviderManifest()
         {
             ProviderAuthorizations = new ChangeTrackingList<ResourceProviderAuthorization>();
@@ -24,7 +56,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             GlobalNotificationEndpoints = new ChangeTrackingList<ResourceProviderEndpoint>();
         }
 
-        /// <summary> Initializes a new instance of ResourceProviderManifest. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceProviderManifest"/>. </summary>
         /// <param name="providerAuthentication"></param>
         /// <param name="providerAuthorizations"></param>
         /// <param name="namespace"></param>
@@ -39,7 +71,8 @@ namespace Azure.ResourceManager.ProviderHub.Models
         /// <param name="metadata"> Anything. </param>
         /// <param name="globalNotificationEndpoints"></param>
         /// <param name="reRegisterSubscriptionMetadata"></param>
-        internal ResourceProviderManifest(ResourceProviderAuthentication providerAuthentication, IReadOnlyList<ResourceProviderAuthorization> providerAuthorizations, string @namespace, string providerVersion, ResourceProviderType? providerType, IReadOnlyList<string> requiredFeatures, FeaturesRule featuresRule, RequestHeaderOptions requestHeaderOptions, IReadOnlyList<ProviderResourceType> resourceTypes, ResourceProviderManagement management, IReadOnlyList<ResourceProviderCapabilities> capabilities, BinaryData metadata, IReadOnlyList<ResourceProviderEndpoint> globalNotificationEndpoints, ReRegisterSubscriptionMetadata reRegisterSubscriptionMetadata)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ResourceProviderManifest(ResourceProviderAuthentication providerAuthentication, IReadOnlyList<ResourceProviderAuthorization> providerAuthorizations, string @namespace, string providerVersion, ResourceProviderType? providerType, IReadOnlyList<string> requiredFeatures, FeaturesRule featuresRule, RequestHeaderOptions requestHeaderOptions, IReadOnlyList<ProviderResourceType> resourceTypes, ResourceProviderManagement management, IReadOnlyList<ResourceProviderCapabilities> capabilities, BinaryData metadata, IReadOnlyList<ResourceProviderEndpoint> globalNotificationEndpoints, ReRegisterSubscriptionMetadata reRegisterSubscriptionMetadata, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ProviderAuthentication = providerAuthentication;
             ProviderAuthorizations = providerAuthorizations;
@@ -55,6 +88,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             Metadata = metadata;
             GlobalNotificationEndpoints = globalNotificationEndpoints;
             ReRegisterSubscriptionMetadata = reRegisterSubscriptionMetadata;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets the provider authentication. </summary>

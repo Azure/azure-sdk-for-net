@@ -19,9 +19,9 @@ namespace Azure.ResourceManager.Sql
 {
     /// <summary>
     /// A Class representing a ManagedDatabaseRestoreDetail along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="ManagedDatabaseRestoreDetailResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetManagedDatabaseRestoreDetailResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ManagedDatabaseResource" /> using the GetManagedDatabaseRestoreDetail method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ManagedDatabaseRestoreDetailResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetManagedDatabaseRestoreDetailResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ManagedDatabaseResource"/> using the GetManagedDatabaseRestoreDetail method.
     /// </summary>
     public partial class ManagedDatabaseRestoreDetailResource : ArmResource
     {
@@ -41,12 +41,15 @@ namespace Azure.ResourceManager.Sql
         private readonly ManagedDatabaseRestoreDetailsRestOperations _managedDatabaseRestoreDetailRestClient;
         private readonly ManagedDatabaseRestoreDetailData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Sql/managedInstances/databases/restoreDetails";
+
         /// <summary> Initializes a new instance of the <see cref="ManagedDatabaseRestoreDetailResource"/> class for mocking. </summary>
         protected ManagedDatabaseRestoreDetailResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "ManagedDatabaseRestoreDetailResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ManagedDatabaseRestoreDetailResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal ManagedDatabaseRestoreDetailResource(ArmClient client, ManagedDatabaseRestoreDetailData data) : this(client, data.Id)
@@ -67,9 +70,6 @@ namespace Azure.ResourceManager.Sql
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Sql/managedInstances/databases/restoreDetails";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -103,6 +103,14 @@ namespace Azure.ResourceManager.Sql
         /// <term>Operation Id</term>
         /// <description>ManagedDatabaseRestoreDetails_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-05-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ManagedDatabaseRestoreDetailResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -134,6 +142,14 @@ namespace Azure.ResourceManager.Sql
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ManagedDatabaseRestoreDetails_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-05-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ManagedDatabaseRestoreDetailResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

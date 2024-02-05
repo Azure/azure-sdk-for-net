@@ -5,16 +5,73 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Storage.Models
 {
     /// <summary> Lease Container request schema. </summary>
     public partial class LeaseContainerContent
     {
-        /// <summary> Initializes a new instance of LeaseContainerContent. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="LeaseContainerContent"/>. </summary>
         /// <param name="action"> Specifies the lease action. Can be one of the available actions. </param>
         public LeaseContainerContent(LeaseContainerAction action)
         {
             Action = action;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="LeaseContainerContent"/>. </summary>
+        /// <param name="action"> Specifies the lease action. Can be one of the available actions. </param>
+        /// <param name="leaseId"> Identifies the lease. Can be specified in any valid GUID string format. </param>
+        /// <param name="breakPeriod"> Optional. For a break action, proposed duration the lease should continue before it is broken, in seconds, between 0 and 60. </param>
+        /// <param name="leaseDuration"> Required for acquire. Specifies the duration of the lease, in seconds, or negative one (-1) for a lease that never expires. </param>
+        /// <param name="proposedLeaseId"> Optional for acquire, required for change. Proposed lease ID, in a GUID string format. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal LeaseContainerContent(LeaseContainerAction action, string leaseId, int? breakPeriod, int? leaseDuration, string proposedLeaseId, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Action = action;
+            LeaseId = leaseId;
+            BreakPeriod = breakPeriod;
+            LeaseDuration = leaseDuration;
+            ProposedLeaseId = proposedLeaseId;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="LeaseContainerContent"/> for deserialization. </summary>
+        internal LeaseContainerContent()
+        {
         }
 
         /// <summary> Specifies the lease action. Can be one of the available actions. </summary>

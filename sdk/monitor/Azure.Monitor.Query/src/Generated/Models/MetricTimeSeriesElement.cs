@@ -13,14 +13,14 @@ namespace Azure.Monitor.Query.Models
     /// <summary> A time series result type. The discriminator value is always TimeSeries in this case. </summary>
     public partial class MetricTimeSeriesElement
     {
-        /// <summary> Initializes a new instance of MetricTimeSeriesElement. </summary>
+        /// <summary> Initializes a new instance of <see cref="MetricTimeSeriesElement"/>. </summary>
         internal MetricTimeSeriesElement()
         {
             Metadatavalues = new ChangeTrackingList<MetadataValue>();
             Values = new ChangeTrackingList<MetricValue>();
         }
 
-        /// <summary> Initializes a new instance of MetricTimeSeriesElement. </summary>
+        /// <summary> Initializes a new instance of <see cref="MetricTimeSeriesElement"/>. </summary>
         /// <param name="metadatavalues"> the metadata values returned if $filter was specified in the call. </param>
         /// <param name="values"> An array of data points representing the metric values.  This is only returned if a result type of data is specified. </param>
         internal MetricTimeSeriesElement(IReadOnlyList<MetadataValue> metadatavalues, IReadOnlyList<MetricValue> values)

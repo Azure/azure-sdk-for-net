@@ -5,23 +5,60 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Logic.Models
 {
     /// <summary> The swagger custom dynamic tree settings. </summary>
     public partial class SwaggerCustomDynamicTreeSettings
     {
-        /// <summary> Initializes a new instance of SwaggerCustomDynamicTreeSettings. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SwaggerCustomDynamicTreeSettings"/>. </summary>
         public SwaggerCustomDynamicTreeSettings()
         {
         }
 
-        /// <summary> Initializes a new instance of SwaggerCustomDynamicTreeSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="SwaggerCustomDynamicTreeSettings"/>. </summary>
         /// <param name="canSelectParentNodes"> Indicates whether parent nodes can be selected. </param>
         /// <param name="canSelectLeafNodes"> Indicates whether leaf nodes can be selected. </param>
-        internal SwaggerCustomDynamicTreeSettings(bool? canSelectParentNodes, bool? canSelectLeafNodes)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SwaggerCustomDynamicTreeSettings(bool? canSelectParentNodes, bool? canSelectLeafNodes, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             CanSelectParentNodes = canSelectParentNodes;
             CanSelectLeafNodes = canSelectLeafNodes;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Indicates whether parent nodes can be selected. </summary>

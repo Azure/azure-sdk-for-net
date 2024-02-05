@@ -5,14 +5,40 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
     /// <summary> The Network Fabric resource definition. </summary>
     public partial class NetworkFabricPatch : NetworkRackPatch
     {
-        /// <summary> Initializes a new instance of NetworkFabricPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkFabricPatch"/>. </summary>
         public NetworkFabricPatch()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="NetworkFabricPatch"/>. </summary>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="annotation"> Switch configuration description. </param>
+        /// <param name="rackCount"> Number of compute racks associated to Network Fabric. </param>
+        /// <param name="serverCountPerRack"> Number of servers.Possible values are from 1-16. </param>
+        /// <param name="ipv4Prefix"> IPv4Prefix for Management Network. Example: 10.1.0.0/19. </param>
+        /// <param name="ipv6Prefix"> IPv6Prefix for Management Network. Example: 3FFE:FFFF:0:CD40::/59. </param>
+        /// <param name="fabricAsn"> ASN of CE devices for CE/PE connectivity. </param>
+        /// <param name="terminalServerConfiguration"> Network and credentials configuration already applied to terminal server. </param>
+        /// <param name="managementNetworkConfiguration"> Configuration to be used to setup the management network. </param>
+        internal NetworkFabricPatch(IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData, string annotation, int? rackCount, int? serverCountPerRack, string ipv4Prefix, string ipv6Prefix, long? fabricAsn, NetworkFabricPatchablePropertiesTerminalServerConfiguration terminalServerConfiguration, ManagementNetworkConfigurationPatchableProperties managementNetworkConfiguration) : base(tags, serializedAdditionalRawData)
+        {
+            Annotation = annotation;
+            RackCount = rackCount;
+            ServerCountPerRack = serverCountPerRack;
+            IPv4Prefix = ipv4Prefix;
+            IPv6Prefix = ipv6Prefix;
+            FabricAsn = fabricAsn;
+            TerminalServerConfiguration = terminalServerConfiguration;
+            ManagementNetworkConfiguration = managementNetworkConfiguration;
         }
 
         /// <summary> Switch configuration description. </summary>

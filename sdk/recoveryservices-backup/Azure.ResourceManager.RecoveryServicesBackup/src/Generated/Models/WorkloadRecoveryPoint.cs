@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// </summary>
     public partial class WorkloadRecoveryPoint : BackupGenericRecoveryPoint
     {
-        /// <summary> Initializes a new instance of WorkloadRecoveryPoint. </summary>
+        /// <summary> Initializes a new instance of <see cref="WorkloadRecoveryPoint"/>. </summary>
         public WorkloadRecoveryPoint()
         {
             RecoveryPointTierDetails = new ChangeTrackingList<RecoveryPointTierInformationV2>();
@@ -26,14 +26,15 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             ObjectType = "AzureWorkloadRecoveryPoint";
         }
 
-        /// <summary> Initializes a new instance of WorkloadRecoveryPoint. </summary>
+        /// <summary> Initializes a new instance of <see cref="WorkloadRecoveryPoint"/>. </summary>
         /// <param name="objectType"> This property will be used as the discriminator for deciding the specific types in the polymorphic chain of types. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="recoveryPointCreatedOn"> UTC time at which recovery point was created. </param>
         /// <param name="restorePointType"> Type of restore point. </param>
         /// <param name="recoveryPointTierDetails"> Recovery point tier information. </param>
         /// <param name="recoveryPointMoveReadinessInfo"> Eligibility of RP to be moved to another tier. </param>
         /// <param name="recoveryPointProperties"> Properties of Recovery Point. </param>
-        internal WorkloadRecoveryPoint(string objectType, DateTimeOffset? recoveryPointCreatedOn, RestorePointType? restorePointType, IList<RecoveryPointTierInformationV2> recoveryPointTierDetails, IDictionary<string, RecoveryPointMoveReadinessInfo> recoveryPointMoveReadinessInfo, RecoveryPointProperties recoveryPointProperties) : base(objectType)
+        internal WorkloadRecoveryPoint(string objectType, IDictionary<string, BinaryData> serializedAdditionalRawData, DateTimeOffset? recoveryPointCreatedOn, RestorePointType? restorePointType, IList<RecoveryPointTierInformationV2> recoveryPointTierDetails, IDictionary<string, RecoveryPointMoveReadinessInfo> recoveryPointMoveReadinessInfo, RecoveryPointProperties recoveryPointProperties) : base(objectType, serializedAdditionalRawData)
         {
             RecoveryPointCreatedOn = recoveryPointCreatedOn;
             RestorePointType = restorePointType;

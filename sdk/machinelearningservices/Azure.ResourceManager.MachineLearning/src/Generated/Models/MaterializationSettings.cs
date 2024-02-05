@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,25 +14,59 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> The MaterializationSettings. </summary>
     public partial class MaterializationSettings
     {
-        /// <summary> Initializes a new instance of MaterializationSettings. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="MaterializationSettings"/>. </summary>
         public MaterializationSettings()
         {
             SparkConfiguration = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of MaterializationSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="MaterializationSettings"/>. </summary>
         /// <param name="notification"> Specifies the notification details. </param>
         /// <param name="resource"> Specifies the compute resource settings. </param>
         /// <param name="schedule"> Specifies the schedule details. </param>
         /// <param name="sparkConfiguration"> Specifies the spark compute settings. </param>
         /// <param name="storeType"> Specifies the stores to which materialization should happen. </param>
-        internal MaterializationSettings(NotificationSetting notification, MaterializationComputeResource resource, MachineLearningRecurrenceTrigger schedule, IDictionary<string, string> sparkConfiguration, MaterializationStoreType? storeType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MaterializationSettings(NotificationSetting notification, MaterializationComputeResource resource, MachineLearningRecurrenceTrigger schedule, IDictionary<string, string> sparkConfiguration, MaterializationStoreType? storeType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Notification = notification;
             Resource = resource;
             Schedule = schedule;
             SparkConfiguration = sparkConfiguration;
             StoreType = storeType;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Specifies the notification details. </summary>

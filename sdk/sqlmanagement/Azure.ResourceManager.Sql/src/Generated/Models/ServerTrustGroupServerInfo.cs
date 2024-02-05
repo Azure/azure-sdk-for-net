@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Sql.Models
@@ -13,7 +14,39 @@ namespace Azure.ResourceManager.Sql.Models
     /// <summary> Server info for the server trust group. </summary>
     public partial class ServerTrustGroupServerInfo
     {
-        /// <summary> Initializes a new instance of ServerTrustGroupServerInfo. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ServerTrustGroupServerInfo"/>. </summary>
         /// <param name="serverId"> Server Id. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="serverId"/> is null. </exception>
         public ServerTrustGroupServerInfo(ResourceIdentifier serverId)
@@ -21,6 +54,20 @@ namespace Azure.ResourceManager.Sql.Models
             Argument.AssertNotNull(serverId, nameof(serverId));
 
             ServerId = serverId;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ServerTrustGroupServerInfo"/>. </summary>
+        /// <param name="serverId"> Server Id. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ServerTrustGroupServerInfo(ResourceIdentifier serverId, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            ServerId = serverId;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ServerTrustGroupServerInfo"/> for deserialization. </summary>
+        internal ServerTrustGroupServerInfo()
+        {
         }
 
         /// <summary> Server Id. </summary>

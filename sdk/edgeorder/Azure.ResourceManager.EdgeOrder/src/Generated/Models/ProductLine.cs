@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,7 +14,39 @@ namespace Azure.ResourceManager.EdgeOrder.Models
     /// <summary> Product line. </summary>
     public partial class ProductLine
     {
-        /// <summary> Initializes a new instance of ProductLine. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ProductLine"/>. </summary>
         internal ProductLine()
         {
             ImageInformation = new ChangeTrackingList<EdgeOrderProductImageInformation>();
@@ -21,7 +54,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             Products = new ChangeTrackingList<EdgeOrderProduct>();
         }
 
-        /// <summary> Initializes a new instance of ProductLine. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProductLine"/>. </summary>
         /// <param name="displayName"> Display Name for the product system. </param>
         /// <param name="description"> Description related to the product system. </param>
         /// <param name="imageInformation"> Image information for the product system. </param>
@@ -30,7 +63,8 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         /// <param name="hierarchyInformation"> Hierarchy information of a product. </param>
         /// <param name="filterableProperties"> list of filters supported for a product. </param>
         /// <param name="products"> List of products in the product line. </param>
-        internal ProductLine(string displayName, ProductDescription description, IReadOnlyList<EdgeOrderProductImageInformation> imageInformation, EdgeOrderProductCostInformation costInformation, ProductAvailabilityInformation availabilityInformation, HierarchyInformation hierarchyInformation, IReadOnlyList<FilterableProperty> filterableProperties, IReadOnlyList<EdgeOrderProduct> products)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ProductLine(string displayName, ProductDescription description, IReadOnlyList<EdgeOrderProductImageInformation> imageInformation, EdgeOrderProductCostInformation costInformation, ProductAvailabilityInformation availabilityInformation, HierarchyInformation hierarchyInformation, IReadOnlyList<FilterableProperty> filterableProperties, IReadOnlyList<EdgeOrderProduct> products, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             DisplayName = displayName;
             Description = description;
@@ -40,6 +74,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             HierarchyInformation = hierarchyInformation;
             FilterableProperties = filterableProperties;
             Products = products;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Display Name for the product system. </summary>

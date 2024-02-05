@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,21 +14,55 @@ namespace Azure.ResourceManager.Support.Models
     /// <summary> Additional set of information required for quota increase support ticket for certain quota types, e.g.: Virtual machine cores. Get complete details about Quota payload support request along with examples at [Support quota request](https://aka.ms/supportrpquotarequestpayload). </summary>
     public partial class QuotaTicketDetails
     {
-        /// <summary> Initializes a new instance of QuotaTicketDetails. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="QuotaTicketDetails"/>. </summary>
         public QuotaTicketDetails()
         {
             QuotaChangeRequests = new ChangeTrackingList<SupportQuotaChangeContent>();
         }
 
-        /// <summary> Initializes a new instance of QuotaTicketDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="QuotaTicketDetails"/>. </summary>
         /// <param name="quotaChangeRequestSubType"> Required for certain quota types when there is a sub type, such as Batch, for which you are requesting a quota increase. </param>
         /// <param name="quotaChangeRequestVersion"> Quota change request version. </param>
         /// <param name="quotaChangeRequests"> This property is required for providing the region and new quota limits. </param>
-        internal QuotaTicketDetails(string quotaChangeRequestSubType, string quotaChangeRequestVersion, IList<SupportQuotaChangeContent> quotaChangeRequests)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal QuotaTicketDetails(string quotaChangeRequestSubType, string quotaChangeRequestVersion, IList<SupportQuotaChangeContent> quotaChangeRequests, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             QuotaChangeRequestSubType = quotaChangeRequestSubType;
             QuotaChangeRequestVersion = quotaChangeRequestVersion;
             QuotaChangeRequests = quotaChangeRequests;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Required for certain quota types when there is a sub type, such as Batch, for which you are requesting a quota increase. </summary>

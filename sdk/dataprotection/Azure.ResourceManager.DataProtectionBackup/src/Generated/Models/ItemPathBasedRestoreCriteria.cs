@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
     /// <summary> Prefix criteria to be used to during restore. </summary>
     public partial class ItemPathBasedRestoreCriteria : ItemLevelRestoreCriteria
     {
-        /// <summary> Initializes a new instance of ItemPathBasedRestoreCriteria. </summary>
+        /// <summary> Initializes a new instance of <see cref="ItemPathBasedRestoreCriteria"/>. </summary>
         /// <param name="itemPath"> The path of the item to be restored. It could be the full path of the item or the path relative to the backup item. </param>
         /// <param name="isPathRelativeToBackupItem"> Flag to specify if the path is relative to backup item or full path. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="itemPath"/> is null. </exception>
@@ -26,6 +26,25 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             IsPathRelativeToBackupItem = isPathRelativeToBackupItem;
             SubItemPathPrefix = new ChangeTrackingList<string>();
             ObjectType = "ItemPathBasedRestoreCriteria";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ItemPathBasedRestoreCriteria"/>. </summary>
+        /// <param name="objectType"> Type of the specific object - used for deserializing. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="itemPath"> The path of the item to be restored. It could be the full path of the item or the path relative to the backup item. </param>
+        /// <param name="isPathRelativeToBackupItem"> Flag to specify if the path is relative to backup item or full path. </param>
+        /// <param name="subItemPathPrefix"> The list of prefix strings to be used as filter criteria during restore. These are relative to the item path specified. </param>
+        internal ItemPathBasedRestoreCriteria(string objectType, IDictionary<string, BinaryData> serializedAdditionalRawData, string itemPath, bool isPathRelativeToBackupItem, IList<string> subItemPathPrefix) : base(objectType, serializedAdditionalRawData)
+        {
+            ItemPath = itemPath;
+            IsPathRelativeToBackupItem = isPathRelativeToBackupItem;
+            SubItemPathPrefix = subItemPathPrefix;
+            ObjectType = objectType ?? "ItemPathBasedRestoreCriteria";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ItemPathBasedRestoreCriteria"/> for deserialization. </summary>
+        internal ItemPathBasedRestoreCriteria()
+        {
         }
 
         /// <summary> The path of the item to be restored. It could be the full path of the item or the path relative to the backup item. </summary>

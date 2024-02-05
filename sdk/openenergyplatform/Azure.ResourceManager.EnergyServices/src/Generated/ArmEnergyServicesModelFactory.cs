@@ -17,17 +17,17 @@ namespace Azure.ResourceManager.EnergyServices.Models
     /// <summary> Model factory for models. </summary>
     public static partial class ArmEnergyServicesModelFactory
     {
-        /// <summary> Initializes a new instance of EnergyServiceNameAvailabilityResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.EnergyServiceNameAvailabilityResult"/>. </summary>
         /// <param name="nameAvailable"> Indicates if the resource name is available. </param>
         /// <param name="reason"> The reason why the given name is not available. </param>
         /// <param name="message"> Detailed reason why the given name is available. </param>
         /// <returns> A new <see cref="Models.EnergyServiceNameAvailabilityResult"/> instance for mocking. </returns>
         public static EnergyServiceNameAvailabilityResult EnergyServiceNameAvailabilityResult(bool? nameAvailable = null, EnergyServiceNameUnavailableReason? reason = null, string message = null)
         {
-            return new EnergyServiceNameAvailabilityResult(nameAvailable, reason, message);
+            return new EnergyServiceNameAvailabilityResult(nameAvailable, reason, message, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of EnergyServiceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="EnergyServices.EnergyServiceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -40,10 +40,10 @@ namespace Azure.ResourceManager.EnergyServices.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new EnergyServiceData(id, name, resourceType, systemData, tags, location, properties);
+            return new EnergyServiceData(id, name, resourceType, systemData, tags, location, properties, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of EnergyServiceProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.EnergyServiceProperties"/>. </summary>
         /// <param name="dnsName"></param>
         /// <param name="provisioningState"></param>
         /// <param name="authAppId"></param>
@@ -53,26 +53,26 @@ namespace Azure.ResourceManager.EnergyServices.Models
         {
             dataPartitionNames ??= new List<DataPartitionName>();
 
-            return new EnergyServiceProperties(dnsName, provisioningState, authAppId, dataPartitionNames?.ToList());
+            return new EnergyServiceProperties(dnsName, provisioningState, authAppId, dataPartitionNames?.ToList(), serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of DataPartitionsListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.DataPartitionsListResult"/>. </summary>
         /// <param name="dataPartitionInfo"> List of data partitions along with their properties in a given OEP resource. </param>
         /// <returns> A new <see cref="Models.DataPartitionsListResult"/> instance for mocking. </returns>
         public static DataPartitionsListResult DataPartitionsListResult(IEnumerable<DataPartition> dataPartitionInfo = null)
         {
             dataPartitionInfo ??= new List<DataPartition>();
 
-            return new DataPartitionsListResult(dataPartitionInfo?.ToList());
+            return new DataPartitionsListResult(dataPartitionInfo?.ToList(), serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of DataPartition. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.DataPartition"/>. </summary>
         /// <param name="name"> Name of the data partition. </param>
         /// <param name="provisioningState"> Name of the data partition. </param>
         /// <returns> A new <see cref="Models.DataPartition"/> instance for mocking. </returns>
         public static DataPartition DataPartition(string name = null, string provisioningState = null)
         {
-            return new DataPartition(name, provisioningState);
+            return new DataPartition(name, provisioningState, serializedAdditionalRawData: null);
         }
     }
 }

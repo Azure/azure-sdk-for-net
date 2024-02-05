@@ -68,10 +68,18 @@ namespace Azure.ResourceManager.HDInsight.Containers.Mocking
         /// <term>Operation Id</term>
         /// <description>ClusterPools_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HDInsightClusterPoolResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="HDInsightClusterPoolResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="HDInsightClusterPoolResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<HDInsightClusterPoolResource> GetHDInsightClusterPoolsAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => HDInsightClusterPoolClusterPoolsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
@@ -90,10 +98,18 @@ namespace Azure.ResourceManager.HDInsight.Containers.Mocking
         /// <term>Operation Id</term>
         /// <description>ClusterPools_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HDInsightClusterPoolResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="HDInsightClusterPoolResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="HDInsightClusterPoolResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<HDInsightClusterPoolResource> GetHDInsightClusterPools(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => HDInsightClusterPoolClusterPoolsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
@@ -111,6 +127,10 @@ namespace Azure.ResourceManager.HDInsight.Containers.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Locations_CheckNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -147,6 +167,10 @@ namespace Azure.ResourceManager.HDInsight.Containers.Mocking
         /// <term>Operation Id</term>
         /// <description>Locations_CheckNameAvailability</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01-preview</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="location"> The name of the Azure region. </param>
@@ -182,16 +206,20 @@ namespace Azure.ResourceManager.HDInsight.Containers.Mocking
         /// <term>Operation Id</term>
         /// <description>AvailableClusterPoolVersions_ListByLocation</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01-preview</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="location"> The name of the Azure region. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ClusterPoolVersion" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="ClusterPoolVersion"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ClusterPoolVersion> GetAvailableClusterPoolVersionsByLocationAsync(AzureLocation location, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => AvailableClusterPoolVersionsRestClient.CreateListByLocationRequest(Id.SubscriptionId, location);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => AvailableClusterPoolVersionsRestClient.CreateListByLocationNextPageRequest(nextLink, Id.SubscriptionId, location);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, ClusterPoolVersion.DeserializeClusterPoolVersion, AvailableClusterPoolVersionsClientDiagnostics, Pipeline, "MockableHDInsightContainersSubscriptionResource.GetAvailableClusterPoolVersionsByLocation", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => ClusterPoolVersion.DeserializeClusterPoolVersion(e), AvailableClusterPoolVersionsClientDiagnostics, Pipeline, "MockableHDInsightContainersSubscriptionResource.GetAvailableClusterPoolVersionsByLocation", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -205,16 +233,20 @@ namespace Azure.ResourceManager.HDInsight.Containers.Mocking
         /// <term>Operation Id</term>
         /// <description>AvailableClusterPoolVersions_ListByLocation</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01-preview</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="location"> The name of the Azure region. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ClusterPoolVersion" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ClusterPoolVersion"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ClusterPoolVersion> GetAvailableClusterPoolVersionsByLocation(AzureLocation location, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => AvailableClusterPoolVersionsRestClient.CreateListByLocationRequest(Id.SubscriptionId, location);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => AvailableClusterPoolVersionsRestClient.CreateListByLocationNextPageRequest(nextLink, Id.SubscriptionId, location);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, ClusterPoolVersion.DeserializeClusterPoolVersion, AvailableClusterPoolVersionsClientDiagnostics, Pipeline, "MockableHDInsightContainersSubscriptionResource.GetAvailableClusterPoolVersionsByLocation", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => ClusterPoolVersion.DeserializeClusterPoolVersion(e), AvailableClusterPoolVersionsClientDiagnostics, Pipeline, "MockableHDInsightContainersSubscriptionResource.GetAvailableClusterPoolVersionsByLocation", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -228,16 +260,20 @@ namespace Azure.ResourceManager.HDInsight.Containers.Mocking
         /// <term>Operation Id</term>
         /// <description>AvailableClusterVersions_ListByLocation</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01-preview</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="location"> The name of the Azure region. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="HDInsightClusterVersion" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="HDInsightClusterVersion"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<HDInsightClusterVersion> GetAvailableClusterVersionsByLocationAsync(AzureLocation location, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => AvailableClusterVersionsRestClient.CreateListByLocationRequest(Id.SubscriptionId, location);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => AvailableClusterVersionsRestClient.CreateListByLocationNextPageRequest(nextLink, Id.SubscriptionId, location);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, HDInsightClusterVersion.DeserializeHDInsightClusterVersion, AvailableClusterVersionsClientDiagnostics, Pipeline, "MockableHDInsightContainersSubscriptionResource.GetAvailableClusterVersionsByLocation", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => HDInsightClusterVersion.DeserializeHDInsightClusterVersion(e), AvailableClusterVersionsClientDiagnostics, Pipeline, "MockableHDInsightContainersSubscriptionResource.GetAvailableClusterVersionsByLocation", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -251,16 +287,20 @@ namespace Azure.ResourceManager.HDInsight.Containers.Mocking
         /// <term>Operation Id</term>
         /// <description>AvailableClusterVersions_ListByLocation</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01-preview</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="location"> The name of the Azure region. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="HDInsightClusterVersion" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="HDInsightClusterVersion"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<HDInsightClusterVersion> GetAvailableClusterVersionsByLocation(AzureLocation location, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => AvailableClusterVersionsRestClient.CreateListByLocationRequest(Id.SubscriptionId, location);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => AvailableClusterVersionsRestClient.CreateListByLocationNextPageRequest(nextLink, Id.SubscriptionId, location);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, HDInsightClusterVersion.DeserializeHDInsightClusterVersion, AvailableClusterVersionsClientDiagnostics, Pipeline, "MockableHDInsightContainersSubscriptionResource.GetAvailableClusterVersionsByLocation", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => HDInsightClusterVersion.DeserializeHDInsightClusterVersion(e), AvailableClusterVersionsClientDiagnostics, Pipeline, "MockableHDInsightContainersSubscriptionResource.GetAvailableClusterVersionsByLocation", "value", "nextLink", cancellationToken);
         }
     }
 }

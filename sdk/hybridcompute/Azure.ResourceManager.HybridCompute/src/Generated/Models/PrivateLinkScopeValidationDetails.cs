@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,28 +14,62 @@ namespace Azure.ResourceManager.HybridCompute.Models
     /// <summary> The PrivateLinkScopeValidationDetails. </summary>
     public partial class PrivateLinkScopeValidationDetails
     {
-        /// <summary> Initializes a new instance of PrivateLinkScopeValidationDetails. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="PrivateLinkScopeValidationDetails"/>. </summary>
         internal PrivateLinkScopeValidationDetails()
         {
-            ConnectionDetails = new ChangeTrackingList<ConnectionDetail>();
+            ConnectionDetails = new ChangeTrackingList<HybridComputeConnectionDetail>();
         }
 
-        /// <summary> Initializes a new instance of PrivateLinkScopeValidationDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="PrivateLinkScopeValidationDetails"/>. </summary>
         /// <param name="id"> Azure resource Id. </param>
         /// <param name="publicNetworkAccess"> Indicates whether machines associated with the private link scope can also use public Azure Arc service endpoints. </param>
         /// <param name="connectionDetails"> List of Private Endpoint Connection details. </param>
-        internal PrivateLinkScopeValidationDetails(string id, PublicNetworkAccessType? publicNetworkAccess, IReadOnlyList<ConnectionDetail> connectionDetails)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal PrivateLinkScopeValidationDetails(ResourceIdentifier id, HybridComputePublicNetworkAccessType? publicNetworkAccess, IReadOnlyList<HybridComputeConnectionDetail> connectionDetails, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Id = id;
             PublicNetworkAccess = publicNetworkAccess;
             ConnectionDetails = connectionDetails;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Azure resource Id. </summary>
-        public string Id { get; }
+        public ResourceIdentifier Id { get; }
         /// <summary> Indicates whether machines associated with the private link scope can also use public Azure Arc service endpoints. </summary>
-        public PublicNetworkAccessType? PublicNetworkAccess { get; }
+        public HybridComputePublicNetworkAccessType? PublicNetworkAccess { get; }
         /// <summary> List of Private Endpoint Connection details. </summary>
-        public IReadOnlyList<ConnectionDetail> ConnectionDetails { get; }
+        public IReadOnlyList<HybridComputeConnectionDetail> ConnectionDetails { get; }
     }
 }

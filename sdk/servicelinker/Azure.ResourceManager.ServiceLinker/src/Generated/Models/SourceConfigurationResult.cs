@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,17 +14,51 @@ namespace Azure.ResourceManager.ServiceLinker.Models
     /// <summary> Configurations for source resource, include appSettings, connectionString and serviceBindings. </summary>
     public partial class SourceConfigurationResult
     {
-        /// <summary> Initializes a new instance of SourceConfigurationResult. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SourceConfigurationResult"/>. </summary>
         internal SourceConfigurationResult()
         {
             Configurations = new ChangeTrackingList<SourceConfiguration>();
         }
 
-        /// <summary> Initializes a new instance of SourceConfigurationResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="SourceConfigurationResult"/>. </summary>
         /// <param name="configurations"> The configuration properties for source resource. </param>
-        internal SourceConfigurationResult(IReadOnlyList<SourceConfiguration> configurations)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SourceConfigurationResult(IReadOnlyList<SourceConfiguration> configurations, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Configurations = configurations;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The configuration properties for source resource. </summary>

@@ -22,8 +22,8 @@ namespace Azure.Communication.JobRouter
             {
                 switch (discriminator.GetString())
                 {
-                    case "queue-length": return QueueLengthExceptionTrigger.DeserializeQueueLengthExceptionTrigger(element);
-                    case "wait-time": return WaitTimeExceptionTrigger.DeserializeWaitTimeExceptionTrigger(element);
+                    case "queueLength": return QueueLengthExceptionTrigger.DeserializeQueueLengthExceptionTrigger(element);
+                    case "waitTime": return WaitTimeExceptionTrigger.DeserializeWaitTimeExceptionTrigger(element);
                 }
             }
             return UnknownExceptionTrigger.DeserializeUnknownExceptionTrigger(element);

@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> The UnknownTrigger. </summary>
     internal partial class UnknownTrigger : DataFactoryTriggerProperties
     {
-        /// <summary> Initializes a new instance of UnknownTrigger. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnknownTrigger"/>. </summary>
         /// <param name="triggerType"> Trigger type. </param>
         /// <param name="description"> Trigger description. </param>
         /// <param name="runtimeState"> Indicates if trigger is running or not. Updated when Start/Stop APIs are called on the Trigger. </param>
@@ -22,6 +22,11 @@ namespace Azure.ResourceManager.DataFactory.Models
         internal UnknownTrigger(string triggerType, string description, DataFactoryTriggerRuntimeState? runtimeState, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties) : base(triggerType, description, runtimeState, annotations, additionalProperties)
         {
             TriggerType = triggerType ?? "Unknown";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="UnknownTrigger"/> for deserialization. </summary>
+        internal UnknownTrigger()
+        {
         }
     }
 }

@@ -5,24 +5,60 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Storage.Models
 {
     /// <summary> Management policy action for base blob. </summary>
     public partial class ManagementPolicyBaseBlob
     {
-        /// <summary> Initializes a new instance of ManagementPolicyBaseBlob. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ManagementPolicyBaseBlob"/>. </summary>
         public ManagementPolicyBaseBlob()
         {
         }
 
-        /// <summary> Initializes a new instance of ManagementPolicyBaseBlob. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagementPolicyBaseBlob"/>. </summary>
         /// <param name="tierToCool"> The function to tier blobs to cool storage. </param>
         /// <param name="tierToArchive"> The function to tier blobs to archive storage. </param>
         /// <param name="tierToCold"> The function to tier blobs to cold storage. </param>
         /// <param name="tierToHot"> The function to tier blobs to hot storage. This action can only be used with Premium Block Blob Storage Accounts. </param>
         /// <param name="delete"> The function to delete the blob. </param>
         /// <param name="enableAutoTierToHotFromCool"> This property enables auto tiering of a blob from cool to hot on a blob access. This property requires tierToCool.daysAfterLastAccessTimeGreaterThan. </param>
-        internal ManagementPolicyBaseBlob(DateAfterModification tierToCool, DateAfterModification tierToArchive, DateAfterModification tierToCold, DateAfterModification tierToHot, DateAfterModification delete, bool? enableAutoTierToHotFromCool)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ManagementPolicyBaseBlob(DateAfterModification tierToCool, DateAfterModification tierToArchive, DateAfterModification tierToCold, DateAfterModification tierToHot, DateAfterModification delete, bool? enableAutoTierToHotFromCool, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             TierToCool = tierToCool;
             TierToArchive = tierToArchive;
@@ -30,6 +66,7 @@ namespace Azure.ResourceManager.Storage.Models
             TierToHot = tierToHot;
             Delete = delete;
             EnableAutoTierToHotFromCool = enableAutoTierToHotFromCool;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The function to tier blobs to cool storage. </summary>

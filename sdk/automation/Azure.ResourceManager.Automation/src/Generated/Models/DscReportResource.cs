@@ -14,13 +14,45 @@ namespace Azure.ResourceManager.Automation.Models
     /// <summary> Definition of the DSC Report Resource. </summary>
     public partial class DscReportResource
     {
-        /// <summary> Initializes a new instance of DscReportResource. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DscReportResource"/>. </summary>
         internal DscReportResource()
         {
             DependsOn = new ChangeTrackingList<DscReportResourceNavigation>();
         }
 
-        /// <summary> Initializes a new instance of DscReportResource. </summary>
+        /// <summary> Initializes a new instance of <see cref="DscReportResource"/>. </summary>
         /// <param name="resourceId"> Gets or sets the ID of the resource. </param>
         /// <param name="sourceInfo"> Gets or sets the source info of the resource. </param>
         /// <param name="dependsOn"> Gets or sets the Resource Navigation values for resources the resource depends on. </param>
@@ -31,7 +63,8 @@ namespace Azure.ResourceManager.Automation.Models
         /// <param name="status"> Gets or sets the status of the resource. </param>
         /// <param name="durationInSeconds"> Gets or sets the duration in seconds for the resource. </param>
         /// <param name="startOn"> Gets or sets the start date of the resource. </param>
-        internal DscReportResource(string resourceId, string sourceInfo, IReadOnlyList<DscReportResourceNavigation> dependsOn, string moduleName, string moduleVersion, string resourceName, string error, string status, double? durationInSeconds, DateTimeOffset? startOn)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DscReportResource(string resourceId, string sourceInfo, IReadOnlyList<DscReportResourceNavigation> dependsOn, string moduleName, string moduleVersion, string resourceName, string error, string status, double? durationInSeconds, DateTimeOffset? startOn, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ResourceId = resourceId;
             SourceInfo = sourceInfo;
@@ -43,6 +76,7 @@ namespace Azure.ResourceManager.Automation.Models
             Status = status;
             DurationInSeconds = durationInSeconds;
             StartOn = startOn;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets or sets the ID of the resource. </summary>

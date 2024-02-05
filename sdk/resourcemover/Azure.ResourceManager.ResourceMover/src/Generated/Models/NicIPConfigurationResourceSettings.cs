@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Net;
 using Azure.Core;
@@ -14,14 +15,46 @@ namespace Azure.ResourceManager.ResourceMover.Models
     /// <summary> Defines NIC IP configuration properties. </summary>
     public partial class NicIPConfigurationResourceSettings
     {
-        /// <summary> Initializes a new instance of NicIPConfigurationResourceSettings. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="NicIPConfigurationResourceSettings"/>. </summary>
         public NicIPConfigurationResourceSettings()
         {
             LoadBalancerBackendAddressPools = new ChangeTrackingList<LoadBalancerBackendAddressPoolReferenceInfo>();
             LoadBalancerNatRules = new ChangeTrackingList<LoadBalancerNatRuleReferenceInfo>();
         }
 
-        /// <summary> Initializes a new instance of NicIPConfigurationResourceSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="NicIPConfigurationResourceSettings"/>. </summary>
         /// <param name="name"> Gets or sets the IP configuration name. </param>
         /// <param name="privateIPAddress"> Gets or sets the private IP address of the network interface IP Configuration. </param>
         /// <param name="privateIPAllocationMethod"> Gets or sets the private IP address allocation method. </param>
@@ -30,7 +63,8 @@ namespace Azure.ResourceManager.ResourceMover.Models
         /// <param name="loadBalancerBackendAddressPools"> Gets or sets the references of the load balancer backend address pools. </param>
         /// <param name="loadBalancerNatRules"> Gets or sets the references of the load balancer NAT rules. </param>
         /// <param name="publicIP"> Defines reference to a public IP. </param>
-        internal NicIPConfigurationResourceSettings(string name, IPAddress privateIPAddress, string privateIPAllocationMethod, SubnetReferenceInfo subnet, bool? isPrimary, IList<LoadBalancerBackendAddressPoolReferenceInfo> loadBalancerBackendAddressPools, IList<LoadBalancerNatRuleReferenceInfo> loadBalancerNatRules, PublicIPReferenceInfo publicIP)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal NicIPConfigurationResourceSettings(string name, IPAddress privateIPAddress, string privateIPAllocationMethod, SubnetReferenceInfo subnet, bool? isPrimary, IList<LoadBalancerBackendAddressPoolReferenceInfo> loadBalancerBackendAddressPools, IList<LoadBalancerNatRuleReferenceInfo> loadBalancerNatRules, PublicIPReferenceInfo publicIP, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             PrivateIPAddress = privateIPAddress;
@@ -40,6 +74,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
             LoadBalancerBackendAddressPools = loadBalancerBackendAddressPools;
             LoadBalancerNatRules = loadBalancerNatRules;
             PublicIP = publicIP;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets or sets the IP configuration name. </summary>

@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
@@ -12,9 +14,64 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> Query parameter to enumerate jobs. </summary>
     public partial class SiteRecoveryJobQueryContent
     {
-        /// <summary> Initializes a new instance of SiteRecoveryJobQueryContent. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryJobQueryContent"/>. </summary>
         public SiteRecoveryJobQueryContent()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryJobQueryContent"/>. </summary>
+        /// <param name="startOn"> Date time to get jobs from. </param>
+        /// <param name="endOn"> Date time to get jobs upto. </param>
+        /// <param name="fabricId"> The Id of the fabric to search jobs under. </param>
+        /// <param name="affectedObjectTypes"> The type of objects. </param>
+        /// <param name="jobStatus"> The states of the job to be filtered can be in. </param>
+        /// <param name="jobOutputType"> The output type of the jobs. </param>
+        /// <param name="jobName"> The job Name. </param>
+        /// <param name="timezoneOffset"> The timezone offset for the location of the request (in minutes). </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SiteRecoveryJobQueryContent(string startOn, string endOn, ResourceIdentifier fabricId, string affectedObjectTypes, string jobStatus, ExportJobOutputSerializationType? jobOutputType, string jobName, double? timezoneOffset, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            StartOn = startOn;
+            EndOn = endOn;
+            FabricId = fabricId;
+            AffectedObjectTypes = affectedObjectTypes;
+            JobStatus = jobStatus;
+            JobOutputType = jobOutputType;
+            JobName = jobName;
+            TimezoneOffset = timezoneOffset;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Date time to get jobs from. </summary>

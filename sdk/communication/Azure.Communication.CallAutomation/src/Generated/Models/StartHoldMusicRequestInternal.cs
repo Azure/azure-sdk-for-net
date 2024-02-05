@@ -14,7 +14,7 @@ namespace Azure.Communication.CallAutomation
     /// <summary> The request payload for holding participant from the call. </summary>
     internal partial class StartHoldMusicRequestInternal
     {
-        /// <summary> Initializes a new instance of StartHoldMusicRequestInternal. </summary>
+        /// <summary> Initializes a new instance of <see cref="StartHoldMusicRequestInternal"/>. </summary>
         /// <param name="targetParticipant"> Participant to be held from the call. </param>
         /// <param name="playSourceInfo"> Prompt to play while in hold. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="targetParticipant"/> or <paramref name="playSourceInfo"/> is null. </exception>
@@ -25,6 +25,19 @@ namespace Azure.Communication.CallAutomation
 
             TargetParticipant = targetParticipant;
             PlaySourceInfo = playSourceInfo;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="StartHoldMusicRequestInternal"/>. </summary>
+        /// <param name="targetParticipant"> Participant to be held from the call. </param>
+        /// <param name="playSourceInfo"> Prompt to play while in hold. </param>
+        /// <param name="loop"> If the prompt will be looped or not. </param>
+        /// <param name="operationContext"> Used by customers when calling mid-call actions to correlate the request to the response event. </param>
+        internal StartHoldMusicRequestInternal(CommunicationIdentifierModel targetParticipant, PlaySourceInternal playSourceInfo, bool? loop, string operationContext)
+        {
+            TargetParticipant = targetParticipant;
+            PlaySourceInfo = playSourceInfo;
+            Loop = loop;
+            OperationContext = operationContext;
         }
 
         /// <summary> Participant to be held from the call. </summary>

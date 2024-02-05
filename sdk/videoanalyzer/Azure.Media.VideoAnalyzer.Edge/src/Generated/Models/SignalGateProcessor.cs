@@ -14,7 +14,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
     /// <summary> A signal gate determines when to block (gate) incoming media, and when to allow it through. It gathers input events over the activationEvaluationWindow, and determines whether to open or close the gate. See https://aka.ms/ava-signalgate for more information. </summary>
     public partial class SignalGateProcessor : ProcessorNodeBase
     {
-        /// <summary> Initializes a new instance of SignalGateProcessor. </summary>
+        /// <summary> Initializes a new instance of <see cref="SignalGateProcessor"/>. </summary>
         /// <param name="name"> Node name. Must be unique within the topology. </param>
         /// <param name="inputs"> An array of upstream node references within the topology to be used as inputs for this node. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="inputs"/> is null. </exception>
@@ -26,7 +26,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             Type = "#Microsoft.VideoAnalyzer.SignalGateProcessor";
         }
 
-        /// <summary> Initializes a new instance of SignalGateProcessor. </summary>
+        /// <summary> Initializes a new instance of <see cref="SignalGateProcessor"/>. </summary>
         /// <param name="type"> Type discriminator for the derived types. </param>
         /// <param name="name"> Node name. Must be unique within the topology. </param>
         /// <param name="inputs"> An array of upstream node references within the topology to be used as inputs for this node. </param>

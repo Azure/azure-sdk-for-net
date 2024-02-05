@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure;
 
 namespace Azure.ResourceManager.StreamAnalytics.Models
@@ -12,13 +14,13 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
     /// <summary> The properties that are associated with an input containing reference data. </summary>
     public partial class ReferenceInputProperties : StreamingJobInputProperties
     {
-        /// <summary> Initializes a new instance of ReferenceInputProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ReferenceInputProperties"/>. </summary>
         public ReferenceInputProperties()
         {
             InputPropertiesType = "Reference";
         }
 
-        /// <summary> Initializes a new instance of ReferenceInputProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ReferenceInputProperties"/>. </summary>
         /// <param name="inputPropertiesType"> Indicates whether the input is a source of reference data or stream data. Required on PUT (CreateOrReplace) requests. </param>
         /// <param name="serialization">
         /// Describes how data from an input is serialized or how data is serialized when written to an output. Required on PUT (CreateOrReplace) requests.
@@ -30,12 +32,13 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         /// <param name="compression"> Describes how input data is compressed. </param>
         /// <param name="partitionKey"> partitionKey Describes a key in the input data which is used for partitioning the input data. </param>
         /// <param name="watermarkSettings"> Settings which determine whether to read watermark events. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="datasource">
         /// Describes an input data source that contains reference data. Required on PUT (CreateOrReplace) requests.
         /// Please note <see cref="ReferenceInputDataSource"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="SqlReferenceInputDataSource"/>, <see cref="BlobReferenceInputDataSource"/> and <see cref="RawReferenceInputDataSource"/>.
         /// </param>
-        internal ReferenceInputProperties(string inputPropertiesType, StreamAnalyticsDataSerialization serialization, StreamingJobDiagnostics diagnostics, ETag? etag, StreamingCompression compression, string partitionKey, StreamingJobInputWatermarkProperties watermarkSettings, ReferenceInputDataSource datasource) : base(inputPropertiesType, serialization, diagnostics, etag, compression, partitionKey, watermarkSettings)
+        internal ReferenceInputProperties(string inputPropertiesType, StreamAnalyticsDataSerialization serialization, StreamingJobDiagnostics diagnostics, ETag? etag, StreamingCompression compression, string partitionKey, StreamingJobInputWatermarkProperties watermarkSettings, IDictionary<string, BinaryData> serializedAdditionalRawData, ReferenceInputDataSource datasource) : base(inputPropertiesType, serialization, diagnostics, etag, compression, partitionKey, watermarkSettings, serializedAdditionalRawData)
         {
             Datasource = datasource;
             InputPropertiesType = inputPropertiesType ?? "Reference";

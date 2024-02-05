@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -13,15 +15,29 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.HardwareSecurityModules
 {
-    public partial class CloudHsmClusterData : IUtf8JsonSerializable
+    public partial class CloudHsmClusterData : IUtf8JsonSerializable, IJsonModel<CloudHsmClusterData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CloudHsmClusterData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<CloudHsmClusterData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<CloudHsmClusterData>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(CloudHsmClusterData)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
                 writer.WriteObjectValue(Sku);
+            }
+            if (Optional.IsDefined(Identity))
+            {
+                writer.WritePropertyName("identity"u8);
+                var serializeOptions = new JsonSerializerOptions { Converters = { new ManagedServiceIdentityTypeV3Converter() } };
+                JsonSerializer.Serialize(writer, Identity, serializeOptions);
             }
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -36,6 +52,26 @@ namespace Azure.ResourceManager.HardwareSecurityModules
             }
             writer.WritePropertyName("location"u8);
             writer.WriteStringValue(Location);
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(ResourceType);
+            }
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            {
+                writer.WritePropertyName("systemData"u8);
+                JsonSerializer.Serialize(writer, SystemData);
+            }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(ProvisioningState))
@@ -78,17 +114,62 @@ namespace Azure.ResourceManager.HardwareSecurityModules
                 }
                 writer.WriteEndArray();
             }
+            if (options.Format != "W" && Optional.IsDefined(StatusMessage))
+            {
+                writer.WritePropertyName("statusMessage"u8);
+                writer.WriteStringValue(StatusMessage);
+            }
+            if (Optional.IsDefined(RestoreProperties))
+            {
+                writer.WritePropertyName("restoreProperties"u8);
+                writer.WriteObjectValue(RestoreProperties);
+            }
+            if (Optional.IsDefined(BackupProperties))
+            {
+                writer.WritePropertyName("backupProperties"u8);
+                writer.WriteObjectValue(BackupProperties);
+            }
             writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static CloudHsmClusterData DeserializeCloudHsmClusterData(JsonElement element)
+        CloudHsmClusterData IJsonModel<CloudHsmClusterData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<CloudHsmClusterData>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(CloudHsmClusterData)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeCloudHsmClusterData(document.RootElement, options);
+        }
+
+        internal static CloudHsmClusterData DeserializeCloudHsmClusterData(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<CloudHsmClusterSku> sku = default;
+            Optional<ManagedServiceIdentity> identity = default;
             Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
@@ -101,6 +182,11 @@ namespace Azure.ResourceManager.HardwareSecurityModules
             Optional<IList<CloudHsmProperties>> hsms = default;
             Optional<string> publicNetworkAccess = default;
             Optional<IList<HardwareSecurityModulesPrivateEndpointConnectionData>> privateEndpointConnections = default;
+            Optional<string> statusMessage = default;
+            Optional<RestoreProperties> restoreProperties = default;
+            Optional<BackupProperties> backupProperties = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sku"u8))
@@ -110,6 +196,16 @@ namespace Azure.ResourceManager.HardwareSecurityModules
                         continue;
                     }
                     sku = CloudHsmClusterSku.DeserializeCloudHsmClusterSku(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("identity"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    var serializeOptions = new JsonSerializerOptions { Converters = { new ManagedServiceIdentityTypeV3Converter() } };
+                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText(), serializeOptions);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -220,11 +316,70 @@ namespace Azure.ResourceManager.HardwareSecurityModules
                             privateEndpointConnections = array;
                             continue;
                         }
+                        if (property0.NameEquals("statusMessage"u8))
+                        {
+                            statusMessage = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("restoreProperties"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            restoreProperties = RestoreProperties.DeserializeRestoreProperties(property0.Value);
+                            continue;
+                        }
+                        if (property0.NameEquals("backupProperties"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            backupProperties = BackupProperties.DeserializeBackupProperties(property0.Value);
+                            continue;
+                        }
                     }
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new CloudHsmClusterData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(provisioningState), autoGeneratedDomainNameLabelScope.Value, securityDomain.Value, Optional.ToList(hsms), publicNetworkAccess.Value, Optional.ToList(privateEndpointConnections), sku.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new CloudHsmClusterData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(provisioningState), autoGeneratedDomainNameLabelScope.Value, securityDomain.Value, Optional.ToList(hsms), publicNetworkAccess.Value, Optional.ToList(privateEndpointConnections), statusMessage.Value, restoreProperties.Value, backupProperties.Value, sku.Value, identity, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<CloudHsmClusterData>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<CloudHsmClusterData>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(CloudHsmClusterData)} does not support '{options.Format}' format.");
+            }
+        }
+
+        CloudHsmClusterData IPersistableModel<CloudHsmClusterData>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<CloudHsmClusterData>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeCloudHsmClusterData(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(CloudHsmClusterData)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<CloudHsmClusterData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

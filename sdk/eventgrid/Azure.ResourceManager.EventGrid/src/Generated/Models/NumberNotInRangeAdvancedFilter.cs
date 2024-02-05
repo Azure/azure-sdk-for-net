@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,18 +14,19 @@ namespace Azure.ResourceManager.EventGrid.Models
     /// <summary> NumberNotInRange Advanced Filter. </summary>
     public partial class NumberNotInRangeAdvancedFilter : AdvancedFilter
     {
-        /// <summary> Initializes a new instance of NumberNotInRangeAdvancedFilter. </summary>
+        /// <summary> Initializes a new instance of <see cref="NumberNotInRangeAdvancedFilter"/>. </summary>
         public NumberNotInRangeAdvancedFilter()
         {
             Values = new ChangeTrackingList<IList<double>>();
             OperatorType = AdvancedFilterOperatorType.NumberNotInRange;
         }
 
-        /// <summary> Initializes a new instance of NumberNotInRangeAdvancedFilter. </summary>
+        /// <summary> Initializes a new instance of <see cref="NumberNotInRangeAdvancedFilter"/>. </summary>
         /// <param name="operatorType"> The operator type used for filtering, e.g., NumberIn, StringContains, BoolEquals and others. </param>
         /// <param name="key"> The field/property in the event based on which you want to filter. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="values"> The set of filter values. </param>
-        internal NumberNotInRangeAdvancedFilter(AdvancedFilterOperatorType operatorType, string key, IList<IList<double>> values) : base(operatorType, key)
+        internal NumberNotInRangeAdvancedFilter(AdvancedFilterOperatorType operatorType, string key, IDictionary<string, BinaryData> serializedAdditionalRawData, IList<IList<double>> values) : base(operatorType, key, serializedAdditionalRawData)
         {
             Values = values;
             OperatorType = operatorType;

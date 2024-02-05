@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> Hyper V replica provider specific settings base class. </summary>
     public partial class HyperVReplicaBaseReplicationDetails : ReplicationProviderSpecificSettings
     {
-        /// <summary> Initializes a new instance of HyperVReplicaBaseReplicationDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="HyperVReplicaBaseReplicationDetails"/>. </summary>
         internal HyperVReplicaBaseReplicationDetails()
         {
             VmNics = new ChangeTrackingList<VmNicDetails>();
@@ -22,8 +22,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             InstanceType = "HyperVReplicaBaseReplicationDetails";
         }
 
-        /// <summary> Initializes a new instance of HyperVReplicaBaseReplicationDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="HyperVReplicaBaseReplicationDetails"/>. </summary>
         /// <param name="instanceType"> Gets the Instance type. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="lastReplicatedOn"> The Last replication time. </param>
         /// <param name="vmNics"> The PE Network details. </param>
         /// <param name="vmId"> The virtual machine Id. </param>
@@ -31,7 +32,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="vmProtectionStateDescription"> The protection state description for the vm. </param>
         /// <param name="initialReplicationDetails"> Initial replication details. </param>
         /// <param name="vmDiskDetails"> VM disk details. </param>
-        internal HyperVReplicaBaseReplicationDetails(string instanceType, DateTimeOffset? lastReplicatedOn, IReadOnlyList<VmNicDetails> vmNics, string vmId, string vmProtectionState, string vmProtectionStateDescription, InitialReplicationDetails initialReplicationDetails, IReadOnlyList<SiteRecoveryDiskDetails> vmDiskDetails) : base(instanceType)
+        internal HyperVReplicaBaseReplicationDetails(string instanceType, IDictionary<string, BinaryData> serializedAdditionalRawData, DateTimeOffset? lastReplicatedOn, IReadOnlyList<VmNicDetails> vmNics, string vmId, string vmProtectionState, string vmProtectionStateDescription, InitialReplicationDetails initialReplicationDetails, IReadOnlyList<SiteRecoveryDiskDetails> vmDiskDetails) : base(instanceType, serializedAdditionalRawData)
         {
             LastReplicatedOn = lastReplicatedOn;
             VmNics = vmNics;

@@ -5,12 +5,47 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Batch.Models
 {
     /// <summary> Settings which will be used by the data disks associated to Compute Nodes in the Pool. When using attached data disks, you need to mount and format the disks from within a VM to use them. </summary>
     public partial class BatchVmDataDisk
     {
-        /// <summary> Initializes a new instance of BatchVmDataDisk. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="BatchVmDataDisk"/>. </summary>
         /// <param name="lun"> The lun is used to uniquely identify each data disk. If attaching multiple disks, each should have a distinct lun. The value must be between 0 and 63, inclusive. </param>
         /// <param name="diskSizeInGB"> The initial disk size in GB when creating new data disk. </param>
         public BatchVmDataDisk(int lun, int diskSizeInGB)
@@ -19,7 +54,7 @@ namespace Azure.ResourceManager.Batch.Models
             DiskSizeInGB = diskSizeInGB;
         }
 
-        /// <summary> Initializes a new instance of BatchVmDataDisk. </summary>
+        /// <summary> Initializes a new instance of <see cref="BatchVmDataDisk"/>. </summary>
         /// <param name="lun"> The lun is used to uniquely identify each data disk. If attaching multiple disks, each should have a distinct lun. The value must be between 0 and 63, inclusive. </param>
         /// <param name="caching">
         /// Values are:
@@ -37,12 +72,19 @@ namespace Azure.ResourceManager.Batch.Models
         ///  Standard_LRS - The data disk should use standard locally redundant storage.
         ///  Premium_LRS - The data disk should use premium locally redundant storage.
         /// </param>
-        internal BatchVmDataDisk(int lun, BatchDiskCachingType? caching, int diskSizeInGB, BatchStorageAccountType? storageAccountType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal BatchVmDataDisk(int lun, BatchDiskCachingType? caching, int diskSizeInGB, BatchStorageAccountType? storageAccountType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Lun = lun;
             Caching = caching;
             DiskSizeInGB = diskSizeInGB;
             StorageAccountType = storageAccountType;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="BatchVmDataDisk"/> for deserialization. </summary>
+        internal BatchVmDataDisk()
+        {
         }
 
         /// <summary> The lun is used to uniquely identify each data disk. If attaching multiple disks, each should have a distinct lun. The value must be between 0 and 63, inclusive. </summary>

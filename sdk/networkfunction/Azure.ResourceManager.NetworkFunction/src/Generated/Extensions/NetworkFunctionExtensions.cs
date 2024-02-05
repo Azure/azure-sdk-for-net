@@ -44,9 +44,12 @@ namespace Azure.ResourceManager.NetworkFunction
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="AzureTrafficCollectorResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="AzureTrafficCollectorResource"/> object. </returns>
         public static AzureTrafficCollectorResource GetAzureTrafficCollectorResource(this ArmClient client, ResourceIdentifier id)
         {
+            Argument.AssertNotNull(client, nameof(client));
+
             return GetMockableNetworkFunctionArmClient(client).GetAzureTrafficCollectorResource(id);
         }
 
@@ -60,9 +63,12 @@ namespace Azure.ResourceManager.NetworkFunction
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="CollectorPolicyResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="CollectorPolicyResource"/> object. </returns>
         public static CollectorPolicyResource GetCollectorPolicyResource(this ArmClient client, ResourceIdentifier id)
         {
+            Argument.AssertNotNull(client, nameof(client));
+
             return GetMockableNetworkFunctionArmClient(client).GetCollectorPolicyResource(id);
         }
 
@@ -74,9 +80,12 @@ namespace Azure.ResourceManager.NetworkFunction
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         /// <returns> An object representing collection of AzureTrafficCollectorResources and their operations over a AzureTrafficCollectorResource. </returns>
         public static AzureTrafficCollectorCollection GetAzureTrafficCollectors(this ResourceGroupResource resourceGroupResource)
         {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
             return GetMockableNetworkFunctionResourceGroupResource(resourceGroupResource).GetAzureTrafficCollectors();
         }
 
@@ -91,6 +100,14 @@ namespace Azure.ResourceManager.NetworkFunction
         /// <term>Operation Id</term>
         /// <description>AzureTrafficCollectors_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AzureTrafficCollectorResource"/></description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -100,11 +117,13 @@ namespace Azure.ResourceManager.NetworkFunction
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="azureTrafficCollectorName"> Azure Traffic Collector name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="azureTrafficCollectorName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="azureTrafficCollectorName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="azureTrafficCollectorName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public static async Task<Response<AzureTrafficCollectorResource>> GetAzureTrafficCollectorAsync(this ResourceGroupResource resourceGroupResource, string azureTrafficCollectorName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
             return await GetMockableNetworkFunctionResourceGroupResource(resourceGroupResource).GetAzureTrafficCollectorAsync(azureTrafficCollectorName, cancellationToken).ConfigureAwait(false);
         }
 
@@ -119,6 +138,14 @@ namespace Azure.ResourceManager.NetworkFunction
         /// <term>Operation Id</term>
         /// <description>AzureTrafficCollectors_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AzureTrafficCollectorResource"/></description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -128,11 +155,13 @@ namespace Azure.ResourceManager.NetworkFunction
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="azureTrafficCollectorName"> Azure Traffic Collector name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="azureTrafficCollectorName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="azureTrafficCollectorName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="azureTrafficCollectorName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public static Response<AzureTrafficCollectorResource> GetAzureTrafficCollector(this ResourceGroupResource resourceGroupResource, string azureTrafficCollectorName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
             return GetMockableNetworkFunctionResourceGroupResource(resourceGroupResource).GetAzureTrafficCollector(azureTrafficCollectorName, cancellationToken);
         }
 
@@ -147,6 +176,10 @@ namespace Azure.ResourceManager.NetworkFunction
         /// <term>Operation Id</term>
         /// <description>AzureTrafficCollectorsBySubscription_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-11-01</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -155,9 +188,12 @@ namespace Azure.ResourceManager.NetworkFunction
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="AzureTrafficCollectorResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> An async collection of <see cref="AzureTrafficCollectorResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<AzureTrafficCollectorResource> GetAzureTrafficCollectorsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
             return GetMockableNetworkFunctionSubscriptionResource(subscriptionResource).GetAzureTrafficCollectorsAsync(cancellationToken);
         }
 
@@ -172,6 +208,10 @@ namespace Azure.ResourceManager.NetworkFunction
         /// <term>Operation Id</term>
         /// <description>AzureTrafficCollectorsBySubscription_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-11-01</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -180,9 +220,12 @@ namespace Azure.ResourceManager.NetworkFunction
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="AzureTrafficCollectorResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="AzureTrafficCollectorResource"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<AzureTrafficCollectorResource> GetAzureTrafficCollectors(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
             return GetMockableNetworkFunctionSubscriptionResource(subscriptionResource).GetAzureTrafficCollectors(cancellationToken);
         }
     }

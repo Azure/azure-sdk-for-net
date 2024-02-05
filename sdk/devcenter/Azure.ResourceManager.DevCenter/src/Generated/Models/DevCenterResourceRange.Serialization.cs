@@ -5,21 +5,79 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DevCenter.Models
 {
-    public partial class DevCenterResourceRange
+    public partial class DevCenterResourceRange : IUtf8JsonSerializable, IJsonModel<DevCenterResourceRange>
     {
-        internal static DevCenterResourceRange DeserializeDevCenterResourceRange(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DevCenterResourceRange>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<DevCenterResourceRange>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<DevCenterResourceRange>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DevCenterResourceRange)} does not support '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (options.Format != "W" && Optional.IsDefined(Min))
+            {
+                writer.WritePropertyName("min"u8);
+                writer.WriteNumberValue(Min.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(Max))
+            {
+                writer.WritePropertyName("max"u8);
+                writer.WriteNumberValue(Max.Value);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        DevCenterResourceRange IJsonModel<DevCenterResourceRange>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DevCenterResourceRange>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DevCenterResourceRange)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeDevCenterResourceRange(document.RootElement, options);
+        }
+
+        internal static DevCenterResourceRange DeserializeDevCenterResourceRange(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<int> min = default;
             Optional<int> max = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("min"u8))
@@ -40,8 +98,44 @@ namespace Azure.ResourceManager.DevCenter.Models
                     max = property.Value.GetInt32();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new DevCenterResourceRange(Optional.ToNullable(min), Optional.ToNullable(max));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new DevCenterResourceRange(Optional.ToNullable(min), Optional.ToNullable(max), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<DevCenterResourceRange>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DevCenterResourceRange>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(DevCenterResourceRange)} does not support '{options.Format}' format.");
+            }
+        }
+
+        DevCenterResourceRange IPersistableModel<DevCenterResourceRange>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DevCenterResourceRange>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeDevCenterResourceRange(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(DevCenterResourceRange)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<DevCenterResourceRange>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

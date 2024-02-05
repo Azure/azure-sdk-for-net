@@ -6,24 +6,59 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.FluidRelay.Models
 {
     /// <summary> All Customer-managed key encryption properties for the resource. </summary>
     public partial class CmkEncryptionProperties
     {
-        /// <summary> Initializes a new instance of CmkEncryptionProperties. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="CmkEncryptionProperties"/>. </summary>
         public CmkEncryptionProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of CmkEncryptionProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="CmkEncryptionProperties"/>. </summary>
         /// <param name="keyEncryptionKeyIdentity"> All identity configuration for Customer-managed key settings defining which identity should be used to auth to Key Vault. </param>
         /// <param name="keyEncryptionKeyUri"> key encryption key Url, with or without a version. Ex: https://contosovault.vault.azure.net/keys/contosokek/562a4bb76b524a1493a6afe8e536ee78 or https://contosovault.vault.azure.net/keys/contosokek. Key auto rotation is enabled by providing a key uri without version. Otherwise, customer is responsible for rotating the key. The keyEncryptionKeyIdentity(either SystemAssigned or UserAssigned) should have permission to access this key url. </param>
-        internal CmkEncryptionProperties(CmkIdentity keyEncryptionKeyIdentity, Uri keyEncryptionKeyUri)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal CmkEncryptionProperties(CmkIdentity keyEncryptionKeyIdentity, Uri keyEncryptionKeyUri, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             KeyEncryptionKeyIdentity = keyEncryptionKeyIdentity;
             KeyEncryptionKeyUri = keyEncryptionKeyUri;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> All identity configuration for Customer-managed key settings defining which identity should be used to auth to Key Vault. </summary>

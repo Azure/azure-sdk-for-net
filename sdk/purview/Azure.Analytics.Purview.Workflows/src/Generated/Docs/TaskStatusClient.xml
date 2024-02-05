@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doc>
+  <members>
+    <member name="UpdateAsync(Guid,RequestContent,RequestContext)">
+      <example>
+This sample shows how to call UpdateAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+TaskStatusClient client = new TaskStatusClient(endpoint, credential);
+
+using RequestContent content = RequestContent.Create(new
+{
+    newStatus = "NotStarted",
+});
+Response response = await client.UpdateAsync(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), content);
+
+Console.WriteLine(response.Status);
+]]></code>
+This sample shows how to call UpdateAsync with all parameters and request content.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+TaskStatusClient client = new TaskStatusClient(endpoint, credential);
+
+using RequestContent content = RequestContent.Create(new
+{
+    newStatus = "NotStarted",
+    comment = "<comment>",
+});
+Response response = await client.UpdateAsync(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), content);
+
+Console.WriteLine(response.Status);
+]]></code></example>
+    </member>
+    <member name="Update(Guid,RequestContent,RequestContext)">
+      <example>
+This sample shows how to call Update.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+TaskStatusClient client = new TaskStatusClient(endpoint, credential);
+
+using RequestContent content = RequestContent.Create(new
+{
+    newStatus = "NotStarted",
+});
+Response response = client.Update(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), content);
+
+Console.WriteLine(response.Status);
+]]></code>
+This sample shows how to call Update with all parameters and request content.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+TaskStatusClient client = new TaskStatusClient(endpoint, credential);
+
+using RequestContent content = RequestContent.Create(new
+{
+    newStatus = "NotStarted",
+    comment = "<comment>",
+});
+Response response = client.Update(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), content);
+
+Console.WriteLine(response.Status);
+]]></code></example>
+    </member>
+  </members>
+</doc>

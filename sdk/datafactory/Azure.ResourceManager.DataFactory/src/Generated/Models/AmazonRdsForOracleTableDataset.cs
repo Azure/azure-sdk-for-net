@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> The AmazonRdsForOracle database dataset. </summary>
     public partial class AmazonRdsForOracleTableDataset : DataFactoryDatasetProperties
     {
-        /// <summary> Initializes a new instance of AmazonRdsForOracleTableDataset. </summary>
+        /// <summary> Initializes a new instance of <see cref="AmazonRdsForOracleTableDataset"/>. </summary>
         /// <param name="linkedServiceName"> Linked service reference. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="linkedServiceName"/> is null. </exception>
         public AmazonRdsForOracleTableDataset(DataFactoryLinkedServiceReference linkedServiceName) : base(linkedServiceName)
@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             DatasetType = "AmazonRdsForOracleTable";
         }
 
-        /// <summary> Initializes a new instance of AmazonRdsForOracleTableDataset. </summary>
+        /// <summary> Initializes a new instance of <see cref="AmazonRdsForOracleTableDataset"/>. </summary>
         /// <param name="datasetType"> Type of dataset. </param>
         /// <param name="description"> Dataset description. </param>
         /// <param name="structure"> Columns that define the structure of the dataset. Type: array (or Expression with resultType array), itemType: DatasetDataElement. </param>
@@ -42,6 +42,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             SchemaTypePropertiesSchema = schemaTypePropertiesSchema;
             Table = table;
             DatasetType = datasetType ?? "AmazonRdsForOracleTable";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AmazonRdsForOracleTableDataset"/> for deserialization. </summary>
+        internal AmazonRdsForOracleTableDataset()
+        {
         }
 
         /// <summary> The schema name of the AmazonRdsForOracle database. Type: string (or Expression with resultType string). </summary>

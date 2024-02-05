@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.FrontDoor.Models
@@ -12,20 +14,21 @@ namespace Azure.ResourceManager.FrontDoor.Models
     /// <summary> Load balancing settings for a backend pool. </summary>
     public partial class FrontDoorLoadBalancingSettingsData : FrontDoorResourceData
     {
-        /// <summary> Initializes a new instance of FrontDoorLoadBalancingSettingsData. </summary>
+        /// <summary> Initializes a new instance of <see cref="FrontDoorLoadBalancingSettingsData"/>. </summary>
         public FrontDoorLoadBalancingSettingsData()
         {
         }
 
-        /// <summary> Initializes a new instance of FrontDoorLoadBalancingSettingsData. </summary>
+        /// <summary> Initializes a new instance of <see cref="FrontDoorLoadBalancingSettingsData"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="resourceType"> Resource type. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="sampleSize"> The number of samples to consider for load balancing decisions. </param>
         /// <param name="successfulSamplesRequired"> The number of samples within the sample period that must succeed. </param>
         /// <param name="additionalLatencyMilliseconds"> The additional latency in milliseconds for probes to fall into the lowest latency bucket. </param>
         /// <param name="resourceState"> Resource status. </param>
-        internal FrontDoorLoadBalancingSettingsData(ResourceIdentifier id, string name, ResourceType? resourceType, int? sampleSize, int? successfulSamplesRequired, int? additionalLatencyMilliseconds, FrontDoorResourceState? resourceState) : base(id, name, resourceType)
+        internal FrontDoorLoadBalancingSettingsData(ResourceIdentifier id, string name, ResourceType? resourceType, IDictionary<string, BinaryData> serializedAdditionalRawData, int? sampleSize, int? successfulSamplesRequired, int? additionalLatencyMilliseconds, FrontDoorResourceState? resourceState) : base(id, name, resourceType, serializedAdditionalRawData)
         {
             SampleSize = sampleSize;
             SuccessfulSamplesRequired = successfulSamplesRequired;

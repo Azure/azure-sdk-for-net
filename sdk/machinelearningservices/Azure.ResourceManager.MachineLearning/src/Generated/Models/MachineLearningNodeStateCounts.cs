@@ -5,24 +5,60 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> Counts of various compute node states on the amlCompute. </summary>
     public partial class MachineLearningNodeStateCounts
     {
-        /// <summary> Initializes a new instance of MachineLearningNodeStateCounts. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="MachineLearningNodeStateCounts"/>. </summary>
         internal MachineLearningNodeStateCounts()
         {
         }
 
-        /// <summary> Initializes a new instance of MachineLearningNodeStateCounts. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningNodeStateCounts"/>. </summary>
         /// <param name="idleNodeCount"> Number of compute nodes in idle state. </param>
         /// <param name="runningNodeCount"> Number of compute nodes which are running jobs. </param>
         /// <param name="preparingNodeCount"> Number of compute nodes which are being prepared. </param>
         /// <param name="unusableNodeCount"> Number of compute nodes which are in unusable state. </param>
         /// <param name="leavingNodeCount"> Number of compute nodes which are leaving the amlCompute. </param>
         /// <param name="preemptedNodeCount"> Number of compute nodes which are in preempted state. </param>
-        internal MachineLearningNodeStateCounts(int? idleNodeCount, int? runningNodeCount, int? preparingNodeCount, int? unusableNodeCount, int? leavingNodeCount, int? preemptedNodeCount)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MachineLearningNodeStateCounts(int? idleNodeCount, int? runningNodeCount, int? preparingNodeCount, int? unusableNodeCount, int? leavingNodeCount, int? preemptedNodeCount, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             IdleNodeCount = idleNodeCount;
             RunningNodeCount = runningNodeCount;
@@ -30,6 +66,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             UnusableNodeCount = unusableNodeCount;
             LeavingNodeCount = leavingNodeCount;
             PreemptedNodeCount = preemptedNodeCount;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Number of compute nodes in idle state. </summary>

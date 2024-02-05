@@ -11,8 +11,8 @@ namespace Azure.Communication.JobRouter
 {
     public partial class ExceptionPolicy : IUtf8JsonSerializable
     {
-        /// <summary> Initializes a new instance of ExceptionPolicy. </summary>
-        /// <param name="exceptionPolicyId"> Id of the policy. </param>
+        /// <summary> Initializes a new instance of an exception policy. </summary>
+        /// <param name="exceptionPolicyId"> Id of an exception policy. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="exceptionPolicyId"/> is null. </exception>
         public ExceptionPolicy(string exceptionPolicyId)
         {
@@ -21,10 +21,10 @@ namespace Azure.Communication.JobRouter
             Id = exceptionPolicyId;
         }
 
-        /// <summary> (Optional) A collection of exception rules on the exception policy. Key is the Id of each exception rule. </summary>
+        /// <summary> A collection of exception rules on the exception policy. </summary>
         public IList<ExceptionRule> ExceptionRules { get; } = new List<ExceptionRule>();
 
-        /// <summary> (Optional) The name of the exception policy. </summary>
+        /// <summary> Friendly name of this policy. </summary>
         public string Name { get; set; }
 
         [CodeGenMember("Etag")]
@@ -40,7 +40,7 @@ namespace Azure.Communication.JobRouter
             }
         }
 
-        /// <summary> Concurrency Token. </summary>
+        /// <summary> The entity tag for this resource. </summary>
         public ETag ETag { get; internal set; }
 
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)

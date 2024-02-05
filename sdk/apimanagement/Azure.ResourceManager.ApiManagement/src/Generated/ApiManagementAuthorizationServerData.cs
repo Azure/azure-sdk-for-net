@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.ApiManagement.Models;
@@ -18,7 +19,39 @@ namespace Azure.ResourceManager.ApiManagement
     /// </summary>
     public partial class ApiManagementAuthorizationServerData : ResourceData
     {
-        /// <summary> Initializes a new instance of ApiManagementAuthorizationServerData. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ApiManagementAuthorizationServerData"/>. </summary>
         public ApiManagementAuthorizationServerData()
         {
             AuthorizationMethods = new ChangeTrackingList<AuthorizationMethod>();
@@ -28,7 +61,7 @@ namespace Azure.ResourceManager.ApiManagement
             GrantTypes = new ChangeTrackingList<GrantType>();
         }
 
-        /// <summary> Initializes a new instance of ApiManagementAuthorizationServerData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApiManagementAuthorizationServerData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -49,7 +82,8 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="grantTypes"> Form of an authorization grant, which the client uses to request the access token. </param>
         /// <param name="clientId"> Client or app id registered with this authorization server. </param>
         /// <param name="clientSecret"> Client or app secret registered with this authorization server. This property will not be filled on 'GET' operations! Use '/listSecrets' POST request to get the value. </param>
-        internal ApiManagementAuthorizationServerData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string description, IList<AuthorizationMethod> authorizationMethods, IList<ClientAuthenticationMethod> clientAuthenticationMethods, IList<TokenBodyParameterContract> tokenBodyParameters, string tokenEndpoint, bool? doesSupportState, string defaultScope, IList<BearerTokenSendingMethod> bearerTokenSendingMethods, string resourceOwnerUsername, string resourceOwnerPassword, string displayName, string clientRegistrationEndpoint, string authorizationEndpoint, IList<GrantType> grantTypes, string clientId, string clientSecret) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ApiManagementAuthorizationServerData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string description, IList<AuthorizationMethod> authorizationMethods, IList<ClientAuthenticationMethod> clientAuthenticationMethods, IList<TokenBodyParameterContract> tokenBodyParameters, string tokenEndpoint, bool? doesSupportState, string defaultScope, IList<BearerTokenSendingMethod> bearerTokenSendingMethods, string resourceOwnerUsername, string resourceOwnerPassword, string displayName, string clientRegistrationEndpoint, string authorizationEndpoint, IList<GrantType> grantTypes, string clientId, string clientSecret, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Description = description;
             AuthorizationMethods = authorizationMethods;
@@ -67,6 +101,7 @@ namespace Azure.ResourceManager.ApiManagement
             GrantTypes = grantTypes;
             ClientId = clientId;
             ClientSecret = clientSecret;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Description of the authorization server. Can contain HTML formatting tags. </summary>

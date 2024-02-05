@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Synapse;
@@ -14,19 +16,20 @@ namespace Azure.ResourceManager.Synapse.Models
     /// <summary> Class representing an Event Grid data connection. </summary>
     public partial class SynapseEventGridDataConnection : SynapseDataConnectionData
     {
-        /// <summary> Initializes a new instance of SynapseEventGridDataConnection. </summary>
+        /// <summary> Initializes a new instance of <see cref="SynapseEventGridDataConnection"/>. </summary>
         public SynapseEventGridDataConnection()
         {
             Kind = SynapseDataConnectionKind.EventGrid;
         }
 
-        /// <summary> Initializes a new instance of SynapseEventGridDataConnection. </summary>
+        /// <summary> Initializes a new instance of <see cref="SynapseEventGridDataConnection"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="location"> Resource location. </param>
         /// <param name="kind"> Kind of the endpoint for the data connection. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="storageAccountResourceId"> The resource ID of the storage account where the data resides. </param>
         /// <param name="eventHubResourceId"> The resource ID where the event grid is configured to send events. </param>
         /// <param name="consumerGroup"> The event hub consumer group. </param>
@@ -36,7 +39,7 @@ namespace Azure.ResourceManager.Synapse.Models
         /// <param name="ignoreFirstRecord"> A Boolean value that, if set to true, indicates that ingestion should ignore the first record of every file. </param>
         /// <param name="blobStorageEventType"> The name of blob storage event type to process. </param>
         /// <param name="provisioningState"> The provisioned state of the resource. </param>
-        internal SynapseEventGridDataConnection(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, SynapseDataConnectionKind kind, ResourceIdentifier storageAccountResourceId, ResourceIdentifier eventHubResourceId, string consumerGroup, string tableName, string mappingRuleName, SynapseEventGridDataFormat? dataFormat, bool? ignoreFirstRecord, SynapseBlobStorageEventType? blobStorageEventType, ResourceProvisioningState? provisioningState) : base(id, name, resourceType, systemData, location, kind)
+        internal SynapseEventGridDataConnection(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, SynapseDataConnectionKind kind, IDictionary<string, BinaryData> serializedAdditionalRawData, ResourceIdentifier storageAccountResourceId, ResourceIdentifier eventHubResourceId, string consumerGroup, string tableName, string mappingRuleName, SynapseEventGridDataFormat? dataFormat, bool? ignoreFirstRecord, SynapseBlobStorageEventType? blobStorageEventType, ResourceProvisioningState? provisioningState) : base(id, name, resourceType, systemData, location, kind, serializedAdditionalRawData)
         {
             StorageAccountResourceId = storageAccountResourceId;
             EventHubResourceId = eventHubResourceId;

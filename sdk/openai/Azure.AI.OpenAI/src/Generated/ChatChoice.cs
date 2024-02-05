@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.AI.OpenAI
 {
     /// <summary>
@@ -14,7 +17,39 @@ namespace Azure.AI.OpenAI
     /// </summary>
     public partial class ChatChoice
     {
-        /// <summary> Initializes a new instance of ChatChoice. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ChatChoice"/>. </summary>
         /// <param name="index"> The ordered index associated with this chat completions choice. </param>
         /// <param name="finishReason"> The reason that this chat completions choice completed its generated. </param>
         internal ChatChoice(int index, CompletionsFinishReason? finishReason)
@@ -23,36 +58,67 @@ namespace Azure.AI.OpenAI
             FinishReason = finishReason;
         }
 
-        /// <summary> Initializes a new instance of ChatChoice. </summary>
+        /// <summary> Initializes a new instance of <see cref="ChatChoice"/>. </summary>
         /// <param name="message"> The chat message for a given chat completions prompt. </param>
         /// <param name="index"> The ordered index associated with this chat completions choice. </param>
         /// <param name="finishReason"> The reason that this chat completions choice completed its generated. </param>
+        /// <param name="finishDetails">
+        /// The reason the model stopped generating tokens, together with any applicable details.
+        /// This structured representation replaces 'finish_reason' for some models.
+        /// </param>
         /// <param name="internalStreamingDeltaMessage"> The delta message content for a streaming response. </param>
         /// <param name="contentFilterResults">
         /// Information about the content filtering category (hate, sexual, violence, self_harm), if it
         /// has been detected, as well as the severity level (very_low, low, medium, high-scale that
         /// determines the intensity and risk level of harmful content) and if it has been filtered or not.
         /// </param>
-        internal ChatChoice(ChatMessage message, int index, CompletionsFinishReason? finishReason, ChatMessage internalStreamingDeltaMessage, ContentFilterResults contentFilterResults)
+        /// <param name="enhancements">
+        /// Represents the output results of Azure OpenAI enhancements to chat completions, as configured via the matching input
+        /// provided in the request. This supplementary information is only available when using Azure OpenAI and only when the
+        /// request is configured to use enhancements.
+        /// </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ChatChoice(ChatResponseMessage message, int index, CompletionsFinishReason? finishReason, ChatFinishDetails finishDetails, ChatResponseMessage internalStreamingDeltaMessage, ContentFilterResultsForChoice contentFilterResults, AzureChatEnhancements enhancements, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Message = message;
             Index = index;
             FinishReason = finishReason;
+            FinishDetails = finishDetails;
             InternalStreamingDeltaMessage = internalStreamingDeltaMessage;
             ContentFilterResults = contentFilterResults;
+            Enhancements = enhancements;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ChatChoice"/> for deserialization. </summary>
+        internal ChatChoice()
+        {
         }
 
         /// <summary> The chat message for a given chat completions prompt. </summary>
-        public ChatMessage Message { get; }
+        public ChatResponseMessage Message { get; }
         /// <summary> The ordered index associated with this chat completions choice. </summary>
         public int Index { get; }
         /// <summary> The reason that this chat completions choice completed its generated. </summary>
         public CompletionsFinishReason? FinishReason { get; }
         /// <summary>
+        /// The reason the model stopped generating tokens, together with any applicable details.
+        /// This structured representation replaces 'finish_reason' for some models.
+        /// Please note <see cref="ChatFinishDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="StopFinishDetails"/> and <see cref="MaxTokensFinishDetails"/>.
+        /// </summary>
+        public ChatFinishDetails FinishDetails { get; }
+        /// <summary>
         /// Information about the content filtering category (hate, sexual, violence, self_harm), if it
         /// has been detected, as well as the severity level (very_low, low, medium, high-scale that
         /// determines the intensity and risk level of harmful content) and if it has been filtered or not.
         /// </summary>
-        public ContentFilterResults ContentFilterResults { get; }
+        public ContentFilterResultsForChoice ContentFilterResults { get; }
+        /// <summary>
+        /// Represents the output results of Azure OpenAI enhancements to chat completions, as configured via the matching input
+        /// provided in the request. This supplementary information is only available when using Azure OpenAI and only when the
+        /// request is configured to use enhancements.
+        /// </summary>
+        public AzureChatEnhancements Enhancements { get; }
     }
 }

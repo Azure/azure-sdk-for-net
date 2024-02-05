@@ -10,10 +10,10 @@ namespace Azure.Communication.JobRouter
     /// <summary> Trigger for an exception action on exceeding queue length. </summary>
     public partial class QueueLengthExceptionTrigger : ExceptionTrigger
     {
-        /// <summary> Initializes a new instance of QueueLengthExceptionTrigger. </summary>
+        /// <summary> Initializes a new instance of <see cref="QueueLengthExceptionTrigger"/>. </summary>
         /// <param name="kind"> The type discriminator describing a sub-type of ExceptionTrigger. </param>
         /// <param name="threshold"> Threshold of number of jobs ahead in the queue to for this trigger to fire. </param>
-        internal QueueLengthExceptionTrigger(string kind, int threshold) : base(kind)
+        internal QueueLengthExceptionTrigger(ExceptionTriggerKind kind, int threshold) : base(kind)
         {
             Threshold = threshold;
         }

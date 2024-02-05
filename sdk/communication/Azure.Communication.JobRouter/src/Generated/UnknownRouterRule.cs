@@ -10,14 +10,9 @@ namespace Azure.Communication.JobRouter
     /// <summary> Unknown version of RouterRule. </summary>
     internal partial class UnknownRouterRule : RouterRule
     {
-        /// <summary> Initializes a new instance of UnknownRouterRule. </summary>
-        internal UnknownRouterRule()
-        {
-        }
-
-        /// <summary> Initializes a new instance of UnknownRouterRule. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnknownRouterRule"/>. </summary>
         /// <param name="kind"> The type discriminator describing a sub-type of RouterRule. </param>
-        internal UnknownRouterRule(string kind) : base(kind)
+        internal UnknownRouterRule(RouterRuleKind kind) : base(kind)
         {
         }
     }

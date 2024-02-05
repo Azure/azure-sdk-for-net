@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
 
@@ -14,7 +15,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> A WebLinkedService that uses client certificate based authentication to communicate with an HTTP endpoint. This scheme follows mutual authentication; the server must also provide valid credentials to the client. </summary>
     public partial class WebClientCertificateAuthentication : WebLinkedServiceTypeProperties
     {
-        /// <summary> Initializes a new instance of WebClientCertificateAuthentication. </summary>
+        /// <summary> Initializes a new instance of <see cref="WebClientCertificateAuthentication"/>. </summary>
         /// <param name="uri"> The URL of the web service endpoint, e.g. https://www.microsoft.com . Type: string (or Expression with resultType string). </param>
         /// <param name="pfx"> Base64-encoded contents of a PFX file. </param>
         /// <param name="password"> Password for the PFX file. </param>
@@ -30,16 +31,22 @@ namespace Azure.ResourceManager.DataFactory.Models
             AuthenticationType = WebAuthenticationType.ClientCertificate;
         }
 
-        /// <summary> Initializes a new instance of WebClientCertificateAuthentication. </summary>
+        /// <summary> Initializes a new instance of <see cref="WebClientCertificateAuthentication"/>. </summary>
         /// <param name="uri"> The URL of the web service endpoint, e.g. https://www.microsoft.com . Type: string (or Expression with resultType string). </param>
         /// <param name="authenticationType"> Type of authentication used to connect to the web table source. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="pfx"> Base64-encoded contents of a PFX file. </param>
         /// <param name="password"> Password for the PFX file. </param>
-        internal WebClientCertificateAuthentication(DataFactoryElement<string> uri, WebAuthenticationType authenticationType, DataFactorySecretBaseDefinition pfx, DataFactorySecretBaseDefinition password) : base(uri, authenticationType)
+        internal WebClientCertificateAuthentication(DataFactoryElement<string> uri, WebAuthenticationType authenticationType, IDictionary<string, BinaryData> serializedAdditionalRawData, DataFactorySecretBaseDefinition pfx, DataFactorySecretBaseDefinition password) : base(uri, authenticationType, serializedAdditionalRawData)
         {
             Pfx = pfx;
             Password = password;
             AuthenticationType = authenticationType;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="WebClientCertificateAuthentication"/> for deserialization. </summary>
+        internal WebClientCertificateAuthentication()
+        {
         }
 
         /// <summary> Base64-encoded contents of a PFX file. </summary>

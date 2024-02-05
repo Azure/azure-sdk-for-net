@@ -13,13 +13,13 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> The LinkConnectionQueryTableStatus. </summary>
     public partial class LinkConnectionQueryTableStatus
     {
-        /// <summary> Initializes a new instance of LinkConnectionQueryTableStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="LinkConnectionQueryTableStatus"/>. </summary>
         internal LinkConnectionQueryTableStatus()
         {
             Value = new ChangeTrackingList<LinkTableStatus>();
         }
 
-        /// <summary> Initializes a new instance of LinkConnectionQueryTableStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="LinkConnectionQueryTableStatus"/>. </summary>
         /// <param name="value"> Link tables' status. </param>
         /// <param name="continuationToken"> Continuation token to query table status. </param>
         internal LinkConnectionQueryTableStatus(IReadOnlyList<LinkTableStatus> value, object continuationToken)

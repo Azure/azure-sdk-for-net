@@ -12,7 +12,7 @@ namespace Azure.AI.MetricsAdvisor.Models
     /// <summary> The IngestionStatusQueryOptions. </summary>
     internal partial class IngestionStatusQueryOptions
     {
-        /// <summary> Initializes a new instance of IngestionStatusQueryOptions. </summary>
+        /// <summary> Initializes a new instance of <see cref="IngestionStatusQueryOptions"/>. </summary>
         /// <param name="startTime"> the start point of time range to query data ingestion status. </param>
         /// <param name="endTime"> the end point of time range to query data ingestion status. </param>
         public IngestionStatusQueryOptions(DateTimeOffset startTime, DateTimeOffset endTime)

@@ -19,14 +19,46 @@ namespace Azure.ResourceManager.Quantum
     /// </summary>
     public partial class QuantumWorkspaceData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of QuantumWorkspaceData. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="QuantumWorkspaceData"/>. </summary>
         /// <param name="location"> The location. </param>
         public QuantumWorkspaceData(AzureLocation location) : base(location)
         {
             Providers = new ChangeTrackingList<Provider>();
         }
 
-        /// <summary> Initializes a new instance of QuantumWorkspaceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="QuantumWorkspaceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -39,7 +71,8 @@ namespace Azure.ResourceManager.Quantum
         /// <param name="provisioningState"> Provisioning status field. </param>
         /// <param name="storageAccount"> ARM Resource Id of the storage account associated with this workspace. </param>
         /// <param name="endpointUri"> The URI of the workspace endpoint. </param>
-        internal QuantumWorkspaceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, IList<Provider> providers, UsableStatus? usable, ProvisioningStatus? provisioningState, string storageAccount, Uri endpointUri) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal QuantumWorkspaceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, IList<Provider> providers, UsableStatus? usable, ProvisioningStatus? provisioningState, string storageAccount, Uri endpointUri, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             Identity = identity;
             Providers = providers;
@@ -47,6 +80,12 @@ namespace Azure.ResourceManager.Quantum
             ProvisioningState = provisioningState;
             StorageAccount = storageAccount;
             EndpointUri = endpointUri;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="QuantumWorkspaceData"/> for deserialization. </summary>
+        internal QuantumWorkspaceData()
+        {
         }
 
         /// <summary> Managed Identity information. Current supported identity types: SystemAssigned, None. </summary>

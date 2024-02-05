@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,12 +14,63 @@ namespace Azure.ResourceManager.Monitor.Models
     /// <summary> The log profile resource for patch operations. </summary>
     public partial class LogProfilePatch
     {
-        /// <summary> Initializes a new instance of LogProfilePatch. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="LogProfilePatch"/>. </summary>
         public LogProfilePatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
             Locations = new ChangeTrackingList<AzureLocation>();
             Categories = new ChangeTrackingList<string>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="LogProfilePatch"/>. </summary>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="storageAccountId"> the resource id of the storage account to which you would like to send the Activity Log. </param>
+        /// <param name="serviceBusRuleId"> The service bus rule ID of the service bus namespace in which you would like to have Event Hubs created for streaming the Activity Log. The rule ID is of the format: '{service bus resource ID}/authorizationrules/{key name}'. </param>
+        /// <param name="locations"> List of regions for which Activity Log events should be stored or streamed. It is a comma separated list of valid ARM locations including the 'global' location. </param>
+        /// <param name="categories"> the categories of the logs. These categories are created as is convenient to the user. Some values are: 'Write', 'Delete', and/or 'Action.'. </param>
+        /// <param name="retentionPolicy"> the retention policy for the events in the log. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal LogProfilePatch(IDictionary<string, string> tags, ResourceIdentifier storageAccountId, ResourceIdentifier serviceBusRuleId, IList<AzureLocation> locations, IList<string> categories, RetentionPolicy retentionPolicy, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Tags = tags;
+            StorageAccountId = storageAccountId;
+            ServiceBusRuleId = serviceBusRuleId;
+            Locations = locations;
+            Categories = categories;
+            RetentionPolicy = retentionPolicy;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Resource tags. </summary>

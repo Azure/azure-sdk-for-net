@@ -5,16 +5,25 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.ServiceFabric.Models
 {
     /// <summary> The UnknownServicePlacementPolicyDescription. </summary>
     internal partial class UnknownServicePlacementPolicyDescription : ServicePlacementPolicyDescription
     {
-        /// <summary> Initializes a new instance of UnknownServicePlacementPolicyDescription. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnknownServicePlacementPolicyDescription"/>. </summary>
         /// <param name="policyType"> The type of placement policy for a service fabric service. Following are the possible values. </param>
-        internal UnknownServicePlacementPolicyDescription(ServicePlacementPolicyType policyType) : base(policyType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal UnknownServicePlacementPolicyDescription(ServicePlacementPolicyType policyType, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(policyType, serializedAdditionalRawData)
         {
             PolicyType = policyType;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="UnknownServicePlacementPolicyDescription"/> for deserialization. </summary>
+        internal UnknownServicePlacementPolicyDescription()
+        {
         }
     }
 }

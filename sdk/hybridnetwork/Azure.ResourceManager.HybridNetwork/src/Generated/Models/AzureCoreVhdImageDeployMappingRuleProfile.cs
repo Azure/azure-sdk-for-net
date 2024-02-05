@@ -5,20 +5,24 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.HybridNetwork.Models
 {
     /// <summary> Azure vhd deploy mapping rule profile. </summary>
     public partial class AzureCoreVhdImageDeployMappingRuleProfile : MappingRuleProfile
     {
-        /// <summary> Initializes a new instance of AzureCoreVhdImageDeployMappingRuleProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureCoreVhdImageDeployMappingRuleProfile"/>. </summary>
         public AzureCoreVhdImageDeployMappingRuleProfile()
         {
         }
 
-        /// <summary> Initializes a new instance of AzureCoreVhdImageDeployMappingRuleProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureCoreVhdImageDeployMappingRuleProfile"/>. </summary>
         /// <param name="applicationEnablement"> The application enablement. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="vhdImageMappingRuleProfile"> The vhd mapping rule profile. </param>
-        internal AzureCoreVhdImageDeployMappingRuleProfile(ApplicationEnablement? applicationEnablement, VhdImageMappingRuleProfile vhdImageMappingRuleProfile) : base(applicationEnablement)
+        internal AzureCoreVhdImageDeployMappingRuleProfile(ApplicationEnablement? applicationEnablement, IDictionary<string, BinaryData> serializedAdditionalRawData, VhdImageMappingRuleProfile vhdImageMappingRuleProfile) : base(applicationEnablement, serializedAdditionalRawData)
         {
             VhdImageMappingRuleProfile = vhdImageMappingRuleProfile;
         }

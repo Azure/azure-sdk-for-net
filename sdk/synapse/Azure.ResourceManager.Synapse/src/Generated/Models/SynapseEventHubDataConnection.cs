@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -15,20 +16,21 @@ namespace Azure.ResourceManager.Synapse.Models
     /// <summary> Class representing an event hub data connection. </summary>
     public partial class SynapseEventHubDataConnection : SynapseDataConnectionData
     {
-        /// <summary> Initializes a new instance of SynapseEventHubDataConnection. </summary>
+        /// <summary> Initializes a new instance of <see cref="SynapseEventHubDataConnection"/>. </summary>
         public SynapseEventHubDataConnection()
         {
             EventSystemProperties = new ChangeTrackingList<string>();
             Kind = SynapseDataConnectionKind.EventHub;
         }
 
-        /// <summary> Initializes a new instance of SynapseEventHubDataConnection. </summary>
+        /// <summary> Initializes a new instance of <see cref="SynapseEventHubDataConnection"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="location"> Resource location. </param>
         /// <param name="kind"> Kind of the endpoint for the data connection. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="eventHubResourceId"> The resource ID of the event hub to be used to create a data connection. </param>
         /// <param name="consumerGroup"> The event hub consumer group. </param>
         /// <param name="tableName"> The table where the data should be ingested. Optionally the table information can be added to each message. </param>
@@ -38,7 +40,7 @@ namespace Azure.ResourceManager.Synapse.Models
         /// <param name="compression"> The event hub messages compression type. </param>
         /// <param name="provisioningState"> The provisioned state of the resource. </param>
         /// <param name="managedIdentityResourceId"> The resource ID of a managed identity (system or user assigned) to be used to authenticate with event hub. </param>
-        internal SynapseEventHubDataConnection(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, SynapseDataConnectionKind kind, ResourceIdentifier eventHubResourceId, string consumerGroup, string tableName, string mappingRuleName, SynapseEventHubDataFormat? dataFormat, IList<string> eventSystemProperties, KustoPoolCompressionType? compression, ResourceProvisioningState? provisioningState, ResourceIdentifier managedIdentityResourceId) : base(id, name, resourceType, systemData, location, kind)
+        internal SynapseEventHubDataConnection(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, SynapseDataConnectionKind kind, IDictionary<string, BinaryData> serializedAdditionalRawData, ResourceIdentifier eventHubResourceId, string consumerGroup, string tableName, string mappingRuleName, SynapseEventHubDataFormat? dataFormat, IList<string> eventSystemProperties, KustoPoolCompressionType? compression, ResourceProvisioningState? provisioningState, ResourceIdentifier managedIdentityResourceId) : base(id, name, resourceType, systemData, location, kind, serializedAdditionalRawData)
         {
             EventHubResourceId = eventHubResourceId;
             ConsumerGroup = consumerGroup;

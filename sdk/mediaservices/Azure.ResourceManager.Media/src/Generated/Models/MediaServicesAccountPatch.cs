@@ -16,12 +16,73 @@ namespace Azure.ResourceManager.Media.Models
     /// <summary> A Media Services account update. </summary>
     public partial class MediaServicesAccountPatch
     {
-        /// <summary> Initializes a new instance of MediaServicesAccountPatch. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="MediaServicesAccountPatch"/>. </summary>
         public MediaServicesAccountPatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
             StorageAccounts = new ChangeTrackingList<MediaServicesStorageAccount>();
             PrivateEndpointConnections = new ChangeTrackingList<MediaServicesPrivateEndpointConnectionData>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MediaServicesAccountPatch"/>. </summary>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="identity"> The Managed Identity for the Media Services account. </param>
+        /// <param name="mediaServiceId"> The Media Services account ID. </param>
+        /// <param name="storageAccounts"> The storage accounts for this resource. </param>
+        /// <param name="storageAuthentication"></param>
+        /// <param name="encryption"> The account encryption properties. </param>
+        /// <param name="keyDelivery"> The Key Delivery properties for Media Services account. </param>
+        /// <param name="publicNetworkAccess"> Whether or not public network access is allowed for resources under the Media Services account. </param>
+        /// <param name="provisioningState"> Provisioning state of the Media Services account. </param>
+        /// <param name="privateEndpointConnections"> The Private Endpoint Connections created for the Media Service account. </param>
+        /// <param name="minimumTlsVersion"> The minimum TLS version allowed for this account's requests. This is an optional property. If unspecified, a secure default value will be used. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MediaServicesAccountPatch(IDictionary<string, string> tags, ManagedServiceIdentity identity, Guid? mediaServiceId, IList<MediaServicesStorageAccount> storageAccounts, MediaStorageAuthentication? storageAuthentication, AccountEncryption encryption, MediaKeyDelivery keyDelivery, MediaServicesPublicNetworkAccess? publicNetworkAccess, MediaServicesProvisioningState? provisioningState, IReadOnlyList<MediaServicesPrivateEndpointConnectionData> privateEndpointConnections, MediaServicesMinimumTlsVersion? minimumTlsVersion, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Tags = tags;
+            Identity = identity;
+            MediaServiceId = mediaServiceId;
+            StorageAccounts = storageAccounts;
+            StorageAuthentication = storageAuthentication;
+            Encryption = encryption;
+            KeyDelivery = keyDelivery;
+            PublicNetworkAccess = publicNetworkAccess;
+            ProvisioningState = provisioningState;
+            PrivateEndpointConnections = privateEndpointConnections;
+            MinimumTlsVersion = minimumTlsVersion;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Resource tags. </summary>

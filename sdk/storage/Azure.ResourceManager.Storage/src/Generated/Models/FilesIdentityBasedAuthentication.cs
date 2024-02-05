@@ -5,27 +5,69 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Storage.Models
 {
     /// <summary> Settings for Azure Files identity based authentication. </summary>
     public partial class FilesIdentityBasedAuthentication
     {
-        /// <summary> Initializes a new instance of FilesIdentityBasedAuthentication. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="FilesIdentityBasedAuthentication"/>. </summary>
         /// <param name="directoryServiceOptions"> Indicates the directory service used. Note that this enum may be extended in the future. </param>
         public FilesIdentityBasedAuthentication(DirectoryServiceOption directoryServiceOptions)
         {
             DirectoryServiceOptions = directoryServiceOptions;
         }
 
-        /// <summary> Initializes a new instance of FilesIdentityBasedAuthentication. </summary>
+        /// <summary> Initializes a new instance of <see cref="FilesIdentityBasedAuthentication"/>. </summary>
         /// <param name="directoryServiceOptions"> Indicates the directory service used. Note that this enum may be extended in the future. </param>
         /// <param name="activeDirectoryProperties"> Required if directoryServiceOptions are AD, optional if they are AADKERB. </param>
         /// <param name="defaultSharePermission"> Default share permission for users using Kerberos authentication if RBAC role is not assigned. </param>
-        internal FilesIdentityBasedAuthentication(DirectoryServiceOption directoryServiceOptions, StorageActiveDirectoryProperties activeDirectoryProperties, DefaultSharePermission? defaultSharePermission)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal FilesIdentityBasedAuthentication(DirectoryServiceOption directoryServiceOptions, StorageActiveDirectoryProperties activeDirectoryProperties, DefaultSharePermission? defaultSharePermission, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             DirectoryServiceOptions = directoryServiceOptions;
             ActiveDirectoryProperties = activeDirectoryProperties;
             DefaultSharePermission = defaultSharePermission;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="FilesIdentityBasedAuthentication"/> for deserialization. </summary>
+        internal FilesIdentityBasedAuthentication()
+        {
         }
 
         /// <summary> Indicates the directory service used. Note that this enum may be extended in the future. </summary>

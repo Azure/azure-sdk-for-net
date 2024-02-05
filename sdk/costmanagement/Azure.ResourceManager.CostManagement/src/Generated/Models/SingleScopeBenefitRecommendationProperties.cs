@@ -6,19 +6,20 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.CostManagement.Models
 {
     /// <summary> The properties of the benefit recommendations when scope is 'Single'. </summary>
     public partial class SingleScopeBenefitRecommendationProperties : BenefitRecommendationProperties
     {
-        /// <summary> Initializes a new instance of SingleScopeBenefitRecommendationProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="SingleScopeBenefitRecommendationProperties"/>. </summary>
         public SingleScopeBenefitRecommendationProperties()
         {
             Scope = BenefitRecommendationScope.Single;
         }
 
-        /// <summary> Initializes a new instance of SingleScopeBenefitRecommendationProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="SingleScopeBenefitRecommendationProperties"/>. </summary>
         /// <param name="firstConsumptionOn"> The first usage date used for looking back for computing the recommendations. </param>
         /// <param name="lastConsumptionOn"> The last usage date used for looking back for computing the recommendations. </param>
         /// <param name="lookBackPeriod"> The number of days of usage evaluated for computing the recommendations. </param>
@@ -32,9 +33,10 @@ namespace Azure.ResourceManager.CostManagement.Models
         /// <param name="recommendationDetails"> The details of the proposed recommendation. </param>
         /// <param name="allRecommendationDetails"> The list of all benefit recommendations with the recommendation details. </param>
         /// <param name="scope"> Benefit scope. For example, Single or Shared. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="subscriptionId"> The subscription ID that this single scope recommendation is for. Applicable only if recommendation is for 'Single' scope. </param>
         /// <param name="resourceGroup"> The resource group that this single scope recommendation is for. Applicable only if recommendation is for 'Single' scope and 'ResourceGroup' request scope. </param>
-        internal SingleScopeBenefitRecommendationProperties(DateTimeOffset? firstConsumptionOn, DateTimeOffset? lastConsumptionOn, LookBackPeriod? lookBackPeriod, int? totalHours, RecommendationUsageDetails usage, string armSkuName, BenefitRecommendationPeriodTerm? term, BenefitRecommendationUsageGrain? commitmentGranularity, string currencyCode, decimal? costWithoutBenefit, AllSavingsBenefitDetails recommendationDetails, AllSavingsList allRecommendationDetails, BenefitRecommendationScope scope, string subscriptionId, string resourceGroup) : base(firstConsumptionOn, lastConsumptionOn, lookBackPeriod, totalHours, usage, armSkuName, term, commitmentGranularity, currencyCode, costWithoutBenefit, recommendationDetails, allRecommendationDetails, scope)
+        internal SingleScopeBenefitRecommendationProperties(DateTimeOffset? firstConsumptionOn, DateTimeOffset? lastConsumptionOn, LookBackPeriod? lookBackPeriod, int? totalHours, RecommendationUsageDetails usage, string armSkuName, BenefitRecommendationPeriodTerm? term, BenefitRecommendationUsageGrain? commitmentGranularity, string currencyCode, decimal? costWithoutBenefit, AllSavingsBenefitDetails recommendationDetails, AllSavingsList allRecommendationDetails, BenefitRecommendationScope scope, IDictionary<string, BinaryData> serializedAdditionalRawData, string subscriptionId, string resourceGroup) : base(firstConsumptionOn, lastConsumptionOn, lookBackPeriod, totalHours, usage, armSkuName, term, commitmentGranularity, currencyCode, costWithoutBenefit, recommendationDetails, allRecommendationDetails, scope, serializedAdditionalRawData)
         {
             SubscriptionId = subscriptionId;
             ResourceGroup = resourceGroup;

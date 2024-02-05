@@ -19,14 +19,46 @@ namespace Azure.ResourceManager.OperationalInsights
     /// </summary>
     public partial class OperationalInsightsClusterData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of OperationalInsightsClusterData. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="OperationalInsightsClusterData"/>. </summary>
         /// <param name="location"> The location. </param>
         public OperationalInsightsClusterData(AzureLocation location) : base(location)
         {
             AssociatedWorkspaces = new ChangeTrackingList<OperationalInsightsClusterAssociatedWorkspace>();
         }
 
-        /// <summary> Initializes a new instance of OperationalInsightsClusterData. </summary>
+        /// <summary> Initializes a new instance of <see cref="OperationalInsightsClusterData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -45,7 +77,8 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <param name="createdOn"> The cluster creation time. </param>
         /// <param name="associatedWorkspaces"> The list of Log Analytics workspaces associated with the cluster. </param>
         /// <param name="capacityReservationProperties"> Additional properties for capacity reservation. </param>
-        internal OperationalInsightsClusterData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, OperationalInsightsClusterSku sku, Guid? clusterId, OperationalInsightsClusterEntityStatus? provisioningState, bool? isDoubleEncryptionEnabled, bool? isAvailabilityZonesEnabled, OperationalInsightsBillingType? billingType, OperationalInsightsKeyVaultProperties keyVaultProperties, DateTimeOffset? lastModifiedOn, DateTimeOffset? createdOn, IList<OperationalInsightsClusterAssociatedWorkspace> associatedWorkspaces, OperationalInsightsCapacityReservationProperties capacityReservationProperties) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal OperationalInsightsClusterData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, OperationalInsightsClusterSku sku, Guid? clusterId, OperationalInsightsClusterEntityStatus? provisioningState, bool? isDoubleEncryptionEnabled, bool? isAvailabilityZonesEnabled, OperationalInsightsBillingType? billingType, OperationalInsightsKeyVaultProperties keyVaultProperties, DateTimeOffset? lastModifiedOn, DateTimeOffset? createdOn, IList<OperationalInsightsClusterAssociatedWorkspace> associatedWorkspaces, OperationalInsightsCapacityReservationProperties capacityReservationProperties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             Identity = identity;
             Sku = sku;
@@ -59,6 +92,12 @@ namespace Azure.ResourceManager.OperationalInsights
             CreatedOn = createdOn;
             AssociatedWorkspaces = associatedWorkspaces;
             CapacityReservationProperties = capacityReservationProperties;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="OperationalInsightsClusterData"/> for deserialization. </summary>
+        internal OperationalInsightsClusterData()
+        {
         }
 
         /// <summary> The identity of the resource. Current supported identity types: None, SystemAssigned, UserAssigned. </summary>

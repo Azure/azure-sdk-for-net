@@ -6,15 +6,69 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.KubernetesConfiguration.Models
 {
     /// <summary> Parameters to reconcile to the Bucket source kind type. </summary>
     public partial class KubernetesBucketUpdateContent
     {
-        /// <summary> Initializes a new instance of KubernetesBucketUpdateContent. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="KubernetesBucketUpdateContent"/>. </summary>
         public KubernetesBucketUpdateContent()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="KubernetesBucketUpdateContent"/>. </summary>
+        /// <param name="uri"> The URL to sync for the flux configuration S3 bucket. </param>
+        /// <param name="bucketName"> The bucket name to sync from the url endpoint for the flux configuration. </param>
+        /// <param name="useInsecureCommunication"> Specify whether to use insecure communication when puling data from the S3 bucket. </param>
+        /// <param name="timeoutInSeconds"> The maximum time to attempt to reconcile the cluster bucket source with the remote. </param>
+        /// <param name="syncIntervalInSeconds"> The interval at which to re-reconcile the cluster bucket source with the remote. </param>
+        /// <param name="accessKey"> Plaintext access key used to securely access the S3 bucket. </param>
+        /// <param name="localAuthRef"> Name of a local secret on the Kubernetes cluster to use as the authentication secret rather than the managed or user-provided configuration secrets. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal KubernetesBucketUpdateContent(Uri uri, string bucketName, bool? useInsecureCommunication, long? timeoutInSeconds, long? syncIntervalInSeconds, string accessKey, string localAuthRef, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Uri = uri;
+            BucketName = bucketName;
+            UseInsecureCommunication = useInsecureCommunication;
+            TimeoutInSeconds = timeoutInSeconds;
+            SyncIntervalInSeconds = syncIntervalInSeconds;
+            AccessKey = accessKey;
+            LocalAuthRef = localAuthRef;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The URL to sync for the flux configuration S3 bucket. </summary>

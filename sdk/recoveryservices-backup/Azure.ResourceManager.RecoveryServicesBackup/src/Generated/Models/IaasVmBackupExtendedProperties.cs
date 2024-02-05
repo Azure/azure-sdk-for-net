@@ -5,23 +5,60 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
     /// <summary> Extended Properties for Azure IaasVM Backup. </summary>
     public partial class IaasVmBackupExtendedProperties
     {
-        /// <summary> Initializes a new instance of IaasVmBackupExtendedProperties. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="IaasVmBackupExtendedProperties"/>. </summary>
         public IaasVmBackupExtendedProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of IaasVmBackupExtendedProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="IaasVmBackupExtendedProperties"/>. </summary>
         /// <param name="diskExclusionProperties"> Extended Properties for Disk Exclusion. </param>
         /// <param name="linuxVmApplicationName"> Linux VM name. </param>
-        internal IaasVmBackupExtendedProperties(DiskExclusionProperties diskExclusionProperties, string linuxVmApplicationName)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal IaasVmBackupExtendedProperties(DiskExclusionProperties diskExclusionProperties, string linuxVmApplicationName, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             DiskExclusionProperties = diskExclusionProperties;
             LinuxVmApplicationName = linuxVmApplicationName;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Extended Properties for Disk Exclusion. </summary>

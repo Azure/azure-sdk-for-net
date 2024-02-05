@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.EventGrid.Tests
                 InputSchema = EventGridInputSchema.CloudEventSchemaV1_0,
                 InputSchemaMapping = new EventGridJsonInputSchemaMapping()
                 {
-                    Topic = new JsonField("myTopicField")
+                    Topic = new JsonField("myTopicField", null)
                 }
             };
 
@@ -172,6 +172,42 @@ namespace Azure.ResourceManager.EventGrid.Tests
         }
 
         [Test]
+        public async Task DomainNSPTests()
+        {
+            await SetCollection();
+
+            var domainName = Recording.GenerateAssetName("sdk-Domain-");
+            AzureLocation location = new AzureLocation("eastus", "eastus");
+
+            var domain = new EventGridDomainData(location)
+            {
+                Tags = {
+                    {"originalTag1", "originalValue1"},
+                    {"originalTag2", "originalValue2"}
+                },
+                InputSchema = EventGridInputSchema.CloudEventSchemaV1_0,
+                InputSchemaMapping = new EventGridJsonInputSchemaMapping()
+                {
+                    Topic = new JsonField("myTopicField", null)
+                }
+            };
+
+            var createDomainResponse = (await DomainCollection.CreateOrUpdateAsync(WaitUntil.Completed, domainName, domain)).Value;
+
+            Assert.NotNull(createDomainResponse);
+            Assert.AreEqual(createDomainResponse.Data.Name, domainName);
+
+            var NspCollection = createDomainResponse.GetDomainNetworkSecurityPerimeterConfigurations();
+            var listNSPConfigs = await NspCollection.GetAllAsync().ToEnumerableAsync();
+            Assert.AreEqual(0, listNSPConfigs.Count());
+
+            // Delete domain
+            await createDomainResponse.DeleteAsync(WaitUntil.Completed);
+            var falseResult = (await DomainCollection.ExistsAsync(domainName)).Value;
+            Assert.IsFalse(falseResult);
+        }
+
+        [Test]
         public async Task DomainDisableLocalAuthAndAutoCreateAndAutoDelete()
         {
             await SetCollection();
@@ -191,7 +227,7 @@ namespace Azure.ResourceManager.EventGrid.Tests
                 AutoDeleteTopicWithLastSubscription = false,
                 InputSchemaMapping = new EventGridJsonInputSchemaMapping()
                 {
-                    Topic = new JsonField("myTopicField")
+                    Topic = new JsonField("myTopicField", null)
                 }
             };
 

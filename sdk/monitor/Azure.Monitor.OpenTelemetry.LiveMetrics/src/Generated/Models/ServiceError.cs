@@ -12,12 +12,12 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Models
     /// <summary> Optional http response body, whose existance carries additional error descriptions. </summary>
     internal partial class ServiceError
     {
-        /// <summary> Initializes a new instance of ServiceError. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceError"/>. </summary>
         internal ServiceError()
         {
         }
 
-        /// <summary> Initializes a new instance of ServiceError. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceError"/>. </summary>
         /// <param name="requestId"> A guid of the request that triggers the service error. </param>
         /// <param name="responseDateTime"> Service error response date time. </param>
         /// <param name="code"> Error code. </param>

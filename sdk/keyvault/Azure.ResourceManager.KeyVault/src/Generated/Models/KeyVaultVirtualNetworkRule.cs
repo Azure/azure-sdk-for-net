@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.KeyVault.Models
@@ -13,7 +14,39 @@ namespace Azure.ResourceManager.KeyVault.Models
     /// <summary> A rule governing the accessibility of a vault from a specific virtual network. </summary>
     public partial class KeyVaultVirtualNetworkRule
     {
-        /// <summary> Initializes a new instance of KeyVaultVirtualNetworkRule. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="KeyVaultVirtualNetworkRule"/>. </summary>
         /// <param name="id"> Full resource id of a vnet subnet, such as '/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/virtualNetworks/test-vnet/subnets/subnet1'. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         public KeyVaultVirtualNetworkRule(string id)
@@ -23,13 +56,20 @@ namespace Azure.ResourceManager.KeyVault.Models
             Id = id;
         }
 
-        /// <summary> Initializes a new instance of KeyVaultVirtualNetworkRule. </summary>
+        /// <summary> Initializes a new instance of <see cref="KeyVaultVirtualNetworkRule"/>. </summary>
         /// <param name="id"> Full resource id of a vnet subnet, such as '/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/virtualNetworks/test-vnet/subnets/subnet1'. </param>
         /// <param name="ignoreMissingVnetServiceEndpoint"> Property to specify whether NRP will ignore the check if parent subnet has serviceEndpoints configured. </param>
-        internal KeyVaultVirtualNetworkRule(string id, bool? ignoreMissingVnetServiceEndpoint)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal KeyVaultVirtualNetworkRule(string id, bool? ignoreMissingVnetServiceEndpoint, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Id = id;
             IgnoreMissingVnetServiceEndpoint = ignoreMissingVnetServiceEndpoint;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="KeyVaultVirtualNetworkRule"/> for deserialization. </summary>
+        internal KeyVaultVirtualNetworkRule()
+        {
         }
 
         /// <summary> Full resource id of a vnet subnet, such as '/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/virtualNetworks/test-vnet/subnets/subnet1'. </summary>

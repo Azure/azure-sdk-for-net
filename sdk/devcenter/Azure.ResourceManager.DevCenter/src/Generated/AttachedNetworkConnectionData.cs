@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.DevCenter.Models;
 using Azure.ResourceManager.Models;
@@ -17,12 +19,44 @@ namespace Azure.ResourceManager.DevCenter
     /// </summary>
     public partial class AttachedNetworkConnectionData : ResourceData
     {
-        /// <summary> Initializes a new instance of AttachedNetworkConnectionData. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AttachedNetworkConnectionData"/>. </summary>
         public AttachedNetworkConnectionData()
         {
         }
 
-        /// <summary> Initializes a new instance of AttachedNetworkConnectionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AttachedNetworkConnectionData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -32,13 +66,15 @@ namespace Azure.ResourceManager.DevCenter
         /// <param name="networkConnectionLocation"> The geo-location where the NetworkConnection resource specified in 'networkConnectionResourceId' property lives. </param>
         /// <param name="healthCheckStatus"> Health check status values. </param>
         /// <param name="domainJoinType"> AAD Join type of the network. This is populated based on the referenced Network Connection. </param>
-        internal AttachedNetworkConnectionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DevCenterProvisioningState? provisioningState, ResourceIdentifier networkConnectionId, AzureLocation? networkConnectionLocation, DevCenterHealthCheckStatus? healthCheckStatus, DomainJoinType? domainJoinType) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AttachedNetworkConnectionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DevCenterProvisioningState? provisioningState, ResourceIdentifier networkConnectionId, AzureLocation? networkConnectionLocation, DevCenterHealthCheckStatus? healthCheckStatus, DomainJoinType? domainJoinType, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             ProvisioningState = provisioningState;
             NetworkConnectionId = networkConnectionId;
             NetworkConnectionLocation = networkConnectionLocation;
             HealthCheckStatus = healthCheckStatus;
             DomainJoinType = domainJoinType;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The provisioning state of the resource. </summary>

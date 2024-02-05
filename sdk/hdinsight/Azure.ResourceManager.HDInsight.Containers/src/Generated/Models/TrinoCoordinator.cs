@@ -5,27 +5,64 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.HDInsight.Containers.Models
 {
     /// <summary> Trino Coordinator. </summary>
     public partial class TrinoCoordinator
     {
-        /// <summary> Initializes a new instance of TrinoCoordinator. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="TrinoCoordinator"/>. </summary>
         public TrinoCoordinator()
         {
         }
 
-        /// <summary> Initializes a new instance of TrinoCoordinator. </summary>
+        /// <summary> Initializes a new instance of <see cref="TrinoCoordinator"/>. </summary>
         /// <param name="highAvailabilityEnabled"> The flag that if enable coordinator HA, uses multiple coordinator replicas with auto failover, one per each head node. Default: true. </param>
         /// <param name="isEnabled"> The flag that if enable debug or not. </param>
         /// <param name="port"> The debug port. </param>
         /// <param name="suspend"> The flag that if suspend debug or not. </param>
-        internal TrinoCoordinator(bool? highAvailabilityEnabled, bool? isEnabled, int? port, bool? suspend)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal TrinoCoordinator(bool? highAvailabilityEnabled, bool? isEnabled, int? port, bool? suspend, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             HighAvailabilityEnabled = highAvailabilityEnabled;
             IsEnabled = isEnabled;
             Port = port;
             Suspend = suspend;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The flag that if enable coordinator HA, uses multiple coordinator replicas with auto failover, one per each head node. Default: true. </summary>

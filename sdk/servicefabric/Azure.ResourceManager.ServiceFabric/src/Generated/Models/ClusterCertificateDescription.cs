@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ServiceFabric.Models
@@ -13,7 +14,39 @@ namespace Azure.ResourceManager.ServiceFabric.Models
     /// <summary> Describes the certificate details. </summary>
     public partial class ClusterCertificateDescription
     {
-        /// <summary> Initializes a new instance of ClusterCertificateDescription. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ClusterCertificateDescription"/>. </summary>
         /// <param name="thumbprint"> Thumbprint of the primary certificate. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="thumbprint"/> is null. </exception>
         public ClusterCertificateDescription(BinaryData thumbprint)
@@ -23,15 +56,22 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             Thumbprint = thumbprint;
         }
 
-        /// <summary> Initializes a new instance of ClusterCertificateDescription. </summary>
+        /// <summary> Initializes a new instance of <see cref="ClusterCertificateDescription"/>. </summary>
         /// <param name="thumbprint"> Thumbprint of the primary certificate. </param>
         /// <param name="thumbprintSecondary"> Thumbprint of the secondary certificate. </param>
         /// <param name="x509StoreName"> The local certificate store location. </param>
-        internal ClusterCertificateDescription(BinaryData thumbprint, string thumbprintSecondary, ClusterCertificateStoreName? x509StoreName)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ClusterCertificateDescription(BinaryData thumbprint, string thumbprintSecondary, ClusterCertificateStoreName? x509StoreName, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Thumbprint = thumbprint;
             ThumbprintSecondary = thumbprintSecondary;
             X509StoreName = x509StoreName;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ClusterCertificateDescription"/> for deserialization. </summary>
+        internal ClusterCertificateDescription()
+        {
         }
 
         /// <summary>

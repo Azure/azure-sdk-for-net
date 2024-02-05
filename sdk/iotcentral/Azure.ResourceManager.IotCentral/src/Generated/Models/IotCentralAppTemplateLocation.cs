@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.IotCentral.Models
@@ -12,18 +14,52 @@ namespace Azure.ResourceManager.IotCentral.Models
     /// <summary> IoT Central Application Template Locations. </summary>
     public partial class IotCentralAppTemplateLocation
     {
-        /// <summary> Initializes a new instance of IotCentralAppTemplateLocation. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="IotCentralAppTemplateLocation"/>. </summary>
         internal IotCentralAppTemplateLocation()
         {
         }
 
-        /// <summary> Initializes a new instance of IotCentralAppTemplateLocation. </summary>
+        /// <summary> Initializes a new instance of <see cref="IotCentralAppTemplateLocation"/>. </summary>
         /// <param name="location"> The ID of the location. </param>
         /// <param name="displayName"> The display name of the location. </param>
-        internal IotCentralAppTemplateLocation(AzureLocation? location, string displayName)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal IotCentralAppTemplateLocation(AzureLocation? location, string displayName, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Location = location;
             DisplayName = displayName;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The ID of the location. </summary>

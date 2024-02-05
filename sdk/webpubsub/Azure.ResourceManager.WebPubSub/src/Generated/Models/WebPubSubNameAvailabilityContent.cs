@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.WebPubSub.Models
@@ -13,7 +14,39 @@ namespace Azure.ResourceManager.WebPubSub.Models
     /// <summary> Data POST-ed to the nameAvailability action. </summary>
     public partial class WebPubSubNameAvailabilityContent
     {
-        /// <summary> Initializes a new instance of WebPubSubNameAvailabilityContent. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="WebPubSubNameAvailabilityContent"/>. </summary>
         /// <param name="resourceType"> The resource type. Can be "Microsoft.SignalRService/SignalR" or "Microsoft.SignalRService/webPubSub". </param>
         /// <param name="name"> The resource name to validate. e.g."my-resource-name". </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceType"/> or <paramref name="name"/> is null. </exception>
@@ -24,6 +57,22 @@ namespace Azure.ResourceManager.WebPubSub.Models
 
             ResourceType = resourceType;
             Name = name;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="WebPubSubNameAvailabilityContent"/>. </summary>
+        /// <param name="resourceType"> The resource type. Can be "Microsoft.SignalRService/SignalR" or "Microsoft.SignalRService/webPubSub". </param>
+        /// <param name="name"> The resource name to validate. e.g."my-resource-name". </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal WebPubSubNameAvailabilityContent(string resourceType, string name, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            ResourceType = resourceType;
+            Name = name;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="WebPubSubNameAvailabilityContent"/> for deserialization. </summary>
+        internal WebPubSubNameAvailabilityContent()
+        {
         }
 
         /// <summary> The resource type. Can be "Microsoft.SignalRService/SignalR" or "Microsoft.SignalRService/webPubSub". </summary>

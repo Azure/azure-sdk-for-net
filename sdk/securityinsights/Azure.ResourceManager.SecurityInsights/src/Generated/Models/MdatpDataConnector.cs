@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -16,22 +17,23 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     /// <summary> Represents MDATP (Microsoft Defender Advanced Threat Protection) data connector. </summary>
     public partial class MdatpDataConnector : SecurityInsightsDataConnectorData
     {
-        /// <summary> Initializes a new instance of MdatpDataConnector. </summary>
+        /// <summary> Initializes a new instance of <see cref="MdatpDataConnector"/>. </summary>
         public MdatpDataConnector()
         {
             Kind = DataConnectorKind.MicrosoftDefenderAdvancedThreatProtection;
         }
 
-        /// <summary> Initializes a new instance of MdatpDataConnector. </summary>
+        /// <summary> Initializes a new instance of <see cref="MdatpDataConnector"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="kind"> The data connector kind. </param>
         /// <param name="etag"> Etag of the azure resource. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="tenantId"> The tenant id to connect to, and get the data from. </param>
         /// <param name="dataTypes"> The available data types for the connector. </param>
-        internal MdatpDataConnector(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DataConnectorKind kind, ETag? etag, Guid? tenantId, SecurityInsightsAlertsDataTypeOfDataConnector dataTypes) : base(id, name, resourceType, systemData, kind, etag)
+        internal MdatpDataConnector(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DataConnectorKind kind, ETag? etag, IDictionary<string, BinaryData> serializedAdditionalRawData, Guid? tenantId, SecurityInsightsAlertsDataTypeOfDataConnector dataTypes) : base(id, name, resourceType, systemData, kind, etag, serializedAdditionalRawData)
         {
             TenantId = tenantId;
             DataTypes = dataTypes;

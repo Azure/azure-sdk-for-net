@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,11 +14,54 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> DiskExclusionInput when doing enable protection of virtual machine in InMage provider. </summary>
     public partial class InMageDiskExclusionContent
     {
-        /// <summary> Initializes a new instance of InMageDiskExclusionContent. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="InMageDiskExclusionContent"/>. </summary>
         public InMageDiskExclusionContent()
         {
             VolumeOptions = new ChangeTrackingList<InMageVolumeExclusionOptions>();
             DiskSignatureOptions = new ChangeTrackingList<InMageDiskSignatureExclusionOptions>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="InMageDiskExclusionContent"/>. </summary>
+        /// <param name="volumeOptions"> The volume label based option for disk exclusion. </param>
+        /// <param name="diskSignatureOptions"> The guest disk signature based option for disk exclusion. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal InMageDiskExclusionContent(IList<InMageVolumeExclusionOptions> volumeOptions, IList<InMageDiskSignatureExclusionOptions> diskSignatureOptions, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            VolumeOptions = volumeOptions;
+            DiskSignatureOptions = diskSignatureOptions;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The volume label based option for disk exclusion. </summary>

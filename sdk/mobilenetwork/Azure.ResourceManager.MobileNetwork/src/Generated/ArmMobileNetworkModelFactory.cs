@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using Azure;
 using Azure.Core;
@@ -19,7 +20,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
     /// <summary> Model factory for models. </summary>
     public static partial class ArmMobileNetworkModelFactory
     {
-        /// <summary> Initializes a new instance of MobileAttachedDataNetworkData. </summary>
+        /// <summary> Initializes a new instance of <see cref="MobileNetwork.MobileAttachedDataNetworkData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -51,10 +52,10 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             userEquipmentAddressPoolPrefix ??= new List<string>();
             userEquipmentStaticAddressPoolPrefix ??= new List<string>();
 
-            return new MobileAttachedDataNetworkData(id, name, resourceType, systemData, tags, location, provisioningState, userPlaneDataInterface, dnsAddresses?.ToList(), naptConfiguration, userEquipmentAddressPoolPrefix?.ToList(), userEquipmentStaticAddressPoolPrefix?.ToList());
+            return new MobileAttachedDataNetworkData(id, name, resourceType, systemData, tags, location, provisioningState, userPlaneDataInterface, dnsAddresses?.ToList(), naptConfiguration, userEquipmentAddressPoolPrefix?.ToList(), userEquipmentStaticAddressPoolPrefix?.ToList(), serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of MobileDataNetworkData. </summary>
+        /// <summary> Initializes a new instance of <see cref="MobileNetwork.MobileDataNetworkData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -68,10 +69,10 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new MobileDataNetworkData(id, name, resourceType, systemData, tags, location, provisioningState, description);
+            return new MobileDataNetworkData(id, name, resourceType, systemData, tags, location, provisioningState, description, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of MobileNetworkDiagnosticsPackageData. </summary>
+        /// <summary> Initializes a new instance of <see cref="MobileNetwork.MobileNetworkDiagnosticsPackageData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -82,10 +83,10 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         /// <returns> A new <see cref="MobileNetwork.MobileNetworkDiagnosticsPackageData"/> instance for mocking. </returns>
         public static MobileNetworkDiagnosticsPackageData MobileNetworkDiagnosticsPackageData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, MobileNetworkProvisioningState? provisioningState = null, MobileNetworkDiagnosticsPackageStatus? status = null, string reason = null)
         {
-            return new MobileNetworkDiagnosticsPackageData(id, name, resourceType, systemData, provisioningState, status, reason);
+            return new MobileNetworkDiagnosticsPackageData(id, name, resourceType, systemData, provisioningState, status, reason, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of MobileNetworkData. </summary>
+        /// <summary> Initializes a new instance of <see cref="MobileNetwork.MobileNetworkData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -100,10 +101,10 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new MobileNetworkData(id, name, resourceType, systemData, tags, location, provisioningState, publicLandMobileNetworkIdentifier, serviceKey);
+            return new MobileNetworkData(id, name, resourceType, systemData, tags, location, provisioningState, publicLandMobileNetworkIdentifier, serviceKey, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of MobileNetworkPacketCaptureData. </summary>
+        /// <summary> Initializes a new instance of <see cref="MobileNetwork.MobileNetworkPacketCaptureData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -123,10 +124,10 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             networkInterfaces ??= new List<string>();
             outputFiles ??= new List<string>();
 
-            return new MobileNetworkPacketCaptureData(id, name, resourceType, systemData, provisioningState, status, reason, captureStartOn, networkInterfaces?.ToList(), bytesToCapturePerPacket, totalBytesPerSession, timeLimitInSeconds, outputFiles?.ToList());
+            return new MobileNetworkPacketCaptureData(id, name, resourceType, systemData, provisioningState, status, reason, captureStartOn, networkInterfaces?.ToList(), bytesToCapturePerPacket, totalBytesPerSession, timeLimitInSeconds, outputFiles?.ToList(), serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of AsyncOperationStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.AsyncOperationStatus"/>. </summary>
         /// <param name="id"> Fully qualified ID for the async operation. </param>
         /// <param name="name"> Name of the async operation. </param>
         /// <param name="status"> The operation status. </param>
@@ -139,10 +140,10 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         /// <returns> A new <see cref="Models.AsyncOperationStatus"/> instance for mocking. </returns>
         public static AsyncOperationStatus AsyncOperationStatus(string id = null, string name = null, string status = null, string resourceId = null, DateTimeOffset? startOn = null, DateTimeOffset? endOn = null, double? percentComplete = null, BinaryData properties = null, ResponseError error = null)
         {
-            return new AsyncOperationStatus(id, name, status, resourceId, startOn, endOn, percentComplete, properties, error);
+            return new AsyncOperationStatus(id, name, status, resourceId, startOn, endOn, percentComplete, properties, error, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of PacketCoreControlPlaneData. </summary>
+        /// <summary> Initializes a new instance of <see cref="MobileNetwork.PacketCoreControlPlaneData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -174,10 +175,10 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             sites ??= new List<WritableSubResource>();
             controlPlaneAccessVirtualIPv4Addresses ??= new List<string>();
 
-            return new PacketCoreControlPlaneData(id, name, resourceType, systemData, tags, location, userAssignedIdentity, provisioningState, installation, sites?.ToList(), platform, coreNetworkTechnology, version, installedVersion, rollbackVersion, controlPlaneAccessInterface, controlPlaneAccessVirtualIPv4Addresses?.ToList(), sku, ueMtu, localDiagnosticsAccess, diagnosticsUploadStorageAccountContainerUri != null ? new DiagnosticsUploadConfiguration(diagnosticsUploadStorageAccountContainerUri) : null, eventHub, nasRerouteMacroMmeGroupId.HasValue ? new SignalingConfiguration(new NASRerouteConfiguration(nasRerouteMacroMmeGroupId.Value)) : null, interopSettings);
+            return new PacketCoreControlPlaneData(id, name, resourceType, systemData, tags, location, userAssignedIdentity, provisioningState, installation, sites?.ToList(), platform, coreNetworkTechnology, version, installedVersion, rollbackVersion, controlPlaneAccessInterface, controlPlaneAccessVirtualIPv4Addresses?.ToList(), sku, ueMtu, localDiagnosticsAccess, diagnosticsUploadStorageAccountContainerUri != null ? new DiagnosticsUploadConfiguration(diagnosticsUploadStorageAccountContainerUri, serializedAdditionalRawData: null) : null, eventHub, nasRerouteMacroMmeGroupId.HasValue ? new SignalingConfiguration(new NASRerouteConfiguration(nasRerouteMacroMmeGroupId.Value, serializedAdditionalRawData: null), serializedAdditionalRawData: null) : null, interopSettings, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of MobileNetworkInstallation. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.MobileNetworkInstallation"/>. </summary>
         /// <param name="desiredState"> The desired installation state. </param>
         /// <param name="state"> Installation state. </param>
         /// <param name="reinstallRequired"> Whether a reinstall of the packet core is required to pick up the latest configuration changes. </param>
@@ -188,10 +189,10 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         {
             reasons ??= new List<MobileNetworkInstallationReason>();
 
-            return new MobileNetworkInstallation(desiredState, state, reinstallRequired, reasons?.ToList(), operationId != null ? ResourceManagerModelFactory.SubResource(operationId) : null);
+            return new MobileNetworkInstallation(desiredState, state, reinstallRequired, reasons?.ToList(), operationId != null ? ResourceManagerModelFactory.SubResource(operationId) : null, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of MobileNetworkPlatformConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.MobileNetworkPlatformConfiguration"/>. </summary>
         /// <param name="platformType"> The platform type where packet core is deployed. </param>
         /// <param name="azureStackEdgeDeviceId"> The Azure Stack Edge device where the packet core is deployed. If the device is part of a fault tolerant pair, either device in the pair can be specified. </param>
         /// <param name="azureStackEdgeDevices"> The Azure Stack Edge devices where the packet core is deployed. If the packet core is deployed across multiple devices, all devices will appear in this list. </param>
@@ -203,28 +204,28 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         {
             azureStackEdgeDevices ??= new List<WritableSubResource>();
 
-            return new MobileNetworkPlatformConfiguration(platformType, azureStackEdgeDeviceId != null ? ResourceManagerModelFactory.WritableSubResource(azureStackEdgeDeviceId) : null, azureStackEdgeDevices?.ToList(), azureStackHciClusterId != null ? ResourceManagerModelFactory.WritableSubResource(azureStackHciClusterId) : null, connectedClusterId != null ? ResourceManagerModelFactory.WritableSubResource(connectedClusterId) : null, customLocationId != null ? ResourceManagerModelFactory.WritableSubResource(customLocationId) : null);
+            return new MobileNetworkPlatformConfiguration(platformType, azureStackEdgeDeviceId != null ? ResourceManagerModelFactory.WritableSubResource(azureStackEdgeDeviceId) : null, azureStackEdgeDevices?.ToList(), azureStackHciClusterId != null ? ResourceManagerModelFactory.WritableSubResource(azureStackHciClusterId) : null, connectedClusterId != null ? ResourceManagerModelFactory.WritableSubResource(connectedClusterId) : null, customLocationId != null ? ResourceManagerModelFactory.WritableSubResource(customLocationId) : null, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of MobileNetworkHttpsServerCertificate. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.MobileNetworkHttpsServerCertificate"/>. </summary>
         /// <param name="certificateUri"> The certificate URL, unversioned. For example: https://contosovault.vault.azure.net/certificates/ingress. </param>
         /// <param name="provisioning"> The provisioning state of the certificate. </param>
         /// <returns> A new <see cref="Models.MobileNetworkHttpsServerCertificate"/> instance for mocking. </returns>
         public static MobileNetworkHttpsServerCertificate MobileNetworkHttpsServerCertificate(Uri certificateUri = null, MobileNetworkCertificateProvisioning provisioning = null)
         {
-            return new MobileNetworkHttpsServerCertificate(certificateUri, provisioning);
+            return new MobileNetworkHttpsServerCertificate(certificateUri, provisioning, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of MobileNetworkCertificateProvisioning. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.MobileNetworkCertificateProvisioning"/>. </summary>
         /// <param name="state"> The certificate's provisioning state. </param>
         /// <param name="reason"> Reason for certificate provisioning failure. </param>
         /// <returns> A new <see cref="Models.MobileNetworkCertificateProvisioning"/> instance for mocking. </returns>
         public static MobileNetworkCertificateProvisioning MobileNetworkCertificateProvisioning(CertificateProvisioningState? state = null, string reason = null)
         {
-            return new MobileNetworkCertificateProvisioning(state, reason);
+            return new MobileNetworkCertificateProvisioning(state, reason, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of PacketCoreControlPlaneVersionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="MobileNetwork.PacketCoreControlPlaneVersionData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -236,10 +237,10 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         {
             platforms ??= new List<MobileNetworkPlatform>();
 
-            return new PacketCoreControlPlaneVersionData(id, name, resourceType, systemData, provisioningState, platforms?.ToList());
+            return new PacketCoreControlPlaneVersionData(id, name, resourceType, systemData, provisioningState, platforms?.ToList(), serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of PacketCoreDataPlaneData. </summary>
+        /// <summary> Initializes a new instance of <see cref="MobileNetwork.PacketCoreDataPlaneData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -255,10 +256,10 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             tags ??= new Dictionary<string, string>();
             userPlaneAccessVirtualIPv4Addresses ??= new List<string>();
 
-            return new PacketCoreDataPlaneData(id, name, resourceType, systemData, tags, location, provisioningState, userPlaneAccessInterface, userPlaneAccessVirtualIPv4Addresses?.ToList());
+            return new PacketCoreDataPlaneData(id, name, resourceType, systemData, tags, location, provisioningState, userPlaneAccessInterface, userPlaneAccessVirtualIPv4Addresses?.ToList(), serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of MobileNetworkServiceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="MobileNetwork.MobileNetworkServiceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -275,10 +276,10 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             tags ??= new Dictionary<string, string>();
             pccRules ??= new List<PccRuleConfiguration>();
 
-            return new MobileNetworkServiceData(id, name, resourceType, systemData, tags, location, provisioningState, servicePrecedence, serviceQosPolicy, pccRules?.ToList());
+            return new MobileNetworkServiceData(id, name, resourceType, systemData, tags, location, provisioningState, servicePrecedence, serviceQosPolicy, pccRules?.ToList(), serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of MobileNetworkSimData. </summary>
+        /// <summary> Initializes a new instance of <see cref="MobileNetwork.MobileNetworkSimData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -301,10 +302,55 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             siteProvisioningState ??= new Dictionary<string, MobileNetworkSiteProvisioningState>();
             staticIPConfiguration ??= new List<SimStaticIPProperties>();
 
-            return new MobileNetworkSimData(id, name, resourceType, systemData, provisioningState, simState, siteProvisioningState, internationalMobileSubscriberIdentity, integratedCircuitCardIdentifier, deviceType, simPolicyId != null ? ResourceManagerModelFactory.WritableSubResource(simPolicyId) : null, staticIPConfiguration?.ToList(), vendorName, vendorKeyFingerprint, authenticationKey, operatorKeyCode);
+            return new MobileNetworkSimData(id, name, resourceType, systemData, provisioningState, simState, siteProvisioningState, internationalMobileSubscriberIdentity, integratedCircuitCardIdentifier, deviceType, simPolicyId != null ? ResourceManagerModelFactory.WritableSubResource(simPolicyId) : null, staticIPConfiguration?.ToList(), vendorName, vendorKeyFingerprint, authenticationKey, operatorKeyCode, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of MobileNetworkSimGroupData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SimNameAndProperties"/>. </summary>
+        /// <param name="name"> The name of the SIM. </param>
+        /// <param name="provisioningState"> The provisioning state of the SIM resource. </param>
+        /// <param name="simState"> The state of the SIM resource. </param>
+        /// <param name="siteProvisioningState"> A dictionary of sites to the provisioning state of this SIM on that site. </param>
+        /// <param name="internationalMobileSubscriberIdentity"> The international mobile subscriber identity (IMSI) for the SIM. </param>
+        /// <param name="integratedCircuitCardIdentifier"> The integrated circuit card ID (ICCID) for the SIM. </param>
+        /// <param name="deviceType"> An optional free-form text field that can be used to record the device type this SIM is associated with, for example 'Video camera'. The Azure portal allows SIMs to be grouped and filtered based on this value. </param>
+        /// <param name="simPolicyId"> The SIM policy used by this SIM. The SIM policy must be in the same location as the SIM. </param>
+        /// <param name="staticIPConfiguration"> A list of static IP addresses assigned to this SIM. Each address is assigned at a defined network scope, made up of {attached data network, slice}. </param>
+        /// <param name="vendorName"> The name of the SIM vendor who provided this SIM, if any. </param>
+        /// <param name="vendorKeyFingerprint"> The public key fingerprint of the SIM vendor who provided this SIM, if any. </param>
+        /// <param name="authenticationKey"> The Ki value for the SIM. </param>
+        /// <param name="operatorKeyCode"> The Opc value for the SIM. </param>
+        /// <returns> A new <see cref="Models.SimNameAndProperties"/> instance for mocking. </returns>
+        public static SimNameAndProperties SimNameAndProperties(string name = null, MobileNetworkProvisioningState? provisioningState = null, MobileNetworkSimState? simState = null, IReadOnlyDictionary<string, MobileNetworkSiteProvisioningState> siteProvisioningState = null, string internationalMobileSubscriberIdentity = null, string integratedCircuitCardIdentifier = null, string deviceType = null, ResourceIdentifier simPolicyId = null, IEnumerable<SimStaticIPProperties> staticIPConfiguration = null, string vendorName = null, string vendorKeyFingerprint = null, string authenticationKey = null, string operatorKeyCode = null)
+        {
+            siteProvisioningState ??= new Dictionary<string, MobileNetworkSiteProvisioningState>();
+            staticIPConfiguration ??= new List<SimStaticIPProperties>();
+
+            return new SimNameAndProperties(name, provisioningState, simState, siteProvisioningState, internationalMobileSubscriberIdentity, integratedCircuitCardIdentifier, deviceType, simPolicyId != null ? ResourceManagerModelFactory.WritableSubResource(simPolicyId) : null, staticIPConfiguration?.ToList(), vendorName, vendorKeyFingerprint, authenticationKey, operatorKeyCode, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.SimNameAndEncryptedProperties"/>. </summary>
+        /// <param name="name"> The name of the SIM. </param>
+        /// <param name="provisioningState"> The provisioning state of the SIM resource. </param>
+        /// <param name="simState"> The state of the SIM resource. </param>
+        /// <param name="siteProvisioningState"> A dictionary of sites to the provisioning state of this SIM on that site. </param>
+        /// <param name="internationalMobileSubscriberIdentity"> The international mobile subscriber identity (IMSI) for the SIM. </param>
+        /// <param name="integratedCircuitCardIdentifier"> The integrated circuit card ID (ICCID) for the SIM. </param>
+        /// <param name="deviceType"> An optional free-form text field that can be used to record the device type this SIM is associated with, for example 'Video camera'. The Azure portal allows SIMs to be grouped and filtered based on this value. </param>
+        /// <param name="simPolicyId"> The SIM policy used by this SIM. The SIM policy must be in the same location as the SIM. </param>
+        /// <param name="staticIPConfiguration"> A list of static IP addresses assigned to this SIM. Each address is assigned at a defined network scope, made up of {attached data network, slice}. </param>
+        /// <param name="vendorName"> The name of the SIM vendor who provided this SIM, if any. </param>
+        /// <param name="vendorKeyFingerprint"> The public key fingerprint of the SIM vendor who provided this SIM, if any. </param>
+        /// <param name="encryptedCredentials"> The encrypted SIM credentials. </param>
+        /// <returns> A new <see cref="Models.SimNameAndEncryptedProperties"/> instance for mocking. </returns>
+        public static SimNameAndEncryptedProperties SimNameAndEncryptedProperties(string name = null, MobileNetworkProvisioningState? provisioningState = null, MobileNetworkSimState? simState = null, IReadOnlyDictionary<string, MobileNetworkSiteProvisioningState> siteProvisioningState = null, string internationalMobileSubscriberIdentity = null, string integratedCircuitCardIdentifier = null, string deviceType = null, ResourceIdentifier simPolicyId = null, IEnumerable<SimStaticIPProperties> staticIPConfiguration = null, string vendorName = null, string vendorKeyFingerprint = null, string encryptedCredentials = null)
+        {
+            siteProvisioningState ??= new Dictionary<string, MobileNetworkSiteProvisioningState>();
+            staticIPConfiguration ??= new List<SimStaticIPProperties>();
+
+            return new SimNameAndEncryptedProperties(name, provisioningState, simState, siteProvisioningState, internationalMobileSubscriberIdentity, integratedCircuitCardIdentifier, deviceType, simPolicyId != null ? ResourceManagerModelFactory.WritableSubResource(simPolicyId) : null, staticIPConfiguration?.ToList(), vendorName, vendorKeyFingerprint, encryptedCredentials, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MobileNetwork.MobileNetworkSimGroupData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -320,10 +366,10 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new MobileNetworkSimGroupData(id, name, resourceType, systemData, tags, location, userAssignedIdentity, provisioningState, keyUri != null ? new KeyVaultKey(keyUri) : null, mobileNetworkId != null ? ResourceManagerModelFactory.WritableSubResource(mobileNetworkId) : null);
+            return new MobileNetworkSimGroupData(id, name, resourceType, systemData, tags, location, userAssignedIdentity, provisioningState, keyUri != null ? new KeyVaultKey(keyUri, serializedAdditionalRawData: null) : null, mobileNetworkId != null ? ResourceManagerModelFactory.WritableSubResource(mobileNetworkId) : null, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of MobileNetworkSimPolicyData. </summary>
+        /// <summary> Initializes a new instance of <see cref="MobileNetwork.MobileNetworkSimPolicyData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -344,10 +390,10 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             siteProvisioningState ??= new Dictionary<string, MobileNetworkSiteProvisioningState>();
             sliceConfigurations ??= new List<MobileNetworkSliceConfiguration>();
 
-            return new MobileNetworkSimPolicyData(id, name, resourceType, systemData, tags, location, provisioningState, siteProvisioningState, ueAmbr, defaultSliceId != null ? ResourceManagerModelFactory.WritableSubResource(defaultSliceId) : null, rfspIndex, registrationTimer, sliceConfigurations?.ToList());
+            return new MobileNetworkSimPolicyData(id, name, resourceType, systemData, tags, location, provisioningState, siteProvisioningState, ueAmbr, defaultSliceId != null ? ResourceManagerModelFactory.WritableSubResource(defaultSliceId) : null, rfspIndex, registrationTimer, sliceConfigurations?.ToList(), serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of MobileNetworkSiteData. </summary>
+        /// <summary> Initializes a new instance of <see cref="MobileNetwork.MobileNetworkSiteData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -362,10 +408,10 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             tags ??= new Dictionary<string, string>();
             networkFunctions ??= new List<SubResource>();
 
-            return new MobileNetworkSiteData(id, name, resourceType, systemData, tags, location, provisioningState, networkFunctions?.ToList());
+            return new MobileNetworkSiteData(id, name, resourceType, systemData, tags, location, provisioningState, networkFunctions?.ToList(), serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of MobileNetworkSliceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="MobileNetwork.MobileNetworkSliceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -380,7 +426,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new MobileNetworkSliceData(id, name, resourceType, systemData, tags, location, provisioningState, snssai, description);
+            return new MobileNetworkSliceData(id, name, resourceType, systemData, tags, location, provisioningState, snssai, description, serializedAdditionalRawData: null);
         }
     }
 }

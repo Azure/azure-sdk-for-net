@@ -5,27 +5,64 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.SecurityDevOps.Models
 {
     /// <summary> AzureDevOps Project properties. </summary>
     public partial class AzureDevOpsProjectProperties
     {
-        /// <summary> Initializes a new instance of AzureDevOpsProjectProperties. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AzureDevOpsProjectProperties"/>. </summary>
         public AzureDevOpsProjectProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of AzureDevOpsProjectProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureDevOpsProjectProperties"/>. </summary>
         /// <param name="provisioningState"></param>
         /// <param name="projectId"> Gets or sets AzureDevOps Project Id. </param>
         /// <param name="orgName"> Gets or sets AzureDevOps Org Name. </param>
         /// <param name="autoDiscovery"></param>
-        internal AzureDevOpsProjectProperties(ProvisioningState? provisioningState, string projectId, string orgName, AutoDiscovery? autoDiscovery)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AzureDevOpsProjectProperties(ProvisioningState? provisioningState, string projectId, string orgName, AutoDiscovery? autoDiscovery, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ProvisioningState = provisioningState;
             ProjectId = projectId;
             OrgName = orgName;
             AutoDiscovery = autoDiscovery;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets or sets the provisioning state. </summary>

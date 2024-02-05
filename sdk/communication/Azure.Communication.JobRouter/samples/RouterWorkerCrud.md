@@ -103,7 +103,7 @@ Console.WriteLine($"Worker successfully de-registered with status set to: {updat
 ## List workers
 
 ```C# Snippet:Azure_Communication_JobRouter_Tests_Samples_Crud_GetRouterWorkers
-Pageable<RouterWorker> workers = routerClient.GetWorkers();
+Pageable<RouterWorker> workers = routerClient.GetWorkers(null, null);
 foreach (Page<RouterWorker> asPage in workers.AsPages(pageSizeHint: 10))
 {
     foreach (RouterWorker? workerPaged in asPage.Values)
@@ -113,7 +113,7 @@ foreach (Page<RouterWorker> asPage in workers.AsPages(pageSizeHint: 10))
 }
 
 // Additionally workers can be queried with several filters like queueId, capacity, state etc.
-workers = routerClient.GetWorkers(channelId: "Voip", state: RouterWorkerStateSelector.All);
+workers = routerClient.GetWorkers(null, channelId: "Voip", state: RouterWorkerStateSelector.All);
 
 foreach (Page<RouterWorker> asPage in workers.AsPages(pageSizeHint: 10))
 {

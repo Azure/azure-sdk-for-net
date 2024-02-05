@@ -14,14 +14,46 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> Describes the basic gallery artifact publishing profile. </summary>
     public partial class GalleryArtifactPublishingProfileBase
     {
-        /// <summary> Initializes a new instance of GalleryArtifactPublishingProfileBase. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private protected IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="GalleryArtifactPublishingProfileBase"/>. </summary>
         public GalleryArtifactPublishingProfileBase()
         {
             TargetRegions = new ChangeTrackingList<TargetRegion>();
             TargetExtendedLocations = new ChangeTrackingList<GalleryTargetExtendedLocation>();
         }
 
-        /// <summary> Initializes a new instance of GalleryArtifactPublishingProfileBase. </summary>
+        /// <summary> Initializes a new instance of <see cref="GalleryArtifactPublishingProfileBase"/>. </summary>
         /// <param name="targetRegions"> The target regions where the Image Version is going to be replicated to. This property is updatable. </param>
         /// <param name="replicaCount"> The number of replicas of the Image Version to be created per region. This property would take effect for a region when regionalReplicaCount is not specified. This property is updatable. </param>
         /// <param name="isExcludedFromLatest"> If set to true, Virtual Machines deployed from the latest version of the Image Definition won't use this Image Version. </param>
@@ -30,7 +62,8 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="storageAccountType"> Specifies the storage account type to be used to store the image. This property is not updatable. </param>
         /// <param name="replicationMode"> Optional parameter which specifies the mode to be used for replication. This property is not updatable. </param>
         /// <param name="targetExtendedLocations"> The target extended locations where the Image Version is going to be replicated to. This property is updatable. </param>
-        internal GalleryArtifactPublishingProfileBase(IList<TargetRegion> targetRegions, int? replicaCount, bool? isExcludedFromLatest, DateTimeOffset? publishedOn, DateTimeOffset? endOfLifeOn, ImageStorageAccountType? storageAccountType, GalleryReplicationMode? replicationMode, IList<GalleryTargetExtendedLocation> targetExtendedLocations)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal GalleryArtifactPublishingProfileBase(IList<TargetRegion> targetRegions, int? replicaCount, bool? isExcludedFromLatest, DateTimeOffset? publishedOn, DateTimeOffset? endOfLifeOn, ImageStorageAccountType? storageAccountType, GalleryReplicationMode? replicationMode, IList<GalleryTargetExtendedLocation> targetExtendedLocations, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             TargetRegions = targetRegions;
             ReplicaCount = replicaCount;
@@ -40,6 +73,7 @@ namespace Azure.ResourceManager.Compute.Models
             StorageAccountType = storageAccountType;
             ReplicationMode = replicationMode;
             TargetExtendedLocations = targetExtendedLocations;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The target regions where the Image Version is going to be replicated to. This property is updatable. </summary>

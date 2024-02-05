@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Net;
 
 namespace Azure.ResourceManager.LabServices.Models
@@ -13,12 +14,44 @@ namespace Azure.ResourceManager.LabServices.Models
     /// <summary> The connection information for the virtual machine. </summary>
     public partial class LabVirtualMachineConnectionProfile
     {
-        /// <summary> Initializes a new instance of LabVirtualMachineConnectionProfile. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="LabVirtualMachineConnectionProfile"/>. </summary>
         internal LabVirtualMachineConnectionProfile()
         {
         }
 
-        /// <summary> Initializes a new instance of LabVirtualMachineConnectionProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="LabVirtualMachineConnectionProfile"/>. </summary>
         /// <param name="privateIPAddress"> The private IP address of the virtual machine. </param>
         /// <param name="sshAuthority"> Port and host name separated by semicolon for connecting via SSH protocol to the virtual machine. </param>
         /// <param name="sshInBrowserUri"> URL for connecting via SSH protocol to the virtual machine in browser. </param>
@@ -26,7 +59,8 @@ namespace Azure.ResourceManager.LabServices.Models
         /// <param name="rdpInBrowserUri"> URL for connecting via RDP protocol to the virtual machine in browser. </param>
         /// <param name="adminUsername"> The username used to log on to the virtual machine as admin. </param>
         /// <param name="nonAdminUsername"> The username used to log on to the virtual machine as non-admin, if one exists. </param>
-        internal LabVirtualMachineConnectionProfile(IPAddress privateIPAddress, string sshAuthority, Uri sshInBrowserUri, string rdpAuthority, Uri rdpInBrowserUri, string adminUsername, string nonAdminUsername)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal LabVirtualMachineConnectionProfile(IPAddress privateIPAddress, string sshAuthority, Uri sshInBrowserUri, string rdpAuthority, Uri rdpInBrowserUri, string adminUsername, string nonAdminUsername, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             PrivateIPAddress = privateIPAddress;
             SshAuthority = sshAuthority;
@@ -35,6 +69,7 @@ namespace Azure.ResourceManager.LabServices.Models
             RdpInBrowserUri = rdpInBrowserUri;
             AdminUsername = adminUsername;
             NonAdminUsername = nonAdminUsername;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The private IP address of the virtual machine. </summary>

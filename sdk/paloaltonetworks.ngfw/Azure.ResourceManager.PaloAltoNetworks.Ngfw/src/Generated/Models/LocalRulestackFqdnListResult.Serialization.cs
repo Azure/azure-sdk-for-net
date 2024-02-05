@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -12,16 +14,73 @@ using Azure.ResourceManager.PaloAltoNetworks.Ngfw;
 
 namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
 {
-    internal partial class LocalRulestackFqdnListResult
+    internal partial class LocalRulestackFqdnListResult : IUtf8JsonSerializable, IJsonModel<LocalRulestackFqdnListResult>
     {
-        internal static LocalRulestackFqdnListResult DeserializeLocalRulestackFqdnListResult(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<LocalRulestackFqdnListResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<LocalRulestackFqdnListResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<LocalRulestackFqdnListResult>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(LocalRulestackFqdnListResult)} does not support '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            writer.WritePropertyName("value"u8);
+            writer.WriteStartArray();
+            foreach (var item in Value)
+            {
+                writer.WriteObjectValue(item);
+            }
+            writer.WriteEndArray();
+            if (Optional.IsDefined(NextLink))
+            {
+                writer.WritePropertyName("nextLink"u8);
+                writer.WriteStringValue(NextLink);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        LocalRulestackFqdnListResult IJsonModel<LocalRulestackFqdnListResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<LocalRulestackFqdnListResult>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(LocalRulestackFqdnListResult)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeLocalRulestackFqdnListResult(document.RootElement, options);
+        }
+
+        internal static LocalRulestackFqdnListResult DeserializeLocalRulestackFqdnListResult(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             IReadOnlyList<LocalRulestackFqdnData> value = default;
             Optional<string> nextLink = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -39,8 +98,44 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                     nextLink = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new LocalRulestackFqdnListResult(value, nextLink.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new LocalRulestackFqdnListResult(value, nextLink.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<LocalRulestackFqdnListResult>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<LocalRulestackFqdnListResult>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(LocalRulestackFqdnListResult)} does not support '{options.Format}' format.");
+            }
+        }
+
+        LocalRulestackFqdnListResult IPersistableModel<LocalRulestackFqdnListResult>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<LocalRulestackFqdnListResult>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeLocalRulestackFqdnListResult(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(LocalRulestackFqdnListResult)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<LocalRulestackFqdnListResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

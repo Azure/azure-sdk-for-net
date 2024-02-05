@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Storage.Models
@@ -13,7 +14,39 @@ namespace Azure.ResourceManager.Storage.Models
     /// <summary> The parameters to list service SAS credentials of a specific resource. </summary>
     public partial class ServiceSasContent
     {
-        /// <summary> Initializes a new instance of ServiceSasContent. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ServiceSasContent"/>. </summary>
         /// <param name="canonicalizedResource"> The canonical path to the signed resource. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="canonicalizedResource"/> is null. </exception>
         public ServiceSasContent(string canonicalizedResource)
@@ -21,6 +54,54 @@ namespace Azure.ResourceManager.Storage.Models
             Argument.AssertNotNull(canonicalizedResource, nameof(canonicalizedResource));
 
             CanonicalizedResource = canonicalizedResource;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ServiceSasContent"/>. </summary>
+        /// <param name="canonicalizedResource"> The canonical path to the signed resource. </param>
+        /// <param name="resource"> The signed services accessible with the service SAS. Possible values include: Blob (b), Container (c), File (f), Share (s). </param>
+        /// <param name="permissions"> The signed permissions for the service SAS. Possible values include: Read (r), Write (w), Delete (d), List (l), Add (a), Create (c), Update (u) and Process (p). </param>
+        /// <param name="ipAddressOrRange"> An IP address or a range of IP addresses from which to accept requests. </param>
+        /// <param name="protocols"> The protocol permitted for a request made with the account SAS. </param>
+        /// <param name="sharedAccessStartOn"> The time at which the SAS becomes valid. </param>
+        /// <param name="sharedAccessExpiryOn"> The time at which the shared access signature becomes invalid. </param>
+        /// <param name="identifier"> A unique value up to 64 characters in length that correlates to an access policy specified for the container, queue, or table. </param>
+        /// <param name="partitionKeyStart"> The start of partition key. </param>
+        /// <param name="partitionKeyEnd"> The end of partition key. </param>
+        /// <param name="rowKeyStart"> The start of row key. </param>
+        /// <param name="rowKeyEnd"> The end of row key. </param>
+        /// <param name="keyToSign"> The key to sign the account SAS token with. </param>
+        /// <param name="cacheControl"> The response header override for cache control. </param>
+        /// <param name="contentDisposition"> The response header override for content disposition. </param>
+        /// <param name="contentEncoding"> The response header override for content encoding. </param>
+        /// <param name="contentLanguage"> The response header override for content language. </param>
+        /// <param name="contentType"> The response header override for content type. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ServiceSasContent(string canonicalizedResource, ServiceSasSignedResourceType? resource, StorageAccountSasPermission? permissions, string ipAddressOrRange, StorageAccountHttpProtocol? protocols, DateTimeOffset? sharedAccessStartOn, DateTimeOffset? sharedAccessExpiryOn, string identifier, string partitionKeyStart, string partitionKeyEnd, string rowKeyStart, string rowKeyEnd, string keyToSign, string cacheControl, string contentDisposition, string contentEncoding, string contentLanguage, string contentType, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            CanonicalizedResource = canonicalizedResource;
+            Resource = resource;
+            Permissions = permissions;
+            IPAddressOrRange = ipAddressOrRange;
+            Protocols = protocols;
+            SharedAccessStartOn = sharedAccessStartOn;
+            SharedAccessExpiryOn = sharedAccessExpiryOn;
+            Identifier = identifier;
+            PartitionKeyStart = partitionKeyStart;
+            PartitionKeyEnd = partitionKeyEnd;
+            RowKeyStart = rowKeyStart;
+            RowKeyEnd = rowKeyEnd;
+            KeyToSign = keyToSign;
+            CacheControl = cacheControl;
+            ContentDisposition = contentDisposition;
+            ContentEncoding = contentEncoding;
+            ContentLanguage = contentLanguage;
+            ContentType = contentType;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ServiceSasContent"/> for deserialization. </summary>
+        internal ServiceSasContent()
+        {
         }
 
         /// <summary> The canonical path to the signed resource. </summary>

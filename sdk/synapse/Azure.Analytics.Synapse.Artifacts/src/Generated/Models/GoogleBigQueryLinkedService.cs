@@ -14,7 +14,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> Google BigQuery service linked service. </summary>
     public partial class GoogleBigQueryLinkedService : LinkedService
     {
-        /// <summary> Initializes a new instance of GoogleBigQueryLinkedService. </summary>
+        /// <summary> Initializes a new instance of <see cref="GoogleBigQueryLinkedService"/>. </summary>
         /// <param name="project"> The default BigQuery project to query against. </param>
         /// <param name="authenticationType"> The OAuth 2.0 authentication mechanism used for authentication. ServiceAuthentication can only be used on self-hosted IR. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="project"/> is null. </exception>
@@ -27,7 +27,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Type = "GoogleBigQuery";
         }
 
-        /// <summary> Initializes a new instance of GoogleBigQueryLinkedService. </summary>
+        /// <summary> Initializes a new instance of <see cref="GoogleBigQueryLinkedService"/>. </summary>
         /// <param name="type"> Type of linked service. </param>
         /// <param name="connectVia"> The integration runtime reference. </param>
         /// <param name="description"> Linked service description. </param>

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure;
 using Azure.Core;
@@ -15,17 +16,18 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Http listener of an application gateway. </summary>
     public partial class ApplicationGatewayHttpListener : NetworkResourceData
     {
-        /// <summary> Initializes a new instance of ApplicationGatewayHttpListener. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApplicationGatewayHttpListener"/>. </summary>
         public ApplicationGatewayHttpListener()
         {
             CustomErrorConfigurations = new ChangeTrackingList<ApplicationGatewayCustomError>();
             HostNames = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of ApplicationGatewayHttpListener. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApplicationGatewayHttpListener"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="resourceType"> Resource type. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="frontendIPConfiguration"> Frontend IP configuration resource of an application gateway. </param>
         /// <param name="frontendPort"> Frontend port resource of an application gateway. </param>
@@ -38,7 +40,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="customErrorConfigurations"> Custom error configurations of the HTTP listener. </param>
         /// <param name="firewallPolicy"> Reference to the FirewallPolicy resource. </param>
         /// <param name="hostNames"> List of Host names for HTTP Listener that allows special wildcard characters as well. </param>
-        internal ApplicationGatewayHttpListener(ResourceIdentifier id, string name, ResourceType? resourceType, ETag? etag, WritableSubResource frontendIPConfiguration, WritableSubResource frontendPort, ApplicationGatewayProtocol? protocol, string hostName, WritableSubResource sslCertificate, WritableSubResource sslProfile, bool? requireServerNameIndication, NetworkProvisioningState? provisioningState, IList<ApplicationGatewayCustomError> customErrorConfigurations, WritableSubResource firewallPolicy, IList<string> hostNames) : base(id, name, resourceType)
+        internal ApplicationGatewayHttpListener(ResourceIdentifier id, string name, ResourceType? resourceType, IDictionary<string, BinaryData> serializedAdditionalRawData, ETag? etag, WritableSubResource frontendIPConfiguration, WritableSubResource frontendPort, ApplicationGatewayProtocol? protocol, string hostName, WritableSubResource sslCertificate, WritableSubResource sslProfile, bool? requireServerNameIndication, NetworkProvisioningState? provisioningState, IList<ApplicationGatewayCustomError> customErrorConfigurations, WritableSubResource firewallPolicy, IList<string> hostNames) : base(id, name, resourceType, serializedAdditionalRawData)
         {
             ETag = etag;
             FrontendIPConfiguration = frontendIPConfiguration;

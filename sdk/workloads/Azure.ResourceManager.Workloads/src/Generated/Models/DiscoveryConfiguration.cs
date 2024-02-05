@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Workloads.Models
@@ -12,18 +14,19 @@ namespace Azure.ResourceManager.Workloads.Models
     /// <summary> Discovery Details. </summary>
     public partial class DiscoveryConfiguration : SapConfiguration
     {
-        /// <summary> Initializes a new instance of DiscoveryConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="DiscoveryConfiguration"/>. </summary>
         public DiscoveryConfiguration()
         {
             ConfigurationType = SapConfigurationType.Discovery;
         }
 
-        /// <summary> Initializes a new instance of DiscoveryConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="DiscoveryConfiguration"/>. </summary>
         /// <param name="configurationType"> The configuration Type. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="centralServerVmId"> The virtual machine ID of the Central Server. </param>
         /// <param name="managedRgStorageAccountName"> The custom storage account name for the storage account created by the service in the managed resource group created as part of VIS deployment.&lt;br&gt;&lt;br&gt;Refer to the storage account naming rules [here](https://learn.microsoft.com/azure/azure-resource-manager/management/resource-name-rules#microsoftstorage).&lt;br&gt;&lt;br&gt;If not provided, the service will create the storage account with a random name. </param>
         /// <param name="appLocation"> The geo-location where the SAP system exists. </param>
-        internal DiscoveryConfiguration(SapConfigurationType configurationType, ResourceIdentifier centralServerVmId, string managedRgStorageAccountName, AzureLocation? appLocation) : base(configurationType)
+        internal DiscoveryConfiguration(SapConfigurationType configurationType, IDictionary<string, BinaryData> serializedAdditionalRawData, ResourceIdentifier centralServerVmId, string managedRgStorageAccountName, AzureLocation? appLocation) : base(configurationType, serializedAdditionalRawData)
         {
             CentralServerVmId = centralServerVmId;
             ManagedRgStorageAccountName = managedRgStorageAccountName;

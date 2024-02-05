@@ -5,19 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> The NlpVerticalFeaturizationSettings. </summary>
     internal partial class NlpVerticalFeaturizationSettings : MachineLearningFeaturizationSettings
     {
-        /// <summary> Initializes a new instance of NlpVerticalFeaturizationSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="NlpVerticalFeaturizationSettings"/>. </summary>
         public NlpVerticalFeaturizationSettings()
         {
         }
 
-        /// <summary> Initializes a new instance of NlpVerticalFeaturizationSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="NlpVerticalFeaturizationSettings"/>. </summary>
         /// <param name="datasetLanguage"> Dataset language, useful for the text data. </param>
-        internal NlpVerticalFeaturizationSettings(string datasetLanguage) : base(datasetLanguage)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal NlpVerticalFeaturizationSettings(string datasetLanguage, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(datasetLanguage, serializedAdditionalRawData)
         {
         }
     }

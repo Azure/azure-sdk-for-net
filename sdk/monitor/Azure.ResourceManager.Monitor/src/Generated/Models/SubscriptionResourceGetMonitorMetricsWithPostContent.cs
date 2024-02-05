@@ -6,15 +6,87 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
     /// <summary> Query parameters can also be specified in the body, specifying the same parameter in both the body and query parameters will result in an error. </summary>
     public partial class SubscriptionResourceGetMonitorMetricsWithPostContent
     {
-        /// <summary> Initializes a new instance of SubscriptionResourceGetMonitorMetricsWithPostContent. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SubscriptionResourceGetMonitorMetricsWithPostContent"/>. </summary>
         public SubscriptionResourceGetMonitorMetricsWithPostContent()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SubscriptionResourceGetMonitorMetricsWithPostContent"/>. </summary>
+        /// <param name="timespan"> The timespan of the query. It is a string with the following format 'startDateTime_ISO/endDateTime_ISO'. </param>
+        /// <param name="interval"> The interval (i.e. timegrain) of the query. </param>
+        /// <param name="metricNames"> The names of the metrics (comma separated) to retrieve. </param>
+        /// <param name="aggregation"> The list of aggregation types (comma separated) to retrieve. </param>
+        /// <param name="filter"> The **$filter** is used to reduce the set of metric data returned.&lt;br&gt;Example:&lt;br&gt;Metric contains metadata A, B and C.&lt;br&gt;- Return all time series of C where A = a1 and B = b1 or b2&lt;br&gt;**$filter=A eq ‘a1’ and B eq ‘b1’ or B eq ‘b2’ and C eq ‘*’**&lt;br&gt;- Invalid variant:&lt;br&gt;**$filter=A eq ‘a1’ and B eq ‘b1’ and C eq ‘*’ or B = ‘b2’**&lt;br&gt;This is invalid because the logical or operator cannot separate two different metadata names.&lt;br&gt;- Return all time series where A = a1, B = b1 and C = c1:&lt;br&gt;**$filter=A eq ‘a1’ and B eq ‘b1’ and C eq ‘c1’**&lt;br&gt;- Return all time series where A = a1&lt;br&gt;**$filter=A eq ‘a1’ and B eq ‘*’ and C eq ‘*’**. </param>
+        /// <param name="top">
+        /// The maximum number of records to retrieve.
+        /// Valid only if $filter is specified.
+        /// Defaults to 10.
+        /// </param>
+        /// <param name="orderBy">
+        /// The aggregation to use for sorting results and the direction of the sort.
+        /// Only one order can be specified.
+        /// Examples: sum asc.
+        /// </param>
+        /// <param name="rollUpBy"> Dimension name(s) to rollup results by. For example if you only want to see metric values with a filter like 'City eq Seattle or City eq Tacoma' but don't want to see separate values for each city, you can specify 'RollUpBy=City' to see the results for Seattle and Tacoma rolled up into one timeseries. </param>
+        /// <param name="resultType"> Reduces the set of data collected. The syntax allowed depends on the operation. See the operation's description for details. </param>
+        /// <param name="metricNamespace"> Metric namespace where the metrics you want reside. </param>
+        /// <param name="autoAdjustTimegrain"> When set to true, if the timespan passed in is not supported by this metric, the API will return the result using the closest supported timespan. When set to false, an error is returned for invalid timespan parameters. Defaults to false. </param>
+        /// <param name="validateDimensions"> When set to false, invalid filter parameter values will be ignored. When set to true, an error is returned for invalid filter parameters. Defaults to true. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SubscriptionResourceGetMonitorMetricsWithPostContent(TimeSpan? timespan, TimeSpan? interval, string metricNames, string aggregation, string filter, int? top, string orderBy, string rollUpBy, MonitorMetricResultType? resultType, string metricNamespace, bool? autoAdjustTimegrain, bool? validateDimensions, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Timespan = timespan;
+            Interval = interval;
+            MetricNames = metricNames;
+            Aggregation = aggregation;
+            Filter = filter;
+            Top = top;
+            OrderBy = orderBy;
+            RollUpBy = rollUpBy;
+            ResultType = resultType;
+            MetricNamespace = metricNamespace;
+            AutoAdjustTimegrain = autoAdjustTimegrain;
+            ValidateDimensions = validateDimensions;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The timespan of the query. It is a string with the following format 'startDateTime_ISO/endDateTime_ISO'. </summary>

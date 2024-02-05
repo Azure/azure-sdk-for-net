@@ -14,25 +14,59 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
     /// <summary> The event request message sent to the service URI. </summary>
     public partial class ContainerRegistryWebhookEventRequestMessage
     {
-        /// <summary> Initializes a new instance of ContainerRegistryWebhookEventRequestMessage. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryWebhookEventRequestMessage"/>. </summary>
         internal ContainerRegistryWebhookEventRequestMessage()
         {
             Headers = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of ContainerRegistryWebhookEventRequestMessage. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryWebhookEventRequestMessage"/>. </summary>
         /// <param name="content"> The content of the event request message. </param>
         /// <param name="headers"> The headers of the event request message. </param>
         /// <param name="method"> The HTTP method used to send the event request message. </param>
         /// <param name="requestUri"> The URI used to send the event request message. </param>
         /// <param name="version"> The HTTP message version. </param>
-        internal ContainerRegistryWebhookEventRequestMessage(ContainerRegistryWebhookEventContent content, IReadOnlyDictionary<string, string> headers, string method, Uri requestUri, string version)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ContainerRegistryWebhookEventRequestMessage(ContainerRegistryWebhookEventContent content, IReadOnlyDictionary<string, string> headers, string method, Uri requestUri, string version, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Content = content;
             Headers = headers;
             Method = method;
             RequestUri = requestUri;
             Version = version;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The content of the event request message. </summary>

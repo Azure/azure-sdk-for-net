@@ -16,12 +16,13 @@ namespace Azure.Data.SchemaRegistry
         /// <summary>
         /// Initializes a new instance of the <see cref="SchemaRegistryClientOptions"/>.
         /// </summary>
-        public SchemaRegistryClientOptions(ServiceVersion version = ServiceVersion.V2022_10)
+        public SchemaRegistryClientOptions(ServiceVersion version = ServiceVersion.V2023_07)
         {
             Version = version switch
             {
                 ServiceVersion.V2021_10 => "2021-10",
                 ServiceVersion.V2022_10 => "2022-10",
+                ServiceVersion.V2023_07 => "2023-07-01",
                 _ => throw new ArgumentException($"The service version {version} is not supported by this library.", nameof(version))
             };
         }
@@ -40,7 +41,12 @@ namespace Azure.Data.SchemaRegistry
             /// <summary>
             /// Version 2022-10 of the Schema Registry service.
             /// </summary>
-            V2022_10 = 2
+            V2022_10 = 2,
+
+            /// <summary>
+            /// Version 2023-07 of the Schema Registry service.
+            /// </summary>
+            V2023_07 = 3
 #pragma warning restore CA1707
         }
     }

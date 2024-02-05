@@ -5,16 +5,25 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> The UnknownDatastoreSecrets. </summary>
     internal partial class UnknownDatastoreSecrets : MachineLearningDatastoreSecrets
     {
-        /// <summary> Initializes a new instance of UnknownDatastoreSecrets. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnknownDatastoreSecrets"/>. </summary>
         /// <param name="secretsType"> [Required] Credential type used to authentication with storage. </param>
-        internal UnknownDatastoreSecrets(SecretsType secretsType) : base(secretsType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal UnknownDatastoreSecrets(SecretsType secretsType, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(secretsType, serializedAdditionalRawData)
         {
             SecretsType = secretsType;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="UnknownDatastoreSecrets"/> for deserialization. </summary>
+        internal UnknownDatastoreSecrets()
+        {
         }
     }
 }

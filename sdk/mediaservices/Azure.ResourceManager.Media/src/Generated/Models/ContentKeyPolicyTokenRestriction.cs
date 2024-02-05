@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.Media.Models
     /// <summary> Represents a token restriction. Provided token must match these requirements for successful license or key delivery. </summary>
     public partial class ContentKeyPolicyTokenRestriction : ContentKeyPolicyRestriction
     {
-        /// <summary> Initializes a new instance of ContentKeyPolicyTokenRestriction. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContentKeyPolicyTokenRestriction"/>. </summary>
         /// <param name="issuer"> The token issuer. </param>
         /// <param name="audience"> The audience for the token. </param>
         /// <param name="primaryVerificationKey">
@@ -38,8 +38,9 @@ namespace Azure.ResourceManager.Media.Models
             OdataType = "#Microsoft.Media.ContentKeyPolicyTokenRestriction";
         }
 
-        /// <summary> Initializes a new instance of ContentKeyPolicyTokenRestriction. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContentKeyPolicyTokenRestriction"/>. </summary>
         /// <param name="odataType"> The discriminator for derived types. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="issuer"> The token issuer. </param>
         /// <param name="audience"> The audience for the token. </param>
         /// <param name="primaryVerificationKey">
@@ -55,7 +56,7 @@ namespace Azure.ResourceManager.Media.Models
         /// <param name="requiredClaims"> A list of required token claims. </param>
         /// <param name="restrictionTokenType"> The type of token. </param>
         /// <param name="openIdConnectDiscoveryDocument"> The OpenID connect discovery document. </param>
-        internal ContentKeyPolicyTokenRestriction(string odataType, string issuer, string audience, ContentKeyPolicyRestrictionTokenKey primaryVerificationKey, IList<ContentKeyPolicyRestrictionTokenKey> alternateVerificationKeys, IList<ContentKeyPolicyTokenClaim> requiredClaims, ContentKeyPolicyRestrictionTokenType restrictionTokenType, string openIdConnectDiscoveryDocument) : base(odataType)
+        internal ContentKeyPolicyTokenRestriction(string odataType, IDictionary<string, BinaryData> serializedAdditionalRawData, string issuer, string audience, ContentKeyPolicyRestrictionTokenKey primaryVerificationKey, IList<ContentKeyPolicyRestrictionTokenKey> alternateVerificationKeys, IList<ContentKeyPolicyTokenClaim> requiredClaims, ContentKeyPolicyRestrictionTokenType restrictionTokenType, string openIdConnectDiscoveryDocument) : base(odataType, serializedAdditionalRawData)
         {
             Issuer = issuer;
             Audience = audience;
@@ -65,6 +66,11 @@ namespace Azure.ResourceManager.Media.Models
             RestrictionTokenType = restrictionTokenType;
             OpenIdConnectDiscoveryDocument = openIdConnectDiscoveryDocument;
             OdataType = odataType ?? "#Microsoft.Media.ContentKeyPolicyTokenRestriction";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ContentKeyPolicyTokenRestriction"/> for deserialization. </summary>
+        internal ContentKeyPolicyTokenRestriction()
+        {
         }
 
         /// <summary> The token issuer. </summary>

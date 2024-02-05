@@ -14,7 +14,39 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     /// <summary> Grouping configuration property bag. </summary>
     public partial class SecurityInsightsGroupingConfiguration
     {
-        /// <summary> Initializes a new instance of SecurityInsightsGroupingConfiguration. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SecurityInsightsGroupingConfiguration"/>. </summary>
         /// <param name="isEnabled"> Grouping enabled. </param>
         /// <param name="isClosedIncidentReopened"> Re-open closed matching incidents. </param>
         /// <param name="lookbackDuration"> Limit the group to alerts created within the lookback duration (in ISO 8601 duration format). </param>
@@ -30,7 +62,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             GroupByCustomDetails = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of SecurityInsightsGroupingConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityInsightsGroupingConfiguration"/>. </summary>
         /// <param name="isEnabled"> Grouping enabled. </param>
         /// <param name="isClosedIncidentReopened"> Re-open closed matching incidents. </param>
         /// <param name="lookbackDuration"> Limit the group to alerts created within the lookback duration (in ISO 8601 duration format). </param>
@@ -38,7 +70,8 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="groupByEntities"> A list of entity types to group by (when matchingMethod is Selected). Only entities defined in the current alert rule may be used. </param>
         /// <param name="groupByAlertDetails"> A list of alert details to group by (when matchingMethod is Selected). </param>
         /// <param name="groupByCustomDetails"> A list of custom details keys to group by (when matchingMethod is Selected). Only keys defined in the current alert rule may be used. </param>
-        internal SecurityInsightsGroupingConfiguration(bool isEnabled, bool isClosedIncidentReopened, TimeSpan lookbackDuration, SecurityInsightsGroupingMatchingMethod matchingMethod, IList<SecurityInsightsAlertRuleEntityMappingType> groupByEntities, IList<SecurityInsightsAlertDetail> groupByAlertDetails, IList<string> groupByCustomDetails)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SecurityInsightsGroupingConfiguration(bool isEnabled, bool isClosedIncidentReopened, TimeSpan lookbackDuration, SecurityInsightsGroupingMatchingMethod matchingMethod, IList<SecurityInsightsAlertRuleEntityMappingType> groupByEntities, IList<SecurityInsightsAlertDetail> groupByAlertDetails, IList<string> groupByCustomDetails, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             IsEnabled = isEnabled;
             IsClosedIncidentReopened = isClosedIncidentReopened;
@@ -47,6 +80,12 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             GroupByEntities = groupByEntities;
             GroupByAlertDetails = groupByAlertDetails;
             GroupByCustomDetails = groupByCustomDetails;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SecurityInsightsGroupingConfiguration"/> for deserialization. </summary>
+        internal SecurityInsightsGroupingConfiguration()
+        {
         }
 
         /// <summary> Grouping enabled. </summary>

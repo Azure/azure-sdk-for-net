@@ -52,6 +52,27 @@ namespace Azure.Messaging.EventHubs.Tests
         }
 
         /// <summary>
+        ///   Verifies diagnostics functionality is off without feature flag.
+        /// </summary>
+        ///
+        [Test]
+        public async Task EventHubProducerActivitySourceDisabled()
+        {
+            using var testListener = new TestActivitySourceListener(DiagnosticProperty.DiagnosticNamespace);
+            var fakeConnection = new MockConnection("SomeName", "endpoint");
+            var transportMock = new Mock<TransportProducer>();
+
+            transportMock
+                .Setup(m => m.SendAsync(It.IsAny<IReadOnlyCollection<EventData>>(), It.IsAny<SendEventOptions>(), It.IsAny<CancellationToken>()))
+                .Returns(Task.CompletedTask);
+
+            var producer = new EventHubProducerClient(fakeConnection, transportMock.Object);
+            await producer.SendAsync(new[] { new EventData(ReadOnlyMemory<byte>.Empty) });
+
+            Assert.IsEmpty(testListener.Activities);
+        }
+
+        /// <summary>
         ///   Verifies diagnostics functionality of the <see cref="EventHubProducerClient" />
         ///   class.
         /// </summary>
@@ -370,12 +391,36 @@ namespace Azure.Messaging.EventHubs.Tests
         }
 
         /// <summary>
+        ///   Verifies diagnostics functionality is off without feature flag.
+        /// </summary>
+        ///
+        [Test]
+        public async Task EventHubProcessorActivitySourceDisabled()
+        {
+            using var cancellationSource = new CancellationTokenSource();
+            cancellationSource.CancelAfter(TimeSpan.FromSeconds(30));
+
+            using var testListener = new TestActivitySourceListener(DiagnosticProperty.DiagnosticNamespace);
+            var partition = new EventProcessorPartition { PartitionId = "123" };
+            var mockProcessor = new Mock<EventProcessor<EventProcessorPartition>>(67, "consumerGroup", "namespace", "eventHub", Mock.Of<TokenCredential>(), default(EventProcessorOptions)) { CallBase = true };
+
+            var eventBatch = new List<EventData>
+            {
+                new EventData(new BinaryData(Array.Empty<byte>()))
+            };
+
+            await mockProcessor.Object.ProcessEventBatchAsync(partition, eventBatch, false, cancellationSource.Token);
+
+            Assert.IsEmpty(testListener.Activities);
+        }
+
+        /// <summary>
         ///   Verifies diagnostics functionality of the <see cref="EventProcessor{TPartition}.ProcessEventBatchAsync" />
         ///   class.
         /// </summary>
         ///
         [Test]
-        public async Task EventProcesorCreatesScopeForEventProcessing()
+        public async Task EventProcessorCreatesScopeForEventProcessing()
         {
             using var cancellationSource = new CancellationTokenSource();
             cancellationSource.CancelAfter(TimeSpan.FromSeconds(30));
@@ -475,7 +520,7 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
-        public async Task EventProcesorAddsAttributesToLinkedActivitiesForBatchEventProcessing()
+        public async Task EventProcessorAddsAttributesToLinkedActivitiesForBatchEventProcessing()
         {
             using var cancellationSource = new CancellationTokenSource();
             cancellationSource.CancelAfter(TimeSpan.FromSeconds(30));
@@ -575,7 +620,8 @@ namespace Azure.Messaging.EventHubs.Tests
                                                                     string eventHubName,
                                                                     TimeSpan operationTimeout,
                                                                     EventHubTokenCredential credential,
-                                                                    EventHubConnectionOptions options) => Mock.Of<TransportClient>();
+                                                                    EventHubConnectionOptions options,
+                                                                    bool useTls = true) => Mock.Of<TransportClient>();
         }
     }
 #endif

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,13 +14,45 @@ namespace Azure.ResourceManager.Logic.Models
     /// <summary> The api operations properties. </summary>
     public partial class LogicApiOperationProperties
     {
-        /// <summary> Initializes a new instance of LogicApiOperationProperties. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="LogicApiOperationProperties"/>. </summary>
         public LogicApiOperationProperties()
         {
             ResponsesDefinition = new ChangeTrackingDictionary<string, SwaggerSchema>();
         }
 
-        /// <summary> Initializes a new instance of LogicApiOperationProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="LogicApiOperationProperties"/>. </summary>
         /// <param name="summary"> The summary of the api operation. </param>
         /// <param name="description"> The description of the api operation. </param>
         /// <param name="visibility"> The visibility of the api operation. </param>
@@ -32,7 +65,8 @@ namespace Azure.ResourceManager.Logic.Models
         /// <param name="responsesDefinition"> The operation responses definition schemas. </param>
         /// <param name="isWebhook"> Indicates whether the API operation is webhook or not. </param>
         /// <param name="isNotification"> Indicates whether the API operation is notification or not. </param>
-        internal LogicApiOperationProperties(string summary, string description, string visibility, string trigger, string triggerHint, bool? isPageable, LogicApiOperationAnnotation annotation, LogicApiReference api, SwaggerSchema inputsDefinition, IDictionary<string, SwaggerSchema> responsesDefinition, bool? isWebhook, bool? isNotification)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal LogicApiOperationProperties(string summary, string description, string visibility, string trigger, string triggerHint, bool? isPageable, LogicApiOperationAnnotation annotation, LogicApiReference api, SwaggerSchema inputsDefinition, IDictionary<string, SwaggerSchema> responsesDefinition, bool? isWebhook, bool? isNotification, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Summary = summary;
             Description = description;
@@ -46,6 +80,7 @@ namespace Azure.ResourceManager.Logic.Models
             ResponsesDefinition = responsesDefinition;
             IsWebhook = isWebhook;
             IsNotification = isNotification;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The summary of the api operation. </summary>

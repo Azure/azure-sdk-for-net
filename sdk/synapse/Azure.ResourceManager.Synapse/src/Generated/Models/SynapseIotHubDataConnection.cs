@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -15,20 +16,21 @@ namespace Azure.ResourceManager.Synapse.Models
     /// <summary> Class representing an iot hub data connection. </summary>
     public partial class SynapseIotHubDataConnection : SynapseDataConnectionData
     {
-        /// <summary> Initializes a new instance of SynapseIotHubDataConnection. </summary>
+        /// <summary> Initializes a new instance of <see cref="SynapseIotHubDataConnection"/>. </summary>
         public SynapseIotHubDataConnection()
         {
             EventSystemProperties = new ChangeTrackingList<string>();
             Kind = SynapseDataConnectionKind.IotHub;
         }
 
-        /// <summary> Initializes a new instance of SynapseIotHubDataConnection. </summary>
+        /// <summary> Initializes a new instance of <see cref="SynapseIotHubDataConnection"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="location"> Resource location. </param>
         /// <param name="kind"> Kind of the endpoint for the data connection. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="iotHubResourceId"> The resource ID of the Iot hub to be used to create a data connection. </param>
         /// <param name="consumerGroup"> The iot hub consumer group. </param>
         /// <param name="tableName"> The table where the data should be ingested. Optionally the table information can be added to each message. </param>
@@ -37,7 +39,7 @@ namespace Azure.ResourceManager.Synapse.Models
         /// <param name="eventSystemProperties"> System properties of the iot hub. </param>
         /// <param name="sharedAccessPolicyName"> The name of the share access policy. </param>
         /// <param name="provisioningState"> The provisioned state of the resource. </param>
-        internal SynapseIotHubDataConnection(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, SynapseDataConnectionKind kind, ResourceIdentifier iotHubResourceId, string consumerGroup, string tableName, string mappingRuleName, SynapseIotHubDataFormat? dataFormat, IList<string> eventSystemProperties, string sharedAccessPolicyName, ResourceProvisioningState? provisioningState) : base(id, name, resourceType, systemData, location, kind)
+        internal SynapseIotHubDataConnection(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, SynapseDataConnectionKind kind, IDictionary<string, BinaryData> serializedAdditionalRawData, ResourceIdentifier iotHubResourceId, string consumerGroup, string tableName, string mappingRuleName, SynapseIotHubDataFormat? dataFormat, IList<string> eventSystemProperties, string sharedAccessPolicyName, ResourceProvisioningState? provisioningState) : base(id, name, resourceType, systemData, location, kind, serializedAdditionalRawData)
         {
             IotHubResourceId = iotHubResourceId;
             ConsumerGroup = consumerGroup;

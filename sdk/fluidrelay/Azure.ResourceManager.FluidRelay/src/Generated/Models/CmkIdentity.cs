@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.FluidRelay.Models
@@ -12,18 +14,52 @@ namespace Azure.ResourceManager.FluidRelay.Models
     /// <summary> All identity configuration for Customer-managed key settings defining which identity should be used to auth to Key Vault. </summary>
     public partial class CmkIdentity
     {
-        /// <summary> Initializes a new instance of CmkIdentity. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="CmkIdentity"/>. </summary>
         public CmkIdentity()
         {
         }
 
-        /// <summary> Initializes a new instance of CmkIdentity. </summary>
+        /// <summary> Initializes a new instance of <see cref="CmkIdentity"/>. </summary>
         /// <param name="identityType"> Values can be SystemAssigned or UserAssigned. </param>
         /// <param name="userAssignedIdentityResourceId"> user assigned identity to use for accessing key encryption key Url. Ex: /subscriptions/fa5fc227-a624-475e-b696-cdd604c735bc/resourceGroups/&lt;resource group&gt;/providers/Microsoft.ManagedIdentity/userAssignedIdentities/myId. Mutually exclusive with identityType systemAssignedIdentity. </param>
-        internal CmkIdentity(CmkIdentityType? identityType, ResourceIdentifier userAssignedIdentityResourceId)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal CmkIdentity(CmkIdentityType? identityType, ResourceIdentifier userAssignedIdentityResourceId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             IdentityType = identityType;
             UserAssignedIdentityResourceId = userAssignedIdentityResourceId;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Values can be SystemAssigned or UserAssigned. </summary>

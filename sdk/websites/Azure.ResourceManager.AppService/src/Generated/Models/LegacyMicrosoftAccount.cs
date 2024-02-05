@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 
 namespace Azure.ResourceManager.AppService.Models
@@ -12,22 +13,56 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> The configuration settings of the legacy Microsoft Account provider. </summary>
     public partial class LegacyMicrosoftAccount
     {
-        /// <summary> Initializes a new instance of LegacyMicrosoftAccount. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="LegacyMicrosoftAccount"/>. </summary>
         public LegacyMicrosoftAccount()
         {
         }
 
-        /// <summary> Initializes a new instance of LegacyMicrosoftAccount. </summary>
+        /// <summary> Initializes a new instance of <see cref="LegacyMicrosoftAccount"/>. </summary>
         /// <param name="isEnabled"> &lt;code&gt;false&lt;/code&gt; if the legacy Microsoft Account provider should not be enabled despite the set registration; otherwise, &lt;code&gt;true&lt;/code&gt;. </param>
         /// <param name="registration"> The configuration settings of the app registration for the legacy Microsoft Account provider. </param>
         /// <param name="login"> The configuration settings of the login flow. </param>
         /// <param name="validation"> The configuration settings of the legacy Microsoft Account provider token validation flow. </param>
-        internal LegacyMicrosoftAccount(bool? isEnabled, ClientRegistration registration, LoginScopes login, AllowedAudiencesValidation validation)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal LegacyMicrosoftAccount(bool? isEnabled, ClientRegistration registration, LoginScopes login, AllowedAudiencesValidation validation, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             IsEnabled = isEnabled;
             Registration = registration;
             Login = login;
             Validation = validation;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> &lt;code&gt;false&lt;/code&gt; if the legacy Microsoft Account provider should not be enabled despite the set registration; otherwise, &lt;code&gt;true&lt;/code&gt;. </summary>

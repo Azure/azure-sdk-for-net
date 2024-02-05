@@ -5,25 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.StreamAnalytics.Models
 {
     /// <summary> Defines the metadata of AzureFunctionOutputDataSource. </summary>
     public partial class FunctionOutputDataSource : StreamingJobOutputDataSource
     {
-        /// <summary> Initializes a new instance of FunctionOutputDataSource. </summary>
+        /// <summary> Initializes a new instance of <see cref="FunctionOutputDataSource"/>. </summary>
         public FunctionOutputDataSource()
         {
             OutputDataSourceType = "Microsoft.AzureFunction";
         }
 
-        /// <summary> Initializes a new instance of FunctionOutputDataSource. </summary>
+        /// <summary> Initializes a new instance of <see cref="FunctionOutputDataSource"/>. </summary>
         /// <param name="outputDataSourceType"> Indicates the type of data source output will be written to. Required on PUT (CreateOrReplace) requests. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="functionAppName"> The name of your Azure Functions app. </param>
         /// <param name="functionName"> The name of the function in your Azure Functions app. </param>
         /// <param name="apiKey"> If you want to use an Azure Function from another subscription, you can do so by providing the key to access your function. </param>
         /// <param name="maxBatchSize"> A property that lets you set the maximum size for each output batch that's sent to your Azure function. The input unit is in bytes. By default, this value is 262,144 bytes (256 KB). </param>
         /// <param name="maxBatchCount"> A property that lets you specify the maximum number of events in each batch that's sent to Azure Functions. The default value is 100. </param>
-        internal FunctionOutputDataSource(string outputDataSourceType, string functionAppName, string functionName, string apiKey, int? maxBatchSize, int? maxBatchCount) : base(outputDataSourceType)
+        internal FunctionOutputDataSource(string outputDataSourceType, IDictionary<string, BinaryData> serializedAdditionalRawData, string functionAppName, string functionName, string apiKey, int? maxBatchSize, int? maxBatchCount) : base(outputDataSourceType, serializedAdditionalRawData)
         {
             FunctionAppName = functionAppName;
             FunctionName = functionName;

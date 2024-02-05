@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
     /// <summary> Model factory for models. </summary>
     public static partial class ArmPolicyInsightsModelFactory
     {
-        /// <summary> Initializes a new instance of PolicyTrackedResourceRecord. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.PolicyTrackedResourceRecord"/>. </summary>
         /// <param name="trackedResourceId"> The ID of the policy tracked resource. </param>
         /// <param name="policyDetails"> The details of the policy that require the tracked resource. </param>
         /// <param name="createdBy"> The details of the policy triggered deployment that created the tracked resource. </param>
@@ -27,10 +27,10 @@ namespace Azure.ResourceManager.PolicyInsights.Models
         /// <returns> A new <see cref="Models.PolicyTrackedResourceRecord"/> instance for mocking. </returns>
         public static PolicyTrackedResourceRecord PolicyTrackedResourceRecord(ResourceIdentifier trackedResourceId = null, PolicyDetails policyDetails = null, TrackedResourceModificationDetails createdBy = null, TrackedResourceModificationDetails lastModifiedBy = null, DateTimeOffset? lastUpdateOn = null)
         {
-            return new PolicyTrackedResourceRecord(trackedResourceId, policyDetails, createdBy, lastModifiedBy, lastUpdateOn);
+            return new PolicyTrackedResourceRecord(trackedResourceId, policyDetails, createdBy, lastModifiedBy, lastUpdateOn, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of PolicyDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.PolicyDetails"/>. </summary>
         /// <param name="policyDefinitionId"> The ID of the policy definition. </param>
         /// <param name="policyAssignmentId"> The ID of the policy assignment. </param>
         /// <param name="policyAssignmentDisplayName"> The display name of the policy assignment. </param>
@@ -40,20 +40,20 @@ namespace Azure.ResourceManager.PolicyInsights.Models
         /// <returns> A new <see cref="Models.PolicyDetails"/> instance for mocking. </returns>
         public static PolicyDetails PolicyDetails(ResourceIdentifier policyDefinitionId = null, ResourceIdentifier policyAssignmentId = null, string policyAssignmentDisplayName = null, string policyAssignmentScope = null, ResourceIdentifier policySetDefinitionId = null, string policyDefinitionReferenceId = null)
         {
-            return new PolicyDetails(policyDefinitionId, policyAssignmentId, policyAssignmentDisplayName, policyAssignmentScope, policySetDefinitionId, policyDefinitionReferenceId);
+            return new PolicyDetails(policyDefinitionId, policyAssignmentId, policyAssignmentDisplayName, policyAssignmentScope, policySetDefinitionId, policyDefinitionReferenceId, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of TrackedResourceModificationDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.TrackedResourceModificationDetails"/>. </summary>
         /// <param name="policyDetails"> The details of the policy that created or modified the tracked resource. </param>
         /// <param name="deploymentId"> The ID of the deployment that created or modified the tracked resource. </param>
         /// <param name="deploymentOn"> Timestamp of the deployment that created or modified the tracked resource. </param>
         /// <returns> A new <see cref="Models.TrackedResourceModificationDetails"/> instance for mocking. </returns>
         public static TrackedResourceModificationDetails TrackedResourceModificationDetails(PolicyDetails policyDetails = null, ResourceIdentifier deploymentId = null, DateTimeOffset? deploymentOn = null)
         {
-            return new TrackedResourceModificationDetails(policyDetails, deploymentId, deploymentOn);
+            return new TrackedResourceModificationDetails(policyDetails, deploymentId, deploymentOn, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of RemediationDeployment. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.RemediationDeployment"/>. </summary>
         /// <param name="remediatedResourceId"> Resource ID of the resource that is being remediated by the deployment. </param>
         /// <param name="deploymentId"> Resource ID of the template deployment that will remediate the resource. </param>
         /// <param name="status"> Status of the remediation deployment. </param>
@@ -64,10 +64,10 @@ namespace Azure.ResourceManager.PolicyInsights.Models
         /// <returns> A new <see cref="Models.RemediationDeployment"/> instance for mocking. </returns>
         public static RemediationDeployment RemediationDeployment(ResourceIdentifier remediatedResourceId = null, ResourceIdentifier deploymentId = null, string status = null, AzureLocation? resourceLocation = null, ResponseError error = null, DateTimeOffset? createdOn = null, DateTimeOffset? lastUpdatedOn = null)
         {
-            return new RemediationDeployment(remediatedResourceId, deploymentId, status, resourceLocation, error, createdOn, lastUpdatedOn);
+            return new RemediationDeployment(remediatedResourceId, deploymentId, status, resourceLocation, error, createdOn, lastUpdatedOn, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of PolicyRemediationData. </summary>
+        /// <summary> Initializes a new instance of <see cref="PolicyInsights.PolicyRemediationData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -90,20 +90,20 @@ namespace Azure.ResourceManager.PolicyInsights.Models
         {
             filterLocations ??= new List<AzureLocation>();
 
-            return new PolicyRemediationData(id, name, resourceType, systemData, policyAssignmentId, policyDefinitionReferenceId, resourceDiscoveryMode, provisioningState, createdOn, lastUpdatedOn, filterLocations != null ? new RemediationFilters(filterLocations?.ToList()) : null, deploymentStatus, statusMessage, correlationId, resourceCount, parallelDeployments, failureThresholdPercentage != null ? new RemediationPropertiesFailureThreshold(failureThresholdPercentage) : null);
+            return new PolicyRemediationData(id, name, resourceType, systemData, policyAssignmentId, policyDefinitionReferenceId, resourceDiscoveryMode, provisioningState, createdOn, lastUpdatedOn, filterLocations != null ? new RemediationFilters(filterLocations?.ToList(), serializedAdditionalRawData: null) : null, deploymentStatus, statusMessage, correlationId, resourceCount, parallelDeployments, failureThresholdPercentage != null ? new RemediationPropertiesFailureThreshold(failureThresholdPercentage, serializedAdditionalRawData: null) : null, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of RemediationDeploymentSummary. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.RemediationDeploymentSummary"/>. </summary>
         /// <param name="totalDeployments"> The number of deployments required by the remediation. </param>
         /// <param name="successfulDeployments"> The number of deployments required by the remediation that have succeeded. </param>
         /// <param name="failedDeployments"> The number of deployments required by the remediation that have failed. </param>
         /// <returns> A new <see cref="Models.RemediationDeploymentSummary"/> instance for mocking. </returns>
         public static RemediationDeploymentSummary RemediationDeploymentSummary(int? totalDeployments = null, int? successfulDeployments = null, int? failedDeployments = null)
         {
-            return new RemediationDeploymentSummary(totalDeployments, successfulDeployments, failedDeployments);
+            return new RemediationDeploymentSummary(totalDeployments, successfulDeployments, failedDeployments, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of PolicyEvent. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.PolicyEvent"/>. </summary>
         /// <param name="odataId"> OData entity ID; always set to null since policy event records do not have an entity ID. </param>
         /// <param name="odataContext"> OData context string; used by OData clients to resolve type information based on metadata. </param>
         /// <param name="timestamp"> Timestamp for the policy event record. </param>
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             return new PolicyEvent(odataId, odataContext, timestamp, resourceId, policyAssignmentId, policyDefinitionId, effectiveParameters, isCompliant, subscriptionId, resourceTypeString, resourceLocation, resourceGroup, resourceTags, policyAssignmentName, policyAssignmentOwner, policyAssignmentParameters, policyAssignmentScope, policyDefinitionName, policyDefinitionAction, policyDefinitionCategory, policySetDefinitionId, policySetDefinitionName, policySetDefinitionOwner, policySetDefinitionCategory, policySetDefinitionParameters, managementGroupIds, policyDefinitionReferenceId, complianceState, tenantId, principalOid, components?.ToList(), additionalProperties);
         }
 
-        /// <summary> Initializes a new instance of ComponentEventDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ComponentEventDetails"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             return new ComponentEventDetails(id, name, resourceType, systemData, timestamp, tenantId, principalOid, policyDefinitionAction, additionalProperties);
         }
 
-        /// <summary> Initializes a new instance of PolicyState. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.PolicyState"/>. </summary>
         /// <param name="odataId"> OData entity ID; always set to null since policy state records do not have an entity ID. </param>
         /// <param name="odataContext"> OData context string; used by OData clients to resolve type information based on metadata. </param>
         /// <param name="timestamp"> Timestamp for the policy state record. </param>
@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             return new PolicyState(odataId, odataContext, timestamp, resourceId, policyAssignmentId, policyDefinitionId, effectiveParameters, isCompliant, subscriptionId, resourceTypeString, resourceLocation, resourceGroup, resourceTags, policyAssignmentName, policyAssignmentOwner, policyAssignmentParameters, policyAssignmentScope, policyDefinitionName, policyDefinitionAction, policyDefinitionCategory, policySetDefinitionId, policySetDefinitionName, policySetDefinitionOwner, policySetDefinitionCategory, policySetDefinitionParameters, managementGroupIds, policyDefinitionReferenceId, complianceState, policyEvaluationDetails, policyDefinitionGroupNames?.ToList(), components?.ToList(), policyDefinitionVersion, policySetDefinitionVersion, policyAssignmentVersion, additionalProperties);
         }
 
-        /// <summary> Initializes a new instance of PolicyEvaluationDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.PolicyEvaluationDetails"/>. </summary>
         /// <param name="evaluatedExpressions"> Details of the evaluated expressions. </param>
         /// <param name="ifNotExistsDetails"> Evaluation details of IfNotExists effect. </param>
         /// <returns> A new <see cref="Models.PolicyEvaluationDetails"/> instance for mocking. </returns>
@@ -217,10 +217,10 @@ namespace Azure.ResourceManager.PolicyInsights.Models
         {
             evaluatedExpressions ??= new List<ExpressionEvaluationDetails>();
 
-            return new PolicyEvaluationDetails(evaluatedExpressions?.ToList(), ifNotExistsDetails);
+            return new PolicyEvaluationDetails(evaluatedExpressions?.ToList(), ifNotExistsDetails, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of ExpressionEvaluationDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ExpressionEvaluationDetails"/>. </summary>
         /// <param name="result"> Evaluation result. </param>
         /// <param name="expression"> Expression evaluated. </param>
         /// <param name="expressionKind"> The kind of expression that was evaluated. </param>
@@ -231,19 +231,19 @@ namespace Azure.ResourceManager.PolicyInsights.Models
         /// <returns> A new <see cref="Models.ExpressionEvaluationDetails"/> instance for mocking. </returns>
         public static ExpressionEvaluationDetails ExpressionEvaluationDetails(string result = null, string expression = null, string expressionKind = null, string path = null, BinaryData expressionValue = null, BinaryData targetValue = null, string @operator = null)
         {
-            return new ExpressionEvaluationDetails(result, expression, expressionKind, path, expressionValue, targetValue, @operator);
+            return new ExpressionEvaluationDetails(result, expression, expressionKind, path, expressionValue, targetValue, @operator, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of IfNotExistsEvaluationDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.IfNotExistsEvaluationDetails"/>. </summary>
         /// <param name="resourceId"> ID of the last evaluated resource for IfNotExists effect. </param>
         /// <param name="totalResources"> Total number of resources to which the existence condition is applicable. </param>
         /// <returns> A new <see cref="Models.IfNotExistsEvaluationDetails"/> instance for mocking. </returns>
         public static IfNotExistsEvaluationDetails IfNotExistsEvaluationDetails(ResourceIdentifier resourceId = null, int? totalResources = null)
         {
-            return new IfNotExistsEvaluationDetails(resourceId, totalResources);
+            return new IfNotExistsEvaluationDetails(resourceId, totalResources, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of ComponentStateDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ComponentStateDetails"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -259,7 +259,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             return new ComponentStateDetails(id, name, resourceType, systemData, timestamp, complianceState, additionalProperties);
         }
 
-        /// <summary> Initializes a new instance of PolicySummary. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.PolicySummary"/>. </summary>
         /// <param name="odataId"> OData entity ID; always set to null since summaries do not have an entity ID. </param>
         /// <param name="odataContext"> OData context string; used by OData clients to resolve type information based on metadata. </param>
         /// <param name="results"> Compliance summary for all policy assignments. </param>
@@ -269,10 +269,10 @@ namespace Azure.ResourceManager.PolicyInsights.Models
         {
             policyAssignments ??= new List<PolicyAssignmentSummary>();
 
-            return new PolicySummary(odataId, odataContext, results, policyAssignments?.ToList());
+            return new PolicySummary(odataId, odataContext, results, policyAssignments?.ToList(), serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of PolicySummaryResults. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.PolicySummaryResults"/>. </summary>
         /// <param name="queryResultsUri"> HTTP POST URI for queryResults action on Microsoft.PolicyInsights to retrieve raw results for the compliance summary. This property will not be available by default in future API versions, but could be queried explicitly. </param>
         /// <param name="nonCompliantResources"> Number of non-compliant resources. </param>
         /// <param name="nonCompliantPolicies"> Number of non-compliant policies. </param>
@@ -286,19 +286,19 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             policyDetails ??= new List<ComplianceDetail>();
             policyGroupDetails ??= new List<ComplianceDetail>();
 
-            return new PolicySummaryResults(queryResultsUri, nonCompliantResources, nonCompliantPolicies, resourceDetails?.ToList(), policyDetails?.ToList(), policyGroupDetails?.ToList());
+            return new PolicySummaryResults(queryResultsUri, nonCompliantResources, nonCompliantPolicies, resourceDetails?.ToList(), policyDetails?.ToList(), policyGroupDetails?.ToList(), serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of ComplianceDetail. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ComplianceDetail"/>. </summary>
         /// <param name="complianceState"> The compliance state. </param>
         /// <param name="count"> Summarized count value for this compliance state. </param>
         /// <returns> A new <see cref="Models.ComplianceDetail"/> instance for mocking. </returns>
         public static ComplianceDetail ComplianceDetail(string complianceState = null, int? count = null)
         {
-            return new ComplianceDetail(complianceState, count);
+            return new ComplianceDetail(complianceState, count, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of PolicyAssignmentSummary. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.PolicyAssignmentSummary"/>. </summary>
         /// <param name="policyAssignmentId"> Policy assignment ID. </param>
         /// <param name="policySetDefinitionId"> Policy set definition ID, if the policy assignment is for a policy set. </param>
         /// <param name="results"> Compliance summary for the policy assignment. </param>
@@ -310,10 +310,10 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             policyDefinitions ??= new List<PolicyDefinitionSummary>();
             policyGroups ??= new List<PolicyGroupSummary>();
 
-            return new PolicyAssignmentSummary(policyAssignmentId, policySetDefinitionId, results, policyDefinitions?.ToList(), policyGroups?.ToList());
+            return new PolicyAssignmentSummary(policyAssignmentId, policySetDefinitionId, results, policyDefinitions?.ToList(), policyGroups?.ToList(), serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of PolicyDefinitionSummary. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.PolicyDefinitionSummary"/>. </summary>
         /// <param name="policyDefinitionId"> Policy definition ID. </param>
         /// <param name="policyDefinitionReferenceId"> Policy definition reference ID. </param>
         /// <param name="policyDefinitionGroupNames"> Policy definition group names. </param>
@@ -324,19 +324,19 @@ namespace Azure.ResourceManager.PolicyInsights.Models
         {
             policyDefinitionGroupNames ??= new List<string>();
 
-            return new PolicyDefinitionSummary(policyDefinitionId, policyDefinitionReferenceId, policyDefinitionGroupNames?.ToList(), effect, results);
+            return new PolicyDefinitionSummary(policyDefinitionId, policyDefinitionReferenceId, policyDefinitionGroupNames?.ToList(), effect, results, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of PolicyGroupSummary. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.PolicyGroupSummary"/>. </summary>
         /// <param name="policyGroupName"> Policy group name. </param>
         /// <param name="results"> Compliance summary for the policy definition group. </param>
         /// <returns> A new <see cref="Models.PolicyGroupSummary"/> instance for mocking. </returns>
         public static PolicyGroupSummary PolicyGroupSummary(string policyGroupName = null, PolicySummaryResults results = null)
         {
-            return new PolicyGroupSummary(policyGroupName, results);
+            return new PolicyGroupSummary(policyGroupName, results, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of PolicyMetadataData. </summary>
+        /// <summary> Initializes a new instance of <see cref="PolicyInsights.PolicyMetadataData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -352,10 +352,10 @@ namespace Azure.ResourceManager.PolicyInsights.Models
         /// <returns> A new <see cref="PolicyInsights.PolicyMetadataData"/> instance for mocking. </returns>
         public static PolicyMetadataData PolicyMetadataData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string metadataId = null, string category = null, string title = null, string owner = null, Uri additionalContentUri = null, BinaryData metadata = null, string description = null, string requirements = null)
         {
-            return new PolicyMetadataData(id, name, resourceType, systemData, metadataId, category, title, owner, additionalContentUri, metadata, description, requirements);
+            return new PolicyMetadataData(id, name, resourceType, systemData, metadataId, category, title, owner, additionalContentUri, metadata, description, requirements, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of SlimPolicyMetadata. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SlimPolicyMetadata"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -369,10 +369,42 @@ namespace Azure.ResourceManager.PolicyInsights.Models
         /// <returns> A new <see cref="Models.SlimPolicyMetadata"/> instance for mocking. </returns>
         public static SlimPolicyMetadata SlimPolicyMetadata(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string metadataId = null, string category = null, string title = null, string owner = null, Uri additionalContentUri = null, BinaryData metadata = null)
         {
-            return new SlimPolicyMetadata(id, name, resourceType, systemData, metadataId, category, title, owner, additionalContentUri, metadata);
+            return new SlimPolicyMetadata(id, name, resourceType, systemData, metadataId, category, title, owner, additionalContentUri, metadata, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of CheckPolicyRestrictionsResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.CheckPolicyRestrictionsContent"/>. </summary>
+        /// <param name="resourceDetails"> The information about the resource that will be evaluated. </param>
+        /// <param name="pendingFields"> The list of fields and values that should be evaluated for potential restrictions. </param>
+        /// <returns> A new <see cref="Models.CheckPolicyRestrictionsContent"/> instance for mocking. </returns>
+        public static CheckPolicyRestrictionsContent CheckPolicyRestrictionsContent(CheckRestrictionsResourceDetails resourceDetails = null, IEnumerable<PendingField> pendingFields = null)
+        {
+            pendingFields ??= new List<PendingField>();
+
+            return new CheckPolicyRestrictionsContent(resourceDetails, pendingFields?.ToList(), serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.CheckRestrictionsResourceDetails"/>. </summary>
+        /// <param name="resourceContent"> The resource content. This should include whatever properties are already known and can be a partial set of all resource properties. </param>
+        /// <param name="apiVersion"> The api-version of the resource content. </param>
+        /// <param name="scope"> The scope where the resource is being created. For example, if the resource is a child resource this would be the parent resource's resource ID. </param>
+        /// <returns> A new <see cref="Models.CheckRestrictionsResourceDetails"/> instance for mocking. </returns>
+        public static CheckRestrictionsResourceDetails CheckRestrictionsResourceDetails(BinaryData resourceContent = null, string apiVersion = null, string scope = null)
+        {
+            return new CheckRestrictionsResourceDetails(resourceContent, apiVersion, scope, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.PendingField"/>. </summary>
+        /// <param name="field"> The name of the field. This can be a top-level property like 'name' or 'type' or an Azure Policy field alias. </param>
+        /// <param name="values"> The list of potential values for the field that should be evaluated against Azure Policy. </param>
+        /// <returns> A new <see cref="Models.PendingField"/> instance for mocking. </returns>
+        public static PendingField PendingField(string field = null, IEnumerable<string> values = null)
+        {
+            values ??= new List<string>();
+
+            return new PendingField(field, values?.ToList(), serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.CheckPolicyRestrictionsResult"/>. </summary>
         /// <param name="fieldRestrictions"> The restrictions that will be placed on various fields in the resource by policy. </param>
         /// <param name="policyEvaluations"> Evaluation results for the provided partial resource content. </param>
         /// <returns> A new <see cref="Models.CheckPolicyRestrictionsResult"/> instance for mocking. </returns>
@@ -381,10 +413,10 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             fieldRestrictions ??= new List<FieldRestrictions>();
             policyEvaluations ??= new List<PolicyEvaluationResult>();
 
-            return new CheckPolicyRestrictionsResult(fieldRestrictions?.ToList(), policyEvaluations != null ? new CheckRestrictionsResultContentEvaluationResult(policyEvaluations?.ToList()) : null);
+            return new CheckPolicyRestrictionsResult(fieldRestrictions?.ToList(), policyEvaluations != null ? new CheckRestrictionsResultContentEvaluationResult(policyEvaluations?.ToList(), serializedAdditionalRawData: null) : null, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of FieldRestrictions. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.FieldRestrictions"/>. </summary>
         /// <param name="field"> The name of the field. This can be a top-level property like 'name' or 'type' or an Azure Policy field alias. </param>
         /// <param name="restrictions"> The restrictions placed on that field by policy. </param>
         /// <returns> A new <see cref="Models.FieldRestrictions"/> instance for mocking. </returns>
@@ -392,10 +424,10 @@ namespace Azure.ResourceManager.PolicyInsights.Models
         {
             restrictions ??= new List<FieldRestriction>();
 
-            return new FieldRestrictions(field, restrictions?.ToList());
+            return new FieldRestrictions(field, restrictions?.ToList(), serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of FieldRestriction. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.FieldRestriction"/>. </summary>
         /// <param name="result"> The type of restriction that is imposed on the field. </param>
         /// <param name="defaultValue"> The value that policy will set for the field if the user does not provide a value. </param>
         /// <param name="values"> The values that policy either requires or denies for the field. </param>
@@ -405,10 +437,10 @@ namespace Azure.ResourceManager.PolicyInsights.Models
         {
             values ??= new List<string>();
 
-            return new FieldRestriction(result, defaultValue, values?.ToList(), policy);
+            return new FieldRestriction(result, defaultValue, values?.ToList(), policy, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of PolicyReference. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.PolicyReference"/>. </summary>
         /// <param name="policyDefinitionId"> The resource identifier of the policy definition. </param>
         /// <param name="policySetDefinitionId"> The resource identifier of the policy set definition. </param>
         /// <param name="policyDefinitionReferenceId"> The reference identifier of a specific policy definition within a policy set definition. </param>
@@ -416,20 +448,20 @@ namespace Azure.ResourceManager.PolicyInsights.Models
         /// <returns> A new <see cref="Models.PolicyReference"/> instance for mocking. </returns>
         public static PolicyReference PolicyReference(ResourceIdentifier policyDefinitionId = null, ResourceIdentifier policySetDefinitionId = null, string policyDefinitionReferenceId = null, ResourceIdentifier policyAssignmentId = null)
         {
-            return new PolicyReference(policyDefinitionId, policySetDefinitionId, policyDefinitionReferenceId, policyAssignmentId);
+            return new PolicyReference(policyDefinitionId, policySetDefinitionId, policyDefinitionReferenceId, policyAssignmentId, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of PolicyEvaluationResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.PolicyEvaluationResult"/>. </summary>
         /// <param name="policyInfo"> The details of the policy that was evaluated. </param>
         /// <param name="evaluationResult"> The result of the policy evaluation against the resource. This will typically be 'NonCompliant' but may contain other values if errors were encountered. </param>
         /// <param name="evaluationDetails"> The detailed results of the policy expressions and values that were evaluated. </param>
         /// <returns> A new <see cref="Models.PolicyEvaluationResult"/> instance for mocking. </returns>
         public static PolicyEvaluationResult PolicyEvaluationResult(PolicyReference policyInfo = null, string evaluationResult = null, PolicyEvaluationDetails evaluationDetails = null)
         {
-            return new PolicyEvaluationResult(policyInfo, evaluationResult, evaluationDetails);
+            return new PolicyEvaluationResult(policyInfo, evaluationResult, evaluationDetails, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of PolicyAttestationData. </summary>
+        /// <summary> Initializes a new instance of <see cref="PolicyInsights.PolicyAttestationData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -450,7 +482,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
         {
             evidence ??= new List<AttestationEvidence>();
 
-            return new PolicyAttestationData(id, name, resourceType, systemData, policyAssignmentId, policyDefinitionReferenceId, complianceState, expireOn, owner, comments, evidence?.ToList(), provisioningState, lastComplianceStateChangeOn, assessOn, metadata);
+            return new PolicyAttestationData(id, name, resourceType, systemData, policyAssignmentId, policyDefinitionReferenceId, complianceState, expireOn, owner, comments, evidence?.ToList(), provisioningState, lastComplianceStateChangeOn, assessOn, metadata, serializedAdditionalRawData: null);
         }
     }
 }

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,10 +14,55 @@ namespace Azure.ResourceManager.StorageSync.Models
     /// <summary> The parameters used when calling trigger change detection action on cloud endpoint. </summary>
     public partial class TriggerChangeDetectionContent
     {
-        /// <summary> Initializes a new instance of TriggerChangeDetectionContent. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="TriggerChangeDetectionContent"/>. </summary>
         public TriggerChangeDetectionContent()
         {
             Paths = new ChangeTrackingList<string>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="TriggerChangeDetectionContent"/>. </summary>
+        /// <param name="directoryPath"> Relative path to a directory Azure File share for which change detection is to be performed. </param>
+        /// <param name="changeDetectionMode"> Change Detection Mode. Applies to a directory specified in directoryPath parameter. </param>
+        /// <param name="paths"> Array of relative paths on the Azure File share to be included in the change detection. Can be files and directories. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal TriggerChangeDetectionContent(string directoryPath, ChangeDetectionMode? changeDetectionMode, IList<string> paths, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            DirectoryPath = directoryPath;
+            ChangeDetectionMode = changeDetectionMode;
+            Paths = paths;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Relative path to a directory Azure File share for which change detection is to be performed. </summary>

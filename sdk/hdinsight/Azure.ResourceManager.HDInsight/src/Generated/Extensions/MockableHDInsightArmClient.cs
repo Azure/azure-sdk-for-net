@@ -37,11 +37,11 @@ namespace Azure.ResourceManager.HDInsight.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="HDInsightApplicationResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="HDInsightApplicationResource.CreateResourceIdentifier" /> to create a <see cref="HDInsightApplicationResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="HDInsightApplicationResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="HDInsightApplicationResource.CreateResourceIdentifier" /> to create a <see cref="HDInsightApplicationResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="HDInsightApplicationResource" /> object. </returns>
+        /// <returns> Returns a <see cref="HDInsightApplicationResource"/> object. </returns>
         public virtual HDInsightApplicationResource GetHDInsightApplicationResource(ResourceIdentifier id)
         {
             HDInsightApplicationResource.ValidateResourceId(id);
@@ -49,11 +49,11 @@ namespace Azure.ResourceManager.HDInsight.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="HDInsightClusterResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="HDInsightClusterResource.CreateResourceIdentifier" /> to create a <see cref="HDInsightClusterResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="HDInsightClusterResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="HDInsightClusterResource.CreateResourceIdentifier" /> to create a <see cref="HDInsightClusterResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="HDInsightClusterResource" /> object. </returns>
+        /// <returns> Returns a <see cref="HDInsightClusterResource"/> object. </returns>
         public virtual HDInsightClusterResource GetHDInsightClusterResource(ResourceIdentifier id)
         {
             HDInsightClusterResource.ValidateResourceId(id);
@@ -61,11 +61,11 @@ namespace Azure.ResourceManager.HDInsight.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="HDInsightPrivateEndpointConnectionResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="HDInsightPrivateEndpointConnectionResource.CreateResourceIdentifier" /> to create a <see cref="HDInsightPrivateEndpointConnectionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="HDInsightPrivateEndpointConnectionResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="HDInsightPrivateEndpointConnectionResource.CreateResourceIdentifier" /> to create a <see cref="HDInsightPrivateEndpointConnectionResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="HDInsightPrivateEndpointConnectionResource" /> object. </returns>
+        /// <returns> Returns a <see cref="HDInsightPrivateEndpointConnectionResource"/> object. </returns>
         public virtual HDInsightPrivateEndpointConnectionResource GetHDInsightPrivateEndpointConnectionResource(ResourceIdentifier id)
         {
             HDInsightPrivateEndpointConnectionResource.ValidateResourceId(id);
@@ -73,11 +73,11 @@ namespace Azure.ResourceManager.HDInsight.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="HDInsightPrivateLinkResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="HDInsightPrivateLinkResource.CreateResourceIdentifier" /> to create a <see cref="HDInsightPrivateLinkResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="HDInsightPrivateLinkResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="HDInsightPrivateLinkResource.CreateResourceIdentifier" /> to create a <see cref="HDInsightPrivateLinkResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="HDInsightPrivateLinkResource" /> object. </returns>
+        /// <returns> Returns a <see cref="HDInsightPrivateLinkResource"/> object. </returns>
         public virtual HDInsightPrivateLinkResource GetHDInsightPrivateLinkResource(ResourceIdentifier id)
         {
             HDInsightPrivateLinkResource.ValidateResourceId(id);

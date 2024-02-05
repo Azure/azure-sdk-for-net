@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> Azure Data Lake Store dataset. </summary>
     public partial class AzureDataLakeStoreDataset : DataFactoryDatasetProperties
     {
-        /// <summary> Initializes a new instance of AzureDataLakeStoreDataset. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureDataLakeStoreDataset"/>. </summary>
         /// <param name="linkedServiceName"> Linked service reference. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="linkedServiceName"/> is null. </exception>
         public AzureDataLakeStoreDataset(DataFactoryLinkedServiceReference linkedServiceName) : base(linkedServiceName)
@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             DatasetType = "AzureDataLakeStoreFile";
         }
 
-        /// <summary> Initializes a new instance of AzureDataLakeStoreDataset. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureDataLakeStoreDataset"/>. </summary>
         /// <param name="datasetType"> Type of dataset. </param>
         /// <param name="description"> Dataset description. </param>
         /// <param name="structure"> Columns that define the structure of the dataset. Type: array (or Expression with resultType array), itemType: DatasetDataElement. </param>
@@ -50,6 +50,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             Format = format;
             Compression = compression;
             DatasetType = datasetType ?? "AzureDataLakeStoreFile";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AzureDataLakeStoreDataset"/> for deserialization. </summary>
+        internal AzureDataLakeStoreDataset()
+        {
         }
 
         /// <summary> Path to the folder in the Azure Data Lake Store. Type: string (or Expression with resultType string). </summary>

@@ -6,30 +6,65 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.KubernetesConfiguration.Models
 {
     /// <summary> Status condition of Kubernetes object. </summary>
     public partial class KubernetesObjectStatusCondition
     {
-        /// <summary> Initializes a new instance of KubernetesObjectStatusCondition. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="KubernetesObjectStatusCondition"/>. </summary>
         internal KubernetesObjectStatusCondition()
         {
         }
 
-        /// <summary> Initializes a new instance of KubernetesObjectStatusCondition. </summary>
+        /// <summary> Initializes a new instance of <see cref="KubernetesObjectStatusCondition"/>. </summary>
         /// <param name="lastTransitionOn"> Last time this status condition has changed. </param>
         /// <param name="message"> A more verbose description of the object status condition. </param>
         /// <param name="reason"> Reason for the specified status condition type status. </param>
         /// <param name="status"> Status of the Kubernetes object condition type. </param>
         /// <param name="objectStatusConditionDefinitionType"> Object status condition type for this object. </param>
-        internal KubernetesObjectStatusCondition(DateTimeOffset? lastTransitionOn, string message, string reason, string status, string objectStatusConditionDefinitionType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal KubernetesObjectStatusCondition(DateTimeOffset? lastTransitionOn, string message, string reason, string status, string objectStatusConditionDefinitionType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             LastTransitionOn = lastTransitionOn;
             Message = message;
             Reason = reason;
             Status = status;
             ObjectStatusConditionDefinitionType = objectStatusConditionDefinitionType;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Last time this status condition has changed. </summary>

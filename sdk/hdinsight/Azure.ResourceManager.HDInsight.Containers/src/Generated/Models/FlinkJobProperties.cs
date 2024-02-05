@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
     /// <summary> Properties of flink job. </summary>
     public partial class FlinkJobProperties : ClusterJobProperties
     {
-        /// <summary> Initializes a new instance of FlinkJobProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="FlinkJobProperties"/>. </summary>
         /// <param name="jobName"> Name of job. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="jobName"/> is null. </exception>
         public FlinkJobProperties(string jobName)
@@ -26,8 +26,9 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             JobType = ClusterJobType.FlinkJob;
         }
 
-        /// <summary> Initializes a new instance of FlinkJobProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="FlinkJobProperties"/>. </summary>
         /// <param name="jobType"> Type of cluster job. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="jobName"> Name of job. </param>
         /// <param name="jobJarDirectory"> A string property that specifies the directory where the job JAR is located. </param>
         /// <param name="jarName"> A string property that represents the name of the job JAR. </param>
@@ -41,7 +42,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         /// <param name="jobOutput"> Output of job. </param>
         /// <param name="actionResult"> Action result of job. </param>
         /// <param name="lastSavePoint"> The last savepoint. </param>
-        internal FlinkJobProperties(ClusterJobType jobType, string jobName, string jobJarDirectory, string jarName, string entryClass, string args, string savePointName, FlinkJobAction? action, IDictionary<string, string> flinkConfiguration, string jobId, string status, string jobOutput, string actionResult, string lastSavePoint) : base(jobType)
+        internal FlinkJobProperties(ClusterJobType jobType, IDictionary<string, BinaryData> serializedAdditionalRawData, string jobName, string jobJarDirectory, string jarName, string entryClass, string args, string savePointName, FlinkJobAction? action, IDictionary<string, string> flinkConfiguration, string jobId, string status, string jobOutput, string actionResult, string lastSavePoint) : base(jobType, serializedAdditionalRawData)
         {
             JobName = jobName;
             JobJarDirectory = jobJarDirectory;
@@ -57,6 +58,11 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             ActionResult = actionResult;
             LastSavePoint = lastSavePoint;
             JobType = jobType;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="FlinkJobProperties"/> for deserialization. </summary>
+        internal FlinkJobProperties()
+        {
         }
 
         /// <summary> Name of job. </summary>

@@ -57,10 +57,18 @@ namespace Azure.ResourceManager.SecurityDevOps.Mocking
         /// <term>Operation Id</term>
         /// <description>AzureDevOpsConnector_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AzureDevOpsConnectorResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="AzureDevOpsConnectorResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="AzureDevOpsConnectorResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<AzureDevOpsConnectorResource> GetAzureDevOpsConnectorsAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => AzureDevOpsConnectorRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
@@ -79,10 +87,18 @@ namespace Azure.ResourceManager.SecurityDevOps.Mocking
         /// <term>Operation Id</term>
         /// <description>AzureDevOpsConnector_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AzureDevOpsConnectorResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="AzureDevOpsConnectorResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="AzureDevOpsConnectorResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<AzureDevOpsConnectorResource> GetAzureDevOpsConnectors(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => AzureDevOpsConnectorRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
@@ -101,10 +117,18 @@ namespace Azure.ResourceManager.SecurityDevOps.Mocking
         /// <term>Operation Id</term>
         /// <description>GitHubConnector_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="GitHubConnectorResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="GitHubConnectorResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="GitHubConnectorResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<GitHubConnectorResource> GetGitHubConnectorsAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => GitHubConnectorRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
@@ -123,10 +147,18 @@ namespace Azure.ResourceManager.SecurityDevOps.Mocking
         /// <term>Operation Id</term>
         /// <description>GitHubConnector_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="GitHubConnectorResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="GitHubConnectorResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="GitHubConnectorResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<GitHubConnectorResource> GetGitHubConnectors(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => GitHubConnectorRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);

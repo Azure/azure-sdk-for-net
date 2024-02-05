@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,7 +14,7 @@ namespace Azure.ResourceManager.Synapse.Models
     /// <summary> Ssis project. </summary>
     public partial class SynapseSsisProject : SynapseSsisObjectMetadata
     {
-        /// <summary> Initializes a new instance of SynapseSsisProject. </summary>
+        /// <summary> Initializes a new instance of <see cref="SynapseSsisProject"/>. </summary>
         internal SynapseSsisProject()
         {
             EnvironmentRefs = new ChangeTrackingList<SynapseSsisEnvironmentReference>();
@@ -21,16 +22,17 @@ namespace Azure.ResourceManager.Synapse.Models
             MetadataType = SynapseSsisObjectMetadataType.Project;
         }
 
-        /// <summary> Initializes a new instance of SynapseSsisProject. </summary>
+        /// <summary> Initializes a new instance of <see cref="SynapseSsisProject"/>. </summary>
         /// <param name="metadataType"> Type of metadata. </param>
         /// <param name="id"> Metadata id. </param>
         /// <param name="name"> Metadata name. </param>
         /// <param name="description"> Metadata description. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="folderId"> Folder id which contains project. </param>
         /// <param name="version"> Project version. </param>
         /// <param name="environmentRefs"> Environment reference in project. </param>
         /// <param name="parameters"> Parameters in project. </param>
-        internal SynapseSsisProject(SynapseSsisObjectMetadataType metadataType, long? id, string name, string description, long? folderId, long? version, IReadOnlyList<SynapseSsisEnvironmentReference> environmentRefs, IReadOnlyList<SynapseSsisParameter> parameters) : base(metadataType, id, name, description)
+        internal SynapseSsisProject(SynapseSsisObjectMetadataType metadataType, long? id, string name, string description, IDictionary<string, BinaryData> serializedAdditionalRawData, long? folderId, long? version, IReadOnlyList<SynapseSsisEnvironmentReference> environmentRefs, IReadOnlyList<SynapseSsisParameter> parameters) : base(metadataType, id, name, description, serializedAdditionalRawData)
         {
             FolderId = folderId;
             Version = version;

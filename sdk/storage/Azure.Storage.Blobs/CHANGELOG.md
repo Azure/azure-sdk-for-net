@@ -1,14 +1,13 @@
 # Release History
 
-## 12.20.0-beta.1 (Unreleased)
+## 12.20.0-beta.2 (Unreleased)
+- Fixed bug where BlockBlobClient.Upload() and .UploadAsync() would throw an exception if BlobUploadOptions was null.
 
-### Features Added
+## 12.20.0-beta.1 (2023-12-05)
+- Added support for service version 2024-02-04.
 
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
+## 12.19.1 (2023-11-13)
+- Distributed tracing with `ActivitySource` is stable and no longer requires the [Experimental feature-flag](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/Diagnostics.md).
 
 ## 12.19.0 (2023-11-06)
 - Includes all features from 12.19.0-beta.1.

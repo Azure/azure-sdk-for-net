@@ -6,20 +6,22 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.StreamAnalytics.Models
 {
     /// <summary> Describes an Azure SQL database reference input data source. </summary>
     public partial class SqlReferenceInputDataSource : ReferenceInputDataSource
     {
-        /// <summary> Initializes a new instance of SqlReferenceInputDataSource. </summary>
+        /// <summary> Initializes a new instance of <see cref="SqlReferenceInputDataSource"/>. </summary>
         public SqlReferenceInputDataSource()
         {
             ReferenceInputDataSourceType = "Microsoft.Sql/Server/Database";
         }
 
-        /// <summary> Initializes a new instance of SqlReferenceInputDataSource. </summary>
+        /// <summary> Initializes a new instance of <see cref="SqlReferenceInputDataSource"/>. </summary>
         /// <param name="referenceInputDataSourceType"> Indicates the type of input data source containing reference data. Required on PUT (CreateOrReplace) requests. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="server"> This element is associated with the datasource element. This is the name of the server that contains the database that will be written to. </param>
         /// <param name="database"> This element is associated with the datasource element. This is the name of the database that output will be written to. </param>
         /// <param name="user"> This element is associated with the datasource element. This is the user name that will be used to connect to the SQL Database instance. </param>
@@ -29,7 +31,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         /// <param name="fullSnapshotQuery"> This element is associated with the datasource element. This query is used to fetch data from the sql database. </param>
         /// <param name="deltaSnapshotQuery"> This element is associated with the datasource element. This query is used to fetch incremental changes from the SQL database. To use this option, we recommend using temporal tables in Azure SQL Database. </param>
         /// <param name="authenticationMode"> Authentication Mode. </param>
-        internal SqlReferenceInputDataSource(string referenceInputDataSourceType, string server, string database, string user, string password, DataRefreshType? refreshType, TimeSpan? refreshInterval, string fullSnapshotQuery, string deltaSnapshotQuery, StreamAnalyticsAuthenticationMode? authenticationMode) : base(referenceInputDataSourceType)
+        internal SqlReferenceInputDataSource(string referenceInputDataSourceType, IDictionary<string, BinaryData> serializedAdditionalRawData, string server, string database, string user, string password, DataRefreshType? refreshType, TimeSpan? refreshInterval, string fullSnapshotQuery, string deltaSnapshotQuery, StreamAnalyticsAuthenticationMode? authenticationMode) : base(referenceInputDataSourceType, serializedAdditionalRawData)
         {
             Server = server;
             Database = database;

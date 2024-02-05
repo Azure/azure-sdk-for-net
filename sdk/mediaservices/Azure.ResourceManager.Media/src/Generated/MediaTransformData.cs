@@ -19,13 +19,45 @@ namespace Azure.ResourceManager.Media
     /// </summary>
     public partial class MediaTransformData : ResourceData
     {
-        /// <summary> Initializes a new instance of MediaTransformData. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="MediaTransformData"/>. </summary>
         public MediaTransformData()
         {
             Outputs = new ChangeTrackingList<MediaTransformOutput>();
         }
 
-        /// <summary> Initializes a new instance of MediaTransformData. </summary>
+        /// <summary> Initializes a new instance of <see cref="MediaTransformData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -34,12 +66,14 @@ namespace Azure.ResourceManager.Media
         /// <param name="description"> An optional verbose description of the Transform. </param>
         /// <param name="lastModifiedOn"> The UTC date and time when the Transform was last updated, in 'YYYY-MM-DDThh:mm:ssZ' format. </param>
         /// <param name="outputs"> An array of one or more TransformOutputs that the Transform should generate. </param>
-        internal MediaTransformData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DateTimeOffset? createdOn, string description, DateTimeOffset? lastModifiedOn, IList<MediaTransformOutput> outputs) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MediaTransformData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DateTimeOffset? createdOn, string description, DateTimeOffset? lastModifiedOn, IList<MediaTransformOutput> outputs, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             CreatedOn = createdOn;
             Description = description;
             LastModifiedOn = lastModifiedOn;
             Outputs = outputs;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The UTC date and time when the Transform was created, in 'YYYY-MM-DDThh:mm:ssZ' format. </summary>

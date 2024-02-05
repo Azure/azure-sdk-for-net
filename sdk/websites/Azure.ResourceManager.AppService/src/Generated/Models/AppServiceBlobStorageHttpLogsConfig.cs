@@ -6,18 +6,51 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Http logs to azure blob storage configuration. </summary>
     public partial class AppServiceBlobStorageHttpLogsConfig
     {
-        /// <summary> Initializes a new instance of AppServiceBlobStorageHttpLogsConfig. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AppServiceBlobStorageHttpLogsConfig"/>. </summary>
         public AppServiceBlobStorageHttpLogsConfig()
         {
         }
 
-        /// <summary> Initializes a new instance of AppServiceBlobStorageHttpLogsConfig. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppServiceBlobStorageHttpLogsConfig"/>. </summary>
         /// <param name="sasUri"> SAS url to a azure blob container with read/write/list/delete permissions. </param>
         /// <param name="retentionInDays">
         /// Retention in days.
@@ -25,11 +58,13 @@ namespace Azure.ResourceManager.AppService.Models
         /// 0 or lower means no retention.
         /// </param>
         /// <param name="isEnabled"> True if configuration is enabled, false if it is disabled and null if configuration is not set. </param>
-        internal AppServiceBlobStorageHttpLogsConfig(Uri sasUri, int? retentionInDays, bool? isEnabled)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AppServiceBlobStorageHttpLogsConfig(Uri sasUri, int? retentionInDays, bool? isEnabled, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             SasUri = sasUri;
             RetentionInDays = retentionInDays;
             IsEnabled = isEnabled;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> SAS url to a azure blob container with read/write/list/delete permissions. </summary>

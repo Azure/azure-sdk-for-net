@@ -10,12 +10,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> Run notebook parameter. </summary>
     public partial class RunNotebookParameter
     {
-        /// <summary> Initializes a new instance of RunNotebookParameter. </summary>
+        /// <summary> Initializes a new instance of <see cref="RunNotebookParameter"/>. </summary>
         public RunNotebookParameter()
         {
         }
 
-        /// <summary> Initializes a new instance of RunNotebookParameter. </summary>
+        /// <summary> Initializes a new instance of <see cref="RunNotebookParameter"/>. </summary>
         /// <param name="type"> Parameter type. </param>
         /// <param name="value"> Parameter value. </param>
         internal RunNotebookParameter(string type, object value)

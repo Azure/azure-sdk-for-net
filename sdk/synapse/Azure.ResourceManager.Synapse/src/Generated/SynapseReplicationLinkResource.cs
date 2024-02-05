@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.Synapse
 {
     /// <summary>
     /// A Class representing a SynapseReplicationLink along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="SynapseReplicationLinkResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetSynapseReplicationLinkResource method.
-    /// Otherwise you can get one from its parent resource <see cref="SynapseSqlPoolResource" /> using the GetSynapseReplicationLink method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="SynapseReplicationLinkResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetSynapseReplicationLinkResource method.
+    /// Otherwise you can get one from its parent resource <see cref="SynapseSqlPoolResource"/> using the GetSynapseReplicationLink method.
     /// </summary>
     public partial class SynapseReplicationLinkResource : ArmResource
     {
@@ -40,12 +40,15 @@ namespace Azure.ResourceManager.Synapse
         private readonly SqlPoolReplicationLinksRestOperations _synapseReplicationLinkSqlPoolReplicationLinksRestClient;
         private readonly SynapseReplicationLinkData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Synapse/workspaces/sqlPools/replicationLinks";
+
         /// <summary> Initializes a new instance of the <see cref="SynapseReplicationLinkResource"/> class for mocking. </summary>
         protected SynapseReplicationLinkResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "SynapseReplicationLinkResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SynapseReplicationLinkResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal SynapseReplicationLinkResource(ArmClient client, SynapseReplicationLinkData data) : this(client, data.Id)
@@ -66,9 +69,6 @@ namespace Azure.ResourceManager.Synapse
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Synapse/workspaces/sqlPools/replicationLinks";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -102,6 +102,14 @@ namespace Azure.ResourceManager.Synapse
         /// <term>Operation Id</term>
         /// <description>SqlPoolReplicationLinks_GetByName</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SynapseReplicationLinkResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -133,6 +141,14 @@ namespace Azure.ResourceManager.Synapse
         /// <item>
         /// <term>Operation Id</term>
         /// <description>SqlPoolReplicationLinks_GetByName</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SynapseReplicationLinkResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

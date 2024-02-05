@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
@@ -13,7 +14,39 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> Azure VM unmanaged disk input details. </summary>
     public partial class A2AProtectionIntentDiskDetails
     {
-        /// <summary> Initializes a new instance of A2AProtectionIntentDiskDetails. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="A2AProtectionIntentDiskDetails"/>. </summary>
         /// <param name="diskUri"> The disk Uri. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="diskUri"/> is null. </exception>
         public A2AProtectionIntentDiskDetails(Uri diskUri)
@@ -23,7 +56,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             DiskUri = diskUri;
         }
 
-        /// <summary> Initializes a new instance of A2AProtectionIntentDiskDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="A2AProtectionIntentDiskDetails"/>. </summary>
         /// <param name="diskUri"> The disk Uri. </param>
         /// <param name="recoveryAzureStorageAccountCustomContent">
         /// The recovery VHD storage account input.
@@ -35,11 +68,18 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// Please note <see cref="StorageAccountCustomDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="ExistingStorageAccount"/>.
         /// </param>
-        internal A2AProtectionIntentDiskDetails(Uri diskUri, StorageAccountCustomDetails recoveryAzureStorageAccountCustomContent, StorageAccountCustomDetails primaryStagingStorageAccountCustomContent)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal A2AProtectionIntentDiskDetails(Uri diskUri, StorageAccountCustomDetails recoveryAzureStorageAccountCustomContent, StorageAccountCustomDetails primaryStagingStorageAccountCustomContent, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             DiskUri = diskUri;
             RecoveryAzureStorageAccountCustomContent = recoveryAzureStorageAccountCustomContent;
             PrimaryStagingStorageAccountCustomContent = primaryStagingStorageAccountCustomContent;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="A2AProtectionIntentDiskDetails"/> for deserialization. </summary>
+        internal A2AProtectionIntentDiskDetails()
+        {
         }
 
         /// <summary> The disk Uri. </summary>

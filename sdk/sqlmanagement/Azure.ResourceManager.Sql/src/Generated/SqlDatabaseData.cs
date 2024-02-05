@@ -19,14 +19,46 @@ namespace Azure.ResourceManager.Sql
     /// </summary>
     public partial class SqlDatabaseData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of SqlDatabaseData. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SqlDatabaseData"/>. </summary>
         /// <param name="location"> The location. </param>
         public SqlDatabaseData(AzureLocation location) : base(location)
         {
             Keys = new ChangeTrackingDictionary<string, SqlDatabaseKey>();
         }
 
-        /// <summary> Initializes a new instance of SqlDatabaseData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SqlDatabaseData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -152,7 +184,8 @@ namespace Azure.ResourceManager.Sql
         /// </param>
         /// <param name="availabilityZone"> Specifies the availability zone the database is pinned to. </param>
         /// <param name="encryptionProtectorAutoRotation"> The flag to enable or disable auto rotation of database encryption protector AKV key. </param>
-        internal SqlDatabaseData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, SqlSku sku, string kind, string managedBy, DatabaseIdentity identity, SqlDatabaseCreateMode? createMode, string collation, long? maxSizeBytes, SampleSchemaName? sampleName, ResourceIdentifier elasticPoolId, ResourceIdentifier sourceDatabaseId, SqlDatabaseStatus? status, Guid? databaseId, DateTimeOffset? createdOn, string currentServiceObjectiveName, string requestedServiceObjectiveName, AzureLocation? defaultSecondaryLocation, ResourceIdentifier failoverGroupId, DateTimeOffset? restorePointInTime, DateTimeOffset? sourceDatabaseDeletedOn, ResourceIdentifier recoveryServicesRecoveryPointId, ResourceIdentifier longTermRetentionBackupResourceId, ResourceIdentifier recoverableDatabaseId, ResourceIdentifier restorableDroppedDatabaseId, CatalogCollationType? catalogCollation, bool? isZoneRedundant, DatabaseLicenseType? licenseType, long? maxLogSizeBytes, DateTimeOffset? earliestRestoreOn, DatabaseReadScale? readScale, int? highAvailabilityReplicaCount, SecondaryType? secondaryType, SqlSku currentSku, int? autoPauseDelay, SqlBackupStorageRedundancy? currentBackupStorageRedundancy, SqlBackupStorageRedundancy? requestedBackupStorageRedundancy, double? minCapacity, DateTimeOffset? pausedOn, DateTimeOffset? resumedOn, ResourceIdentifier maintenanceConfigurationId, bool? isLedgerOn, bool? isInfraEncryptionEnabled, Guid? federatedClientId, IDictionary<string, SqlDatabaseKey> keys, string encryptionProtector, SqlAlwaysEncryptedEnclaveType? preferredEnclaveType, bool? useFreeLimit, FreeLimitExhaustionBehavior? freeLimitExhaustionBehavior, ResourceIdentifier sourceResourceId, bool? manualCutover, bool? performCutover, SqlAvailabilityZoneType? availabilityZone, bool? encryptionProtectorAutoRotation) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SqlDatabaseData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, SqlSku sku, string kind, string managedBy, DatabaseIdentity identity, SqlDatabaseCreateMode? createMode, string collation, long? maxSizeBytes, SampleSchemaName? sampleName, ResourceIdentifier elasticPoolId, ResourceIdentifier sourceDatabaseId, SqlDatabaseStatus? status, Guid? databaseId, DateTimeOffset? createdOn, string currentServiceObjectiveName, string requestedServiceObjectiveName, AzureLocation? defaultSecondaryLocation, ResourceIdentifier failoverGroupId, DateTimeOffset? restorePointInTime, DateTimeOffset? sourceDatabaseDeletedOn, ResourceIdentifier recoveryServicesRecoveryPointId, ResourceIdentifier longTermRetentionBackupResourceId, ResourceIdentifier recoverableDatabaseId, ResourceIdentifier restorableDroppedDatabaseId, CatalogCollationType? catalogCollation, bool? isZoneRedundant, DatabaseLicenseType? licenseType, long? maxLogSizeBytes, DateTimeOffset? earliestRestoreOn, DatabaseReadScale? readScale, int? highAvailabilityReplicaCount, SecondaryType? secondaryType, SqlSku currentSku, int? autoPauseDelay, SqlBackupStorageRedundancy? currentBackupStorageRedundancy, SqlBackupStorageRedundancy? requestedBackupStorageRedundancy, double? minCapacity, DateTimeOffset? pausedOn, DateTimeOffset? resumedOn, ResourceIdentifier maintenanceConfigurationId, bool? isLedgerOn, bool? isInfraEncryptionEnabled, Guid? federatedClientId, IDictionary<string, SqlDatabaseKey> keys, string encryptionProtector, SqlAlwaysEncryptedEnclaveType? preferredEnclaveType, bool? useFreeLimit, FreeLimitExhaustionBehavior? freeLimitExhaustionBehavior, ResourceIdentifier sourceResourceId, bool? manualCutover, bool? performCutover, SqlAvailabilityZoneType? availabilityZone, bool? encryptionProtectorAutoRotation, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             Sku = sku;
             Kind = kind;
@@ -206,6 +239,12 @@ namespace Azure.ResourceManager.Sql
             PerformCutover = performCutover;
             AvailabilityZone = availabilityZone;
             EncryptionProtectorAutoRotation = encryptionProtectorAutoRotation;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SqlDatabaseData"/> for deserialization. </summary>
+        internal SqlDatabaseData()
+        {
         }
 
         /// <summary>

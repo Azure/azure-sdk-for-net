@@ -5,14 +5,62 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.HDInsight.Models
 {
     /// <summary> The update cluster identity certificate request parameters. </summary>
     public partial class HDInsightClusterUpdateIdentityCertificateContent
     {
-        /// <summary> Initializes a new instance of HDInsightClusterUpdateIdentityCertificateContent. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="HDInsightClusterUpdateIdentityCertificateContent"/>. </summary>
         public HDInsightClusterUpdateIdentityCertificateContent()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="HDInsightClusterUpdateIdentityCertificateContent"/>. </summary>
+        /// <param name="applicationId"> The application id. </param>
+        /// <param name="certificate"> The certificate in base64 encoded format. </param>
+        /// <param name="certificatePassword"> The password of the certificate. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal HDInsightClusterUpdateIdentityCertificateContent(string applicationId, string certificate, string certificatePassword, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            ApplicationId = applicationId;
+            Certificate = certificate;
+            CertificatePassword = certificatePassword;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The application id. </summary>

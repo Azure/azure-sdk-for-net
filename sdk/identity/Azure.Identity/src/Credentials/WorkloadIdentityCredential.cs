@@ -44,7 +44,6 @@ namespace Azure.Identity
                 _tokenFileCache = new FileContentsCache(options.TokenFilePath);
 
                 ClientAssertionCredentialOptions clientAssertionCredentialOptions = options.Clone<ClientAssertionCredentialOptions>();
-
                 clientAssertionCredentialOptions.Pipeline = options.Pipeline;
                 clientAssertionCredentialOptions.MsalClient = options.MsalClient;
 

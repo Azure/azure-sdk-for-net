@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
@@ -14,12 +15,61 @@ namespace Azure.ResourceManager.StoragePool.Models
     /// <summary> Request payload for Update Disk Pool request. </summary>
     public partial class DiskPoolPatch
     {
-        /// <summary> Initializes a new instance of DiskPoolPatch. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DiskPoolPatch"/>. </summary>
         public DiskPoolPatch()
         {
             ManagedByExtended = new ChangeTrackingList<string>();
             Tags = new ChangeTrackingDictionary<string, string>();
             Disks = new ChangeTrackingList<WritableSubResource>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DiskPoolPatch"/>. </summary>
+        /// <param name="managedBy"> Azure resource id. Indicates if this resource is managed by another Azure resource. </param>
+        /// <param name="managedByExtended"> List of Azure resource ids that manage this resource. </param>
+        /// <param name="sku"> Determines the SKU of the Disk Pool. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="disks"> List of Azure Managed Disks to attach to a Disk Pool. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DiskPoolPatch(string managedBy, IList<string> managedByExtended, StoragePoolSku sku, IDictionary<string, string> tags, IList<WritableSubResource> disks, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            ManagedBy = managedBy;
+            ManagedByExtended = managedByExtended;
+            Sku = sku;
+            Tags = tags;
+            Disks = disks;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Azure resource id. Indicates if this resource is managed by another Azure resource. </summary>

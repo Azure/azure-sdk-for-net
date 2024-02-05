@@ -20,6 +20,7 @@ namespace Azure.ResourceManager.Models
         /// <param name="options"> The options for JsonSerializer. </param>
         public override void Write(Utf8JsonWriter writer, ManagedServiceIdentityType model, JsonSerializerOptions options)
         {
+            writer.WritePropertyName("type");
             if (model == ManagedServiceIdentityType.SystemAssignedUserAssigned)
             {
                 writer.WriteStringValue(SystemAssignedUserAssignedV3Value);
@@ -37,12 +38,16 @@ namespace Azure.ResourceManager.Models
         public override ManagedServiceIdentityType Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
         {
             using var document = JsonDocument.ParseValue(ref reader);
-            var typeValue = document.RootElement.GetString();
-            if (typeValue.Equals(SystemAssignedUserAssignedV3Value, StringComparison.OrdinalIgnoreCase))
+            foreach (var property in document.RootElement.EnumerateObject())
             {
-                return ManagedServiceIdentityType.SystemAssignedUserAssigned;
+                var typeValue = property.Value.GetString();
+                if (typeValue.Equals(SystemAssignedUserAssignedV3Value, StringComparison.OrdinalIgnoreCase))
+                {
+                    return ManagedServiceIdentityType.SystemAssignedUserAssigned;
+                }
+                return new ManagedServiceIdentityType(typeValue);
             }
-            return new ManagedServiceIdentityType(typeValue);
+            return null;
         }
     }
 }

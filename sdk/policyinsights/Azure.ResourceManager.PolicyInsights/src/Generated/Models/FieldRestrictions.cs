@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,19 +14,53 @@ namespace Azure.ResourceManager.PolicyInsights.Models
     /// <summary> The restrictions that will be placed on a field in the resource by policy. </summary>
     public partial class FieldRestrictions
     {
-        /// <summary> Initializes a new instance of FieldRestrictions. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="FieldRestrictions"/>. </summary>
         internal FieldRestrictions()
         {
             Restrictions = new ChangeTrackingList<FieldRestriction>();
         }
 
-        /// <summary> Initializes a new instance of FieldRestrictions. </summary>
+        /// <summary> Initializes a new instance of <see cref="FieldRestrictions"/>. </summary>
         /// <param name="field"> The name of the field. This can be a top-level property like 'name' or 'type' or an Azure Policy field alias. </param>
         /// <param name="restrictions"> The restrictions placed on that field by policy. </param>
-        internal FieldRestrictions(string field, IReadOnlyList<FieldRestriction> restrictions)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal FieldRestrictions(string field, IReadOnlyList<FieldRestriction> restrictions, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Field = field;
             Restrictions = restrictions;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The name of the field. This can be a top-level property like 'name' or 'type' or an Azure Policy field alias. </summary>

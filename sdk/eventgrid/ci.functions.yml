@@ -1,0 +1,39 @@
+# NOTE: Please refer to https://aka.ms/azsdk/engsys/ci-yaml before editing this file.
+# This is for Track 1 and Track 2 data plane SDK
+
+trigger:
+  branches:
+    include:
+    - main
+    - hotfix/*
+    - release/*
+  paths:
+    include:
+      - sdk/eventgrid/Microsoft.Azure.WebJobs.Extensions.EventGrid
+      - sdk/eventgrid/service.projects
+      - sdk/eventgrid/ci.functions.yml
+
+pr:
+  branches:
+    include:
+    - main
+    - feature/*
+    - hotfix/*
+    - release/*
+  paths:
+    include:
+      - sdk/eventgrid/Microsoft.Azure.WebJobs.Extensions.EventGrid
+      - sdk/eventgrid/service.projects
+      - sdk/eventgrid/ci.functions.yml
+
+extends:
+  template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
+  parameters:
+    SDKType: functions
+    ServiceDirectory: eventgrid
+    ArtifactName: packages
+    Artifacts:
+    - name: Microsoft.Azure.WebJobs.Extensions.EventGrid
+      safeName: MicrosoftAzureWebJobsExtensionsEventGrid
+
+    

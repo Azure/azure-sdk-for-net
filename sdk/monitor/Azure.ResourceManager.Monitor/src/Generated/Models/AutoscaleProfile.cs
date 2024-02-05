@@ -15,7 +15,39 @@ namespace Azure.ResourceManager.Monitor.Models
     /// <summary> Autoscale profile. </summary>
     public partial class AutoscaleProfile
     {
-        /// <summary> Initializes a new instance of AutoscaleProfile. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AutoscaleProfile"/>. </summary>
         /// <param name="name"> the name of the profile. </param>
         /// <param name="capacity"> the number of instances that can be used during this profile. </param>
         /// <param name="rules"> the collection of rules that provide the triggers and parameters for the scaling action. A maximum of 10 rules can be specified. </param>
@@ -31,19 +63,26 @@ namespace Azure.ResourceManager.Monitor.Models
             Rules = rules.ToList();
         }
 
-        /// <summary> Initializes a new instance of AutoscaleProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="AutoscaleProfile"/>. </summary>
         /// <param name="name"> the name of the profile. </param>
         /// <param name="capacity"> the number of instances that can be used during this profile. </param>
         /// <param name="rules"> the collection of rules that provide the triggers and parameters for the scaling action. A maximum of 10 rules can be specified. </param>
         /// <param name="fixedDate"> the specific date-time for the profile. This element is not used if the Recurrence element is used. </param>
         /// <param name="recurrence"> the repeating times at which this profile begins. This element is not used if the FixedDate element is used. </param>
-        internal AutoscaleProfile(string name, MonitorScaleCapacity capacity, IList<AutoscaleRule> rules, MonitorTimeWindow fixedDate, MonitorRecurrence recurrence)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AutoscaleProfile(string name, MonitorScaleCapacity capacity, IList<AutoscaleRule> rules, MonitorTimeWindow fixedDate, MonitorRecurrence recurrence, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             Capacity = capacity;
             Rules = rules;
             FixedDate = fixedDate;
             Recurrence = recurrence;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AutoscaleProfile"/> for deserialization. </summary>
+        internal AutoscaleProfile()
+        {
         }
 
         /// <summary> the name of the profile. </summary>

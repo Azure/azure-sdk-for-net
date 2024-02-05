@@ -6,30 +6,65 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> Provides entity name and id that started the pipeline run. </summary>
     public partial class DataFactoryPipelineRunEntityInfo
     {
-        /// <summary> Initializes a new instance of DataFactoryPipelineRunEntityInfo. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DataFactoryPipelineRunEntityInfo"/>. </summary>
         internal DataFactoryPipelineRunEntityInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of DataFactoryPipelineRunEntityInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataFactoryPipelineRunEntityInfo"/>. </summary>
         /// <param name="name"> Name of the entity that started the pipeline run. </param>
         /// <param name="id"> The ID of the entity that started the run. </param>
         /// <param name="invokedByType"> The type of the entity that started the run. </param>
         /// <param name="pipelineName"> The name of the pipeline that triggered the run, if any. </param>
         /// <param name="pipelineRunId"> The run id of the pipeline that triggered the run, if any. </param>
-        internal DataFactoryPipelineRunEntityInfo(string name, string id, string invokedByType, string pipelineName, Guid? pipelineRunId)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DataFactoryPipelineRunEntityInfo(string name, string id, string invokedByType, string pipelineName, Guid? pipelineRunId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             Id = id;
             InvokedByType = invokedByType;
             PipelineName = pipelineName;
             PipelineRunId = pipelineRunId;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Name of the entity that started the pipeline run. </summary>

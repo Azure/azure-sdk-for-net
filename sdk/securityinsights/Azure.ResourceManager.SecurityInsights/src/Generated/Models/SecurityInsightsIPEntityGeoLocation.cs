@@ -5,17 +5,52 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
     /// <summary> The geo-location context attached to the ip entity. </summary>
     public partial class SecurityInsightsIPEntityGeoLocation
     {
-        /// <summary> Initializes a new instance of SecurityInsightsIPEntityGeoLocation. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SecurityInsightsIPEntityGeoLocation"/>. </summary>
         internal SecurityInsightsIPEntityGeoLocation()
         {
         }
 
-        /// <summary> Initializes a new instance of SecurityInsightsIPEntityGeoLocation. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityInsightsIPEntityGeoLocation"/>. </summary>
         /// <param name="asn"> Autonomous System Number. </param>
         /// <param name="city"> City name. </param>
         /// <param name="countryCode"> The country code according to ISO 3166 format. </param>
@@ -23,7 +58,8 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="latitude"> The longitude of the identified location, expressed as a floating point number with range of -180 to 180, with positive numbers representing East and negative numbers representing West. Latitude and longitude are derived from the city or postal code. </param>
         /// <param name="longitude"> The latitude of the identified location, expressed as a floating point number with range of - 90 to 90, with positive numbers representing North and negative numbers representing South. Latitude and longitude are derived from the city or postal code. </param>
         /// <param name="state"> State name. </param>
-        internal SecurityInsightsIPEntityGeoLocation(int? asn, string city, string countryCode, string countryName, double? latitude, double? longitude, string state)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SecurityInsightsIPEntityGeoLocation(int? asn, string city, string countryCode, string countryName, double? latitude, double? longitude, string state, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Asn = asn;
             City = city;
@@ -32,6 +68,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             Latitude = latitude;
             Longitude = longitude;
             State = state;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Autonomous System Number. </summary>

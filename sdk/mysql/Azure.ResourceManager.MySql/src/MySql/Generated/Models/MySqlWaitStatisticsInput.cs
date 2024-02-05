@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.MySql.Models
@@ -13,7 +14,39 @@ namespace Azure.ResourceManager.MySql.Models
     /// <summary> Input to get wait statistics. </summary>
     public partial class MySqlWaitStatisticsInput
     {
-        /// <summary> Initializes a new instance of MySqlWaitStatisticsInput. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="MySqlWaitStatisticsInput"/>. </summary>
         /// <param name="observationStartOn"> Observation start time. </param>
         /// <param name="observationEndOn"> Observation end time. </param>
         /// <param name="aggregationWindow"> Aggregation interval type in ISO 8601 format. </param>
@@ -25,6 +58,24 @@ namespace Azure.ResourceManager.MySql.Models
             ObservationStartOn = observationStartOn;
             ObservationEndOn = observationEndOn;
             AggregationWindow = aggregationWindow;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MySqlWaitStatisticsInput"/>. </summary>
+        /// <param name="observationStartOn"> Observation start time. </param>
+        /// <param name="observationEndOn"> Observation end time. </param>
+        /// <param name="aggregationWindow"> Aggregation interval type in ISO 8601 format. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MySqlWaitStatisticsInput(DateTimeOffset observationStartOn, DateTimeOffset observationEndOn, string aggregationWindow, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            ObservationStartOn = observationStartOn;
+            ObservationEndOn = observationEndOn;
+            AggregationWindow = aggregationWindow;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MySqlWaitStatisticsInput"/> for deserialization. </summary>
+        internal MySqlWaitStatisticsInput()
+        {
         }
 
         /// <summary> Observation start time. </summary>

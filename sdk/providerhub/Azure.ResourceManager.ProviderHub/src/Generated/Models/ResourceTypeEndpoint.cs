@@ -14,7 +14,39 @@ namespace Azure.ResourceManager.ProviderHub.Models
     /// <summary> The ResourceTypeEndpoint. </summary>
     public partial class ResourceTypeEndpoint
     {
-        /// <summary> Initializes a new instance of ResourceTypeEndpoint. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ResourceTypeEndpoint"/>. </summary>
         public ResourceTypeEndpoint()
         {
             ApiVersions = new ChangeTrackingList<string>();
@@ -23,7 +55,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             Extensions = new ChangeTrackingList<ResourceTypeExtension>();
         }
 
-        /// <summary> Initializes a new instance of ResourceTypeEndpoint. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceTypeEndpoint"/>. </summary>
         /// <param name="isEnabled"></param>
         /// <param name="apiVersions"></param>
         /// <param name="locations"></param>
@@ -31,7 +63,8 @@ namespace Azure.ResourceManager.ProviderHub.Models
         /// <param name="featuresRule"></param>
         /// <param name="extensions"></param>
         /// <param name="timeout"></param>
-        internal ResourceTypeEndpoint(bool? isEnabled, IList<string> apiVersions, IList<AzureLocation> locations, IList<string> requiredFeatures, FeaturesRule featuresRule, IList<ResourceTypeExtension> extensions, TimeSpan? timeout)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ResourceTypeEndpoint(bool? isEnabled, IList<string> apiVersions, IList<AzureLocation> locations, IList<string> requiredFeatures, FeaturesRule featuresRule, IList<ResourceTypeExtension> extensions, TimeSpan? timeout, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             IsEnabled = isEnabled;
             ApiVersions = apiVersions;
@@ -40,6 +73,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             FeaturesRule = featuresRule;
             Extensions = extensions;
             Timeout = timeout;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets or sets the is enabled. </summary>

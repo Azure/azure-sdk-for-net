@@ -1,6 +1,6 @@
 # Release History
 
-## 1.1.0-beta.2 (Unreleased)
+## 1.2.0-beta.2 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,28 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.2.0-beta.1 (2024-02-01)
+
+### Features Added
+
+- Upgraded api-version tag from 'package-2021-06' to 'package-2023-11-preview'. Tag detail available athttps://github.com/Azure/azure-rest-api-specs/blob/784dcbc568c61801a33dfe197cb785ffe22a9dec/specification/servicefabric/resource-manager/readme.md
+- Enable the new model serialization by using the System.ClientModel, refer this [document](https://aka.ms/azsdk/net/mrw) for more details.
+
+### Other Changes
+
+- Upgraded Azure.Core from 1.36.0 to 1.37.0
+- Upgraded Azure.ResourceManager from 1.9.0 to 1.10.1
+
+## 1.1.0 (2023-11-21)
+
+### Features Added
+
+- Enable mocking for extension methods, refer this [document](https://aka.ms/azsdk/net/mocking) for more details.
+
+### Other Changes
+
+- Upgraded dependent `Azure.ResourceManager` to 1.9.0.
 
 ## 1.1.0-beta.1 (2023-05-31)
 

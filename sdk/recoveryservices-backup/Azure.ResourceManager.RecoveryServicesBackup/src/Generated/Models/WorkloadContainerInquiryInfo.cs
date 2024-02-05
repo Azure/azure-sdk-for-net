@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,13 +14,45 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// <summary> Details about inquired protectable items under a given container. </summary>
     public partial class WorkloadContainerInquiryInfo
     {
-        /// <summary> Initializes a new instance of WorkloadContainerInquiryInfo. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="WorkloadContainerInquiryInfo"/>. </summary>
         public WorkloadContainerInquiryInfo()
         {
             InquiryDetails = new ChangeTrackingList<WorkloadInquiryDetails>();
         }
 
-        /// <summary> Initializes a new instance of WorkloadContainerInquiryInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="WorkloadContainerInquiryInfo"/>. </summary>
         /// <param name="status">
         /// Inquiry Status for this container such as
         /// InProgress | Failed | Succeeded
@@ -29,11 +62,13 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// Inquiry Details which will have workload specific details.
         /// For e.g. - For SQL and oracle this will contain different details.
         /// </param>
-        internal WorkloadContainerInquiryInfo(string status, BackupErrorDetail errorDetail, IList<WorkloadInquiryDetails> inquiryDetails)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal WorkloadContainerInquiryInfo(string status, BackupErrorDetail errorDetail, IList<WorkloadInquiryDetails> inquiryDetails, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Status = status;
             ErrorDetail = errorDetail;
             InquiryDetails = inquiryDetails;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary>

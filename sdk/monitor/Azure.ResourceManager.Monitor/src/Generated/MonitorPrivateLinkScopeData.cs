@@ -19,7 +19,39 @@ namespace Azure.ResourceManager.Monitor
     /// </summary>
     public partial class MonitorPrivateLinkScopeData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of MonitorPrivateLinkScopeData. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="MonitorPrivateLinkScopeData"/>. </summary>
         /// <param name="location"> The location. </param>
         /// <param name="accessModeSettings"> Access mode settings. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="accessModeSettings"/> is null. </exception>
@@ -31,7 +63,7 @@ namespace Azure.ResourceManager.Monitor
             AccessModeSettings = accessModeSettings;
         }
 
-        /// <summary> Initializes a new instance of MonitorPrivateLinkScopeData. </summary>
+        /// <summary> Initializes a new instance of <see cref="MonitorPrivateLinkScopeData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -41,11 +73,18 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="provisioningState"> Current state of this PrivateLinkScope: whether or not is has been provisioned within the resource group it is defined. Users cannot change this value but are able to read from it. Values will include Provisioning ,Succeeded, Canceled and Failed. </param>
         /// <param name="privateEndpointConnections"> List of private endpoint connections. </param>
         /// <param name="accessModeSettings"> Access mode settings. </param>
-        internal MonitorPrivateLinkScopeData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string provisioningState, IReadOnlyList<MonitorPrivateEndpointConnectionData> privateEndpointConnections, MonitorPrivateLinkAccessModeSettings accessModeSettings) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MonitorPrivateLinkScopeData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string provisioningState, IReadOnlyList<MonitorPrivateEndpointConnectionData> privateEndpointConnections, MonitorPrivateLinkAccessModeSettings accessModeSettings, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             ProvisioningState = provisioningState;
             PrivateEndpointConnections = privateEndpointConnections;
             AccessModeSettings = accessModeSettings;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MonitorPrivateLinkScopeData"/> for deserialization. </summary>
+        internal MonitorPrivateLinkScopeData()
+        {
         }
 
         /// <summary> Current state of this PrivateLinkScope: whether or not is has been provisioned within the resource group it is defined. Users cannot change this value but are able to read from it. Values will include Provisioning ,Succeeded, Canceled and Failed. </summary>

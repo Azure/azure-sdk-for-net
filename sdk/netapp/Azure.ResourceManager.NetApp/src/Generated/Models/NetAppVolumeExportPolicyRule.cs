@@ -5,17 +5,52 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.NetApp.Models
 {
     /// <summary> Volume Export Policy Rule. </summary>
     public partial class NetAppVolumeExportPolicyRule
     {
-        /// <summary> Initializes a new instance of NetAppVolumeExportPolicyRule. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="NetAppVolumeExportPolicyRule"/>. </summary>
         public NetAppVolumeExportPolicyRule()
         {
         }
 
-        /// <summary> Initializes a new instance of NetAppVolumeExportPolicyRule. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetAppVolumeExportPolicyRule"/>. </summary>
         /// <param name="ruleIndex"> Order index. </param>
         /// <param name="isUnixReadOnly"> Read only access. </param>
         /// <param name="isUnixReadWrite"> Read and write access. </param>
@@ -31,7 +66,8 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="allowedClients"> Client ingress specification as comma separated string with IPv4 CIDRs, IPv4 host addresses and host names. </param>
         /// <param name="hasRootAccess"> Has root access to volume. </param>
         /// <param name="chownMode"> This parameter specifies who is authorized to change the ownership of a file. restricted - Only root user can change the ownership of the file. unrestricted - Non-root users can change ownership of files that they own. </param>
-        internal NetAppVolumeExportPolicyRule(int? ruleIndex, bool? isUnixReadOnly, bool? isUnixReadWrite, bool? isKerberos5ReadOnly, bool? isKerberos5ReadWrite, bool? isKerberos5iReadOnly, bool? isKerberos5iReadWrite, bool? isKerberos5pReadOnly, bool? isKerberos5pReadWrite, bool? allowCifsProtocol, bool? allowNfsV3Protocol, bool? allowNfsV41Protocol, string allowedClients, bool? hasRootAccess, NetAppChownMode? chownMode)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal NetAppVolumeExportPolicyRule(int? ruleIndex, bool? isUnixReadOnly, bool? isUnixReadWrite, bool? isKerberos5ReadOnly, bool? isKerberos5ReadWrite, bool? isKerberos5iReadOnly, bool? isKerberos5iReadWrite, bool? isKerberos5pReadOnly, bool? isKerberos5pReadWrite, bool? allowCifsProtocol, bool? allowNfsV3Protocol, bool? allowNfsV41Protocol, string allowedClients, bool? hasRootAccess, NetAppChownMode? chownMode, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             RuleIndex = ruleIndex;
             IsUnixReadOnly = isUnixReadOnly;
@@ -48,6 +84,7 @@ namespace Azure.ResourceManager.NetApp.Models
             AllowedClients = allowedClients;
             HasRootAccess = hasRootAccess;
             ChownMode = chownMode;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Order index. </summary>

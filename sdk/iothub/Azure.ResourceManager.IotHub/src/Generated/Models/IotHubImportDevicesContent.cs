@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.IotHub.Models
@@ -13,7 +14,39 @@ namespace Azure.ResourceManager.IotHub.Models
     /// <summary> Use to provide parameters when requesting an import of all devices in the hub. </summary>
     public partial class IotHubImportDevicesContent
     {
-        /// <summary> Initializes a new instance of IotHubImportDevicesContent. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="IotHubImportDevicesContent"/>. </summary>
         /// <param name="inputBlobContainerUri"> The input blob container URI. </param>
         /// <param name="outputBlobContainerUri"> The output blob container URI. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="inputBlobContainerUri"/> or <paramref name="outputBlobContainerUri"/> is null. </exception>
@@ -24,6 +57,34 @@ namespace Azure.ResourceManager.IotHub.Models
 
             InputBlobContainerUri = inputBlobContainerUri;
             OutputBlobContainerUri = outputBlobContainerUri;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="IotHubImportDevicesContent"/>. </summary>
+        /// <param name="inputBlobContainerUri"> The input blob container URI. </param>
+        /// <param name="outputBlobContainerUri"> The output blob container URI. </param>
+        /// <param name="inputBlobName"> The blob name to be used when importing from the provided input blob container. </param>
+        /// <param name="outputBlobName"> The blob name to use for storing the status of the import job. </param>
+        /// <param name="authenticationType"> Specifies authentication type being used for connecting to the storage account. </param>
+        /// <param name="identity"> Managed identity properties of storage endpoint for import devices. </param>
+        /// <param name="includeConfigurations"> The value indicating whether configurations should be imported. </param>
+        /// <param name="configurationsBlobName"> The blob name to be used when importing configurations from the provided input blob container. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal IotHubImportDevicesContent(Uri inputBlobContainerUri, Uri outputBlobContainerUri, string inputBlobName, string outputBlobName, IotHubAuthenticationType? authenticationType, ManagedIdentity identity, bool? includeConfigurations, string configurationsBlobName, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            InputBlobContainerUri = inputBlobContainerUri;
+            OutputBlobContainerUri = outputBlobContainerUri;
+            InputBlobName = inputBlobName;
+            OutputBlobName = outputBlobName;
+            AuthenticationType = authenticationType;
+            Identity = identity;
+            IncludeConfigurations = includeConfigurations;
+            ConfigurationsBlobName = configurationsBlobName;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="IotHubImportDevicesContent"/> for deserialization. </summary>
+        internal IotHubImportDevicesContent()
+        {
         }
 
         /// <summary> The input blob container URI. </summary>

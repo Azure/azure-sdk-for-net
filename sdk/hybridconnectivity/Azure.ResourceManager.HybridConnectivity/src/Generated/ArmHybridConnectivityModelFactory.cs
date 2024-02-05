@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.HybridConnectivity.Models
     /// <summary> Model factory for models. </summary>
     public static partial class ArmHybridConnectivityModelFactory
     {
-        /// <summary> Initializes a new instance of EndpointResourceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="HybridConnectivity.EndpointResourceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -32,10 +32,10 @@ namespace Azure.ResourceManager.HybridConnectivity.Models
         /// <returns> A new <see cref="HybridConnectivity.EndpointResourceData"/> instance for mocking. </returns>
         public static EndpointResourceData EndpointResourceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, EndpointType? endpointType = null, string resourceId = null, string provisioningState = null, string createdBy = null, CreatedByType? createdByType = null, DateTimeOffset? createdOn = null, string lastModifiedBy = null, CreatedByType? lastModifiedByType = null, DateTimeOffset? lastModifiedOn = null)
         {
-            return new EndpointResourceData(id, name, resourceType, systemData, endpointType, resourceId, provisioningState, createdBy, createdByType, createdOn, lastModifiedBy, lastModifiedByType, lastModifiedOn);
+            return new EndpointResourceData(id, name, resourceType, systemData, endpointType, resourceId, provisioningState, createdBy, createdByType, createdOn, lastModifiedBy, lastModifiedByType, lastModifiedOn, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of TargetResourceEndpointAccess. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.TargetResourceEndpointAccess"/>. </summary>
         /// <param name="namespaceName"> The namespace name. </param>
         /// <param name="namespaceNameSuffix"> The suffix domain name of relay namespace. </param>
         /// <param name="hybridConnectionName"> Azure Relay hybrid connection name for the resource. </param>
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.HybridConnectivity.Models
         /// <returns> A new <see cref="Models.TargetResourceEndpointAccess"/> instance for mocking. </returns>
         public static TargetResourceEndpointAccess TargetResourceEndpointAccess(string namespaceName = null, string namespaceNameSuffix = null, string hybridConnectionName = null, string accessKey = null, long? expiresOn = null)
         {
-            return new TargetResourceEndpointAccess(namespaceName, namespaceNameSuffix, hybridConnectionName, accessKey, expiresOn);
+            return new TargetResourceEndpointAccess(namespaceName, namespaceNameSuffix, hybridConnectionName, accessKey, expiresOn, serializedAdditionalRawData: null);
         }
     }
 }

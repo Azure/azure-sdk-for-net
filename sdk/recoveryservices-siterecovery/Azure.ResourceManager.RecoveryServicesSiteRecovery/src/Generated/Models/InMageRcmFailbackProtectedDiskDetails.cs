@@ -6,18 +6,51 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     /// <summary> InMageRcmFailback protected disk details. </summary>
     public partial class InMageRcmFailbackProtectedDiskDetails
     {
-        /// <summary> Initializes a new instance of InMageRcmFailbackProtectedDiskDetails. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="InMageRcmFailbackProtectedDiskDetails"/>. </summary>
         internal InMageRcmFailbackProtectedDiskDetails()
         {
         }
 
-        /// <summary> Initializes a new instance of InMageRcmFailbackProtectedDiskDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="InMageRcmFailbackProtectedDiskDetails"/>. </summary>
         /// <param name="diskId"> The disk Id (reported by source agent). </param>
         /// <param name="diskName"> The disk name. </param>
         /// <param name="isOSDisk"> A value indicating whether the disk is the OS disk. </param>
@@ -29,7 +62,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="irDetails"> The initial replication details. </param>
         /// <param name="resyncDetails"> The resync details. </param>
         /// <param name="lastSyncedOn"> The last sync time. </param>
-        internal InMageRcmFailbackProtectedDiskDetails(string diskId, string diskName, string isOSDisk, long? capacityInBytes, string diskUuid, double? dataPendingInLogDataStoreInMB, double? dataPendingAtSourceAgentInMB, string isInitialReplicationComplete, InMageRcmFailbackSyncDetails irDetails, InMageRcmFailbackSyncDetails resyncDetails, DateTimeOffset? lastSyncedOn)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal InMageRcmFailbackProtectedDiskDetails(string diskId, string diskName, string isOSDisk, long? capacityInBytes, string diskUuid, double? dataPendingInLogDataStoreInMB, double? dataPendingAtSourceAgentInMB, string isInitialReplicationComplete, InMageRcmFailbackSyncDetails irDetails, InMageRcmFailbackSyncDetails resyncDetails, DateTimeOffset? lastSyncedOn, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             DiskId = diskId;
             DiskName = diskName;
@@ -42,6 +76,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             IrDetails = irDetails;
             ResyncDetails = resyncDetails;
             LastSyncedOn = lastSyncedOn;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The disk Id (reported by source agent). </summary>

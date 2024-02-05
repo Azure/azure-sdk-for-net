@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
@@ -12,16 +14,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> Package input path specified with a resource id. </summary>
     public partial class PackageInputPathId : PackageInputPathBase
     {
-        /// <summary> Initializes a new instance of PackageInputPathId. </summary>
+        /// <summary> Initializes a new instance of <see cref="PackageInputPathId"/>. </summary>
         public PackageInputPathId()
         {
             InputPathType = InputPathType.PathId;
         }
 
-        /// <summary> Initializes a new instance of PackageInputPathId. </summary>
+        /// <summary> Initializes a new instance of <see cref="PackageInputPathId"/>. </summary>
         /// <param name="inputPathType"> [Required] Input path type for package inputs. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="resourceId"> Input resource id. </param>
-        internal PackageInputPathId(InputPathType inputPathType, ResourceIdentifier resourceId) : base(inputPathType)
+        internal PackageInputPathId(InputPathType inputPathType, IDictionary<string, BinaryData> serializedAdditionalRawData, ResourceIdentifier resourceId) : base(inputPathType, serializedAdditionalRawData)
         {
             ResourceId = resourceId;
             InputPathType = inputPathType;

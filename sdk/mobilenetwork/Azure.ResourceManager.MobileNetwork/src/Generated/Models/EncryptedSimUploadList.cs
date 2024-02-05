@@ -15,7 +15,39 @@ namespace Azure.ResourceManager.MobileNetwork.Models
     /// <summary> The SIMs to upload. The SIM credentials must be encrypted. </summary>
     public partial class EncryptedSimUploadList
     {
-        /// <summary> Initializes a new instance of EncryptedSimUploadList. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="EncryptedSimUploadList"/>. </summary>
         /// <param name="version"> The upload file format version. </param>
         /// <param name="azureKeyIdentifier"> An identifier for the Azure SIM onboarding public key used for encrypted upload. </param>
         /// <param name="vendorKeyFingerprint"> The fingerprint of the SIM vendor public key. The private counterpart is used for signing the encrypted transport key. </param>
@@ -36,6 +68,30 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             EncryptedTransportKey = encryptedTransportKey;
             SignedTransportKey = signedTransportKey;
             Sims = sims.ToList();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="EncryptedSimUploadList"/>. </summary>
+        /// <param name="version"> The upload file format version. </param>
+        /// <param name="azureKeyIdentifier"> An identifier for the Azure SIM onboarding public key used for encrypted upload. </param>
+        /// <param name="vendorKeyFingerprint"> The fingerprint of the SIM vendor public key. The private counterpart is used for signing the encrypted transport key. </param>
+        /// <param name="encryptedTransportKey"> The transport key used for encrypting SIM credentials, encrypted using the SIM onboarding public key. </param>
+        /// <param name="signedTransportKey"> The encrypted transport key, signed using the SIM vendor private key. </param>
+        /// <param name="sims"> A list of SIMs to upload, with encrypted properties. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal EncryptedSimUploadList(int version, int azureKeyIdentifier, string vendorKeyFingerprint, string encryptedTransportKey, string signedTransportKey, IList<SimNameAndEncryptedProperties> sims, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Version = version;
+            AzureKeyIdentifier = azureKeyIdentifier;
+            VendorKeyFingerprint = vendorKeyFingerprint;
+            EncryptedTransportKey = encryptedTransportKey;
+            SignedTransportKey = signedTransportKey;
+            Sims = sims;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="EncryptedSimUploadList"/> for deserialization. </summary>
+        internal EncryptedSimUploadList()
+        {
         }
 
         /// <summary> The upload file format version. </summary>

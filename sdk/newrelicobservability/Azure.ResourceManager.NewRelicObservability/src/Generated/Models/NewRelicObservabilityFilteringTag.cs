@@ -5,25 +5,62 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.NewRelicObservability.Models
 {
     /// <summary> The definition of a filtering tag. Filtering tags are used for capturing resources and include/exclude them from being monitored. </summary>
     public partial class NewRelicObservabilityFilteringTag
     {
-        /// <summary> Initializes a new instance of NewRelicObservabilityFilteringTag. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="NewRelicObservabilityFilteringTag"/>. </summary>
         public NewRelicObservabilityFilteringTag()
         {
         }
 
-        /// <summary> Initializes a new instance of NewRelicObservabilityFilteringTag. </summary>
+        /// <summary> Initializes a new instance of <see cref="NewRelicObservabilityFilteringTag"/>. </summary>
         /// <param name="name"> The name (also known as the key) of the tag. </param>
         /// <param name="value"> The value of the tag. </param>
         /// <param name="action"> Valid actions for a filtering tag. Exclusion takes priority over inclusion. </param>
-        internal NewRelicObservabilityFilteringTag(string name, string value, NewRelicObservabilityTagAction? action)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal NewRelicObservabilityFilteringTag(string name, string value, NewRelicObservabilityTagAction? action, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             Value = value;
             Action = action;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The name (also known as the key) of the tag. </summary>

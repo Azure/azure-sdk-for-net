@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -14,10 +15,59 @@ namespace Azure.ResourceManager.OperationalInsights.Models
     /// <summary> The top level Log Analytics cluster resource container. </summary>
     public partial class OperationalInsightsClusterPatch
     {
-        /// <summary> Initializes a new instance of OperationalInsightsClusterPatch. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="OperationalInsightsClusterPatch"/>. </summary>
         public OperationalInsightsClusterPatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="OperationalInsightsClusterPatch"/>. </summary>
+        /// <param name="identity"> The identity of the resource. Current supported identity types: None, SystemAssigned, UserAssigned. </param>
+        /// <param name="sku"> The sku properties. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="keyVaultProperties"> The associated key properties. </param>
+        /// <param name="billingType"> The cluster's billing type. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal OperationalInsightsClusterPatch(ManagedServiceIdentity identity, OperationalInsightsClusterSku sku, IDictionary<string, string> tags, OperationalInsightsKeyVaultProperties keyVaultProperties, OperationalInsightsBillingType? billingType, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Identity = identity;
+            Sku = sku;
+            Tags = tags;
+            KeyVaultProperties = keyVaultProperties;
+            BillingType = billingType;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The identity of the resource. Current supported identity types: None, SystemAssigned, UserAssigned. </summary>

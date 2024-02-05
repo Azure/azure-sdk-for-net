@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.StorageSync.Models;
@@ -18,12 +19,44 @@ namespace Azure.ResourceManager.StorageSync
     /// </summary>
     public partial class StorageSyncServerEndpointData : ResourceData
     {
-        /// <summary> Initializes a new instance of StorageSyncServerEndpointData. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="StorageSyncServerEndpointData"/>. </summary>
         public StorageSyncServerEndpointData()
         {
         }
 
-        /// <summary> Initializes a new instance of StorageSyncServerEndpointData. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageSyncServerEndpointData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -48,7 +81,8 @@ namespace Azure.ResourceManager.StorageSync
         /// <param name="localCacheMode"> Policy for enabling follow-the-sun business models: link local cache to cloud behavior to pre-populate before local access. </param>
         /// <param name="initialUploadPolicy"> Policy for how the initial upload sync session is performed. </param>
         /// <param name="serverName"> Server name. </param>
-        internal StorageSyncServerEndpointData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string serverLocalPath, StorageSyncFeatureStatus? cloudTiering, int? volumeFreeSpacePercent, int? tierFilesOlderThanDays, string friendlyName, ResourceIdentifier serverResourceId, string provisioningState, string lastWorkflowId, string lastOperationName, ServerEndpointSyncStatus syncStatus, StorageSyncFeatureStatus? offlineDataTransfer, ResourceIdentifier offlineDataTransferStorageAccountResourceId, Guid? offlineDataTransferStorageAccountTenantId, string offlineDataTransferShareName, ServerEndpointCloudTieringStatus cloudTieringStatus, ServerEndpointRecallStatus recallStatus, InitialDownloadPolicy? initialDownloadPolicy, LocalCacheMode? localCacheMode, InitialUploadPolicy? initialUploadPolicy, string serverName) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal StorageSyncServerEndpointData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string serverLocalPath, StorageSyncFeatureStatus? cloudTiering, int? volumeFreeSpacePercent, int? tierFilesOlderThanDays, string friendlyName, ResourceIdentifier serverResourceId, string provisioningState, string lastWorkflowId, string lastOperationName, ServerEndpointSyncStatus syncStatus, StorageSyncFeatureStatus? offlineDataTransfer, ResourceIdentifier offlineDataTransferStorageAccountResourceId, Guid? offlineDataTransferStorageAccountTenantId, string offlineDataTransferShareName, ServerEndpointCloudTieringStatus cloudTieringStatus, ServerEndpointRecallStatus recallStatus, InitialDownloadPolicy? initialDownloadPolicy, LocalCacheMode? localCacheMode, InitialUploadPolicy? initialUploadPolicy, string serverName, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             ServerLocalPath = serverLocalPath;
             CloudTiering = cloudTiering;
@@ -70,6 +104,7 @@ namespace Azure.ResourceManager.StorageSync
             LocalCacheMode = localCacheMode;
             InitialUploadPolicy = initialUploadPolicy;
             ServerName = serverName;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Server Local path. </summary>

@@ -5,19 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Media.Models
 {
     /// <summary> Represents an audio track in the asset. </summary>
     public partial class AudioTrack : MediaAssetTrackBase
     {
-        /// <summary> Initializes a new instance of AudioTrack. </summary>
+        /// <summary> Initializes a new instance of <see cref="AudioTrack"/>. </summary>
         public AudioTrack()
         {
             OdataType = "#Microsoft.Media.AudioTrack";
         }
 
-        /// <summary> Initializes a new instance of AudioTrack. </summary>
+        /// <summary> Initializes a new instance of <see cref="AudioTrack"/>. </summary>
         /// <param name="odataType"> The discriminator for derived types. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="fileName"> The file name to the source file. This file is located in the storage container of the asset. </param>
         /// <param name="displayName"> The display name of the audio track on a video player. In HLS, this maps to the NAME attribute of EXT-X-MEDIA. </param>
         /// <param name="languageCode"> The RFC5646 language code for the audio track. </param>
@@ -25,7 +29,7 @@ namespace Azure.ResourceManager.Media.Models
         /// <param name="dashSettings"> The DASH specific setting for the audio track. </param>
         /// <param name="mpeg4TrackId"> The MPEG-4 audio track ID for the audio track. </param>
         /// <param name="bitRate"> The stream bit rate for the audio track. </param>
-        internal AudioTrack(string odataType, string fileName, string displayName, string languageCode, HlsSettings hlsSettings, TrackDashSettings dashSettings, int? mpeg4TrackId, int? bitRate) : base(odataType)
+        internal AudioTrack(string odataType, IDictionary<string, BinaryData> serializedAdditionalRawData, string fileName, string displayName, string languageCode, HlsSettings hlsSettings, TrackDashSettings dashSettings, int? mpeg4TrackId, int? bitRate) : base(odataType, serializedAdditionalRawData)
         {
             FileName = fileName;
             DisplayName = displayName;

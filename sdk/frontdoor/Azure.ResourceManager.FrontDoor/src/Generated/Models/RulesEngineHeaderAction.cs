@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.FrontDoor.Models
@@ -13,7 +14,39 @@ namespace Azure.ResourceManager.FrontDoor.Models
     /// <summary> An action that can manipulate an http header. </summary>
     public partial class RulesEngineHeaderAction
     {
-        /// <summary> Initializes a new instance of RulesEngineHeaderAction. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="RulesEngineHeaderAction"/>. </summary>
         /// <param name="headerActionType"> Which type of manipulation to apply to the header. </param>
         /// <param name="headerName"> The name of the header this action will apply to. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="headerName"/> is null. </exception>
@@ -25,15 +58,22 @@ namespace Azure.ResourceManager.FrontDoor.Models
             HeaderName = headerName;
         }
 
-        /// <summary> Initializes a new instance of RulesEngineHeaderAction. </summary>
+        /// <summary> Initializes a new instance of <see cref="RulesEngineHeaderAction"/>. </summary>
         /// <param name="headerActionType"> Which type of manipulation to apply to the header. </param>
         /// <param name="headerName"> The name of the header this action will apply to. </param>
         /// <param name="value"> The value to update the given header name with. This value is not used if the actionType is Delete. </param>
-        internal RulesEngineHeaderAction(RulesEngineHeaderActionType headerActionType, string headerName, string value)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal RulesEngineHeaderAction(RulesEngineHeaderActionType headerActionType, string headerName, string value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             HeaderActionType = headerActionType;
             HeaderName = headerName;
             Value = value;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="RulesEngineHeaderAction"/> for deserialization. </summary>
+        internal RulesEngineHeaderAction()
+        {
         }
 
         /// <summary> Which type of manipulation to apply to the header. </summary>

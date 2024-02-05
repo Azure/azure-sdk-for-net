@@ -15,7 +15,39 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> ARM resource for a domain. </summary>
     public partial class AppServiceDomainPatch : ResourceData
     {
-        /// <summary> Initializes a new instance of AppServiceDomainPatch. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AppServiceDomainPatch"/>. </summary>
         public AppServiceDomainPatch()
         {
             NameServers = new ChangeTrackingList<string>();
@@ -23,7 +55,7 @@ namespace Azure.ResourceManager.AppService.Models
             DomainNotRenewableReasons = new ChangeTrackingList<DomainNotRenewableReason>();
         }
 
-        /// <summary> Initializes a new instance of AppServiceDomainPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppServiceDomainPatch"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -52,7 +84,8 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="targetDnsType"> Target DNS type (would be used for migration). </param>
         /// <param name="authCode"></param>
         /// <param name="kind"> Kind of resource. </param>
-        internal AppServiceDomainPatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, RegistrationContactInfo contactAdmin, RegistrationContactInfo contactBilling, RegistrationContactInfo contactRegistrant, RegistrationContactInfo contactTech, AppServiceDomainStatus? registrationStatus, ProvisioningState? provisioningState, IReadOnlyList<string> nameServers, bool? isDomainPrivacyEnabled, DateTimeOffset? createdOn, DateTimeOffset? expireOn, DateTimeOffset? lastRenewedOn, bool? isAutoRenew, bool? isReadyForDnsRecordManagement, IReadOnlyList<AppServiceHostName> managedHostNames, DomainPurchaseConsent consent, IReadOnlyList<DomainNotRenewableReason> domainNotRenewableReasons, AppServiceDnsType? dnsType, string dnsZoneId, AppServiceDnsType? targetDnsType, string authCode, string kind) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AppServiceDomainPatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, RegistrationContactInfo contactAdmin, RegistrationContactInfo contactBilling, RegistrationContactInfo contactRegistrant, RegistrationContactInfo contactTech, AppServiceDomainStatus? registrationStatus, ProvisioningState? provisioningState, IReadOnlyList<string> nameServers, bool? isDomainPrivacyEnabled, DateTimeOffset? createdOn, DateTimeOffset? expireOn, DateTimeOffset? lastRenewedOn, bool? isAutoRenew, bool? isReadyForDnsRecordManagement, IReadOnlyList<AppServiceHostName> managedHostNames, DomainPurchaseConsent consent, IReadOnlyList<DomainNotRenewableReason> domainNotRenewableReasons, AppServiceDnsType? dnsType, string dnsZoneId, AppServiceDnsType? targetDnsType, string authCode, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             ContactAdmin = contactAdmin;
             ContactBilling = contactBilling;
@@ -75,6 +108,7 @@ namespace Azure.ResourceManager.AppService.Models
             TargetDnsType = targetDnsType;
             AuthCode = authCode;
             Kind = kind;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Administrative contact. </summary>

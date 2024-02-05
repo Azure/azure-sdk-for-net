@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
@@ -23,7 +24,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
     /// </summary>
     public partial class ServicePlacementPreferPrimaryDomainPolicy : ManagedServicePlacementPolicy
     {
-        /// <summary> Initializes a new instance of ServicePlacementPreferPrimaryDomainPolicy. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServicePlacementPreferPrimaryDomainPolicy"/>. </summary>
         /// <param name="domainName"> The name of the domain that should used for placement as per this policy. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="domainName"/> is null. </exception>
         public ServicePlacementPreferPrimaryDomainPolicy(string domainName)
@@ -34,13 +35,19 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             ServicePlacementPolicyType = ServicePlacementPolicyType.PreferredPrimaryDomain;
         }
 
-        /// <summary> Initializes a new instance of ServicePlacementPreferPrimaryDomainPolicy. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServicePlacementPreferPrimaryDomainPolicy"/>. </summary>
         /// <param name="servicePlacementPolicyType"> The type of placement policy for a service fabric service. Following are the possible values. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="domainName"> The name of the domain that should used for placement as per this policy. </param>
-        internal ServicePlacementPreferPrimaryDomainPolicy(ServicePlacementPolicyType servicePlacementPolicyType, string domainName) : base(servicePlacementPolicyType)
+        internal ServicePlacementPreferPrimaryDomainPolicy(ServicePlacementPolicyType servicePlacementPolicyType, IDictionary<string, BinaryData> serializedAdditionalRawData, string domainName) : base(servicePlacementPolicyType, serializedAdditionalRawData)
         {
             DomainName = domainName;
             ServicePlacementPolicyType = servicePlacementPolicyType;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ServicePlacementPreferPrimaryDomainPolicy"/> for deserialization. </summary>
+        internal ServicePlacementPreferPrimaryDomainPolicy()
+        {
         }
 
         /// <summary> The name of the domain that should used for placement as per this policy. </summary>

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.DeviceUpdate.Models;
@@ -18,7 +19,39 @@ namespace Azure.ResourceManager.DeviceUpdate
     /// </summary>
     public partial class DeviceUpdateAccountData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of DeviceUpdateAccountData. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DeviceUpdateAccountData"/>. </summary>
         /// <param name="location"> The location. </param>
         public DeviceUpdateAccountData(AzureLocation location) : base(location)
         {
@@ -26,7 +59,7 @@ namespace Azure.ResourceManager.DeviceUpdate
             Locations = new ChangeTrackingList<DeviceUpdateAccountLocationDetail>();
         }
 
-        /// <summary> Initializes a new instance of DeviceUpdateAccountData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeviceUpdateAccountData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -39,8 +72,10 @@ namespace Azure.ResourceManager.DeviceUpdate
         /// <param name="publicNetworkAccess"> Whether or not public network access is allowed for the account. </param>
         /// <param name="privateEndpointConnections"> List of private endpoint connections associated with the account. </param>
         /// <param name="sku"> Device Update Sku. </param>
+        /// <param name="encryption"> CMK encryption at rest properties. </param>
         /// <param name="locations"> Device Update account primary and failover location details. </param>
-        internal DeviceUpdateAccountData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, ProvisioningState? provisioningState, string hostName, PublicNetworkAccess? publicNetworkAccess, IList<DeviceUpdatePrivateEndpointConnectionData> privateEndpointConnections, DeviceUpdateSku? sku, IReadOnlyList<DeviceUpdateAccountLocationDetail> locations) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DeviceUpdateAccountData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, DeviceUpdateProvisioningState? provisioningState, string hostName, DeviceUpdatePublicNetworkAccess? publicNetworkAccess, IList<DeviceUpdatePrivateEndpointConnectionData> privateEndpointConnections, DeviceUpdateSku? sku, DeviceUpdateEncryption encryption, IReadOnlyList<DeviceUpdateAccountLocationDetail> locations, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             Identity = identity;
             ProvisioningState = provisioningState;
@@ -48,21 +83,30 @@ namespace Azure.ResourceManager.DeviceUpdate
             PublicNetworkAccess = publicNetworkAccess;
             PrivateEndpointConnections = privateEndpointConnections;
             Sku = sku;
+            Encryption = encryption;
             Locations = locations;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DeviceUpdateAccountData"/> for deserialization. </summary>
+        internal DeviceUpdateAccountData()
+        {
         }
 
         /// <summary> The type of identity used for the resource. </summary>
         public ManagedServiceIdentity Identity { get; set; }
         /// <summary> Provisioning state. </summary>
-        public ProvisioningState? ProvisioningState { get; }
+        public DeviceUpdateProvisioningState? ProvisioningState { get; }
         /// <summary> API host name. </summary>
         public string HostName { get; }
         /// <summary> Whether or not public network access is allowed for the account. </summary>
-        public PublicNetworkAccess? PublicNetworkAccess { get; set; }
+        public DeviceUpdatePublicNetworkAccess? PublicNetworkAccess { get; set; }
         /// <summary> List of private endpoint connections associated with the account. </summary>
         public IList<DeviceUpdatePrivateEndpointConnectionData> PrivateEndpointConnections { get; }
         /// <summary> Device Update Sku. </summary>
         public DeviceUpdateSku? Sku { get; set; }
+        /// <summary> CMK encryption at rest properties. </summary>
+        public DeviceUpdateEncryption Encryption { get; set; }
         /// <summary> Device Update account primary and failover location details. </summary>
         public IReadOnlyList<DeviceUpdateAccountLocationDetail> Locations { get; }
     }

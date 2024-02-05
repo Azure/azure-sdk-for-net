@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.NetworkCloud.Models
@@ -12,18 +14,52 @@ namespace Azure.ResourceManager.NetworkCloud.Models
     /// <summary> ManagedResourceGroupConfiguration represents the configuration of the resource group managed by Azure. </summary>
     public partial class ManagedResourceGroupConfiguration
     {
-        /// <summary> Initializes a new instance of ManagedResourceGroupConfiguration. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ManagedResourceGroupConfiguration"/>. </summary>
         public ManagedResourceGroupConfiguration()
         {
         }
 
-        /// <summary> Initializes a new instance of ManagedResourceGroupConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedResourceGroupConfiguration"/>. </summary>
         /// <param name="location"> The location of the managed resource group. If not specified, the location of the parent resource is chosen. </param>
         /// <param name="name"> The name for the managed resource group. If not specified, the unique name is automatically generated. </param>
-        internal ManagedResourceGroupConfiguration(AzureLocation? location, string name)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ManagedResourceGroupConfiguration(AzureLocation? location, string name, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Location = location;
             Name = name;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The location of the managed resource group. If not specified, the location of the parent resource is chosen. </summary>

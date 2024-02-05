@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class DataFactoryDatasetProperties : IUtf8JsonSerializable
+    [PersistableModelProxy(typeof(UnknownDataset))]
+    public partial class DataFactoryDatasetProperties : IUtf8JsonSerializable, IJsonModel<DataFactoryDatasetProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataFactoryDatasetProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<DataFactoryDatasetProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<DataFactoryDatasetProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DataFactoryDatasetProperties)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(DatasetType);
@@ -87,8 +98,22 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteEndObject();
         }
 
-        internal static DataFactoryDatasetProperties DeserializeDataFactoryDatasetProperties(JsonElement element)
+        DataFactoryDatasetProperties IJsonModel<DataFactoryDatasetProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<DataFactoryDatasetProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DataFactoryDatasetProperties)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeDataFactoryDatasetProperties(document.RootElement, options);
+        }
+
+        internal static DataFactoryDatasetProperties DeserializeDataFactoryDatasetProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -145,6 +170,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     case "InformixTable": return InformixTableDataset.DeserializeInformixTableDataset(element);
                     case "JiraObject": return JiraObjectDataset.DeserializeJiraObjectDataset(element);
                     case "Json": return JsonDataset.DeserializeJsonDataset(element);
+                    case "LakeHouseTable": return LakeHouseTableDataset.DeserializeLakeHouseTableDataset(element);
                     case "MagentoObject": return MagentoObjectDataset.DeserializeMagentoObjectDataset(element);
                     case "MariaDBTable": return MariaDBTableDataset.DeserializeMariaDBTableDataset(element);
                     case "MarketoObject": return MarketoObjectDataset.DeserializeMarketoObjectDataset(element);
@@ -172,6 +198,8 @@ namespace Azure.ResourceManager.DataFactory.Models
                     case "SalesforceMarketingCloudObject": return SalesforceMarketingCloudObjectDataset.DeserializeSalesforceMarketingCloudObjectDataset(element);
                     case "SalesforceObject": return SalesforceObjectDataset.DeserializeSalesforceObjectDataset(element);
                     case "SalesforceServiceCloudObject": return SalesforceServiceCloudObjectDataset.DeserializeSalesforceServiceCloudObjectDataset(element);
+                    case "SalesforceServiceCloudV2Object": return SalesforceServiceCloudV2ObjectDataset.DeserializeSalesforceServiceCloudV2ObjectDataset(element);
+                    case "SalesforceV2Object": return SalesforceV2ObjectDataset.DeserializeSalesforceV2ObjectDataset(element);
                     case "SapBwCube": return SapBWCubeDataset.DeserializeSapBWCubeDataset(element);
                     case "SapCloudForCustomerResource": return SapCloudForCustomerResourceDataset.DeserializeSapCloudForCustomerResourceDataset(element);
                     case "SapEccResource": return SapEccResourceDataset.DeserializeSapEccResourceDataset(element);
@@ -183,12 +211,14 @@ namespace Azure.ResourceManager.DataFactory.Models
                     case "SharePointOnlineListResource": return SharePointOnlineListResourceDataset.DeserializeSharePointOnlineListResourceDataset(element);
                     case "ShopifyObject": return ShopifyObjectDataset.DeserializeShopifyObjectDataset(element);
                     case "SnowflakeTable": return SnowflakeDataset.DeserializeSnowflakeDataset(element);
+                    case "SnowflakeV2Table": return SnowflakeV2Dataset.DeserializeSnowflakeV2Dataset(element);
                     case "SparkObject": return SparkObjectDataset.DeserializeSparkObjectDataset(element);
                     case "SqlServerTable": return SqlServerTableDataset.DeserializeSqlServerTableDataset(element);
                     case "SquareObject": return SquareObjectDataset.DeserializeSquareObjectDataset(element);
                     case "SybaseTable": return SybaseTableDataset.DeserializeSybaseTableDataset(element);
                     case "TeradataTable": return TeradataTableDataset.DeserializeTeradataTableDataset(element);
                     case "VerticaTable": return VerticaTableDataset.DeserializeVerticaTableDataset(element);
+                    case "WarehouseTable": return WarehouseTableDataset.DeserializeWarehouseTableDataset(element);
                     case "WebTable": return WebTableDataset.DeserializeWebTableDataset(element);
                     case "XeroObject": return XeroObjectDataset.DeserializeXeroObjectDataset(element);
                     case "Xml": return XmlDataset.DeserializeXmlDataset(element);
@@ -197,5 +227,36 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             return UnknownDataset.DeserializeUnknownDataset(element);
         }
+
+        BinaryData IPersistableModel<DataFactoryDatasetProperties>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DataFactoryDatasetProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(DataFactoryDatasetProperties)} does not support '{options.Format}' format.");
+            }
+        }
+
+        DataFactoryDatasetProperties IPersistableModel<DataFactoryDatasetProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DataFactoryDatasetProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeDataFactoryDatasetProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(DataFactoryDatasetProperties)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<DataFactoryDatasetProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

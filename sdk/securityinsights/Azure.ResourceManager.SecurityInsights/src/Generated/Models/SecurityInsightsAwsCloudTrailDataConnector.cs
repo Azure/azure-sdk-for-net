@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -15,22 +17,23 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     /// <summary> Represents Amazon Web Services CloudTrail data connector. </summary>
     public partial class SecurityInsightsAwsCloudTrailDataConnector : SecurityInsightsDataConnectorData
     {
-        /// <summary> Initializes a new instance of SecurityInsightsAwsCloudTrailDataConnector. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityInsightsAwsCloudTrailDataConnector"/>. </summary>
         public SecurityInsightsAwsCloudTrailDataConnector()
         {
             Kind = DataConnectorKind.AmazonWebServicesCloudTrail;
         }
 
-        /// <summary> Initializes a new instance of SecurityInsightsAwsCloudTrailDataConnector. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityInsightsAwsCloudTrailDataConnector"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="kind"> The data connector kind. </param>
         /// <param name="etag"> Etag of the azure resource. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="awsRoleArn"> The Aws Role Arn (with CloudTrailReadOnly policy) that is used to access the Aws account. </param>
         /// <param name="dataTypes"> The available data types for the connector. </param>
-        internal SecurityInsightsAwsCloudTrailDataConnector(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DataConnectorKind kind, ETag? etag, string awsRoleArn, AwsCloudTrailDataConnectorDataTypes dataTypes) : base(id, name, resourceType, systemData, kind, etag)
+        internal SecurityInsightsAwsCloudTrailDataConnector(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DataConnectorKind kind, ETag? etag, IDictionary<string, BinaryData> serializedAdditionalRawData, string awsRoleArn, AwsCloudTrailDataConnectorDataTypes dataTypes) : base(id, name, resourceType, systemData, kind, etag, serializedAdditionalRawData)
         {
             AwsRoleArn = awsRoleArn;
             DataTypes = dataTypes;

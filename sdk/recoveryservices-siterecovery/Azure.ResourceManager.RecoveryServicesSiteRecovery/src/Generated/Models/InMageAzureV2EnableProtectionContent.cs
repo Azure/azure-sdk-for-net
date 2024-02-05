@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> VMware Azure specific enable protection input. </summary>
     public partial class InMageAzureV2EnableProtectionContent : EnableProtectionProviderSpecificContent
     {
-        /// <summary> Initializes a new instance of InMageAzureV2EnableProtectionContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="InMageAzureV2EnableProtectionContent"/>. </summary>
         public InMageAzureV2EnableProtectionContent()
         {
             DisksToInclude = new ChangeTrackingList<InMageAzureV2DiskDetails>();
@@ -23,6 +23,66 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             TargetManagedDiskTags = new ChangeTrackingDictionary<string, string>();
             TargetNicTags = new ChangeTrackingDictionary<string, string>();
             InstanceType = "InMageAzureV2";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="InMageAzureV2EnableProtectionContent"/>. </summary>
+        /// <param name="instanceType"> The class type. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="masterTargetId"> The Master target Id. </param>
+        /// <param name="processServerId"> The Process Server Id. </param>
+        /// <param name="storageAccountId"> The storage account Id. </param>
+        /// <param name="runAsAccountId"> The CS account Id. </param>
+        /// <param name="multiVmGroupId"> The multi VM group Id. </param>
+        /// <param name="multiVmGroupName"> The multi VM group name. </param>
+        /// <param name="disksToInclude"> The disks to include list. </param>
+        /// <param name="targetAzureNetworkId"> The selected target Azure network Id. </param>
+        /// <param name="targetAzureSubnetId"> The selected target Azure subnet Id. </param>
+        /// <param name="enableRdpOnTargetOption"> The selected option to enable RDP\SSH on target VM after failover. String value of SrsDataContract.EnableRDPOnTargetOption enum. </param>
+        /// <param name="targetAzureVmName"> The target azure VM Name. </param>
+        /// <param name="logStorageAccountId"> The storage account to be used for logging during replication. </param>
+        /// <param name="targetAzureV1ResourceGroupId"> The Id of the target resource group (for classic deployment) in which the failover VM is to be created. </param>
+        /// <param name="targetAzureV2ResourceGroupId"> The Id of the target resource group (for resource manager deployment) in which the failover VM is to be created. </param>
+        /// <param name="diskType"> The DiskType. </param>
+        /// <param name="targetAvailabilitySetId"> The target availability set ARM Id for resource manager deployment. </param>
+        /// <param name="targetAvailabilityZone"> The target availability zone. </param>
+        /// <param name="targetProximityPlacementGroupId"> The proximity placement group ARM Id. </param>
+        /// <param name="licenseType"> License type. </param>
+        /// <param name="sqlServerLicenseType"> The SQL Server license type. </param>
+        /// <param name="targetVmSize"> The target VM size. </param>
+        /// <param name="diskEncryptionSetId"> The DiskEncryptionSet ARM Id. </param>
+        /// <param name="targetVmTags"> The target VM tags. </param>
+        /// <param name="seedManagedDiskTags"> The tags for the seed managed disks. </param>
+        /// <param name="targetManagedDiskTags"> The tags for the target managed disks. </param>
+        /// <param name="targetNicTags"> The tags for the target NICs. </param>
+        internal InMageAzureV2EnableProtectionContent(string instanceType, IDictionary<string, BinaryData> serializedAdditionalRawData, string masterTargetId, Guid? processServerId, ResourceIdentifier storageAccountId, string runAsAccountId, string multiVmGroupId, string multiVmGroupName, IList<InMageAzureV2DiskDetails> disksToInclude, ResourceIdentifier targetAzureNetworkId, ResourceIdentifier targetAzureSubnetId, string enableRdpOnTargetOption, string targetAzureVmName, ResourceIdentifier logStorageAccountId, ResourceIdentifier targetAzureV1ResourceGroupId, ResourceIdentifier targetAzureV2ResourceGroupId, SiteRecoveryDiskAccountType? diskType, ResourceIdentifier targetAvailabilitySetId, string targetAvailabilityZone, ResourceIdentifier targetProximityPlacementGroupId, SiteRecoveryLicenseType? licenseType, SiteRecoverySqlServerLicenseType? sqlServerLicenseType, string targetVmSize, ResourceIdentifier diskEncryptionSetId, IDictionary<string, string> targetVmTags, IDictionary<string, string> seedManagedDiskTags, IDictionary<string, string> targetManagedDiskTags, IDictionary<string, string> targetNicTags) : base(instanceType, serializedAdditionalRawData)
+        {
+            MasterTargetId = masterTargetId;
+            ProcessServerId = processServerId;
+            StorageAccountId = storageAccountId;
+            RunAsAccountId = runAsAccountId;
+            MultiVmGroupId = multiVmGroupId;
+            MultiVmGroupName = multiVmGroupName;
+            DisksToInclude = disksToInclude;
+            TargetAzureNetworkId = targetAzureNetworkId;
+            TargetAzureSubnetId = targetAzureSubnetId;
+            EnableRdpOnTargetOption = enableRdpOnTargetOption;
+            TargetAzureVmName = targetAzureVmName;
+            LogStorageAccountId = logStorageAccountId;
+            TargetAzureV1ResourceGroupId = targetAzureV1ResourceGroupId;
+            TargetAzureV2ResourceGroupId = targetAzureV2ResourceGroupId;
+            DiskType = diskType;
+            TargetAvailabilitySetId = targetAvailabilitySetId;
+            TargetAvailabilityZone = targetAvailabilityZone;
+            TargetProximityPlacementGroupId = targetProximityPlacementGroupId;
+            LicenseType = licenseType;
+            SqlServerLicenseType = sqlServerLicenseType;
+            TargetVmSize = targetVmSize;
+            DiskEncryptionSetId = diskEncryptionSetId;
+            TargetVmTags = targetVmTags;
+            SeedManagedDiskTags = seedManagedDiskTags;
+            TargetManagedDiskTags = targetManagedDiskTags;
+            TargetNicTags = targetNicTags;
+            InstanceType = instanceType ?? "InMageAzureV2";
         }
 
         /// <summary> The Master target Id. </summary>

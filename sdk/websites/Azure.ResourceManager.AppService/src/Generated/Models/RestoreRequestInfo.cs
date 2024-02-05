@@ -15,13 +15,45 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> Description of a restore request. </summary>
     public partial class RestoreRequestInfo : ResourceData
     {
-        /// <summary> Initializes a new instance of RestoreRequestInfo. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="RestoreRequestInfo"/>. </summary>
         public RestoreRequestInfo()
         {
             Databases = new ChangeTrackingList<AppServiceDatabaseBackupSetting>();
         }
 
-        /// <summary> Initializes a new instance of RestoreRequestInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="RestoreRequestInfo"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -41,7 +73,8 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="adjustConnectionStrings"> &lt;code&gt;true&lt;/code&gt; if SiteConfig.ConnectionStrings should be set in new app; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
         /// <param name="hostingEnvironment"> App Service Environment name, if needed (only when restoring an app to an App Service Environment). </param>
         /// <param name="kind"> Kind of resource. </param>
-        internal RestoreRequestInfo(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, Uri storageAccountUri, string blobName, bool? canOverwrite, string siteName, IList<AppServiceDatabaseBackupSetting> databases, bool? ignoreConflictingHostNames, bool? ignoreDatabases, string appServicePlan, BackupRestoreOperationType? operationType, bool? adjustConnectionStrings, string hostingEnvironment, string kind) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal RestoreRequestInfo(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, Uri storageAccountUri, string blobName, bool? canOverwrite, string siteName, IList<AppServiceDatabaseBackupSetting> databases, bool? ignoreConflictingHostNames, bool? ignoreDatabases, string appServicePlan, BackupRestoreOperationType? operationType, bool? adjustConnectionStrings, string hostingEnvironment, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             StorageAccountUri = storageAccountUri;
             BlobName = blobName;
@@ -55,6 +88,7 @@ namespace Azure.ResourceManager.AppService.Models
             AdjustConnectionStrings = adjustConnectionStrings;
             HostingEnvironment = hostingEnvironment;
             Kind = kind;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> SAS URL to the container. </summary>

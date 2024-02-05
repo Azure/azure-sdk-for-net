@@ -15,7 +15,39 @@ namespace Azure.ResourceManager.HDInsight.Models
     /// <summary> The private link configuration. </summary>
     public partial class HDInsightPrivateLinkConfiguration
     {
-        /// <summary> Initializes a new instance of HDInsightPrivateLinkConfiguration. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="HDInsightPrivateLinkConfiguration"/>. </summary>
         /// <param name="name"> The name of private link configuration. </param>
         /// <param name="groupId"> The HDInsight private linkable sub-resource name to apply the private link configuration to. For example, 'headnode', 'gateway', 'edgenode'. </param>
         /// <param name="ipConfigurations"> The IP configurations for the private link service. </param>
@@ -31,14 +63,15 @@ namespace Azure.ResourceManager.HDInsight.Models
             IPConfigurations = ipConfigurations.ToList();
         }
 
-        /// <summary> Initializes a new instance of HDInsightPrivateLinkConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="HDInsightPrivateLinkConfiguration"/>. </summary>
         /// <param name="id"> The private link configuration id. </param>
         /// <param name="name"> The name of private link configuration. </param>
         /// <param name="resourceType"> The type of the private link configuration. </param>
         /// <param name="groupId"> The HDInsight private linkable sub-resource name to apply the private link configuration to. For example, 'headnode', 'gateway', 'edgenode'. </param>
         /// <param name="provisioningState"> The private link configuration provisioning state, which only appears in the response. </param>
         /// <param name="ipConfigurations"> The IP configurations for the private link service. </param>
-        internal HDInsightPrivateLinkConfiguration(string id, string name, ResourceType? resourceType, string groupId, HDInsightPrivateLinkConfigurationProvisioningState? provisioningState, IList<HDInsightIPConfiguration> ipConfigurations)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal HDInsightPrivateLinkConfiguration(string id, string name, ResourceType? resourceType, string groupId, HDInsightPrivateLinkConfigurationProvisioningState? provisioningState, IList<HDInsightIPConfiguration> ipConfigurations, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Id = id;
             Name = name;
@@ -46,6 +79,12 @@ namespace Azure.ResourceManager.HDInsight.Models
             GroupId = groupId;
             ProvisioningState = provisioningState;
             IPConfigurations = ipConfigurations;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="HDInsightPrivateLinkConfiguration"/> for deserialization. </summary>
+        internal HDInsightPrivateLinkConfiguration()
+        {
         }
 
         /// <summary> The private link configuration id. </summary>

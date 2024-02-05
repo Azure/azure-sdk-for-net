@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.AppService.Models
@@ -13,7 +14,39 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> Legal agreement for a top level domain. </summary>
     public partial class TldLegalAgreement
     {
-        /// <summary> Initializes a new instance of TldLegalAgreement. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="TldLegalAgreement"/>. </summary>
         /// <param name="agreementKey"> Unique identifier for the agreement. </param>
         /// <param name="title"> Agreement title. </param>
         /// <param name="content"> Agreement details. </param>
@@ -29,17 +62,24 @@ namespace Azure.ResourceManager.AppService.Models
             Content = content;
         }
 
-        /// <summary> Initializes a new instance of TldLegalAgreement. </summary>
+        /// <summary> Initializes a new instance of <see cref="TldLegalAgreement"/>. </summary>
         /// <param name="agreementKey"> Unique identifier for the agreement. </param>
         /// <param name="title"> Agreement title. </param>
         /// <param name="content"> Agreement details. </param>
         /// <param name="uri"> URL where a copy of the agreement details is hosted. </param>
-        internal TldLegalAgreement(string agreementKey, string title, string content, Uri uri)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal TldLegalAgreement(string agreementKey, string title, string content, Uri uri, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             AgreementKey = agreementKey;
             Title = title;
             Content = content;
             Uri = uri;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="TldLegalAgreement"/> for deserialization. </summary>
+        internal TldLegalAgreement()
+        {
         }
 
         /// <summary> Unique identifier for the agreement. </summary>

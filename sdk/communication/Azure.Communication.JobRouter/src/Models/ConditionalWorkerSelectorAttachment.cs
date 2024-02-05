@@ -29,6 +29,7 @@ namespace Azure.Communication.JobRouter
         {
             Argument.AssertNotNull(condition, nameof(condition));
 
+            Kind = WorkerSelectorAttachmentKind.Conditional;
             Condition = condition;
         }
 
@@ -48,7 +49,7 @@ namespace Azure.Communication.JobRouter
             }
             writer.WriteEndArray();
             writer.WritePropertyName("kind"u8);
-            writer.WriteStringValue(Kind);
+            writer.WriteStringValue(Kind.ToString());
             writer.WriteEndObject();
         }
     }

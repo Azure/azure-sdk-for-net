@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> The relational table dataset. </summary>
     public partial class RelationalTableDataset : DataFactoryDatasetProperties
     {
-        /// <summary> Initializes a new instance of RelationalTableDataset. </summary>
+        /// <summary> Initializes a new instance of <see cref="RelationalTableDataset"/>. </summary>
         /// <param name="linkedServiceName"> Linked service reference. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="linkedServiceName"/> is null. </exception>
         public RelationalTableDataset(DataFactoryLinkedServiceReference linkedServiceName) : base(linkedServiceName)
@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             DatasetType = "RelationalTable";
         }
 
-        /// <summary> Initializes a new instance of RelationalTableDataset. </summary>
+        /// <summary> Initializes a new instance of <see cref="RelationalTableDataset"/>. </summary>
         /// <param name="datasetType"> Type of dataset. </param>
         /// <param name="description"> Dataset description. </param>
         /// <param name="structure"> Columns that define the structure of the dataset. Type: array (or Expression with resultType array), itemType: DatasetDataElement. </param>
@@ -40,6 +40,11 @@ namespace Azure.ResourceManager.DataFactory.Models
         {
             TableName = tableName;
             DatasetType = datasetType ?? "RelationalTable";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="RelationalTableDataset"/> for deserialization. </summary>
+        internal RelationalTableDataset()
+        {
         }
 
         /// <summary> The relational table name. Type: string (or Expression with resultType string). </summary>

@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Kubernetes.Models
     /// <summary> Model factory for models. </summary>
     public static partial class ArmKubernetesModelFactory
     {
-        /// <summary> Initializes a new instance of ConnectedClusterData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Kubernetes.ConnectedClusterData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -44,10 +44,10 @@ namespace Azure.ResourceManager.Kubernetes.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new ConnectedClusterData(id, name, resourceType, systemData, tags, location, identity, agentPublicKeyCertificate, kubernetesVersion, totalNodeCount, totalCoreCount, agentVersion, provisioningState, distribution, infrastructure, offering, managedIdentityCertificateExpirationOn, lastConnectivityOn, connectivityStatus, privateLinkState, privateLinkScopeResourceId);
+            return new ConnectedClusterData(id, name, resourceType, systemData, tags, location, identity, agentPublicKeyCertificate, kubernetesVersion, totalNodeCount, totalCoreCount, agentVersion, provisioningState, distribution, infrastructure, offering, managedIdentityCertificateExpirationOn, lastConnectivityOn, connectivityStatus, privateLinkState, privateLinkScopeResourceId, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of CredentialResults. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.CredentialResults"/>. </summary>
         /// <param name="hybridConnectionConfig"> Contains the REP (rendezvous endpoint) and “Sender” access token. </param>
         /// <param name="kubeconfigs"> Base64-encoded Kubernetes configuration file. </param>
         /// <returns> A new <see cref="Models.CredentialResults"/> instance for mocking. </returns>
@@ -55,10 +55,10 @@ namespace Azure.ResourceManager.Kubernetes.Models
         {
             kubeconfigs ??= new List<CredentialResult>();
 
-            return new CredentialResults(hybridConnectionConfig, kubeconfigs?.ToList());
+            return new CredentialResults(hybridConnectionConfig, kubeconfigs?.ToList(), serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of HybridConnectionConfig. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.HybridConnectionConfig"/>. </summary>
         /// <param name="expirationTime"> Timestamp when this token will be expired. </param>
         /// <param name="hybridConnectionName"> Name of the connection. </param>
         /// <param name="relay"> Name of the relay. </param>
@@ -66,16 +66,16 @@ namespace Azure.ResourceManager.Kubernetes.Models
         /// <returns> A new <see cref="Models.HybridConnectionConfig"/> instance for mocking. </returns>
         public static HybridConnectionConfig HybridConnectionConfig(long? expirationTime = null, string hybridConnectionName = null, string relay = null, string token = null)
         {
-            return new HybridConnectionConfig(expirationTime, hybridConnectionName, relay, token);
+            return new HybridConnectionConfig(expirationTime, hybridConnectionName, relay, token, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of CredentialResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.CredentialResult"/>. </summary>
         /// <param name="name"> The name of the credential. </param>
         /// <param name="value"> Base64-encoded Kubernetes configuration file. </param>
         /// <returns> A new <see cref="Models.CredentialResult"/> instance for mocking. </returns>
         public static CredentialResult CredentialResult(string name = null, byte[] value = null)
         {
-            return new CredentialResult(name, value);
+            return new CredentialResult(name, value, serializedAdditionalRawData: null);
         }
     }
 }

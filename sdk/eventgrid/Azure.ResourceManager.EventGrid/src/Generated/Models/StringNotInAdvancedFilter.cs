@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,18 +14,19 @@ namespace Azure.ResourceManager.EventGrid.Models
     /// <summary> StringNotIn Advanced Filter. </summary>
     public partial class StringNotInAdvancedFilter : AdvancedFilter
     {
-        /// <summary> Initializes a new instance of StringNotInAdvancedFilter. </summary>
+        /// <summary> Initializes a new instance of <see cref="StringNotInAdvancedFilter"/>. </summary>
         public StringNotInAdvancedFilter()
         {
             Values = new ChangeTrackingList<string>();
             OperatorType = AdvancedFilterOperatorType.StringNotIn;
         }
 
-        /// <summary> Initializes a new instance of StringNotInAdvancedFilter. </summary>
+        /// <summary> Initializes a new instance of <see cref="StringNotInAdvancedFilter"/>. </summary>
         /// <param name="operatorType"> The operator type used for filtering, e.g., NumberIn, StringContains, BoolEquals and others. </param>
         /// <param name="key"> The field/property in the event based on which you want to filter. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="values"> The set of filter values. </param>
-        internal StringNotInAdvancedFilter(AdvancedFilterOperatorType operatorType, string key, IList<string> values) : base(operatorType, key)
+        internal StringNotInAdvancedFilter(AdvancedFilterOperatorType operatorType, string key, IDictionary<string, BinaryData> serializedAdditionalRawData, IList<string> values) : base(operatorType, key, serializedAdditionalRawData)
         {
             Values = values;
             OperatorType = operatorType;

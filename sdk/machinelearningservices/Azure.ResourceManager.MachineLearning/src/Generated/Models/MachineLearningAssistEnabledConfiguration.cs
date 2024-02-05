@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
@@ -13,7 +14,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> Labeling MLAssist configuration definition when MLAssist is enabled. </summary>
     public partial class MachineLearningAssistEnabledConfiguration : MachineLearningAssistConfiguration
     {
-        /// <summary> Initializes a new instance of MachineLearningAssistEnabledConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningAssistEnabledConfiguration"/>. </summary>
         /// <param name="inferencingComputeBinding"> [Required] AML compute binding used in inferencing. </param>
         /// <param name="trainingComputeBinding"> [Required] AML compute binding used in training. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="inferencingComputeBinding"/> or <paramref name="trainingComputeBinding"/> is null. </exception>
@@ -27,15 +28,21 @@ namespace Azure.ResourceManager.MachineLearning.Models
             MlAssist = MLAssistConfigurationType.Enabled;
         }
 
-        /// <summary> Initializes a new instance of MachineLearningAssistEnabledConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningAssistEnabledConfiguration"/>. </summary>
         /// <param name="mlAssist"> [Required] Indicates whether MLAssist feature is enabled. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="inferencingComputeBinding"> [Required] AML compute binding used in inferencing. </param>
         /// <param name="trainingComputeBinding"> [Required] AML compute binding used in training. </param>
-        internal MachineLearningAssistEnabledConfiguration(MLAssistConfigurationType mlAssist, string inferencingComputeBinding, string trainingComputeBinding) : base(mlAssist)
+        internal MachineLearningAssistEnabledConfiguration(MLAssistConfigurationType mlAssist, IDictionary<string, BinaryData> serializedAdditionalRawData, string inferencingComputeBinding, string trainingComputeBinding) : base(mlAssist, serializedAdditionalRawData)
         {
             InferencingComputeBinding = inferencingComputeBinding;
             TrainingComputeBinding = trainingComputeBinding;
             MlAssist = mlAssist;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MachineLearningAssistEnabledConfiguration"/> for deserialization. </summary>
+        internal MachineLearningAssistEnabledConfiguration()
+        {
         }
 
         /// <summary> [Required] AML compute binding used in inferencing. </summary>

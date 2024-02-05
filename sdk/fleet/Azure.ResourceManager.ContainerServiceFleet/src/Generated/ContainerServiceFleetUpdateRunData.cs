@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure;
 using Azure.Core;
@@ -19,12 +20,44 @@ namespace Azure.ResourceManager.ContainerServiceFleet
     /// </summary>
     public partial class ContainerServiceFleetUpdateRunData : ResourceData
     {
-        /// <summary> Initializes a new instance of ContainerServiceFleetUpdateRunData. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ContainerServiceFleetUpdateRunData"/>. </summary>
         public ContainerServiceFleetUpdateRunData()
         {
         }
 
-        /// <summary> Initializes a new instance of ContainerServiceFleetUpdateRunData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerServiceFleetUpdateRunData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -52,7 +85,8 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         /// </param>
         /// <param name="managedClusterUpdate"> The update to be applied to all clusters in the UpdateRun. The managedClusterUpdate can be modified until the run is started. </param>
         /// <param name="status"> The status of the UpdateRun. </param>
-        internal ContainerServiceFleetUpdateRunData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ETag? eTag, ContainerServiceFleetUpdateRunProvisioningState? provisioningState, ResourceIdentifier updateStrategyId, ContainerServiceFleetUpdateRunStrategy strategy, ContainerServiceFleetManagedClusterUpdate managedClusterUpdate, ContainerServiceFleetUpdateRunStatus status) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ContainerServiceFleetUpdateRunData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ETag? eTag, ContainerServiceFleetUpdateRunProvisioningState? provisioningState, ResourceIdentifier updateStrategyId, ContainerServiceFleetUpdateRunStrategy strategy, ContainerServiceFleetManagedClusterUpdate managedClusterUpdate, ContainerServiceFleetUpdateRunStatus status, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             ETag = eTag;
             ProvisioningState = provisioningState;
@@ -60,6 +94,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
             Strategy = strategy;
             ManagedClusterUpdate = managedClusterUpdate;
             Status = status;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> If eTag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields. </summary>

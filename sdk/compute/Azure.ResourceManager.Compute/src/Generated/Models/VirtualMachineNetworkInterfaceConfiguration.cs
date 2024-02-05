@@ -15,7 +15,39 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> Describes a virtual machine network interface configurations. </summary>
     public partial class VirtualMachineNetworkInterfaceConfiguration
     {
-        /// <summary> Initializes a new instance of VirtualMachineNetworkInterfaceConfiguration. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="VirtualMachineNetworkInterfaceConfiguration"/>. </summary>
         /// <param name="name"> The network interface configuration name. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public VirtualMachineNetworkInterfaceConfiguration(string name)
@@ -26,7 +58,7 @@ namespace Azure.ResourceManager.Compute.Models
             IPConfigurations = new ChangeTrackingList<VirtualMachineNetworkInterfaceIPConfiguration>();
         }
 
-        /// <summary> Initializes a new instance of VirtualMachineNetworkInterfaceConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualMachineNetworkInterfaceConfiguration"/>. </summary>
         /// <param name="name"> The network interface configuration name. </param>
         /// <param name="primary"> Specifies the primary network interface in case the virtual machine has more than 1 network interface. </param>
         /// <param name="deleteOption"> Specify what happens to the network interface when the VM is deleted. </param>
@@ -40,7 +72,8 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="dscpConfiguration"> Gets or sets the dscp configuration. </param>
         /// <param name="auxiliaryMode"> Specifies whether the Auxiliary mode is enabled for the Network Interface resource. </param>
         /// <param name="auxiliarySku"> Specifies whether the Auxiliary sku is enabled for the Network Interface resource. </param>
-        internal VirtualMachineNetworkInterfaceConfiguration(string name, bool? primary, ComputeDeleteOption? deleteOption, bool? enableAcceleratedNetworking, bool? isTcpStateTrackingDisabled, bool? enableFpga, bool? enableIPForwarding, WritableSubResource networkSecurityGroup, VirtualMachineNetworkInterfaceDnsSettingsConfiguration dnsSettings, IList<VirtualMachineNetworkInterfaceIPConfiguration> ipConfigurations, WritableSubResource dscpConfiguration, ComputeNetworkInterfaceAuxiliaryMode? auxiliaryMode, ComputeNetworkInterfaceAuxiliarySku? auxiliarySku)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal VirtualMachineNetworkInterfaceConfiguration(string name, bool? primary, ComputeDeleteOption? deleteOption, bool? enableAcceleratedNetworking, bool? isTcpStateTrackingDisabled, bool? enableFpga, bool? enableIPForwarding, WritableSubResource networkSecurityGroup, VirtualMachineNetworkInterfaceDnsSettingsConfiguration dnsSettings, IList<VirtualMachineNetworkInterfaceIPConfiguration> ipConfigurations, WritableSubResource dscpConfiguration, ComputeNetworkInterfaceAuxiliaryMode? auxiliaryMode, ComputeNetworkInterfaceAuxiliarySku? auxiliarySku, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             Primary = primary;
@@ -55,6 +88,12 @@ namespace Azure.ResourceManager.Compute.Models
             DscpConfiguration = dscpConfiguration;
             AuxiliaryMode = auxiliaryMode;
             AuxiliarySku = auxiliarySku;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="VirtualMachineNetworkInterfaceConfiguration"/> for deserialization. </summary>
+        internal VirtualMachineNetworkInterfaceConfiguration()
+        {
         }
 
         /// <summary> The network interface configuration name. </summary>

@@ -5,16 +5,25 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     /// <summary> The UnknownRecoveryAvailabilitySetCustomDetails. </summary>
     internal partial class UnknownRecoveryAvailabilitySetCustomDetails : RecoveryAvailabilitySetCustomDetails
     {
-        /// <summary> Initializes a new instance of UnknownRecoveryAvailabilitySetCustomDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnknownRecoveryAvailabilitySetCustomDetails"/>. </summary>
         /// <param name="resourceType"> The class type. </param>
-        internal UnknownRecoveryAvailabilitySetCustomDetails(string resourceType) : base(resourceType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal UnknownRecoveryAvailabilitySetCustomDetails(string resourceType, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(resourceType, serializedAdditionalRawData)
         {
             ResourceType = resourceType ?? "Unknown";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="UnknownRecoveryAvailabilitySetCustomDetails"/> for deserialization. </summary>
+        internal UnknownRecoveryAvailabilitySetCustomDetails()
+        {
         }
     }
 }

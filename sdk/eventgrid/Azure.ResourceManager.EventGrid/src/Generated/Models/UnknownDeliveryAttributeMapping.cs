@@ -5,17 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.EventGrid.Models
 {
     /// <summary> The UnknownDeliveryAttributeMapping. </summary>
     internal partial class UnknownDeliveryAttributeMapping : DeliveryAttributeMapping
     {
-        /// <summary> Initializes a new instance of UnknownDeliveryAttributeMapping. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnknownDeliveryAttributeMapping"/>. </summary>
         /// <param name="name"> Name of the delivery attribute or header. </param>
         /// <param name="mappingType"> Type of the delivery attribute or header name. </param>
-        internal UnknownDeliveryAttributeMapping(string name, DeliveryAttributeMappingType mappingType) : base(name, mappingType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal UnknownDeliveryAttributeMapping(string name, DeliveryAttributeMappingType mappingType, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(name, mappingType, serializedAdditionalRawData)
         {
             MappingType = mappingType;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="UnknownDeliveryAttributeMapping"/> for deserialization. </summary>
+        internal UnknownDeliveryAttributeMapping()
+        {
         }
     }
 }

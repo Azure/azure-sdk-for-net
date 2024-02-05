@@ -5,26 +5,30 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.FrontDoor.Models
 {
     /// <summary> Describes Redirect Route. </summary>
     public partial class RedirectConfiguration : RouteConfiguration
     {
-        /// <summary> Initializes a new instance of RedirectConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="RedirectConfiguration"/>. </summary>
         public RedirectConfiguration()
         {
             OdataType = "#Microsoft.Azure.FrontDoor.Models.FrontdoorRedirectConfiguration";
         }
 
-        /// <summary> Initializes a new instance of RedirectConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="RedirectConfiguration"/>. </summary>
         /// <param name="odataType"></param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="redirectType"> The redirect type the rule will use when redirecting traffic. </param>
         /// <param name="redirectProtocol"> The protocol of the destination to where the traffic is redirected. </param>
         /// <param name="customHost"> Host to redirect. Leave empty to use the incoming host as the destination host. </param>
         /// <param name="customPath"> The full path to redirect. Path cannot be empty and must start with /. Leave empty to use the incoming path as destination path. </param>
         /// <param name="customFragment"> Fragment to add to the redirect URL. Fragment is the part of the URL that comes after #. Do not include the #. </param>
         /// <param name="customQueryString"> The set of query strings to be placed in the redirect URL. Setting this value would replace any existing query string; leave empty to preserve the incoming query string. Query string must be in &lt;key&gt;=&lt;value&gt; format. The first ? and &amp; will be added automatically so do not include them in the front, but do separate multiple query strings with &amp;. </param>
-        internal RedirectConfiguration(string odataType, FrontDoorRedirectType? redirectType, FrontDoorRedirectProtocol? redirectProtocol, string customHost, string customPath, string customFragment, string customQueryString) : base(odataType)
+        internal RedirectConfiguration(string odataType, IDictionary<string, BinaryData> serializedAdditionalRawData, FrontDoorRedirectType? redirectType, FrontDoorRedirectProtocol? redirectProtocol, string customHost, string customPath, string customFragment, string customQueryString) : base(odataType, serializedAdditionalRawData)
         {
             RedirectType = redirectType;
             RedirectProtocol = redirectProtocol;

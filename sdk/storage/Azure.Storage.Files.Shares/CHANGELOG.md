@@ -1,6 +1,6 @@
 # Release History
 
-## 12.18.0-beta.1 (Unreleased)
+## 12.18.0-beta.2 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,12 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 12.18.0-beta.1 (2023-12-05)
+- Added support for service version 2024-02-04.
+
+## 12.17.1 (2023-11-13)
+- Distributed tracing with `ActivitySource` is stable and no longer requires the [Experimental feature-flag](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/Diagnostics.md).
 
 ## 12.17.0 (2023-11-06)
 - Includes all features from 12.17.0-beta.1.

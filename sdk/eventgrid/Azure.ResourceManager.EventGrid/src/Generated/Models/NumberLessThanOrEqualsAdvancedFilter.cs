@@ -5,22 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.EventGrid.Models
 {
     /// <summary> NumberLessThanOrEquals Advanced Filter. </summary>
     public partial class NumberLessThanOrEqualsAdvancedFilter : AdvancedFilter
     {
-        /// <summary> Initializes a new instance of NumberLessThanOrEqualsAdvancedFilter. </summary>
+        /// <summary> Initializes a new instance of <see cref="NumberLessThanOrEqualsAdvancedFilter"/>. </summary>
         public NumberLessThanOrEqualsAdvancedFilter()
         {
             OperatorType = AdvancedFilterOperatorType.NumberLessThanOrEquals;
         }
 
-        /// <summary> Initializes a new instance of NumberLessThanOrEqualsAdvancedFilter. </summary>
+        /// <summary> Initializes a new instance of <see cref="NumberLessThanOrEqualsAdvancedFilter"/>. </summary>
         /// <param name="operatorType"> The operator type used for filtering, e.g., NumberIn, StringContains, BoolEquals and others. </param>
         /// <param name="key"> The field/property in the event based on which you want to filter. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="value"> The filter value. </param>
-        internal NumberLessThanOrEqualsAdvancedFilter(AdvancedFilterOperatorType operatorType, string key, double? value) : base(operatorType, key)
+        internal NumberLessThanOrEqualsAdvancedFilter(AdvancedFilterOperatorType operatorType, string key, IDictionary<string, BinaryData> serializedAdditionalRawData, double? value) : base(operatorType, key, serializedAdditionalRawData)
         {
             Value = value;
             OperatorType = operatorType;

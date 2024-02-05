@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure;
 using Azure.Core;
@@ -15,7 +16,7 @@ namespace Azure.ResourceManager.ManagedNetwork.Models
     /// <summary> Properties of a Managed Network Peering Policy. </summary>
     public partial class ManagedNetworkPeeringPolicyProperties : ResourceProperties
     {
-        /// <summary> Initializes a new instance of ManagedNetworkPeeringPolicyProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedNetworkPeeringPolicyProperties"/>. </summary>
         /// <param name="connectivityType"> Gets or sets the connectivity type of a network structure policy. </param>
         public ManagedNetworkPeeringPolicyProperties(ConnectivityType connectivityType)
         {
@@ -24,19 +25,25 @@ namespace Azure.ResourceManager.ManagedNetwork.Models
             Mesh = new ChangeTrackingList<WritableSubResource>();
         }
 
-        /// <summary> Initializes a new instance of ManagedNetworkPeeringPolicyProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedNetworkPeeringPolicyProperties"/>. </summary>
         /// <param name="provisioningState"> Provisioning state of the ManagedNetwork resource. </param>
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="connectivityType"> Gets or sets the connectivity type of a network structure policy. </param>
         /// <param name="hub"> Gets or sets the hub virtual network ID. </param>
         /// <param name="spokes"> Gets or sets the spokes group IDs. </param>
         /// <param name="mesh"> Gets or sets the mesh group IDs. </param>
-        internal ManagedNetworkPeeringPolicyProperties(ProvisioningState? provisioningState, ETag? etag, ConnectivityType connectivityType, WritableSubResource hub, IList<WritableSubResource> spokes, IList<WritableSubResource> mesh) : base(provisioningState, etag)
+        internal ManagedNetworkPeeringPolicyProperties(ProvisioningState? provisioningState, ETag? etag, IDictionary<string, BinaryData> serializedAdditionalRawData, ConnectivityType connectivityType, WritableSubResource hub, IList<WritableSubResource> spokes, IList<WritableSubResource> mesh) : base(provisioningState, etag, serializedAdditionalRawData)
         {
             ConnectivityType = connectivityType;
             Hub = hub;
             Spokes = spokes;
             Mesh = mesh;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ManagedNetworkPeeringPolicyProperties"/> for deserialization. </summary>
+        internal ManagedNetworkPeeringPolicyProperties()
+        {
         }
 
         /// <summary> Gets or sets the connectivity type of a network structure policy. </summary>

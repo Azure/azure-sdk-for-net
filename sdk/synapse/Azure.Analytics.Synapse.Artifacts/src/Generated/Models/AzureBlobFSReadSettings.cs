@@ -12,13 +12,13 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> Azure blobFS read settings. </summary>
     public partial class AzureBlobFSReadSettings : StoreReadSettings
     {
-        /// <summary> Initializes a new instance of AzureBlobFSReadSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureBlobFSReadSettings"/>. </summary>
         public AzureBlobFSReadSettings()
         {
             Type = "AzureBlobFSReadSettings";
         }
 
-        /// <summary> Initializes a new instance of AzureBlobFSReadSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureBlobFSReadSettings"/>. </summary>
         /// <param name="type"> The read setting type. </param>
         /// <param name="maxConcurrentConnections"> The maximum concurrent connection count for the source data store. Type: integer (or Expression with resultType integer). </param>
         /// <param name="additionalProperties"> Additional Properties. </param>

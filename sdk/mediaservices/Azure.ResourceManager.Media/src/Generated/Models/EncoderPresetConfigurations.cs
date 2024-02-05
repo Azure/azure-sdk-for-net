@@ -5,17 +5,52 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Media.Models
 {
     /// <summary> An object of optional configuration settings for encoder. </summary>
     public partial class EncoderPresetConfigurations
     {
-        /// <summary> Initializes a new instance of EncoderPresetConfigurations. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="EncoderPresetConfigurations"/>. </summary>
         public EncoderPresetConfigurations()
         {
         }
 
-        /// <summary> Initializes a new instance of EncoderPresetConfigurations. </summary>
+        /// <summary> Initializes a new instance of <see cref="EncoderPresetConfigurations"/>. </summary>
         /// <param name="complexity"> Allows you to configure the encoder settings to control the balance between speed and quality. Example: set Complexity as Speed for faster encoding but less compression efficiency. </param>
         /// <param name="interleaveOutput"> Sets the interleave mode of the output to control how audio and video are stored in the container format. Example: set InterleavedOutput as NonInterleavedOutput to produce audio-only and video-only outputs in separate MP4 files. </param>
         /// <param name="keyFrameIntervalInSeconds"> The key frame interval in seconds. Example: set KeyFrameIntervalInSeconds as 2 to reduce the playback buffering for some players. </param>
@@ -24,7 +59,8 @@ namespace Azure.ResourceManager.Media.Models
         /// <param name="maxLayers"> The maximum number of output video layers. Example: set MaxLayers as 4 to make sure at most 4 output layers are produced to control the overall cost of the encoding job. </param>
         /// <param name="minBitrateBps"> The minimum bitrate in bits per second (threshold for the bottom video layer). Example: set MinBitrateBps as 200000 to have a bottom layer that covers users with low network bandwidth. </param>
         /// <param name="minHeight"> The minimum height of output video layers. Example: set MinHeight as 360 to avoid output layers of smaller resolutions like 180P. </param>
-        internal EncoderPresetConfigurations(EncodingComplexity? complexity, InterleaveOutput? interleaveOutput, float? keyFrameIntervalInSeconds, int? maxBitrateBps, int? maxHeight, int? maxLayers, int? minBitrateBps, int? minHeight)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal EncoderPresetConfigurations(EncodingComplexity? complexity, InterleaveOutput? interleaveOutput, float? keyFrameIntervalInSeconds, int? maxBitrateBps, int? maxHeight, int? maxLayers, int? minBitrateBps, int? minHeight, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Complexity = complexity;
             InterleaveOutput = interleaveOutput;
@@ -34,6 +70,7 @@ namespace Azure.ResourceManager.Media.Models
             MaxLayers = maxLayers;
             MinBitrateBps = minBitrateBps;
             MinHeight = minHeight;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Allows you to configure the encoder settings to control the balance between speed and quality. Example: set Complexity as Speed for faster encoding but less compression efficiency. </summary>

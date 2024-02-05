@@ -14,7 +14,39 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     /// <summary> Describes automation rule triggering logic. </summary>
     public partial class SecurityInsightsAutomationRuleTriggeringLogic
     {
-        /// <summary> Initializes a new instance of SecurityInsightsAutomationRuleTriggeringLogic. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SecurityInsightsAutomationRuleTriggeringLogic"/>. </summary>
         /// <param name="isEnabled"> Determines whether the automation rule is enabled or disabled. </param>
         /// <param name="triggersOn"></param>
         /// <param name="triggersWhen"></param>
@@ -26,7 +58,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             Conditions = new ChangeTrackingList<SecurityInsightsAutomationRuleCondition>();
         }
 
-        /// <summary> Initializes a new instance of SecurityInsightsAutomationRuleTriggeringLogic. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityInsightsAutomationRuleTriggeringLogic"/>. </summary>
         /// <param name="isEnabled"> Determines whether the automation rule is enabled or disabled. </param>
         /// <param name="expireOn"> Determines when the automation rule should automatically expire and be disabled. </param>
         /// <param name="triggersOn"></param>
@@ -36,13 +68,20 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// Please note <see cref="SecurityInsightsAutomationRuleCondition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="SecurityInsightsPropertyConditionProperties"/>, <see cref="SecurityInsightsPropertyArrayChangedConditionProperties"/> and <see cref="SecurityInsightsPropertyChangedConditionProperties"/>.
         /// </param>
-        internal SecurityInsightsAutomationRuleTriggeringLogic(bool isEnabled, DateTimeOffset? expireOn, TriggersOn triggersOn, TriggersWhen triggersWhen, IList<SecurityInsightsAutomationRuleCondition> conditions)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SecurityInsightsAutomationRuleTriggeringLogic(bool isEnabled, DateTimeOffset? expireOn, TriggersOn triggersOn, TriggersWhen triggersWhen, IList<SecurityInsightsAutomationRuleCondition> conditions, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             IsEnabled = isEnabled;
             ExpireOn = expireOn;
             TriggersOn = triggersOn;
             TriggersWhen = triggersWhen;
             Conditions = conditions;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SecurityInsightsAutomationRuleTriggeringLogic"/> for deserialization. </summary>
+        internal SecurityInsightsAutomationRuleTriggeringLogic()
+        {
         }
 
         /// <summary> Determines whether the automation rule is enabled or disabled. </summary>

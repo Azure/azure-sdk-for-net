@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.NewRelicObservability.Models
@@ -12,24 +14,58 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
     /// <summary> Details of resource being monitored by NewRelic monitor resource. </summary>
     public partial class NewRelicResourceMonitorResult
     {
-        /// <summary> Initializes a new instance of NewRelicResourceMonitorResult. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="NewRelicResourceMonitorResult"/>. </summary>
         internal NewRelicResourceMonitorResult()
         {
         }
 
-        /// <summary> Initializes a new instance of NewRelicResourceMonitorResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="NewRelicResourceMonitorResult"/>. </summary>
         /// <param name="id"> The ARM id of the resource. </param>
         /// <param name="sendingMetrics"> Flag indicating if resource is sending metrics to NewRelic. </param>
         /// <param name="reasonForMetricsStatus"> Reason for why the resource is sending metrics (or why it is not sending). </param>
         /// <param name="sendingLogs"> Flag indicating if resource is sending logs to NewRelic. </param>
         /// <param name="reasonForLogsStatus"> Reason for why the resource is sending logs (or why it is not sending). </param>
-        internal NewRelicResourceMonitorResult(ResourceIdentifier id, NewRelicObservabilitySendingMetricsStatus? sendingMetrics, string reasonForMetricsStatus, NewRelicObservabilitySendingLogsStatus? sendingLogs, string reasonForLogsStatus)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal NewRelicResourceMonitorResult(ResourceIdentifier id, NewRelicObservabilitySendingMetricsStatus? sendingMetrics, string reasonForMetricsStatus, NewRelicObservabilitySendingLogsStatus? sendingLogs, string reasonForLogsStatus, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Id = id;
             SendingMetrics = sendingMetrics;
             ReasonForMetricsStatus = reasonForMetricsStatus;
             SendingLogs = sendingLogs;
             ReasonForLogsStatus = reasonForLogsStatus;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The ARM id of the resource. </summary>

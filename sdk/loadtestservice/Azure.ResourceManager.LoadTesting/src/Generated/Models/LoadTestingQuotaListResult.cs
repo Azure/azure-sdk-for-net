@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.LoadTesting;
@@ -14,19 +15,53 @@ namespace Azure.ResourceManager.LoadTesting.Models
     /// <summary> List of quota bucket objects. It contains a URL link to get the next set of results. </summary>
     internal partial class LoadTestingQuotaListResult
     {
-        /// <summary> Initializes a new instance of LoadTestingQuotaListResult. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="LoadTestingQuotaListResult"/>. </summary>
         internal LoadTestingQuotaListResult()
         {
             Value = new ChangeTrackingList<LoadTestingQuotaData>();
         }
 
-        /// <summary> Initializes a new instance of LoadTestingQuotaListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="LoadTestingQuotaListResult"/>. </summary>
         /// <param name="value"> List of quota bucket objects provided by the loadtestservice. </param>
         /// <param name="nextLink"> URL to get the next set of quota bucket objects results (if there are any). </param>
-        internal LoadTestingQuotaListResult(IReadOnlyList<LoadTestingQuotaData> value, string nextLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal LoadTestingQuotaListResult(IReadOnlyList<LoadTestingQuotaData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> List of quota bucket objects provided by the loadtestservice. </summary>

@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Maintenance.Models
     /// <summary> The ResourceGroupResourceDeleteConfigurationAssignmentByParentOptions. </summary>
     public partial class ResourceGroupResourceDeleteConfigurationAssignmentByParentOptions
     {
-        /// <summary> Initializes a new instance of ResourceGroupResourceDeleteConfigurationAssignmentByParentOptions. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceGroupResourceDeleteConfigurationAssignmentByParentOptions"/>. </summary>
         /// <param name="providerName"> Resource provider name. </param>
         /// <param name="resourceParentType"> Resource parent type. </param>
         /// <param name="resourceParentName"> Resource parent identifier. </param>
@@ -36,6 +36,11 @@ namespace Azure.ResourceManager.Maintenance.Models
             ResourceType = resourceType;
             ResourceName = resourceName;
             ConfigurationAssignmentName = configurationAssignmentName;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ResourceGroupResourceDeleteConfigurationAssignmentByParentOptions"/> for deserialization. </summary>
+        internal ResourceGroupResourceDeleteConfigurationAssignmentByParentOptions()
+        {
         }
 
         /// <summary> Resource provider name. </summary>

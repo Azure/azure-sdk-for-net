@@ -5,25 +5,62 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Storage.Models
 {
     /// <summary> Routing preference defines the type of network, either microsoft or internet routing to be used to deliver the user data, the default option is microsoft routing. </summary>
     public partial class StorageRoutingPreference
     {
-        /// <summary> Initializes a new instance of StorageRoutingPreference. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="StorageRoutingPreference"/>. </summary>
         public StorageRoutingPreference()
         {
         }
 
-        /// <summary> Initializes a new instance of StorageRoutingPreference. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageRoutingPreference"/>. </summary>
         /// <param name="routingChoice"> Routing Choice defines the kind of network routing opted by the user. </param>
         /// <param name="isMicrosoftEndpointsPublished"> A boolean flag which indicates whether microsoft routing storage endpoints are to be published. </param>
         /// <param name="isInternetEndpointsPublished"> A boolean flag which indicates whether internet routing storage endpoints are to be published. </param>
-        internal StorageRoutingPreference(StorageRoutingChoice? routingChoice, bool? isMicrosoftEndpointsPublished, bool? isInternetEndpointsPublished)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal StorageRoutingPreference(StorageRoutingChoice? routingChoice, bool? isMicrosoftEndpointsPublished, bool? isInternetEndpointsPublished, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             RoutingChoice = routingChoice;
             IsMicrosoftEndpointsPublished = isMicrosoftEndpointsPublished;
             IsInternetEndpointsPublished = isInternetEndpointsPublished;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Routing Choice defines the kind of network routing opted by the user. </summary>

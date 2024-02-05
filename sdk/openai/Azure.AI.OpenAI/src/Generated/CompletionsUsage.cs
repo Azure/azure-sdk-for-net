@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.AI.OpenAI
 {
     /// <summary>
@@ -14,7 +17,39 @@ namespace Azure.AI.OpenAI
     /// </summary>
     public partial class CompletionsUsage
     {
-        /// <summary> Initializes a new instance of CompletionsUsage. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="CompletionsUsage"/>. </summary>
         /// <param name="completionTokens"> The number of tokens generated across all completions emissions. </param>
         /// <param name="promptTokens"> The number of tokens in the provided prompts for the completions request. </param>
         /// <param name="totalTokens"> The total number of tokens processed for the completions request and response. </param>
@@ -23,6 +58,24 @@ namespace Azure.AI.OpenAI
             CompletionTokens = completionTokens;
             PromptTokens = promptTokens;
             TotalTokens = totalTokens;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="CompletionsUsage"/>. </summary>
+        /// <param name="completionTokens"> The number of tokens generated across all completions emissions. </param>
+        /// <param name="promptTokens"> The number of tokens in the provided prompts for the completions request. </param>
+        /// <param name="totalTokens"> The total number of tokens processed for the completions request and response. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal CompletionsUsage(int completionTokens, int promptTokens, int totalTokens, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            CompletionTokens = completionTokens;
+            PromptTokens = promptTokens;
+            TotalTokens = totalTokens;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="CompletionsUsage"/> for deserialization. </summary>
+        internal CompletionsUsage()
+        {
         }
 
         /// <summary> The number of tokens generated across all completions emissions. </summary>

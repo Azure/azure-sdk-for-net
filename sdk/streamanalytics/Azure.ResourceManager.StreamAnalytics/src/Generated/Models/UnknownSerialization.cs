@@ -5,16 +5,25 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.StreamAnalytics.Models
 {
     /// <summary> The UnknownSerialization. </summary>
     internal partial class UnknownSerialization : StreamAnalyticsDataSerialization
     {
-        /// <summary> Initializes a new instance of UnknownSerialization. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnknownSerialization"/>. </summary>
         /// <param name="eventSerializationType"> Indicates the type of serialization that the input or output uses. Required on PUT (CreateOrReplace) requests. </param>
-        internal UnknownSerialization(EventSerializationType eventSerializationType) : base(eventSerializationType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal UnknownSerialization(EventSerializationType eventSerializationType, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(eventSerializationType, serializedAdditionalRawData)
         {
             EventSerializationType = eventSerializationType;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="UnknownSerialization"/> for deserialization. </summary>
+        internal UnknownSerialization()
+        {
         }
     }
 }

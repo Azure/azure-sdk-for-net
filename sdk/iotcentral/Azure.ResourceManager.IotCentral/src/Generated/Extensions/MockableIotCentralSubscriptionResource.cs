@@ -56,10 +56,18 @@ namespace Azure.ResourceManager.IotCentral.Mocking
         /// <term>Operation Id</term>
         /// <description>Apps_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="IotCentralAppResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="IotCentralAppResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="IotCentralAppResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<IotCentralAppResource> GetIotCentralAppsAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => IotCentralAppAppsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
@@ -78,10 +86,18 @@ namespace Azure.ResourceManager.IotCentral.Mocking
         /// <term>Operation Id</term>
         /// <description>Apps_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="IotCentralAppResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="IotCentralAppResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="IotCentralAppResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<IotCentralAppResource> GetIotCentralApps(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => IotCentralAppAppsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
@@ -99,6 +115,14 @@ namespace Azure.ResourceManager.IotCentral.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Apps_CheckNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="IotCentralAppResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -134,6 +158,14 @@ namespace Azure.ResourceManager.IotCentral.Mocking
         /// <term>Operation Id</term>
         /// <description>Apps_CheckNameAvailability</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="IotCentralAppResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="content"> Set the name parameter in the OperationInputs structure to the name of the IoT Central application to check. </param>
@@ -167,6 +199,14 @@ namespace Azure.ResourceManager.IotCentral.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Apps_CheckSubdomainAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="IotCentralAppResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -202,6 +242,14 @@ namespace Azure.ResourceManager.IotCentral.Mocking
         /// <term>Operation Id</term>
         /// <description>Apps_CheckSubdomainAvailability</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="IotCentralAppResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="content"> Set the name parameter in the OperationInputs structure to the subdomain of the IoT Central application to check. </param>
@@ -236,15 +284,23 @@ namespace Azure.ResourceManager.IotCentral.Mocking
         /// <term>Operation Id</term>
         /// <description>Apps_ListTemplates</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="IotCentralAppResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="IotCentralAppTemplate" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="IotCentralAppTemplate"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<IotCentralAppTemplate> GetTemplatesAppsAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => IotCentralAppAppsRestClient.CreateListTemplatesRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => IotCentralAppAppsRestClient.CreateListTemplatesNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, IotCentralAppTemplate.DeserializeIotCentralAppTemplate, IotCentralAppAppsClientDiagnostics, Pipeline, "MockableIotCentralSubscriptionResource.GetTemplatesApps", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => IotCentralAppTemplate.DeserializeIotCentralAppTemplate(e), IotCentralAppAppsClientDiagnostics, Pipeline, "MockableIotCentralSubscriptionResource.GetTemplatesApps", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -258,15 +314,23 @@ namespace Azure.ResourceManager.IotCentral.Mocking
         /// <term>Operation Id</term>
         /// <description>Apps_ListTemplates</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="IotCentralAppResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="IotCentralAppTemplate" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="IotCentralAppTemplate"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<IotCentralAppTemplate> GetTemplatesApps(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => IotCentralAppAppsRestClient.CreateListTemplatesRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => IotCentralAppAppsRestClient.CreateListTemplatesNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, IotCentralAppTemplate.DeserializeIotCentralAppTemplate, IotCentralAppAppsClientDiagnostics, Pipeline, "MockableIotCentralSubscriptionResource.GetTemplatesApps", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => IotCentralAppTemplate.DeserializeIotCentralAppTemplate(e), IotCentralAppAppsClientDiagnostics, Pipeline, "MockableIotCentralSubscriptionResource.GetTemplatesApps", "value", "nextLink", cancellationToken);
         }
     }
 }

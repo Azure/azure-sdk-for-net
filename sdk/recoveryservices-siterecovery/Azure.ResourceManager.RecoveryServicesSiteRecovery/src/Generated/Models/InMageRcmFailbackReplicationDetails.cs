@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> InMageRcmFailback provider specific details. </summary>
     public partial class InMageRcmFailbackReplicationDetails : ReplicationProviderSpecificSettings
     {
-        /// <summary> Initializes a new instance of InMageRcmFailbackReplicationDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="InMageRcmFailbackReplicationDetails"/>. </summary>
         internal InMageRcmFailbackReplicationDetails()
         {
             ProtectedDisks = new ChangeTrackingList<InMageRcmFailbackProtectedDiskDetails>();
@@ -22,8 +22,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             InstanceType = "InMageRcmFailback";
         }
 
-        /// <summary> Initializes a new instance of InMageRcmFailbackReplicationDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="InMageRcmFailbackReplicationDetails"/>. </summary>
         /// <param name="instanceType"> Gets the Instance type. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="internalIdentifier"> The virtual machine internal identifier. </param>
         /// <param name="azureVirtualMachineId"> The ARM Id of the azure VM. </param>
         /// <param name="multiVmGroupName"> The multi VM group name. </param>
@@ -53,7 +54,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="lastUsedPolicyId"> The policy Id used by the forward replication. </param>
         /// <param name="lastUsedPolicyFriendlyName"> The policy friendly name used by the forward replication. </param>
         /// <param name="isAgentRegistrationSuccessfulAfterFailover"> A value indicating whether agent registration was successful after failover. </param>
-        internal InMageRcmFailbackReplicationDetails(string instanceType, string internalIdentifier, ResourceIdentifier azureVirtualMachineId, string multiVmGroupName, string reprotectAgentId, string reprotectAgentName, string osType, ResourceIdentifier logStorageAccountId, string targetVCenterId, string targetDataStoreName, string targetVmName, int? initialReplicationProgressPercentage, long? initialReplicationProcessedBytes, long? initialReplicationTransferredBytes, VmReplicationProgressHealth? initialReplicationProgressHealth, int? resyncProgressPercentage, long? resyncProcessedBytes, long? resyncTransferredBytes, VmReplicationProgressHealth? resyncProgressHealth, string resyncRequired, SiteRecoveryResyncState? resyncState, IReadOnlyList<InMageRcmFailbackProtectedDiskDetails> protectedDisks, InMageRcmFailbackMobilityAgentDetails mobilityAgentDetails, IReadOnlyList<InMageRcmFailbackNicDetails> vmNics, DateTimeOffset? lastPlannedFailoverStartOn, PlannedFailoverStatus? lastPlannedFailoverStatus, InMageRcmFailbackDiscoveredProtectedVmDetails discoveredVmDetails, ResourceIdentifier lastUsedPolicyId, string lastUsedPolicyFriendlyName, bool? isAgentRegistrationSuccessfulAfterFailover) : base(instanceType)
+        internal InMageRcmFailbackReplicationDetails(string instanceType, IDictionary<string, BinaryData> serializedAdditionalRawData, string internalIdentifier, ResourceIdentifier azureVirtualMachineId, string multiVmGroupName, string reprotectAgentId, string reprotectAgentName, string osType, ResourceIdentifier logStorageAccountId, string targetVCenterId, string targetDataStoreName, string targetVmName, int? initialReplicationProgressPercentage, long? initialReplicationProcessedBytes, long? initialReplicationTransferredBytes, VmReplicationProgressHealth? initialReplicationProgressHealth, int? resyncProgressPercentage, long? resyncProcessedBytes, long? resyncTransferredBytes, VmReplicationProgressHealth? resyncProgressHealth, string resyncRequired, SiteRecoveryResyncState? resyncState, IReadOnlyList<InMageRcmFailbackProtectedDiskDetails> protectedDisks, InMageRcmFailbackMobilityAgentDetails mobilityAgentDetails, IReadOnlyList<InMageRcmFailbackNicDetails> vmNics, DateTimeOffset? lastPlannedFailoverStartOn, PlannedFailoverStatus? lastPlannedFailoverStatus, InMageRcmFailbackDiscoveredProtectedVmDetails discoveredVmDetails, ResourceIdentifier lastUsedPolicyId, string lastUsedPolicyFriendlyName, bool? isAgentRegistrationSuccessfulAfterFailover) : base(instanceType, serializedAdditionalRawData)
         {
             InternalIdentifier = internalIdentifier;
             AzureVirtualMachineId = azureVirtualMachineId;

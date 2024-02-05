@@ -19,14 +19,46 @@ namespace Azure.ResourceManager.StorageSync
     /// </summary>
     public partial class StorageSyncServiceData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of StorageSyncServiceData. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="StorageSyncServiceData"/>. </summary>
         /// <param name="location"> The location. </param>
         public StorageSyncServiceData(AzureLocation location) : base(location)
         {
             PrivateEndpointConnections = new ChangeTrackingList<StorageSyncPrivateEndpointConnectionData>();
         }
 
-        /// <summary> Initializes a new instance of StorageSyncServiceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageSyncServiceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -40,7 +72,8 @@ namespace Azure.ResourceManager.StorageSync
         /// <param name="lastWorkflowId"> StorageSyncService lastWorkflowId. </param>
         /// <param name="lastOperationName"> Resource Last Operation Name. </param>
         /// <param name="privateEndpointConnections"> List of private endpoint connection associated with the specified storage sync service. </param>
-        internal StorageSyncServiceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, IncomingTrafficPolicy? incomingTrafficPolicy, int? storageSyncServiceStatus, Guid? storageSyncServiceUid, string provisioningState, string lastWorkflowId, string lastOperationName, IReadOnlyList<StorageSyncPrivateEndpointConnectionData> privateEndpointConnections) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal StorageSyncServiceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, IncomingTrafficPolicy? incomingTrafficPolicy, int? storageSyncServiceStatus, Guid? storageSyncServiceUid, string provisioningState, string lastWorkflowId, string lastOperationName, IReadOnlyList<StorageSyncPrivateEndpointConnectionData> privateEndpointConnections, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             IncomingTrafficPolicy = incomingTrafficPolicy;
             StorageSyncServiceStatus = storageSyncServiceStatus;
@@ -49,6 +82,12 @@ namespace Azure.ResourceManager.StorageSync
             LastWorkflowId = lastWorkflowId;
             LastOperationName = lastOperationName;
             PrivateEndpointConnections = privateEndpointConnections;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="StorageSyncServiceData"/> for deserialization. </summary>
+        internal StorageSyncServiceData()
+        {
         }
 
         /// <summary> Incoming Traffic Policy. </summary>

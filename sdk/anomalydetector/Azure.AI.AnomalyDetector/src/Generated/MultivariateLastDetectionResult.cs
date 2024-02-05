@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,20 +14,54 @@ namespace Azure.AI.AnomalyDetector
     /// <summary> Results of the last detection. </summary>
     public partial class MultivariateLastDetectionResult
     {
-        /// <summary> Initializes a new instance of MultivariateLastDetectionResult. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="MultivariateLastDetectionResult"/>. </summary>
         internal MultivariateLastDetectionResult()
         {
             VariableStates = new ChangeTrackingList<VariableState>();
             Results = new ChangeTrackingList<AnomalyState>();
         }
 
-        /// <summary> Initializes a new instance of MultivariateLastDetectionResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="MultivariateLastDetectionResult"/>. </summary>
         /// <param name="variableStates"> Variable status. </param>
         /// <param name="results"> Anomaly status and information. </param>
-        internal MultivariateLastDetectionResult(IReadOnlyList<VariableState> variableStates, IReadOnlyList<AnomalyState> results)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MultivariateLastDetectionResult(IReadOnlyList<VariableState> variableStates, IReadOnlyList<AnomalyState> results, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             VariableStates = variableStates;
             Results = results;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Variable status. </summary>

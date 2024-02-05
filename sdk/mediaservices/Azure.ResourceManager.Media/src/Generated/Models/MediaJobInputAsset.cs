@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.Media.Models
     /// <summary> Represents an Asset for input into a Job. </summary>
     public partial class MediaJobInputAsset : MediaJobInputClip
     {
-        /// <summary> Initializes a new instance of MediaJobInputAsset. </summary>
+        /// <summary> Initializes a new instance of <see cref="MediaJobInputAsset"/>. </summary>
         /// <param name="assetName"> The name of the input Asset. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="assetName"/> is null. </exception>
         public MediaJobInputAsset(string assetName)
@@ -25,8 +25,9 @@ namespace Azure.ResourceManager.Media.Models
             OdataType = "#Microsoft.Media.JobInputAsset";
         }
 
-        /// <summary> Initializes a new instance of MediaJobInputAsset. </summary>
+        /// <summary> Initializes a new instance of <see cref="MediaJobInputAsset"/>. </summary>
         /// <param name="odataType"> The discriminator for derived types. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="files"> List of files. Required for JobInputHttp. Maximum of 4000 characters each. Query strings will not be returned in service responses to prevent sensitive data exposure. </param>
         /// <param name="start">
         /// Defines a point on the timeline of the input media at which processing will start. Defaults to the beginning of the input media.
@@ -45,10 +46,15 @@ namespace Azure.ResourceManager.Media.Models
         /// The available derived classes include <see cref="FromAllInputFile"/>, <see cref="FromEachInputFile"/> and <see cref="MediaJobInputFile"/>.
         /// </param>
         /// <param name="assetName"> The name of the input Asset. </param>
-        internal MediaJobInputAsset(string odataType, IList<string> files, ClipTime start, ClipTime end, string label, IList<MediaJobInputDefinition> inputDefinitions, string assetName) : base(odataType, files, start, end, label, inputDefinitions)
+        internal MediaJobInputAsset(string odataType, IDictionary<string, BinaryData> serializedAdditionalRawData, IList<string> files, ClipTime start, ClipTime end, string label, IList<MediaJobInputDefinition> inputDefinitions, string assetName) : base(odataType, serializedAdditionalRawData, files, start, end, label, inputDefinitions)
         {
             AssetName = assetName;
             OdataType = odataType ?? "#Microsoft.Media.JobInputAsset";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MediaJobInputAsset"/> for deserialization. </summary>
+        internal MediaJobInputAsset()
+        {
         }
 
         /// <summary> The name of the input Asset. </summary>

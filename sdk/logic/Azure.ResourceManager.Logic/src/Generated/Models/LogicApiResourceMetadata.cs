@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,13 +14,45 @@ namespace Azure.ResourceManager.Logic.Models
     /// <summary> The api resource metadata. </summary>
     public partial class LogicApiResourceMetadata
     {
-        /// <summary> Initializes a new instance of LogicApiResourceMetadata. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="LogicApiResourceMetadata"/>. </summary>
         internal LogicApiResourceMetadata()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of LogicApiResourceMetadata. </summary>
+        /// <summary> Initializes a new instance of <see cref="LogicApiResourceMetadata"/>. </summary>
         /// <param name="source"> The source. </param>
         /// <param name="brandColor"> The brand color. </param>
         /// <param name="hideKey"> The hide key. </param>
@@ -30,7 +63,8 @@ namespace Azure.ResourceManager.Logic.Models
         /// <param name="connectionType"> The connection type. </param>
         /// <param name="provisioningState"> The provisioning state. </param>
         /// <param name="deploymentParameters"> The connector deployment parameters metadata. </param>
-        internal LogicApiResourceMetadata(string source, string brandColor, string hideKey, IReadOnlyDictionary<string, string> tags, LogicApiType? apiType, LogicWsdlService wsdlService, LogicWsdlImportMethod? wsdlImportMethod, string connectionType, LogicWorkflowProvisioningState? provisioningState, LogicApiDeploymentParameterMetadataSet deploymentParameters)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal LogicApiResourceMetadata(string source, string brandColor, string hideKey, IReadOnlyDictionary<string, string> tags, LogicApiType? apiType, LogicWsdlService wsdlService, LogicWsdlImportMethod? wsdlImportMethod, string connectionType, LogicWorkflowProvisioningState? provisioningState, LogicApiDeploymentParameterMetadataSet deploymentParameters, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Source = source;
             BrandColor = brandColor;
@@ -42,6 +76,7 @@ namespace Azure.ResourceManager.Logic.Models
             ConnectionType = connectionType;
             ProvisioningState = provisioningState;
             DeploymentParameters = deploymentParameters;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The source. </summary>

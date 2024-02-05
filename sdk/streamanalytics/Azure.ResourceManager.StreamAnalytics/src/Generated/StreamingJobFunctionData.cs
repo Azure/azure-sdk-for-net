@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.StreamAnalytics.Models;
 
@@ -16,21 +18,22 @@ namespace Azure.ResourceManager.StreamAnalytics
     /// </summary>
     public partial class StreamingJobFunctionData : StreamAnalyticsSubResource
     {
-        /// <summary> Initializes a new instance of StreamingJobFunctionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="StreamingJobFunctionData"/>. </summary>
         public StreamingJobFunctionData()
         {
         }
 
-        /// <summary> Initializes a new instance of StreamingJobFunctionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="StreamingJobFunctionData"/>. </summary>
         /// <param name="id"> Resource Id. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="resourceType"> Resource type. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties">
         /// The properties that are associated with a function.
         /// Please note <see cref="StreamingJobFunctionProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="AggregateFunctionProperties"/> and <see cref="ScalarFunctionProperties"/>.
         /// </param>
-        internal StreamingJobFunctionData(ResourceIdentifier id, string name, ResourceType? resourceType, StreamingJobFunctionProperties properties) : base(id, name, resourceType)
+        internal StreamingJobFunctionData(ResourceIdentifier id, string name, ResourceType? resourceType, IDictionary<string, BinaryData> serializedAdditionalRawData, StreamingJobFunctionProperties properties) : base(id, name, resourceType, serializedAdditionalRawData)
         {
             Properties = properties;
         }

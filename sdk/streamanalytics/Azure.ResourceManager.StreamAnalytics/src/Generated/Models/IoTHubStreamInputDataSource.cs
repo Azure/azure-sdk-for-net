@@ -5,25 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.StreamAnalytics.Models
 {
     /// <summary> Describes an IoT Hub input data source that contains stream data. </summary>
     public partial class IoTHubStreamInputDataSource : StreamInputDataSource
     {
-        /// <summary> Initializes a new instance of IoTHubStreamInputDataSource. </summary>
+        /// <summary> Initializes a new instance of <see cref="IoTHubStreamInputDataSource"/>. </summary>
         public IoTHubStreamInputDataSource()
         {
             StreamInputDataSourceType = "Microsoft.Devices/IotHubs";
         }
 
-        /// <summary> Initializes a new instance of IoTHubStreamInputDataSource. </summary>
+        /// <summary> Initializes a new instance of <see cref="IoTHubStreamInputDataSource"/>. </summary>
         /// <param name="streamInputDataSourceType"> Indicates the type of input data source containing stream data. Required on PUT (CreateOrReplace) requests. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="iotHubNamespace"> The name or the URI of the IoT Hub. Required on PUT (CreateOrReplace) requests. </param>
         /// <param name="sharedAccessPolicyName"> The shared access policy name for the IoT Hub. This policy must contain at least the Service connect permission. Required on PUT (CreateOrReplace) requests. </param>
         /// <param name="sharedAccessPolicyKey"> The shared access policy key for the specified shared access policy. Required on PUT (CreateOrReplace) requests. </param>
         /// <param name="consumerGroupName"> The name of an IoT Hub Consumer Group that should be used to read events from the IoT Hub. If not specified, the input uses the Iot Hub’s default consumer group. </param>
         /// <param name="endpoint"> The IoT Hub endpoint to connect to (ie. messages/events, messages/operationsMonitoringEvents, etc.). </param>
-        internal IoTHubStreamInputDataSource(string streamInputDataSourceType, string iotHubNamespace, string sharedAccessPolicyName, string sharedAccessPolicyKey, string consumerGroupName, string endpoint) : base(streamInputDataSourceType)
+        internal IoTHubStreamInputDataSource(string streamInputDataSourceType, IDictionary<string, BinaryData> serializedAdditionalRawData, string iotHubNamespace, string sharedAccessPolicyName, string sharedAccessPolicyKey, string consumerGroupName, string endpoint) : base(streamInputDataSourceType, serializedAdditionalRawData)
         {
             IotHubNamespace = iotHubNamespace;
             SharedAccessPolicyName = sharedAccessPolicyName;

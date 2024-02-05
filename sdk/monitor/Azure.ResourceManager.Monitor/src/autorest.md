@@ -23,6 +23,7 @@ skip-csproj: true
 modelerfour:
   flatten-payloads: false
 deserialize-null-collection-as-null-value: true
+use-model-reader-writer: true
 
 format-by-name-rules:
   "tenantId": "uuid"
@@ -313,6 +314,10 @@ rename-mapping:
   SingleMetricBaseline: MonitorSingleMetricBaseline
   TimeSeriesBaseline: MonitorTimeSeriesBaseline
   Unit: MonitorMetricUnit
+
+suppress-abstract-base-class:
+- MetricAlertCriteria
+- MultiMetricCriteria
 
 directive:
   # remove operations because they are covered in resourcemanager we no longer need to generate them here, and they are causing duplicate schemas

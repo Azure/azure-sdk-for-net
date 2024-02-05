@@ -13,13 +13,13 @@ namespace Azure.Containers.ContainerRegistry
     /// <summary> Returns the requested Docker V2 Manifest file. </summary>
     internal partial class V2Manifest : Manifest
     {
-        /// <summary> Initializes a new instance of V2Manifest. </summary>
+        /// <summary> Initializes a new instance of <see cref="V2Manifest"/>. </summary>
         internal V2Manifest()
         {
             Layers = new ChangeTrackingList<OciDescriptor>();
         }
 
-        /// <summary> Initializes a new instance of V2Manifest. </summary>
+        /// <summary> Initializes a new instance of <see cref="V2Manifest"/>. </summary>
         /// <param name="schemaVersion"> Schema version. </param>
         /// <param name="mediaType"> Media type for this Manifest. </param>
         /// <param name="config"> V2 image config descriptor. </param>

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,13 +14,45 @@ namespace Azure.ResourceManager.PostgreSql.Models
     /// <summary> Performance tier properties. </summary>
     public partial class PostgreSqlPerformanceTierProperties
     {
-        /// <summary> Initializes a new instance of PostgreSqlPerformanceTierProperties. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="PostgreSqlPerformanceTierProperties"/>. </summary>
         internal PostgreSqlPerformanceTierProperties()
         {
             ServiceLevelObjectives = new ChangeTrackingList<PostgreSqlPerformanceTierServiceLevelObjectives>();
         }
 
-        /// <summary> Initializes a new instance of PostgreSqlPerformanceTierProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="PostgreSqlPerformanceTierProperties"/>. </summary>
         /// <param name="id"> ID of the performance tier. </param>
         /// <param name="maxBackupRetentionDays"> Maximum Backup retention in days for the performance tier edition. </param>
         /// <param name="minBackupRetentionDays"> Minimum Backup retention in days for the performance tier edition. </param>
@@ -28,7 +61,8 @@ namespace Azure.ResourceManager.PostgreSql.Models
         /// <param name="maxLargeStorageInMB"> Max storage allowed for a server. </param>
         /// <param name="minStorageInMB"> Max storage allowed for a server. </param>
         /// <param name="serviceLevelObjectives"> Service level objectives associated with the performance tier. </param>
-        internal PostgreSqlPerformanceTierProperties(string id, int? maxBackupRetentionDays, int? minBackupRetentionDays, int? maxStorageInMB, int? minLargeStorageInMB, int? maxLargeStorageInMB, int? minStorageInMB, IReadOnlyList<PostgreSqlPerformanceTierServiceLevelObjectives> serviceLevelObjectives)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal PostgreSqlPerformanceTierProperties(string id, int? maxBackupRetentionDays, int? minBackupRetentionDays, int? maxStorageInMB, int? minLargeStorageInMB, int? maxLargeStorageInMB, int? minStorageInMB, IReadOnlyList<PostgreSqlPerformanceTierServiceLevelObjectives> serviceLevelObjectives, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Id = id;
             MaxBackupRetentionDays = maxBackupRetentionDays;
@@ -38,6 +72,7 @@ namespace Azure.ResourceManager.PostgreSql.Models
             MaxLargeStorageInMB = maxLargeStorageInMB;
             MinStorageInMB = minStorageInMB;
             ServiceLevelObjectives = serviceLevelObjectives;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> ID of the performance tier. </summary>

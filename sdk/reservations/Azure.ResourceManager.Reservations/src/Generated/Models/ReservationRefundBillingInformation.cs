@@ -5,24 +5,60 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Reservations.Models
 {
     /// <summary> billing information. </summary>
     public partial class ReservationRefundBillingInformation
     {
-        /// <summary> Initializes a new instance of ReservationRefundBillingInformation. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ReservationRefundBillingInformation"/>. </summary>
         internal ReservationRefundBillingInformation()
         {
         }
 
-        /// <summary> Initializes a new instance of ReservationRefundBillingInformation. </summary>
+        /// <summary> Initializes a new instance of <see cref="ReservationRefundBillingInformation"/>. </summary>
         /// <param name="billingPlan"> Represent the billing plans. </param>
         /// <param name="completedTransactions"> The number of completed transactions in this reservation's payment. </param>
         /// <param name="totalTransactions"> The number of total transactions in this reservation's payment. </param>
         /// <param name="billingCurrencyTotalPaidAmount"> Pricing information containing the amount and the currency code. </param>
         /// <param name="billingCurrencyProratedAmount"> Pricing information containing the amount and the currency code. </param>
         /// <param name="billingCurrencyRemainingCommitmentAmount"> Pricing information containing the amount and the currency code. </param>
-        internal ReservationRefundBillingInformation(ReservationBillingPlan? billingPlan, int? completedTransactions, int? totalTransactions, PurchasePrice billingCurrencyTotalPaidAmount, PurchasePrice billingCurrencyProratedAmount, PurchasePrice billingCurrencyRemainingCommitmentAmount)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ReservationRefundBillingInformation(ReservationBillingPlan? billingPlan, int? completedTransactions, int? totalTransactions, PurchasePrice billingCurrencyTotalPaidAmount, PurchasePrice billingCurrencyProratedAmount, PurchasePrice billingCurrencyRemainingCommitmentAmount, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             BillingPlan = billingPlan;
             CompletedTransactions = completedTransactions;
@@ -30,6 +66,7 @@ namespace Azure.ResourceManager.Reservations.Models
             BillingCurrencyTotalPaidAmount = billingCurrencyTotalPaidAmount;
             BillingCurrencyProratedAmount = billingCurrencyProratedAmount;
             BillingCurrencyRemainingCommitmentAmount = billingCurrencyRemainingCommitmentAmount;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Represent the billing plans. </summary>

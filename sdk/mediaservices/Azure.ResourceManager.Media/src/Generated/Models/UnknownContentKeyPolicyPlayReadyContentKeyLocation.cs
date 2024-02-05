@@ -5,16 +5,25 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Media.Models
 {
     /// <summary> The UnknownContentKeyPolicyPlayReadyContentKeyLocation. </summary>
     internal partial class UnknownContentKeyPolicyPlayReadyContentKeyLocation : ContentKeyPolicyPlayReadyContentKeyLocation
     {
-        /// <summary> Initializes a new instance of UnknownContentKeyPolicyPlayReadyContentKeyLocation. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnknownContentKeyPolicyPlayReadyContentKeyLocation"/>. </summary>
         /// <param name="odataType"> The discriminator for derived types. </param>
-        internal UnknownContentKeyPolicyPlayReadyContentKeyLocation(string odataType) : base(odataType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal UnknownContentKeyPolicyPlayReadyContentKeyLocation(string odataType, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(odataType, serializedAdditionalRawData)
         {
             OdataType = odataType ?? "Unknown";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="UnknownContentKeyPolicyPlayReadyContentKeyLocation"/> for deserialization. </summary>
+        internal UnknownContentKeyPolicyPlayReadyContentKeyLocation()
+        {
         }
     }
 }

@@ -5,27 +5,64 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.AppContainers.Models
 {
     /// <summary> Container App Private Registry. </summary>
     public partial class ContainerAppRegistryCredentials
     {
-        /// <summary> Initializes a new instance of ContainerAppRegistryCredentials. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ContainerAppRegistryCredentials"/>. </summary>
         public ContainerAppRegistryCredentials()
         {
         }
 
-        /// <summary> Initializes a new instance of ContainerAppRegistryCredentials. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerAppRegistryCredentials"/>. </summary>
         /// <param name="server"> Container Registry Server. </param>
         /// <param name="username"> Container Registry Username. </param>
         /// <param name="passwordSecretRef"> The name of the Secret that contains the registry login password. </param>
         /// <param name="identity"> A Managed Identity to use to authenticate with Azure Container Registry. For user-assigned identities, use the full user-assigned identity Resource ID. For system-assigned identities, use 'system'. </param>
-        internal ContainerAppRegistryCredentials(string server, string username, string passwordSecretRef, string identity)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ContainerAppRegistryCredentials(string server, string username, string passwordSecretRef, string identity, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Server = server;
             Username = username;
             PasswordSecretRef = passwordSecretRef;
             Identity = identity;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Container Registry Server. </summary>

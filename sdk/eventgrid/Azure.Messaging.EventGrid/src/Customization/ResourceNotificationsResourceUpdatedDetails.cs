@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using Azure.Core;
@@ -45,6 +46,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
 
         /// <summary> the tags on the resource for which the event is being emitted. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("This property will always be null. Use ResourceTags instead.")]
         public string Tags { get; internal set; }
 
         /// <summary> the tags on the resource for which the event is being emitted. </summary>

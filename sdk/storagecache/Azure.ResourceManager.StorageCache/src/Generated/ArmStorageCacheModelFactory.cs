@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Net;
 using Azure.Core;
@@ -18,7 +19,7 @@ namespace Azure.ResourceManager.StorageCache.Models
     /// <summary> Model factory for models. </summary>
     public static partial class ArmStorageCacheModelFactory
     {
-        /// <summary> Initializes a new instance of AmlFileSystemData. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageCache.AmlFileSystemData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -37,26 +38,27 @@ namespace Azure.ResourceManager.StorageCache.Models
         /// <param name="keyEncryptionKey"> Specifies encryption settings of the AML file system. </param>
         /// <param name="maintenanceWindow"> Start time of a 30-minute weekly maintenance window. </param>
         /// <param name="hsm"> Hydration and archive settings and status. </param>
+        /// <param name="rootSquashSettings"> Specifies root squash settings of the AML file system. </param>
         /// <returns> A new <see cref="StorageCache.AmlFileSystemData"/> instance for mocking. </returns>
-        public static AmlFileSystemData AmlFileSystemData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ManagedServiceIdentity identity = null, string skuName = null, IEnumerable<string> zones = null, float? storageCapacityTiB = null, AmlFileSystemHealth health = null, AmlFileSystemProvisioningStateType? provisioningState = null, string filesystemSubnet = null, AmlFileSystemClientInfo clientInfo = null, int? throughputProvisionedMBps = null, StorageCacheEncryptionKeyVaultKeyReference keyEncryptionKey = null, AmlFileSystemPropertiesMaintenanceWindow maintenanceWindow = null, AmlFileSystemPropertiesHsm hsm = null)
+        public static AmlFileSystemData AmlFileSystemData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ManagedServiceIdentity identity = null, string skuName = null, IEnumerable<string> zones = null, float? storageCapacityTiB = null, AmlFileSystemHealth health = null, AmlFileSystemProvisioningStateType? provisioningState = null, string filesystemSubnet = null, AmlFileSystemClientInfo clientInfo = null, int? throughputProvisionedMBps = null, StorageCacheEncryptionKeyVaultKeyReference keyEncryptionKey = null, AmlFileSystemPropertiesMaintenanceWindow maintenanceWindow = null, AmlFileSystemPropertiesHsm hsm = null, AmlFileSystemRootSquashSettings rootSquashSettings = null)
         {
             tags ??= new Dictionary<string, string>();
             zones ??= new List<string>();
 
-            return new AmlFileSystemData(id, name, resourceType, systemData, tags, location, identity, skuName != null ? new StorageCacheSkuName(skuName) : null, zones?.ToList(), storageCapacityTiB, health, provisioningState, filesystemSubnet, clientInfo, throughputProvisionedMBps, keyEncryptionKey != null ? new AmlFileSystemEncryptionSettings(keyEncryptionKey) : null, maintenanceWindow, hsm);
+            return new AmlFileSystemData(id, name, resourceType, systemData, tags, location, identity, skuName != null ? new StorageCacheSkuName(skuName, serializedAdditionalRawData: null) : null, zones?.ToList(), storageCapacityTiB, health, provisioningState, filesystemSubnet, clientInfo, throughputProvisionedMBps, keyEncryptionKey != null ? new AmlFileSystemEncryptionSettings(keyEncryptionKey, serializedAdditionalRawData: null) : null, maintenanceWindow, hsm, rootSquashSettings, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of AmlFileSystemHealth. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.AmlFileSystemHealth"/>. </summary>
         /// <param name="state"> List of AML file system health states. </param>
         /// <param name="statusCode"> Server-defined error code for the AML file system health. </param>
         /// <param name="statusDescription"> Describes the health state. </param>
         /// <returns> A new <see cref="Models.AmlFileSystemHealth"/> instance for mocking. </returns>
         public static AmlFileSystemHealth AmlFileSystemHealth(AmlFileSystemHealthStateType? state = null, string statusCode = null, string statusDescription = null)
         {
-            return new AmlFileSystemHealth(state, statusCode, statusDescription);
+            return new AmlFileSystemHealth(state, statusCode, statusDescription, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of AmlFileSystemClientInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.AmlFileSystemClientInfo"/>. </summary>
         /// <param name="mgsAddress"> The IPv4 address used by clients to mount the AML file system's Lustre Management Service (MGS). </param>
         /// <param name="mountCommand"> Recommended command to mount the AML file system. </param>
         /// <param name="lustreVersion"> The version of Lustre running in the AML file system. </param>
@@ -64,20 +66,20 @@ namespace Azure.ResourceManager.StorageCache.Models
         /// <returns> A new <see cref="Models.AmlFileSystemClientInfo"/> instance for mocking. </returns>
         public static AmlFileSystemClientInfo AmlFileSystemClientInfo(string mgsAddress = null, string mountCommand = null, string lustreVersion = null, AmlFileSystemContainerStorageInterface containerStorageInterface = null)
         {
-            return new AmlFileSystemClientInfo(mgsAddress, mountCommand, lustreVersion, containerStorageInterface);
+            return new AmlFileSystemClientInfo(mgsAddress, mountCommand, lustreVersion, containerStorageInterface, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of AmlFileSystemContainerStorageInterface. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.AmlFileSystemContainerStorageInterface"/>. </summary>
         /// <param name="persistentVolumeClaim"> Recommended AKS Persistent Volume Claim for the CSI driver, in Base64 encoded YAML. </param>
         /// <param name="persistentVolume"> Recommended AKS Persistent Volume for the CSI driver, in Base64 encoded YAML. </param>
         /// <param name="storageClass"> Recommended AKS Storage Class for the CSI driver, in Base64 encoded YAML. </param>
         /// <returns> A new <see cref="Models.AmlFileSystemContainerStorageInterface"/> instance for mocking. </returns>
         public static AmlFileSystemContainerStorageInterface AmlFileSystemContainerStorageInterface(string persistentVolumeClaim = null, string persistentVolume = null, string storageClass = null)
         {
-            return new AmlFileSystemContainerStorageInterface(persistentVolumeClaim, persistentVolume, storageClass);
+            return new AmlFileSystemContainerStorageInterface(persistentVolumeClaim, persistentVolume, storageClass, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of AmlFileSystemPropertiesHsm. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.AmlFileSystemPropertiesHsm"/>. </summary>
         /// <param name="settings"> Specifies HSM settings of the AML file system. </param>
         /// <param name="archiveStatus"> Archive status. </param>
         /// <returns> A new <see cref="Models.AmlFileSystemPropertiesHsm"/> instance for mocking. </returns>
@@ -85,19 +87,19 @@ namespace Azure.ResourceManager.StorageCache.Models
         {
             archiveStatus ??= new List<AmlFileSystemArchive>();
 
-            return new AmlFileSystemPropertiesHsm(settings, archiveStatus?.ToList());
+            return new AmlFileSystemPropertiesHsm(settings, archiveStatus?.ToList(), serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of AmlFileSystemArchive. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.AmlFileSystemArchive"/>. </summary>
         /// <param name="filesystemPath"> Lustre file system path to archive relative to the file system root.  Specify '/' to archive all modified data. </param>
         /// <param name="status"> The status of the archive. </param>
         /// <returns> A new <see cref="Models.AmlFileSystemArchive"/> instance for mocking. </returns>
         public static AmlFileSystemArchive AmlFileSystemArchive(string filesystemPath = null, AmlFileSystemArchiveStatus status = null)
         {
-            return new AmlFileSystemArchive(filesystemPath, status);
+            return new AmlFileSystemArchive(filesystemPath, status, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of AmlFileSystemArchiveStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.AmlFileSystemArchiveStatus"/>. </summary>
         /// <param name="state"> The state of the archive operation. </param>
         /// <param name="lastCompletionOn"> The time of the last completed archive operation. </param>
         /// <param name="lastStartedOn"> The time the latest archive operation started. </param>
@@ -107,18 +109,30 @@ namespace Azure.ResourceManager.StorageCache.Models
         /// <returns> A new <see cref="Models.AmlFileSystemArchiveStatus"/> instance for mocking. </returns>
         public static AmlFileSystemArchiveStatus AmlFileSystemArchiveStatus(ArchiveStatusType? state = null, DateTimeOffset? lastCompletionOn = null, DateTimeOffset? lastStartedOn = null, int? percentComplete = null, string errorCode = null, string errorMessage = null)
         {
-            return new AmlFileSystemArchiveStatus(state, lastCompletionOn, lastStartedOn, percentComplete, errorCode, errorMessage);
+            return new AmlFileSystemArchiveStatus(state, lastCompletionOn, lastStartedOn, percentComplete, errorCode, errorMessage, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of RequiredAmlFileSystemSubnetsSize. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.AmlFileSystemRootSquashSettings"/>. </summary>
+        /// <param name="mode"> Squash mode of the AML file system. 'All': User and Group IDs on files will be squashed to the provided values for all users on non-trusted systems. 'RootOnly': User and Group IDs on files will be squashed to provided values for solely the root user on non-trusted systems. 'None': No squashing of User and Group IDs is performed for any users on any systems. </param>
+        /// <param name="noSquashNidLists"> Semicolon separated NID IP Address list(s) to be added to the TrustedSystems. </param>
+        /// <param name="squashUID"> User ID to squash to. </param>
+        /// <param name="squashGID"> Group ID to squash to. </param>
+        /// <param name="status"> AML file system squash status. </param>
+        /// <returns> A new <see cref="Models.AmlFileSystemRootSquashSettings"/> instance for mocking. </returns>
+        public static AmlFileSystemRootSquashSettings AmlFileSystemRootSquashSettings(AmlFileSystemSquashMode? mode = null, string noSquashNidLists = null, long? squashUID = null, long? squashGID = null, string status = null)
+        {
+            return new AmlFileSystemRootSquashSettings(mode, noSquashNidLists, squashUID, squashGID, status, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.RequiredAmlFileSystemSubnetsSize"/>. </summary>
         /// <param name="filesystemSubnetSize"> The number of available IP addresses that are required for the AML file system. </param>
         /// <returns> A new <see cref="Models.RequiredAmlFileSystemSubnetsSize"/> instance for mocking. </returns>
         public static RequiredAmlFileSystemSubnetsSize RequiredAmlFileSystemSubnetsSize(int? filesystemSubnetSize = null)
         {
-            return new RequiredAmlFileSystemSubnetsSize(filesystemSubnetSize);
+            return new RequiredAmlFileSystemSubnetsSize(filesystemSubnetSize, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of StorageCacheSku. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.StorageCacheSku"/>. </summary>
         /// <param name="resourceType"> The type of resource the SKU applies to. </param>
         /// <param name="capabilities"> A list of capabilities of this SKU, such as throughput or ops/sec. </param>
         /// <param name="locations"> The set of locations where the SKU is available. This is the supported and registered Azure Geo Regions (e.g., West US, East US, Southeast Asia, etc.). </param>
@@ -133,19 +147,19 @@ namespace Azure.ResourceManager.StorageCache.Models
             locationInfo ??= new List<StorageCacheSkuLocationInfo>();
             restrictions ??= new List<StorageCacheRestriction>();
 
-            return new StorageCacheSku(resourceType, capabilities?.ToList(), locations?.ToList(), locationInfo?.ToList(), name, restrictions?.ToList());
+            return new StorageCacheSku(resourceType, capabilities?.ToList(), locations?.ToList(), locationInfo?.ToList(), name, restrictions?.ToList(), serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of StorageCacheSkuCapability. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.StorageCacheSkuCapability"/>. </summary>
         /// <param name="name"> Name of a capability, such as ops/sec. </param>
         /// <param name="value"> Quantity, if the capability is measured by quantity. </param>
         /// <returns> A new <see cref="Models.StorageCacheSkuCapability"/> instance for mocking. </returns>
         public static StorageCacheSkuCapability StorageCacheSkuCapability(string name = null, string value = null)
         {
-            return new StorageCacheSkuCapability(name, value);
+            return new StorageCacheSkuCapability(name, value, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of StorageCacheSkuLocationInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.StorageCacheSkuLocationInfo"/>. </summary>
         /// <param name="location"> Location where this SKU is available. </param>
         /// <param name="zones"> Zones if any. </param>
         /// <returns> A new <see cref="Models.StorageCacheSkuLocationInfo"/> instance for mocking. </returns>
@@ -153,10 +167,10 @@ namespace Azure.ResourceManager.StorageCache.Models
         {
             zones ??= new List<string>();
 
-            return new StorageCacheSkuLocationInfo(location, zones?.ToList());
+            return new StorageCacheSkuLocationInfo(location, zones?.ToList(), serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of StorageCacheRestriction. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.StorageCacheRestriction"/>. </summary>
         /// <param name="restrictionType"> The type of restrictions. In this version, the only possible value for this is location. </param>
         /// <param name="values"> The value of restrictions. If the restriction type is set to location, then this would be the different locations where the SKU is restricted. </param>
         /// <param name="reasonCode"> The reason for the restriction. As of now this can be "QuotaId" or "NotAvailableForSubscription". "QuotaId" is set when the SKU has requiredQuotas parameter as the subscription does not belong to that quota. "NotAvailableForSubscription" is related to capacity at the datacenter. </param>
@@ -165,20 +179,20 @@ namespace Azure.ResourceManager.StorageCache.Models
         {
             values ??= new List<string>();
 
-            return new StorageCacheRestriction(restrictionType, values?.ToList(), reasonCode);
+            return new StorageCacheRestriction(restrictionType, values?.ToList(), reasonCode, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of StorageCacheUsageModel. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.StorageCacheUsageModel"/>. </summary>
         /// <param name="displayDescription"> Localized information describing this usage model. </param>
         /// <param name="modelName"> Non-localized keyword name for this usage model. </param>
         /// <param name="targetType"> The type of Storage Target to which this model is applicable (only nfs3 as of this version). </param>
         /// <returns> A new <see cref="Models.StorageCacheUsageModel"/> instance for mocking. </returns>
         public static StorageCacheUsageModel StorageCacheUsageModel(string displayDescription = null, string modelName = null, string targetType = null)
         {
-            return new StorageCacheUsageModel(displayDescription != null ? new StorageCacheUsageModelDisplay(displayDescription) : null, modelName, targetType);
+            return new StorageCacheUsageModel(displayDescription != null ? new StorageCacheUsageModelDisplay(displayDescription, serializedAdditionalRawData: null) : null, modelName, targetType, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of StorageCacheUsage. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.StorageCacheUsage"/>. </summary>
         /// <param name="limit"> The limit (quota) for this resource. </param>
         /// <param name="unit"> Unit that the limit and usages are expressed in, such as 'Count'. </param>
         /// <param name="currentValue"> The current usage of this resource. </param>
@@ -186,19 +200,19 @@ namespace Azure.ResourceManager.StorageCache.Models
         /// <returns> A new <see cref="Models.StorageCacheUsage"/> instance for mocking. </returns>
         public static StorageCacheUsage StorageCacheUsage(int? limit = null, string unit = null, int? currentValue = null, StorageCacheUsageName name = null)
         {
-            return new StorageCacheUsage(limit, unit, currentValue, name);
+            return new StorageCacheUsage(limit, unit, currentValue, name, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of StorageCacheUsageName. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.StorageCacheUsageName"/>. </summary>
         /// <param name="value"> Canonical name for this resource type. </param>
         /// <param name="localizedValue"> Localized name for this resource type. </param>
         /// <returns> A new <see cref="Models.StorageCacheUsageName"/> instance for mocking. </returns>
         public static StorageCacheUsageName StorageCacheUsageName(string value = null, string localizedValue = null)
         {
-            return new StorageCacheUsageName(value, localizedValue);
+            return new StorageCacheUsageName(value, localizedValue, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of StorageCacheData. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageCache.StorageCacheData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -231,10 +245,10 @@ namespace Azure.ResourceManager.StorageCache.Models
             primingJobs ??= new List<PrimingJob>();
             spaceAllocation ??= new List<StorageTargetSpaceAllocation>();
 
-            return new StorageCacheData(id, name, resourceType, systemData, tags, location, identity, skuName != null ? new StorageCacheSkuInfo(skuName) : null, cacheSizeGB, health, mountAddresses?.ToList(), provisioningState, subnet, upgradeStatus, upgradeSettings, networkSettings, encryptionSettings, securityAccessPolicies != null ? new StorageCacheSecuritySettings(securityAccessPolicies?.ToList()) : null, directoryServicesSettings, zones?.ToList(), primingJobs?.ToList(), spaceAllocation?.ToList());
+            return new StorageCacheData(id, name, resourceType, systemData, tags, location, identity, skuName != null ? new StorageCacheSkuInfo(skuName, serializedAdditionalRawData: null) : null, cacheSizeGB, health, mountAddresses?.ToList(), provisioningState, subnet, upgradeStatus, upgradeSettings, networkSettings, encryptionSettings, securityAccessPolicies != null ? new StorageCacheSecuritySettings(securityAccessPolicies?.ToList(), serializedAdditionalRawData: null) : null, directoryServicesSettings, zones?.ToList(), primingJobs?.ToList(), spaceAllocation?.ToList(), serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of StorageCacheHealth. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.StorageCacheHealth"/>. </summary>
         /// <param name="state"> List of cache health states. Down is when the cluster is not responding.  Degraded is when its functioning but has some alerts. Transitioning when it is creating or deleting. Unknown will be returned in old api versions when a new value is added in future versions. WaitingForKey is when the create is waiting for the system assigned identity to be given access to the encryption key in the encryption settings. </param>
         /// <param name="statusDescription"> Describes explanation of state. </param>
         /// <param name="conditions"> Outstanding conditions that need to be investigated and resolved. </param>
@@ -243,19 +257,19 @@ namespace Azure.ResourceManager.StorageCache.Models
         {
             conditions ??= new List<OutstandingCondition>();
 
-            return new StorageCacheHealth(state, statusDescription, conditions?.ToList());
+            return new StorageCacheHealth(state, statusDescription, conditions?.ToList(), serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of OutstandingCondition. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.OutstandingCondition"/>. </summary>
         /// <param name="timestamp"> The time when the condition was raised. </param>
         /// <param name="message"> The issue requiring attention. </param>
         /// <returns> A new <see cref="Models.OutstandingCondition"/> instance for mocking. </returns>
         public static OutstandingCondition OutstandingCondition(DateTimeOffset? timestamp = null, string message = null)
         {
-            return new OutstandingCondition(timestamp, message);
+            return new OutstandingCondition(timestamp, message, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of StorageCacheUpgradeStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.StorageCacheUpgradeStatus"/>. </summary>
         /// <param name="currentFirmwareVersion"> Version string of the firmware currently installed on this cache. </param>
         /// <param name="firmwareUpdateStatus"> True if there is a firmware update ready to install on this cache. The firmware will automatically be installed after firmwareUpdateDeadline if not triggered earlier via the upgrade operation. </param>
         /// <param name="firmwareUpdateDeadline"> Time at which the pending firmware update will automatically be installed on the cache. </param>
@@ -264,10 +278,10 @@ namespace Azure.ResourceManager.StorageCache.Models
         /// <returns> A new <see cref="Models.StorageCacheUpgradeStatus"/> instance for mocking. </returns>
         public static StorageCacheUpgradeStatus StorageCacheUpgradeStatus(string currentFirmwareVersion = null, StorageCacheFirmwareStatusType? firmwareUpdateStatus = null, DateTimeOffset? firmwareUpdateDeadline = null, DateTimeOffset? lastFirmwareUpdate = null, string pendingFirmwareVersion = null)
         {
-            return new StorageCacheUpgradeStatus(currentFirmwareVersion, firmwareUpdateStatus, firmwareUpdateDeadline, lastFirmwareUpdate, pendingFirmwareVersion);
+            return new StorageCacheUpgradeStatus(currentFirmwareVersion, firmwareUpdateStatus, firmwareUpdateDeadline, lastFirmwareUpdate, pendingFirmwareVersion, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of StorageCacheNetworkSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.StorageCacheNetworkSettings"/>. </summary>
         /// <param name="mtu"> The IPv4 maximum transmission unit configured for the subnet. </param>
         /// <param name="utilityAddresses"> Array of additional IP addresses used by this cache. </param>
         /// <param name="dnsServers"> DNS servers for the cache to use.  It will be set from the network configuration if no value is provided. </param>
@@ -279,10 +293,10 @@ namespace Azure.ResourceManager.StorageCache.Models
             utilityAddresses ??= new List<IPAddress>();
             dnsServers ??= new List<IPAddress>();
 
-            return new StorageCacheNetworkSettings(mtu, utilityAddresses?.ToList(), dnsServers?.ToList(), dnsSearchDomain, ntpServer);
+            return new StorageCacheNetworkSettings(mtu, utilityAddresses?.ToList(), dnsServers?.ToList(), dnsSearchDomain, ntpServer, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of StorageCacheActiveDirectorySettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.StorageCacheActiveDirectorySettings"/>. </summary>
         /// <param name="primaryDnsIPAddress"> Primary DNS IP address used to resolve the Active Directory domain controller's fully qualified domain name. </param>
         /// <param name="secondaryDnsIPAddress"> Secondary DNS IP address used to resolve the Active Directory domain controller's fully qualified domain name. </param>
         /// <param name="domainName"> The fully qualified domain name of the Active Directory domain controller. </param>
@@ -293,10 +307,10 @@ namespace Azure.ResourceManager.StorageCache.Models
         /// <returns> A new <see cref="Models.StorageCacheActiveDirectorySettings"/> instance for mocking. </returns>
         public static StorageCacheActiveDirectorySettings StorageCacheActiveDirectorySettings(IPAddress primaryDnsIPAddress = null, IPAddress secondaryDnsIPAddress = null, string domainName = null, string domainNetBiosName = null, string cacheNetBiosName = null, DomainJoinedType? domainJoined = null, StorageCacheActiveDirectorySettingsCredentials credentials = null)
         {
-            return new StorageCacheActiveDirectorySettings(primaryDnsIPAddress, secondaryDnsIPAddress, domainName, domainNetBiosName, cacheNetBiosName, domainJoined, credentials);
+            return new StorageCacheActiveDirectorySettings(primaryDnsIPAddress, secondaryDnsIPAddress, domainName, domainNetBiosName, cacheNetBiosName, domainJoined, credentials, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of StorageCacheUsernameDownloadSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.StorageCacheUsernameDownloadSettings"/>. </summary>
         /// <param name="enableExtendedGroups"> Whether or not Extended Groups is enabled. </param>
         /// <param name="usernameSource"> This setting determines how the cache gets username and group names for clients. </param>
         /// <param name="groupFileUri"> The URI of the file containing group information (in /etc/group file format). This field must be populated when 'usernameSource' is set to 'File'. </param>
@@ -312,10 +326,10 @@ namespace Azure.ResourceManager.StorageCache.Models
         /// <returns> A new <see cref="Models.StorageCacheUsernameDownloadSettings"/> instance for mocking. </returns>
         public static StorageCacheUsernameDownloadSettings StorageCacheUsernameDownloadSettings(bool? enableExtendedGroups = null, StorageCacheUsernameSourceType? usernameSource = null, Uri groupFileUri = null, Uri userFileUri = null, string ldapServer = null, string ldapBaseDN = null, bool? encryptLdapConnection = null, bool? requireValidCertificate = null, bool? autoDownloadCertificate = null, Uri caCertificateUri = null, StorageCacheUsernameDownloadedType? usernameDownloaded = null, StorageCacheUsernameDownloadCredential credentials = null)
         {
-            return new StorageCacheUsernameDownloadSettings(enableExtendedGroups, usernameSource, groupFileUri, userFileUri, ldapServer, ldapBaseDN, encryptLdapConnection, requireValidCertificate, autoDownloadCertificate, caCertificateUri, usernameDownloaded, credentials);
+            return new StorageCacheUsernameDownloadSettings(enableExtendedGroups, usernameSource, groupFileUri, userFileUri, ldapServer, ldapBaseDN, encryptLdapConnection, requireValidCertificate, autoDownloadCertificate, caCertificateUri, usernameDownloaded, credentials, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of PrimingJob. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.PrimingJob"/>. </summary>
         /// <param name="primingJobName"> The priming job name. </param>
         /// <param name="primingManifestUri"> The URL for the priming manifest file to download. This file must be readable from the HPC Cache. When the file is in Azure blob storage the URL should include a Shared Access Signature (SAS) granting read permissions on the blob. </param>
         /// <param name="primingJobId"> The unique identifier of the priming job. </param>
@@ -326,10 +340,10 @@ namespace Azure.ResourceManager.StorageCache.Models
         /// <returns> A new <see cref="Models.PrimingJob"/> instance for mocking. </returns>
         public static PrimingJob PrimingJob(string primingJobName = null, Uri primingManifestUri = null, string primingJobId = null, PrimingJobState? primingJobState = null, string primingJobStatus = null, string primingJobDetails = null, double? primingJobPercentComplete = null)
         {
-            return new PrimingJob(primingJobName, primingManifestUri, primingJobId, primingJobState, primingJobStatus, primingJobDetails, primingJobPercentComplete);
+            return new PrimingJob(primingJobName, primingManifestUri, primingJobId, primingJobState, primingJobStatus, primingJobDetails, primingJobPercentComplete, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of StorageTargetData. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageCache.StorageTargetData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -350,7 +364,7 @@ namespace Azure.ResourceManager.StorageCache.Models
             junctions ??= new List<NamespaceJunction>();
             unknownAttributes ??= new Dictionary<string, string>();
 
-            return new StorageTargetData(id, name, resourceType, systemData, junctions?.ToList(), targetType, provisioningState, state, nfs3, clfsTarget != null ? new ClfsTarget(clfsTarget) : null, unknownAttributes != null ? new UnknownTarget(unknownAttributes) : null, blobNfs, allocationPercentage, location);
+            return new StorageTargetData(id, name, resourceType, systemData, junctions?.ToList(), targetType, provisioningState, state, nfs3, clfsTarget != null ? new ClfsTarget(clfsTarget, serializedAdditionalRawData: null) : null, unknownAttributes != null ? new UnknownTarget(unknownAttributes, serializedAdditionalRawData: null) : null, blobNfs, allocationPercentage, location, serializedAdditionalRawData: null);
         }
     }
 }

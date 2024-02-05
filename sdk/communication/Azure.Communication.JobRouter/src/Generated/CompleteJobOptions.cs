@@ -5,37 +5,16 @@
 
 #nullable disable
 
-using System;
-using Azure.Core;
-
 namespace Azure.Communication.JobRouter
 {
     /// <summary> Request payload for completing jobs. </summary>
     public partial class CompleteJobOptions
     {
-        /// <summary> Initializes a new instance of CompleteJobOptions. </summary>
-        /// <param name="assignmentId"> The assignment within the job to complete. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="assignmentId"/> is null. </exception>
-        public CompleteJobOptions(string assignmentId)
+        /// <summary> Initializes a new instance of <see cref="CompleteJobOptions"/>. </summary>
+        /// <param name="note"> A note that will be appended to a job's Notes collection with the current timestamp. </param>
+        internal CompleteJobOptions(string note)
         {
-            Argument.AssertNotNull(assignmentId, nameof(assignmentId));
-
-            AssignmentId = assignmentId;
-        }
-
-        /// <summary> Initializes a new instance of CompleteJobOptions. </summary>
-        /// <param name="assignmentId"> The assignment within the job to complete. </param>
-        /// <param name="note">
-        /// (Optional) A note that will be appended to the jobs' Notes collection with the
-        /// current timestamp.
-        /// </param>
-        internal CompleteJobOptions(string assignmentId, string note)
-        {
-            AssignmentId = assignmentId;
             Note = note;
         }
-
-        /// <summary> The assignment within the job to complete. </summary>
-        public string AssignmentId { get; }
     }
 }

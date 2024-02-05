@@ -5,20 +5,24 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> The AutoTargetLags. </summary>
     public partial class AutoTargetLags : TargetLags
     {
-        /// <summary> Initializes a new instance of AutoTargetLags. </summary>
+        /// <summary> Initializes a new instance of <see cref="AutoTargetLags"/>. </summary>
         public AutoTargetLags()
         {
             Mode = TargetLagsMode.Auto;
         }
 
-        /// <summary> Initializes a new instance of AutoTargetLags. </summary>
+        /// <summary> Initializes a new instance of <see cref="AutoTargetLags"/>. </summary>
         /// <param name="mode"> [Required] Set target lags mode - Auto/Custom. </param>
-        internal AutoTargetLags(TargetLagsMode mode) : base(mode)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AutoTargetLags(TargetLagsMode mode, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(mode, serializedAdditionalRawData)
         {
             Mode = mode;
         }

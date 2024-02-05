@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,24 +14,25 @@ namespace Azure.ResourceManager.ResourceMover.Models
     /// <summary> Defines the public IP address resource settings. </summary>
     public partial class PublicIPAddressResourceSettings : MoverResourceSettings
     {
-        /// <summary> Initializes a new instance of PublicIPAddressResourceSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="PublicIPAddressResourceSettings"/>. </summary>
         public PublicIPAddressResourceSettings()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
             ResourceType = "Microsoft.Network/publicIPAddresses";
         }
 
-        /// <summary> Initializes a new instance of PublicIPAddressResourceSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="PublicIPAddressResourceSettings"/>. </summary>
         /// <param name="resourceType"> The resource type. For example, the value can be Microsoft.Compute/virtualMachines. </param>
         /// <param name="targetResourceName"> Gets or sets the target Resource name. </param>
         /// <param name="targetResourceGroupName"> Gets or sets the target resource group name. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="tags"> Gets or sets the Resource tags. </param>
         /// <param name="domainNameLabel"> Gets or sets the domain name label. </param>
         /// <param name="fqdn"> Gets or sets the fully qualified domain name. </param>
         /// <param name="publicIPAllocationMethod"> Gets or sets public IP allocation method. </param>
         /// <param name="sku"> Gets or sets public IP sku. </param>
         /// <param name="zones"> Gets or sets public IP zones. </param>
-        internal PublicIPAddressResourceSettings(string resourceType, string targetResourceName, string targetResourceGroupName, IDictionary<string, string> tags, string domainNameLabel, string fqdn, string publicIPAllocationMethod, string sku, string zones) : base(resourceType, targetResourceName, targetResourceGroupName)
+        internal PublicIPAddressResourceSettings(string resourceType, string targetResourceName, string targetResourceGroupName, IDictionary<string, BinaryData> serializedAdditionalRawData, IDictionary<string, string> tags, string domainNameLabel, string fqdn, string publicIPAllocationMethod, string sku, string zones) : base(resourceType, targetResourceName, targetResourceGroupName, serializedAdditionalRawData)
         {
             Tags = tags;
             DomainNameLabel = domainNameLabel;

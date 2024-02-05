@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Network.Models;
@@ -17,22 +19,23 @@ namespace Azure.ResourceManager.Network
     /// </summary>
     public partial class HubIPConfigurationData : NetworkResourceData
     {
-        /// <summary> Initializes a new instance of HubIPConfigurationData. </summary>
+        /// <summary> Initializes a new instance of <see cref="HubIPConfigurationData"/>. </summary>
         public HubIPConfigurationData()
         {
         }
 
-        /// <summary> Initializes a new instance of HubIPConfigurationData. </summary>
+        /// <summary> Initializes a new instance of <see cref="HubIPConfigurationData"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="resourceType"> Resource type. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="privateIPAddress"> The private IP address of the IP configuration. </param>
         /// <param name="privateIPAllocationMethod"> The private IP address allocation method. </param>
         /// <param name="subnet"> The reference to the subnet resource. </param>
         /// <param name="publicIPAddress"> The reference to the public IP resource. </param>
         /// <param name="provisioningState"> The provisioning state of the IP configuration resource. </param>
-        internal HubIPConfigurationData(ResourceIdentifier id, string name, ResourceType? resourceType, ETag? etag, string privateIPAddress, NetworkIPAllocationMethod? privateIPAllocationMethod, SubnetData subnet, PublicIPAddressData publicIPAddress, NetworkProvisioningState? provisioningState) : base(id, name, resourceType)
+        internal HubIPConfigurationData(ResourceIdentifier id, string name, ResourceType? resourceType, IDictionary<string, BinaryData> serializedAdditionalRawData, ETag? etag, string privateIPAddress, NetworkIPAllocationMethod? privateIPAllocationMethod, SubnetData subnet, PublicIPAddressData publicIPAddress, NetworkProvisioningState? provisioningState) : base(id, name, resourceType, serializedAdditionalRawData)
         {
             ETag = etag;
             PrivateIPAddress = privateIPAddress;

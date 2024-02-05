@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.HybridContainerService.Models;
@@ -14,34 +15,73 @@ namespace Azure.ResourceManager.HybridContainerService
 {
     /// <summary>
     /// A class representing the HybridContainerServiceVirtualNetwork data model.
-    /// The virtualNetworks resource definition.
+    /// The Virtual Network resource definition.
     /// </summary>
     public partial class HybridContainerServiceVirtualNetworkData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of HybridContainerServiceVirtualNetworkData. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="HybridContainerServiceVirtualNetworkData"/>. </summary>
         /// <param name="location"> The location. </param>
         public HybridContainerServiceVirtualNetworkData(AzureLocation location) : base(location)
         {
         }
 
-        /// <summary> Initializes a new instance of HybridContainerServiceVirtualNetworkData. </summary>
+        /// <summary> Initializes a new instance of <see cref="HybridContainerServiceVirtualNetworkData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="properties"> HybridAKSNetworkSpec defines the desired state of HybridAKSNetwork. </param>
-        /// <param name="extendedLocation"></param>
-        internal HybridContainerServiceVirtualNetworkData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, VirtualNetworksProperties properties, VirtualNetworksExtendedLocation extendedLocation) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="properties"> Properties of the virtual network resource. </param>
+        /// <param name="extendedLocation"> Extended location pointing to the underlying infrastructure. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal HybridContainerServiceVirtualNetworkData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, HybridContainerServiceVirtualNetworkProperties properties, HybridContainerServiceExtendedLocation extendedLocation, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             Properties = properties;
             ExtendedLocation = extendedLocation;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> HybridAKSNetworkSpec defines the desired state of HybridAKSNetwork. </summary>
-        public VirtualNetworksProperties Properties { get; set; }
-        /// <summary> Gets or sets the extended location. </summary>
-        public VirtualNetworksExtendedLocation ExtendedLocation { get; set; }
+        /// <summary> Initializes a new instance of <see cref="HybridContainerServiceVirtualNetworkData"/> for deserialization. </summary>
+        internal HybridContainerServiceVirtualNetworkData()
+        {
+        }
+
+        /// <summary> Properties of the virtual network resource. </summary>
+        public HybridContainerServiceVirtualNetworkProperties Properties { get; set; }
+        /// <summary> Extended location pointing to the underlying infrastructure. </summary>
+        public HybridContainerServiceExtendedLocation ExtendedLocation { get; set; }
     }
 }

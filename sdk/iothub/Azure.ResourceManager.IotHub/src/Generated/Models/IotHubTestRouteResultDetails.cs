@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,17 +14,51 @@ namespace Azure.ResourceManager.IotHub.Models
     /// <summary> Detailed result of testing a route. </summary>
     internal partial class IotHubTestRouteResultDetails
     {
-        /// <summary> Initializes a new instance of IotHubTestRouteResultDetails. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="IotHubTestRouteResultDetails"/>. </summary>
         internal IotHubTestRouteResultDetails()
         {
             CompilationErrors = new ChangeTrackingList<RouteCompilationError>();
         }
 
-        /// <summary> Initializes a new instance of IotHubTestRouteResultDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="IotHubTestRouteResultDetails"/>. </summary>
         /// <param name="compilationErrors"> JSON-serialized list of route compilation errors. </param>
-        internal IotHubTestRouteResultDetails(IReadOnlyList<RouteCompilationError> compilationErrors)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal IotHubTestRouteResultDetails(IReadOnlyList<RouteCompilationError> compilationErrors, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             CompilationErrors = compilationErrors;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> JSON-serialized list of route compilation errors. </summary>

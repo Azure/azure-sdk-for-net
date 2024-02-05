@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,15 +14,16 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
     /// <summary> Describes an Azure Table output data source. </summary>
     public partial class TableOutputDataSource : StreamingJobOutputDataSource
     {
-        /// <summary> Initializes a new instance of TableOutputDataSource. </summary>
+        /// <summary> Initializes a new instance of <see cref="TableOutputDataSource"/>. </summary>
         public TableOutputDataSource()
         {
             ColumnsToRemove = new ChangeTrackingList<string>();
             OutputDataSourceType = "Microsoft.Storage/Table";
         }
 
-        /// <summary> Initializes a new instance of TableOutputDataSource. </summary>
+        /// <summary> Initializes a new instance of <see cref="TableOutputDataSource"/>. </summary>
         /// <param name="outputDataSourceType"> Indicates the type of data source output will be written to. Required on PUT (CreateOrReplace) requests. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="accountName"> The name of the Azure Storage account. Required on PUT (CreateOrReplace) requests. </param>
         /// <param name="accountKey"> The account key for the Azure Storage account. Required on PUT (CreateOrReplace) requests. </param>
         /// <param name="table"> The name of the Azure Table. Required on PUT (CreateOrReplace) requests. </param>
@@ -29,7 +31,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         /// <param name="rowKey"> This element indicates the name of a column from the SELECT statement in the query that will be used as the row key for the Azure Table. Required on PUT (CreateOrReplace) requests. </param>
         /// <param name="columnsToRemove"> If specified, each item in the array is the name of a column to remove (if present) from output event entities. </param>
         /// <param name="batchSize"> The number of rows to write to the Azure Table at a time. </param>
-        internal TableOutputDataSource(string outputDataSourceType, string accountName, string accountKey, string table, string partitionKey, string rowKey, IList<string> columnsToRemove, int? batchSize) : base(outputDataSourceType)
+        internal TableOutputDataSource(string outputDataSourceType, IDictionary<string, BinaryData> serializedAdditionalRawData, string accountName, string accountKey, string table, string partitionKey, string rowKey, IList<string> columnsToRemove, int? batchSize) : base(outputDataSourceType, serializedAdditionalRawData)
         {
             AccountName = accountName;
             AccountKey = accountKey;

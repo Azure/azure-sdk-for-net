@@ -6,26 +6,61 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.IotHub.Models
 {
     /// <summary> The properties of the messaging endpoints used by this IoT hub. </summary>
     public partial class MessagingEndpointProperties
     {
-        /// <summary> Initializes a new instance of MessagingEndpointProperties. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="MessagingEndpointProperties"/>. </summary>
         public MessagingEndpointProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of MessagingEndpointProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="MessagingEndpointProperties"/>. </summary>
         /// <param name="lockDurationAsIso8601"> The lock duration. See: https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-file-upload. </param>
         /// <param name="ttlAsIso8601"> The period of time for which a message is available to consume before it is expired by the IoT hub. See: https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-file-upload. </param>
         /// <param name="maxDeliveryCount"> The number of times the IoT hub attempts to deliver a message. See: https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-file-upload. </param>
-        internal MessagingEndpointProperties(TimeSpan? lockDurationAsIso8601, TimeSpan? ttlAsIso8601, int? maxDeliveryCount)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MessagingEndpointProperties(TimeSpan? lockDurationAsIso8601, TimeSpan? ttlAsIso8601, int? maxDeliveryCount, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             LockDurationAsIso8601 = lockDurationAsIso8601;
             TtlAsIso8601 = ttlAsIso8601;
             MaxDeliveryCount = maxDeliveryCount;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The lock duration. See: https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-file-upload. </summary>

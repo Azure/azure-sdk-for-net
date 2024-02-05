@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 
 namespace Azure.ResourceManager.HealthcareApis.Models
@@ -12,14 +13,15 @@ namespace Azure.ResourceManager.HealthcareApis.Models
     /// <summary> Workspace patch properties. </summary>
     public partial class HealthcareApisWorkspacePatch : HealthcareApisResourceTags
     {
-        /// <summary> Initializes a new instance of HealthcareApisWorkspacePatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="HealthcareApisWorkspacePatch"/>. </summary>
         public HealthcareApisWorkspacePatch()
         {
         }
 
-        /// <summary> Initializes a new instance of HealthcareApisWorkspacePatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="HealthcareApisWorkspacePatch"/>. </summary>
         /// <param name="tags"> Resource tags. </param>
-        internal HealthcareApisWorkspacePatch(IDictionary<string, string> tags) : base(tags)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal HealthcareApisWorkspacePatch(IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(tags, serializedAdditionalRawData)
         {
         }
     }

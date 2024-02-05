@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,7 +14,39 @@ namespace Azure.ResourceManager.SelfHelp.Models
     /// <summary> Solution replacement maps. </summary>
     public partial class ReplacementMaps
     {
-        /// <summary> Initializes a new instance of ReplacementMaps. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ReplacementMaps"/>. </summary>
         public ReplacementMaps()
         {
             WebResults = new ChangeTrackingList<WebResult>();
@@ -24,14 +57,15 @@ namespace Azure.ResourceManager.SelfHelp.Models
             VideoGroups = new ChangeTrackingList<VideoGroup>();
         }
 
-        /// <summary> Initializes a new instance of ReplacementMaps. </summary>
+        /// <summary> Initializes a new instance of <see cref="ReplacementMaps"/>. </summary>
         /// <param name="webResults"> Solution AzureKB results. </param>
         /// <param name="diagnostics"> Solution diagnostics results. </param>
         /// <param name="troubleshooters"> Solutions Troubleshooters. </param>
         /// <param name="metricsBasedCharts"> Solution metrics based charts. </param>
         /// <param name="videos"> Video solutions, which have the power to engage the customer by stimulating their senses. </param>
         /// <param name="videoGroups"> Group of Videos. </param>
-        internal ReplacementMaps(IList<WebResult> webResults, IList<SolutionsDiagnostic> diagnostics, IList<SolutionsTroubleshooters> troubleshooters, IList<MetricsBasedChart> metricsBasedCharts, IList<SelfHelpVideo> videos, IList<VideoGroup> videoGroups)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ReplacementMaps(IList<WebResult> webResults, IList<SolutionsDiagnostic> diagnostics, IList<SolutionsTroubleshooters> troubleshooters, IList<MetricsBasedChart> metricsBasedCharts, IList<SelfHelpVideo> videos, IList<VideoGroup> videoGroups, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             WebResults = webResults;
             Diagnostics = diagnostics;
@@ -39,6 +73,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
             MetricsBasedCharts = metricsBasedCharts;
             Videos = videos;
             VideoGroups = videoGroups;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Solution AzureKB results. </summary>

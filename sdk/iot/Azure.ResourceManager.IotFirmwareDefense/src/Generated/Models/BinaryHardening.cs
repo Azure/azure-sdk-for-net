@@ -5,17 +5,52 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.IotFirmwareDefense.Models
 {
     /// <summary> Binary hardening of a firmware. </summary>
     public partial class BinaryHardening
     {
-        /// <summary> Initializes a new instance of BinaryHardening. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="BinaryHardening"/>. </summary>
         internal BinaryHardening()
         {
         }
 
-        /// <summary> Initializes a new instance of BinaryHardening. </summary>
+        /// <summary> Initializes a new instance of <see cref="BinaryHardening"/>. </summary>
         /// <param name="binaryHardeningId"> ID for the binary hardening result. </param>
         /// <param name="architecture"> The architecture of the uploaded firmware. </param>
         /// <param name="path"> path for binary hardening. </param>
@@ -27,7 +62,8 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
         /// <param name="relro"> RELRO flag. </param>
         /// <param name="canary"> Canary flag. </param>
         /// <param name="stripped"> Stripped flag. </param>
-        internal BinaryHardening(string binaryHardeningId, string architecture, string path, string @class, string runpath, string rpath, NxFlag? nx, PieFlag? pie, RelroFlag? relro, CanaryFlag? canary, StrippedFlag? stripped)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal BinaryHardening(string binaryHardeningId, string architecture, string path, string @class, string runpath, string rpath, NxFlag? nx, PieFlag? pie, RelroFlag? relro, CanaryFlag? canary, StrippedFlag? stripped, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             BinaryHardeningId = binaryHardeningId;
             Architecture = architecture;
@@ -40,6 +76,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             Relro = relro;
             Canary = canary;
             Stripped = stripped;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> ID for the binary hardening result. </summary>

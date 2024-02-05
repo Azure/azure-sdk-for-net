@@ -21,7 +21,39 @@ namespace Azure.ResourceManager.Redis
     /// </summary>
     public partial class RedisData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of RedisData. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="RedisData"/>. </summary>
         /// <param name="location"> The location. </param>
         /// <param name="sku"> The SKU of the Redis cache to deploy. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sku"/> is null. </exception>
@@ -37,7 +69,7 @@ namespace Azure.ResourceManager.Redis
             PrivateEndpointConnections = new ChangeTrackingList<RedisPrivateEndpointConnectionData>();
         }
 
-        /// <summary> Initializes a new instance of RedisData. </summary>
+        /// <summary> Initializes a new instance of <see cref="RedisData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -55,6 +87,7 @@ namespace Azure.ResourceManager.Redis
         /// <param name="shardCount"> The number of shards to be created on a Premium Cluster Cache. </param>
         /// <param name="minimumTlsVersion"> Optional: requires clients to use a specified TLS version (or higher) to connect (e,g, '1.0', '1.1', '1.2'). </param>
         /// <param name="publicNetworkAccess"> Whether or not public endpoint access is allowed for this cache.  Value is optional but if passed in, must be 'Enabled' or 'Disabled'. If 'Disabled', private endpoints are the exclusive access method. Default value is 'Enabled'. </param>
+        /// <param name="updateChannel"> Optional: Specifies the update channel for the monthly Redis updates your Redis Cache will receive. Caches using 'Preview' update channel get latest Redis updates at least 4 weeks ahead of 'Stable' channel caches. Default value is 'Stable'. </param>
         /// <param name="sku"> The SKU of the Redis cache to deploy. </param>
         /// <param name="subnetId"> The full resource ID of a subnet in a virtual network to deploy the Redis cache in. Example format: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/Microsoft.{Network|ClassicNetwork}/VirtualNetworks/vnet1/subnets/subnet1. </param>
         /// <param name="staticIP"> Static IP address. Optionally, may be specified when deploying a Redis cache inside an existing Azure Virtual Network; auto assigned by default. </param>
@@ -66,7 +99,8 @@ namespace Azure.ResourceManager.Redis
         /// <param name="linkedServers"> List of the linked servers associated with the cache. </param>
         /// <param name="instances"> List of the Redis instances associated with the cache. </param>
         /// <param name="privateEndpointConnections"> List of private endpoint connection associated with the specified redis cache. </param>
-        internal RedisData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, IList<string> zones, ManagedServiceIdentity identity, RedisCommonConfiguration redisConfiguration, string redisVersion, bool? enableNonSslPort, int? replicasPerMaster, int? replicasPerPrimary, IDictionary<string, string> tenantSettings, int? shardCount, RedisTlsVersion? minimumTlsVersion, RedisPublicNetworkAccess? publicNetworkAccess, RedisSku sku, ResourceIdentifier subnetId, IPAddress staticIP, RedisProvisioningState? provisioningState, string hostName, int? port, int? sslPort, RedisAccessKeys accessKeys, IReadOnlyList<SubResource> linkedServers, IReadOnlyList<RedisInstanceDetails> instances, IReadOnlyList<RedisPrivateEndpointConnectionData> privateEndpointConnections) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal RedisData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, IList<string> zones, ManagedServiceIdentity identity, RedisCommonConfiguration redisConfiguration, string redisVersion, bool? enableNonSslPort, int? replicasPerMaster, int? replicasPerPrimary, IDictionary<string, string> tenantSettings, int? shardCount, RedisTlsVersion? minimumTlsVersion, RedisPublicNetworkAccess? publicNetworkAccess, UpdateChannel? updateChannel, RedisSku sku, ResourceIdentifier subnetId, IPAddress staticIP, RedisProvisioningState? provisioningState, string hostName, int? port, int? sslPort, RedisAccessKeys accessKeys, IReadOnlyList<SubResource> linkedServers, IReadOnlyList<RedisInstanceDetails> instances, IReadOnlyList<RedisPrivateEndpointConnectionData> privateEndpointConnections, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             Zones = zones;
             Identity = identity;
@@ -79,6 +113,7 @@ namespace Azure.ResourceManager.Redis
             ShardCount = shardCount;
             MinimumTlsVersion = minimumTlsVersion;
             PublicNetworkAccess = publicNetworkAccess;
+            UpdateChannel = updateChannel;
             Sku = sku;
             SubnetId = subnetId;
             StaticIP = staticIP;
@@ -90,6 +125,12 @@ namespace Azure.ResourceManager.Redis
             LinkedServers = linkedServers;
             Instances = instances;
             PrivateEndpointConnections = privateEndpointConnections;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="RedisData"/> for deserialization. </summary>
+        internal RedisData()
+        {
         }
 
         /// <summary> A list of availability zones denoting where the resource needs to come from. </summary>
@@ -114,6 +155,8 @@ namespace Azure.ResourceManager.Redis
         public RedisTlsVersion? MinimumTlsVersion { get; set; }
         /// <summary> Whether or not public endpoint access is allowed for this cache.  Value is optional but if passed in, must be 'Enabled' or 'Disabled'. If 'Disabled', private endpoints are the exclusive access method. Default value is 'Enabled'. </summary>
         public RedisPublicNetworkAccess? PublicNetworkAccess { get; set; }
+        /// <summary> Optional: Specifies the update channel for the monthly Redis updates your Redis Cache will receive. Caches using 'Preview' update channel get latest Redis updates at least 4 weeks ahead of 'Stable' channel caches. Default value is 'Stable'. </summary>
+        public UpdateChannel? UpdateChannel { get; set; }
         /// <summary> The SKU of the Redis cache to deploy. </summary>
         public RedisSku Sku { get; set; }
         /// <summary> The full resource ID of a subnet in a virtual network to deploy the Redis cache in. Example format: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/Microsoft.{Network|ClassicNetwork}/VirtualNetworks/vnet1/subnets/subnet1. </summary>

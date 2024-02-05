@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,19 +14,53 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> Suggested utterances where the detector can be applicable. </summary>
     public partial class QueryUtterancesResults
     {
-        /// <summary> Initializes a new instance of QueryUtterancesResults. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="QueryUtterancesResults"/>. </summary>
         public QueryUtterancesResults()
         {
             Results = new ChangeTrackingList<QueryUtterancesResult>();
         }
 
-        /// <summary> Initializes a new instance of QueryUtterancesResults. </summary>
+        /// <summary> Initializes a new instance of <see cref="QueryUtterancesResults"/>. </summary>
         /// <param name="query"> Search Query. </param>
         /// <param name="results"> Array of utterance results for search query. </param>
-        internal QueryUtterancesResults(string query, IList<QueryUtterancesResult> results)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal QueryUtterancesResults(string query, IList<QueryUtterancesResult> results, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Query = query;
             Results = results;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Search Query. </summary>

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
@@ -13,7 +14,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
     /// <summary> AzureBackup Restore with Rehydration Request. </summary>
     public partial class BackupRestoreWithRehydrationContent : BackupRecoveryPointBasedRestoreContent
     {
-        /// <summary> Initializes a new instance of BackupRestoreWithRehydrationContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="BackupRestoreWithRehydrationContent"/>. </summary>
         /// <param name="restoreTargetInfo">
         /// Gets or sets the restore target information.
         /// Please note <see cref="RestoreTargetInfoBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
@@ -32,6 +33,35 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             RehydrationPriority = rehydrationPriority;
             RehydrationRetentionDuration = rehydrationRetentionDuration;
             ObjectType = "AzureBackupRestoreWithRehydrationRequest";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="BackupRestoreWithRehydrationContent"/>. </summary>
+        /// <param name="objectType"></param>
+        /// <param name="restoreTargetInfo">
+        /// Gets or sets the restore target information.
+        /// Please note <see cref="RestoreTargetInfoBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="ItemLevelRestoreTargetInfo"/>, <see cref="RestoreFilesTargetInfo"/> and <see cref="RestoreTargetInfo"/>.
+        /// </param>
+        /// <param name="sourceDataStoreType"> Gets or sets the type of the source data store. </param>
+        /// <param name="sourceResourceId"> Fully qualified Azure Resource Manager ID of the datasource which is being recovered. </param>
+        /// <param name="identityDetails">
+        /// Contains information of the Identity Details for the BI.
+        /// If it is null, default will be considered as System Assigned.
+        /// </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="recoveryPointId"></param>
+        /// <param name="rehydrationPriority"> Priority to be used for rehydration. Values High or Standard. </param>
+        /// <param name="rehydrationRetentionDuration"> Retention duration in ISO 8601 format i.e P10D . </param>
+        internal BackupRestoreWithRehydrationContent(string objectType, RestoreTargetInfoBase restoreTargetInfo, SourceDataStoreType sourceDataStoreType, ResourceIdentifier sourceResourceId, DataProtectionIdentityDetails identityDetails, IDictionary<string, BinaryData> serializedAdditionalRawData, string recoveryPointId, BackupRehydrationPriority rehydrationPriority, TimeSpan rehydrationRetentionDuration) : base(objectType, restoreTargetInfo, sourceDataStoreType, sourceResourceId, identityDetails, serializedAdditionalRawData, recoveryPointId)
+        {
+            RehydrationPriority = rehydrationPriority;
+            RehydrationRetentionDuration = rehydrationRetentionDuration;
+            ObjectType = objectType ?? "AzureBackupRestoreWithRehydrationRequest";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="BackupRestoreWithRehydrationContent"/> for deserialization. </summary>
+        internal BackupRestoreWithRehydrationContent()
+        {
         }
 
         /// <summary> Priority to be used for rehydration. Values High or Standard. </summary>

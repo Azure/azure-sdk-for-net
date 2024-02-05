@@ -14,12 +14,89 @@ namespace Azure.ResourceManager.Monitor.Models
     /// <summary> The scheduled query rule resource for patch operations. </summary>
     public partial class ScheduledQueryRulePatch
     {
-        /// <summary> Initializes a new instance of ScheduledQueryRulePatch. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ScheduledQueryRulePatch"/>. </summary>
         public ScheduledQueryRulePatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
             Scopes = new ChangeTrackingList<string>();
             TargetResourceTypes = new ChangeTrackingList<string>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ScheduledQueryRulePatch"/>. </summary>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="createdWithApiVersion"> The api-version used when creating this alert rule. </param>
+        /// <param name="isLegacyLogAnalyticsRule"> True if alert rule is legacy Log Analytic rule. </param>
+        /// <param name="description"> The description of the scheduled query rule. </param>
+        /// <param name="displayName"> The display name of the alert rule. </param>
+        /// <param name="severity"> Severity of the alert. Should be an integer between [0-4]. Value of 0 is severest. Relevant and required only for rules of the kind LogAlert. </param>
+        /// <param name="isEnabled"> The flag which indicates whether this scheduled query rule is enabled. Value should be true or false. </param>
+        /// <param name="scopes"> The list of resource id's that this scheduled query rule is scoped to. </param>
+        /// <param name="evaluationFrequency"> How often the scheduled query rule is evaluated represented in ISO 8601 duration format. Relevant and required only for rules of the kind LogAlert. </param>
+        /// <param name="windowSize"> The period of time (in ISO 8601 duration format) on which the Alert query will be executed (bin size). Relevant and required only for rules of the kind LogAlert. </param>
+        /// <param name="overrideQueryTimeRange"> If specified then overrides the query time range (default is WindowSize*NumberOfEvaluationPeriods). Relevant only for rules of the kind LogAlert. </param>
+        /// <param name="targetResourceTypes"> List of resource type of the target resource(s) on which the alert is created/updated. For example if the scope is a resource group and targetResourceTypes is Microsoft.Compute/virtualMachines, then a different alert will be fired for each virtual machine in the resource group which meet the alert criteria. Relevant only for rules of the kind LogAlert. </param>
+        /// <param name="criteria"> The rule criteria that defines the conditions of the scheduled query rule. </param>
+        /// <param name="muteActionsDuration"> Mute actions for the chosen period of time (in ISO 8601 duration format) after the alert is fired. Relevant only for rules of the kind LogAlert. </param>
+        /// <param name="actions"> Actions to invoke when the alert fires. </param>
+        /// <param name="isWorkspaceAlertsStorageConfigured"> The flag which indicates whether this scheduled query rule has been configured to be stored in the customer's storage. The default is false. </param>
+        /// <param name="checkWorkspaceAlertsStorageConfigured"> The flag which indicates whether this scheduled query rule should be stored in the customer's storage. The default is false. Relevant only for rules of the kind LogAlert. </param>
+        /// <param name="skipQueryValidation"> The flag which indicates whether the provided query should be validated or not. The default is false. Relevant only for rules of the kind LogAlert. </param>
+        /// <param name="autoMitigate"> The flag that indicates whether the alert should be automatically resolved or not. The default is true. Relevant only for rules of the kind LogAlert. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ScheduledQueryRulePatch(IDictionary<string, string> tags, string createdWithApiVersion, bool? isLegacyLogAnalyticsRule, string description, string displayName, AlertSeverity? severity, bool? isEnabled, IList<string> scopes, TimeSpan? evaluationFrequency, TimeSpan? windowSize, TimeSpan? overrideQueryTimeRange, IList<string> targetResourceTypes, ScheduledQueryRuleCriteria criteria, TimeSpan? muteActionsDuration, ScheduledQueryRuleActions actions, bool? isWorkspaceAlertsStorageConfigured, bool? checkWorkspaceAlertsStorageConfigured, bool? skipQueryValidation, bool? autoMitigate, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Tags = tags;
+            CreatedWithApiVersion = createdWithApiVersion;
+            IsLegacyLogAnalyticsRule = isLegacyLogAnalyticsRule;
+            Description = description;
+            DisplayName = displayName;
+            Severity = severity;
+            IsEnabled = isEnabled;
+            Scopes = scopes;
+            EvaluationFrequency = evaluationFrequency;
+            WindowSize = windowSize;
+            OverrideQueryTimeRange = overrideQueryTimeRange;
+            TargetResourceTypes = targetResourceTypes;
+            Criteria = criteria;
+            MuteActionsDuration = muteActionsDuration;
+            Actions = actions;
+            IsWorkspaceAlertsStorageConfigured = isWorkspaceAlertsStorageConfigured;
+            CheckWorkspaceAlertsStorageConfigured = checkWorkspaceAlertsStorageConfigured;
+            SkipQueryValidation = skipQueryValidation;
+            AutoMitigate = autoMitigate;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Resource tags. </summary>

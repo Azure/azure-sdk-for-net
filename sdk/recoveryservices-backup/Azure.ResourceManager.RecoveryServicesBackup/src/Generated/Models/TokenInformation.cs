@@ -5,25 +5,62 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
     /// <summary> The token information details. </summary>
     public partial class TokenInformation
     {
-        /// <summary> Initializes a new instance of TokenInformation. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="TokenInformation"/>. </summary>
         internal TokenInformation()
         {
         }
 
-        /// <summary> Initializes a new instance of TokenInformation. </summary>
+        /// <summary> Initializes a new instance of <see cref="TokenInformation"/>. </summary>
         /// <param name="token"> Token value. </param>
         /// <param name="expiryTimeInUtcTicks"> Expiry time of token. </param>
         /// <param name="securityPin"> Security PIN. </param>
-        internal TokenInformation(string token, long? expiryTimeInUtcTicks, string securityPin)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal TokenInformation(string token, long? expiryTimeInUtcTicks, string securityPin, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Token = token;
             ExpiryTimeInUtcTicks = expiryTimeInUtcTicks;
             SecurityPin = securityPin;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Token value. </summary>

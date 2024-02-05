@@ -16,6 +16,8 @@ namespace Azure.ResourceManager.Network.Models
             if (value == 0) return FirewallPolicyIdpsSignatureDirection.Zero;
             if (value == 1) return FirewallPolicyIdpsSignatureDirection.One;
             if (value == 2) return FirewallPolicyIdpsSignatureDirection.Two;
+            if (value == 3) return FirewallPolicyIdpsSignatureDirection.Three;
+            if (value == 4) return FirewallPolicyIdpsSignatureDirection.Four;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown FirewallPolicyIdpsSignatureDirection value.");
         }
     }

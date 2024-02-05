@@ -21,7 +21,39 @@ namespace Azure.ResourceManager.ServiceFabric
     /// </summary>
     public partial class ServiceFabricClusterData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of ServiceFabricClusterData. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ServiceFabricClusterData"/>. </summary>
         /// <param name="location"> The location. </param>
         public ServiceFabricClusterData(AzureLocation location) : base(location)
         {
@@ -34,7 +66,7 @@ namespace Azure.ResourceManager.ServiceFabric
             Notifications = new ChangeTrackingList<ClusterNotification>();
         }
 
-        /// <summary> Initializes a new instance of ServiceFabricClusterData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceFabricClusterData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -48,7 +80,7 @@ namespace Azure.ResourceManager.ServiceFabric
         /// <param name="certificateCommonNames"> Describes a list of server certificates referenced by common name that are used to secure the cluster. </param>
         /// <param name="clientCertificateCommonNames"> The list of client certificates referenced by common name that are allowed to manage the cluster. </param>
         /// <param name="clientCertificateThumbprints"> The list of client certificates referenced by thumbprint that are allowed to manage the cluster. </param>
-        /// <param name="clusterCodeVersion"> The Service Fabric runtime version of the cluster. This property can only by set the user when **upgradeMode** is set to 'Manual'. To get list of available Service Fabric versions for new clusters use [ClusterVersion API](./ClusterVersion.md). To get the list of available version for existing clusters use **availableClusterVersions**. </param>
+        /// <param name="clusterCodeVersion"> The Service Fabric runtime version of the cluster. This property can only by set the user when **upgradeMode** is set to 'Manual'. To get list of available Service Fabric versions for new clusters use [ClusterVersion API](https://learn.microsoft.com/rest/api/servicefabric/cluster-versions/list). To get the list of available version for existing clusters use **availableClusterVersions**. </param>
         /// <param name="clusterEndpoint"> The Azure Resource Provider endpoint. A system service in the cluster connects to this  endpoint. </param>
         /// <param name="clusterId"> A service generated unique identifier for the cluster resource. </param>
         /// <param name="clusterState">
@@ -96,8 +128,10 @@ namespace Azure.ResourceManager.ServiceFabric
         /// <param name="upgradePauseEndOn"> Indicates the end date and time to pause automatic runtime version upgrades on the cluster for an specific period of time on the cluster (UTC). </param>
         /// <param name="isWaveUpgradePaused"> Boolean to pause automatic runtime version upgrades to the cluster. </param>
         /// <param name="notifications"> Indicates a list of notification channels for cluster events. </param>
+        /// <param name="isHttpGatewayExclusiveAuthModeEnabled"> If true, token-based authentication is not allowed on the HttpGatewayEndpoint. This is required to support TLS versions 1.3 and above. If token-based authentication is used, HttpGatewayTokenAuthEndpointPort must be defined. </param>
         /// <param name="etag"> Azure resource etag. </param>
-        internal ServiceFabricClusterData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, IList<ClusterAddOnFeature> addOnFeatures, IReadOnlyList<ClusterVersionDetails> availableClusterVersions, ClusterAadSetting azureActiveDirectory, ClusterCertificateDescription certificate, ClusterServerCertificateCommonNames certificateCommonNames, IList<ClusterClientCertificateCommonName> clientCertificateCommonNames, IList<ClusterClientCertificateThumbprint> clientCertificateThumbprints, string clusterCodeVersion, Uri clusterEndpoint, Guid? clusterId, ServiceFabricClusterState? clusterState, DiagnosticsStorageAccountConfig diagnosticsStorageAccountConfig, bool? isEventStoreServiceEnabled, IList<SettingsSectionDescription> fabricSettings, Uri managementEndpoint, IList<ClusterNodeTypeDescription> nodeTypes, ServiceFabricProvisioningState? provisioningState, ClusterReliabilityLevel? reliabilityLevel, ClusterCertificateDescription reverseProxyCertificate, ClusterServerCertificateCommonNames reverseProxyCertificateCommonNames, ClusterUpgradePolicy upgradeDescription, ClusterUpgradeMode? upgradeMode, ApplicationTypeVersionsCleanupPolicy applicationTypeVersionsCleanupPolicy, string vmImage, SfZonalUpgradeMode? serviceFabricZonalUpgradeMode, VmssZonalUpgradeMode? vmssZonalUpgradeMode, bool? isInfrastructureServiceManagerEnabled, ClusterUpgradeCadence? upgradeWave, DateTimeOffset? upgradePauseStartOn, DateTimeOffset? upgradePauseEndOn, bool? isWaveUpgradePaused, IList<ClusterNotification> notifications, ETag? etag) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ServiceFabricClusterData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, IList<ClusterAddOnFeature> addOnFeatures, IReadOnlyList<ClusterVersionDetails> availableClusterVersions, ClusterAadSetting azureActiveDirectory, ClusterCertificateDescription certificate, ClusterServerCertificateCommonNames certificateCommonNames, IList<ClusterClientCertificateCommonName> clientCertificateCommonNames, IList<ClusterClientCertificateThumbprint> clientCertificateThumbprints, string clusterCodeVersion, Uri clusterEndpoint, Guid? clusterId, ServiceFabricClusterState? clusterState, DiagnosticsStorageAccountConfig diagnosticsStorageAccountConfig, bool? isEventStoreServiceEnabled, IList<SettingsSectionDescription> fabricSettings, Uri managementEndpoint, IList<ClusterNodeTypeDescription> nodeTypes, ServiceFabricProvisioningState? provisioningState, ClusterReliabilityLevel? reliabilityLevel, ClusterCertificateDescription reverseProxyCertificate, ClusterServerCertificateCommonNames reverseProxyCertificateCommonNames, ClusterUpgradePolicy upgradeDescription, ClusterUpgradeMode? upgradeMode, ApplicationTypeVersionsCleanupPolicy applicationTypeVersionsCleanupPolicy, string vmImage, SfZonalUpgradeMode? serviceFabricZonalUpgradeMode, VmssZonalUpgradeMode? vmssZonalUpgradeMode, bool? isInfrastructureServiceManagerEnabled, ClusterUpgradeCadence? upgradeWave, DateTimeOffset? upgradePauseStartOn, DateTimeOffset? upgradePauseEndOn, bool? isWaveUpgradePaused, IList<ClusterNotification> notifications, bool? isHttpGatewayExclusiveAuthModeEnabled, ETag? etag, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             AddOnFeatures = addOnFeatures;
             AvailableClusterVersions = availableClusterVersions;
@@ -131,7 +165,14 @@ namespace Azure.ResourceManager.ServiceFabric
             UpgradePauseEndOn = upgradePauseEndOn;
             IsWaveUpgradePaused = isWaveUpgradePaused;
             Notifications = notifications;
+            IsHttpGatewayExclusiveAuthModeEnabled = isHttpGatewayExclusiveAuthModeEnabled;
             ETag = etag;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ServiceFabricClusterData"/> for deserialization. </summary>
+        internal ServiceFabricClusterData()
+        {
         }
 
         /// <summary> The list of add-on features to enable in the cluster. </summary>
@@ -148,7 +189,7 @@ namespace Azure.ResourceManager.ServiceFabric
         public IList<ClusterClientCertificateCommonName> ClientCertificateCommonNames { get; }
         /// <summary> The list of client certificates referenced by thumbprint that are allowed to manage the cluster. </summary>
         public IList<ClusterClientCertificateThumbprint> ClientCertificateThumbprints { get; }
-        /// <summary> The Service Fabric runtime version of the cluster. This property can only by set the user when **upgradeMode** is set to 'Manual'. To get list of available Service Fabric versions for new clusters use [ClusterVersion API](./ClusterVersion.md). To get the list of available version for existing clusters use **availableClusterVersions**. </summary>
+        /// <summary> The Service Fabric runtime version of the cluster. This property can only by set the user when **upgradeMode** is set to 'Manual'. To get list of available Service Fabric versions for new clusters use [ClusterVersion API](https://learn.microsoft.com/rest/api/servicefabric/cluster-versions/list). To get the list of available version for existing clusters use **availableClusterVersions**. </summary>
         public string ClusterCodeVersion { get; set; }
         /// <summary> The Azure Resource Provider endpoint. A system service in the cluster connects to this  endpoint. </summary>
         public Uri ClusterEndpoint { get; }
@@ -231,6 +272,8 @@ namespace Azure.ResourceManager.ServiceFabric
         public bool? IsWaveUpgradePaused { get; set; }
         /// <summary> Indicates a list of notification channels for cluster events. </summary>
         public IList<ClusterNotification> Notifications { get; }
+        /// <summary> If true, token-based authentication is not allowed on the HttpGatewayEndpoint. This is required to support TLS versions 1.3 and above. If token-based authentication is used, HttpGatewayTokenAuthEndpointPort must be defined. </summary>
+        public bool? IsHttpGatewayExclusiveAuthModeEnabled { get; set; }
         /// <summary> Azure resource etag. </summary>
         public ETag? ETag { get; }
     }

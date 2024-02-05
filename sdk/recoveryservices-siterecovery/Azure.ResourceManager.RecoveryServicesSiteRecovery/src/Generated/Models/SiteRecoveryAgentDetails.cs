@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,25 +14,59 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> Agent details. </summary>
     public partial class SiteRecoveryAgentDetails
     {
-        /// <summary> Initializes a new instance of SiteRecoveryAgentDetails. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryAgentDetails"/>. </summary>
         internal SiteRecoveryAgentDetails()
         {
             Disks = new ChangeTrackingList<SiteRecoveryAgentDiskDetails>();
         }
 
-        /// <summary> Initializes a new instance of SiteRecoveryAgentDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryAgentDetails"/>. </summary>
         /// <param name="agentId"> The Id of the agent running on the server. </param>
         /// <param name="machineId"> The Id of the machine to which the agent is registered. </param>
         /// <param name="biosId"> The machine BIOS Id. </param>
         /// <param name="fqdn"> The machine FQDN. </param>
         /// <param name="disks"> The disks. </param>
-        internal SiteRecoveryAgentDetails(string agentId, string machineId, string biosId, string fqdn, IReadOnlyList<SiteRecoveryAgentDiskDetails> disks)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SiteRecoveryAgentDetails(string agentId, string machineId, string biosId, string fqdn, IReadOnlyList<SiteRecoveryAgentDiskDetails> disks, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             AgentId = agentId;
             MachineId = machineId;
             BiosId = biosId;
             Fqdn = fqdn;
             Disks = disks;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The Id of the agent running on the server. </summary>

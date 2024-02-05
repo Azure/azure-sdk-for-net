@@ -5,23 +5,27 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> Ssis folder. </summary>
     public partial class SsisFolder : SsisObjectMetadata
     {
-        /// <summary> Initializes a new instance of SsisFolder. </summary>
+        /// <summary> Initializes a new instance of <see cref="SsisFolder"/>. </summary>
         internal SsisFolder()
         {
             MetadataType = SsisObjectMetadataType.Folder;
         }
 
-        /// <summary> Initializes a new instance of SsisFolder. </summary>
+        /// <summary> Initializes a new instance of <see cref="SsisFolder"/>. </summary>
         /// <param name="metadataType"> Type of metadata. </param>
         /// <param name="id"> Metadata id. </param>
         /// <param name="name"> Metadata name. </param>
         /// <param name="description"> Metadata description. </param>
-        internal SsisFolder(SsisObjectMetadataType metadataType, long? id, string name, string description) : base(metadataType, id, name, description)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SsisFolder(SsisObjectMetadataType metadataType, long? id, string name, string description, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(metadataType, id, name, description, serializedAdditionalRawData)
         {
             MetadataType = metadataType;
         }

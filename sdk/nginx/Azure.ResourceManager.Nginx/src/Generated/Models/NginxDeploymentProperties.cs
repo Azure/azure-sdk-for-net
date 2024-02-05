@@ -5,17 +5,52 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Nginx.Models
 {
     /// <summary> The NginxDeploymentProperties. </summary>
     public partial class NginxDeploymentProperties
     {
-        /// <summary> Initializes a new instance of NginxDeploymentProperties. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="NginxDeploymentProperties"/>. </summary>
         public NginxDeploymentProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of NginxDeploymentProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="NginxDeploymentProperties"/>. </summary>
         /// <param name="provisioningState"></param>
         /// <param name="nginxVersion"></param>
         /// <param name="managedResourceGroup"> The managed resource group to deploy VNet injection related network resources. </param>
@@ -23,7 +58,10 @@ namespace Azure.ResourceManager.Nginx.Models
         /// <param name="ipAddress"> The IP address of the deployment. </param>
         /// <param name="enableDiagnosticsSupport"></param>
         /// <param name="logging"></param>
-        internal NginxDeploymentProperties(ProvisioningState? provisioningState, string nginxVersion, string managedResourceGroup, NginxNetworkProfile networkProfile, string ipAddress, bool? enableDiagnosticsSupport, NginxLogging logging)
+        /// <param name="scalingProperties"></param>
+        /// <param name="userProfile"></param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal NginxDeploymentProperties(NginxProvisioningState? provisioningState, string nginxVersion, string managedResourceGroup, NginxNetworkProfile networkProfile, string ipAddress, bool? enableDiagnosticsSupport, NginxLogging logging, NginxDeploymentScalingProperties scalingProperties, NginxDeploymentUserProfile userProfile, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ProvisioningState = provisioningState;
             NginxVersion = nginxVersion;
@@ -32,10 +70,13 @@ namespace Azure.ResourceManager.Nginx.Models
             IPAddress = ipAddress;
             EnableDiagnosticsSupport = enableDiagnosticsSupport;
             Logging = logging;
+            ScalingProperties = scalingProperties;
+            UserProfile = userProfile;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets the provisioning state. </summary>
-        public ProvisioningState? ProvisioningState { get; }
+        public NginxProvisioningState? ProvisioningState { get; }
         /// <summary> Gets the nginx version. </summary>
         public string NginxVersion { get; }
         /// <summary> The managed resource group to deploy VNet injection related network resources. </summary>
@@ -57,6 +98,34 @@ namespace Azure.ResourceManager.Nginx.Models
                 if (Logging is null)
                     Logging = new NginxLogging();
                 Logging.StorageAccount = value;
+            }
+        }
+
+        /// <summary> Gets or sets the scaling properties. </summary>
+        internal NginxDeploymentScalingProperties ScalingProperties { get; set; }
+        /// <summary> Gets or sets the scaling capacity. </summary>
+        public int? ScalingCapacity
+        {
+            get => ScalingProperties is null ? default : ScalingProperties.Capacity;
+            set
+            {
+                if (ScalingProperties is null)
+                    ScalingProperties = new NginxDeploymentScalingProperties();
+                ScalingProperties.Capacity = value;
+            }
+        }
+
+        /// <summary> Gets or sets the user profile. </summary>
+        internal NginxDeploymentUserProfile UserProfile { get; set; }
+        /// <summary> The preferred support contact email address of the user used for sending alerts and notification. Can be an empty string or a valid email address. </summary>
+        public string UserPreferredEmail
+        {
+            get => UserProfile is null ? default : UserProfile.PreferredEmail;
+            set
+            {
+                if (UserProfile is null)
+                    UserProfile = new NginxDeploymentUserProfile();
+                UserProfile.PreferredEmail = value;
             }
         }
     }

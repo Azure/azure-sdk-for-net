@@ -5,20 +5,24 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.HybridNetwork.Models
 {
     /// <summary> Azure template deploy mapping rule profile. </summary>
     public partial class AzureCoreArmTemplateDeployMappingRuleProfile : MappingRuleProfile
     {
-        /// <summary> Initializes a new instance of AzureCoreArmTemplateDeployMappingRuleProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureCoreArmTemplateDeployMappingRuleProfile"/>. </summary>
         public AzureCoreArmTemplateDeployMappingRuleProfile()
         {
         }
 
-        /// <summary> Initializes a new instance of AzureCoreArmTemplateDeployMappingRuleProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureCoreArmTemplateDeployMappingRuleProfile"/>. </summary>
         /// <param name="applicationEnablement"> The application enablement. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="templateMappingRuleProfile"> The template mapping rule profile. </param>
-        internal AzureCoreArmTemplateDeployMappingRuleProfile(ApplicationEnablement? applicationEnablement, ArmTemplateMappingRuleProfile templateMappingRuleProfile) : base(applicationEnablement)
+        internal AzureCoreArmTemplateDeployMappingRuleProfile(ApplicationEnablement? applicationEnablement, IDictionary<string, BinaryData> serializedAdditionalRawData, ArmTemplateMappingRuleProfile templateMappingRuleProfile) : base(applicationEnablement, serializedAdditionalRawData)
         {
             TemplateMappingRuleProfile = templateMappingRuleProfile;
         }

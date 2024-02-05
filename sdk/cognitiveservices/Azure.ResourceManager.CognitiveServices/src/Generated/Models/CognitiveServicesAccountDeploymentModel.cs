@@ -5,29 +5,66 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
     /// <summary> Properties of Cognitive Services account deployment model. </summary>
     public partial class CognitiveServicesAccountDeploymentModel
     {
-        /// <summary> Initializes a new instance of CognitiveServicesAccountDeploymentModel. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private protected IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="CognitiveServicesAccountDeploymentModel"/>. </summary>
         public CognitiveServicesAccountDeploymentModel()
         {
         }
 
-        /// <summary> Initializes a new instance of CognitiveServicesAccountDeploymentModel. </summary>
+        /// <summary> Initializes a new instance of <see cref="CognitiveServicesAccountDeploymentModel"/>. </summary>
         /// <param name="format"> Deployment model format. </param>
         /// <param name="name"> Deployment model name. </param>
         /// <param name="version"> Optional. Deployment model version. If version is not specified, a default version will be assigned. The default version is different for different models and might change when there is new version available for a model. Default version for a model could be found from list models API. </param>
         /// <param name="source"> Optional. Deployment model source ARM resource ID. </param>
         /// <param name="callRateLimit"> The call rate limit Cognitive Services account. </param>
-        internal CognitiveServicesAccountDeploymentModel(string format, string name, string version, string source, ServiceAccountCallRateLimit callRateLimit)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal CognitiveServicesAccountDeploymentModel(string format, string name, string version, string source, ServiceAccountCallRateLimit callRateLimit, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Format = format;
             Name = name;
             Version = version;
             Source = source;
             CallRateLimit = callRateLimit;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Deployment model format. </summary>

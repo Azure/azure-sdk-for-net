@@ -5,23 +5,60 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.EventGrid.Models
 {
     /// <summary> The identity information with the event subscription. </summary>
     public partial class EventSubscriptionIdentity
     {
-        /// <summary> Initializes a new instance of EventSubscriptionIdentity. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="EventSubscriptionIdentity"/>. </summary>
         public EventSubscriptionIdentity()
         {
         }
 
-        /// <summary> Initializes a new instance of EventSubscriptionIdentity. </summary>
+        /// <summary> Initializes a new instance of <see cref="EventSubscriptionIdentity"/>. </summary>
         /// <param name="identityType"> The type of managed identity used. The type 'SystemAssigned, UserAssigned' includes both an implicitly created identity and a set of user-assigned identities. The type 'None' will remove any identity. </param>
         /// <param name="userAssignedIdentity"> The user identity associated with the resource. </param>
-        internal EventSubscriptionIdentity(EventSubscriptionIdentityType? identityType, string userAssignedIdentity)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal EventSubscriptionIdentity(EventSubscriptionIdentityType? identityType, string userAssignedIdentity, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             IdentityType = identityType;
             UserAssignedIdentity = userAssignedIdentity;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The type of managed identity used. The type 'SystemAssigned, UserAssigned' includes both an implicitly created identity and a set of user-assigned identities. The type 'None' will remove any identity. </summary>

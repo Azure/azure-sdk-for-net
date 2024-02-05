@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,24 +14,58 @@ namespace Azure.ResourceManager.DataMigration.Models
     /// <summary> Output for the task that validates Oracle database connection. </summary>
     public partial class ConnectToSourceOracleSyncTaskOutput
     {
-        /// <summary> Initializes a new instance of ConnectToSourceOracleSyncTaskOutput. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ConnectToSourceOracleSyncTaskOutput"/>. </summary>
         internal ConnectToSourceOracleSyncTaskOutput()
         {
             Databases = new ChangeTrackingList<string>();
             ValidationErrors = new ChangeTrackingList<ReportableException>();
         }
 
-        /// <summary> Initializes a new instance of ConnectToSourceOracleSyncTaskOutput. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConnectToSourceOracleSyncTaskOutput"/>. </summary>
         /// <param name="sourceServerVersion"> Version of the source server. </param>
         /// <param name="databases"> List of schemas on source server. </param>
         /// <param name="sourceServerBrandVersion"> Source server brand version. </param>
         /// <param name="validationErrors"> Validation errors associated with the task. </param>
-        internal ConnectToSourceOracleSyncTaskOutput(string sourceServerVersion, IReadOnlyList<string> databases, string sourceServerBrandVersion, IReadOnlyList<ReportableException> validationErrors)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ConnectToSourceOracleSyncTaskOutput(string sourceServerVersion, IReadOnlyList<string> databases, string sourceServerBrandVersion, IReadOnlyList<ReportableException> validationErrors, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             SourceServerVersion = sourceServerVersion;
             Databases = databases;
             SourceServerBrandVersion = sourceServerBrandVersion;
             ValidationErrors = validationErrors;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Version of the source server. </summary>

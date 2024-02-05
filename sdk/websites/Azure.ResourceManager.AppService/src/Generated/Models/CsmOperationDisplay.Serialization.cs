@@ -5,15 +5,81 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class CsmOperationDisplay
+    public partial class CsmOperationDisplay : IUtf8JsonSerializable, IJsonModel<CsmOperationDisplay>
     {
-        internal static CsmOperationDisplay DeserializeCsmOperationDisplay(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CsmOperationDisplay>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<CsmOperationDisplay>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<CsmOperationDisplay>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(CsmOperationDisplay)} does not support '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(Provider))
+            {
+                writer.WritePropertyName("provider"u8);
+                writer.WriteStringValue(Provider);
+            }
+            if (Optional.IsDefined(Resource))
+            {
+                writer.WritePropertyName("resource"u8);
+                writer.WriteStringValue(Resource);
+            }
+            if (Optional.IsDefined(Operation))
+            {
+                writer.WritePropertyName("operation"u8);
+                writer.WriteStringValue(Operation);
+            }
+            if (Optional.IsDefined(Description))
+            {
+                writer.WritePropertyName("description"u8);
+                writer.WriteStringValue(Description);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        CsmOperationDisplay IJsonModel<CsmOperationDisplay>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<CsmOperationDisplay>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(CsmOperationDisplay)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeCsmOperationDisplay(document.RootElement, options);
+        }
+
+        internal static CsmOperationDisplay DeserializeCsmOperationDisplay(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -22,6 +88,8 @@ namespace Azure.ResourceManager.AppService.Models
             Optional<string> resource = default;
             Optional<string> operation = default;
             Optional<string> description = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("provider"u8))
@@ -44,8 +112,44 @@ namespace Azure.ResourceManager.AppService.Models
                     description = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new CsmOperationDisplay(provider.Value, resource.Value, operation.Value, description.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new CsmOperationDisplay(provider.Value, resource.Value, operation.Value, description.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<CsmOperationDisplay>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<CsmOperationDisplay>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(CsmOperationDisplay)} does not support '{options.Format}' format.");
+            }
+        }
+
+        CsmOperationDisplay IPersistableModel<CsmOperationDisplay>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<CsmOperationDisplay>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeCsmOperationDisplay(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(CsmOperationDisplay)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<CsmOperationDisplay>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

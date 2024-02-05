@@ -45,9 +45,12 @@ namespace Azure.ResourceManager.Batch
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="BatchAccountResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="BatchAccountResource"/> object. </returns>
         public static BatchAccountResource GetBatchAccountResource(this ArmClient client, ResourceIdentifier id)
         {
+            Argument.AssertNotNull(client, nameof(client));
+
             return GetMockableBatchArmClient(client).GetBatchAccountResource(id);
         }
 
@@ -61,9 +64,12 @@ namespace Azure.ResourceManager.Batch
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="BatchAccountDetectorResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="BatchAccountDetectorResource"/> object. </returns>
         public static BatchAccountDetectorResource GetBatchAccountDetectorResource(this ArmClient client, ResourceIdentifier id)
         {
+            Argument.AssertNotNull(client, nameof(client));
+
             return GetMockableBatchArmClient(client).GetBatchAccountDetectorResource(id);
         }
 
@@ -77,9 +83,12 @@ namespace Azure.ResourceManager.Batch
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="BatchApplicationPackageResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="BatchApplicationPackageResource"/> object. </returns>
         public static BatchApplicationPackageResource GetBatchApplicationPackageResource(this ArmClient client, ResourceIdentifier id)
         {
+            Argument.AssertNotNull(client, nameof(client));
+
             return GetMockableBatchArmClient(client).GetBatchApplicationPackageResource(id);
         }
 
@@ -93,9 +102,12 @@ namespace Azure.ResourceManager.Batch
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="BatchApplicationResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="BatchApplicationResource"/> object. </returns>
         public static BatchApplicationResource GetBatchApplicationResource(this ArmClient client, ResourceIdentifier id)
         {
+            Argument.AssertNotNull(client, nameof(client));
+
             return GetMockableBatchArmClient(client).GetBatchApplicationResource(id);
         }
 
@@ -109,9 +121,12 @@ namespace Azure.ResourceManager.Batch
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="BatchAccountCertificateResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="BatchAccountCertificateResource"/> object. </returns>
         public static BatchAccountCertificateResource GetBatchAccountCertificateResource(this ArmClient client, ResourceIdentifier id)
         {
+            Argument.AssertNotNull(client, nameof(client));
+
             return GetMockableBatchArmClient(client).GetBatchAccountCertificateResource(id);
         }
 
@@ -125,9 +140,12 @@ namespace Azure.ResourceManager.Batch
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="BatchPrivateLinkResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="BatchPrivateLinkResource"/> object. </returns>
         public static BatchPrivateLinkResource GetBatchPrivateLinkResource(this ArmClient client, ResourceIdentifier id)
         {
+            Argument.AssertNotNull(client, nameof(client));
+
             return GetMockableBatchArmClient(client).GetBatchPrivateLinkResource(id);
         }
 
@@ -141,9 +159,12 @@ namespace Azure.ResourceManager.Batch
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="BatchPrivateEndpointConnectionResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="BatchPrivateEndpointConnectionResource"/> object. </returns>
         public static BatchPrivateEndpointConnectionResource GetBatchPrivateEndpointConnectionResource(this ArmClient client, ResourceIdentifier id)
         {
+            Argument.AssertNotNull(client, nameof(client));
+
             return GetMockableBatchArmClient(client).GetBatchPrivateEndpointConnectionResource(id);
         }
 
@@ -157,9 +178,12 @@ namespace Azure.ResourceManager.Batch
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="BatchAccountPoolResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="BatchAccountPoolResource"/> object. </returns>
         public static BatchAccountPoolResource GetBatchAccountPoolResource(this ArmClient client, ResourceIdentifier id)
         {
+            Argument.AssertNotNull(client, nameof(client));
+
             return GetMockableBatchArmClient(client).GetBatchAccountPoolResource(id);
         }
 
@@ -171,9 +195,12 @@ namespace Azure.ResourceManager.Batch
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         /// <returns> An object representing collection of BatchAccountResources and their operations over a BatchAccountResource. </returns>
         public static BatchAccountCollection GetBatchAccounts(this ResourceGroupResource resourceGroupResource)
         {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
             return GetMockableBatchResourceGroupResource(resourceGroupResource).GetBatchAccounts();
         }
 
@@ -188,6 +215,14 @@ namespace Azure.ResourceManager.Batch
         /// <term>Operation Id</term>
         /// <description>BatchAccount_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BatchAccountResource"/></description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -197,11 +232,13 @@ namespace Azure.ResourceManager.Batch
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="accountName"> The name of the Batch account. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="accountName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="accountName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public static async Task<Response<BatchAccountResource>> GetBatchAccountAsync(this ResourceGroupResource resourceGroupResource, string accountName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
             return await GetMockableBatchResourceGroupResource(resourceGroupResource).GetBatchAccountAsync(accountName, cancellationToken).ConfigureAwait(false);
         }
 
@@ -216,6 +253,14 @@ namespace Azure.ResourceManager.Batch
         /// <term>Operation Id</term>
         /// <description>BatchAccount_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BatchAccountResource"/></description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -225,11 +270,13 @@ namespace Azure.ResourceManager.Batch
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="accountName"> The name of the Batch account. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="accountName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="accountName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public static Response<BatchAccountResource> GetBatchAccount(this ResourceGroupResource resourceGroupResource, string accountName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
             return GetMockableBatchResourceGroupResource(resourceGroupResource).GetBatchAccount(accountName, cancellationToken);
         }
 
@@ -244,6 +291,14 @@ namespace Azure.ResourceManager.Batch
         /// <term>Operation Id</term>
         /// <description>BatchAccount_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BatchAccountResource"/></description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -252,9 +307,12 @@ namespace Azure.ResourceManager.Batch
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="BatchAccountResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> An async collection of <see cref="BatchAccountResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<BatchAccountResource> GetBatchAccountsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
             return GetMockableBatchSubscriptionResource(subscriptionResource).GetBatchAccountsAsync(cancellationToken);
         }
 
@@ -269,6 +327,14 @@ namespace Azure.ResourceManager.Batch
         /// <term>Operation Id</term>
         /// <description>BatchAccount_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BatchAccountResource"/></description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -277,9 +343,12 @@ namespace Azure.ResourceManager.Batch
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="BatchAccountResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="BatchAccountResource"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<BatchAccountResource> GetBatchAccounts(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
             return GetMockableBatchSubscriptionResource(subscriptionResource).GetBatchAccounts(cancellationToken);
         }
 
@@ -294,6 +363,10 @@ namespace Azure.ResourceManager.Batch
         /// <term>Operation Id</term>
         /// <description>Location_GetQuotas</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-11-01</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -303,8 +376,11 @@ namespace Azure.ResourceManager.Batch
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="locationName"> The region for which to retrieve Batch service quotas. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         public static async Task<Response<BatchLocationQuota>> GetBatchQuotasAsync(this SubscriptionResource subscriptionResource, AzureLocation locationName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
             return await GetMockableBatchSubscriptionResource(subscriptionResource).GetBatchQuotasAsync(locationName, cancellationToken).ConfigureAwait(false);
         }
 
@@ -319,6 +395,10 @@ namespace Azure.ResourceManager.Batch
         /// <term>Operation Id</term>
         /// <description>Location_GetQuotas</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-11-01</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -328,8 +408,11 @@ namespace Azure.ResourceManager.Batch
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="locationName"> The region for which to retrieve Batch service quotas. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         public static Response<BatchLocationQuota> GetBatchQuotas(this SubscriptionResource subscriptionResource, AzureLocation locationName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
             return GetMockableBatchSubscriptionResource(subscriptionResource).GetBatchQuotas(locationName, cancellationToken);
         }
 
@@ -344,6 +427,10 @@ namespace Azure.ResourceManager.Batch
         /// <term>Operation Id</term>
         /// <description>Location_ListSupportedVirtualMachineSkus</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-11-01</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -355,9 +442,12 @@ namespace Azure.ResourceManager.Batch
         /// <param name="maxresults"> The maximum number of items to return in the response. </param>
         /// <param name="filter"> OData filter expression. Valid properties for filtering are "familyName". </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="BatchSupportedSku" /> that may take multiple service requests to iterate over. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> An async collection of <see cref="BatchSupportedSku"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<BatchSupportedSku> GetBatchSupportedVirtualMachineSkusAsync(this SubscriptionResource subscriptionResource, AzureLocation locationName, int? maxresults = null, string filter = null, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
             return GetMockableBatchSubscriptionResource(subscriptionResource).GetBatchSupportedVirtualMachineSkusAsync(locationName, maxresults, filter, cancellationToken);
         }
 
@@ -372,6 +462,10 @@ namespace Azure.ResourceManager.Batch
         /// <term>Operation Id</term>
         /// <description>Location_ListSupportedVirtualMachineSkus</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-11-01</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -383,9 +477,12 @@ namespace Azure.ResourceManager.Batch
         /// <param name="maxresults"> The maximum number of items to return in the response. </param>
         /// <param name="filter"> OData filter expression. Valid properties for filtering are "familyName". </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="BatchSupportedSku" /> that may take multiple service requests to iterate over. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="BatchSupportedSku"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<BatchSupportedSku> GetBatchSupportedVirtualMachineSkus(this SubscriptionResource subscriptionResource, AzureLocation locationName, int? maxresults = null, string filter = null, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
             return GetMockableBatchSubscriptionResource(subscriptionResource).GetBatchSupportedVirtualMachineSkus(locationName, maxresults, filter, cancellationToken);
         }
 
@@ -400,6 +497,10 @@ namespace Azure.ResourceManager.Batch
         /// <term>Operation Id</term>
         /// <description>Location_ListSupportedCloudServiceSkus</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-11-01</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -411,9 +512,12 @@ namespace Azure.ResourceManager.Batch
         /// <param name="maxresults"> The maximum number of items to return in the response. </param>
         /// <param name="filter"> OData filter expression. Valid properties for filtering are "familyName". </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="BatchSupportedSku" /> that may take multiple service requests to iterate over. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> An async collection of <see cref="BatchSupportedSku"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<BatchSupportedSku> GetBatchSupportedCloudServiceSkusAsync(this SubscriptionResource subscriptionResource, AzureLocation locationName, int? maxresults = null, string filter = null, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
             return GetMockableBatchSubscriptionResource(subscriptionResource).GetBatchSupportedCloudServiceSkusAsync(locationName, maxresults, filter, cancellationToken);
         }
 
@@ -428,6 +532,10 @@ namespace Azure.ResourceManager.Batch
         /// <term>Operation Id</term>
         /// <description>Location_ListSupportedCloudServiceSkus</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-11-01</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -439,9 +547,12 @@ namespace Azure.ResourceManager.Batch
         /// <param name="maxresults"> The maximum number of items to return in the response. </param>
         /// <param name="filter"> OData filter expression. Valid properties for filtering are "familyName". </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="BatchSupportedSku" /> that may take multiple service requests to iterate over. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="BatchSupportedSku"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<BatchSupportedSku> GetBatchSupportedCloudServiceSkus(this SubscriptionResource subscriptionResource, AzureLocation locationName, int? maxresults = null, string filter = null, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
             return GetMockableBatchSubscriptionResource(subscriptionResource).GetBatchSupportedCloudServiceSkus(locationName, maxresults, filter, cancellationToken);
         }
 
@@ -456,6 +567,10 @@ namespace Azure.ResourceManager.Batch
         /// <term>Operation Id</term>
         /// <description>Location_CheckNameAvailability</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-11-01</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -466,9 +581,11 @@ namespace Azure.ResourceManager.Batch
         /// <param name="locationName"> The desired region for the name check. </param>
         /// <param name="content"> Properties needed to check the availability of a name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="content"/> is null. </exception>
         public static async Task<Response<BatchNameAvailabilityResult>> CheckBatchNameAvailabilityAsync(this SubscriptionResource subscriptionResource, AzureLocation locationName, BatchNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
             return await GetMockableBatchSubscriptionResource(subscriptionResource).CheckBatchNameAvailabilityAsync(locationName, content, cancellationToken).ConfigureAwait(false);
         }
 
@@ -483,6 +600,10 @@ namespace Azure.ResourceManager.Batch
         /// <term>Operation Id</term>
         /// <description>Location_CheckNameAvailability</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-11-01</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -493,9 +614,11 @@ namespace Azure.ResourceManager.Batch
         /// <param name="locationName"> The desired region for the name check. </param>
         /// <param name="content"> Properties needed to check the availability of a name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="content"/> is null. </exception>
         public static Response<BatchNameAvailabilityResult> CheckBatchNameAvailability(this SubscriptionResource subscriptionResource, AzureLocation locationName, BatchNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
             return GetMockableBatchSubscriptionResource(subscriptionResource).CheckBatchNameAvailability(locationName, content, cancellationToken);
         }
     }

@@ -15,7 +15,39 @@ namespace Azure.ResourceManager.EdgeOrder.Models
     /// <summary> Order item details. </summary>
     public partial class EdgeOrderItemDetails
     {
-        /// <summary> Initializes a new instance of EdgeOrderItemDetails. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="EdgeOrderItemDetails"/>. </summary>
         /// <param name="productDetails"> Unique identifier for configuration. </param>
         /// <param name="orderItemType"> Order item type. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="productDetails"/> is null. </exception>
@@ -30,7 +62,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             ManagementRPDetailsList = new ChangeTrackingList<ResourceProviderDetails>();
         }
 
-        /// <summary> Initializes a new instance of EdgeOrderItemDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="EdgeOrderItemDetails"/>. </summary>
         /// <param name="productDetails"> Unique identifier for configuration. </param>
         /// <param name="orderItemType"> Order item type. </param>
         /// <param name="currentStage"> Current Order item Status. </param>
@@ -47,7 +79,8 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         /// <param name="firstOrDefaultManagement"> Parent RP details - this returns only the first or default parent RP from the entire list. </param>
         /// <param name="managementRPDetailsList"> List of parent RP details supported for configuration. </param>
         /// <param name="error"> Top level error for the job. </param>
-        internal EdgeOrderItemDetails(ProductDetails productDetails, OrderItemType orderItemType, EdgeOrderStageDetails currentStage, IReadOnlyList<EdgeOrderStageDetails> orderItemStageHistory, OrderItemPreferences preferences, ForwardShippingDetails forwardShippingDetails, ReverseShippingDetails reverseShippingDetails, IList<string> notificationEmailList, string cancellationReason, OrderItemCancellationStatus? cancellationStatus, EdgeOrderActionStatus? deletionStatus, string returnReason, OrderItemReturnStatus? returnStatus, ResourceProviderDetails firstOrDefaultManagement, IReadOnlyList<ResourceProviderDetails> managementRPDetailsList, ResponseError error)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal EdgeOrderItemDetails(ProductDetails productDetails, OrderItemType orderItemType, EdgeOrderStageDetails currentStage, IReadOnlyList<EdgeOrderStageDetails> orderItemStageHistory, OrderItemPreferences preferences, ForwardShippingDetails forwardShippingDetails, ReverseShippingDetails reverseShippingDetails, IList<string> notificationEmailList, string cancellationReason, OrderItemCancellationStatus? cancellationStatus, EdgeOrderActionStatus? deletionStatus, string returnReason, OrderItemReturnStatus? returnStatus, ResourceProviderDetails firstOrDefaultManagement, IReadOnlyList<ResourceProviderDetails> managementRPDetailsList, ResponseError error, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ProductDetails = productDetails;
             OrderItemType = orderItemType;
@@ -65,6 +98,12 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             FirstOrDefaultManagement = firstOrDefaultManagement;
             ManagementRPDetailsList = managementRPDetailsList;
             Error = error;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="EdgeOrderItemDetails"/> for deserialization. </summary>
+        internal EdgeOrderItemDetails()
+        {
         }
 
         /// <summary> Unique identifier for configuration. </summary>

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,19 +14,20 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// <summary> Azure VM workload-specific protectable item representing SQL Availability Group. </summary>
     public partial class VmWorkloadSqlAvailabilityGroupProtectableItem : VmWorkloadProtectableItem
     {
-        /// <summary> Initializes a new instance of VmWorkloadSqlAvailabilityGroupProtectableItem. </summary>
+        /// <summary> Initializes a new instance of <see cref="VmWorkloadSqlAvailabilityGroupProtectableItem"/>. </summary>
         public VmWorkloadSqlAvailabilityGroupProtectableItem()
         {
             NodesList = new ChangeTrackingList<DistributedNodesInfo>();
             ProtectableItemType = "SQLAvailabilityGroupContainer";
         }
 
-        /// <summary> Initializes a new instance of VmWorkloadSqlAvailabilityGroupProtectableItem. </summary>
+        /// <summary> Initializes a new instance of <see cref="VmWorkloadSqlAvailabilityGroupProtectableItem"/>. </summary>
         /// <param name="backupManagementType"> Type of backup management to backup an item. </param>
         /// <param name="workloadType"> Type of workload for the backup management. </param>
         /// <param name="protectableItemType"> Type of the backup item. </param>
         /// <param name="friendlyName"> Friendly name of the backup item. </param>
         /// <param name="protectionState"> State of the back up item. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="parentName"> Name for instance or AG. </param>
         /// <param name="parentUniqueName">
         /// Parent Unique Name is added to provide the service formatted URI Name of the Parent
@@ -39,7 +41,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="preBackupValidation"> Pre-backup validation for protectable objects. </param>
         /// <param name="isProtectable"> Indicates if item is protectable. </param>
         /// <param name="nodesList"> List of the nodes in case of distributed container. </param>
-        internal VmWorkloadSqlAvailabilityGroupProtectableItem(string backupManagementType, string workloadType, string protectableItemType, string friendlyName, BackupProtectionStatus? protectionState, string parentName, string parentUniqueName, string serverName, bool? isAutoProtectable, bool? isAutoProtected, int? subInquiredItemCount, int? subProtectableItemCount, PreBackupValidation preBackupValidation, bool? isProtectable, IList<DistributedNodesInfo> nodesList) : base(backupManagementType, workloadType, protectableItemType, friendlyName, protectionState, parentName, parentUniqueName, serverName, isAutoProtectable, isAutoProtected, subInquiredItemCount, subProtectableItemCount, preBackupValidation, isProtectable)
+        internal VmWorkloadSqlAvailabilityGroupProtectableItem(string backupManagementType, string workloadType, string protectableItemType, string friendlyName, BackupProtectionStatus? protectionState, IDictionary<string, BinaryData> serializedAdditionalRawData, string parentName, string parentUniqueName, string serverName, bool? isAutoProtectable, bool? isAutoProtected, int? subInquiredItemCount, int? subProtectableItemCount, PreBackupValidation preBackupValidation, bool? isProtectable, IList<DistributedNodesInfo> nodesList) : base(backupManagementType, workloadType, protectableItemType, friendlyName, protectionState, serializedAdditionalRawData, parentName, parentUniqueName, serverName, isAutoProtectable, isAutoProtected, subInquiredItemCount, subProtectableItemCount, preBackupValidation, isProtectable)
         {
             NodesList = nodesList;
             ProtectableItemType = protectableItemType ?? "SQLAvailabilityGroupContainer";

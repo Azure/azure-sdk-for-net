@@ -5,16 +5,25 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Workloads.Models
 {
     /// <summary> The UnknownSingleServerCustomResourceNames. </summary>
     internal partial class UnknownSingleServerCustomResourceNames : SingleServerCustomResourceNames
     {
-        /// <summary> Initializes a new instance of UnknownSingleServerCustomResourceNames. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnknownSingleServerCustomResourceNames"/>. </summary>
         /// <param name="namingPatternType"> The pattern type to be used for resource naming. </param>
-        internal UnknownSingleServerCustomResourceNames(SapNamingPatternType namingPatternType) : base(namingPatternType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal UnknownSingleServerCustomResourceNames(SapNamingPatternType namingPatternType, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(namingPatternType, serializedAdditionalRawData)
         {
             NamingPatternType = namingPatternType;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="UnknownSingleServerCustomResourceNames"/> for deserialization. </summary>
+        internal UnknownSingleServerCustomResourceNames()
+        {
         }
     }
 }

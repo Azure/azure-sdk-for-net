@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,19 +14,20 @@ namespace Azure.ResourceManager.TrafficManager.Models
     /// <summary> The resource model definition for a ARM tracked top level resource. </summary>
     public partial class TrafficManagerTrackedResourceData : TrafficManagerResourceData
     {
-        /// <summary> Initializes a new instance of TrafficManagerTrackedResourceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="TrafficManagerTrackedResourceData"/>. </summary>
         public TrafficManagerTrackedResourceData()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of TrafficManagerTrackedResourceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="TrafficManagerTrackedResourceData"/>. </summary>
         /// <param name="id"> Fully qualified resource Id for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/trafficManagerProfiles/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. Ex- Microsoft.Network/trafficManagerProfiles. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The Azure Region where the resource lives. </param>
-        internal TrafficManagerTrackedResourceData(ResourceIdentifier id, string name, ResourceType? resourceType, IDictionary<string, string> tags, AzureLocation? location) : base(id, name, resourceType)
+        internal TrafficManagerTrackedResourceData(ResourceIdentifier id, string name, ResourceType? resourceType, IDictionary<string, BinaryData> serializedAdditionalRawData, IDictionary<string, string> tags, AzureLocation? location) : base(id, name, resourceType, serializedAdditionalRawData)
         {
             Tags = tags;
             Location = location;

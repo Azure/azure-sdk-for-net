@@ -6,26 +6,61 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
     /// <summary> Properties of Recovery Point. </summary>
     public partial class RecoveryPointProperties
     {
-        /// <summary> Initializes a new instance of RecoveryPointProperties. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="RecoveryPointProperties"/>. </summary>
         public RecoveryPointProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of RecoveryPointProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="RecoveryPointProperties"/>. </summary>
         /// <param name="expireOn"> Expiry time of Recovery Point in UTC. </param>
         /// <param name="ruleName"> Rule name tagged on Recovery Point that governs life cycle. </param>
         /// <param name="isSoftDeleted"> Bool to indicate whether RP is in soft delete state or not. </param>
-        internal RecoveryPointProperties(DateTimeOffset? expireOn, string ruleName, bool? isSoftDeleted)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal RecoveryPointProperties(DateTimeOffset? expireOn, string ruleName, bool? isSoftDeleted, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ExpireOn = expireOn;
             RuleName = ruleName;
             IsSoftDeleted = isSoftDeleted;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Expiry time of Recovery Point in UTC. </summary>

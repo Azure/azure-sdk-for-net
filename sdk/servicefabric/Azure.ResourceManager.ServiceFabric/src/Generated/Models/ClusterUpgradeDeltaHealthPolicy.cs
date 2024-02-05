@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,7 +14,39 @@ namespace Azure.ResourceManager.ServiceFabric.Models
     /// <summary> Describes the delta health policies for the cluster upgrade. </summary>
     public partial class ClusterUpgradeDeltaHealthPolicy
     {
-        /// <summary> Initializes a new instance of ClusterUpgradeDeltaHealthPolicy. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ClusterUpgradeDeltaHealthPolicy"/>. </summary>
         /// <param name="maxPercentDeltaUnhealthyNodes">
         /// The maximum allowed percentage of nodes health degradation allowed during cluster upgrades.
         /// The delta is measured between the state of the nodes at the beginning of upgrade and the state of the nodes at the time of the health evaluation.
@@ -40,7 +73,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             ApplicationDeltaHealthPolicies = new ChangeTrackingDictionary<string, ApplicationDeltaHealthPolicy>();
         }
 
-        /// <summary> Initializes a new instance of ClusterUpgradeDeltaHealthPolicy. </summary>
+        /// <summary> Initializes a new instance of <see cref="ClusterUpgradeDeltaHealthPolicy"/>. </summary>
         /// <param name="maxPercentDeltaUnhealthyNodes">
         /// The maximum allowed percentage of nodes health degradation allowed during cluster upgrades.
         /// The delta is measured between the state of the nodes at the beginning of upgrade and the state of the nodes at the time of the health evaluation.
@@ -60,12 +93,19 @@ namespace Azure.ResourceManager.ServiceFabric.Models
         ///
         /// </param>
         /// <param name="applicationDeltaHealthPolicies"> Defines the application delta health policy map used to evaluate the health of an application or one of its child entities when upgrading the cluster. </param>
-        internal ClusterUpgradeDeltaHealthPolicy(int maxPercentDeltaUnhealthyNodes, int maxPercentUpgradeDomainDeltaUnhealthyNodes, int maxPercentDeltaUnhealthyApplications, IDictionary<string, ApplicationDeltaHealthPolicy> applicationDeltaHealthPolicies)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ClusterUpgradeDeltaHealthPolicy(int maxPercentDeltaUnhealthyNodes, int maxPercentUpgradeDomainDeltaUnhealthyNodes, int maxPercentDeltaUnhealthyApplications, IDictionary<string, ApplicationDeltaHealthPolicy> applicationDeltaHealthPolicies, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             MaxPercentDeltaUnhealthyNodes = maxPercentDeltaUnhealthyNodes;
             MaxPercentUpgradeDomainDeltaUnhealthyNodes = maxPercentUpgradeDomainDeltaUnhealthyNodes;
             MaxPercentDeltaUnhealthyApplications = maxPercentDeltaUnhealthyApplications;
             ApplicationDeltaHealthPolicies = applicationDeltaHealthPolicies;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ClusterUpgradeDeltaHealthPolicy"/> for deserialization. </summary>
+        internal ClusterUpgradeDeltaHealthPolicy()
+        {
         }
 
         /// <summary>

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,13 +14,45 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> Hyper V VM network details. </summary>
     public partial class VmNicDetails
     {
-        /// <summary> Initializes a new instance of VmNicDetails. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="VmNicDetails"/>. </summary>
         internal VmNicDetails()
         {
             IPConfigs = new ChangeTrackingList<HyperVIPConfigDetails>();
         }
 
-        /// <summary> Initializes a new instance of VmNicDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="VmNicDetails"/>. </summary>
         /// <param name="nicId"> The nic Id. </param>
         /// <param name="replicaNicId"> The replica nic Id. </param>
         /// <param name="sourceNicArmId"> The source nic ARM Id. </param>
@@ -39,7 +72,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="tfoRecoveryNicResourceGroupName"> The resource group of the NIC to be used when creating target NICs in TFO. </param>
         /// <param name="isTfoReuseExistingNicAllowed"> A value indicating whether an existing NIC is allowed to be reused during test failover subject to availability. </param>
         /// <param name="targetNicName"> Target NIC name. </param>
-        internal VmNicDetails(string nicId, string replicaNicId, ResourceIdentifier sourceNicArmId, string vmNetworkName, ResourceIdentifier recoveryVmNetworkId, IReadOnlyList<HyperVIPConfigDetails> ipConfigs, string selectionType, string recoveryNetworkSecurityGroupId, bool? isAcceleratedNetworkingOnRecoveryEnabled, ResourceIdentifier tfoVmNetworkId, string tfoNetworkSecurityGroupId, bool? isAcceleratedNetworkingOnTfoEnabled, string recoveryNicName, string recoveryNicResourceGroupName, bool? isReuseExistingNicAllowed, string tfoRecoveryNicName, string tfoRecoveryNicResourceGroupName, bool? isTfoReuseExistingNicAllowed, string targetNicName)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal VmNicDetails(string nicId, string replicaNicId, ResourceIdentifier sourceNicArmId, string vmNetworkName, ResourceIdentifier recoveryVmNetworkId, IReadOnlyList<HyperVIPConfigDetails> ipConfigs, string selectionType, string recoveryNetworkSecurityGroupId, bool? isAcceleratedNetworkingOnRecoveryEnabled, ResourceIdentifier tfoVmNetworkId, string tfoNetworkSecurityGroupId, bool? isAcceleratedNetworkingOnTfoEnabled, string recoveryNicName, string recoveryNicResourceGroupName, bool? isReuseExistingNicAllowed, string tfoRecoveryNicName, string tfoRecoveryNicResourceGroupName, bool? isTfoReuseExistingNicAllowed, string targetNicName, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             NicId = nicId;
             ReplicaNicId = replicaNicId;
@@ -60,6 +94,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             TfoRecoveryNicResourceGroupName = tfoRecoveryNicResourceGroupName;
             IsTfoReuseExistingNicAllowed = isTfoReuseExistingNicAllowed;
             TargetNicName = targetNicName;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The nic Id. </summary>

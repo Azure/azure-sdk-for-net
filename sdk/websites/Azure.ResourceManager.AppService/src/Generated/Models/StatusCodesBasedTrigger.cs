@@ -5,24 +5,60 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Trigger based on status code. </summary>
     public partial class StatusCodesBasedTrigger
     {
-        /// <summary> Initializes a new instance of StatusCodesBasedTrigger. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="StatusCodesBasedTrigger"/>. </summary>
         public StatusCodesBasedTrigger()
         {
         }
 
-        /// <summary> Initializes a new instance of StatusCodesBasedTrigger. </summary>
+        /// <summary> Initializes a new instance of <see cref="StatusCodesBasedTrigger"/>. </summary>
         /// <param name="status"> HTTP status code. </param>
         /// <param name="subStatus"> Request Sub Status. </param>
         /// <param name="win32Status"> Win32 error code. </param>
         /// <param name="count"> Request Count. </param>
         /// <param name="timeInterval"> Time interval. </param>
         /// <param name="path"> Request Path. </param>
-        internal StatusCodesBasedTrigger(int? status, int? subStatus, int? win32Status, int? count, string timeInterval, string path)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal StatusCodesBasedTrigger(int? status, int? subStatus, int? win32Status, int? count, string timeInterval, string path, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Status = status;
             SubStatus = subStatus;
@@ -30,6 +66,7 @@ namespace Azure.ResourceManager.AppService.Models
             Count = count;
             TimeInterval = timeInterval;
             Path = path;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> HTTP status code. </summary>

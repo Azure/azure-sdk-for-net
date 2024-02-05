@@ -5,24 +5,60 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.SqlVirtualMachine.Models
 {
     /// <summary> Storage Configurations for SQL Data, Log and TempDb. </summary>
     public partial class SqlVmStorageConfigurationSettings
     {
-        /// <summary> Initializes a new instance of SqlVmStorageConfigurationSettings. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SqlVmStorageConfigurationSettings"/>. </summary>
         public SqlVmStorageConfigurationSettings()
         {
         }
 
-        /// <summary> Initializes a new instance of SqlVmStorageConfigurationSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="SqlVmStorageConfigurationSettings"/>. </summary>
         /// <param name="sqlDataSettings"> SQL Server Data Storage Settings. </param>
         /// <param name="sqlLogSettings"> SQL Server Log Storage Settings. </param>
         /// <param name="sqlTempDBSettings"> SQL Server TempDb Storage Settings. </param>
         /// <param name="isSqlSystemDBOnDataDisk"> SQL Server SystemDb Storage on DataPool if true. </param>
         /// <param name="diskConfigurationType"> Disk configuration to apply to SQL Server. </param>
         /// <param name="storageWorkloadType"> Storage workload type. </param>
-        internal SqlVmStorageConfigurationSettings(SqlStorageSettings sqlDataSettings, SqlStorageSettings sqlLogSettings, SqlTempDBSettings sqlTempDBSettings, bool? isSqlSystemDBOnDataDisk, SqlVmDiskConfigurationType? diskConfigurationType, SqlVmStorageWorkloadType? storageWorkloadType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SqlVmStorageConfigurationSettings(SqlStorageSettings sqlDataSettings, SqlStorageSettings sqlLogSettings, SqlTempDBSettings sqlTempDBSettings, bool? isSqlSystemDBOnDataDisk, SqlVmDiskConfigurationType? diskConfigurationType, SqlVmStorageWorkloadType? storageWorkloadType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             SqlDataSettings = sqlDataSettings;
             SqlLogSettings = sqlLogSettings;
@@ -30,6 +66,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
             IsSqlSystemDBOnDataDisk = isSqlSystemDBOnDataDisk;
             DiskConfigurationType = diskConfigurationType;
             StorageWorkloadType = storageWorkloadType;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> SQL Server Data Storage Settings. </summary>

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
@@ -13,7 +14,39 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> Enable migration input properties. </summary>
     public partial class EnableMigrationProperties
     {
-        /// <summary> Initializes a new instance of EnableMigrationProperties. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="EnableMigrationProperties"/>. </summary>
         /// <param name="policyId"> The policy Id. </param>
         /// <param name="providerSpecificDetails">
         /// The provider specific details.
@@ -28,6 +61,26 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 
             PolicyId = policyId;
             ProviderSpecificDetails = providerSpecificDetails;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="EnableMigrationProperties"/>. </summary>
+        /// <param name="policyId"> The policy Id. </param>
+        /// <param name="providerSpecificDetails">
+        /// The provider specific details.
+        /// Please note <see cref="EnableMigrationProviderSpecificContent"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="VMwareCbtEnableMigrationContent"/>.
+        /// </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal EnableMigrationProperties(ResourceIdentifier policyId, EnableMigrationProviderSpecificContent providerSpecificDetails, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            PolicyId = policyId;
+            ProviderSpecificDetails = providerSpecificDetails;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="EnableMigrationProperties"/> for deserialization. </summary>
+        internal EnableMigrationProperties()
+        {
         }
 
         /// <summary> The policy Id. </summary>

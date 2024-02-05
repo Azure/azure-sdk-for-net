@@ -5,23 +5,61 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using Azure.Core;
+
 namespace Azure.ResourceManager.Nginx.Models
 {
     /// <summary> The NginxNetworkProfile. </summary>
     public partial class NginxNetworkProfile
     {
-        /// <summary> Initializes a new instance of NginxNetworkProfile. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="NginxNetworkProfile"/>. </summary>
         public NginxNetworkProfile()
         {
         }
 
-        /// <summary> Initializes a new instance of NginxNetworkProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="NginxNetworkProfile"/>. </summary>
         /// <param name="frontEndIPConfiguration"></param>
         /// <param name="networkInterfaceConfiguration"></param>
-        internal NginxNetworkProfile(NginxFrontendIPConfiguration frontEndIPConfiguration, NginxNetworkInterfaceConfiguration networkInterfaceConfiguration)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal NginxNetworkProfile(NginxFrontendIPConfiguration frontEndIPConfiguration, NginxNetworkInterfaceConfiguration networkInterfaceConfiguration, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             FrontEndIPConfiguration = frontEndIPConfiguration;
             NetworkInterfaceConfiguration = networkInterfaceConfiguration;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets or sets the front end ip configuration. </summary>
@@ -29,7 +67,7 @@ namespace Azure.ResourceManager.Nginx.Models
         /// <summary> Gets or sets the network interface configuration. </summary>
         internal NginxNetworkInterfaceConfiguration NetworkInterfaceConfiguration { get; set; }
         /// <summary> Gets or sets the network interface subnet id. </summary>
-        public string NetworkInterfaceSubnetId
+        public ResourceIdentifier NetworkInterfaceSubnetId
         {
             get => NetworkInterfaceConfiguration is null ? default : NetworkInterfaceConfiguration.SubnetId;
             set

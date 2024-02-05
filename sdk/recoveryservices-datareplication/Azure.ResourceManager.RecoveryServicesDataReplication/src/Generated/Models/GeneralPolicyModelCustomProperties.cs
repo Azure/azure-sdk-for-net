@@ -5,20 +5,24 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
 {
     /// <summary> General Policy model custom properties. </summary>
     public partial class GeneralPolicyModelCustomProperties : PolicyModelCustomProperties
     {
-        /// <summary> Initializes a new instance of GeneralPolicyModelCustomProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="GeneralPolicyModelCustomProperties"/>. </summary>
         public GeneralPolicyModelCustomProperties()
         {
             InstanceType = "PolicyModelCustomProperties";
         }
 
-        /// <summary> Initializes a new instance of GeneralPolicyModelCustomProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="GeneralPolicyModelCustomProperties"/>. </summary>
         /// <param name="instanceType"> Gets or sets the instance type. </param>
-        internal GeneralPolicyModelCustomProperties(string instanceType) : base(instanceType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal GeneralPolicyModelCustomProperties(string instanceType, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(instanceType, serializedAdditionalRawData)
         {
             InstanceType = instanceType ?? "PolicyModelCustomProperties";
         }

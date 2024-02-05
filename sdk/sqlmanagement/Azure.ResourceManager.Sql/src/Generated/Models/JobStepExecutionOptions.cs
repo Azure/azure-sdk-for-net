@@ -5,29 +5,66 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> The execution options of a job step. </summary>
     public partial class JobStepExecutionOptions
     {
-        /// <summary> Initializes a new instance of JobStepExecutionOptions. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="JobStepExecutionOptions"/>. </summary>
         public JobStepExecutionOptions()
         {
         }
 
-        /// <summary> Initializes a new instance of JobStepExecutionOptions. </summary>
+        /// <summary> Initializes a new instance of <see cref="JobStepExecutionOptions"/>. </summary>
         /// <param name="timeoutSeconds"> Execution timeout for the job step. </param>
         /// <param name="retryAttempts"> Maximum number of times the job step will be reattempted if the first attempt fails. </param>
         /// <param name="initialRetryIntervalSeconds"> Initial delay between retries for job step execution. </param>
         /// <param name="maximumRetryIntervalSeconds"> The maximum amount of time to wait between retries for job step execution. </param>
         /// <param name="retryIntervalBackoffMultiplier"> The backoff multiplier for the time between retries. </param>
-        internal JobStepExecutionOptions(int? timeoutSeconds, int? retryAttempts, int? initialRetryIntervalSeconds, int? maximumRetryIntervalSeconds, float? retryIntervalBackoffMultiplier)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal JobStepExecutionOptions(int? timeoutSeconds, int? retryAttempts, int? initialRetryIntervalSeconds, int? maximumRetryIntervalSeconds, float? retryIntervalBackoffMultiplier, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             TimeoutSeconds = timeoutSeconds;
             RetryAttempts = retryAttempts;
             InitialRetryIntervalSeconds = initialRetryIntervalSeconds;
             MaximumRetryIntervalSeconds = maximumRetryIntervalSeconds;
             RetryIntervalBackoffMultiplier = retryIntervalBackoffMultiplier;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Execution timeout for the job step. </summary>

@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
@@ -12,18 +14,19 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
     /// <summary> Destination. </summary>
     public partial class NetworkTapPropertiesDestinationsItem : NetworkTapDestinationProperties
     {
-        /// <summary> Initializes a new instance of NetworkTapPropertiesDestinationsItem. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkTapPropertiesDestinationsItem"/>. </summary>
         public NetworkTapPropertiesDestinationsItem()
         {
         }
 
-        /// <summary> Initializes a new instance of NetworkTapPropertiesDestinationsItem. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkTapPropertiesDestinationsItem"/>. </summary>
         /// <param name="name"> Destination name. </param>
         /// <param name="destinationType"> Type of destination. Input can be IsolationDomain or Direct. </param>
         /// <param name="destinationId"> The destination Id. ARM Resource ID of either NNI or Internal Networks. </param>
         /// <param name="isolationDomainProperties"> Isolation Domain Properties. </param>
         /// <param name="destinationTapRuleId"> ARM Resource ID of destination Tap Rule that contains match configurations. </param>
-        internal NetworkTapPropertiesDestinationsItem(string name, NetworkTapDestinationType? destinationType, ResourceIdentifier destinationId, IsolationDomainProperties isolationDomainProperties, ResourceIdentifier destinationTapRuleId) : base(name, destinationType, destinationId, isolationDomainProperties, destinationTapRuleId)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal NetworkTapPropertiesDestinationsItem(string name, NetworkTapDestinationType? destinationType, ResourceIdentifier destinationId, IsolationDomainProperties isolationDomainProperties, ResourceIdentifier destinationTapRuleId, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(name, destinationType, destinationId, isolationDomainProperties, destinationTapRuleId, serializedAdditionalRawData)
         {
         }
     }

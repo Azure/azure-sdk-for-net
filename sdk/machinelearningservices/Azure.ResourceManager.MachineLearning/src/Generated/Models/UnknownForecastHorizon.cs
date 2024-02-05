@@ -5,16 +5,25 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> The UnknownForecastHorizon. </summary>
     internal partial class UnknownForecastHorizon : ForecastHorizon
     {
-        /// <summary> Initializes a new instance of UnknownForecastHorizon. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnknownForecastHorizon"/>. </summary>
         /// <param name="mode"> [Required] Set forecast horizon value selection mode. </param>
-        internal UnknownForecastHorizon(ForecastHorizonMode mode) : base(mode)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal UnknownForecastHorizon(ForecastHorizonMode mode, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(mode, serializedAdditionalRawData)
         {
             Mode = mode;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="UnknownForecastHorizon"/> for deserialization. </summary>
+        internal UnknownForecastHorizon()
+        {
         }
     }
 }

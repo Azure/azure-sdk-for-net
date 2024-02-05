@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.AI.Translation.Text
@@ -13,7 +14,39 @@ namespace Azure.AI.Translation.Text
     /// <summary> An object describing the detected language. </summary>
     public partial class DetectedLanguage
     {
-        /// <summary> Initializes a new instance of DetectedLanguage. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DetectedLanguage"/>. </summary>
         /// <param name="language"> A string representing the code of the detected language. </param>
         /// <param name="score">
         /// A float value indicating the confidence in the result.
@@ -26,6 +59,25 @@ namespace Azure.AI.Translation.Text
 
             Language = language;
             Score = score;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DetectedLanguage"/>. </summary>
+        /// <param name="language"> A string representing the code of the detected language. </param>
+        /// <param name="score">
+        /// A float value indicating the confidence in the result.
+        /// The score is between zero and one and a low score indicates a low confidence.
+        /// </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DetectedLanguage(string language, float score, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Language = language;
+            Score = score;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DetectedLanguage"/> for deserialization. </summary>
+        internal DetectedLanguage()
+        {
         }
 
         /// <summary> A string representing the code of the detected language. </summary>

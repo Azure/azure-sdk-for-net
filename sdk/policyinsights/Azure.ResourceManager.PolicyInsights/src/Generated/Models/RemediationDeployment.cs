@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure;
 using Azure.Core;
 
@@ -14,12 +15,44 @@ namespace Azure.ResourceManager.PolicyInsights.Models
     /// <summary> Details of a single deployment created by the remediation. </summary>
     public partial class RemediationDeployment
     {
-        /// <summary> Initializes a new instance of RemediationDeployment. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="RemediationDeployment"/>. </summary>
         internal RemediationDeployment()
         {
         }
 
-        /// <summary> Initializes a new instance of RemediationDeployment. </summary>
+        /// <summary> Initializes a new instance of <see cref="RemediationDeployment"/>. </summary>
         /// <param name="remediatedResourceId"> Resource ID of the resource that is being remediated by the deployment. </param>
         /// <param name="deploymentId"> Resource ID of the template deployment that will remediate the resource. </param>
         /// <param name="status"> Status of the remediation deployment. </param>
@@ -27,7 +60,8 @@ namespace Azure.ResourceManager.PolicyInsights.Models
         /// <param name="error"> Error encountered while remediated the resource. </param>
         /// <param name="createdOn"> The time at which the remediation was created. </param>
         /// <param name="lastUpdatedOn"> The time at which the remediation deployment was last updated. </param>
-        internal RemediationDeployment(ResourceIdentifier remediatedResourceId, ResourceIdentifier deploymentId, string status, AzureLocation? resourceLocation, ResponseError error, DateTimeOffset? createdOn, DateTimeOffset? lastUpdatedOn)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal RemediationDeployment(ResourceIdentifier remediatedResourceId, ResourceIdentifier deploymentId, string status, AzureLocation? resourceLocation, ResponseError error, DateTimeOffset? createdOn, DateTimeOffset? lastUpdatedOn, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             RemediatedResourceId = remediatedResourceId;
             DeploymentId = deploymentId;
@@ -36,6 +70,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             Error = error;
             CreatedOn = createdOn;
             LastUpdatedOn = lastUpdatedOn;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Resource ID of the resource that is being remediated by the deployment. </summary>

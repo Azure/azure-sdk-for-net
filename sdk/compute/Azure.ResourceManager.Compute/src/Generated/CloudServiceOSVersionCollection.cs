@@ -21,9 +21,9 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.Compute
 {
     /// <summary>
-    /// A class representing a collection of <see cref="CloudServiceOSVersionResource" /> and their operations.
-    /// Each <see cref="CloudServiceOSVersionResource" /> in the collection will belong to the same instance of <see cref="SubscriptionResource" />.
-    /// To get a <see cref="CloudServiceOSVersionCollection" /> instance call the GetCloudServiceOSVersions method from an instance of <see cref="SubscriptionResource" />.
+    /// A class representing a collection of <see cref="CloudServiceOSVersionResource"/> and their operations.
+    /// Each <see cref="CloudServiceOSVersionResource"/> in the collection will belong to the same instance of <see cref="SubscriptionResource"/>.
+    /// To get a <see cref="CloudServiceOSVersionCollection"/> instance call the GetCloudServiceOSVersions method from an instance of <see cref="SubscriptionResource"/>.
     /// </summary>
     public partial class CloudServiceOSVersionCollection : ArmCollection, IEnumerable<CloudServiceOSVersionResource>, IAsyncEnumerable<CloudServiceOSVersionResource>
     {
@@ -68,6 +68,14 @@ namespace Azure.ResourceManager.Compute
         /// <term>Operation Id</term>
         /// <description>CloudServiceOperatingSystems_GetOSVersion</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-04</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CloudServiceOSVersionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="osVersionName"> Name of the OS version. </param>
@@ -104,6 +112,14 @@ namespace Azure.ResourceManager.Compute
         /// <item>
         /// <term>Operation Id</term>
         /// <description>CloudServiceOperatingSystems_GetOSVersion</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-04</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CloudServiceOSVersionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -142,10 +158,18 @@ namespace Azure.ResourceManager.Compute
         /// <term>Operation Id</term>
         /// <description>CloudServiceOperatingSystems_ListOSVersions</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-04</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CloudServiceOSVersionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="CloudServiceOSVersionResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="CloudServiceOSVersionResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<CloudServiceOSVersionResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _cloudServiceOSVersionCloudServiceOperatingSystemsRestClient.CreateListOSVersionsRequest(Id.SubscriptionId, new AzureLocation(_location));
@@ -164,10 +188,18 @@ namespace Azure.ResourceManager.Compute
         /// <term>Operation Id</term>
         /// <description>CloudServiceOperatingSystems_ListOSVersions</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-04</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CloudServiceOSVersionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="CloudServiceOSVersionResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="CloudServiceOSVersionResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<CloudServiceOSVersionResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _cloudServiceOSVersionCloudServiceOperatingSystemsRestClient.CreateListOSVersionsRequest(Id.SubscriptionId, new AzureLocation(_location));
@@ -185,6 +217,14 @@ namespace Azure.ResourceManager.Compute
         /// <item>
         /// <term>Operation Id</term>
         /// <description>CloudServiceOperatingSystems_GetOSVersion</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-04</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CloudServiceOSVersionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -221,6 +261,14 @@ namespace Azure.ResourceManager.Compute
         /// <term>Operation Id</term>
         /// <description>CloudServiceOperatingSystems_GetOSVersion</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-04</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CloudServiceOSVersionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="osVersionName"> Name of the OS version. </param>
@@ -255,6 +303,14 @@ namespace Azure.ResourceManager.Compute
         /// <item>
         /// <term>Operation Id</term>
         /// <description>CloudServiceOperatingSystems_GetOSVersion</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-04</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CloudServiceOSVersionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -292,6 +348,14 @@ namespace Azure.ResourceManager.Compute
         /// <item>
         /// <term>Operation Id</term>
         /// <description>CloudServiceOperatingSystems_GetOSVersion</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-04</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CloudServiceOSVersionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

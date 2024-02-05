@@ -10,7 +10,7 @@ namespace Azure.Communication.JobRouter
     public partial class FunctionRouterRuleCredential : IUtf8JsonSerializable
     {
         /// <summary> Initializes a new instance of AzureFunctionRuleCredential. </summary>
-        /// <param name="functionKey"> (Optional) Access key scoped to a particular function. </param>
+        /// <param name="functionKey"> Access key scoped to a particular function. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="functionKey"/> is null. </exception>
         public FunctionRouterRuleCredential(string functionKey)
         {
@@ -20,12 +20,12 @@ namespace Azure.Communication.JobRouter
 
         /// <summary> Initializes a new instance of AzureFunctionRuleCredential. </summary>
         /// <param name="appKey">
-        /// (Optional) Access key scoped to a Azure Function app.
+        /// Access key scoped to a Azure Function app.
         ///
         /// This key grants access to all functions under the app.
         /// </param>
         /// <param name="clientId">
-        /// (Optional) Client id, when AppKey is provided
+        /// Client id, when AppKey is provided
         ///
         /// In context of Azure function, this is usually the name of the key.
         /// </param>
@@ -39,17 +39,17 @@ namespace Azure.Communication.JobRouter
             ClientId = clientId;
         }
 
-        /// <summary> (Optional) Access key scoped to a particular function. </summary>
+        /// <summary> Access key scoped to a particular function. </summary>
         internal string FunctionKey { get; }
 
         /// <summary>
-        /// (Optional) Access key scoped to a Azure Function app.
+        /// Access key scoped to a Azure Function app.
         /// This key grants access to all functions under the app.
         /// </summary>
         internal string AppKey { get; }
 
         /// <summary>
-        /// (Optional) Client id, when AppKey is provided
+        /// Client id, when AppKey is provided
         /// In context of Azure function, this is usually the name of the key
         /// </summary>
         internal string ClientId { get; }

@@ -13,18 +13,19 @@ namespace Azure.ResourceManager.Logic.Models
     /// <summary> The expression root. </summary>
     public partial class LogicExpressionRoot : LogicExpression
     {
-        /// <summary> Initializes a new instance of LogicExpressionRoot. </summary>
+        /// <summary> Initializes a new instance of <see cref="LogicExpressionRoot"/>. </summary>
         internal LogicExpressionRoot()
         {
         }
 
-        /// <summary> Initializes a new instance of LogicExpressionRoot. </summary>
+        /// <summary> Initializes a new instance of <see cref="LogicExpressionRoot"/>. </summary>
         /// <param name="text"> The text. </param>
         /// <param name="value"> Anything. </param>
         /// <param name="subexpressions"> The sub expressions. </param>
         /// <param name="error"> The azure resource error info. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="path"> The path. </param>
-        internal LogicExpressionRoot(string text, BinaryData value, IReadOnlyList<LogicExpression> subexpressions, LogicExpressionErrorInfo error, string path) : base(text, value, subexpressions, error)
+        internal LogicExpressionRoot(string text, BinaryData value, IReadOnlyList<LogicExpression> subexpressions, LogicExpressionErrorInfo error, IDictionary<string, BinaryData> serializedAdditionalRawData, string path) : base(text, value, subexpressions, error, serializedAdditionalRawData)
         {
             Path = path;
         }

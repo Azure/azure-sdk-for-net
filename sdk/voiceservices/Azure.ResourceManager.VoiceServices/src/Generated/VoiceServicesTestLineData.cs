@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -18,13 +19,45 @@ namespace Azure.ResourceManager.VoiceServices
     /// </summary>
     public partial class VoiceServicesTestLineData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of VoiceServicesTestLineData. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="VoiceServicesTestLineData"/>. </summary>
         /// <param name="location"> The location. </param>
         public VoiceServicesTestLineData(AzureLocation location) : base(location)
         {
         }
 
-        /// <summary> Initializes a new instance of VoiceServicesTestLineData. </summary>
+        /// <summary> Initializes a new instance of <see cref="VoiceServicesTestLineData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -34,11 +67,18 @@ namespace Azure.ResourceManager.VoiceServices
         /// <param name="provisioningState"> Resource provisioning state. </param>
         /// <param name="phoneNumber"> The phone number. </param>
         /// <param name="purpose"> Purpose of this test line, e.g. automated or manual testing. </param>
-        internal VoiceServicesTestLineData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, VoiceServicesProvisioningState? provisioningState, string phoneNumber, VoiceServicesTestLinePurpose? purpose) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal VoiceServicesTestLineData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, VoiceServicesProvisioningState? provisioningState, string phoneNumber, VoiceServicesTestLinePurpose? purpose, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             ProvisioningState = provisioningState;
             PhoneNumber = phoneNumber;
             Purpose = purpose;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="VoiceServicesTestLineData"/> for deserialization. </summary>
+        internal VoiceServicesTestLineData()
+        {
         }
 
         /// <summary> Resource provisioning state. </summary>

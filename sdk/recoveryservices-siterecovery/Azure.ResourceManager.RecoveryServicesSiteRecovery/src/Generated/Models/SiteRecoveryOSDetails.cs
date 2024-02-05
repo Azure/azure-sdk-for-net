@@ -5,24 +5,60 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     /// <summary> Disk Details. </summary>
     public partial class SiteRecoveryOSDetails
     {
-        /// <summary> Initializes a new instance of SiteRecoveryOSDetails. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryOSDetails"/>. </summary>
         internal SiteRecoveryOSDetails()
         {
         }
 
-        /// <summary> Initializes a new instance of SiteRecoveryOSDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryOSDetails"/>. </summary>
         /// <param name="osType"> VM Disk details. </param>
         /// <param name="productType"> Product type. </param>
         /// <param name="osEdition"> The OSEdition. </param>
         /// <param name="osVersion"> The OS Version. </param>
         /// <param name="osMajorVersion"> The OS Major Version. </param>
         /// <param name="osMinorVersion"> The OS Minor Version. </param>
-        internal SiteRecoveryOSDetails(string osType, string productType, string osEdition, string osVersion, string osMajorVersion, string osMinorVersion)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SiteRecoveryOSDetails(string osType, string productType, string osEdition, string osVersion, string osMajorVersion, string osMinorVersion, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             OSType = osType;
             ProductType = productType;
@@ -30,6 +66,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             OSVersion = osVersion;
             OSMajorVersion = osMajorVersion;
             OSMinorVersion = osMinorVersion;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> VM Disk details. </summary>

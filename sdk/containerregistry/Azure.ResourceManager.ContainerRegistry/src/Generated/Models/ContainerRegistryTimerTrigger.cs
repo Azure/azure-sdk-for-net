@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ContainerRegistry.Models
@@ -13,7 +14,39 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
     /// <summary> The properties of a timer trigger. </summary>
     public partial class ContainerRegistryTimerTrigger
     {
-        /// <summary> Initializes a new instance of ContainerRegistryTimerTrigger. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryTimerTrigger"/>. </summary>
         /// <param name="schedule"> The CRON expression for the task schedule. </param>
         /// <param name="name"> The name of the trigger. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="schedule"/> or <paramref name="name"/> is null. </exception>
@@ -26,15 +59,22 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             Name = name;
         }
 
-        /// <summary> Initializes a new instance of ContainerRegistryTimerTrigger. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryTimerTrigger"/>. </summary>
         /// <param name="schedule"> The CRON expression for the task schedule. </param>
         /// <param name="status"> The current status of trigger. </param>
         /// <param name="name"> The name of the trigger. </param>
-        internal ContainerRegistryTimerTrigger(string schedule, ContainerRegistryTriggerStatus? status, string name)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ContainerRegistryTimerTrigger(string schedule, ContainerRegistryTriggerStatus? status, string name, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Schedule = schedule;
             Status = status;
             Name = name;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryTimerTrigger"/> for deserialization. </summary>
+        internal ContainerRegistryTimerTrigger()
+        {
         }
 
         /// <summary> The CRON expression for the task schedule. </summary>

@@ -14,7 +14,39 @@ namespace Azure.Health.Insights.CancerProfiling
     /// <summary> A patient record, including their clinical information and data. </summary>
     public partial class PatientRecord
     {
-        /// <summary> Initializes a new instance of PatientRecord. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="PatientRecord"/>. </summary>
         /// <param name="id"> A given identifier for the patient. Has to be unique across all patients in a single request. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         public PatientRecord(string id)
@@ -25,15 +57,22 @@ namespace Azure.Health.Insights.CancerProfiling
             Data = new ChangeTrackingList<PatientDocument>();
         }
 
-        /// <summary> Initializes a new instance of PatientRecord. </summary>
+        /// <summary> Initializes a new instance of <see cref="PatientRecord"/>. </summary>
         /// <param name="id"> A given identifier for the patient. Has to be unique across all patients in a single request. </param>
         /// <param name="info"> Patient structured information, including demographics and known structured clinical information. </param>
         /// <param name="data"> Patient unstructured clinical data, given as documents. </param>
-        internal PatientRecord(string id, PatientInfo info, IList<PatientDocument> data)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal PatientRecord(string id, PatientInfo info, IList<PatientDocument> data, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Id = id;
             Info = info;
             Data = data;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="PatientRecord"/> for deserialization. </summary>
+        internal PatientRecord()
+        {
         }
 
         /// <summary> A given identifier for the patient. Has to be unique across all patients in a single request. </summary>

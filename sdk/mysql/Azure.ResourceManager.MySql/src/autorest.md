@@ -10,6 +10,7 @@ skip-csproj: true
 library-name: MySql
 #mgmt-debug:
 #  show-serialized-names: true
+use-model-reader-writer: true
 
 batch:
   - tag: package-2020-01-01

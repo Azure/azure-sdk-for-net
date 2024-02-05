@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -14,10 +16,18 @@ using Azure.ResourceManager.Workloads.Models;
 
 namespace Azure.ResourceManager.Workloads
 {
-    public partial class SapCentralServerInstanceData : IUtf8JsonSerializable
+    public partial class SapCentralServerInstanceData : IUtf8JsonSerializable, IJsonModel<SapCentralServerInstanceData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SapCentralServerInstanceData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<SapCentralServerInstanceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<SapCentralServerInstanceData>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SapCentralServerInstanceData)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -32,8 +42,38 @@ namespace Azure.ResourceManager.Workloads
             }
             writer.WritePropertyName("location"u8);
             writer.WriteStringValue(Location);
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(ResourceType);
+            }
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            {
+                writer.WritePropertyName("systemData"u8);
+                JsonSerializer.Serialize(writer, SystemData);
+            }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
+            if (options.Format != "W" && Optional.IsDefined(InstanceNo))
+            {
+                writer.WritePropertyName("instanceNo"u8);
+                writer.WriteStringValue(InstanceNo);
+            }
+            if (options.Format != "W" && Optional.IsDefined(SubnetId))
+            {
+                writer.WritePropertyName("subnet"u8);
+                writer.WriteStringValue(SubnetId);
+            }
             if (Optional.IsDefined(MessageServerProperties))
             {
                 writer.WritePropertyName("messageServerProperties"u8);
@@ -54,12 +94,100 @@ namespace Azure.ResourceManager.Workloads
                 writer.WritePropertyName("enqueueReplicationServerProperties"u8);
                 writer.WriteObjectValue(EnqueueReplicationServerProperties);
             }
+            if (options.Format != "W" && Optional.IsDefined(KernelVersion))
+            {
+                if (KernelVersion != null)
+                {
+                    writer.WritePropertyName("kernelVersion"u8);
+                    writer.WriteStringValue(KernelVersion);
+                }
+                else
+                {
+                    writer.WriteNull("kernelVersion");
+                }
+            }
+            if (options.Format != "W" && Optional.IsDefined(KernelPatch))
+            {
+                if (KernelPatch != null)
+                {
+                    writer.WritePropertyName("kernelPatch"u8);
+                    writer.WriteStringValue(KernelPatch);
+                }
+                else
+                {
+                    writer.WriteNull("kernelPatch");
+                }
+            }
+            if (options.Format != "W" && Optional.IsDefined(LoadBalancerDetails))
+            {
+                writer.WritePropertyName("loadBalancerDetails"u8);
+                JsonSerializer.Serialize(writer, LoadBalancerDetails);
+            }
+            if (options.Format != "W" && Optional.IsCollectionDefined(VmDetails))
+            {
+                writer.WritePropertyName("vmDetails"u8);
+                writer.WriteStartArray();
+                foreach (var item in VmDetails)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (options.Format != "W" && Optional.IsDefined(Status))
+            {
+                writer.WritePropertyName("status"u8);
+                writer.WriteStringValue(Status.Value.ToString());
+            }
+            if (options.Format != "W" && Optional.IsDefined(Health))
+            {
+                writer.WritePropertyName("health"u8);
+                writer.WriteStringValue(Health.Value.ToString());
+            }
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            {
+                writer.WritePropertyName("provisioningState"u8);
+                writer.WriteStringValue(ProvisioningState.Value.ToString());
+            }
+            if (options.Format != "W" && Optional.IsDefined(Errors))
+            {
+                writer.WritePropertyName("errors"u8);
+                writer.WriteObjectValue(Errors);
+            }
             writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static SapCentralServerInstanceData DeserializeSapCentralServerInstanceData(JsonElement element)
+        SapCentralServerInstanceData IJsonModel<SapCentralServerInstanceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<SapCentralServerInstanceData>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SapCentralServerInstanceData)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeSapCentralServerInstanceData(document.RootElement, options);
+        }
+
+        internal static SapCentralServerInstanceData DeserializeSapCentralServerInstanceData(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -84,6 +212,8 @@ namespace Azure.ResourceManager.Workloads
             Optional<SapHealthState> health = default;
             Optional<SapVirtualInstanceProvisioningState> provisioningState = default;
             Optional<SapVirtualInstanceError> errors = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"u8))
@@ -270,8 +400,44 @@ namespace Azure.ResourceManager.Workloads
                     }
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new SapCentralServerInstanceData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, instanceNo.Value, subnet.Value, messageServerProperties.Value, enqueueServerProperties.Value, gatewayServerProperties.Value, enqueueReplicationServerProperties.Value, kernelVersion.Value, kernelPatch.Value, loadBalancerDetails, Optional.ToList(vmDetails), Optional.ToNullable(status), Optional.ToNullable(health), Optional.ToNullable(provisioningState), errors.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new SapCentralServerInstanceData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, instanceNo.Value, subnet.Value, messageServerProperties.Value, enqueueServerProperties.Value, gatewayServerProperties.Value, enqueueReplicationServerProperties.Value, kernelVersion.Value, kernelPatch.Value, loadBalancerDetails, Optional.ToList(vmDetails), Optional.ToNullable(status), Optional.ToNullable(health), Optional.ToNullable(provisioningState), errors.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<SapCentralServerInstanceData>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SapCentralServerInstanceData>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(SapCentralServerInstanceData)} does not support '{options.Format}' format.");
+            }
+        }
+
+        SapCentralServerInstanceData IPersistableModel<SapCentralServerInstanceData>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SapCentralServerInstanceData>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeSapCentralServerInstanceData(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(SapCentralServerInstanceData)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<SapCentralServerInstanceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -6,26 +6,61 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.StreamAnalytics.Models
 {
     /// <summary> Condition applicable to the resource, or to the job overall, that warrant customer attention. </summary>
     public partial class StreamingJobDiagnosticCondition
     {
-        /// <summary> Initializes a new instance of StreamingJobDiagnosticCondition. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="StreamingJobDiagnosticCondition"/>. </summary>
         internal StreamingJobDiagnosticCondition()
         {
         }
 
-        /// <summary> Initializes a new instance of StreamingJobDiagnosticCondition. </summary>
+        /// <summary> Initializes a new instance of <see cref="StreamingJobDiagnosticCondition"/>. </summary>
         /// <param name="since"> The UTC timestamp of when the condition started. Customers should be able to find a corresponding event in the ops log around this time. </param>
         /// <param name="code"> The opaque diagnostic code. </param>
         /// <param name="message"> The human-readable message describing the condition in detail. Localized in the Accept-Language of the client request. </param>
-        internal StreamingJobDiagnosticCondition(DateTimeOffset? since, string code, string message)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal StreamingJobDiagnosticCondition(DateTimeOffset? since, string code, string message, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Since = since;
             Code = code;
             Message = message;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The UTC timestamp of when the condition started. Customers should be able to find a corresponding event in the ops log around this time. </summary>

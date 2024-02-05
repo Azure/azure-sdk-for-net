@@ -19,13 +19,45 @@ namespace Azure.ResourceManager.Reservations
     /// </summary>
     public partial class QuotaRequestDetailData : ResourceData
     {
-        /// <summary> Initializes a new instance of QuotaRequestDetailData. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="QuotaRequestDetailData"/>. </summary>
         internal QuotaRequestDetailData()
         {
             QuotaRequestValue = new ChangeTrackingList<SubContent>();
         }
 
-        /// <summary> Initializes a new instance of QuotaRequestDetailData. </summary>
+        /// <summary> Initializes a new instance of <see cref="QuotaRequestDetailData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -34,12 +66,14 @@ namespace Azure.ResourceManager.Reservations
         /// <param name="message"> User friendly status message. </param>
         /// <param name="requestSubmitOn"> The time when the quota request was submitted using format: yyyy-MM-ddTHH:mm:ssZ as specified by the ISO 8601 standard. </param>
         /// <param name="quotaRequestValue"> The quotaRequests. </param>
-        internal QuotaRequestDetailData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, QuotaRequestState? provisioningState, string message, DateTimeOffset? requestSubmitOn, IReadOnlyList<SubContent> quotaRequestValue) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal QuotaRequestDetailData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, QuotaRequestState? provisioningState, string message, DateTimeOffset? requestSubmitOn, IReadOnlyList<SubContent> quotaRequestValue, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             ProvisioningState = provisioningState;
             Message = message;
             RequestSubmitOn = requestSubmitOn;
             QuotaRequestValue = quotaRequestValue;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The quota request status. </summary>

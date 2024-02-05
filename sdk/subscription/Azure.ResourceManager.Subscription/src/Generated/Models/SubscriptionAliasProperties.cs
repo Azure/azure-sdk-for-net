@@ -14,13 +14,45 @@ namespace Azure.ResourceManager.Subscription.Models
     /// <summary> Put subscription creation result properties. </summary>
     public partial class SubscriptionAliasProperties
     {
-        /// <summary> Initializes a new instance of SubscriptionAliasProperties. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SubscriptionAliasProperties"/>. </summary>
         internal SubscriptionAliasProperties()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of SubscriptionAliasProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="SubscriptionAliasProperties"/>. </summary>
         /// <param name="subscriptionId"> Newly created subscription Id. </param>
         /// <param name="displayName"> The display name of the subscription. </param>
         /// <param name="provisioningState"> The provisioning state of the resource. </param>
@@ -38,7 +70,8 @@ namespace Azure.ResourceManager.Subscription.Models
         /// <param name="managementGroupId"> The Management Group Id. </param>
         /// <param name="createdOn"> Created Time. </param>
         /// <param name="tags"> Tags for the subscription. </param>
-        internal SubscriptionAliasProperties(string subscriptionId, string displayName, SubscriptionProvisioningState? provisioningState, Uri acceptOwnershipUri, AcceptOwnershipState? acceptOwnershipState, string billingScope, SubscriptionWorkload? workload, string resellerId, string subscriptionOwnerId, string managementGroupId, DateTimeOffset? createdOn, IReadOnlyDictionary<string, string> tags)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SubscriptionAliasProperties(string subscriptionId, string displayName, SubscriptionProvisioningState? provisioningState, Uri acceptOwnershipUri, AcceptOwnershipState? acceptOwnershipState, string billingScope, SubscriptionWorkload? workload, string resellerId, string subscriptionOwnerId, string managementGroupId, DateTimeOffset? createdOn, IReadOnlyDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             SubscriptionId = subscriptionId;
             DisplayName = displayName;
@@ -52,6 +85,7 @@ namespace Azure.ResourceManager.Subscription.Models
             ManagementGroupId = managementGroupId;
             CreatedOn = createdOn;
             Tags = tags;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Newly created subscription Id. </summary>

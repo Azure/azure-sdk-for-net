@@ -5,27 +5,69 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.HDInsight.Models
 {
     /// <summary> The private link service connection state. </summary>
     public partial class HDInsightPrivateLinkServiceConnectionState
     {
-        /// <summary> Initializes a new instance of HDInsightPrivateLinkServiceConnectionState. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="HDInsightPrivateLinkServiceConnectionState"/>. </summary>
         /// <param name="status"> The concrete private link service connection. </param>
         public HDInsightPrivateLinkServiceConnectionState(HDInsightPrivateLinkServiceConnectionStatus status)
         {
             Status = status;
         }
 
-        /// <summary> Initializes a new instance of HDInsightPrivateLinkServiceConnectionState. </summary>
+        /// <summary> Initializes a new instance of <see cref="HDInsightPrivateLinkServiceConnectionState"/>. </summary>
         /// <param name="status"> The concrete private link service connection. </param>
         /// <param name="description"> The optional description of the status. </param>
         /// <param name="actionsRequired"> Whether there is further actions. </param>
-        internal HDInsightPrivateLinkServiceConnectionState(HDInsightPrivateLinkServiceConnectionStatus status, string description, string actionsRequired)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal HDInsightPrivateLinkServiceConnectionState(HDInsightPrivateLinkServiceConnectionStatus status, string description, string actionsRequired, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Status = status;
             Description = description;
             ActionsRequired = actionsRequired;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="HDInsightPrivateLinkServiceConnectionState"/> for deserialization. </summary>
+        internal HDInsightPrivateLinkServiceConnectionState()
+        {
         }
 
         /// <summary> The concrete private link service connection. </summary>

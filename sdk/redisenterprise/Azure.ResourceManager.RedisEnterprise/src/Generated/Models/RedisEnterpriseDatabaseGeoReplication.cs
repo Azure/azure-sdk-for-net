@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,19 +14,53 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
     /// <summary> Optional set of properties to configure geo replication for this database. </summary>
     public partial class RedisEnterpriseDatabaseGeoReplication
     {
-        /// <summary> Initializes a new instance of RedisEnterpriseDatabaseGeoReplication. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="RedisEnterpriseDatabaseGeoReplication"/>. </summary>
         public RedisEnterpriseDatabaseGeoReplication()
         {
             LinkedDatabases = new ChangeTrackingList<RedisEnterpriseLinkedDatabase>();
         }
 
-        /// <summary> Initializes a new instance of RedisEnterpriseDatabaseGeoReplication. </summary>
+        /// <summary> Initializes a new instance of <see cref="RedisEnterpriseDatabaseGeoReplication"/>. </summary>
         /// <param name="groupNickname"> Name for the group of linked database resources. </param>
         /// <param name="linkedDatabases"> List of database resources to link with this database. </param>
-        internal RedisEnterpriseDatabaseGeoReplication(string groupNickname, IList<RedisEnterpriseLinkedDatabase> linkedDatabases)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal RedisEnterpriseDatabaseGeoReplication(string groupNickname, IList<RedisEnterpriseLinkedDatabase> linkedDatabases, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             GroupNickname = groupNickname;
             LinkedDatabases = linkedDatabases;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Name for the group of linked database resources. </summary>

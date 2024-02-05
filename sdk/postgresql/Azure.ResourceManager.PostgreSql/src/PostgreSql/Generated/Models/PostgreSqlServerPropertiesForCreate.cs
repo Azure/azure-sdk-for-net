@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.PostgreSql.Models
 {
     /// <summary>
@@ -14,9 +17,62 @@ namespace Azure.ResourceManager.PostgreSql.Models
     /// </summary>
     public abstract partial class PostgreSqlServerPropertiesForCreate
     {
-        /// <summary> Initializes a new instance of PostgreSqlServerPropertiesForCreate. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private protected IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="PostgreSqlServerPropertiesForCreate"/>. </summary>
         protected PostgreSqlServerPropertiesForCreate()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="PostgreSqlServerPropertiesForCreate"/>. </summary>
+        /// <param name="version"> Server version. </param>
+        /// <param name="sslEnforcement"> Enable ssl enforcement or not when connect to server. </param>
+        /// <param name="minimalTlsVersion"> Enforce a minimal Tls version for the server. </param>
+        /// <param name="infrastructureEncryption"> Status showing whether the server enabled infrastructure encryption. </param>
+        /// <param name="publicNetworkAccess"> Whether or not public network access is allowed for this server. Value is optional but if passed in, must be 'Enabled' or 'Disabled'. </param>
+        /// <param name="storageProfile"> Storage profile of a server. </param>
+        /// <param name="createMode"> The mode to create a new server. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal PostgreSqlServerPropertiesForCreate(PostgreSqlServerVersion? version, PostgreSqlSslEnforcementEnum? sslEnforcement, PostgreSqlMinimalTlsVersionEnum? minimalTlsVersion, PostgreSqlInfrastructureEncryption? infrastructureEncryption, PostgreSqlPublicNetworkAccessEnum? publicNetworkAccess, PostgreSqlStorageProfile storageProfile, PostgreSqlCreateMode createMode, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Version = version;
+            SslEnforcement = sslEnforcement;
+            MinimalTlsVersion = minimalTlsVersion;
+            InfrastructureEncryption = infrastructureEncryption;
+            PublicNetworkAccess = publicNetworkAccess;
+            StorageProfile = storageProfile;
+            CreateMode = createMode;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Server version. </summary>

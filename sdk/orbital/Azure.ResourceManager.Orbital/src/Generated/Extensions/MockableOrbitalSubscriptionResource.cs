@@ -66,6 +66,14 @@ namespace Azure.ResourceManager.Orbital.Mocking
         /// <term>Operation Id</term>
         /// <description>AvailableGroundStations_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AvailableGroundStationResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="groundStationName"> Ground Station name. </param>
@@ -88,6 +96,14 @@ namespace Azure.ResourceManager.Orbital.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>AvailableGroundStations_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AvailableGroundStationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -112,11 +128,19 @@ namespace Azure.ResourceManager.Orbital.Mocking
         /// <term>Operation Id</term>
         /// <description>Spacecrafts_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="OrbitalSpacecraftResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="skiptoken"> An opaque string that the resource provider uses to skip over previously-returned results. This is used when a previous list operation call returned a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skiptoken parameter that specifies a starting point to use for subsequent calls. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="OrbitalSpacecraftResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="OrbitalSpacecraftResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<OrbitalSpacecraftResource> GetOrbitalSpacecraftsAsync(string skiptoken = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => OrbitalSpacecraftSpacecraftsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, skiptoken);
@@ -135,11 +159,19 @@ namespace Azure.ResourceManager.Orbital.Mocking
         /// <term>Operation Id</term>
         /// <description>Spacecrafts_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="OrbitalSpacecraftResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="skiptoken"> An opaque string that the resource provider uses to skip over previously-returned results. This is used when a previous list operation call returned a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skiptoken parameter that specifies a starting point to use for subsequent calls. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="OrbitalSpacecraftResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="OrbitalSpacecraftResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<OrbitalSpacecraftResource> GetOrbitalSpacecrafts(string skiptoken = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => OrbitalSpacecraftSpacecraftsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, skiptoken);
@@ -158,11 +190,19 @@ namespace Azure.ResourceManager.Orbital.Mocking
         /// <term>Operation Id</term>
         /// <description>ContactProfiles_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="OrbitalContactProfileResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="skiptoken"> An opaque string that the resource provider uses to skip over previously-returned results. This is used when a previous list operation call returned a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skiptoken parameter that specifies a starting point to use for subsequent calls. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="OrbitalContactProfileResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="OrbitalContactProfileResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<OrbitalContactProfileResource> GetOrbitalContactProfilesAsync(string skiptoken = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => OrbitalContactProfileContactProfilesRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, skiptoken);
@@ -181,11 +221,19 @@ namespace Azure.ResourceManager.Orbital.Mocking
         /// <term>Operation Id</term>
         /// <description>ContactProfiles_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="OrbitalContactProfileResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="skiptoken"> An opaque string that the resource provider uses to skip over previously-returned results. This is used when a previous list operation call returned a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skiptoken parameter that specifies a starting point to use for subsequent calls. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="OrbitalContactProfileResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="OrbitalContactProfileResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<OrbitalContactProfileResource> GetOrbitalContactProfiles(string skiptoken = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => OrbitalContactProfileContactProfilesRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, skiptoken);

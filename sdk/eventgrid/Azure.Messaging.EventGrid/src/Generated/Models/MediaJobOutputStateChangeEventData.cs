@@ -13,13 +13,13 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.Media.JobOutputStateChange event. </summary>
     public partial class MediaJobOutputStateChangeEventData
     {
-        /// <summary> Initializes a new instance of MediaJobOutputStateChangeEventData. </summary>
+        /// <summary> Initializes a new instance of <see cref="MediaJobOutputStateChangeEventData"/>. </summary>
         internal MediaJobOutputStateChangeEventData()
         {
             JobCorrelationData = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of MediaJobOutputStateChangeEventData. </summary>
+        /// <summary> Initializes a new instance of <see cref="MediaJobOutputStateChangeEventData"/>. </summary>
         /// <param name="previousState"> The previous state of the Job. </param>
         /// <param name="output">
         /// Gets the output.

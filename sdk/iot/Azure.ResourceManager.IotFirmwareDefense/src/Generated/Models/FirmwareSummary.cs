@@ -5,17 +5,52 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.IotFirmwareDefense.Models
 {
     /// <summary> Summary result after scanning the firmware. </summary>
     public partial class FirmwareSummary
     {
-        /// <summary> Initializes a new instance of FirmwareSummary. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="FirmwareSummary"/>. </summary>
         internal FirmwareSummary()
         {
         }
 
-        /// <summary> Initializes a new instance of FirmwareSummary. </summary>
+        /// <summary> Initializes a new instance of <see cref="FirmwareSummary"/>. </summary>
         /// <param name="extractedSize"> Total extracted size of the firmware in bytes. </param>
         /// <param name="fileSize"> Firmware file size in bytes. </param>
         /// <param name="extractedFileCount"> Extracted file count. </param>
@@ -23,7 +58,8 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
         /// <param name="binaryCount"> Binary count. </param>
         /// <param name="analysisTimeSeconds"> Time used for analysis. </param>
         /// <param name="rootFileSystems"> The number of root file systems found. </param>
-        internal FirmwareSummary(long? extractedSize, long? fileSize, long? extractedFileCount, long? componentCount, long? binaryCount, long? analysisTimeSeconds, long? rootFileSystems)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal FirmwareSummary(long? extractedSize, long? fileSize, long? extractedFileCount, long? componentCount, long? binaryCount, long? analysisTimeSeconds, long? rootFileSystems, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ExtractedSize = extractedSize;
             FileSize = fileSize;
@@ -32,6 +68,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             BinaryCount = binaryCount;
             AnalysisTimeSeconds = analysisTimeSeconds;
             RootFileSystems = rootFileSystems;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Total extracted size of the firmware in bytes. </summary>

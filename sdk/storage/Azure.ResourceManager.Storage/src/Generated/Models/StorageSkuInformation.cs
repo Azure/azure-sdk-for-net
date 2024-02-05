@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,7 +14,39 @@ namespace Azure.ResourceManager.Storage.Models
     /// <summary> Storage SKU and its properties. </summary>
     public partial class StorageSkuInformation
     {
-        /// <summary> Initializes a new instance of StorageSkuInformation. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="StorageSkuInformation"/>. </summary>
         /// <param name="name"> The SKU name. Required for account creation; optional for update. Note that in older versions, SKU name was called accountType. </param>
         internal StorageSkuInformation(StorageSkuName name)
         {
@@ -23,7 +56,7 @@ namespace Azure.ResourceManager.Storage.Models
             Restrictions = new ChangeTrackingList<StorageSkuRestriction>();
         }
 
-        /// <summary> Initializes a new instance of StorageSkuInformation. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageSkuInformation"/>. </summary>
         /// <param name="name"> The SKU name. Required for account creation; optional for update. Note that in older versions, SKU name was called accountType. </param>
         /// <param name="tier"> The SKU tier. This is based on the SKU name. </param>
         /// <param name="resourceType"> The type of the resource, usually it is 'storageAccounts'. </param>
@@ -31,7 +64,8 @@ namespace Azure.ResourceManager.Storage.Models
         /// <param name="locations"> The set of locations that the SKU is available. This will be supported and registered Azure Geo Regions (e.g. West US, East US, Southeast Asia, etc.). </param>
         /// <param name="capabilities"> The capability information in the specified SKU, including file encryption, network ACLs, change notification, etc. </param>
         /// <param name="restrictions"> The restrictions because of which SKU cannot be used. This is empty if there are no restrictions. </param>
-        internal StorageSkuInformation(StorageSkuName name, StorageSkuTier? tier, string resourceType, StorageKind? kind, IReadOnlyList<string> locations, IReadOnlyList<StorageSkuCapability> capabilities, IReadOnlyList<StorageSkuRestriction> restrictions)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal StorageSkuInformation(StorageSkuName name, StorageSkuTier? tier, string resourceType, StorageKind? kind, IReadOnlyList<string> locations, IReadOnlyList<StorageSkuCapability> capabilities, IReadOnlyList<StorageSkuRestriction> restrictions, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             Tier = tier;
@@ -40,6 +74,12 @@ namespace Azure.ResourceManager.Storage.Models
             Locations = locations;
             Capabilities = capabilities;
             Restrictions = restrictions;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="StorageSkuInformation"/> for deserialization. </summary>
+        internal StorageSkuInformation()
+        {
         }
 
         /// <summary> The SKU name. Required for account creation; optional for update. Note that in older versions, SKU name was called accountType. </summary>

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.GraphServices.Models
@@ -13,7 +14,39 @@ namespace Azure.ResourceManager.GraphServices.Models
     /// <summary> Property bag from billing account. </summary>
     public partial class GraphServicesAccountResourceProperties
     {
-        /// <summary> Initializes a new instance of GraphServicesAccountResourceProperties. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="GraphServicesAccountResourceProperties"/>. </summary>
         /// <param name="appId"> Customer owned application ID. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="appId"/> is null. </exception>
         public GraphServicesAccountResourceProperties(string appId)
@@ -23,15 +56,22 @@ namespace Azure.ResourceManager.GraphServices.Models
             AppId = appId;
         }
 
-        /// <summary> Initializes a new instance of GraphServicesAccountResourceProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="GraphServicesAccountResourceProperties"/>. </summary>
         /// <param name="provisioningState"> Provisioning state. </param>
         /// <param name="appId"> Customer owned application ID. </param>
         /// <param name="billingPlanId"> Billing Plan Id. </param>
-        internal GraphServicesAccountResourceProperties(GraphServicesProvisioningState? provisioningState, string appId, string billingPlanId)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal GraphServicesAccountResourceProperties(GraphServicesProvisioningState? provisioningState, string appId, string billingPlanId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ProvisioningState = provisioningState;
             AppId = appId;
             BillingPlanId = billingPlanId;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="GraphServicesAccountResourceProperties"/> for deserialization. </summary>
+        internal GraphServicesAccountResourceProperties()
+        {
         }
 
         /// <summary> Provisioning state. </summary>

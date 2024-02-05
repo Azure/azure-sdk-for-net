@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Media.Models
 {
@@ -16,12 +17,44 @@ namespace Azure.ResourceManager.Media.Models
     /// </summary>
     public abstract partial class MediaJobOutput
     {
-        /// <summary> Initializes a new instance of MediaJobOutput. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private protected IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="MediaJobOutput"/>. </summary>
         protected MediaJobOutput()
         {
         }
 
-        /// <summary> Initializes a new instance of MediaJobOutput. </summary>
+        /// <summary> Initializes a new instance of <see cref="MediaJobOutput"/>. </summary>
         /// <param name="odataType"> The discriminator for derived types. </param>
         /// <param name="error"> If the JobOutput is in the Error state, it contains the details of the error. </param>
         /// <param name="presetOverride">
@@ -34,7 +67,8 @@ namespace Azure.ResourceManager.Media.Models
         /// <param name="label"> A label that is assigned to a JobOutput in order to help uniquely identify it. This is useful when your Transform has more than one TransformOutput, whereby your Job has more than one JobOutput. In such cases, when you submit the Job, you will add two or more JobOutputs, in the same order as TransformOutputs in the Transform. Subsequently, when you retrieve the Job, either through events or on a GET request, you can use the label to easily identify the JobOutput. If a label is not provided, a default value of '{presetName}_{outputIndex}' will be used, where the preset name is the name of the preset in the corresponding TransformOutput and the output index is the relative index of the this JobOutput within the Job. Note that this index is the same as the relative index of the corresponding TransformOutput within its Transform. </param>
         /// <param name="startOn"> The UTC date and time at which this Job Output began processing. </param>
         /// <param name="endOn"> The UTC date and time at which this Job Output finished processing. </param>
-        internal MediaJobOutput(string odataType, MediaJobError error, MediaTransformPreset presetOverride, MediaJobState? state, int? progress, string label, DateTimeOffset? startOn, DateTimeOffset? endOn)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MediaJobOutput(string odataType, MediaJobError error, MediaTransformPreset presetOverride, MediaJobState? state, int? progress, string label, DateTimeOffset? startOn, DateTimeOffset? endOn, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             OdataType = odataType;
             Error = error;
@@ -44,6 +78,7 @@ namespace Azure.ResourceManager.Media.Models
             Label = label;
             StartOn = startOn;
             EndOn = endOn;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The discriminator for derived types. </summary>

@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> The UnknownDataset. </summary>
     internal partial class UnknownDataset : DataFactoryDatasetProperties
     {
-        /// <summary> Initializes a new instance of UnknownDataset. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnknownDataset"/>. </summary>
         /// <param name="datasetType"> Type of dataset. </param>
         /// <param name="description"> Dataset description. </param>
         /// <param name="structure"> Columns that define the structure of the dataset. Type: array (or Expression with resultType array), itemType: DatasetDataElement. </param>
@@ -27,6 +27,11 @@ namespace Azure.ResourceManager.DataFactory.Models
         internal UnknownDataset(string datasetType, string description, DataFactoryElement<IList<DatasetDataElement>> structure, DataFactoryElement<IList<DatasetSchemaDataElement>> schema, DataFactoryLinkedServiceReference linkedServiceName, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, DatasetFolder folder, IDictionary<string, BinaryData> additionalProperties) : base(datasetType, description, structure, schema, linkedServiceName, parameters, annotations, folder, additionalProperties)
         {
             DatasetType = datasetType ?? "Unknown";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="UnknownDataset"/> for deserialization. </summary>
+        internal UnknownDataset()
+        {
         }
     }
 }

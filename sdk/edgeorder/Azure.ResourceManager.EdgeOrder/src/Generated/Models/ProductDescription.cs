@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,7 +14,39 @@ namespace Azure.ResourceManager.EdgeOrder.Models
     /// <summary> Description related properties of a product system. </summary>
     public partial class ProductDescription
     {
-        /// <summary> Initializes a new instance of ProductDescription. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ProductDescription"/>. </summary>
         internal ProductDescription()
         {
             Keywords = new ChangeTrackingList<string>();
@@ -21,14 +54,15 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             Links = new ChangeTrackingList<ProductLink>();
         }
 
-        /// <summary> Initializes a new instance of ProductDescription. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProductDescription"/>. </summary>
         /// <param name="descriptionType"> Type of description. </param>
         /// <param name="shortDescription"> Short description of the product system. </param>
         /// <param name="longDescription"> Long description of the product system. </param>
         /// <param name="keywords"> Keywords for the product system. </param>
         /// <param name="attributes"> Attributes for the product system. </param>
         /// <param name="links"> Links for the product system. </param>
-        internal ProductDescription(ProductDescriptionType? descriptionType, string shortDescription, string longDescription, IReadOnlyList<string> keywords, IReadOnlyList<string> attributes, IReadOnlyList<ProductLink> links)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ProductDescription(ProductDescriptionType? descriptionType, string shortDescription, string longDescription, IReadOnlyList<string> keywords, IReadOnlyList<string> attributes, IReadOnlyList<ProductLink> links, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             DescriptionType = descriptionType;
             ShortDescription = shortDescription;
@@ -36,6 +70,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             Keywords = keywords;
             Attributes = attributes;
             Links = links;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Type of description. </summary>

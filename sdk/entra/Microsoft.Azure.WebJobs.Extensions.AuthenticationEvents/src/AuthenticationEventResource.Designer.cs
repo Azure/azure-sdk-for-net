@@ -80,6 +80,15 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to JSON is null or empty..
+        /// </summary>
+        internal static string Ex_Empty_Json {
+            get {
+                return ResourceManager.GetString("Ex_Empty_Json", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Cannot determine the event from payload, please check that the incoming payload is a valid JSON string and contains the event type..
         /// </summary>
         internal static string Ex_Event_Missing {
@@ -170,11 +179,11 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Invalid Payload detected..
+        ///   Looks up a localized string similar to Invalid Json Payload.
         /// </summary>
-        internal static string Ex_Invalid_Payload {
+        internal static string Ex_Invalid_JsonPayload {
             get {
-                return ResourceManager.GetString("Ex_Invalid_Payload", resourceCulture);
+                return ResourceManager.GetString("Ex_Invalid_JsonPayload", resourceCulture);
             }
         }
         
@@ -188,7 +197,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Return type is invalid, please return either an AuthEventResponse, HttpResponse, HttpResponseMessage or string in your function return..
+        ///   Looks up a localized string similar to Return type is invalid, please return either an AuthEventResponse, HttpResponse, HttpResponseMessage or string in your function return.
         /// </summary>
         internal static string Ex_Invalid_Return {
             get {
@@ -269,7 +278,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Actions can not contain null items.
+        ///   Looks up a localized string similar to Actions can not contain null items..
         /// </summary>
         internal static string Ex_Null_Action_Items {
             get {

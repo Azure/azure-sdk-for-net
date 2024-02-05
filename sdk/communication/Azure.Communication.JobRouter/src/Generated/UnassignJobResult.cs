@@ -13,8 +13,8 @@ namespace Azure.Communication.JobRouter
     /// <summary> Response payload after a job has been successfully unassigned. </summary>
     public partial class UnassignJobResult
     {
-        /// <summary> Initializes a new instance of UnassignJobResult. </summary>
-        /// <param name="jobId"> The Id of the job unassigned. </param>
+        /// <summary> Initializes a new instance of <see cref="UnassignJobResult"/>. </summary>
+        /// <param name="jobId"> Id of an unassigned job. </param>
         /// <param name="unassignmentCount"> The number of times a job is unassigned. At a maximum 3. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
         internal UnassignJobResult(string jobId, int unassignmentCount)
@@ -25,7 +25,7 @@ namespace Azure.Communication.JobRouter
             UnassignmentCount = unassignmentCount;
         }
 
-        /// <summary> The Id of the job unassigned. </summary>
+        /// <summary> Id of an unassigned job. </summary>
         public string JobId { get; }
         /// <summary> The number of times a job is unassigned. At a maximum 3. </summary>
         public int UnassignmentCount { get; }

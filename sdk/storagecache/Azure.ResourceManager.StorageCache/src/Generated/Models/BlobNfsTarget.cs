@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.StorageCache.Models
@@ -12,22 +14,56 @@ namespace Azure.ResourceManager.StorageCache.Models
     /// <summary> Properties pertaining to the BlobNfsTarget. </summary>
     public partial class BlobNfsTarget
     {
-        /// <summary> Initializes a new instance of BlobNfsTarget. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="BlobNfsTarget"/>. </summary>
         public BlobNfsTarget()
         {
         }
 
-        /// <summary> Initializes a new instance of BlobNfsTarget. </summary>
+        /// <summary> Initializes a new instance of <see cref="BlobNfsTarget"/>. </summary>
         /// <param name="target"> Resource ID of the storage container. </param>
         /// <param name="usageModel"> Identifies the StorageCache usage model to be used for this storage target. </param>
         /// <param name="verificationDelayInSeconds"> Amount of time (in seconds) the cache waits before it checks the back-end storage for file updates. </param>
         /// <param name="writeBackDelayInSeconds"> Amount of time (in seconds) the cache waits after the last file change before it copies the changed file to back-end storage. </param>
-        internal BlobNfsTarget(ResourceIdentifier target, string usageModel, int? verificationDelayInSeconds, int? writeBackDelayInSeconds)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal BlobNfsTarget(ResourceIdentifier target, string usageModel, int? verificationDelayInSeconds, int? writeBackDelayInSeconds, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Target = target;
             UsageModel = usageModel;
             VerificationDelayInSeconds = verificationDelayInSeconds;
             WriteBackDelayInSeconds = writeBackDelayInSeconds;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Resource ID of the storage container. </summary>

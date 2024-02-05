@@ -5,29 +5,66 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.IotFirmwareDefense.Models
 {
     /// <summary> Cryptographic key summary values. </summary>
     public partial class FirmwareCryptoKeySummary
     {
-        /// <summary> Initializes a new instance of FirmwareCryptoKeySummary. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="FirmwareCryptoKeySummary"/>. </summary>
         internal FirmwareCryptoKeySummary()
         {
         }
 
-        /// <summary> Initializes a new instance of FirmwareCryptoKeySummary. </summary>
+        /// <summary> Initializes a new instance of <see cref="FirmwareCryptoKeySummary"/>. </summary>
         /// <param name="totalKeys"> Total number of cryptographic keys found. </param>
         /// <param name="publicKeys"> Total number of (non-certificate) public keys found. </param>
         /// <param name="privateKeys"> Total number of private keys found. </param>
         /// <param name="pairedKeys"> Total number of keys found that have a matching paired key or certificate. </param>
         /// <param name="shortKeySize"> Total number of keys found that have an insecure key size for the algorithm. </param>
-        internal FirmwareCryptoKeySummary(long? totalKeys, long? publicKeys, long? privateKeys, long? pairedKeys, long? shortKeySize)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal FirmwareCryptoKeySummary(long? totalKeys, long? publicKeys, long? privateKeys, long? pairedKeys, long? shortKeySize, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             TotalKeys = totalKeys;
             PublicKeys = publicKeys;
             PrivateKeys = privateKeys;
             PairedKeys = pairedKeys;
             ShortKeySize = shortKeySize;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Total number of cryptographic keys found. </summary>

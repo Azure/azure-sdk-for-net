@@ -5,20 +5,24 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> Target lags rolling window determined automatically. </summary>
     public partial class AutoTargetRollingWindowSize : TargetRollingWindowSize
     {
-        /// <summary> Initializes a new instance of AutoTargetRollingWindowSize. </summary>
+        /// <summary> Initializes a new instance of <see cref="AutoTargetRollingWindowSize"/>. </summary>
         public AutoTargetRollingWindowSize()
         {
             Mode = TargetRollingWindowSizeMode.Auto;
         }
 
-        /// <summary> Initializes a new instance of AutoTargetRollingWindowSize. </summary>
+        /// <summary> Initializes a new instance of <see cref="AutoTargetRollingWindowSize"/>. </summary>
         /// <param name="mode"> [Required] TargetRollingWindowSiz detection mode. </param>
-        internal AutoTargetRollingWindowSize(TargetRollingWindowSizeMode mode) : base(mode)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AutoTargetRollingWindowSize(TargetRollingWindowSizeMode mode, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(mode, serializedAdditionalRawData)
         {
             Mode = mode;
         }

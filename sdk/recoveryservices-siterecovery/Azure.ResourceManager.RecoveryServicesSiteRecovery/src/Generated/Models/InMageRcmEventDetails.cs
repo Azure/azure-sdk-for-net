@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
@@ -12,14 +14,15 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> Event details for InMageRcm provider. </summary>
     public partial class InMageRcmEventDetails : SiteRecoveryEventProviderSpecificDetails
     {
-        /// <summary> Initializes a new instance of InMageRcmEventDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="InMageRcmEventDetails"/>. </summary>
         internal InMageRcmEventDetails()
         {
             InstanceType = "InMageRcm";
         }
 
-        /// <summary> Initializes a new instance of InMageRcmEventDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="InMageRcmEventDetails"/>. </summary>
         /// <param name="instanceType"> Gets the class type. Overridden in derived classes. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="protectedItemName"> The protected item name. </param>
         /// <param name="vmName"> The protected item name. </param>
         /// <param name="latestAgentVersion"> The latest agent version. </param>
@@ -28,7 +31,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="applianceName"> The appliance name. </param>
         /// <param name="serverType"> The server type. </param>
         /// <param name="componentDisplayName"> The component display name. </param>
-        internal InMageRcmEventDetails(string instanceType, string protectedItemName, string vmName, string latestAgentVersion, ResourceIdentifier jobId, string fabricName, string applianceName, string serverType, string componentDisplayName) : base(instanceType)
+        internal InMageRcmEventDetails(string instanceType, IDictionary<string, BinaryData> serializedAdditionalRawData, string protectedItemName, string vmName, string latestAgentVersion, ResourceIdentifier jobId, string fabricName, string applianceName, string serverType, string componentDisplayName) : base(instanceType, serializedAdditionalRawData)
         {
             ProtectedItemName = protectedItemName;
             VmName = vmName;

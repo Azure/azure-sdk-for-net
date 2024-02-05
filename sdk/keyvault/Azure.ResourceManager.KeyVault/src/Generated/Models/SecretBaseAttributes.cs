@@ -6,30 +6,65 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.KeyVault.Models
 {
     /// <summary> The object attributes managed by the KeyVault service. </summary>
     public partial class SecretBaseAttributes
     {
-        /// <summary> Initializes a new instance of SecretBaseAttributes. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private protected IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SecretBaseAttributes"/>. </summary>
         public SecretBaseAttributes()
         {
         }
 
-        /// <summary> Initializes a new instance of SecretBaseAttributes. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecretBaseAttributes"/>. </summary>
         /// <param name="enabled"> Determines whether the object is enabled. </param>
         /// <param name="notBefore"> Not before date in seconds since 1970-01-01T00:00:00Z. </param>
         /// <param name="expires"> Expiry date in seconds since 1970-01-01T00:00:00Z. </param>
         /// <param name="created"> Creation time in seconds since 1970-01-01T00:00:00Z. </param>
         /// <param name="updated"> Last updated time in seconds since 1970-01-01T00:00:00Z. </param>
-        internal SecretBaseAttributes(bool? enabled, DateTimeOffset? notBefore, DateTimeOffset? expires, DateTimeOffset? created, DateTimeOffset? updated)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SecretBaseAttributes(bool? enabled, DateTimeOffset? notBefore, DateTimeOffset? expires, DateTimeOffset? created, DateTimeOffset? updated, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Enabled = enabled;
             NotBefore = notBefore;
             Expires = expires;
             Created = created;
             Updated = updated;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Determines whether the object is enabled. </summary>

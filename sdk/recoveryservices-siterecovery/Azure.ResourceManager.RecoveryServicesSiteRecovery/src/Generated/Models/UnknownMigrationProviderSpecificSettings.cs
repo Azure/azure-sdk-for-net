@@ -5,16 +5,25 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     /// <summary> The UnknownMigrationProviderSpecificSettings. </summary>
     internal partial class UnknownMigrationProviderSpecificSettings : MigrationProviderSpecificSettings
     {
-        /// <summary> Initializes a new instance of UnknownMigrationProviderSpecificSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnknownMigrationProviderSpecificSettings"/>. </summary>
         /// <param name="instanceType"> Gets the instance type. </param>
-        internal UnknownMigrationProviderSpecificSettings(string instanceType) : base(instanceType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal UnknownMigrationProviderSpecificSettings(string instanceType, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(instanceType, serializedAdditionalRawData)
         {
             InstanceType = instanceType ?? "Unknown";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="UnknownMigrationProviderSpecificSettings"/> for deserialization. </summary>
+        internal UnknownMigrationProviderSpecificSettings()
+        {
         }
     }
 }

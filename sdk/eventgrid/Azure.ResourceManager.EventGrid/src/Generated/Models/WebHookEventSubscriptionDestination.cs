@@ -14,15 +14,16 @@ namespace Azure.ResourceManager.EventGrid.Models
     /// <summary> Information about the webhook destination for an event subscription. </summary>
     public partial class WebHookEventSubscriptionDestination : EventSubscriptionDestination
     {
-        /// <summary> Initializes a new instance of WebHookEventSubscriptionDestination. </summary>
+        /// <summary> Initializes a new instance of <see cref="WebHookEventSubscriptionDestination"/>. </summary>
         public WebHookEventSubscriptionDestination()
         {
             DeliveryAttributeMappings = new ChangeTrackingList<DeliveryAttributeMapping>();
             EndpointType = EndpointType.WebHook;
         }
 
-        /// <summary> Initializes a new instance of WebHookEventSubscriptionDestination. </summary>
+        /// <summary> Initializes a new instance of <see cref="WebHookEventSubscriptionDestination"/>. </summary>
         /// <param name="endpointType"> Type of the endpoint for the event subscription destination. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="endpoint"> The URL that represents the endpoint of the destination of an event subscription. </param>
         /// <param name="baseEndpoint"> The base URL that represents the endpoint of the destination of an event subscription. </param>
         /// <param name="maxEventsPerBatch"> Maximum number of events per batch. </param>
@@ -35,7 +36,7 @@ namespace Azure.ResourceManager.EventGrid.Models
         /// The available derived classes include <see cref="DynamicDeliveryAttributeMapping"/> and <see cref="StaticDeliveryAttributeMapping"/>.
         /// </param>
         /// <param name="minimumTlsVersionAllowed"> Minimum TLS version that should be supported by webhook endpoint. </param>
-        internal WebHookEventSubscriptionDestination(EndpointType endpointType, Uri endpoint, Uri baseEndpoint, int? maxEventsPerBatch, int? preferredBatchSizeInKilobytes, Guid? azureActiveDirectoryTenantId, string uriOrAzureActiveDirectoryApplicationId, IList<DeliveryAttributeMapping> deliveryAttributeMappings, TlsVersion? minimumTlsVersionAllowed) : base(endpointType)
+        internal WebHookEventSubscriptionDestination(EndpointType endpointType, IDictionary<string, BinaryData> serializedAdditionalRawData, Uri endpoint, Uri baseEndpoint, int? maxEventsPerBatch, int? preferredBatchSizeInKilobytes, Guid? azureActiveDirectoryTenantId, string uriOrAzureActiveDirectoryApplicationId, IList<DeliveryAttributeMapping> deliveryAttributeMappings, TlsVersion? minimumTlsVersionAllowed) : base(endpointType, serializedAdditionalRawData)
         {
             Endpoint = endpoint;
             BaseEndpoint = baseEndpoint;

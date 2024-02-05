@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> Couchbase server dataset. </summary>
     public partial class CouchbaseTableDataset : DataFactoryDatasetProperties
     {
-        /// <summary> Initializes a new instance of CouchbaseTableDataset. </summary>
+        /// <summary> Initializes a new instance of <see cref="CouchbaseTableDataset"/>. </summary>
         /// <param name="linkedServiceName"> Linked service reference. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="linkedServiceName"/> is null. </exception>
         public CouchbaseTableDataset(DataFactoryLinkedServiceReference linkedServiceName) : base(linkedServiceName)
@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             DatasetType = "CouchbaseTable";
         }
 
-        /// <summary> Initializes a new instance of CouchbaseTableDataset. </summary>
+        /// <summary> Initializes a new instance of <see cref="CouchbaseTableDataset"/>. </summary>
         /// <param name="datasetType"> Type of dataset. </param>
         /// <param name="description"> Dataset description. </param>
         /// <param name="structure"> Columns that define the structure of the dataset. Type: array (or Expression with resultType array), itemType: DatasetDataElement. </param>
@@ -40,6 +40,11 @@ namespace Azure.ResourceManager.DataFactory.Models
         {
             TableName = tableName;
             DatasetType = datasetType ?? "CouchbaseTable";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="CouchbaseTableDataset"/> for deserialization. </summary>
+        internal CouchbaseTableDataset()
+        {
         }
 
         /// <summary> The table name. Type: string (or Expression with resultType string). </summary>

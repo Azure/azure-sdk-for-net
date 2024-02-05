@@ -10,12 +10,12 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.ServiceBus.ActiveMessagesAvailableWithNoListeners event. </summary>
     public partial class ServiceBusActiveMessagesAvailableWithNoListenersEventData
     {
-        /// <summary> Initializes a new instance of ServiceBusActiveMessagesAvailableWithNoListenersEventData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceBusActiveMessagesAvailableWithNoListenersEventData"/>. </summary>
         internal ServiceBusActiveMessagesAvailableWithNoListenersEventData()
         {
         }
 
-        /// <summary> Initializes a new instance of ServiceBusActiveMessagesAvailableWithNoListenersEventData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceBusActiveMessagesAvailableWithNoListenersEventData"/>. </summary>
         /// <param name="namespaceName"> The namespace name of the Microsoft.ServiceBus resource. </param>
         /// <param name="requestUri"> The endpoint of the Microsoft.ServiceBus resource. </param>
         /// <param name="entityType"> The entity type of the Microsoft.ServiceBus resource. Could be one of 'queue' or 'subscriber'. </param>

@@ -5,16 +5,25 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
 {
     /// <summary> The UnknownFabricModelCustomProperties. </summary>
     internal partial class UnknownFabricModelCustomProperties : FabricModelCustomProperties
     {
-        /// <summary> Initializes a new instance of UnknownFabricModelCustomProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnknownFabricModelCustomProperties"/>. </summary>
         /// <param name="instanceType"> Gets or sets the instance type. </param>
-        internal UnknownFabricModelCustomProperties(string instanceType) : base(instanceType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal UnknownFabricModelCustomProperties(string instanceType, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(instanceType, serializedAdditionalRawData)
         {
             InstanceType = instanceType ?? "Unknown";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="UnknownFabricModelCustomProperties"/> for deserialization. </summary>
+        internal UnknownFabricModelCustomProperties()
+        {
         }
     }
 }

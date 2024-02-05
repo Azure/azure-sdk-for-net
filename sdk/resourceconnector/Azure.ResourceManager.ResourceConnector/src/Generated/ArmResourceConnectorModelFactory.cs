@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.ResourceConnector.Models
     /// <summary> Model factory for models. </summary>
     public static partial class ArmResourceConnectorModelFactory
     {
-        /// <summary> Initializes a new instance of ResourceConnectorApplianceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceConnector.ResourceConnectorApplianceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -36,18 +36,18 @@ namespace Azure.ResourceManager.ResourceConnector.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new ResourceConnectorApplianceData(id, name, resourceType, systemData, tags, location, identity, distro, infrastructureConfigProvider != null ? new AppliancePropertiesInfrastructureConfig(infrastructureConfigProvider) : null, provisioningState, publicKey, status, version);
+            return new ResourceConnectorApplianceData(id, name, resourceType, systemData, tags, location, identity, distro, infrastructureConfigProvider != null ? new AppliancePropertiesInfrastructureConfig(infrastructureConfigProvider, serializedAdditionalRawData: null) : null, provisioningState, publicKey, status, version, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of ApplianceTelemetryConfigResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ApplianceTelemetryConfigResult"/>. </summary>
         /// <param name="telemetryInstrumentationKey"> Telemetry instrumentation key. </param>
         /// <returns> A new <see cref="Models.ApplianceTelemetryConfigResult"/> instance for mocking. </returns>
         public static ApplianceTelemetryConfigResult ApplianceTelemetryConfigResult(string telemetryInstrumentationKey = null)
         {
-            return new ApplianceTelemetryConfigResult(telemetryInstrumentationKey);
+            return new ApplianceTelemetryConfigResult(telemetryInstrumentationKey, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of ApplianceClusterUserCredentialResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ApplianceClusterUserCredentialResult"/>. </summary>
         /// <param name="hybridConnectionConfig"> Contains the REP (rendezvous endpoint) and “Listener” access token from notification service (NS). </param>
         /// <param name="kubeconfigs"> The list of appliance kubeconfigs. </param>
         /// <returns> A new <see cref="Models.ApplianceClusterUserCredentialResult"/> instance for mocking. </returns>
@@ -55,10 +55,10 @@ namespace Azure.ResourceManager.ResourceConnector.Models
         {
             kubeconfigs ??= new List<ApplianceCredentialKubeconfig>();
 
-            return new ApplianceClusterUserCredentialResult(hybridConnectionConfig, kubeconfigs?.ToList());
+            return new ApplianceClusterUserCredentialResult(hybridConnectionConfig, kubeconfigs?.ToList(), serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of HybridConnectionConfig. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.HybridConnectionConfig"/>. </summary>
         /// <param name="expirationTime"> Timestamp when this token will be expired. </param>
         /// <param name="hybridConnectionName"> Name of the connection. </param>
         /// <param name="relay"> Name of the notification service. </param>
@@ -66,19 +66,19 @@ namespace Azure.ResourceManager.ResourceConnector.Models
         /// <returns> A new <see cref="Models.HybridConnectionConfig"/> instance for mocking. </returns>
         public static HybridConnectionConfig HybridConnectionConfig(long? expirationTime = null, string hybridConnectionName = null, string relay = null, string token = null)
         {
-            return new HybridConnectionConfig(expirationTime, hybridConnectionName, relay, token);
+            return new HybridConnectionConfig(expirationTime, hybridConnectionName, relay, token, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of ApplianceCredentialKubeconfig. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ApplianceCredentialKubeconfig"/>. </summary>
         /// <param name="name"> Name which contains the role of the kubeconfig. </param>
         /// <param name="value"> Contains the kubeconfig value. </param>
         /// <returns> A new <see cref="Models.ApplianceCredentialKubeconfig"/> instance for mocking. </returns>
         public static ApplianceCredentialKubeconfig ApplianceCredentialKubeconfig(AccessProfileType? name = null, string value = null)
         {
-            return new ApplianceCredentialKubeconfig(name, value);
+            return new ApplianceCredentialKubeconfig(name, value, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of ApplianceClusterUserKeysResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ApplianceClusterUserKeysResult"/>. </summary>
         /// <param name="artifactProfiles"> Map of artifacts that contains a list of ArtifactProfile used to upload artifacts such as logs. </param>
         /// <param name="kubeconfigs"> The list of appliance kubeconfigs. </param>
         /// <param name="sshKeys"> Map of Customer User Public, Private SSH Keys and Certificate when available. </param>
@@ -89,18 +89,18 @@ namespace Azure.ResourceManager.ResourceConnector.Models
             kubeconfigs ??= new List<ApplianceCredentialKubeconfig>();
             sshKeys ??= new Dictionary<string, ApplianceSshKey>();
 
-            return new ApplianceClusterUserKeysResult(artifactProfiles, kubeconfigs?.ToList(), sshKeys);
+            return new ApplianceClusterUserKeysResult(artifactProfiles, kubeconfigs?.ToList(), sshKeys, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of ApplianceArtifactProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ApplianceArtifactProfile"/>. </summary>
         /// <param name="endpoint"> Endpoint is the URL to upload artifacts to. </param>
         /// <returns> A new <see cref="Models.ApplianceArtifactProfile"/> instance for mocking. </returns>
         public static ApplianceArtifactProfile ApplianceArtifactProfile(string endpoint = null)
         {
-            return new ApplianceArtifactProfile(endpoint);
+            return new ApplianceArtifactProfile(endpoint, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of ApplianceSshKey. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ApplianceSshKey"/>. </summary>
         /// <param name="certificate"> Certificate associated with the public key if the key is signed. </param>
         /// <param name="creationTimeStamp"> Certificate creation timestamp (Unix). </param>
         /// <param name="expirationTimeStamp"> Certificate expiration timestamp (Unix). </param>
@@ -109,20 +109,20 @@ namespace Azure.ResourceManager.ResourceConnector.Models
         /// <returns> A new <see cref="Models.ApplianceSshKey"/> instance for mocking. </returns>
         public static ApplianceSshKey ApplianceSshKey(string certificate = null, long? creationTimeStamp = null, long? expirationTimeStamp = null, string privateKey = null, string publicKey = null)
         {
-            return new ApplianceSshKey(certificate, creationTimeStamp, expirationTimeStamp, privateKey, publicKey);
+            return new ApplianceSshKey(certificate, creationTimeStamp, expirationTimeStamp, privateKey, publicKey, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of ApplianceUpgradeGraph. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ApplianceUpgradeGraph"/>. </summary>
         /// <param name="id"> The appliance resource path. </param>
         /// <param name="name"> The release train name. </param>
         /// <param name="properties"> The properties of supported version. </param>
         /// <returns> A new <see cref="Models.ApplianceUpgradeGraph"/> instance for mocking. </returns>
         public static ApplianceUpgradeGraph ApplianceUpgradeGraph(string id = null, string name = null, ApplianceUpgradeGraphProperties properties = null)
         {
-            return new ApplianceUpgradeGraph(id, name, properties);
+            return new ApplianceUpgradeGraph(id, name, properties, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of ApplianceUpgradeGraphProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ApplianceUpgradeGraphProperties"/>. </summary>
         /// <param name="applianceVersion"> The current appliance version. </param>
         /// <param name="supportedVersions"> This contains the current version and supported upgrade versions. </param>
         /// <returns> A new <see cref="Models.ApplianceUpgradeGraphProperties"/> instance for mocking. </returns>
@@ -130,29 +130,29 @@ namespace Azure.ResourceManager.ResourceConnector.Models
         {
             supportedVersions ??= new List<ApplianceSupportedVersion>();
 
-            return new ApplianceUpgradeGraphProperties(applianceVersion, supportedVersions?.ToList());
+            return new ApplianceUpgradeGraphProperties(applianceVersion, supportedVersions?.ToList(), serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of ApplianceSupportedVersion. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ApplianceSupportedVersion"/>. </summary>
         /// <param name="metadataCatalogVersion"> This is the metadata of the supported newer version. </param>
         /// <param name="version"> The newer version available for upgrade. </param>
         /// <returns> A new <see cref="Models.ApplianceSupportedVersion"/> instance for mocking. </returns>
         public static ApplianceSupportedVersion ApplianceSupportedVersion(ApplianceSupportedVersionCatalogVersion metadataCatalogVersion = null, string version = null)
         {
-            return new ApplianceSupportedVersion(metadataCatalogVersion != null ? new ApplianceSupportedVersionMetadata(metadataCatalogVersion) : null, version);
+            return new ApplianceSupportedVersion(metadataCatalogVersion != null ? new ApplianceSupportedVersionMetadata(metadataCatalogVersion, serializedAdditionalRawData: null) : null, version, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of ApplianceSupportedVersionCatalogVersion. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ApplianceSupportedVersionCatalogVersion"/>. </summary>
         /// <param name="data"> The newer supported version catalog version data. </param>
         /// <param name="name"> The catalog version name for the version available for upgrade. </param>
         /// <param name="namespace"> The catalog version namespace for the version available for upgrade. </param>
         /// <returns> A new <see cref="Models.ApplianceSupportedVersionCatalogVersion"/> instance for mocking. </returns>
         public static ApplianceSupportedVersionCatalogVersion ApplianceSupportedVersionCatalogVersion(ApplianceSupportedVersionCatalogVersionProperties data = null, string name = null, string @namespace = null)
         {
-            return new ApplianceSupportedVersionCatalogVersion(data, name, @namespace);
+            return new ApplianceSupportedVersionCatalogVersion(data, name, @namespace, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of ApplianceSupportedVersionCatalogVersionProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ApplianceSupportedVersionCatalogVersionProperties"/>. </summary>
         /// <param name="audience"> The image audience name for the version available for upgrade. </param>
         /// <param name="catalog"> The image catalog name for the version available for upgrade. </param>
         /// <param name="offer"> The image offer name for the version available for upgrade. </param>
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.ResourceConnector.Models
         /// <returns> A new <see cref="Models.ApplianceSupportedVersionCatalogVersionProperties"/> instance for mocking. </returns>
         public static ApplianceSupportedVersionCatalogVersionProperties ApplianceSupportedVersionCatalogVersionProperties(string audience = null, string catalog = null, string offer = null, string version = null)
         {
-            return new ApplianceSupportedVersionCatalogVersionProperties(audience, catalog, offer, version);
+            return new ApplianceSupportedVersionCatalogVersionProperties(audience, catalog, offer, version, serializedAdditionalRawData: null);
         }
     }
 }

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,15 +14,16 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
     /// <summary> Describes a blob output data source. </summary>
     public partial class BlobOutputDataSource : StreamingJobOutputDataSource
     {
-        /// <summary> Initializes a new instance of BlobOutputDataSource. </summary>
+        /// <summary> Initializes a new instance of <see cref="BlobOutputDataSource"/>. </summary>
         public BlobOutputDataSource()
         {
             StorageAccounts = new ChangeTrackingList<StreamAnalyticsStorageAccount>();
             OutputDataSourceType = "Microsoft.Storage/Blob";
         }
 
-        /// <summary> Initializes a new instance of BlobOutputDataSource. </summary>
+        /// <summary> Initializes a new instance of <see cref="BlobOutputDataSource"/>. </summary>
         /// <param name="outputDataSourceType"> Indicates the type of data source output will be written to. Required on PUT (CreateOrReplace) requests. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="storageAccounts"> A list of one or more Azure Storage accounts. Required on PUT (CreateOrReplace) requests. </param>
         /// <param name="container"> The name of a container within the associated Storage account. This container contains either the blob(s) to be read from or written to. Required on PUT (CreateOrReplace) requests. </param>
         /// <param name="pathPattern"> The blob path pattern. Not a regular expression. It represents a pattern against which blob names will be matched to determine whether or not they should be included as input or output to the job. See https://docs.microsoft.com/en-us/rest/api/streamanalytics/stream-analytics-input or https://docs.microsoft.com/en-us/rest/api/streamanalytics/stream-analytics-output for a more detailed explanation and example. </param>
@@ -30,7 +32,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         /// <param name="authenticationMode"> Authentication Mode. </param>
         /// <param name="blobPathPrefix"> Blob path prefix. </param>
         /// <param name="blobWriteMode"> Blob write mode. </param>
-        internal BlobOutputDataSource(string outputDataSourceType, IList<StreamAnalyticsStorageAccount> storageAccounts, string container, string pathPattern, string dateFormat, string timeFormat, StreamAnalyticsAuthenticationMode? authenticationMode, string blobPathPrefix, BlobOutputWriteMode? blobWriteMode) : base(outputDataSourceType)
+        internal BlobOutputDataSource(string outputDataSourceType, IDictionary<string, BinaryData> serializedAdditionalRawData, IList<StreamAnalyticsStorageAccount> storageAccounts, string container, string pathPattern, string dateFormat, string timeFormat, StreamAnalyticsAuthenticationMode? authenticationMode, string blobPathPrefix, BlobOutputWriteMode? blobWriteMode) : base(outputDataSourceType, serializedAdditionalRawData)
         {
             StorageAccounts = storageAccounts;
             Container = container;

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,19 +14,53 @@ namespace Azure.ResourceManager.ExtendedLocations.Models
     /// <summary> List of EnabledResourceTypes definition. </summary>
     internal partial class CustomLocationEnabledResourceTypesResult
     {
-        /// <summary> Initializes a new instance of CustomLocationEnabledResourceTypesResult. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="CustomLocationEnabledResourceTypesResult"/>. </summary>
         internal CustomLocationEnabledResourceTypesResult()
         {
             Value = new ChangeTrackingList<CustomLocationEnabledResourceType>();
         }
 
-        /// <summary> Initializes a new instance of CustomLocationEnabledResourceTypesResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="CustomLocationEnabledResourceTypesResult"/>. </summary>
         /// <param name="nextLink"> The URL to use for getting the next set of results. </param>
         /// <param name="value"> The list of EnabledResourceTypes available for a customLocation. </param>
-        internal CustomLocationEnabledResourceTypesResult(string nextLink, IReadOnlyList<CustomLocationEnabledResourceType> value)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal CustomLocationEnabledResourceTypesResult(string nextLink, IReadOnlyList<CustomLocationEnabledResourceType> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             NextLink = nextLink;
             Value = value;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The URL to use for getting the next set of results. </summary>

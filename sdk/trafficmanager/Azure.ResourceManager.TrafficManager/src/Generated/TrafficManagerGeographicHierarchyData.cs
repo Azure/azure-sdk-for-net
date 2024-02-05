@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.TrafficManager.Models;
 
@@ -16,17 +18,18 @@ namespace Azure.ResourceManager.TrafficManager
     /// </summary>
     public partial class TrafficManagerGeographicHierarchyData : TrafficManagerProxyResourceData
     {
-        /// <summary> Initializes a new instance of TrafficManagerGeographicHierarchyData. </summary>
+        /// <summary> Initializes a new instance of <see cref="TrafficManagerGeographicHierarchyData"/>. </summary>
         public TrafficManagerGeographicHierarchyData()
         {
         }
 
-        /// <summary> Initializes a new instance of TrafficManagerGeographicHierarchyData. </summary>
+        /// <summary> Initializes a new instance of <see cref="TrafficManagerGeographicHierarchyData"/>. </summary>
         /// <param name="id"> Fully qualified resource Id for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/trafficManagerProfiles/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. Ex- Microsoft.Network/trafficManagerProfiles. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="geographicHierarchy"> The region at the root of the hierarchy from all the regions in the hierarchy can be retrieved. </param>
-        internal TrafficManagerGeographicHierarchyData(ResourceIdentifier id, string name, ResourceType? resourceType, TrafficManagerRegion geographicHierarchy) : base(id, name, resourceType)
+        internal TrafficManagerGeographicHierarchyData(ResourceIdentifier id, string name, ResourceType? resourceType, IDictionary<string, BinaryData> serializedAdditionalRawData, TrafficManagerRegion geographicHierarchy) : base(id, name, resourceType, serializedAdditionalRawData)
         {
             GeographicHierarchy = geographicHierarchy;
         }

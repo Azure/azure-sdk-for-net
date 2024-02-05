@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,11 +14,65 @@ namespace Azure.ResourceManager.NetworkCloud.Models
     /// <summary> ClusterPatchParameters represents the body of the request to patch the cluster properties. </summary>
     public partial class NetworkCloudClusterPatch
     {
-        /// <summary> Initializes a new instance of NetworkCloudClusterPatch. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="NetworkCloudClusterPatch"/>. </summary>
         public NetworkCloudClusterPatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
             ComputeRackDefinitions = new ChangeTrackingList<NetworkCloudRackDefinition>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="NetworkCloudClusterPatch"/>. </summary>
+        /// <param name="tags"> The Azure resource tags that will replace the existing ones. </param>
+        /// <param name="aggregatorOrSingleRackDefinition"> The rack definition that is intended to reflect only a single rack in a single rack cluster, or an aggregator rack in a multi-rack cluster. </param>
+        /// <param name="clusterLocation"> The customer-provided location information to identify where the cluster resides. </param>
+        /// <param name="clusterServicePrincipal"> The service principal to be used by the cluster during Arc Appliance installation. </param>
+        /// <param name="computeDeploymentThreshold"> The validation threshold indicating the allowable failures of compute machines during environment validation and deployment. </param>
+        /// <param name="computeRackDefinitions">
+        /// The list of rack definitions for the compute racks in a multi-rack
+        /// cluster, or an empty list in a single-rack cluster.
+        /// </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal NetworkCloudClusterPatch(IDictionary<string, string> tags, NetworkCloudRackDefinition aggregatorOrSingleRackDefinition, string clusterLocation, ServicePrincipalInformation clusterServicePrincipal, ValidationThreshold computeDeploymentThreshold, IList<NetworkCloudRackDefinition> computeRackDefinitions, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Tags = tags;
+            AggregatorOrSingleRackDefinition = aggregatorOrSingleRackDefinition;
+            ClusterLocation = clusterLocation;
+            ClusterServicePrincipal = clusterServicePrincipal;
+            ComputeDeploymentThreshold = computeDeploymentThreshold;
+            ComputeRackDefinitions = computeRackDefinitions;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The Azure resource tags that will replace the existing ones. </summary>

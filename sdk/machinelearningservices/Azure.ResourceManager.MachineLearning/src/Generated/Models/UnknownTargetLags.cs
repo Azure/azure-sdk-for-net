@@ -5,16 +5,25 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> The UnknownTargetLags. </summary>
     internal partial class UnknownTargetLags : TargetLags
     {
-        /// <summary> Initializes a new instance of UnknownTargetLags. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnknownTargetLags"/>. </summary>
         /// <param name="mode"> [Required] Set target lags mode - Auto/Custom. </param>
-        internal UnknownTargetLags(TargetLagsMode mode) : base(mode)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal UnknownTargetLags(TargetLagsMode mode, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(mode, serializedAdditionalRawData)
         {
             Mode = mode;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="UnknownTargetLags"/> for deserialization. </summary>
+        internal UnknownTargetLags()
+        {
         }
     }
 }

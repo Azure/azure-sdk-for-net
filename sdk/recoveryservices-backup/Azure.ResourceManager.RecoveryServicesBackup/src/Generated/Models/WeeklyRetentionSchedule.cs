@@ -14,22 +14,56 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// <summary> Weekly retention schedule. </summary>
     public partial class WeeklyRetentionSchedule
     {
-        /// <summary> Initializes a new instance of WeeklyRetentionSchedule. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="WeeklyRetentionSchedule"/>. </summary>
         public WeeklyRetentionSchedule()
         {
             DaysOfTheWeek = new ChangeTrackingList<BackupDayOfWeek>();
             RetentionTimes = new ChangeTrackingList<DateTimeOffset>();
         }
 
-        /// <summary> Initializes a new instance of WeeklyRetentionSchedule. </summary>
+        /// <summary> Initializes a new instance of <see cref="WeeklyRetentionSchedule"/>. </summary>
         /// <param name="daysOfTheWeek"> List of days of week for weekly retention policy. </param>
         /// <param name="retentionTimes"> Retention times of retention policy. </param>
         /// <param name="retentionDuration"> Retention duration of retention Policy. </param>
-        internal WeeklyRetentionSchedule(IList<BackupDayOfWeek> daysOfTheWeek, IList<DateTimeOffset> retentionTimes, RetentionDuration retentionDuration)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal WeeklyRetentionSchedule(IList<BackupDayOfWeek> daysOfTheWeek, IList<DateTimeOffset> retentionTimes, RetentionDuration retentionDuration, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             DaysOfTheWeek = daysOfTheWeek;
             RetentionTimes = retentionTimes;
             RetentionDuration = retentionDuration;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> List of days of week for weekly retention policy. </summary>

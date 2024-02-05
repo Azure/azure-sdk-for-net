@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    public partial class CspmMonitorGcpOffering : IUtf8JsonSerializable
+    public partial class CspmMonitorGcpOffering : IUtf8JsonSerializable, IJsonModel<CspmMonitorGcpOffering>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CspmMonitorGcpOffering>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<CspmMonitorGcpOffering>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<CspmMonitorGcpOffering>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(CspmMonitorGcpOffering)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(NativeCloudConnection))
             {
@@ -22,11 +33,45 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
             writer.WritePropertyName("offeringType"u8);
             writer.WriteStringValue(OfferingType.ToString());
+            if (options.Format != "W" && Optional.IsDefined(Description))
+            {
+                writer.WritePropertyName("description"u8);
+                writer.WriteStringValue(Description);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static CspmMonitorGcpOffering DeserializeCspmMonitorGcpOffering(JsonElement element)
+        CspmMonitorGcpOffering IJsonModel<CspmMonitorGcpOffering>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<CspmMonitorGcpOffering>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(CspmMonitorGcpOffering)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeCspmMonitorGcpOffering(document.RootElement, options);
+        }
+
+        internal static CspmMonitorGcpOffering DeserializeCspmMonitorGcpOffering(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -34,6 +79,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             Optional<CspmMonitorGcpOfferingNativeCloudConnection> nativeCloudConnection = default;
             OfferingType offeringType = default;
             Optional<string> description = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("nativeCloudConnection"u8))
@@ -55,8 +102,44 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     description = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new CspmMonitorGcpOffering(offeringType, description.Value, nativeCloudConnection.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new CspmMonitorGcpOffering(offeringType, description.Value, serializedAdditionalRawData, nativeCloudConnection.Value);
         }
+
+        BinaryData IPersistableModel<CspmMonitorGcpOffering>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<CspmMonitorGcpOffering>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(CspmMonitorGcpOffering)} does not support '{options.Format}' format.");
+            }
+        }
+
+        CspmMonitorGcpOffering IPersistableModel<CspmMonitorGcpOffering>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<CspmMonitorGcpOffering>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeCspmMonitorGcpOffering(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(CspmMonitorGcpOffering)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<CspmMonitorGcpOffering>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

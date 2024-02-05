@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -13,10 +14,18 @@ using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class AzureSqlSource : IUtf8JsonSerializable
+    public partial class AzureSqlSource : IUtf8JsonSerializable, IJsonModel<AzureSqlSource>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AzureSqlSource>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<AzureSqlSource>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<AzureSqlSource>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(AzureSqlSource)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(SqlReaderQuery))
             {
@@ -60,14 +69,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(PartitionOption))
             {
                 writer.WritePropertyName("partitionOption"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(PartitionOption);
-#else
-                using (JsonDocument document = JsonDocument.Parse(PartitionOption))
-                {
-                    JsonSerializer.Serialize(writer, document.RootElement);
-                }
-#endif
+                JsonSerializer.Serialize(writer, PartitionOption);
             }
             if (Optional.IsDefined(PartitionSettings))
             {
@@ -128,8 +130,22 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteEndObject();
         }
 
-        internal static AzureSqlSource DeserializeAzureSqlSource(JsonElement element)
+        AzureSqlSource IJsonModel<AzureSqlSource>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<AzureSqlSource>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(AzureSqlSource)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeAzureSqlSource(document.RootElement, options);
+        }
+
+        internal static AzureSqlSource DeserializeAzureSqlSource(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -139,7 +155,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             Optional<BinaryData> storedProcedureParameters = default;
             Optional<DataFactoryElement<string>> isolationLevel = default;
             Optional<BinaryData> produceAdditionalTypes = default;
-            Optional<BinaryData> partitionOption = default;
+            Optional<DataFactoryElement<string>> partitionOption = default;
             Optional<SqlPartitionSettings> partitionSettings = default;
             Optional<DataFactoryElement<string>> queryTimeout = default;
             Optional<BinaryData> additionalColumns = default;
@@ -203,7 +219,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    partitionOption = BinaryData.FromString(property.Value.GetRawText());
+                    partitionOption = JsonSerializer.Deserialize<DataFactoryElement<string>>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("partitionSettings"u8))
@@ -279,5 +295,36 @@ namespace Azure.ResourceManager.DataFactory.Models
             additionalProperties = additionalPropertiesDictionary;
             return new AzureSqlSource(type, sourceRetryCount.Value, sourceRetryWait.Value, maxConcurrentConnections.Value, disableMetricsCollection.Value, additionalProperties, queryTimeout.Value, additionalColumns.Value, sqlReaderQuery.Value, sqlReaderStoredProcedureName.Value, storedProcedureParameters.Value, isolationLevel.Value, produceAdditionalTypes.Value, partitionOption.Value, partitionSettings.Value);
         }
+
+        BinaryData IPersistableModel<AzureSqlSource>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AzureSqlSource>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(AzureSqlSource)} does not support '{options.Format}' format.");
+            }
+        }
+
+        AzureSqlSource IPersistableModel<AzureSqlSource>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AzureSqlSource>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeAzureSqlSource(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(AzureSqlSource)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<AzureSqlSource>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

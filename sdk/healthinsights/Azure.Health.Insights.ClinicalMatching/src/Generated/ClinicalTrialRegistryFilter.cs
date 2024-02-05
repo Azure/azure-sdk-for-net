@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,7 +14,39 @@ namespace Azure.Health.Insights.ClinicalMatching
     /// <summary> A filter defining a subset of clinical trials from a given clinical trial registry (e.g. clinicaltrials.gov). </summary>
     public partial class ClinicalTrialRegistryFilter
     {
-        /// <summary> Initializes a new instance of ClinicalTrialRegistryFilter. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ClinicalTrialRegistryFilter"/>. </summary>
         public ClinicalTrialRegistryFilter()
         {
             Conditions = new ChangeTrackingList<string>();
@@ -29,7 +62,7 @@ namespace Azure.Health.Insights.ClinicalMatching
             FacilityAreas = new ChangeTrackingList<GeographicArea>();
         }
 
-        /// <summary> Initializes a new instance of ClinicalTrialRegistryFilter. </summary>
+        /// <summary> Initializes a new instance of <see cref="ClinicalTrialRegistryFilter"/>. </summary>
         /// <param name="conditions">
         /// Trials with any of the given medical conditions will be included in the selection (provided that other limitations are satisfied).
         /// Leaving this list empty will not limit the medical conditions.
@@ -74,7 +107,8 @@ namespace Azure.Health.Insights.ClinicalMatching
         /// Trials with any of the given facility area boundaries will be included in the selection (provided that other limitations are satisfied).
         /// Leaving this list empty will not limit the trial facility area boundaries.
         /// </param>
-        internal ClinicalTrialRegistryFilter(IList<string> conditions, IList<ClinicalTrialStudyType> studyTypes, IList<ClinicalTrialRecruitmentStatus> recruitmentStatuses, IList<string> sponsors, IList<ClinicalTrialPhase> phases, IList<ClinicalTrialPurpose> purposes, IList<string> ids, IList<ClinicalTrialSource> sources, IList<string> facilityNames, IList<GeographicLocation> facilityLocations, IList<GeographicArea> facilityAreas)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ClinicalTrialRegistryFilter(IList<string> conditions, IList<ClinicalTrialStudyType> studyTypes, IList<ClinicalTrialRecruitmentStatus> recruitmentStatuses, IList<string> sponsors, IList<ClinicalTrialPhase> phases, IList<ClinicalTrialPurpose> purposes, IList<string> ids, IList<ClinicalTrialSource> sources, IList<string> facilityNames, IList<GeographicLocation> facilityLocations, IList<GeographicArea> facilityAreas, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Conditions = conditions;
             StudyTypes = studyTypes;
@@ -87,6 +121,7 @@ namespace Azure.Health.Insights.ClinicalMatching
             FacilityNames = facilityNames;
             FacilityLocations = facilityLocations;
             FacilityAreas = facilityAreas;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary>

@@ -5,25 +5,62 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.DataMigration.Models
 {
     /// <summary> Specifies resource limits for the migration. </summary>
     public partial class MongoDBThrottlingSettings
     {
-        /// <summary> Initializes a new instance of MongoDBThrottlingSettings. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="MongoDBThrottlingSettings"/>. </summary>
         public MongoDBThrottlingSettings()
         {
         }
 
-        /// <summary> Initializes a new instance of MongoDBThrottlingSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="MongoDBThrottlingSettings"/>. </summary>
         /// <param name="minFreeCpu"> The percentage of CPU time that the migrator will try to avoid using, from 0 to 100. </param>
         /// <param name="minFreeMemoryMb"> The number of megabytes of RAM that the migrator will try to avoid using. </param>
         /// <param name="maxParallelism"> The maximum number of work items (e.g. collection copies) that will be processed in parallel. </param>
-        internal MongoDBThrottlingSettings(int? minFreeCpu, int? minFreeMemoryMb, int? maxParallelism)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MongoDBThrottlingSettings(int? minFreeCpu, int? minFreeMemoryMb, int? maxParallelism, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             MinFreeCpu = minFreeCpu;
             MinFreeMemoryMb = minFreeMemoryMb;
             MaxParallelism = maxParallelism;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The percentage of CPU time that the migrator will try to avoid using, from 0 to 100. </summary>

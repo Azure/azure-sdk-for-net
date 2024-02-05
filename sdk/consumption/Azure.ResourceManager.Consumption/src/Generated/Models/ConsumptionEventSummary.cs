@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -15,12 +16,44 @@ namespace Azure.ResourceManager.Consumption.Models
     /// <summary> An event summary resource. </summary>
     public partial class ConsumptionEventSummary : ResourceData
     {
-        /// <summary> Initializes a new instance of ConsumptionEventSummary. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ConsumptionEventSummary"/>. </summary>
         public ConsumptionEventSummary()
         {
         }
 
-        /// <summary> Initializes a new instance of ConsumptionEventSummary. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConsumptionEventSummary"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -48,7 +81,8 @@ namespace Azure.ResourceManager.Consumption.Models
         /// <param name="chargesInBillingCurrency"> The amount of charges for events of type SettleCharges and PendingEligibleCharges in billing currency. </param>
         /// <param name="closedBalanceInBillingCurrency"> The balance in billing currency after the event. </param>
         /// <param name="etag"> eTag of the resource. To handle concurrent update scenario, this field will be used to determine whether the user is updating the latest version or not. </param>
-        internal ConsumptionEventSummary(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DateTimeOffset? transactOn, string description, ConsumptionAmount newCredit, ConsumptionAmount adjustments, ConsumptionAmount creditExpired, ConsumptionAmount charges, ConsumptionAmount closedBalance, ConsumptionEventType? eventType, string invoiceNumber, ResourceIdentifier billingProfileId, string billingProfileDisplayName, ResourceIdentifier lotId, string lotSource, ConsumptionAmount canceledCredit, string creditCurrency, string billingCurrency, ConsumptionReseller reseller, ConsumptionAmountWithExchangeRate creditExpiredInBillingCurrency, ConsumptionAmountWithExchangeRate newCreditInBillingCurrency, ConsumptionAmountWithExchangeRate adjustmentsInBillingCurrency, ConsumptionAmountWithExchangeRate chargesInBillingCurrency, ConsumptionAmountWithExchangeRate closedBalanceInBillingCurrency, ETag? etag) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ConsumptionEventSummary(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DateTimeOffset? transactOn, string description, ConsumptionAmount newCredit, ConsumptionAmount adjustments, ConsumptionAmount creditExpired, ConsumptionAmount charges, ConsumptionAmount closedBalance, ConsumptionEventType? eventType, string invoiceNumber, ResourceIdentifier billingProfileId, string billingProfileDisplayName, ResourceIdentifier lotId, string lotSource, ConsumptionAmount canceledCredit, string creditCurrency, string billingCurrency, ConsumptionReseller reseller, ConsumptionAmountWithExchangeRate creditExpiredInBillingCurrency, ConsumptionAmountWithExchangeRate newCreditInBillingCurrency, ConsumptionAmountWithExchangeRate adjustmentsInBillingCurrency, ConsumptionAmountWithExchangeRate chargesInBillingCurrency, ConsumptionAmountWithExchangeRate closedBalanceInBillingCurrency, ETag? etag, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             TransactOn = transactOn;
             Description = description;
@@ -73,6 +107,7 @@ namespace Azure.ResourceManager.Consumption.Models
             ChargesInBillingCurrency = chargesInBillingCurrency;
             ClosedBalanceInBillingCurrency = closedBalanceInBillingCurrency;
             ETag = etag;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The date of the event. </summary>

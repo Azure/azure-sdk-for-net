@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -14,7 +15,39 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> Configuration settings for the Azure App Service Authentication / Authorization feature. </summary>
     public partial class SiteAuthSettings : ResourceData
     {
-        /// <summary> Initializes a new instance of SiteAuthSettings. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SiteAuthSettings"/>. </summary>
         public SiteAuthSettings()
         {
             AllowedExternalRedirectUrls = new ChangeTrackingList<string>();
@@ -26,7 +59,7 @@ namespace Azure.ResourceManager.AppService.Models
             MicrosoftAccountOAuthScopes = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of SiteAuthSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="SiteAuthSettings"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -186,7 +219,8 @@ namespace Azure.ResourceManager.AppService.Models
         /// The setting in this value can control the behavior of the control plane for Authentication / Authorization.
         /// </param>
         /// <param name="kind"> Kind of resource. </param>
-        internal SiteAuthSettings(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, bool? isEnabled, string runtimeVersion, UnauthenticatedClientAction? unauthenticatedClientAction, bool? isTokenStoreEnabled, IList<string> allowedExternalRedirectUrls, BuiltInAuthenticationProvider? defaultProvider, double? tokenRefreshExtensionHours, string clientId, string clientSecret, string clientSecretSettingName, string clientSecretCertificateThumbprintString, string issuer, bool? validateIssuer, IList<string> allowedAudiences, IList<string> additionalLoginParams, string aadClaimsAuthorization, string googleClientId, string googleClientSecret, string googleClientSecretSettingName, IList<string> googleOAuthScopes, string facebookAppId, string facebookAppSecret, string facebookAppSecretSettingName, IList<string> facebookOAuthScopes, string gitHubClientId, string gitHubClientSecret, string gitHubClientSecretSettingName, IList<string> gitHubOAuthScopes, string twitterConsumerKey, string twitterConsumerSecret, string twitterConsumerSecretSettingName, string microsoftAccountClientId, string microsoftAccountClientSecret, string microsoftAccountClientSecretSettingName, IList<string> microsoftAccountOAuthScopes, string isAuthFromFile, string authFilePath, string configVersion, string kind) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SiteAuthSettings(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, bool? isEnabled, string runtimeVersion, UnauthenticatedClientAction? unauthenticatedClientAction, bool? isTokenStoreEnabled, IList<string> allowedExternalRedirectUrls, BuiltInAuthenticationProvider? defaultProvider, double? tokenRefreshExtensionHours, string clientId, string clientSecret, string clientSecretSettingName, string clientSecretCertificateThumbprintString, string issuer, bool? validateIssuer, IList<string> allowedAudiences, IList<string> additionalLoginParams, string aadClaimsAuthorization, string googleClientId, string googleClientSecret, string googleClientSecretSettingName, IList<string> googleOAuthScopes, string facebookAppId, string facebookAppSecret, string facebookAppSecretSettingName, IList<string> facebookOAuthScopes, string gitHubClientId, string gitHubClientSecret, string gitHubClientSecretSettingName, IList<string> gitHubOAuthScopes, string twitterConsumerKey, string twitterConsumerSecret, string twitterConsumerSecretSettingName, string microsoftAccountClientId, string microsoftAccountClientSecret, string microsoftAccountClientSecretSettingName, IList<string> microsoftAccountOAuthScopes, string isAuthFromFile, string authFilePath, string configVersion, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             IsEnabled = isEnabled;
             RuntimeVersion = runtimeVersion;
@@ -227,6 +261,7 @@ namespace Azure.ResourceManager.AppService.Models
             AuthFilePath = authFilePath;
             ConfigVersion = configVersion;
             Kind = kind;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> &lt;code&gt;true&lt;/code&gt; if the Authentication / Authorization feature is enabled for the current app; otherwise, &lt;code&gt;false&lt;/code&gt;. </summary>

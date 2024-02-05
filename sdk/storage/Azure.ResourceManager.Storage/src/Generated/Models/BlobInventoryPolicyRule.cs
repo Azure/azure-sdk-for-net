@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Storage.Models
@@ -13,7 +14,39 @@ namespace Azure.ResourceManager.Storage.Models
     /// <summary> An object that wraps the blob inventory rule. Each rule is uniquely defined by name. </summary>
     public partial class BlobInventoryPolicyRule
     {
-        /// <summary> Initializes a new instance of BlobInventoryPolicyRule. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="BlobInventoryPolicyRule"/>. </summary>
         /// <param name="isEnabled"> Rule is enabled when set to true. </param>
         /// <param name="name"> A rule name can contain any combination of alpha numeric characters. Rule name is case-sensitive. It must be unique within a policy. </param>
         /// <param name="destination"> Container name where blob inventory files are stored. Must be pre-created. </param>
@@ -29,6 +62,26 @@ namespace Azure.ResourceManager.Storage.Models
             Name = name;
             Destination = destination;
             Definition = definition;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="BlobInventoryPolicyRule"/>. </summary>
+        /// <param name="isEnabled"> Rule is enabled when set to true. </param>
+        /// <param name="name"> A rule name can contain any combination of alpha numeric characters. Rule name is case-sensitive. It must be unique within a policy. </param>
+        /// <param name="destination"> Container name where blob inventory files are stored. Must be pre-created. </param>
+        /// <param name="definition"> An object that defines the blob inventory policy rule. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal BlobInventoryPolicyRule(bool isEnabled, string name, string destination, BlobInventoryPolicyDefinition definition, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            IsEnabled = isEnabled;
+            Name = name;
+            Destination = destination;
+            Definition = definition;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="BlobInventoryPolicyRule"/> for deserialization. </summary>
+        internal BlobInventoryPolicyRule()
+        {
         }
 
         /// <summary> Rule is enabled when set to true. </summary>

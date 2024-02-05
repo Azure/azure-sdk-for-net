@@ -14,7 +14,39 @@ namespace Azure.ResourceManager.EdgeOrder.Models
     /// <summary> Represents product details. </summary>
     public partial class ProductDetails
     {
-        /// <summary> Initializes a new instance of ProductDetails. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ProductDetails"/>. </summary>
         /// <param name="hierarchyInformation"> Hierarchy of the product which uniquely identifies the product. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="hierarchyInformation"/> is null. </exception>
         public ProductDetails(HierarchyInformation hierarchyInformation)
@@ -25,19 +57,26 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             DeviceDetails = new ChangeTrackingList<EdgeOrderProductDeviceDetails>();
         }
 
-        /// <summary> Initializes a new instance of ProductDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProductDetails"/>. </summary>
         /// <param name="displayInfo"> Display details of the product. </param>
         /// <param name="hierarchyInformation"> Hierarchy of the product which uniquely identifies the product. </param>
         /// <param name="count"> Quantity of the product. </param>
         /// <param name="productDoubleEncryptionStatus"> Double encryption status of the configuration. Read-only field. </param>
         /// <param name="deviceDetails"> list of device details. </param>
-        internal ProductDetails(ProductDisplayInfo displayInfo, HierarchyInformation hierarchyInformation, int? count, DoubleEncryptionStatus? productDoubleEncryptionStatus, IReadOnlyList<EdgeOrderProductDeviceDetails> deviceDetails)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ProductDetails(ProductDisplayInfo displayInfo, HierarchyInformation hierarchyInformation, int? count, DoubleEncryptionStatus? productDoubleEncryptionStatus, IReadOnlyList<EdgeOrderProductDeviceDetails> deviceDetails, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             DisplayInfo = displayInfo;
             HierarchyInformation = hierarchyInformation;
             Count = count;
             ProductDoubleEncryptionStatus = productDoubleEncryptionStatus;
             DeviceDetails = deviceDetails;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ProductDetails"/> for deserialization. </summary>
+        internal ProductDetails()
+        {
         }
 
         /// <summary> Display details of the product. </summary>

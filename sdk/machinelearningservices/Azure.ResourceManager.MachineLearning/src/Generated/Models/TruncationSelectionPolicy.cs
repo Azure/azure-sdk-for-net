@@ -5,23 +5,27 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> Defines an early termination policy that cancels a given percentage of runs at each evaluation interval. </summary>
     public partial class TruncationSelectionPolicy : MachineLearningEarlyTerminationPolicy
     {
-        /// <summary> Initializes a new instance of TruncationSelectionPolicy. </summary>
+        /// <summary> Initializes a new instance of <see cref="TruncationSelectionPolicy"/>. </summary>
         public TruncationSelectionPolicy()
         {
             PolicyType = EarlyTerminationPolicyType.TruncationSelection;
         }
 
-        /// <summary> Initializes a new instance of TruncationSelectionPolicy. </summary>
+        /// <summary> Initializes a new instance of <see cref="TruncationSelectionPolicy"/>. </summary>
         /// <param name="delayEvaluation"> Number of intervals by which to delay the first evaluation. </param>
         /// <param name="evaluationInterval"> Interval (number of runs) between policy evaluations. </param>
         /// <param name="policyType"> [Required] Name of policy configuration. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="truncationPercentage"> The percentage of runs to cancel at each evaluation interval. </param>
-        internal TruncationSelectionPolicy(int? delayEvaluation, int? evaluationInterval, EarlyTerminationPolicyType policyType, int? truncationPercentage) : base(delayEvaluation, evaluationInterval, policyType)
+        internal TruncationSelectionPolicy(int? delayEvaluation, int? evaluationInterval, EarlyTerminationPolicyType policyType, IDictionary<string, BinaryData> serializedAdditionalRawData, int? truncationPercentage) : base(delayEvaluation, evaluationInterval, policyType, serializedAdditionalRawData)
         {
             TruncationPercentage = truncationPercentage;
             PolicyType = policyType;

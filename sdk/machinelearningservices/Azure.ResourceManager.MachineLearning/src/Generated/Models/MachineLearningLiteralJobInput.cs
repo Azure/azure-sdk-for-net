@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
@@ -13,7 +14,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> Literal input type. </summary>
     public partial class MachineLearningLiteralJobInput : MachineLearningJobInput
     {
-        /// <summary> Initializes a new instance of MachineLearningLiteralJobInput. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningLiteralJobInput"/>. </summary>
         /// <param name="value"> [Required] Literal value for the input. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public MachineLearningLiteralJobInput(string value)
@@ -24,14 +25,20 @@ namespace Azure.ResourceManager.MachineLearning.Models
             JobInputType = JobInputType.Literal;
         }
 
-        /// <summary> Initializes a new instance of MachineLearningLiteralJobInput. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningLiteralJobInput"/>. </summary>
         /// <param name="description"> Description for the input. </param>
         /// <param name="jobInputType"> [Required] Specifies the type of job. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="value"> [Required] Literal value for the input. </param>
-        internal MachineLearningLiteralJobInput(string description, JobInputType jobInputType, string value) : base(description, jobInputType)
+        internal MachineLearningLiteralJobInput(string description, JobInputType jobInputType, IDictionary<string, BinaryData> serializedAdditionalRawData, string value) : base(description, jobInputType, serializedAdditionalRawData)
         {
             Value = value;
             JobInputType = jobInputType;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MachineLearningLiteralJobInput"/> for deserialization. </summary>
+        internal MachineLearningLiteralJobInput()
+        {
         }
 
         /// <summary> [Required] Literal value for the input. </summary>

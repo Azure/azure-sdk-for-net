@@ -13,7 +13,7 @@ namespace Azure.IoT.TimeSeriesInsights
     /// <summary> Response of a single operation on a batch of instances. Only one of "get", "put", "update" or "delete" will be set based on the request. </summary>
     internal partial class InstancesBatchResponse
     {
-        /// <summary> Initializes a new instance of InstancesBatchResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="InstancesBatchResponse"/>. </summary>
         internal InstancesBatchResponse()
         {
             Get = new ChangeTrackingList<InstancesOperationResult>();
@@ -22,7 +22,7 @@ namespace Azure.IoT.TimeSeriesInsights
             Delete = new ChangeTrackingList<TimeSeriesOperationError>();
         }
 
-        /// <summary> Initializes a new instance of InstancesBatchResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="InstancesBatchResponse"/>. </summary>
         /// <param name="get"> List of instance or error objects corresponding by position to the "get" array in the request. Instance object is set when operation is successful and error object is set when operation is unsuccessful. </param>
         /// <param name="put"> List of error objects corresponding by position to the "put" array in the request. Error object is set when operation is unsuccessful. </param>
         /// <param name="update"> List of error objects corresponding by position to the "update" array in the request. Instance object is set when operation is successful and error object is set when operation is unsuccessful. </param>

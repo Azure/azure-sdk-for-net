@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ManagedServices.Models
@@ -13,7 +14,39 @@ namespace Azure.ResourceManager.ManagedServices.Models
     /// <summary> The details for the Managed Services offer’s plan in Azure Marketplace. </summary>
     public partial class ManagedServicesPlan
     {
-        /// <summary> Initializes a new instance of ManagedServicesPlan. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ManagedServicesPlan"/>. </summary>
         /// <param name="name"> Azure Marketplace plan name. </param>
         /// <param name="publisher"> Azure Marketplace publisher ID. </param>
         /// <param name="product"> Azure Marketplace product code. </param>
@@ -30,6 +63,26 @@ namespace Azure.ResourceManager.ManagedServices.Models
             Publisher = publisher;
             Product = product;
             Version = version;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ManagedServicesPlan"/>. </summary>
+        /// <param name="name"> Azure Marketplace plan name. </param>
+        /// <param name="publisher"> Azure Marketplace publisher ID. </param>
+        /// <param name="product"> Azure Marketplace product code. </param>
+        /// <param name="version"> Azure Marketplace plan's version. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ManagedServicesPlan(string name, string publisher, string product, string version, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Name = name;
+            Publisher = publisher;
+            Product = product;
+            Version = version;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ManagedServicesPlan"/> for deserialization. </summary>
+        internal ManagedServicesPlan()
+        {
         }
 
         /// <summary> Azure Marketplace plan name. </summary>

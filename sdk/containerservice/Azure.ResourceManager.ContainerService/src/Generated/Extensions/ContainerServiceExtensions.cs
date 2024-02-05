@@ -45,9 +45,12 @@ namespace Azure.ResourceManager.ContainerService
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="OSOptionProfileResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="OSOptionProfileResource"/> object. </returns>
         public static OSOptionProfileResource GetOSOptionProfileResource(this ArmClient client, ResourceIdentifier id)
         {
+            Argument.AssertNotNull(client, nameof(client));
+
             return GetMockableContainerServiceArmClient(client).GetOSOptionProfileResource(id);
         }
 
@@ -61,9 +64,12 @@ namespace Azure.ResourceManager.ContainerService
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ManagedClusterUpgradeProfileResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="ManagedClusterUpgradeProfileResource"/> object. </returns>
         public static ManagedClusterUpgradeProfileResource GetManagedClusterUpgradeProfileResource(this ArmClient client, ResourceIdentifier id)
         {
+            Argument.AssertNotNull(client, nameof(client));
+
             return GetMockableContainerServiceArmClient(client).GetManagedClusterUpgradeProfileResource(id);
         }
 
@@ -77,10 +83,51 @@ namespace Azure.ResourceManager.ContainerService
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ContainerServiceManagedClusterResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="ContainerServiceManagedClusterResource"/> object. </returns>
         public static ContainerServiceManagedClusterResource GetContainerServiceManagedClusterResource(this ArmClient client, ResourceIdentifier id)
         {
+            Argument.AssertNotNull(client, nameof(client));
+
             return GetMockableContainerServiceArmClient(client).GetContainerServiceManagedClusterResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="MeshRevisionProfileResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="MeshRevisionProfileResource.CreateResourceIdentifier" /> to create a <see cref="MeshRevisionProfileResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableContainerServiceArmClient.GetMeshRevisionProfileResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="MeshRevisionProfileResource"/> object. </returns>
+        public static MeshRevisionProfileResource GetMeshRevisionProfileResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableContainerServiceArmClient(client).GetMeshRevisionProfileResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="MeshUpgradeProfileResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="MeshUpgradeProfileResource.CreateResourceIdentifier" /> to create a <see cref="MeshUpgradeProfileResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableContainerServiceArmClient.GetMeshUpgradeProfileResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="MeshUpgradeProfileResource"/> object. </returns>
+        public static MeshUpgradeProfileResource GetMeshUpgradeProfileResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableContainerServiceArmClient(client).GetMeshUpgradeProfileResource(id);
         }
 
         /// <summary>
@@ -93,9 +140,12 @@ namespace Azure.ResourceManager.ContainerService
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ContainerServiceMaintenanceConfigurationResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="ContainerServiceMaintenanceConfigurationResource"/> object. </returns>
         public static ContainerServiceMaintenanceConfigurationResource GetContainerServiceMaintenanceConfigurationResource(this ArmClient client, ResourceIdentifier id)
         {
+            Argument.AssertNotNull(client, nameof(client));
+
             return GetMockableContainerServiceArmClient(client).GetContainerServiceMaintenanceConfigurationResource(id);
         }
 
@@ -109,9 +159,12 @@ namespace Azure.ResourceManager.ContainerService
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ContainerServiceAgentPoolResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="ContainerServiceAgentPoolResource"/> object. </returns>
         public static ContainerServiceAgentPoolResource GetContainerServiceAgentPoolResource(this ArmClient client, ResourceIdentifier id)
         {
+            Argument.AssertNotNull(client, nameof(client));
+
             return GetMockableContainerServiceArmClient(client).GetContainerServiceAgentPoolResource(id);
         }
 
@@ -125,9 +178,12 @@ namespace Azure.ResourceManager.ContainerService
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="AgentPoolUpgradeProfileResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="AgentPoolUpgradeProfileResource"/> object. </returns>
         public static AgentPoolUpgradeProfileResource GetAgentPoolUpgradeProfileResource(this ArmClient client, ResourceIdentifier id)
         {
+            Argument.AssertNotNull(client, nameof(client));
+
             return GetMockableContainerServiceArmClient(client).GetAgentPoolUpgradeProfileResource(id);
         }
 
@@ -141,9 +197,12 @@ namespace Azure.ResourceManager.ContainerService
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ContainerServicePrivateEndpointConnectionResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="ContainerServicePrivateEndpointConnectionResource"/> object. </returns>
         public static ContainerServicePrivateEndpointConnectionResource GetContainerServicePrivateEndpointConnectionResource(this ArmClient client, ResourceIdentifier id)
         {
+            Argument.AssertNotNull(client, nameof(client));
+
             return GetMockableContainerServiceArmClient(client).GetContainerServicePrivateEndpointConnectionResource(id);
         }
 
@@ -157,26 +216,13 @@ namespace Azure.ResourceManager.ContainerService
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="AgentPoolSnapshotResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="AgentPoolSnapshotResource"/> object. </returns>
         public static AgentPoolSnapshotResource GetAgentPoolSnapshotResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetMockableContainerServiceArmClient(client).GetAgentPoolSnapshotResource(id);
-        }
+            Argument.AssertNotNull(client, nameof(client));
 
-        /// <summary>
-        /// Gets an object representing a <see cref="ManagedClusterSnapshotResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ManagedClusterSnapshotResource.CreateResourceIdentifier" /> to create a <see cref="ManagedClusterSnapshotResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableContainerServiceArmClient.GetManagedClusterSnapshotResource(ResourceIdentifier)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ManagedClusterSnapshotResource" /> object. </returns>
-        public static ManagedClusterSnapshotResource GetManagedClusterSnapshotResource(this ArmClient client, ResourceIdentifier id)
-        {
-            return GetMockableContainerServiceArmClient(client).GetManagedClusterSnapshotResource(id);
+            return GetMockableContainerServiceArmClient(client).GetAgentPoolSnapshotResource(id);
         }
 
         /// <summary>
@@ -189,42 +235,13 @@ namespace Azure.ResourceManager.ContainerService
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ContainerServiceTrustedAccessRoleBindingResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="ContainerServiceTrustedAccessRoleBindingResource"/> object. </returns>
         public static ContainerServiceTrustedAccessRoleBindingResource GetContainerServiceTrustedAccessRoleBindingResource(this ArmClient client, ResourceIdentifier id)
         {
+            Argument.AssertNotNull(client, nameof(client));
+
             return GetMockableContainerServiceArmClient(client).GetContainerServiceTrustedAccessRoleBindingResource(id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="ContainerServiceFleetResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ContainerServiceFleetResource.CreateResourceIdentifier" /> to create a <see cref="ContainerServiceFleetResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableContainerServiceArmClient.GetContainerServiceFleetResource(ResourceIdentifier)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ContainerServiceFleetResource" /> object. </returns>
-        public static ContainerServiceFleetResource GetContainerServiceFleetResource(this ArmClient client, ResourceIdentifier id)
-        {
-            return GetMockableContainerServiceArmClient(client).GetContainerServiceFleetResource(id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="ContainerServiceFleetMemberResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ContainerServiceFleetMemberResource.CreateResourceIdentifier" /> to create a <see cref="ContainerServiceFleetMemberResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableContainerServiceArmClient.GetContainerServiceFleetMemberResource(ResourceIdentifier)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ContainerServiceFleetMemberResource" /> object. </returns>
-        public static ContainerServiceFleetMemberResource GetContainerServiceFleetMemberResource(this ArmClient client, ResourceIdentifier id)
-        {
-            return GetMockableContainerServiceArmClient(client).GetContainerServiceFleetMemberResource(id);
         }
 
         /// <summary>
@@ -235,9 +252,12 @@ namespace Azure.ResourceManager.ContainerService
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         /// <returns> An object representing collection of ContainerServiceManagedClusterResources and their operations over a ContainerServiceManagedClusterResource. </returns>
         public static ContainerServiceManagedClusterCollection GetContainerServiceManagedClusters(this ResourceGroupResource resourceGroupResource)
         {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
             return GetMockableContainerServiceResourceGroupResource(resourceGroupResource).GetContainerServiceManagedClusters();
         }
 
@@ -252,6 +272,14 @@ namespace Azure.ResourceManager.ContainerService
         /// <term>Operation Id</term>
         /// <description>ManagedClusters_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerServiceManagedClusterResource"/></description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -261,11 +289,13 @@ namespace Azure.ResourceManager.ContainerService
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="resourceName"> The name of the managed cluster resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="resourceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public static async Task<Response<ContainerServiceManagedClusterResource>> GetContainerServiceManagedClusterAsync(this ResourceGroupResource resourceGroupResource, string resourceName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
             return await GetMockableContainerServiceResourceGroupResource(resourceGroupResource).GetContainerServiceManagedClusterAsync(resourceName, cancellationToken).ConfigureAwait(false);
         }
 
@@ -280,6 +310,14 @@ namespace Azure.ResourceManager.ContainerService
         /// <term>Operation Id</term>
         /// <description>ManagedClusters_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerServiceManagedClusterResource"/></description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -289,11 +327,13 @@ namespace Azure.ResourceManager.ContainerService
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="resourceName"> The name of the managed cluster resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="resourceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public static Response<ContainerServiceManagedClusterResource> GetContainerServiceManagedCluster(this ResourceGroupResource resourceGroupResource, string resourceName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
             return GetMockableContainerServiceResourceGroupResource(resourceGroupResource).GetContainerServiceManagedCluster(resourceName, cancellationToken);
         }
 
@@ -305,9 +345,12 @@ namespace Azure.ResourceManager.ContainerService
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         /// <returns> An object representing collection of AgentPoolSnapshotResources and their operations over a AgentPoolSnapshotResource. </returns>
         public static AgentPoolSnapshotCollection GetAgentPoolSnapshots(this ResourceGroupResource resourceGroupResource)
         {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
             return GetMockableContainerServiceResourceGroupResource(resourceGroupResource).GetAgentPoolSnapshots();
         }
 
@@ -322,6 +365,14 @@ namespace Azure.ResourceManager.ContainerService
         /// <term>Operation Id</term>
         /// <description>Snapshots_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AgentPoolSnapshotResource"/></description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -331,11 +382,13 @@ namespace Azure.ResourceManager.ContainerService
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="resourceName"> The name of the managed cluster resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="resourceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public static async Task<Response<AgentPoolSnapshotResource>> GetAgentPoolSnapshotAsync(this ResourceGroupResource resourceGroupResource, string resourceName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
             return await GetMockableContainerServiceResourceGroupResource(resourceGroupResource).GetAgentPoolSnapshotAsync(resourceName, cancellationToken).ConfigureAwait(false);
         }
 
@@ -350,6 +403,14 @@ namespace Azure.ResourceManager.ContainerService
         /// <term>Operation Id</term>
         /// <description>Snapshots_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AgentPoolSnapshotResource"/></description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -359,152 +420,174 @@ namespace Azure.ResourceManager.ContainerService
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="resourceName"> The name of the managed cluster resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="resourceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public static Response<AgentPoolSnapshotResource> GetAgentPoolSnapshot(this ResourceGroupResource resourceGroupResource, string resourceName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
             return GetMockableContainerServiceResourceGroupResource(resourceGroupResource).GetAgentPoolSnapshot(resourceName, cancellationToken);
         }
 
         /// <summary>
-        /// Gets a collection of ManagedClusterSnapshotResources in the ResourceGroupResource.
+        /// Gets a collection of MeshRevisionProfileResources in the SubscriptionResource.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableContainerServiceResourceGroupResource.GetManagedClusterSnapshots()"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableContainerServiceSubscriptionResource.GetMeshRevisionProfiles(AzureLocation)"/> instead.</description>
         /// </item>
         /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <returns> An object representing collection of ManagedClusterSnapshotResources and their operations over a ManagedClusterSnapshotResource. </returns>
-        public static ManagedClusterSnapshotCollection GetManagedClusterSnapshots(this ResourceGroupResource resourceGroupResource)
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="location"> The name of the Azure region. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> An object representing collection of MeshRevisionProfileResources and their operations over a MeshRevisionProfileResource. </returns>
+        public static MeshRevisionProfileCollection GetMeshRevisionProfiles(this SubscriptionResource subscriptionResource, AzureLocation location)
         {
-            return GetMockableContainerServiceResourceGroupResource(resourceGroupResource).GetManagedClusterSnapshots();
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableContainerServiceSubscriptionResource(subscriptionResource).GetMeshRevisionProfiles(location);
         }
 
         /// <summary>
-        /// Gets a managed cluster snapshot.
+        /// Contains extra metadata on the revision, including supported revisions, cluster compatibility and available upgrades
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerService/managedclustersnapshots/{resourceName}</description>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ContainerService/locations/{location}/meshRevisionProfiles/{mode}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ManagedClusterSnapshots_Get</description>
+        /// <description>ManagedClusters_GetMeshRevisionProfile</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MeshRevisionProfileResource"/></description>
         /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableContainerServiceResourceGroupResource.GetManagedClusterSnapshotAsync(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableContainerServiceSubscriptionResource.GetMeshRevisionProfileAsync(AzureLocation,string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="resourceName"> The name of the managed cluster resource. </param>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="location"> The name of the Azure region. </param>
+        /// <param name="mode"> The mode of the mesh. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="mode"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="mode"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<ManagedClusterSnapshotResource>> GetManagedClusterSnapshotAsync(this ResourceGroupResource resourceGroupResource, string resourceName, CancellationToken cancellationToken = default)
+        public static async Task<Response<MeshRevisionProfileResource>> GetMeshRevisionProfileAsync(this SubscriptionResource subscriptionResource, AzureLocation location, string mode, CancellationToken cancellationToken = default)
         {
-            return await GetMockableContainerServiceResourceGroupResource(resourceGroupResource).GetManagedClusterSnapshotAsync(resourceName, cancellationToken).ConfigureAwait(false);
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return await GetMockableContainerServiceSubscriptionResource(subscriptionResource).GetMeshRevisionProfileAsync(location, mode, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
-        /// Gets a managed cluster snapshot.
+        /// Contains extra metadata on the revision, including supported revisions, cluster compatibility and available upgrades
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerService/managedclustersnapshots/{resourceName}</description>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ContainerService/locations/{location}/meshRevisionProfiles/{mode}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ManagedClusterSnapshots_Get</description>
+        /// <description>ManagedClusters_GetMeshRevisionProfile</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MeshRevisionProfileResource"/></description>
         /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableContainerServiceResourceGroupResource.GetManagedClusterSnapshot(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableContainerServiceSubscriptionResource.GetMeshRevisionProfile(AzureLocation,string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="resourceName"> The name of the managed cluster resource. </param>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="location"> The name of the Azure region. </param>
+        /// <param name="mode"> The mode of the mesh. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="mode"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="mode"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public static Response<ManagedClusterSnapshotResource> GetManagedClusterSnapshot(this ResourceGroupResource resourceGroupResource, string resourceName, CancellationToken cancellationToken = default)
+        public static Response<MeshRevisionProfileResource> GetMeshRevisionProfile(this SubscriptionResource subscriptionResource, AzureLocation location, string mode, CancellationToken cancellationToken = default)
         {
-            return GetMockableContainerServiceResourceGroupResource(resourceGroupResource).GetManagedClusterSnapshot(resourceName, cancellationToken);
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableContainerServiceSubscriptionResource(subscriptionResource).GetMeshRevisionProfile(location, mode, cancellationToken);
         }
 
         /// <summary>
-        /// Gets a collection of ContainerServiceFleetResources in the ResourceGroupResource.
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableContainerServiceResourceGroupResource.GetContainerServiceFleets()"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <returns> An object representing collection of ContainerServiceFleetResources and their operations over a ContainerServiceFleetResource. </returns>
-        public static ContainerServiceFleetCollection GetContainerServiceFleets(this ResourceGroupResource resourceGroupResource)
-        {
-            return GetMockableContainerServiceResourceGroupResource(resourceGroupResource).GetContainerServiceFleets();
-        }
-
-        /// <summary>
-        /// Gets a Fleet.
+        /// Contains extra metadata on the version, including supported patch versions, capabilities, available upgrades, and details on preview status of the version
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerService/fleets/{fleetName}</description>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ContainerService/locations/{location}/kubernetesVersions</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Fleets_Get</description>
+        /// <description>ManagedClusters_ListKubernetesVersions</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-01</description>
         /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableContainerServiceResourceGroupResource.GetContainerServiceFleetAsync(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableContainerServiceSubscriptionResource.GetKubernetesVersionsManagedCluster(AzureLocation,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="fleetName"> The name of the Fleet resource. </param>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="location"> The name of the Azure region. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="fleetName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="fleetName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public static async Task<Response<ContainerServiceFleetResource>> GetContainerServiceFleetAsync(this ResourceGroupResource resourceGroupResource, string fleetName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        public static async Task<Response<KubernetesVersionListResult>> GetKubernetesVersionsManagedClusterAsync(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            return await GetMockableContainerServiceResourceGroupResource(resourceGroupResource).GetContainerServiceFleetAsync(fleetName, cancellationToken).ConfigureAwait(false);
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return await GetMockableContainerServiceSubscriptionResource(subscriptionResource).GetKubernetesVersionsManagedClusterAsync(location, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
-        /// Gets a Fleet.
+        /// Contains extra metadata on the version, including supported patch versions, capabilities, available upgrades, and details on preview status of the version
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerService/fleets/{fleetName}</description>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ContainerService/locations/{location}/kubernetesVersions</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Fleets_Get</description>
+        /// <description>ManagedClusters_ListKubernetesVersions</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-01</description>
         /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableContainerServiceResourceGroupResource.GetContainerServiceFleet(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableContainerServiceSubscriptionResource.GetKubernetesVersionsManagedCluster(AzureLocation,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="fleetName"> The name of the Fleet resource. </param>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="location"> The name of the Azure region. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="fleetName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="fleetName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public static Response<ContainerServiceFleetResource> GetContainerServiceFleet(this ResourceGroupResource resourceGroupResource, string fleetName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        public static Response<KubernetesVersionListResult> GetKubernetesVersionsManagedCluster(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            return GetMockableContainerServiceResourceGroupResource(resourceGroupResource).GetContainerServiceFleet(fleetName, cancellationToken);
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableContainerServiceSubscriptionResource(subscriptionResource).GetKubernetesVersionsManagedCluster(location, cancellationToken);
         }
 
         /// <summary>
@@ -518,6 +601,14 @@ namespace Azure.ResourceManager.ContainerService
         /// <term>Operation Id</term>
         /// <description>ManagedClusters_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerServiceManagedClusterResource"/></description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -526,9 +617,12 @@ namespace Azure.ResourceManager.ContainerService
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ContainerServiceManagedClusterResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> An async collection of <see cref="ContainerServiceManagedClusterResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<ContainerServiceManagedClusterResource> GetContainerServiceManagedClustersAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
             return GetMockableContainerServiceSubscriptionResource(subscriptionResource).GetContainerServiceManagedClustersAsync(cancellationToken);
         }
 
@@ -543,6 +637,14 @@ namespace Azure.ResourceManager.ContainerService
         /// <term>Operation Id</term>
         /// <description>ManagedClusters_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerServiceManagedClusterResource"/></description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -551,9 +653,12 @@ namespace Azure.ResourceManager.ContainerService
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ContainerServiceManagedClusterResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="ContainerServiceManagedClusterResource"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<ContainerServiceManagedClusterResource> GetContainerServiceManagedClusters(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
             return GetMockableContainerServiceSubscriptionResource(subscriptionResource).GetContainerServiceManagedClusters(cancellationToken);
         }
 
@@ -568,6 +673,14 @@ namespace Azure.ResourceManager.ContainerService
         /// <term>Operation Id</term>
         /// <description>Snapshots_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AgentPoolSnapshotResource"/></description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -576,9 +689,12 @@ namespace Azure.ResourceManager.ContainerService
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="AgentPoolSnapshotResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> An async collection of <see cref="AgentPoolSnapshotResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<AgentPoolSnapshotResource> GetAgentPoolSnapshotsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
             return GetMockableContainerServiceSubscriptionResource(subscriptionResource).GetAgentPoolSnapshotsAsync(cancellationToken);
         }
 
@@ -593,6 +709,14 @@ namespace Azure.ResourceManager.ContainerService
         /// <term>Operation Id</term>
         /// <description>Snapshots_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AgentPoolSnapshotResource"/></description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -601,60 +725,13 @@ namespace Azure.ResourceManager.ContainerService
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="AgentPoolSnapshotResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="AgentPoolSnapshotResource"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<AgentPoolSnapshotResource> GetAgentPoolSnapshots(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
             return GetMockableContainerServiceSubscriptionResource(subscriptionResource).GetAgentPoolSnapshots(cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets a list of managed cluster snapshots in the specified subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ContainerService/managedclustersnapshots</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ManagedClusterSnapshots_List</description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableContainerServiceSubscriptionResource.GetManagedClusterSnapshots(CancellationToken)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ManagedClusterSnapshotResource" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<ManagedClusterSnapshotResource> GetManagedClusterSnapshotsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
-        {
-            return GetMockableContainerServiceSubscriptionResource(subscriptionResource).GetManagedClusterSnapshotsAsync(cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets a list of managed cluster snapshots in the specified subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ContainerService/managedclustersnapshots</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ManagedClusterSnapshots_List</description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableContainerServiceSubscriptionResource.GetManagedClusterSnapshots(CancellationToken)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ManagedClusterSnapshotResource" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<ManagedClusterSnapshotResource> GetManagedClusterSnapshots(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
-        {
-            return GetMockableContainerServiceSubscriptionResource(subscriptionResource).GetManagedClusterSnapshots(cancellationToken);
         }
 
         /// <summary>
@@ -668,6 +745,10 @@ namespace Azure.ResourceManager.ContainerService
         /// <term>Operation Id</term>
         /// <description>TrustedAccessRoles_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-01</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -675,11 +756,14 @@ namespace Azure.ResourceManager.ContainerService
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="location"> The name of Azure region. </param>
+        /// <param name="location"> The name of the Azure region. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ContainerServiceTrustedAccessRole" /> that may take multiple service requests to iterate over. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> An async collection of <see cref="ContainerServiceTrustedAccessRole"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<ContainerServiceTrustedAccessRole> GetTrustedAccessRolesAsync(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
             return GetMockableContainerServiceSubscriptionResource(subscriptionResource).GetTrustedAccessRolesAsync(location, cancellationToken);
         }
 
@@ -694,6 +778,10 @@ namespace Azure.ResourceManager.ContainerService
         /// <term>Operation Id</term>
         /// <description>TrustedAccessRoles_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-01</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -701,62 +789,15 @@ namespace Azure.ResourceManager.ContainerService
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="location"> The name of Azure region. </param>
+        /// <param name="location"> The name of the Azure region. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ContainerServiceTrustedAccessRole" /> that may take multiple service requests to iterate over. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="ContainerServiceTrustedAccessRole"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<ContainerServiceTrustedAccessRole> GetTrustedAccessRoles(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
             return GetMockableContainerServiceSubscriptionResource(subscriptionResource).GetTrustedAccessRoles(location, cancellationToken);
-        }
-
-        /// <summary>
-        /// Lists fleets in the specified subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ContainerService/fleets</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Fleets_List</description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableContainerServiceSubscriptionResource.GetContainerServiceFleets(CancellationToken)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ContainerServiceFleetResource" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<ContainerServiceFleetResource> GetContainerServiceFleetsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
-        {
-            return GetMockableContainerServiceSubscriptionResource(subscriptionResource).GetContainerServiceFleetsAsync(cancellationToken);
-        }
-
-        /// <summary>
-        /// Lists fleets in the specified subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ContainerService/fleets</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Fleets_List</description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableContainerServiceSubscriptionResource.GetContainerServiceFleets(CancellationToken)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ContainerServiceFleetResource" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<ContainerServiceFleetResource> GetContainerServiceFleets(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
-        {
-            return GetMockableContainerServiceSubscriptionResource(subscriptionResource).GetContainerServiceFleets(cancellationToken);
         }
     }
 }

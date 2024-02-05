@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure;
 using Azure.Core;
@@ -19,13 +20,45 @@ namespace Azure.ResourceManager.PrivateDns
     /// </summary>
     public partial class PrivateDnsZoneData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of PrivateDnsZoneData. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="PrivateDnsZoneData"/>. </summary>
         /// <param name="location"> The location. </param>
         public PrivateDnsZoneData(AzureLocation location) : base(location)
         {
         }
 
-        /// <summary> Initializes a new instance of PrivateDnsZoneData. </summary>
+        /// <summary> Initializes a new instance of <see cref="PrivateDnsZoneData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -41,7 +74,8 @@ namespace Azure.ResourceManager.PrivateDns
         /// <param name="numberOfVirtualNetworkLinksWithRegistration"> The current number of virtual networks that are linked to this Private DNS zone with registration enabled. This is a read-only property and any attempt to set this value will be ignored. </param>
         /// <param name="privateDnsProvisioningState"> The provisioning state of the resource. This is a read-only property and any attempt to set this value will be ignored. </param>
         /// <param name="internalId"> Private zone internal Id. </param>
-        internal PrivateDnsZoneData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, long? maxNumberOfRecords, long? numberOfRecords, long? maxNumberOfVirtualNetworkLinks, long? numberOfVirtualNetworkLinks, long? maxNumberOfVirtualNetworkLinksWithRegistration, long? numberOfVirtualNetworkLinksWithRegistration, PrivateDnsProvisioningState? privateDnsProvisioningState, string internalId) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal PrivateDnsZoneData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, long? maxNumberOfRecords, long? numberOfRecords, long? maxNumberOfVirtualNetworkLinks, long? numberOfVirtualNetworkLinks, long? maxNumberOfVirtualNetworkLinksWithRegistration, long? numberOfVirtualNetworkLinksWithRegistration, PrivateDnsProvisioningState? privateDnsProvisioningState, string internalId, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             ETag = etag;
             MaxNumberOfRecords = maxNumberOfRecords;
@@ -52,6 +86,12 @@ namespace Azure.ResourceManager.PrivateDns
             NumberOfVirtualNetworkLinksWithRegistration = numberOfVirtualNetworkLinksWithRegistration;
             PrivateDnsProvisioningState = privateDnsProvisioningState;
             InternalId = internalId;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="PrivateDnsZoneData"/> for deserialization. </summary>
+        internal PrivateDnsZoneData()
+        {
         }
 
         /// <summary> The ETag of the zone. </summary>

@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
@@ -12,21 +14,27 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
     /// <summary> Parameters for Operational-Tier DataStore. </summary>
     public partial class OperationalDataStoreSettings : DataStoreSettings
     {
-        /// <summary> Initializes a new instance of OperationalDataStoreSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="OperationalDataStoreSettings"/>. </summary>
         /// <param name="dataStoreType"> type of datastore; Operational/Vault/Archive. </param>
         public OperationalDataStoreSettings(DataStoreType dataStoreType) : base(dataStoreType)
         {
             ObjectType = "AzureOperationalStoreParameters";
         }
 
-        /// <summary> Initializes a new instance of OperationalDataStoreSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="OperationalDataStoreSettings"/>. </summary>
         /// <param name="objectType"> Type of the specific object - used for deserializing. </param>
         /// <param name="dataStoreType"> type of datastore; Operational/Vault/Archive. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="resourceGroupId"> Gets or sets the Snapshot Resource Group Uri. </param>
-        internal OperationalDataStoreSettings(string objectType, DataStoreType dataStoreType, ResourceIdentifier resourceGroupId) : base(objectType, dataStoreType)
+        internal OperationalDataStoreSettings(string objectType, DataStoreType dataStoreType, IDictionary<string, BinaryData> serializedAdditionalRawData, ResourceIdentifier resourceGroupId) : base(objectType, dataStoreType, serializedAdditionalRawData)
         {
             ResourceGroupId = resourceGroupId;
             ObjectType = objectType ?? "AzureOperationalStoreParameters";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="OperationalDataStoreSettings"/> for deserialization. </summary>
+        internal OperationalDataStoreSettings()
+        {
         }
 
         /// <summary> Gets or sets the Snapshot Resource Group Uri. </summary>

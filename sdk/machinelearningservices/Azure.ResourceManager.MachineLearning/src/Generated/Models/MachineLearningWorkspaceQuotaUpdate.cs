@@ -5,29 +5,66 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> The properties for update Quota response. </summary>
     public partial class MachineLearningWorkspaceQuotaUpdate
     {
-        /// <summary> Initializes a new instance of MachineLearningWorkspaceQuotaUpdate. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="MachineLearningWorkspaceQuotaUpdate"/>. </summary>
         internal MachineLearningWorkspaceQuotaUpdate()
         {
         }
 
-        /// <summary> Initializes a new instance of MachineLearningWorkspaceQuotaUpdate. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningWorkspaceQuotaUpdate"/>. </summary>
         /// <param name="id"> Specifies the resource ID. </param>
         /// <param name="updateWorkspaceQuotasType"> Specifies the resource type. </param>
         /// <param name="limit"> The maximum permitted quota of the resource. </param>
         /// <param name="unit"> An enum describing the unit of quota measurement. </param>
         /// <param name="status"> Status of update workspace quota. </param>
-        internal MachineLearningWorkspaceQuotaUpdate(string id, string updateWorkspaceQuotasType, long? limit, MachineLearningQuotaUnit? unit, MachineLearningWorkspaceQuotaStatus? status)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MachineLearningWorkspaceQuotaUpdate(string id, string updateWorkspaceQuotasType, long? limit, MachineLearningQuotaUnit? unit, MachineLearningWorkspaceQuotaStatus? status, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Id = id;
             UpdateWorkspaceQuotasType = updateWorkspaceQuotasType;
             Limit = limit;
             Unit = unit;
             Status = status;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Specifies the resource ID. </summary>

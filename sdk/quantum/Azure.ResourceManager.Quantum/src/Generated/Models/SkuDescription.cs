@@ -14,7 +14,39 @@ namespace Azure.ResourceManager.Quantum.Models
     /// <summary> Information about a specific sku. </summary>
     public partial class SkuDescription
     {
-        /// <summary> Initializes a new instance of SkuDescription. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SkuDescription"/>. </summary>
         internal SkuDescription()
         {
             Targets = new ChangeTrackingList<string>();
@@ -22,7 +54,7 @@ namespace Azure.ResourceManager.Quantum.Models
             PricingDetails = new ChangeTrackingList<PricingDetail>();
         }
 
-        /// <summary> Initializes a new instance of SkuDescription. </summary>
+        /// <summary> Initializes a new instance of <see cref="SkuDescription"/>. </summary>
         /// <param name="id"> Unique sku id. </param>
         /// <param name="name"> Display name of this sku. </param>
         /// <param name="version"> Display name of this sku. </param>
@@ -32,7 +64,8 @@ namespace Azure.ResourceManager.Quantum.Models
         /// <param name="targets"> The list of targets available for this sku. </param>
         /// <param name="quotaDimensions"> The list of quota dimensions for this sku. </param>
         /// <param name="pricingDetails"> The list of pricing details for the sku. </param>
-        internal SkuDescription(string id, string name, string version, string description, Uri restrictedAccessUri, bool? autoAdd, IReadOnlyList<string> targets, IReadOnlyList<QuotaDimension> quotaDimensions, IReadOnlyList<PricingDetail> pricingDetails)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SkuDescription(string id, string name, string version, string description, Uri restrictedAccessUri, bool? autoAdd, IReadOnlyList<string> targets, IReadOnlyList<QuotaDimension> quotaDimensions, IReadOnlyList<PricingDetail> pricingDetails, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Id = id;
             Name = name;
@@ -43,6 +76,7 @@ namespace Azure.ResourceManager.Quantum.Models
             Targets = targets;
             QuotaDimensions = quotaDimensions;
             PricingDetails = pricingDetails;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Unique sku id. </summary>

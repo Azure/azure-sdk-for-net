@@ -8,20 +8,20 @@
 namespace Azure.Communication.JobRouter
 {
     /// <summary>
-    /// An attachment which attaches worker selectors to a job
+    /// An attachment which attaches worker selectors to a job.
     /// Please note <see cref="WorkerSelectorAttachment"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="ConditionalWorkerSelectorAttachment"/>, <see cref="PassThroughWorkerSelectorAttachment"/>, <see cref="RuleEngineWorkerSelectorAttachment"/>, <see cref="StaticWorkerSelectorAttachment"/> and <see cref="WeightedAllocationWorkerSelectorAttachment"/>.
     /// </summary>
     public abstract partial class WorkerSelectorAttachment
     {
-        /// <summary> Initializes a new instance of WorkerSelectorAttachment. </summary>
+        /// <summary> Initializes a new instance of <see cref="WorkerSelectorAttachment"/>. </summary>
         protected WorkerSelectorAttachment()
         {
         }
 
-        /// <summary> Initializes a new instance of WorkerSelectorAttachment. </summary>
+        /// <summary> Initializes a new instance of <see cref="WorkerSelectorAttachment"/>. </summary>
         /// <param name="kind"> The type discriminator describing a sub-type of WorkerSelectorAttachment. </param>
-        internal WorkerSelectorAttachment(string kind)
+        internal WorkerSelectorAttachment(WorkerSelectorAttachmentKind kind)
         {
             Kind = kind;
         }

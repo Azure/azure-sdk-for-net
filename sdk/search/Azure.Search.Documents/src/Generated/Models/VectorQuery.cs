@@ -10,16 +10,16 @@ namespace Azure.Search.Documents.Models
     /// <summary>
     /// The query parameters for vector and hybrid search queries.
     /// Please note <see cref="VectorQuery"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-    /// The available derived classes include <see cref="VectorizedQuery"/>.
+    /// The available derived classes include <see cref="VectorizableTextQuery"/> and <see cref="VectorizedQuery"/>.
     /// </summary>
     public abstract partial class VectorQuery
     {
-        /// <summary> Initializes a new instance of VectorQuery. </summary>
+        /// <summary> Initializes a new instance of <see cref="VectorQuery"/>. </summary>
         protected VectorQuery()
         {
         }
 
-        /// <summary> Initializes a new instance of VectorQuery. </summary>
+        /// <summary> Initializes a new instance of <see cref="VectorQuery"/>. </summary>
         /// <param name="kind"> The kind of vector query being performed. </param>
         /// <param name="kNearestNeighborsCount"> Number of nearest neighbors to return as top hits. </param>
         /// <param name="fieldsRaw"> Vector Fields of type Collection(Edm.Single) to be included in the vector searched. </param>

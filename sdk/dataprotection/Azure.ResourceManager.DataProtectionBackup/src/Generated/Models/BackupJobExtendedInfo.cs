@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,14 +14,47 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
     /// <summary> Extended Information about the job. </summary>
     public partial class BackupJobExtendedInfo
     {
-        /// <summary> Initializes a new instance of BackupJobExtendedInfo. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="BackupJobExtendedInfo"/>. </summary>
         internal BackupJobExtendedInfo()
         {
             AdditionalDetails = new ChangeTrackingDictionary<string, string>();
             SubTasks = new ChangeTrackingList<BackupJobSubTask>();
+            WarningDetails = new ChangeTrackingList<UserFacingWarningDetail>();
         }
 
-        /// <summary> Initializes a new instance of BackupJobExtendedInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="BackupJobExtendedInfo"/>. </summary>
         /// <param name="additionalDetails"> Job's Additional Details. </param>
         /// <param name="backupInstanceState"> State of the Backup Instance. </param>
         /// <param name="dataTransferredInBytes"> Number of bytes transferred. </param>
@@ -28,7 +62,9 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <param name="sourceRecoverPoint"> Details of the Source Recovery Point. </param>
         /// <param name="subTasks"> List of Sub Tasks of the job. </param>
         /// <param name="targetRecoverPoint"> Details of the Target Recovery Point. </param>
-        internal BackupJobExtendedInfo(IReadOnlyDictionary<string, string> additionalDetails, string backupInstanceState, double? dataTransferredInBytes, string recoveryDestination, RestoreJobRecoveryPointDetails sourceRecoverPoint, IReadOnlyList<BackupJobSubTask> subTasks, RestoreJobRecoveryPointDetails targetRecoverPoint)
+        /// <param name="warningDetails"> A List, detailing the warnings related to the job. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal BackupJobExtendedInfo(IReadOnlyDictionary<string, string> additionalDetails, string backupInstanceState, double? dataTransferredInBytes, string recoveryDestination, RestoreJobRecoveryPointDetails sourceRecoverPoint, IReadOnlyList<BackupJobSubTask> subTasks, RestoreJobRecoveryPointDetails targetRecoverPoint, IReadOnlyList<UserFacingWarningDetail> warningDetails, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             AdditionalDetails = additionalDetails;
             BackupInstanceState = backupInstanceState;
@@ -37,6 +73,8 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             SourceRecoverPoint = sourceRecoverPoint;
             SubTasks = subTasks;
             TargetRecoverPoint = targetRecoverPoint;
+            WarningDetails = warningDetails;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Job's Additional Details. </summary>
@@ -53,5 +91,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         public IReadOnlyList<BackupJobSubTask> SubTasks { get; }
         /// <summary> Details of the Target Recovery Point. </summary>
         public RestoreJobRecoveryPointDetails TargetRecoverPoint { get; }
+        /// <summary> A List, detailing the warnings related to the job. </summary>
+        public IReadOnlyList<UserFacingWarningDetail> WarningDetails { get; }
     }
 }

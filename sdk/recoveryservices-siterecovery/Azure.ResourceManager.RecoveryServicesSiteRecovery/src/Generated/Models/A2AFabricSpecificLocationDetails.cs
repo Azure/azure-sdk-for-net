@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
@@ -12,12 +14,44 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> ExtendedLocation details data. </summary>
     public partial class A2AFabricSpecificLocationDetails
     {
-        /// <summary> Initializes a new instance of A2AFabricSpecificLocationDetails. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="A2AFabricSpecificLocationDetails"/>. </summary>
         internal A2AFabricSpecificLocationDetails()
         {
         }
 
-        /// <summary> Initializes a new instance of A2AFabricSpecificLocationDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="A2AFabricSpecificLocationDetails"/>. </summary>
         /// <param name="initialPrimaryZone"> The initial source zone info. </param>
         /// <param name="initialRecoveryZone"> The initial target zone info. </param>
         /// <param name="initialPrimaryExtendedLocation"> The initial primary ExtendedLocation. </param>
@@ -30,7 +64,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="recoveryExtendedLocation"> The recovery ExtendedLocation. </param>
         /// <param name="primaryFabricLocation"> Primary fabric location info. </param>
         /// <param name="recoveryFabricLocation"> The recovery fabric location info. </param>
-        internal A2AFabricSpecificLocationDetails(string initialPrimaryZone, string initialRecoveryZone, SiteRecoveryExtendedLocation initialPrimaryExtendedLocation, SiteRecoveryExtendedLocation initialRecoveryExtendedLocation, AzureLocation? initialPrimaryFabricLocation, AzureLocation? initialRecoveryFabricLocation, string primaryZone, string recoveryZone, SiteRecoveryExtendedLocation primaryExtendedLocation, SiteRecoveryExtendedLocation recoveryExtendedLocation, AzureLocation? primaryFabricLocation, AzureLocation? recoveryFabricLocation)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal A2AFabricSpecificLocationDetails(string initialPrimaryZone, string initialRecoveryZone, SiteRecoveryExtendedLocation initialPrimaryExtendedLocation, SiteRecoveryExtendedLocation initialRecoveryExtendedLocation, AzureLocation? initialPrimaryFabricLocation, AzureLocation? initialRecoveryFabricLocation, string primaryZone, string recoveryZone, SiteRecoveryExtendedLocation primaryExtendedLocation, SiteRecoveryExtendedLocation recoveryExtendedLocation, AzureLocation? primaryFabricLocation, AzureLocation? recoveryFabricLocation, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             InitialPrimaryZone = initialPrimaryZone;
             InitialRecoveryZone = initialRecoveryZone;
@@ -44,6 +79,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             RecoveryExtendedLocation = recoveryExtendedLocation;
             PrimaryFabricLocation = primaryFabricLocation;
             RecoveryFabricLocation = recoveryFabricLocation;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The initial source zone info. </summary>

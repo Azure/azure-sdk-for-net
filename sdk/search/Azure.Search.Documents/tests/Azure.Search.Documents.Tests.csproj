@@ -27,7 +27,7 @@
 
  <!-- References required for sample snippet -->
   <ItemGroup>
-    <ProjectReference Include="..\..\..\openai\Azure.AI.OpenAI\src\Azure.AI.OpenAI.csproj" />
+    <PackageReference Include="Azure.AI.OpenAI" />
   </ItemGroup>
 
   <!-- References required for test resource creation -->

@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> DatabricksNotebook activity. </summary>
     public partial class DatabricksNotebookActivity : ExecutionActivity
     {
-        /// <summary> Initializes a new instance of DatabricksNotebookActivity. </summary>
+        /// <summary> Initializes a new instance of <see cref="DatabricksNotebookActivity"/>. </summary>
         /// <param name="name"> Activity name. </param>
         /// <param name="notebookPath"> The absolute path of the notebook to be run in the Databricks Workspace. This path must begin with a slash. Type: string (or Expression with resultType string). </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="notebookPath"/> is null. </exception>
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             ActivityType = "DatabricksNotebook";
         }
 
-        /// <summary> Initializes a new instance of DatabricksNotebookActivity. </summary>
+        /// <summary> Initializes a new instance of <see cref="DatabricksNotebookActivity"/>. </summary>
         /// <param name="name"> Activity name. </param>
         /// <param name="activityType"> Type of activity. </param>
         /// <param name="description"> Activity description. </param>
@@ -50,6 +50,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             BaseParameters = baseParameters;
             Libraries = libraries;
             ActivityType = activityType ?? "DatabricksNotebook";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DatabricksNotebookActivity"/> for deserialization. </summary>
+        internal DatabricksNotebookActivity()
+        {
         }
 
         /// <summary> The absolute path of the notebook to be run in the Databricks Workspace. This path must begin with a slash. Type: string (or Expression with resultType string). </summary>

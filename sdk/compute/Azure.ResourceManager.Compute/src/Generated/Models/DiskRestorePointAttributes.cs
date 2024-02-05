@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
 
@@ -13,16 +15,17 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> Disk Restore Point details. </summary>
     public partial class DiskRestorePointAttributes : ComputeSubResourceData
     {
-        /// <summary> Initializes a new instance of DiskRestorePointAttributes. </summary>
+        /// <summary> Initializes a new instance of <see cref="DiskRestorePointAttributes"/>. </summary>
         public DiskRestorePointAttributes()
         {
         }
 
-        /// <summary> Initializes a new instance of DiskRestorePointAttributes. </summary>
+        /// <summary> Initializes a new instance of <see cref="DiskRestorePointAttributes"/>. </summary>
         /// <param name="id"> Resource Id. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="encryption"> Encryption at rest settings for disk restore point. It is an optional property that can be specified in the input while creating a restore point. </param>
         /// <param name="sourceDiskRestorePoint"> Resource Id of the source disk restore point. </param>
-        internal DiskRestorePointAttributes(ResourceIdentifier id, RestorePointEncryption encryption, WritableSubResource sourceDiskRestorePoint) : base(id)
+        internal DiskRestorePointAttributes(ResourceIdentifier id, IDictionary<string, BinaryData> serializedAdditionalRawData, RestorePointEncryption encryption, WritableSubResource sourceDiskRestorePoint) : base(id, serializedAdditionalRawData)
         {
             Encryption = encryption;
             SourceDiskRestorePoint = sourceDiskRestorePoint;

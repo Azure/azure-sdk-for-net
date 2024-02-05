@@ -19,7 +19,39 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
     /// </summary>
     public partial class PostgreSqlMigrationData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of PostgreSqlMigrationData. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="PostgreSqlMigrationData"/>. </summary>
         /// <param name="location"> The location. </param>
         public PostgreSqlMigrationData(AzureLocation location) : base(location)
         {
@@ -28,7 +60,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
             DbsToCancelMigrationOn = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of PostgreSqlMigrationData. </summary>
+        /// <summary> Initializes a new instance of <see cref="PostgreSqlMigrationData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -55,7 +87,8 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// <param name="dbsToTriggerCutoverOn"> When you want to trigger cutover for specific databases send triggerCutover flag as True and database names in this array. </param>
         /// <param name="cancel"> To trigger cancel for entire migration we need to send this flag as True. </param>
         /// <param name="dbsToCancelMigrationOn"> When you want to trigger cancel for specific databases send cancel flag as True and database names in this array. </param>
-        internal PostgreSqlMigrationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string migrationId, PostgreSqlMigrationStatus currentStatus, PostgreSqlMigrationMode? migrationMode, PostgreSqlServerMetadata sourceDbServerMetadata, PostgreSqlServerMetadata targetDbServerMetadata, ResourceIdentifier sourceDbServerResourceId, string sourceDbServerFullyQualifiedDomainName, ResourceIdentifier targetDbServerResourceId, string targetDbServerFullyQualifiedDomainName, PostgreSqlMigrationSecretParameters secretParameters, IList<string> dbsToMigrate, PostgreSqlMigrationLogicalReplicationOnSourceDb? setupLogicalReplicationOnSourceDbIfNeeded, PostgreSqlMigrationOverwriteDbsInTarget? overwriteDbsInTarget, DateTimeOffset? migrationWindowStartTimeInUtc, DateTimeOffset? migrationWindowEndTimeInUtc, PostgreSqlMigrationStartDataMigration? startDataMigration, PostgreSqlMigrationTriggerCutover? triggerCutover, IList<string> dbsToTriggerCutoverOn, PostgreSqlMigrationCancel? cancel, IList<string> dbsToCancelMigrationOn) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal PostgreSqlMigrationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string migrationId, PostgreSqlMigrationStatus currentStatus, PostgreSqlMigrationMode? migrationMode, PostgreSqlServerMetadata sourceDbServerMetadata, PostgreSqlServerMetadata targetDbServerMetadata, ResourceIdentifier sourceDbServerResourceId, string sourceDbServerFullyQualifiedDomainName, ResourceIdentifier targetDbServerResourceId, string targetDbServerFullyQualifiedDomainName, PostgreSqlMigrationSecretParameters secretParameters, IList<string> dbsToMigrate, PostgreSqlMigrationLogicalReplicationOnSourceDb? setupLogicalReplicationOnSourceDbIfNeeded, PostgreSqlMigrationOverwriteDbsInTarget? overwriteDbsInTarget, DateTimeOffset? migrationWindowStartTimeInUtc, DateTimeOffset? migrationWindowEndTimeInUtc, PostgreSqlMigrationStartDataMigration? startDataMigration, PostgreSqlMigrationTriggerCutover? triggerCutover, IList<string> dbsToTriggerCutoverOn, PostgreSqlMigrationCancel? cancel, IList<string> dbsToCancelMigrationOn, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             MigrationId = migrationId;
             CurrentStatus = currentStatus;
@@ -77,6 +110,12 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
             DbsToTriggerCutoverOn = dbsToTriggerCutoverOn;
             Cancel = cancel;
             DbsToCancelMigrationOn = dbsToCancelMigrationOn;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="PostgreSqlMigrationData"/> for deserialization. </summary>
+        internal PostgreSqlMigrationData()
+        {
         }
 
         /// <summary> ID for migration, a GUID. </summary>

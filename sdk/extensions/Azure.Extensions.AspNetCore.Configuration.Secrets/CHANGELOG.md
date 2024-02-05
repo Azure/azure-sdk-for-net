@@ -1,6 +1,16 @@
 # Release History
 
-## 1.3.0-beta.1 (Unreleased)
+## 1.4.0-beta.1 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+## 1.3.0 (2023-11-08)
 
 ### Acknowledgments
 
@@ -12,14 +22,10 @@ Thank you to our developer community members who helped to make the Key Vault co
 
 - Changed visibility of `AzureKeyVaultConfigurationSource` as public to allow for custom ordering of configuration sections when reading.  _(A community contribution, courtesy of [jabberwik](https://github.com/jabberwik))_
 
-### Breaking Changes
-
 ### Bugs Fixed
 
 - Corrected the parameter name in the `ArgumentNullException` that is thrown if a null `options` argument is passed 
   to `AddAzureKeyVault`.
-
-### Other Changes
 
 ## 1.2.2 (2022-04-05)
 

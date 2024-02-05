@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ServiceLinker.Models
@@ -13,7 +14,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
     /// <summary> The authentication info when authType is servicePrincipal secret. </summary>
     public partial class ServicePrincipalSecretAuthInfo : AuthBaseInfo
     {
-        /// <summary> Initializes a new instance of ServicePrincipalSecretAuthInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServicePrincipalSecretAuthInfo"/>. </summary>
         /// <param name="clientId"> ServicePrincipal application clientId for servicePrincipal auth. </param>
         /// <param name="principalId"> Principal Id for servicePrincipal auth. </param>
         /// <param name="secret"> Secret for servicePrincipal auth. </param>
@@ -29,17 +30,23 @@ namespace Azure.ResourceManager.ServiceLinker.Models
             AuthType = LinkerAuthType.ServicePrincipalSecret;
         }
 
-        /// <summary> Initializes a new instance of ServicePrincipalSecretAuthInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServicePrincipalSecretAuthInfo"/>. </summary>
         /// <param name="authType"> The authentication type. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="clientId"> ServicePrincipal application clientId for servicePrincipal auth. </param>
         /// <param name="principalId"> Principal Id for servicePrincipal auth. </param>
         /// <param name="secret"> Secret for servicePrincipal auth. </param>
-        internal ServicePrincipalSecretAuthInfo(LinkerAuthType authType, string clientId, Guid principalId, string secret) : base(authType)
+        internal ServicePrincipalSecretAuthInfo(LinkerAuthType authType, IDictionary<string, BinaryData> serializedAdditionalRawData, string clientId, Guid principalId, string secret) : base(authType, serializedAdditionalRawData)
         {
             ClientId = clientId;
             PrincipalId = principalId;
             Secret = secret;
             AuthType = authType;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ServicePrincipalSecretAuthInfo"/> for deserialization. </summary>
+        internal ServicePrincipalSecretAuthInfo()
+        {
         }
 
         /// <summary> ServicePrincipal application clientId for servicePrincipal auth. </summary>

@@ -13,17 +13,18 @@ namespace Azure.Communication.CallAutomation.Tests.CallDialogs
     public class CallDialogTests : CallAutomationTestBase
     {
         private const string dialogId = "92e08834-b6ee-4ede-8956-9fefa27a691c";
+
         private static readonly Dictionary<string, object> dialogContextWithObject = new Dictionary<string, object>()
         {
             {
                 "context",
-                new
+                new Dictionary<string, object>
                 {
-                    contextName = "name",
-                    secondProperty = 1
+                    { "name", 1 }
                 }
             }
         };
+
         private static readonly Dictionary<string, object> dialogContextWithString = new Dictionary<string, object>()
         {
             {
@@ -31,22 +32,23 @@ namespace Azure.Communication.CallAutomation.Tests.CallDialogs
                 "context"
             }
         };
-        private static readonly StartDialogOptions _startDialogOptions = new StartDialogOptions(DialogInputType.PowerVirtualAgents, "botAppId", new Dictionary<string, object>())
+
+        private static readonly StartDialogOptions _startDialogOptions = new StartDialogOptions(new PowerVirtualAgentsDialog("botAppId", new Dictionary<string, object>()))
         {
             OperationContext = "context"
         };
 
-        private static readonly StartDialogOptions _startDialogWithCustomObjectOptions = new StartDialogOptions(DialogInputType.PowerVirtualAgents, "botAppId", dialogContextWithObject)
+        private static readonly StartDialogOptions _startDialogWithCustomObjectOptions = new StartDialogOptions(new PowerVirtualAgentsDialog("botAppId", dialogContextWithObject))
         {
             OperationContext = "context"
         };
 
-        private static readonly StartDialogOptions _startDialogWithStringOptions = new StartDialogOptions(DialogInputType.PowerVirtualAgents, "botAppId", dialogContextWithString)
+        private static readonly StartDialogOptions _startDialogWithStringOptions = new StartDialogOptions(new PowerVirtualAgentsDialog("botAppId", dialogContextWithString))
         {
             OperationContext = "context"
         };
 
-        private static readonly StartDialogOptions _startDialogWithIdOptions = new StartDialogOptions(dialogId, DialogInputType.PowerVirtualAgents, "botAppId", new Dictionary<string, object>())
+        private static readonly StartDialogOptions _startDialogWithIdOptions = new StartDialogOptions(dialogId, new PowerVirtualAgentsDialog("botAppId", new Dictionary<string, object>()))
         {
             OperationContext = "context"
         };
@@ -102,6 +104,24 @@ namespace Azure.Communication.CallAutomation.Tests.CallDialogs
             Assert.AreEqual(result.Value.DialogId, dialogId);
         }
 
+        [TestCaseSource(nameof(TestData_UpdateDialogAsync))]
+        public async Task UpdateDialogAsync_Return200OK(Func<CallDialog, Task<Response>> operation)
+        {
+            _callDialog = GetCallDialog(200);
+            var result = await operation(_callDialog);
+            Assert.IsNotNull(result);
+            Assert.AreEqual((int)HttpStatusCode.OK, result.Status);
+        }
+
+        [TestCaseSource(nameof(TestData_UpdateDialog))]
+        public void UpdateDialog_Return200OK(Func<CallDialog, Response> operation)
+        {
+            _callDialog = GetCallDialog(200);
+            var result = operation(_callDialog);
+            Assert.IsNotNull(result);
+            Assert.AreEqual((int)HttpStatusCode.OK, result.Status);
+        }
+
         [TestCaseSource(nameof(TestData_StopDialogAsync))]
         public async Task StopDialogAsync_Return204NoContent(Func<CallDialog, Task<Response<DialogResult>>> operation)
         {
@@ -130,14 +150,6 @@ namespace Azure.Communication.CallAutomation.Tests.CallDialogs
                 },
                 new Func<CallDialog, Task<Response<DialogResult>>>?[]
                 {
-                    callDialog => callDialog.StartDialogAsync(_startDialogWithCustomObjectOptions)
-                },
-                new Func<CallDialog, Task<Response<DialogResult>>>?[]
-                {
-                    callDialog => callDialog.StartDialogAsync(_startDialogWithStringOptions)
-                },
-                new Func<CallDialog, Task<Response<DialogResult>>>?[]
-                {
                     callDialog => callDialog.StartDialogAsync(_startDialogWithIdOptions)
                 },
             };
@@ -150,14 +162,6 @@ namespace Azure.Communication.CallAutomation.Tests.CallDialogs
                 new Func<CallDialog, Response<DialogResult>>?[]
                 {
                     callDialog => callDialog.StartDialog(_startDialogOptions)
-                },
-                new Func<CallDialog, Response<DialogResult>>?[]
-                {
-                    callDialog => callDialog.StartDialog(_startDialogWithCustomObjectOptions)
-                },
-                new Func<CallDialog, Response<DialogResult>>?[]
-                {
-                    callDialog => callDialog.StartDialog(_startDialogWithStringOptions)
                 },
                 new Func<CallDialog, Response<DialogResult>>?[]
                 {
@@ -184,6 +188,35 @@ namespace Azure.Communication.CallAutomation.Tests.CallDialogs
                 new Func<CallDialog, Response<DialogResult>>?[]
                 {
                     callDialog => callDialog.StartDialog(_startDialogWithIdOptions)
+                },
+            };
+        }
+
+        private static IEnumerable<object?[]> TestData_UpdateDialogAsync()
+        {
+            return new[]
+            {
+                new Func<CallDialog, Task<Response>>?[]
+                {
+                    callDialog => callDialog.UpdateDialogAsync(new UpdateDialogOptions(dialogId, new AzureOpenAIDialogUpdate(dialogContextWithObject)))
+                },
+                new Func<CallDialog, Task<Response>>?[]
+                {
+                    callDialog => callDialog.UpdateDialogAsync(new UpdateDialogOptions(dialogId, new AzureOpenAIDialogUpdate(dialogContextWithString)))
+                },
+            };
+        }
+        private static IEnumerable<object?[]> TestData_UpdateDialog()
+        {
+            return new[]
+            {
+                new Func<CallDialog, Response>?[]
+                {
+                    callDialog => callDialog.UpdateDialog(new UpdateDialogOptions(dialogId, new AzureOpenAIDialogUpdate(dialogContextWithObject)))
+                },
+                new Func<CallDialog, Response>?[]
+                {
+                    callDialog => callDialog.UpdateDialog(new UpdateDialogOptions(dialogId, new AzureOpenAIDialogUpdate(dialogContextWithString)))
                 },
             };
         }

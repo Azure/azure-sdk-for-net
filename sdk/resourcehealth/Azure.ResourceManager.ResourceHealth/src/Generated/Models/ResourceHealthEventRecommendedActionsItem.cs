@@ -5,23 +5,60 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.ResourceHealth.Models
 {
     /// <summary> Recommended action for the service health event. </summary>
     public partial class ResourceHealthEventRecommendedActionsItem
     {
-        /// <summary> Initializes a new instance of ResourceHealthEventRecommendedActionsItem. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ResourceHealthEventRecommendedActionsItem"/>. </summary>
         internal ResourceHealthEventRecommendedActionsItem()
         {
         }
 
-        /// <summary> Initializes a new instance of ResourceHealthEventRecommendedActionsItem. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceHealthEventRecommendedActionsItem"/>. </summary>
         /// <param name="groupId"> Recommended action group Id for the service health event. </param>
         /// <param name="actionText"> Recommended action text. </param>
-        internal ResourceHealthEventRecommendedActionsItem(int? groupId, string actionText)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ResourceHealthEventRecommendedActionsItem(int? groupId, string actionText, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             GroupId = groupId;
             ActionText = actionText;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Recommended action group Id for the service health event. </summary>

@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.Automanage
 {
     /// <summary>
-    /// A class representing a collection of <see cref="AutomanageVmConfigurationProfileAssignmentReportResource" /> and their operations.
-    /// Each <see cref="AutomanageVmConfigurationProfileAssignmentReportResource" /> in the collection will belong to the same instance of <see cref="AutomanageVmConfigurationProfileAssignmentResource" />.
-    /// To get an <see cref="AutomanageVmConfigurationProfileAssignmentReportCollection" /> instance call the GetAutomanageVmConfigurationProfileAssignmentReports method from an instance of <see cref="AutomanageVmConfigurationProfileAssignmentResource" />.
+    /// A class representing a collection of <see cref="AutomanageVmConfigurationProfileAssignmentReportResource"/> and their operations.
+    /// Each <see cref="AutomanageVmConfigurationProfileAssignmentReportResource"/> in the collection will belong to the same instance of <see cref="AutomanageVmConfigurationProfileAssignmentResource"/>.
+    /// To get an <see cref="AutomanageVmConfigurationProfileAssignmentReportCollection"/> instance call the GetAutomanageVmConfigurationProfileAssignmentReports method from an instance of <see cref="AutomanageVmConfigurationProfileAssignmentResource"/>.
     /// </summary>
     public partial class AutomanageVmConfigurationProfileAssignmentReportCollection : ArmCollection, IEnumerable<AutomanageVmConfigurationProfileAssignmentReportResource>, IAsyncEnumerable<AutomanageVmConfigurationProfileAssignmentReportResource>
     {
@@ -64,6 +64,14 @@ namespace Azure.ResourceManager.Automanage
         /// <term>Operation Id</term>
         /// <description>reports_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-05-04</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AutomanageVmConfigurationProfileAssignmentReportResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="reportName"> The report name. </param>
@@ -100,6 +108,14 @@ namespace Azure.ResourceManager.Automanage
         /// <item>
         /// <term>Operation Id</term>
         /// <description>reports_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-05-04</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AutomanageVmConfigurationProfileAssignmentReportResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -138,10 +154,18 @@ namespace Azure.ResourceManager.Automanage
         /// <term>Operation Id</term>
         /// <description>reports_ListByConfigurationProfileAssignments</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-05-04</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AutomanageVmConfigurationProfileAssignmentReportResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="AutomanageVmConfigurationProfileAssignmentReportResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="AutomanageVmConfigurationProfileAssignmentReportResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<AutomanageVmConfigurationProfileAssignmentReportResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _automanageVmConfigurationProfileAssignmentReportreportsRestClient.CreateListByConfigurationProfileAssignmentsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
@@ -159,10 +183,18 @@ namespace Azure.ResourceManager.Automanage
         /// <term>Operation Id</term>
         /// <description>reports_ListByConfigurationProfileAssignments</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-05-04</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AutomanageVmConfigurationProfileAssignmentReportResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="AutomanageVmConfigurationProfileAssignmentReportResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="AutomanageVmConfigurationProfileAssignmentReportResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<AutomanageVmConfigurationProfileAssignmentReportResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _automanageVmConfigurationProfileAssignmentReportreportsRestClient.CreateListByConfigurationProfileAssignmentsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
@@ -179,6 +211,14 @@ namespace Azure.ResourceManager.Automanage
         /// <item>
         /// <term>Operation Id</term>
         /// <description>reports_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-05-04</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AutomanageVmConfigurationProfileAssignmentReportResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -215,6 +255,14 @@ namespace Azure.ResourceManager.Automanage
         /// <term>Operation Id</term>
         /// <description>reports_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-05-04</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AutomanageVmConfigurationProfileAssignmentReportResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="reportName"> The report name. </param>
@@ -249,6 +297,14 @@ namespace Azure.ResourceManager.Automanage
         /// <item>
         /// <term>Operation Id</term>
         /// <description>reports_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-05-04</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AutomanageVmConfigurationProfileAssignmentReportResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -286,6 +342,14 @@ namespace Azure.ResourceManager.Automanage
         /// <item>
         /// <term>Operation Id</term>
         /// <description>reports_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-05-04</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AutomanageVmConfigurationProfileAssignmentReportResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

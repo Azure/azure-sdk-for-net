@@ -5,27 +5,64 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.ArcScVmm.Models
 {
     /// <summary> Defines the resource properties. </summary>
     public partial class Checkpoint
     {
-        /// <summary> Initializes a new instance of Checkpoint. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="Checkpoint"/>. </summary>
         public Checkpoint()
         {
         }
 
-        /// <summary> Initializes a new instance of Checkpoint. </summary>
+        /// <summary> Initializes a new instance of <see cref="Checkpoint"/>. </summary>
         /// <param name="parentCheckpointId"> Gets ID of parent of the checkpoint. </param>
         /// <param name="checkpointId"> Gets ID of the checkpoint. </param>
         /// <param name="name"> Gets name of the checkpoint. </param>
         /// <param name="description"> Gets description of the checkpoint. </param>
-        internal Checkpoint(string parentCheckpointId, string checkpointId, string name, string description)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal Checkpoint(string parentCheckpointId, string checkpointId, string name, string description, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ParentCheckpointId = parentCheckpointId;
             CheckpointId = checkpointId;
             Name = name;
             Description = description;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets ID of parent of the checkpoint. </summary>

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,7 +14,39 @@ namespace Azure.ResourceManager.AppContainers.Models
     /// <summary> Custom domain analysis. </summary>
     public partial class ContainerAppCustomHostnameAnalysisResult
     {
-        /// <summary> Initializes a new instance of ContainerAppCustomHostnameAnalysisResult. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ContainerAppCustomHostnameAnalysisResult"/>. </summary>
         internal ContainerAppCustomHostnameAnalysisResult()
         {
             CNameRecords = new ChangeTrackingList<string>();
@@ -23,7 +56,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             AlternateTxtRecords = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of ContainerAppCustomHostnameAnalysisResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerAppCustomHostnameAnalysisResult"/>. </summary>
         /// <param name="hostName"> Host name that was analyzed. </param>
         /// <param name="isHostnameAlreadyVerified"> &lt;code&gt;true&lt;/code&gt; if hostname is already verified; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
         /// <param name="customDomainVerificationTest"> DNS verification test result. </param>
@@ -36,7 +69,8 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// <param name="aRecords"> A records visible for this hostname. </param>
         /// <param name="alternateCNameRecords"> Alternate CName records visible for this hostname. </param>
         /// <param name="alternateTxtRecords"> Alternate TXT records visible for this hostname. </param>
-        internal ContainerAppCustomHostnameAnalysisResult(string hostName, bool? isHostnameAlreadyVerified, ContainerAppDnsVerificationTestResult? customDomainVerificationTest, ContainerAppCustomDomainVerificationFailureInfo customDomainVerificationFailureInfo, bool? hasConflictOnManagedEnvironment, bool? conflictWithEnvironmentCustomDomain, string conflictingContainerAppResourceId, IReadOnlyList<string> cNameRecords, IReadOnlyList<string> txtRecords, IReadOnlyList<string> aRecords, IReadOnlyList<string> alternateCNameRecords, IReadOnlyList<string> alternateTxtRecords)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ContainerAppCustomHostnameAnalysisResult(string hostName, bool? isHostnameAlreadyVerified, ContainerAppDnsVerificationTestResult? customDomainVerificationTest, ContainerAppCustomDomainVerificationFailureInfo customDomainVerificationFailureInfo, bool? hasConflictOnManagedEnvironment, bool? conflictWithEnvironmentCustomDomain, string conflictingContainerAppResourceId, IReadOnlyList<string> cNameRecords, IReadOnlyList<string> txtRecords, IReadOnlyList<string> aRecords, IReadOnlyList<string> alternateCNameRecords, IReadOnlyList<string> alternateTxtRecords, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             HostName = hostName;
             IsHostnameAlreadyVerified = isHostnameAlreadyVerified;
@@ -50,6 +84,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             ARecords = aRecords;
             AlternateCNameRecords = alternateCNameRecords;
             AlternateTxtRecords = alternateTxtRecords;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Host name that was analyzed. </summary>

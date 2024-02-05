@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> Spark Server dataset. </summary>
     public partial class SparkObjectDataset : DataFactoryDatasetProperties
     {
-        /// <summary> Initializes a new instance of SparkObjectDataset. </summary>
+        /// <summary> Initializes a new instance of <see cref="SparkObjectDataset"/>. </summary>
         /// <param name="linkedServiceName"> Linked service reference. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="linkedServiceName"/> is null. </exception>
         public SparkObjectDataset(DataFactoryLinkedServiceReference linkedServiceName) : base(linkedServiceName)
@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             DatasetType = "SparkObject";
         }
 
-        /// <summary> Initializes a new instance of SparkObjectDataset. </summary>
+        /// <summary> Initializes a new instance of <see cref="SparkObjectDataset"/>. </summary>
         /// <param name="datasetType"> Type of dataset. </param>
         /// <param name="description"> Dataset description. </param>
         /// <param name="structure"> Columns that define the structure of the dataset. Type: array (or Expression with resultType array), itemType: DatasetDataElement. </param>
@@ -44,6 +44,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             Table = table;
             SchemaTypePropertiesSchema = schemaTypePropertiesSchema;
             DatasetType = datasetType ?? "SparkObject";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SparkObjectDataset"/> for deserialization. </summary>
+        internal SparkObjectDataset()
+        {
         }
 
         /// <summary>

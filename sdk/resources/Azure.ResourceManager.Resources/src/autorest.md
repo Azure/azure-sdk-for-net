@@ -19,6 +19,10 @@ public-clients: false
 head-as-boolean: false
 modelerfour:
   lenient-model-deduplication: true
+use-model-reader-writer: true
+
+#mgmt-debug:
+#  show-serialized-names: true
 
 patch-initializer-customization:
   ArmDeploymentContent:
@@ -95,6 +99,9 @@ acronym-mapping:
 models-to-treat-empty-string-as-null:
   - ArmApplicationPackageSupportUris
 
+suppress-abstract-base-class:
+- ArmDeploymentScriptData
+
 directive:
   - remove-operation: checkResourceName
   # Use AtScope methods to replace the following operations
@@ -139,7 +146,6 @@ directive:
   - remove-operation: DeploymentOperations_ListAtSubscriptionScope
   - remove-operation: DeploymentOperations_Get
   - remove-operation: DeploymentOperations_List
-
   - remove-operation: Applications_GetById
   - remove-operation: Applications_DeleteById
   - remove-operation: Applications_CreateOrUpdateById
@@ -328,6 +334,11 @@ directive:
     where: $.definitions.DeploymentScriptPropertiesBase.properties.outputs
     transform: >
       $.additionalProperties = undefined
+  # Avoid breaking change
+  - from: resources.json
+    where: $.definitions.DeploymentProperties
+    transform:
+      delete $.properties.parameters.additionalProperties
 ```
 
 ### Tag: package-resources-2022-04
@@ -336,8 +347,8 @@ These settings apply only when `--tag=package-resources-2022-04` is specified on
 
 ```yaml $(tag) == 'package-resources-2022-04'
 input-file:
-    - https://raw.githubusercontent.com/Azure/azure-rest-api-specs/639376b2bf9f0f36debfd7fce7debdf7b72578af/specification/resources/resource-manager/Microsoft.Resources/stable/2022-09-01/resources.json
-    - https://raw.githubusercontent.com/Azure/azure-rest-api-specs/639376b2bf9f0f36debfd7fce7debdf7b72578af/specification/resources/resource-manager/Microsoft.Solutions/stable/2019-07-01/managedapplications.json
-    - https://raw.githubusercontent.com/Azure/azure-rest-api-specs/639376b2bf9f0f36debfd7fce7debdf7b72578af/specification/resources/resource-manager/Microsoft.Resources/stable/2020-10-01/deploymentScripts.json
-    - https://raw.githubusercontent.com/Azure/azure-rest-api-specs/639376b2bf9f0f36debfd7fce7debdf7b72578af/specification/resources/resource-manager/Microsoft.Resources/stable/2021-05-01/templateSpecs.json
+    - https://github.com/Azure/azure-rest-api-specs/blob/90a65cb3135d42438a381eb8bb5461a2b99b199f/specification/resources/resource-manager/Microsoft.Resources/stable/2021-05-01/templateSpecs.json
+    - https://github.com/Azure/azure-rest-api-specs/blob/90a65cb3135d42438a381eb8bb5461a2b99b199f/specification/resources/resource-manager/Microsoft.Resources/stable/2020-10-01/deploymentScripts.json
+    - https://github.com/Azure/azure-rest-api-specs/blob/90a65cb3135d42438a381eb8bb5461a2b99b199f/specification/resources/resource-manager/Microsoft.Resources/stable/2022-09-01/resources.json
+    - https://github.com/Azure/azure-rest-api-specs/blob/90a65cb3135d42438a381eb8bb5461a2b99b199f/specification/resources/resource-manager/Microsoft.Solutions/stable/2019-07-01/managedapplications.json
 ```

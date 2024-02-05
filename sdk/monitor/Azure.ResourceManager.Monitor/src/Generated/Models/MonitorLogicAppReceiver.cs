@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Monitor.Models
@@ -13,7 +14,39 @@ namespace Azure.ResourceManager.Monitor.Models
     /// <summary> A logic app receiver. </summary>
     public partial class MonitorLogicAppReceiver
     {
-        /// <summary> Initializes a new instance of MonitorLogicAppReceiver. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="MonitorLogicAppReceiver"/>. </summary>
         /// <param name="name"> The name of the logic app receiver. Names must be unique across all receivers within an action group. </param>
         /// <param name="resourceId"> The azure resource id of the logic app receiver. </param>
         /// <param name="callbackUri"> The callback url where http request sent to. </param>
@@ -29,17 +62,24 @@ namespace Azure.ResourceManager.Monitor.Models
             CallbackUri = callbackUri;
         }
 
-        /// <summary> Initializes a new instance of MonitorLogicAppReceiver. </summary>
+        /// <summary> Initializes a new instance of <see cref="MonitorLogicAppReceiver"/>. </summary>
         /// <param name="name"> The name of the logic app receiver. Names must be unique across all receivers within an action group. </param>
         /// <param name="resourceId"> The azure resource id of the logic app receiver. </param>
         /// <param name="callbackUri"> The callback url where http request sent to. </param>
         /// <param name="useCommonAlertSchema"> Indicates whether to use common alert schema. </param>
-        internal MonitorLogicAppReceiver(string name, ResourceIdentifier resourceId, Uri callbackUri, bool? useCommonAlertSchema)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MonitorLogicAppReceiver(string name, ResourceIdentifier resourceId, Uri callbackUri, bool? useCommonAlertSchema, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             ResourceId = resourceId;
             CallbackUri = callbackUri;
             UseCommonAlertSchema = useCommonAlertSchema;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MonitorLogicAppReceiver"/> for deserialization. </summary>
+        internal MonitorLogicAppReceiver()
+        {
         }
 
         /// <summary> The name of the logic app receiver. Names must be unique across all receivers within an action group. </summary>

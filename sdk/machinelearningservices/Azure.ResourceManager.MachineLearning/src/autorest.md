@@ -20,8 +20,9 @@ skip-csproj: true
 modelerfour:
   flatten-payloads: false
 deserialize-null-collection-as-null-value: true
+use-model-reader-writer: true
 
-#mgmt-debug: 
+#mgmt-debug:
 #  show-serialized-names: true
 
 format-by-name-rules:
@@ -517,6 +518,12 @@ rename-mapping:
   StatusMessageLevel: JobStatusMessageLevel
   ImageType.azureml: AzureML
   ProtectionLevel: IntellectualProtectionLevel
+
+suppress-abstract-base-class:
+- MachineLearningJobProperties
+- MachineLearningDataVersionProperties
+- MachineLearningDatastoreProperties
+- MachineLearningOnlineDeploymentProperties
 
 directive:
   - from: swagger-document

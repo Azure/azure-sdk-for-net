@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -13,10 +14,18 @@ using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class MySqlLinkedService : IUtf8JsonSerializable
+    public partial class MySqlLinkedService : IUtf8JsonSerializable, IJsonModel<MySqlLinkedService>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MySqlLinkedService>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<MySqlLinkedService>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<MySqlLinkedService>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(MySqlLinkedService)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(LinkedServiceType);
@@ -65,8 +74,46 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             writer.WritePropertyName("typeProperties"u8);
             writer.WriteStartObject();
-            writer.WritePropertyName("connectionString"u8);
-            JsonSerializer.Serialize(writer, ConnectionString);
+            if (Optional.IsDefined(DriverVersion))
+            {
+                writer.WritePropertyName("driverVersion"u8);
+                JsonSerializer.Serialize(writer, DriverVersion);
+            }
+            if (Optional.IsDefined(ConnectionString))
+            {
+                writer.WritePropertyName("connectionString"u8);
+                JsonSerializer.Serialize(writer, ConnectionString);
+            }
+            if (Optional.IsDefined(Server))
+            {
+                writer.WritePropertyName("server"u8);
+                JsonSerializer.Serialize(writer, Server);
+            }
+            if (Optional.IsDefined(Port))
+            {
+                writer.WritePropertyName("port"u8);
+                JsonSerializer.Serialize(writer, Port);
+            }
+            if (Optional.IsDefined(Username))
+            {
+                writer.WritePropertyName("username"u8);
+                JsonSerializer.Serialize(writer, Username);
+            }
+            if (Optional.IsDefined(Database))
+            {
+                writer.WritePropertyName("database"u8);
+                JsonSerializer.Serialize(writer, Database);
+            }
+            if (Optional.IsDefined(SslMode))
+            {
+                writer.WritePropertyName("sslMode"u8);
+                JsonSerializer.Serialize(writer, SslMode);
+            }
+            if (Optional.IsDefined(UseSystemTrustStore))
+            {
+                writer.WritePropertyName("useSystemTrustStore"u8);
+                JsonSerializer.Serialize(writer, UseSystemTrustStore);
+            }
             if (Optional.IsDefined(Password))
             {
                 writer.WritePropertyName("password"u8);
@@ -93,8 +140,22 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteEndObject();
         }
 
-        internal static MySqlLinkedService DeserializeMySqlLinkedService(JsonElement element)
+        MySqlLinkedService IJsonModel<MySqlLinkedService>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<MySqlLinkedService>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(MySqlLinkedService)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeMySqlLinkedService(document.RootElement, options);
+        }
+
+        internal static MySqlLinkedService DeserializeMySqlLinkedService(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -104,7 +165,14 @@ namespace Azure.ResourceManager.DataFactory.Models
             Optional<string> description = default;
             Optional<IDictionary<string, EntityParameterSpecification>> parameters = default;
             Optional<IList<BinaryData>> annotations = default;
-            DataFactoryElement<string> connectionString = default;
+            Optional<DataFactoryElement<string>> driverVersion = default;
+            Optional<DataFactoryElement<string>> connectionString = default;
+            Optional<DataFactoryElement<string>> server = default;
+            Optional<DataFactoryElement<int>> port = default;
+            Optional<DataFactoryElement<string>> username = default;
+            Optional<DataFactoryElement<string>> database = default;
+            Optional<DataFactoryElement<int>> sslMode = default;
+            Optional<DataFactoryElement<int>> useSystemTrustStore = default;
             Optional<DataFactoryKeyVaultSecretReference> password = default;
             Optional<string> encryptedCredential = default;
             IDictionary<string, BinaryData> additionalProperties = default;
@@ -174,9 +242,76 @@ namespace Azure.ResourceManager.DataFactory.Models
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
+                        if (property0.NameEquals("driverVersion"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            driverVersion = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
+                            continue;
+                        }
                         if (property0.NameEquals("connectionString"u8))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
                             connectionString = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
+                            continue;
+                        }
+                        if (property0.NameEquals("server"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            server = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
+                            continue;
+                        }
+                        if (property0.NameEquals("port"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            port = JsonSerializer.Deserialize<DataFactoryElement<int>>(property0.Value.GetRawText());
+                            continue;
+                        }
+                        if (property0.NameEquals("username"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            username = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
+                            continue;
+                        }
+                        if (property0.NameEquals("database"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            database = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
+                            continue;
+                        }
+                        if (property0.NameEquals("sslMode"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            sslMode = JsonSerializer.Deserialize<DataFactoryElement<int>>(property0.Value.GetRawText());
+                            continue;
+                        }
+                        if (property0.NameEquals("useSystemTrustStore"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            useSystemTrustStore = JsonSerializer.Deserialize<DataFactoryElement<int>>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("password"u8))
@@ -199,7 +334,38 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new MySqlLinkedService(type, connectVia.Value, description.Value, Optional.ToDictionary(parameters), Optional.ToList(annotations), additionalProperties, connectionString, password, encryptedCredential.Value);
+            return new MySqlLinkedService(type, connectVia.Value, description.Value, Optional.ToDictionary(parameters), Optional.ToList(annotations), additionalProperties, driverVersion.Value, connectionString.Value, server.Value, port.Value, username.Value, database.Value, sslMode.Value, useSystemTrustStore.Value, password, encryptedCredential.Value);
         }
+
+        BinaryData IPersistableModel<MySqlLinkedService>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MySqlLinkedService>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(MySqlLinkedService)} does not support '{options.Format}' format.");
+            }
+        }
+
+        MySqlLinkedService IPersistableModel<MySqlLinkedService>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MySqlLinkedService>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeMySqlLinkedService(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(MySqlLinkedService)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<MySqlLinkedService>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

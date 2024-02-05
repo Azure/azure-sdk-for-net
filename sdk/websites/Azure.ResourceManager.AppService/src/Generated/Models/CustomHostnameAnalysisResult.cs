@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure;
 using Azure.Core;
@@ -15,7 +16,39 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> Custom domain analysis. </summary>
     public partial class CustomHostnameAnalysisResult : ResourceData
     {
-        /// <summary> Initializes a new instance of CustomHostnameAnalysisResult. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="CustomHostnameAnalysisResult"/>. </summary>
         public CustomHostnameAnalysisResult()
         {
             CNameRecords = new ChangeTrackingList<string>();
@@ -25,7 +58,7 @@ namespace Azure.ResourceManager.AppService.Models
             AlternateTxtRecords = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of CustomHostnameAnalysisResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="CustomHostnameAnalysisResult"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -42,7 +75,8 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="alternateCNameRecords"> Alternate CName records controller can see for this hostname. </param>
         /// <param name="alternateTxtRecords"> Alternate TXT records controller can see for this hostname. </param>
         /// <param name="kind"> Kind of resource. </param>
-        internal CustomHostnameAnalysisResult(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, bool? isHostnameAlreadyVerified, DnsVerificationTestResult? customDomainVerificationTest, ResponseError customDomainVerificationFailureInfo, bool? hasConflictOnScaleUnit, bool? hasConflictAcrossSubscription, string conflictingAppResourceId, IList<string> cNameRecords, IList<string> txtRecords, IList<string> aRecords, IList<string> alternateCNameRecords, IList<string> alternateTxtRecords, string kind) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal CustomHostnameAnalysisResult(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, bool? isHostnameAlreadyVerified, DnsVerificationTestResult? customDomainVerificationTest, ResponseError customDomainVerificationFailureInfo, bool? hasConflictOnScaleUnit, bool? hasConflictAcrossSubscription, string conflictingAppResourceId, IList<string> cNameRecords, IList<string> txtRecords, IList<string> aRecords, IList<string> alternateCNameRecords, IList<string> alternateTxtRecords, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             IsHostnameAlreadyVerified = isHostnameAlreadyVerified;
             CustomDomainVerificationTest = customDomainVerificationTest;
@@ -56,6 +90,7 @@ namespace Azure.ResourceManager.AppService.Models
             AlternateCNameRecords = alternateCNameRecords;
             AlternateTxtRecords = alternateTxtRecords;
             Kind = kind;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> &lt;code&gt;true&lt;/code&gt; if hostname is already verified; otherwise, &lt;code&gt;false&lt;/code&gt;. </summary>

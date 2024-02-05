@@ -18,19 +18,29 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// </summary>
     public partial class WorkloadSqlPointInTimeRestoreContent : WorkloadSqlRestoreContent
     {
-        /// <summary> Initializes a new instance of WorkloadSqlPointInTimeRestoreContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="WorkloadSqlPointInTimeRestoreContent"/>. </summary>
         public WorkloadSqlPointInTimeRestoreContent()
         {
             ObjectType = "AzureWorkloadSQLPointInTimeRestoreRequest";
         }
 
-        /// <summary> Initializes a new instance of WorkloadSqlPointInTimeRestoreContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="WorkloadSqlPointInTimeRestoreContent"/>. </summary>
         /// <param name="objectType"> This property will be used as the discriminator for deciding the specific types in the polymorphic chain of types. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="recoveryType"> Type of this recovery. </param>
         /// <param name="sourceResourceId"> Fully qualified ARM ID of the VM on which workload that was running is being recovered. </param>
         /// <param name="propertyBag"> Workload specific property bag. </param>
         /// <param name="targetInfo"> Details of target database. </param>
         /// <param name="recoveryMode"> Defines whether the current recovery mode is file restore or database restore. </param>
+        /// <param name="targetResourceGroupName"> Defines the Resource group of the Target VM. </param>
+        /// <param name="userAssignedManagedIdentityDetails">
+        /// User Assigned managed identity details
+        /// Currently used for snapshot.
+        /// </param>
+        /// <param name="snapshotRestoreParameters">
+        /// Additional details for snapshot recovery
+        /// Currently used for snapshot for SAP Hana.
+        /// </param>
         /// <param name="targetVirtualMachineId">
         /// This is the complete ARM Id of the target VM
         /// For e.g. /subscriptions/{subId}/resourcegroups/{rg}/provider/Microsoft.Compute/virtualmachines/{vm}
@@ -39,7 +49,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="isNonRecoverable"> SQL specific property where user can chose to set no-recovery when restore operation is tried. </param>
         /// <param name="alternateDirectoryPaths"> Data directory details. </param>
         /// <param name="pointInTime"> PointInTime value. </param>
-        internal WorkloadSqlPointInTimeRestoreContent(string objectType, FileShareRecoveryType? recoveryType, ResourceIdentifier sourceResourceId, IDictionary<string, string> propertyBag, TargetRestoreInfo targetInfo, RecoveryMode? recoveryMode, ResourceIdentifier targetVirtualMachineId, bool? shouldUseAlternateTargetLocation, bool? isNonRecoverable, IList<SqlDataDirectoryMapping> alternateDirectoryPaths, DateTimeOffset? pointInTime) : base(objectType, recoveryType, sourceResourceId, propertyBag, targetInfo, recoveryMode, targetVirtualMachineId, shouldUseAlternateTargetLocation, isNonRecoverable, alternateDirectoryPaths)
+        internal WorkloadSqlPointInTimeRestoreContent(string objectType, IDictionary<string, BinaryData> serializedAdditionalRawData, FileShareRecoveryType? recoveryType, ResourceIdentifier sourceResourceId, IDictionary<string, string> propertyBag, TargetRestoreInfo targetInfo, RecoveryMode? recoveryMode, string targetResourceGroupName, UserAssignedManagedIdentityDetails userAssignedManagedIdentityDetails, SnapshotRestoreContent snapshotRestoreParameters, ResourceIdentifier targetVirtualMachineId, bool? shouldUseAlternateTargetLocation, bool? isNonRecoverable, IList<SqlDataDirectoryMapping> alternateDirectoryPaths, DateTimeOffset? pointInTime) : base(objectType, serializedAdditionalRawData, recoveryType, sourceResourceId, propertyBag, targetInfo, recoveryMode, targetResourceGroupName, userAssignedManagedIdentityDetails, snapshotRestoreParameters, targetVirtualMachineId, shouldUseAlternateTargetLocation, isNonRecoverable, alternateDirectoryPaths)
         {
             PointInTime = pointInTime;
             ObjectType = objectType ?? "AzureWorkloadSQLPointInTimeRestoreRequest";

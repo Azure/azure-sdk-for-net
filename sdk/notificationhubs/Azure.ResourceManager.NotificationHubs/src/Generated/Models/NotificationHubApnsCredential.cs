@@ -6,18 +6,51 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.NotificationHubs.Models
 {
     /// <summary> Description of a NotificationHub ApnsCredential. </summary>
     public partial class NotificationHubApnsCredential
     {
-        /// <summary> Initializes a new instance of NotificationHubApnsCredential. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="NotificationHubApnsCredential"/>. </summary>
         public NotificationHubApnsCredential()
         {
         }
 
-        /// <summary> Initializes a new instance of NotificationHubApnsCredential. </summary>
+        /// <summary> Initializes a new instance of <see cref="NotificationHubApnsCredential"/>. </summary>
         /// <param name="apnsCertificate"> The APNS certificate. Specify if using Certificate Authentication Mode. </param>
         /// <param name="certificateKey"> The APNS certificate password if it exists. </param>
         /// <param name="endpoint"> The APNS endpoint of this credential. If using Certificate Authentication Mode and Sandbox specify 'gateway.sandbox.push.apple.com'. If using Certificate Authentication Mode and Production specify 'gateway.push.apple.com'. If using Token Authentication Mode and Sandbox specify 'https://api.development.push.apple.com:443/3/device'. If using Token Authentication Mode and Production specify 'https://api.push.apple.com:443/3/device'. </param>
@@ -26,7 +59,8 @@ namespace Azure.ResourceManager.NotificationHubs.Models
         /// <param name="appName"> The name of the application or BundleId. Specify if using Token Authentication Mode. </param>
         /// <param name="appId"> The issuer (iss) registered claim key. The value is a 10-character TeamId, obtained from your developer account. Specify if using Token Authentication Mode. </param>
         /// <param name="token"> Provider Authentication Token, obtained through your developer account. Specify if using Token Authentication Mode. </param>
-        internal NotificationHubApnsCredential(string apnsCertificate, string certificateKey, Uri endpoint, string thumbprintString, string keyId, string appName, string appId, string token)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal NotificationHubApnsCredential(string apnsCertificate, string certificateKey, Uri endpoint, string thumbprintString, string keyId, string appName, string appId, string token, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ApnsCertificate = apnsCertificate;
             CertificateKey = certificateKey;
@@ -36,6 +70,7 @@ namespace Azure.ResourceManager.NotificationHubs.Models
             AppName = appName;
             AppId = appId;
             Token = token;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The APNS certificate. Specify if using Certificate Authentication Mode. </summary>

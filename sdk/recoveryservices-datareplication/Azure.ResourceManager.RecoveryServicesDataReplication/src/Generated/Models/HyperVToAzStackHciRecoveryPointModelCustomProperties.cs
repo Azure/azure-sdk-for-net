@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,17 +14,18 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
     /// <summary> HyperV to AzStackHCI recovery point model custom properties. </summary>
     public partial class HyperVToAzStackHciRecoveryPointModelCustomProperties : RecoveryPointModelCustomProperties
     {
-        /// <summary> Initializes a new instance of HyperVToAzStackHciRecoveryPointModelCustomProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="HyperVToAzStackHciRecoveryPointModelCustomProperties"/>. </summary>
         internal HyperVToAzStackHciRecoveryPointModelCustomProperties()
         {
             DiskIds = new ChangeTrackingList<string>();
             InstanceType = "HyperVToAzStackHCI";
         }
 
-        /// <summary> Initializes a new instance of HyperVToAzStackHciRecoveryPointModelCustomProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="HyperVToAzStackHciRecoveryPointModelCustomProperties"/>. </summary>
         /// <param name="instanceType"> Gets or sets the instance type. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="diskIds"> Gets or sets the list of the disk Ids. </param>
-        internal HyperVToAzStackHciRecoveryPointModelCustomProperties(string instanceType, IReadOnlyList<string> diskIds) : base(instanceType)
+        internal HyperVToAzStackHciRecoveryPointModelCustomProperties(string instanceType, IDictionary<string, BinaryData> serializedAdditionalRawData, IReadOnlyList<string> diskIds) : base(instanceType, serializedAdditionalRawData)
         {
             DiskIds = diskIds;
             InstanceType = instanceType ?? "HyperVToAzStackHCI";

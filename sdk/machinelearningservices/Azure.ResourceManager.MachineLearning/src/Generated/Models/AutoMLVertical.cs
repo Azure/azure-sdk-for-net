@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
@@ -18,7 +19,39 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// </summary>
     public abstract partial class AutoMLVertical
     {
-        /// <summary> Initializes a new instance of AutoMLVertical. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private protected IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AutoMLVertical"/>. </summary>
         /// <param name="trainingData"> [Required] Training data input. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="trainingData"/> is null. </exception>
         protected AutoMLVertical(MachineLearningTableJobInput trainingData)
@@ -28,7 +61,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             TrainingData = trainingData;
         }
 
-        /// <summary> Initializes a new instance of AutoMLVertical. </summary>
+        /// <summary> Initializes a new instance of <see cref="AutoMLVertical"/>. </summary>
         /// <param name="logVerbosity"> Log verbosity for the job. </param>
         /// <param name="targetColumnName">
         /// Target column name: This is prediction values column.
@@ -36,12 +69,19 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// </param>
         /// <param name="taskType"> [Required] Task type for AutoMLJob. </param>
         /// <param name="trainingData"> [Required] Training data input. </param>
-        internal AutoMLVertical(MachineLearningLogVerbosity? logVerbosity, string targetColumnName, TaskType taskType, MachineLearningTableJobInput trainingData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AutoMLVertical(MachineLearningLogVerbosity? logVerbosity, string targetColumnName, TaskType taskType, MachineLearningTableJobInput trainingData, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             LogVerbosity = logVerbosity;
             TargetColumnName = targetColumnName;
             TaskType = taskType;
             TrainingData = trainingData;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AutoMLVertical"/> for deserialization. </summary>
+        internal AutoMLVertical()
+        {
         }
 
         /// <summary> Log verbosity for the job. </summary>

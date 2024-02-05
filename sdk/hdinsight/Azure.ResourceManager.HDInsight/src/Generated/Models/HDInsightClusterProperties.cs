@@ -16,7 +16,39 @@ namespace Azure.ResourceManager.HDInsight.Models
     /// <summary> The properties of cluster. </summary>
     public partial class HDInsightClusterProperties
     {
-        /// <summary> Initializes a new instance of HDInsightClusterProperties. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="HDInsightClusterProperties"/>. </summary>
         /// <param name="clusterDefinition"> The cluster definition. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="clusterDefinition"/> is null. </exception>
         public HDInsightClusterProperties(HDInsightClusterDefinition clusterDefinition)
@@ -30,7 +62,7 @@ namespace Azure.ResourceManager.HDInsight.Models
             PrivateEndpointConnections = new ChangeTrackingList<HDInsightPrivateEndpointConnectionData>();
         }
 
-        /// <summary> Initializes a new instance of HDInsightClusterProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="HDInsightClusterProperties"/>. </summary>
         /// <param name="clusterVersion"> The version of the cluster. </param>
         /// <param name="clusterHdpVersion"> The hdp version of the cluster. </param>
         /// <param name="osType"> The type of operating system. </param>
@@ -55,7 +87,8 @@ namespace Azure.ResourceManager.HDInsight.Models
         /// <param name="computeIsolationProperties"> The compute isolation properties. </param>
         /// <param name="privateLinkConfigurations"> The private link configurations. </param>
         /// <param name="privateEndpointConnections"> The list of private endpoint connections. </param>
-        internal HDInsightClusterProperties(string clusterVersion, string clusterHdpVersion, HDInsightOSType? osType, HDInsightTier? tier, string clusterId, HDInsightClusterDefinition clusterDefinition, KafkaRestProperties kafkaRestProperties, HDInsightSecurityProfile securityProfile, ComputeProfile computeProfile, HDInsightClusterProvisioningState? provisioningState, DateTimeOffset? createdOn, string clusterState, QuotaInfo quotaInfo, IList<ResponseError> errors, IList<ConnectivityEndpoint> connectivityEndpoints, HDInsightDiskEncryptionProperties diskEncryptionProperties, EncryptionInTransitProperties encryptionInTransitProperties, StorageProfile storageProfile, string minSupportedTlsVersion, ExcludedServicesConfig excludedServicesConfig, HDInsightClusterNetworkProperties networkProperties, HDInsightComputeIsolationProperties computeIsolationProperties, IList<HDInsightPrivateLinkConfiguration> privateLinkConfigurations, IReadOnlyList<HDInsightPrivateEndpointConnectionData> privateEndpointConnections)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal HDInsightClusterProperties(string clusterVersion, string clusterHdpVersion, HDInsightOSType? osType, HDInsightTier? tier, string clusterId, HDInsightClusterDefinition clusterDefinition, KafkaRestProperties kafkaRestProperties, HDInsightSecurityProfile securityProfile, ComputeProfile computeProfile, HDInsightClusterProvisioningState? provisioningState, DateTimeOffset? createdOn, string clusterState, QuotaInfo quotaInfo, IList<ResponseError> errors, IList<ConnectivityEndpoint> connectivityEndpoints, HDInsightDiskEncryptionProperties diskEncryptionProperties, EncryptionInTransitProperties encryptionInTransitProperties, StorageProfile storageProfile, string minSupportedTlsVersion, ExcludedServicesConfig excludedServicesConfig, HDInsightClusterNetworkProperties networkProperties, HDInsightComputeIsolationProperties computeIsolationProperties, IList<HDInsightPrivateLinkConfiguration> privateLinkConfigurations, IReadOnlyList<HDInsightPrivateEndpointConnectionData> privateEndpointConnections, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ClusterVersion = clusterVersion;
             ClusterHdpVersion = clusterHdpVersion;
@@ -81,6 +114,12 @@ namespace Azure.ResourceManager.HDInsight.Models
             ComputeIsolationProperties = computeIsolationProperties;
             PrivateLinkConfigurations = privateLinkConfigurations;
             PrivateEndpointConnections = privateEndpointConnections;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="HDInsightClusterProperties"/> for deserialization. </summary>
+        internal HDInsightClusterProperties()
+        {
         }
 
         /// <summary> The version of the cluster. </summary>

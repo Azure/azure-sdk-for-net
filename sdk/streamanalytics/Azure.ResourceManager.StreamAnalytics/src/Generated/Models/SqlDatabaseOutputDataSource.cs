@@ -5,19 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.StreamAnalytics.Models
 {
     /// <summary> Describes an Azure SQL database output data source. </summary>
     public partial class SqlDatabaseOutputDataSource : StreamingJobOutputDataSource
     {
-        /// <summary> Initializes a new instance of SqlDatabaseOutputDataSource. </summary>
+        /// <summary> Initializes a new instance of <see cref="SqlDatabaseOutputDataSource"/>. </summary>
         public SqlDatabaseOutputDataSource()
         {
             OutputDataSourceType = "Microsoft.Sql/Server/Database";
         }
 
-        /// <summary> Initializes a new instance of SqlDatabaseOutputDataSource. </summary>
+        /// <summary> Initializes a new instance of <see cref="SqlDatabaseOutputDataSource"/>. </summary>
         /// <param name="outputDataSourceType"> Indicates the type of data source output will be written to. Required on PUT (CreateOrReplace) requests. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="server"> The name of the SQL server containing the Azure SQL database. Required on PUT (CreateOrReplace) requests. </param>
         /// <param name="database"> The name of the Azure SQL database. Required on PUT (CreateOrReplace) requests. </param>
         /// <param name="user"> The user name that will be used to connect to the Azure SQL database. Required on PUT (CreateOrReplace) requests. </param>
@@ -26,7 +30,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         /// <param name="maxBatchCount"> Max Batch count for write to Sql database, the default value is 10,000. Optional on PUT requests. </param>
         /// <param name="maxWriterCount"> Max Writer count, currently only 1(single writer) and 0(based on query partition) are available. Optional on PUT requests. </param>
         /// <param name="authenticationMode"> Authentication Mode. </param>
-        internal SqlDatabaseOutputDataSource(string outputDataSourceType, string server, string database, string user, string password, string table, int? maxBatchCount, int? maxWriterCount, StreamAnalyticsAuthenticationMode? authenticationMode) : base(outputDataSourceType)
+        internal SqlDatabaseOutputDataSource(string outputDataSourceType, IDictionary<string, BinaryData> serializedAdditionalRawData, string server, string database, string user, string password, string table, int? maxBatchCount, int? maxWriterCount, StreamAnalyticsAuthenticationMode? authenticationMode) : base(outputDataSourceType, serializedAdditionalRawData)
         {
             Server = server;
             Database = database;

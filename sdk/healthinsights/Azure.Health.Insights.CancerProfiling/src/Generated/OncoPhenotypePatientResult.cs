@@ -15,7 +15,39 @@ namespace Azure.Health.Insights.CancerProfiling
     /// <summary> The results of the model's work for a single patient. </summary>
     public partial class OncoPhenotypePatientResult
     {
-        /// <summary> Initializes a new instance of OncoPhenotypePatientResult. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="OncoPhenotypePatientResult"/>. </summary>
         /// <param name="id"> The identifier given for the patient in the request. </param>
         /// <param name="inferences"> The model's inferences for the given patient. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="inferences"/> is null. </exception>
@@ -28,13 +60,20 @@ namespace Azure.Health.Insights.CancerProfiling
             Inferences = inferences.ToList();
         }
 
-        /// <summary> Initializes a new instance of OncoPhenotypePatientResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="OncoPhenotypePatientResult"/>. </summary>
         /// <param name="id"> The identifier given for the patient in the request. </param>
         /// <param name="inferences"> The model's inferences for the given patient. </param>
-        internal OncoPhenotypePatientResult(string id, IReadOnlyList<OncoPhenotypeInference> inferences)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal OncoPhenotypePatientResult(string id, IReadOnlyList<OncoPhenotypeInference> inferences, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Id = id;
             Inferences = inferences;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="OncoPhenotypePatientResult"/> for deserialization. </summary>
+        internal OncoPhenotypePatientResult()
+        {
         }
 
         /// <summary> The identifier given for the patient in the request. </summary>

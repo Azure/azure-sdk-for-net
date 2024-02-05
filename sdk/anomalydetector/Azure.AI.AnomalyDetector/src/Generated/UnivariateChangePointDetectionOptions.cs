@@ -15,7 +15,39 @@ namespace Azure.AI.AnomalyDetector
     /// <summary> Request of change point detection. </summary>
     public partial class UnivariateChangePointDetectionOptions
     {
-        /// <summary> Initializes a new instance of UnivariateChangePointDetectionOptions. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="UnivariateChangePointDetectionOptions"/>. </summary>
         /// <param name="series">
         /// Time series data points. Points should be sorted by time stamp in ascending
         /// order to match the change point detection result.
@@ -30,7 +62,7 @@ namespace Azure.AI.AnomalyDetector
             Granularity = granularity;
         }
 
-        /// <summary> Initializes a new instance of UnivariateChangePointDetectionOptions. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnivariateChangePointDetectionOptions"/>. </summary>
         /// <param name="series">
         /// Time series data points. Points should be sorted by time stamp in ascending
         /// order to match the change point detection result.
@@ -54,7 +86,8 @@ namespace Azure.AI.AnomalyDetector
         /// value is, the larger the trend error is, which means less change point will
         /// be accepted.
         /// </param>
-        internal UnivariateChangePointDetectionOptions(IList<TimeSeriesPoint> series, TimeGranularity granularity, int? customInterval, int? period, int? stableTrendWindow, float? threshold)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal UnivariateChangePointDetectionOptions(IList<TimeSeriesPoint> series, TimeGranularity granularity, int? customInterval, int? period, int? stableTrendWindow, float? threshold, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Series = series;
             Granularity = granularity;
@@ -62,6 +95,12 @@ namespace Azure.AI.AnomalyDetector
             Period = period;
             StableTrendWindow = stableTrendWindow;
             Threshold = threshold;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="UnivariateChangePointDetectionOptions"/> for deserialization. </summary>
+        internal UnivariateChangePointDetectionOptions()
+        {
         }
 
         /// <summary>

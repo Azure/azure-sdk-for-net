@@ -5,12 +5,15 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 {
     /// <summary> Describes a partitioning scheme where an integer range is allocated evenly across a number of partitions. </summary>
     public partial class UniformInt64RangePartitionScheme : ManagedServicePartitionScheme
     {
-        /// <summary> Initializes a new instance of UniformInt64RangePartitionScheme. </summary>
+        /// <summary> Initializes a new instance of <see cref="UniformInt64RangePartitionScheme"/>. </summary>
         /// <param name="count"> The number of partitions. </param>
         /// <param name="lowKey">
         /// The lower bound of the partition key range that
@@ -30,8 +33,9 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             PartitionScheme = PartitionScheme.UniformInt64Range;
         }
 
-        /// <summary> Initializes a new instance of UniformInt64RangePartitionScheme. </summary>
+        /// <summary> Initializes a new instance of <see cref="UniformInt64RangePartitionScheme"/>. </summary>
         /// <param name="partitionScheme"> Specifies how the service is partitioned. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="count"> The number of partitions. </param>
         /// <param name="lowKey">
         /// The lower bound of the partition key range that
@@ -43,12 +47,17 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         /// should be split between the partition ‘Count’
         ///
         /// </param>
-        internal UniformInt64RangePartitionScheme(PartitionScheme partitionScheme, int count, long lowKey, long highKey) : base(partitionScheme)
+        internal UniformInt64RangePartitionScheme(PartitionScheme partitionScheme, IDictionary<string, BinaryData> serializedAdditionalRawData, int count, long lowKey, long highKey) : base(partitionScheme, serializedAdditionalRawData)
         {
             Count = count;
             LowKey = lowKey;
             HighKey = highKey;
             PartitionScheme = partitionScheme;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="UniformInt64RangePartitionScheme"/> for deserialization. </summary>
+        internal UniformInt64RangePartitionScheme()
+        {
         }
 
         /// <summary> The number of partitions. </summary>

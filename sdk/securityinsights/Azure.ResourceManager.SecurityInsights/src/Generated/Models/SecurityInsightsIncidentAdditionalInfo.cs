@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,26 +14,60 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     /// <summary> Incident additional data property bag. </summary>
     public partial class SecurityInsightsIncidentAdditionalInfo
     {
-        /// <summary> Initializes a new instance of SecurityInsightsIncidentAdditionalInfo. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SecurityInsightsIncidentAdditionalInfo"/>. </summary>
         internal SecurityInsightsIncidentAdditionalInfo()
         {
             AlertProductNames = new ChangeTrackingList<string>();
             Tactics = new ChangeTrackingList<SecurityInsightsAttackTactic>();
         }
 
-        /// <summary> Initializes a new instance of SecurityInsightsIncidentAdditionalInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityInsightsIncidentAdditionalInfo"/>. </summary>
         /// <param name="alertsCount"> The number of alerts in the incident. </param>
         /// <param name="bookmarksCount"> The number of bookmarks in the incident. </param>
         /// <param name="commentsCount"> The number of comments in the incident. </param>
         /// <param name="alertProductNames"> List of product names of alerts in the incident. </param>
         /// <param name="tactics"> The tactics associated with incident. </param>
-        internal SecurityInsightsIncidentAdditionalInfo(int? alertsCount, int? bookmarksCount, int? commentsCount, IReadOnlyList<string> alertProductNames, IReadOnlyList<SecurityInsightsAttackTactic> tactics)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SecurityInsightsIncidentAdditionalInfo(int? alertsCount, int? bookmarksCount, int? commentsCount, IReadOnlyList<string> alertProductNames, IReadOnlyList<SecurityInsightsAttackTactic> tactics, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             AlertsCount = alertsCount;
             BookmarksCount = bookmarksCount;
             CommentsCount = commentsCount;
             AlertProductNames = alertProductNames;
             Tactics = tactics;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The number of alerts in the incident. </summary>

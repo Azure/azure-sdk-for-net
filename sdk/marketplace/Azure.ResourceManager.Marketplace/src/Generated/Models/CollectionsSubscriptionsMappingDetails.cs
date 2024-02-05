@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,19 +14,53 @@ namespace Azure.ResourceManager.Marketplace.Models
     /// <summary> Collection name and related subscriptions list. </summary>
     public partial class CollectionsSubscriptionsMappingDetails
     {
-        /// <summary> Initializes a new instance of CollectionsSubscriptionsMappingDetails. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="CollectionsSubscriptionsMappingDetails"/>. </summary>
         internal CollectionsSubscriptionsMappingDetails()
         {
             Subscriptions = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of CollectionsSubscriptionsMappingDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="CollectionsSubscriptionsMappingDetails"/>. </summary>
         /// <param name="collectionName"> Collection name. </param>
         /// <param name="subscriptions"> Subscriptions ids list. </param>
-        internal CollectionsSubscriptionsMappingDetails(string collectionName, IReadOnlyList<string> subscriptions)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal CollectionsSubscriptionsMappingDetails(string collectionName, IReadOnlyList<string> subscriptions, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             CollectionName = collectionName;
             Subscriptions = subscriptions;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Collection name. </summary>

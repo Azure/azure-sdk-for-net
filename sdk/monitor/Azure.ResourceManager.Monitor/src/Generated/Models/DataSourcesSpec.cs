@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,7 +14,39 @@ namespace Azure.ResourceManager.Monitor.Models
     /// <summary> Specification of data sources that will be collected. </summary>
     public partial class DataSourcesSpec
     {
-        /// <summary> Initializes a new instance of DataSourcesSpec. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private protected IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DataSourcesSpec"/>. </summary>
         public DataSourcesSpec()
         {
             PerformanceCounters = new ChangeTrackingList<PerfCounterDataSource>();
@@ -27,7 +60,7 @@ namespace Azure.ResourceManager.Monitor.Models
             PlatformTelemetry = new ChangeTrackingList<PlatformTelemetryDataSource>();
         }
 
-        /// <summary> Initializes a new instance of DataSourcesSpec. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataSourcesSpec"/>. </summary>
         /// <param name="performanceCounters"> The list of performance counter data source configurations. </param>
         /// <param name="windowsEventLogs"> The list of Windows Event Log data source configurations. </param>
         /// <param name="syslog"> The list of Syslog data source configurations. </param>
@@ -38,7 +71,8 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="prometheusForwarder"> The list of Prometheus forwarder data source configurations. </param>
         /// <param name="platformTelemetry"> The list of platform telemetry configurations. </param>
         /// <param name="dataImports"> Specifications of pull based data sources. </param>
-        internal DataSourcesSpec(IList<PerfCounterDataSource> performanceCounters, IList<WindowsEventLogDataSource> windowsEventLogs, IList<SyslogDataSource> syslog, IList<ExtensionDataSource> extensions, IList<LogFilesDataSource> logFiles, IList<IisLogsDataSource> iisLogs, IList<WindowsFirewallLogsDataSource> windowsFirewallLogs, IList<PrometheusForwarderDataSource> prometheusForwarder, IList<PlatformTelemetryDataSource> platformTelemetry, DataSourcesSpecDataImports dataImports)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DataSourcesSpec(IList<PerfCounterDataSource> performanceCounters, IList<WindowsEventLogDataSource> windowsEventLogs, IList<SyslogDataSource> syslog, IList<ExtensionDataSource> extensions, IList<LogFilesDataSource> logFiles, IList<IisLogsDataSource> iisLogs, IList<WindowsFirewallLogsDataSource> windowsFirewallLogs, IList<PrometheusForwarderDataSource> prometheusForwarder, IList<PlatformTelemetryDataSource> platformTelemetry, DataSourcesSpecDataImports dataImports, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             PerformanceCounters = performanceCounters;
             WindowsEventLogs = windowsEventLogs;
@@ -50,6 +84,7 @@ namespace Azure.ResourceManager.Monitor.Models
             PrometheusForwarder = prometheusForwarder;
             PlatformTelemetry = platformTelemetry;
             DataImports = dataImports;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The list of performance counter data source configurations. </summary>

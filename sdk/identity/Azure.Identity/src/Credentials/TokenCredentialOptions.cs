@@ -44,6 +44,8 @@ namespace Azure.Identity
         /// </summary>
         internal bool IsChainedCredential { get; set; }
 
+        internal TenantIdResolverBase TenantIdResolver { get; set; } = TenantIdResolverBase.Default;
+
         internal virtual T Clone<T>()
             where T : TokenCredentialOptions, new()
         {
@@ -69,7 +71,7 @@ namespace Azure.Identity
             // copy base ClientOptions properties, this would be replaced by a similar method on the base class
 
             // only copy transport if the original has changed from the default so as not to set IsCustomTransportSet unintentionally
-            if (Transport != ClientOptions.Default.Transport)
+            if (Transport != Default.Transport)
             {
                 clone.Transport = Transport;
             }

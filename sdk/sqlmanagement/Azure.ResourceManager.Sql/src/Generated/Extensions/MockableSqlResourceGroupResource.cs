@@ -67,6 +67,14 @@ namespace Azure.ResourceManager.Sql.Mocking
         /// <term>Operation Id</term>
         /// <description>InstancePools_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="InstancePoolResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="instancePoolName"> The name of the instance pool to be retrieved. </param>
@@ -89,6 +97,14 @@ namespace Azure.ResourceManager.Sql.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>InstancePools_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="InstancePoolResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -121,6 +137,14 @@ namespace Azure.ResourceManager.Sql.Mocking
         /// <term>Operation Id</term>
         /// <description>ServerTrustGroups_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SqlServerTrustGroupResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="locationName"> The name of the region where the resource is located. </param>
@@ -144,6 +168,14 @@ namespace Azure.ResourceManager.Sql.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ServerTrustGroups_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SqlServerTrustGroupResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -181,6 +213,14 @@ namespace Azure.ResourceManager.Sql.Mocking
         /// <term>Operation Id</term>
         /// <description>LongTermRetentionBackups_GetByResourceGroup</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-05-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ResourceGroupLongTermRetentionBackupResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="locationName"> The location of the database. </param>
@@ -206,6 +246,14 @@ namespace Azure.ResourceManager.Sql.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>LongTermRetentionBackups_GetByResourceGroup</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-05-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ResourceGroupLongTermRetentionBackupResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -245,6 +293,14 @@ namespace Azure.ResourceManager.Sql.Mocking
         /// <term>Operation Id</term>
         /// <description>LongTermRetentionManagedInstanceBackups_GetByResourceGroup</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-05-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ResourceGroupLongTermRetentionManagedInstanceBackupResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="locationName"> The location of the database. </param>
@@ -270,6 +326,14 @@ namespace Azure.ResourceManager.Sql.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>LongTermRetentionManagedInstanceBackups_GetByResourceGroup</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-05-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ResourceGroupLongTermRetentionManagedInstanceBackupResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -304,6 +368,14 @@ namespace Azure.ResourceManager.Sql.Mocking
         /// <term>Operation Id</term>
         /// <description>VirtualClusters_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-05-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="VirtualClusterResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="virtualClusterName"> The name of the virtual cluster. </param>
@@ -326,6 +398,14 @@ namespace Azure.ResourceManager.Sql.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>VirtualClusters_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-05-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="VirtualClusterResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -358,6 +438,14 @@ namespace Azure.ResourceManager.Sql.Mocking
         /// <term>Operation Id</term>
         /// <description>InstanceFailoverGroups_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-05-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="InstanceFailoverGroupResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="locationName"> The name of the region where the resource is located. </param>
@@ -381,6 +469,14 @@ namespace Azure.ResourceManager.Sql.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>InstanceFailoverGroups_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-05-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="InstanceFailoverGroupResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -413,6 +509,14 @@ namespace Azure.ResourceManager.Sql.Mocking
         /// <term>Operation Id</term>
         /// <description>ManagedInstances_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-08-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ManagedInstanceResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="managedInstanceName"> The name of the managed instance. </param>
@@ -436,6 +540,14 @@ namespace Azure.ResourceManager.Sql.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ManagedInstances_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-08-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ManagedInstanceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -468,6 +580,14 @@ namespace Azure.ResourceManager.Sql.Mocking
         /// <term>Operation Id</term>
         /// <description>Servers_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-02-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SqlServerResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="serverName"> The name of the server. </param>
@@ -491,6 +611,14 @@ namespace Azure.ResourceManager.Sql.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Servers_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-02-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SqlServerResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -516,18 +644,22 @@ namespace Azure.ResourceManager.Sql.Mocking
         /// <term>Operation Id</term>
         /// <description>LongTermRetentionBackups_ListByResourceGroupLocation</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-05-01-preview</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="locationName"> The location of the database. </param>
         /// <param name="onlyLatestPerDatabase"> Whether or not to only get the latest backup for each database. </param>
         /// <param name="databaseState"> Whether to query against just live databases, just deleted databases, or all databases. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="LongTermRetentionBackupData" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="LongTermRetentionBackupData"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<LongTermRetentionBackupData> GetLongTermRetentionBackupsWithLocationAsync(AzureLocation locationName, bool? onlyLatestPerDatabase = null, SqlDatabaseState? databaseState = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => LongTermRetentionBackupsRestClient.CreateListByResourceGroupLocationRequest(Id.SubscriptionId, Id.ResourceGroupName, locationName, onlyLatestPerDatabase, databaseState);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => LongTermRetentionBackupsRestClient.CreateListByResourceGroupLocationNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, locationName, onlyLatestPerDatabase, databaseState);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, LongTermRetentionBackupData.DeserializeLongTermRetentionBackupData, LongTermRetentionBackupsClientDiagnostics, Pipeline, "MockableSqlResourceGroupResource.GetLongTermRetentionBackupsWithLocation", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => LongTermRetentionBackupData.DeserializeLongTermRetentionBackupData(e), LongTermRetentionBackupsClientDiagnostics, Pipeline, "MockableSqlResourceGroupResource.GetLongTermRetentionBackupsWithLocation", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -541,18 +673,22 @@ namespace Azure.ResourceManager.Sql.Mocking
         /// <term>Operation Id</term>
         /// <description>LongTermRetentionBackups_ListByResourceGroupLocation</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-05-01-preview</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="locationName"> The location of the database. </param>
         /// <param name="onlyLatestPerDatabase"> Whether or not to only get the latest backup for each database. </param>
         /// <param name="databaseState"> Whether to query against just live databases, just deleted databases, or all databases. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="LongTermRetentionBackupData" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="LongTermRetentionBackupData"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<LongTermRetentionBackupData> GetLongTermRetentionBackupsWithLocation(AzureLocation locationName, bool? onlyLatestPerDatabase = null, SqlDatabaseState? databaseState = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => LongTermRetentionBackupsRestClient.CreateListByResourceGroupLocationRequest(Id.SubscriptionId, Id.ResourceGroupName, locationName, onlyLatestPerDatabase, databaseState);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => LongTermRetentionBackupsRestClient.CreateListByResourceGroupLocationNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, locationName, onlyLatestPerDatabase, databaseState);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, LongTermRetentionBackupData.DeserializeLongTermRetentionBackupData, LongTermRetentionBackupsClientDiagnostics, Pipeline, "MockableSqlResourceGroupResource.GetLongTermRetentionBackupsWithLocation", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => LongTermRetentionBackupData.DeserializeLongTermRetentionBackupData(e), LongTermRetentionBackupsClientDiagnostics, Pipeline, "MockableSqlResourceGroupResource.GetLongTermRetentionBackupsWithLocation", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -566,6 +702,10 @@ namespace Azure.ResourceManager.Sql.Mocking
         /// <term>Operation Id</term>
         /// <description>LongTermRetentionBackups_ListByResourceGroupServer</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-05-01-preview</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="locationName"> The location of the database. </param>
@@ -575,14 +715,14 @@ namespace Azure.ResourceManager.Sql.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="longTermRetentionServerName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="longTermRetentionServerName"/> is null. </exception>
-        /// <returns> An async collection of <see cref="LongTermRetentionBackupData" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="LongTermRetentionBackupData"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<LongTermRetentionBackupData> GetLongTermRetentionBackupsWithServerAsync(AzureLocation locationName, string longTermRetentionServerName, bool? onlyLatestPerDatabase = null, SqlDatabaseState? databaseState = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(longTermRetentionServerName, nameof(longTermRetentionServerName));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => LongTermRetentionBackupsRestClient.CreateListByResourceGroupServerRequest(Id.SubscriptionId, Id.ResourceGroupName, locationName, longTermRetentionServerName, onlyLatestPerDatabase, databaseState);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => LongTermRetentionBackupsRestClient.CreateListByResourceGroupServerNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, locationName, longTermRetentionServerName, onlyLatestPerDatabase, databaseState);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, LongTermRetentionBackupData.DeserializeLongTermRetentionBackupData, LongTermRetentionBackupsClientDiagnostics, Pipeline, "MockableSqlResourceGroupResource.GetLongTermRetentionBackupsWithServer", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => LongTermRetentionBackupData.DeserializeLongTermRetentionBackupData(e), LongTermRetentionBackupsClientDiagnostics, Pipeline, "MockableSqlResourceGroupResource.GetLongTermRetentionBackupsWithServer", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -596,6 +736,10 @@ namespace Azure.ResourceManager.Sql.Mocking
         /// <term>Operation Id</term>
         /// <description>LongTermRetentionBackups_ListByResourceGroupServer</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-05-01-preview</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="locationName"> The location of the database. </param>
@@ -605,14 +749,14 @@ namespace Azure.ResourceManager.Sql.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="longTermRetentionServerName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="longTermRetentionServerName"/> is null. </exception>
-        /// <returns> A collection of <see cref="LongTermRetentionBackupData" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="LongTermRetentionBackupData"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<LongTermRetentionBackupData> GetLongTermRetentionBackupsWithServer(AzureLocation locationName, string longTermRetentionServerName, bool? onlyLatestPerDatabase = null, SqlDatabaseState? databaseState = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(longTermRetentionServerName, nameof(longTermRetentionServerName));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => LongTermRetentionBackupsRestClient.CreateListByResourceGroupServerRequest(Id.SubscriptionId, Id.ResourceGroupName, locationName, longTermRetentionServerName, onlyLatestPerDatabase, databaseState);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => LongTermRetentionBackupsRestClient.CreateListByResourceGroupServerNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, locationName, longTermRetentionServerName, onlyLatestPerDatabase, databaseState);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, LongTermRetentionBackupData.DeserializeLongTermRetentionBackupData, LongTermRetentionBackupsClientDiagnostics, Pipeline, "MockableSqlResourceGroupResource.GetLongTermRetentionBackupsWithServer", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => LongTermRetentionBackupData.DeserializeLongTermRetentionBackupData(e), LongTermRetentionBackupsClientDiagnostics, Pipeline, "MockableSqlResourceGroupResource.GetLongTermRetentionBackupsWithServer", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -626,6 +770,10 @@ namespace Azure.ResourceManager.Sql.Mocking
         /// <term>Operation Id</term>
         /// <description>LongTermRetentionManagedInstanceBackups_ListByResourceGroupInstance</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-05-01-preview</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="locationName"> The location of the database. </param>
@@ -635,14 +783,14 @@ namespace Azure.ResourceManager.Sql.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="managedInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="managedInstanceName"/> is null. </exception>
-        /// <returns> An async collection of <see cref="ManagedInstanceLongTermRetentionBackupData" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="ManagedInstanceLongTermRetentionBackupData"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ManagedInstanceLongTermRetentionBackupData> GetLongTermRetentionManagedInstanceBackupsWithInstanceAsync(AzureLocation locationName, string managedInstanceName, bool? onlyLatestPerDatabase = null, SqlDatabaseState? databaseState = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(managedInstanceName, nameof(managedInstanceName));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => LongTermRetentionManagedInstanceBackupsRestClient.CreateListByResourceGroupInstanceRequest(Id.SubscriptionId, Id.ResourceGroupName, locationName, managedInstanceName, onlyLatestPerDatabase, databaseState);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => LongTermRetentionManagedInstanceBackupsRestClient.CreateListByResourceGroupInstanceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, locationName, managedInstanceName, onlyLatestPerDatabase, databaseState);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, ManagedInstanceLongTermRetentionBackupData.DeserializeManagedInstanceLongTermRetentionBackupData, LongTermRetentionManagedInstanceBackupsClientDiagnostics, Pipeline, "MockableSqlResourceGroupResource.GetLongTermRetentionManagedInstanceBackupsWithInstance", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => ManagedInstanceLongTermRetentionBackupData.DeserializeManagedInstanceLongTermRetentionBackupData(e), LongTermRetentionManagedInstanceBackupsClientDiagnostics, Pipeline, "MockableSqlResourceGroupResource.GetLongTermRetentionManagedInstanceBackupsWithInstance", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -656,6 +804,10 @@ namespace Azure.ResourceManager.Sql.Mocking
         /// <term>Operation Id</term>
         /// <description>LongTermRetentionManagedInstanceBackups_ListByResourceGroupInstance</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-05-01-preview</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="locationName"> The location of the database. </param>
@@ -665,14 +817,14 @@ namespace Azure.ResourceManager.Sql.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="managedInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="managedInstanceName"/> is null. </exception>
-        /// <returns> A collection of <see cref="ManagedInstanceLongTermRetentionBackupData" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ManagedInstanceLongTermRetentionBackupData"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ManagedInstanceLongTermRetentionBackupData> GetLongTermRetentionManagedInstanceBackupsWithInstance(AzureLocation locationName, string managedInstanceName, bool? onlyLatestPerDatabase = null, SqlDatabaseState? databaseState = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(managedInstanceName, nameof(managedInstanceName));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => LongTermRetentionManagedInstanceBackupsRestClient.CreateListByResourceGroupInstanceRequest(Id.SubscriptionId, Id.ResourceGroupName, locationName, managedInstanceName, onlyLatestPerDatabase, databaseState);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => LongTermRetentionManagedInstanceBackupsRestClient.CreateListByResourceGroupInstanceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, locationName, managedInstanceName, onlyLatestPerDatabase, databaseState);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, ManagedInstanceLongTermRetentionBackupData.DeserializeManagedInstanceLongTermRetentionBackupData, LongTermRetentionManagedInstanceBackupsClientDiagnostics, Pipeline, "MockableSqlResourceGroupResource.GetLongTermRetentionManagedInstanceBackupsWithInstance", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => ManagedInstanceLongTermRetentionBackupData.DeserializeManagedInstanceLongTermRetentionBackupData(e), LongTermRetentionManagedInstanceBackupsClientDiagnostics, Pipeline, "MockableSqlResourceGroupResource.GetLongTermRetentionManagedInstanceBackupsWithInstance", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -686,18 +838,22 @@ namespace Azure.ResourceManager.Sql.Mocking
         /// <term>Operation Id</term>
         /// <description>LongTermRetentionManagedInstanceBackups_ListByResourceGroupLocation</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-05-01-preview</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="locationName"> The location of the database. </param>
         /// <param name="onlyLatestPerDatabase"> Whether or not to only get the latest backup for each database. </param>
         /// <param name="databaseState"> Whether to query against just live databases, just deleted databases, or all databases. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ManagedInstanceLongTermRetentionBackupData" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="ManagedInstanceLongTermRetentionBackupData"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ManagedInstanceLongTermRetentionBackupData> GetLongTermRetentionManagedInstanceBackupsWithLocationAsync(AzureLocation locationName, bool? onlyLatestPerDatabase = null, SqlDatabaseState? databaseState = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => LongTermRetentionManagedInstanceBackupsRestClient.CreateListByResourceGroupLocationRequest(Id.SubscriptionId, Id.ResourceGroupName, locationName, onlyLatestPerDatabase, databaseState);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => LongTermRetentionManagedInstanceBackupsRestClient.CreateListByResourceGroupLocationNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, locationName, onlyLatestPerDatabase, databaseState);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, ManagedInstanceLongTermRetentionBackupData.DeserializeManagedInstanceLongTermRetentionBackupData, LongTermRetentionManagedInstanceBackupsClientDiagnostics, Pipeline, "MockableSqlResourceGroupResource.GetLongTermRetentionManagedInstanceBackupsWithLocation", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => ManagedInstanceLongTermRetentionBackupData.DeserializeManagedInstanceLongTermRetentionBackupData(e), LongTermRetentionManagedInstanceBackupsClientDiagnostics, Pipeline, "MockableSqlResourceGroupResource.GetLongTermRetentionManagedInstanceBackupsWithLocation", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -711,18 +867,22 @@ namespace Azure.ResourceManager.Sql.Mocking
         /// <term>Operation Id</term>
         /// <description>LongTermRetentionManagedInstanceBackups_ListByResourceGroupLocation</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-05-01-preview</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="locationName"> The location of the database. </param>
         /// <param name="onlyLatestPerDatabase"> Whether or not to only get the latest backup for each database. </param>
         /// <param name="databaseState"> Whether to query against just live databases, just deleted databases, or all databases. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ManagedInstanceLongTermRetentionBackupData" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ManagedInstanceLongTermRetentionBackupData"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ManagedInstanceLongTermRetentionBackupData> GetLongTermRetentionManagedInstanceBackupsWithLocation(AzureLocation locationName, bool? onlyLatestPerDatabase = null, SqlDatabaseState? databaseState = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => LongTermRetentionManagedInstanceBackupsRestClient.CreateListByResourceGroupLocationRequest(Id.SubscriptionId, Id.ResourceGroupName, locationName, onlyLatestPerDatabase, databaseState);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => LongTermRetentionManagedInstanceBackupsRestClient.CreateListByResourceGroupLocationNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, locationName, onlyLatestPerDatabase, databaseState);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, ManagedInstanceLongTermRetentionBackupData.DeserializeManagedInstanceLongTermRetentionBackupData, LongTermRetentionManagedInstanceBackupsClientDiagnostics, Pipeline, "MockableSqlResourceGroupResource.GetLongTermRetentionManagedInstanceBackupsWithLocation", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => ManagedInstanceLongTermRetentionBackupData.DeserializeManagedInstanceLongTermRetentionBackupData(e), LongTermRetentionManagedInstanceBackupsClientDiagnostics, Pipeline, "MockableSqlResourceGroupResource.GetLongTermRetentionManagedInstanceBackupsWithLocation", "value", "nextLink", cancellationToken);
         }
     }
 }

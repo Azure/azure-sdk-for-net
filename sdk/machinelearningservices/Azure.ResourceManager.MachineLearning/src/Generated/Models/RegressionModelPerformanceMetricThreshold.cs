@@ -5,12 +5,15 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> The RegressionModelPerformanceMetricThreshold. </summary>
     public partial class RegressionModelPerformanceMetricThreshold : ModelPerformanceMetricThresholdBase
     {
-        /// <summary> Initializes a new instance of RegressionModelPerformanceMetricThreshold. </summary>
+        /// <summary> Initializes a new instance of <see cref="RegressionModelPerformanceMetricThreshold"/>. </summary>
         /// <param name="metric"> [Required] The regression model performance metric to calculate. </param>
         public RegressionModelPerformanceMetricThreshold(RegressionModelPerformanceMetric metric)
         {
@@ -18,14 +21,20 @@ namespace Azure.ResourceManager.MachineLearning.Models
             ModelType = MonitoringModelType.Regression;
         }
 
-        /// <summary> Initializes a new instance of RegressionModelPerformanceMetricThreshold. </summary>
+        /// <summary> Initializes a new instance of <see cref="RegressionModelPerformanceMetricThreshold"/>. </summary>
         /// <param name="modelType"> [Required] Specifies the data type of the metric threshold. </param>
         /// <param name="threshold"> The threshold value. If null, a default value will be set depending on the selected metric. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="metric"> [Required] The regression model performance metric to calculate. </param>
-        internal RegressionModelPerformanceMetricThreshold(MonitoringModelType modelType, MonitoringThreshold threshold, RegressionModelPerformanceMetric metric) : base(modelType, threshold)
+        internal RegressionModelPerformanceMetricThreshold(MonitoringModelType modelType, MonitoringThreshold threshold, IDictionary<string, BinaryData> serializedAdditionalRawData, RegressionModelPerformanceMetric metric) : base(modelType, threshold, serializedAdditionalRawData)
         {
             Metric = metric;
             ModelType = modelType;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="RegressionModelPerformanceMetricThreshold"/> for deserialization. </summary>
+        internal RegressionModelPerformanceMetricThreshold()
+        {
         }
 
         /// <summary> [Required] The regression model performance metric to calculate. </summary>

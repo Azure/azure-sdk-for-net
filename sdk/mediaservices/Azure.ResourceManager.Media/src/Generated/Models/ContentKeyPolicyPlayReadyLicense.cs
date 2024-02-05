@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Media.Models
@@ -13,7 +14,39 @@ namespace Azure.ResourceManager.Media.Models
     /// <summary> The PlayReady license. </summary>
     public partial class ContentKeyPolicyPlayReadyLicense
     {
-        /// <summary> Initializes a new instance of ContentKeyPolicyPlayReadyLicense. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ContentKeyPolicyPlayReadyLicense"/>. </summary>
         /// <param name="allowTestDevices"> A flag indicating whether test devices can use the license. </param>
         /// <param name="licenseType"> The license type. </param>
         /// <param name="contentKeyLocation">
@@ -33,7 +66,7 @@ namespace Azure.ResourceManager.Media.Models
             ContentType = contentType;
         }
 
-        /// <summary> Initializes a new instance of ContentKeyPolicyPlayReadyLicense. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContentKeyPolicyPlayReadyLicense"/>. </summary>
         /// <param name="allowTestDevices"> A flag indicating whether test devices can use the license. </param>
         /// <param name="securityLevel"> The security level. </param>
         /// <param name="beginOn"> The begin date of license. </param>
@@ -49,7 +82,8 @@ namespace Azure.ResourceManager.Media.Models
         /// The available derived classes include <see cref="ContentKeyPolicyPlayReadyContentEncryptionKeyFromHeader"/> and <see cref="ContentKeyPolicyPlayReadyContentEncryptionKeyFromKeyIdentifier"/>.
         /// </param>
         /// <param name="contentType"> The PlayReady content type. </param>
-        internal ContentKeyPolicyPlayReadyLicense(bool allowTestDevices, PlayReadySecurityLevel? securityLevel, DateTimeOffset? beginOn, DateTimeOffset? expireOn, TimeSpan? relativeBeginDate, TimeSpan? relativeExpirationDate, TimeSpan? gracePeriod, ContentKeyPolicyPlayReadyPlayRight playRight, ContentKeyPolicyPlayReadyLicenseType licenseType, ContentKeyPolicyPlayReadyContentKeyLocation contentKeyLocation, ContentKeyPolicyPlayReadyContentType contentType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ContentKeyPolicyPlayReadyLicense(bool allowTestDevices, PlayReadySecurityLevel? securityLevel, DateTimeOffset? beginOn, DateTimeOffset? expireOn, TimeSpan? relativeBeginDate, TimeSpan? relativeExpirationDate, TimeSpan? gracePeriod, ContentKeyPolicyPlayReadyPlayRight playRight, ContentKeyPolicyPlayReadyLicenseType licenseType, ContentKeyPolicyPlayReadyContentKeyLocation contentKeyLocation, ContentKeyPolicyPlayReadyContentType contentType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             AllowTestDevices = allowTestDevices;
             SecurityLevel = securityLevel;
@@ -62,6 +96,12 @@ namespace Azure.ResourceManager.Media.Models
             LicenseType = licenseType;
             ContentKeyLocation = contentKeyLocation;
             ContentType = contentType;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ContentKeyPolicyPlayReadyLicense"/> for deserialization. </summary>
+        internal ContentKeyPolicyPlayReadyLicense()
+        {
         }
 
         /// <summary> A flag indicating whether test devices can use the license. </summary>

@@ -5,23 +5,60 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.ExtendedLocations.Models
 {
     /// <summary> This is optional input that contains the authentication that should be used to generate the namespace. </summary>
     public partial class CustomLocationAuthentication
     {
-        /// <summary> Initializes a new instance of CustomLocationAuthentication. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="CustomLocationAuthentication"/>. </summary>
         public CustomLocationAuthentication()
         {
         }
 
-        /// <summary> Initializes a new instance of CustomLocationAuthentication. </summary>
+        /// <summary> Initializes a new instance of <see cref="CustomLocationAuthentication"/>. </summary>
         /// <param name="customLocationPropertiesAuthenticationType"> The type of the Custom Locations authentication. </param>
         /// <param name="value"> The kubeconfig value. </param>
-        internal CustomLocationAuthentication(string customLocationPropertiesAuthenticationType, string value)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal CustomLocationAuthentication(string customLocationPropertiesAuthenticationType, string value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             CustomLocationPropertiesAuthenticationType = customLocationPropertiesAuthenticationType;
             Value = value;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The type of the Custom Locations authentication. </summary>

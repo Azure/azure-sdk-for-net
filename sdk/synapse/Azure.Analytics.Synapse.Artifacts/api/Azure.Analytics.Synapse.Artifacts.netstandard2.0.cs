@@ -953,9 +953,9 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public static bool operator !=(Azure.Analytics.Synapse.Artifacts.Models.ActionOnExistingTargetTable left, Azure.Analytics.Synapse.Artifacts.Models.ActionOnExistingTargetTable right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class Activity
+    public abstract partial class Activity
     {
-        public Activity(string name) { }
+        protected Activity(string name) { }
         public System.Collections.Generic.IDictionary<string, object> AdditionalProperties { get { throw null; } }
         public System.Collections.Generic.IList<Azure.Analytics.Synapse.Artifacts.Models.ActivityDependency> DependsOn { get { throw null; } }
         public string Description { get { throw null; } set { } }
@@ -2278,9 +2278,9 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public object AdditionalColumns { get { throw null; } set { } }
         public object Query { get { throw null; } set { } }
     }
-    public partial class CompressionReadSettings
+    public abstract partial class CompressionReadSettings
     {
-        public CompressionReadSettings() { }
+        protected CompressionReadSettings() { }
         public System.Collections.Generic.IDictionary<string, object> AdditionalProperties { get { throw null; } }
     }
     public partial class ConcurLinkedService : Azure.Analytics.Synapse.Artifacts.Models.LinkedService
@@ -2355,9 +2355,9 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public object EnableReliableLogging { get { throw null; } set { } }
         public object LogLevel { get { throw null; } set { } }
     }
-    public partial class CopySink
+    public abstract partial class CopySink
     {
-        public CopySink() { }
+        protected CopySink() { }
         public System.Collections.Generic.IDictionary<string, object> AdditionalProperties { get { throw null; } }
         public object MaxConcurrentConnections { get { throw null; } set { } }
         public object SinkRetryCount { get { throw null; } set { } }
@@ -2365,17 +2365,17 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public object WriteBatchSize { get { throw null; } set { } }
         public object WriteBatchTimeout { get { throw null; } set { } }
     }
-    public partial class CopySource
+    public abstract partial class CopySource
     {
-        public CopySource() { }
+        protected CopySource() { }
         public System.Collections.Generic.IDictionary<string, object> AdditionalProperties { get { throw null; } }
         public object MaxConcurrentConnections { get { throw null; } set { } }
         public object SourceRetryCount { get { throw null; } set { } }
         public object SourceRetryWait { get { throw null; } set { } }
     }
-    public partial class CopyTranslator
+    public abstract partial class CopyTranslator
     {
-        public CopyTranslator() { }
+        protected CopyTranslator() { }
         public System.Collections.Generic.IDictionary<string, object> AdditionalProperties { get { throw null; } }
     }
     public partial class CosmosDbLinkedService : Azure.Analytics.Synapse.Artifacts.Models.LinkedService
@@ -2820,9 +2820,9 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public DatasetFolder() { }
         public string Name { get { throw null; } set { } }
     }
-    public partial class DatasetLocation
+    public abstract partial class DatasetLocation
     {
-        public DatasetLocation() { }
+        protected DatasetLocation() { }
         public System.Collections.Generic.IDictionary<string, object> AdditionalProperties { get { throw null; } }
         public object FileName { get { throw null; } set { } }
         public object FolderPath { get { throw null; } set { } }
@@ -2863,9 +2863,9 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public object Name { get { throw null; } set { } }
         public object Type { get { throw null; } set { } }
     }
-    public partial class DatasetStorageFormat
+    public abstract partial class DatasetStorageFormat
     {
-        public DatasetStorageFormat() { }
+        protected DatasetStorageFormat() { }
         public System.Collections.Generic.IDictionary<string, object> AdditionalProperties { get { throw null; } }
         public object Deserializer { get { throw null; } set { } }
         public object Serializer { get { throw null; } set { } }
@@ -3310,9 +3310,9 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public Azure.Analytics.Synapse.Artifacts.Models.LinkedServiceReference LinkedServiceName { get { throw null; } set { } }
         public Azure.Analytics.Synapse.Artifacts.Models.ActivityPolicy Policy { get { throw null; } set { } }
     }
-    public partial class ExportSettings
+    public abstract partial class ExportSettings
     {
-        public ExportSettings() { }
+        protected ExportSettings() { }
         public System.Collections.Generic.IDictionary<string, object> AdditionalProperties { get { throw null; } }
     }
     public partial class ExposureControlRequest
@@ -3431,14 +3431,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public bool? IsSequential { get { throw null; } set { } }
         public Azure.Analytics.Synapse.Artifacts.Models.Expression Items { get { throw null; } set { } }
     }
-    public partial class FormatReadSettings
+    public abstract partial class FormatReadSettings
     {
-        public FormatReadSettings() { }
+        protected FormatReadSettings() { }
         public System.Collections.Generic.IDictionary<string, object> AdditionalProperties { get { throw null; } }
     }
-    public partial class FormatWriteSettings
+    public abstract partial class FormatWriteSettings
     {
-        public FormatWriteSettings() { }
+        protected FormatWriteSettings() { }
         public System.Collections.Generic.IDictionary<string, object> AdditionalProperties { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
@@ -4099,9 +4099,9 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public ImpalaSource() { }
         public object Query { get { throw null; } set { } }
     }
-    public partial class ImportSettings
+    public abstract partial class ImportSettings
     {
-        public ImportSettings() { }
+        protected ImportSettings() { }
         public System.Collections.Generic.IDictionary<string, object> AdditionalProperties { get { throw null; } }
     }
     public partial class InformixLinkedService : Azure.Analytics.Synapse.Artifacts.Models.LinkedService
@@ -4129,9 +4129,9 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public InformixTableDataset(Azure.Analytics.Synapse.Artifacts.Models.LinkedServiceReference linkedServiceName) : base (default(Azure.Analytics.Synapse.Artifacts.Models.LinkedServiceReference)) { }
         public object TableName { get { throw null; } set { } }
     }
-    public partial class IntegrationRuntime
+    public abstract partial class IntegrationRuntime
     {
-        public IntegrationRuntime() { }
+        protected IntegrationRuntime() { }
         public System.Collections.Generic.IDictionary<string, object> AdditionalProperties { get { throw null; } }
         public string Description { get { throw null; } set { } }
     }
@@ -4593,9 +4593,9 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     {
         public LinkedIntegrationRuntimeType() { }
     }
-    public partial class LinkedService
+    public abstract partial class LinkedService
     {
-        public LinkedService() { }
+        protected LinkedService() { }
         public System.Collections.Generic.IDictionary<string, object> AdditionalProperties { get { throw null; } }
         public System.Collections.Generic.IList<object> Annotations { get { throw null; } }
         public Azure.Analytics.Synapse.Artifacts.Models.IntegrationRuntimeReference ConnectVia { get { throw null; } set { } }
@@ -7738,15 +7738,15 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public StartDataFlowDebugSessionResponse() { }
         public string JobVersion { get { throw null; } set { } }
     }
-    public partial class StoreReadSettings
+    public abstract partial class StoreReadSettings
     {
-        public StoreReadSettings() { }
+        protected StoreReadSettings() { }
         public System.Collections.Generic.IDictionary<string, object> AdditionalProperties { get { throw null; } }
         public object MaxConcurrentConnections { get { throw null; } set { } }
     }
-    public partial class StoreWriteSettings
+    public abstract partial class StoreWriteSettings
     {
-        public StoreWriteSettings() { }
+        protected StoreWriteSettings() { }
         public System.Collections.Generic.IDictionary<string, object> AdditionalProperties { get { throw null; } }
         public object CopyBehavior { get { throw null; } set { } }
         public object MaxConcurrentConnections { get { throw null; } set { } }
@@ -8008,9 +8008,9 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public Azure.Analytics.Synapse.Artifacts.Models.LinkedServiceReference LinkedService { get { throw null; } set { } }
         public string Name { get { throw null; } set { } }
     }
-    public partial class Trigger
+    public abstract partial class Trigger
     {
-        public Trigger() { }
+        protected Trigger() { }
         public System.Collections.Generic.IDictionary<string, object> AdditionalProperties { get { throw null; } }
         public System.Collections.Generic.IList<object> Annotations { get { throw null; } }
         public string Description { get { throw null; } set { } }

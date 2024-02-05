@@ -1,11 +1,11 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFrameworks>$(RequiredTargetFrameworks);net6.0</TargetFrameworks>
     <IncludeGeneratorSharedCode>true</IncludeGeneratorSharedCode>
   </PropertyGroup>
   <PropertyGroup>
     <AssemblyTitle>Microsoft Azure.Storage.DataMovement.Files.Shares client library</AssemblyTitle>
-    <Version>12.0.0-beta.1</Version>
+    <Version>12.0.0-beta.2</Version>
     <DefineConstants>ShareDataMovementSDK;$(DefineConstants)</DefineConstants>
     <PackageTags>Microsoft Azure Storage DataMovement, DataMovement, Microsoft, Azure, StorageScalable, azureofficial</PackageTags>
     <Description>
@@ -32,6 +32,10 @@
     <Compile Include="$(AzureCoreSharedSources)SyncAsyncEventHandlerExtensions.cs" LinkBase="Shared\Core" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="$(AzureCoreSharedSources)HashCodeBuilder.cs" LinkBase="Shared\Core" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="$(AzureStorageSharedSources)ContentRange.cs" LinkBase="Shared" />
     <Compile Include="$(AzureStorageSharedSources)Constants.cs" LinkBase="Shared" />
     <Compile Include="$(AzureStorageSharedSources)Errors.cs" LinkBase="Shared" />
     <Compile Include="$(AzureStorageSharedSources)Errors.Clients.cs" LinkBase="Shared" />
@@ -40,6 +44,7 @@
     <Compile Include="$(AzureStorageDataMovementSharedSources)DataMovementConstants.cs" LinkBase="Shared\DataMovement" />
     <Compile Include="$(AzureStorageDataMovementSharedSources)Errors.DataMovement.cs" LinkBase="Shared\DataMovement" />
     <Compile Include="$(AzureStorageDataMovementSharedSources)CheckpointerExtensions.cs" LinkBase="Shared\DataMovement" />
+    <Compile Include="$(AzureStorageDataMovementSharedSources)StorageResourceCheckpointDataInternal.cs" LinkBase="Shared\DataMovement" />
     <Compile Include="$(AzureStorageDataMovementSharedSources)StorageResourceItemInternal.cs" LinkBase="Shared\DataMovement" />
     <Compile Include="$(AzureStorageDataMovementSharedSources)StorageResourceContainerInternal.cs" LinkBase="Shared\DataMovement" />
   </ItemGroup>

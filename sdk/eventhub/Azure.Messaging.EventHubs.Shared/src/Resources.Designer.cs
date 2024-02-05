@@ -243,6 +243,18 @@ namespace Azure.Messaging.EventHubs
         }
 
         /// <summary>
+        ///   Looks up a localized string similar to The Event Hubs emulator is only available locally.  The endpoint must reference to the local host..
+        /// </summary>
+        internal static string InvalidEmulatorEndpoint
+        {
+            get
+            {
+                return ResourceManager.GetString("InvalidEmulatorEndpoint", resourceCulture);
+            }
+        }
+
+
+        /// <summary>
         ///   Looks up a localized string similar to The string has an invalid encoding format..
         /// </summary>
         internal static string InvalidEncoding
@@ -859,6 +871,17 @@ namespace Azure.Messaging.EventHubs
         }
 
         /// <summary>
+        ///   Looks up a localized string similar to FATAL: The processor has experienced a fatal error in its load balancing and health check task.  Recovery is NOT possible; the processor is shutting down.   Error message: {0}.
+        /// </summary>
+        internal static string ProcessorLoadBalancingFatalErrorMask
+        {
+            get
+            {
+                return ResourceManager.GetString("ProcessorLoadBalancingFatalErrorMask", resourceCulture);
+            }
+        }
+
+        /// <summary>
         ///   Looks up a localized string similar to Events cannot be enqueued processing without the {0} handler set..
         /// </summary>
         internal static string CannotEnqueueEventWithoutHandler
@@ -899,6 +922,17 @@ namespace Azure.Messaging.EventHubs
             get
             {
                 return ResourceManager.GetString("TroubleshootingGuideLink", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to The buffered producer took too long to start.
+        /// </summary>
+        internal static string BufferedProducerStartupTimeout
+        {
+            get
+            {
+                return ResourceManager.GetString("BufferedProducerStartupTimeout", resourceCulture);
             }
         }
     }

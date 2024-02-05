@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Net;
 using Azure.Core;
@@ -14,20 +15,54 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
     /// <summary> An array of destination IPv4 Addresses or IPv6 Addresses. </summary>
     public partial class NeighborGroupDestination
     {
-        /// <summary> Initializes a new instance of NeighborGroupDestination. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="NeighborGroupDestination"/>. </summary>
         public NeighborGroupDestination()
         {
             IPv4Addresses = new ChangeTrackingList<IPAddress>();
             IPv6Addresses = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of NeighborGroupDestination. </summary>
+        /// <summary> Initializes a new instance of <see cref="NeighborGroupDestination"/>. </summary>
         /// <param name="ipv4Addresses"> Array of IPv4 Addresses. </param>
         /// <param name="ipv6Addresses"> Array of IPv6 Addresses. </param>
-        internal NeighborGroupDestination(IList<IPAddress> ipv4Addresses, IList<string> ipv6Addresses)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal NeighborGroupDestination(IList<IPAddress> ipv4Addresses, IList<string> ipv6Addresses, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             IPv4Addresses = ipv4Addresses;
             IPv6Addresses = ipv6Addresses;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Array of IPv4 Addresses. </summary>

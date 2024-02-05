@@ -5,31 +5,64 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Purview.Models
 {
     /// <summary> The account endpoints. </summary>
     public partial class PurviewAccountEndpoint
     {
-        /// <summary> Initializes a new instance of PurviewAccountEndpoint. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="PurviewAccountEndpoint"/>. </summary>
         internal PurviewAccountEndpoint()
         {
         }
 
-        /// <summary> Initializes a new instance of PurviewAccountEndpoint. </summary>
+        /// <summary> Initializes a new instance of <see cref="PurviewAccountEndpoint"/>. </summary>
         /// <param name="catalog"> Gets the catalog endpoint. </param>
-        /// <param name="guardian"> Gets the guardian endpoint. </param>
         /// <param name="scan"> Gets the scan endpoint. </param>
-        internal PurviewAccountEndpoint(string catalog, string guardian, string scan)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal PurviewAccountEndpoint(string catalog, string scan, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Catalog = catalog;
-            Guardian = guardian;
             Scan = scan;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets the catalog endpoint. </summary>
         public string Catalog { get; }
-        /// <summary> Gets the guardian endpoint. </summary>
-        public string Guardian { get; }
         /// <summary> Gets the scan endpoint. </summary>
         public string Scan { get; }
     }

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,19 +14,53 @@ namespace Azure.ResourceManager.EventGrid.Models
     /// <summary> The certificate authentication properties for the client. </summary>
     public partial class ClientCertificateAuthentication
     {
-        /// <summary> Initializes a new instance of ClientCertificateAuthentication. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ClientCertificateAuthentication"/>. </summary>
         public ClientCertificateAuthentication()
         {
             AllowedThumbprints = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of ClientCertificateAuthentication. </summary>
+        /// <summary> Initializes a new instance of <see cref="ClientCertificateAuthentication"/>. </summary>
         /// <param name="validationScheme"> The validation scheme used to authenticate the client. Default value is SubjectMatchesAuthenticationName. </param>
         /// <param name="allowedThumbprints"> The list of thumbprints that are allowed during client authentication. This property is required only if the validationScheme is 'ThumbprintMatch'. </param>
-        internal ClientCertificateAuthentication(ClientCertificateValidationScheme? validationScheme, IList<string> allowedThumbprints)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ClientCertificateAuthentication(ClientCertificateValidationScheme? validationScheme, IList<string> allowedThumbprints, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ValidationScheme = validationScheme;
             AllowedThumbprints = allowedThumbprints;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The validation scheme used to authenticate the client. Default value is SubjectMatchesAuthenticationName. </summary>

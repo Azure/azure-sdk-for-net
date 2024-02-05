@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> Execute Synapse notebook activity. </summary>
     public partial class SynapseNotebookActivity : ExecutionActivity
     {
-        /// <summary> Initializes a new instance of SynapseNotebookActivity. </summary>
+        /// <summary> Initializes a new instance of <see cref="SynapseNotebookActivity"/>. </summary>
         /// <param name="name"> Activity name. </param>
         /// <param name="notebook"> Synapse notebook reference. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="notebook"/> is null. </exception>
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             ActivityType = "SynapseNotebook";
         }
 
-        /// <summary> Initializes a new instance of SynapseNotebookActivity. </summary>
+        /// <summary> Initializes a new instance of <see cref="SynapseNotebookActivity"/>. </summary>
         /// <param name="name"> Activity name. </param>
         /// <param name="activityType"> Type of activity. </param>
         /// <param name="description"> Activity description. </param>
@@ -64,6 +64,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             TargetSparkConfiguration = targetSparkConfiguration;
             SparkConfig = sparkConfig;
             ActivityType = activityType ?? "SynapseNotebook";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SynapseNotebookActivity"/> for deserialization. </summary>
+        internal SynapseNotebookActivity()
+        {
         }
 
         /// <summary> Synapse notebook reference. </summary>

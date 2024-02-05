@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.EventGrid.Models
@@ -12,18 +14,19 @@ namespace Azure.ResourceManager.EventGrid.Models
     /// <summary> Information about the storage queue destination for an event subscription. </summary>
     public partial class StorageQueueEventSubscriptionDestination : EventSubscriptionDestination
     {
-        /// <summary> Initializes a new instance of StorageQueueEventSubscriptionDestination. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageQueueEventSubscriptionDestination"/>. </summary>
         public StorageQueueEventSubscriptionDestination()
         {
             EndpointType = EndpointType.StorageQueue;
         }
 
-        /// <summary> Initializes a new instance of StorageQueueEventSubscriptionDestination. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageQueueEventSubscriptionDestination"/>. </summary>
         /// <param name="endpointType"> Type of the endpoint for the event subscription destination. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="resourceId"> The Azure Resource ID of the storage account that contains the queue that is the destination of an event subscription. </param>
         /// <param name="queueName"> The name of the Storage queue under a storage account that is the destination of an event subscription. </param>
         /// <param name="queueMessageTimeToLiveInSeconds"> Storage queue message time to live in seconds. This value cannot be zero or negative with the exception of using -1 to indicate that the Time To Live of the message is Infinite. </param>
-        internal StorageQueueEventSubscriptionDestination(EndpointType endpointType, ResourceIdentifier resourceId, string queueName, long? queueMessageTimeToLiveInSeconds) : base(endpointType)
+        internal StorageQueueEventSubscriptionDestination(EndpointType endpointType, IDictionary<string, BinaryData> serializedAdditionalRawData, ResourceIdentifier resourceId, string queueName, long? queueMessageTimeToLiveInSeconds) : base(endpointType, serializedAdditionalRawData)
         {
             ResourceId = resourceId;
             QueueName = queueName;

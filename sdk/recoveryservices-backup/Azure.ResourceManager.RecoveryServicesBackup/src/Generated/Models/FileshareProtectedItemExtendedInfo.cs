@@ -6,30 +6,65 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
     /// <summary> Additional information about Azure File Share backup item. </summary>
     public partial class FileshareProtectedItemExtendedInfo
     {
-        /// <summary> Initializes a new instance of FileshareProtectedItemExtendedInfo. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="FileshareProtectedItemExtendedInfo"/>. </summary>
         public FileshareProtectedItemExtendedInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of FileshareProtectedItemExtendedInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="FileshareProtectedItemExtendedInfo"/>. </summary>
         /// <param name="oldestRecoverOn"> The oldest backup copy available for this item in the service. </param>
         /// <param name="recoveryPointCount"> Number of available backup copies associated with this backup item. </param>
         /// <param name="policyState"> Indicates consistency of policy object and policy applied to this backup item. </param>
         /// <param name="resourceState"> Indicates the state of this resource. Possible values are from enum ResourceState {Invalid, Active, SoftDeleted, Deleted}. </param>
         /// <param name="resourceStateSyncOn"> The resource state sync time for this backup item. </param>
-        internal FileshareProtectedItemExtendedInfo(DateTimeOffset? oldestRecoverOn, int? recoveryPointCount, string policyState, string resourceState, DateTimeOffset? resourceStateSyncOn)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal FileshareProtectedItemExtendedInfo(DateTimeOffset? oldestRecoverOn, int? recoveryPointCount, string policyState, string resourceState, DateTimeOffset? resourceStateSyncOn, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             OldestRecoverOn = oldestRecoverOn;
             RecoveryPointCount = recoveryPointCount;
             PolicyState = policyState;
             ResourceState = resourceState;
             ResourceStateSyncOn = resourceStateSyncOn;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The oldest backup copy available for this item in the service. </summary>

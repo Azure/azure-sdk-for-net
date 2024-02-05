@@ -1,6 +1,12 @@
 # Release History
 
-## 12.8.2 (2023-10-10)
+## 12.8.3 (2024-02-06)
+
+### Bugs Fixed
+- `TableEntity` string properties will correctly handle type coercion from `DateTime` and `DateTimeOffset` types. ([#40775](https://github.com/Azure/azure-sdk-for-net/issues/40775))
+- Fixed an error handling bug that could result in an `ArgumentNullException` when calling `CreateIfNotExistsAsync`. ([#41463](https://github.com/Azure/azure-sdk-for-net/issues/41463))
+
+## 12.8.2 (2023-11-13)
 
 ### Acknowledgments
 
@@ -11,6 +17,9 @@ Thank you to our developer community members who helped to make Azure Tables bet
 ### Bugs Fixed
 
 - Fixed an issue where custom models decorated with the `DataMemberAttribute` were not properly considered in query filters (A community contribution, courtesy of _[metjuperry]_ ([#38884](https://github.com/Azure/azure-sdk-for-net/issues/38884))
+
+### Other Changes
+- Distributed tracing with `ActivitySource` is stable and no longer requires the [Experimental feature-flag](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/Diagnostics.md).
 
 ## 12.8.1 (2023-08-15)
 

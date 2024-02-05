@@ -14,20 +14,53 @@ namespace Azure.ResourceManager.Sql.Models
     /// <summary> Database metrics. </summary>
     public partial class SqlMetric
     {
-        /// <summary> Initializes a new instance of SqlMetric. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SqlMetric"/>. </summary>
         internal SqlMetric()
         {
             MetricValues = new ChangeTrackingList<SqlMetricValue>();
         }
 
-        /// <summary> Initializes a new instance of SqlMetric. </summary>
+        /// <summary> Initializes a new instance of <see cref="SqlMetric"/>. </summary>
         /// <param name="startOn"> The start time for the metric (ISO-8601 format). </param>
         /// <param name="endOn"> The end time for the metric (ISO-8601 format). </param>
         /// <param name="timeGrain"> The time step to be used to summarize the metric values. </param>
         /// <param name="unit"> The unit of the metric. </param>
         /// <param name="name"> The name information for the metric. </param>
         /// <param name="metricValues"> The metric values for the specified time window and timestep. </param>
-        internal SqlMetric(DateTimeOffset? startOn, DateTimeOffset? endOn, string timeGrain, SqlMetricUnitType? unit, SqlMetricName name, IReadOnlyList<SqlMetricValue> metricValues)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SqlMetric(DateTimeOffset? startOn, DateTimeOffset? endOn, string timeGrain, SqlMetricUnitType? unit, SqlMetricName name, IReadOnlyList<SqlMetricValue> metricValues, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             StartOn = startOn;
             EndOn = endOn;
@@ -35,6 +68,7 @@ namespace Azure.ResourceManager.Sql.Models
             Unit = unit;
             Name = name;
             MetricValues = metricValues;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The start time for the metric (ISO-8601 format). </summary>

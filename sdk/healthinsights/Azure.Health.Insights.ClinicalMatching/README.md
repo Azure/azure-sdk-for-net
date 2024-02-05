@@ -70,12 +70,12 @@ Trial Matcher provides the user of the services two main modes of operation: pat
 ### Match Trials
 
 ```C# Snippet:HealthInsightsClinicalMatchingMatchTrialsAsync
-TrialMatcherResult trialMatcherResult = default;
+TrialMatcherResults matcherResults = default;
 try
 {
     // Using ClinicalMatchingClient + MatchTrialsAsync
-    Operation<TrialMatcherResult> operation = await clinicalMatchingClient.MatchTrialsAsync(WaitUntil.Completed, trialMatcherData);
-    trialMatcherResult = operation.Value;
+    Operation<TrialMatcherResults> operation = await clinicalMatchingClient.MatchTrialsAsync(WaitUntil.Completed, trialMatcherData);
+    matcherResults = operation.Value;
 }
 catch (Exception ex)
 {
@@ -84,10 +84,7 @@ catch (Exception ex)
 }
 ```
 ```C# Snippet:HealthInsightsTrialMatcherMatchTrialsAsyncViewResults
-// View the match trials (eligible/ineligible)
-if (trialMatcherResult.Status == JobStatus.Succeeded)
-{
-    TrialMatcherResults matcherResults = trialMatcherResult.Results;
+    // View the match trials (eligible/ineligible)
     foreach (TrialMatcherPatientResult patientResult in matcherResults.Patients)
     {
         Console.WriteLine($"Inferences of Patient {patientResult.Id}");
@@ -97,14 +94,6 @@ if (trialMatcherResult.Status == JobStatus.Succeeded)
             Console.WriteLine($"Type: {tmInferences.Type.ToString()}  Value: {tmInferences.Value}");
             Console.WriteLine($"Description {tmInferences.Description}");
         }
-    }
-}
-else
-{
-    IReadOnlyList<ResponseError> matcherErrors = trialMatcherResult.Errors;
-    foreach (ResponseError error in matcherErrors)
-    {
-        Console.WriteLine($"{error.Code} : {error.Message}");
     }
 }
 ```

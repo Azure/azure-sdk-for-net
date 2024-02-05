@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Media.Models
@@ -13,7 +14,7 @@ namespace Azure.ResourceManager.Media.Models
     /// <summary> Specifies a configuration for Widevine licenses. </summary>
     public partial class ContentKeyPolicyWidevineConfiguration : ContentKeyPolicyConfiguration
     {
-        /// <summary> Initializes a new instance of ContentKeyPolicyWidevineConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContentKeyPolicyWidevineConfiguration"/>. </summary>
         /// <param name="widevineTemplate"> The Widevine template. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="widevineTemplate"/> is null. </exception>
         public ContentKeyPolicyWidevineConfiguration(string widevineTemplate)
@@ -24,13 +25,19 @@ namespace Azure.ResourceManager.Media.Models
             OdataType = "#Microsoft.Media.ContentKeyPolicyWidevineConfiguration";
         }
 
-        /// <summary> Initializes a new instance of ContentKeyPolicyWidevineConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContentKeyPolicyWidevineConfiguration"/>. </summary>
         /// <param name="odataType"> The discriminator for derived types. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="widevineTemplate"> The Widevine template. </param>
-        internal ContentKeyPolicyWidevineConfiguration(string odataType, string widevineTemplate) : base(odataType)
+        internal ContentKeyPolicyWidevineConfiguration(string odataType, IDictionary<string, BinaryData> serializedAdditionalRawData, string widevineTemplate) : base(odataType, serializedAdditionalRawData)
         {
             WidevineTemplate = widevineTemplate;
             OdataType = odataType ?? "#Microsoft.Media.ContentKeyPolicyWidevineConfiguration";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ContentKeyPolicyWidevineConfiguration"/> for deserialization. </summary>
+        internal ContentKeyPolicyWidevineConfiguration()
+        {
         }
 
         /// <summary> The Widevine template. </summary>

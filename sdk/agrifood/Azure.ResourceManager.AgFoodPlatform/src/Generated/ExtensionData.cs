@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -17,12 +19,44 @@ namespace Azure.ResourceManager.AgFoodPlatform
     /// </summary>
     public partial class ExtensionData : ResourceData
     {
-        /// <summary> Initializes a new instance of ExtensionData. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ExtensionData"/>. </summary>
         public ExtensionData()
         {
         }
 
-        /// <summary> Initializes a new instance of ExtensionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExtensionData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -33,7 +67,8 @@ namespace Azure.ResourceManager.AgFoodPlatform
         /// <param name="installedExtensionVersion"> Installed extension version. </param>
         /// <param name="extensionAuthLink"> Extension auth link. </param>
         /// <param name="extensionApiDocsLink"> Extension api docs link. </param>
-        internal ExtensionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ETag? eTag, string extensionId, string extensionCategory, string installedExtensionVersion, string extensionAuthLink, string extensionApiDocsLink) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ExtensionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ETag? eTag, string extensionId, string extensionCategory, string installedExtensionVersion, string extensionAuthLink, string extensionApiDocsLink, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             ETag = eTag;
             ExtensionId = extensionId;
@@ -41,6 +76,7 @@ namespace Azure.ResourceManager.AgFoodPlatform
             InstalledExtensionVersion = installedExtensionVersion;
             ExtensionAuthLink = extensionAuthLink;
             ExtensionApiDocsLink = extensionApiDocsLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The ETag value to implement optimistic concurrency. </summary>

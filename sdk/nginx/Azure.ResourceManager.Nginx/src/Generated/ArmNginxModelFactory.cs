@@ -17,65 +17,59 @@ namespace Azure.ResourceManager.Nginx.Models
     /// <summary> Model factory for models. </summary>
     public static partial class ArmNginxModelFactory
     {
-        /// <summary> Initializes a new instance of NginxCertificateData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Nginx.NginxCertificateData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
         /// <param name="properties"></param>
+        /// <param name="location"></param>
         /// <returns> A new <see cref="Nginx.NginxCertificateData"/> instance for mocking. </returns>
-        public static NginxCertificateData NginxCertificateData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, NginxCertificateProperties properties = null)
+        public static NginxCertificateData NginxCertificateData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, NginxCertificateProperties properties = null, AzureLocation? location = null)
         {
-            tags ??= new Dictionary<string, string>();
-
-            return new NginxCertificateData(id, name, resourceType, systemData, tags, location, properties);
+            return new NginxCertificateData(id, name, resourceType, systemData, properties, location, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of NginxCertificateProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.NginxCertificateProperties"/>. </summary>
         /// <param name="provisioningState"></param>
         /// <param name="keyVirtualPath"></param>
         /// <param name="certificateVirtualPath"></param>
         /// <param name="keyVaultSecretId"></param>
         /// <returns> A new <see cref="Models.NginxCertificateProperties"/> instance for mocking. </returns>
-        public static NginxCertificateProperties NginxCertificateProperties(ProvisioningState? provisioningState = null, string keyVirtualPath = null, string certificateVirtualPath = null, string keyVaultSecretId = null)
+        public static NginxCertificateProperties NginxCertificateProperties(NginxProvisioningState? provisioningState = null, string keyVirtualPath = null, string certificateVirtualPath = null, string keyVaultSecretId = null)
         {
-            return new NginxCertificateProperties(provisioningState, keyVirtualPath, certificateVirtualPath, keyVaultSecretId);
+            return new NginxCertificateProperties(provisioningState, keyVirtualPath, certificateVirtualPath, keyVaultSecretId, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of NginxConfigurationData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Nginx.NginxConfigurationData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
         /// <param name="properties"></param>
+        /// <param name="location"></param>
         /// <returns> A new <see cref="Nginx.NginxConfigurationData"/> instance for mocking. </returns>
-        public static NginxConfigurationData NginxConfigurationData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, NginxConfigurationProperties properties = null)
+        public static NginxConfigurationData NginxConfigurationData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, NginxConfigurationProperties properties = null, AzureLocation? location = null)
         {
-            tags ??= new Dictionary<string, string>();
-
-            return new NginxConfigurationData(id, name, resourceType, systemData, tags, location, properties);
+            return new NginxConfigurationData(id, name, resourceType, systemData, properties, location, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of NginxConfigurationProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.NginxConfigurationProperties"/>. </summary>
         /// <param name="provisioningState"></param>
         /// <param name="files"></param>
         /// <param name="protectedFiles"></param>
-        /// <param name="packageData"></param>
+        /// <param name="package"></param>
         /// <param name="rootFile"></param>
         /// <returns> A new <see cref="Models.NginxConfigurationProperties"/> instance for mocking. </returns>
-        public static NginxConfigurationProperties NginxConfigurationProperties(ProvisioningState? provisioningState = null, IEnumerable<NginxConfigurationFile> files = null, IEnumerable<NginxConfigurationFile> protectedFiles = null, string packageData = null, string rootFile = null)
+        public static NginxConfigurationProperties NginxConfigurationProperties(NginxProvisioningState? provisioningState = null, IEnumerable<NginxConfigurationFile> files = null, IEnumerable<NginxConfigurationFile> protectedFiles = null, NginxConfigurationPackage package = null, string rootFile = null)
         {
             files ??= new List<NginxConfigurationFile>();
             protectedFiles ??= new List<NginxConfigurationFile>();
 
-            return new NginxConfigurationProperties(provisioningState, files?.ToList(), protectedFiles?.ToList(), packageData != null ? new NginxConfigurationPackage(packageData) : null, rootFile);
+            return new NginxConfigurationProperties(provisioningState, files?.ToList(), protectedFiles?.ToList(), package, rootFile, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of NginxDeploymentData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Nginx.NginxDeploymentData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -90,10 +84,10 @@ namespace Azure.ResourceManager.Nginx.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new NginxDeploymentData(id, name, resourceType, systemData, tags, location, identity, properties, skuName != null ? new ResourceSku(skuName) : null);
+            return new NginxDeploymentData(id, name, resourceType, systemData, tags, location, identity, properties, skuName != null ? new NginxResourceSku(skuName, serializedAdditionalRawData: null) : null, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of NginxDeploymentProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.NginxDeploymentProperties"/>. </summary>
         /// <param name="provisioningState"></param>
         /// <param name="nginxVersion"></param>
         /// <param name="managedResourceGroup"> The managed resource group to deploy VNet injection related network resources. </param>
@@ -101,10 +95,12 @@ namespace Azure.ResourceManager.Nginx.Models
         /// <param name="ipAddress"> The IP address of the deployment. </param>
         /// <param name="enableDiagnosticsSupport"></param>
         /// <param name="loggingStorageAccount"></param>
+        /// <param name="scalingCapacity"></param>
+        /// <param name="userPreferredEmail"></param>
         /// <returns> A new <see cref="Models.NginxDeploymentProperties"/> instance for mocking. </returns>
-        public static NginxDeploymentProperties NginxDeploymentProperties(ProvisioningState? provisioningState = null, string nginxVersion = null, string managedResourceGroup = null, NginxNetworkProfile networkProfile = null, string ipAddress = null, bool? enableDiagnosticsSupport = null, NginxStorageAccount loggingStorageAccount = null)
+        public static NginxDeploymentProperties NginxDeploymentProperties(NginxProvisioningState? provisioningState = null, string nginxVersion = null, string managedResourceGroup = null, NginxNetworkProfile networkProfile = null, string ipAddress = null, bool? enableDiagnosticsSupport = null, NginxStorageAccount loggingStorageAccount = null, int? scalingCapacity = null, string userPreferredEmail = null)
         {
-            return new NginxDeploymentProperties(provisioningState, nginxVersion, managedResourceGroup, networkProfile, ipAddress, enableDiagnosticsSupport, loggingStorageAccount != null ? new NginxLogging(loggingStorageAccount) : null);
+            return new NginxDeploymentProperties(provisioningState, nginxVersion, managedResourceGroup, networkProfile, ipAddress, enableDiagnosticsSupport, loggingStorageAccount != null ? new NginxLogging(loggingStorageAccount, serializedAdditionalRawData: null) : null, scalingCapacity != null ? new NginxDeploymentScalingProperties(scalingCapacity, serializedAdditionalRawData: null) : null, userPreferredEmail != null ? new NginxDeploymentUserProfile(userPreferredEmail, serializedAdditionalRawData: null) : null, serializedAdditionalRawData: null);
         }
     }
 }

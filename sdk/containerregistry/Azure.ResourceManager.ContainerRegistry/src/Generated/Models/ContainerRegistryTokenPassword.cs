@@ -6,28 +6,63 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ContainerRegistry.Models
 {
     /// <summary> The password that will be used for authenticating the token of a container registry. </summary>
     public partial class ContainerRegistryTokenPassword
     {
-        /// <summary> Initializes a new instance of ContainerRegistryTokenPassword. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryTokenPassword"/>. </summary>
         public ContainerRegistryTokenPassword()
         {
         }
 
-        /// <summary> Initializes a new instance of ContainerRegistryTokenPassword. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryTokenPassword"/>. </summary>
         /// <param name="createdOn"> The creation datetime of the password. </param>
         /// <param name="expireOn"> The expiry datetime of the password. </param>
         /// <param name="name"> The password name "password1" or "password2". </param>
         /// <param name="value"> The password value. </param>
-        internal ContainerRegistryTokenPassword(DateTimeOffset? createdOn, DateTimeOffset? expireOn, ContainerRegistryTokenPasswordName? name, string value)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ContainerRegistryTokenPassword(DateTimeOffset? createdOn, DateTimeOffset? expireOn, ContainerRegistryTokenPasswordName? name, string value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             CreatedOn = createdOn;
             ExpireOn = expireOn;
             Name = name;
             Value = value;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The creation datetime of the password. </summary>

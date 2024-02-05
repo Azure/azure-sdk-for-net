@@ -1,11 +1,11 @@
 trigger: none
 
 extends:
-  template: ../../eng/pipelines/templates/stages/archetype-sdk-tests.yml
+  template: /eng/pipelines/templates/stages/archetype-sdk-tests.yml
   parameters:
     MaxParallel: 4
     ServiceDirectory: servicebus
     SDKType: client
     TimeoutInMinutes: 240
     Clouds: 'Public,Canary'
-    SupportedClouds: 'Public,UsGov,China,Canary'
+    SupportedClouds: 'Public,UsGov,Canary'

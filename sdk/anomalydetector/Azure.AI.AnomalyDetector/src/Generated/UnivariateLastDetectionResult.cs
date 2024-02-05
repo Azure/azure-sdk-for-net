@@ -5,12 +5,47 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.AI.AnomalyDetector
 {
     /// <summary> Response of the last anomaly detection. </summary>
     public partial class UnivariateLastDetectionResult
     {
-        /// <summary> Initializes a new instance of UnivariateLastDetectionResult. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="UnivariateLastDetectionResult"/>. </summary>
         /// <param name="period">
         /// Frequency extracted from the series. Zero means no recurrent pattern has been
         /// found.
@@ -52,7 +87,7 @@ namespace Azure.AI.AnomalyDetector
             IsPositiveAnomaly = isPositiveAnomaly;
         }
 
-        /// <summary> Initializes a new instance of UnivariateLastDetectionResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnivariateLastDetectionResult"/>. </summary>
         /// <param name="period">
         /// Frequency extracted from the series. Zero means no recurrent pattern has been
         /// found.
@@ -86,7 +121,8 @@ namespace Azure.AI.AnomalyDetector
         /// Severity score for the last input point. The larger the value is, the more
         /// severe the anomaly is. For normal points, the severity is always 0.
         /// </param>
-        internal UnivariateLastDetectionResult(int period, int suggestedWindow, float expectedValue, float upperMargin, float lowerMargin, bool isAnomaly, bool isNegativeAnomaly, bool isPositiveAnomaly, float? severity)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal UnivariateLastDetectionResult(int period, int suggestedWindow, float expectedValue, float upperMargin, float lowerMargin, bool isAnomaly, bool isNegativeAnomaly, bool isPositiveAnomaly, float? severity, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Period = period;
             SuggestedWindow = suggestedWindow;
@@ -97,6 +133,12 @@ namespace Azure.AI.AnomalyDetector
             IsNegativeAnomaly = isNegativeAnomaly;
             IsPositiveAnomaly = isPositiveAnomaly;
             Severity = severity;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="UnivariateLastDetectionResult"/> for deserialization. </summary>
+        internal UnivariateLastDetectionResult()
+        {
         }
 
         /// <summary>

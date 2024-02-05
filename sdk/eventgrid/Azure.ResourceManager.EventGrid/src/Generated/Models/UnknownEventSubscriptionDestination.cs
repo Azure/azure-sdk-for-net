@@ -5,16 +5,25 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.EventGrid.Models
 {
     /// <summary> The UnknownEventSubscriptionDestination. </summary>
     internal partial class UnknownEventSubscriptionDestination : EventSubscriptionDestination
     {
-        /// <summary> Initializes a new instance of UnknownEventSubscriptionDestination. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnknownEventSubscriptionDestination"/>. </summary>
         /// <param name="endpointType"> Type of the endpoint for the event subscription destination. </param>
-        internal UnknownEventSubscriptionDestination(EndpointType endpointType) : base(endpointType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal UnknownEventSubscriptionDestination(EndpointType endpointType, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(endpointType, serializedAdditionalRawData)
         {
             EndpointType = endpointType;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="UnknownEventSubscriptionDestination"/> for deserialization. </summary>
+        internal UnknownEventSubscriptionDestination()
+        {
         }
     }
 }

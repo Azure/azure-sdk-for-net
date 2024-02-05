@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class CopySink : IUtf8JsonSerializable
+    [PersistableModelProxy(typeof(UnknownCopySink))]
+    public partial class CopySink : IUtf8JsonSerializable, IJsonModel<CopySink>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CopySink>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<CopySink>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<CopySink>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(CopySink)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(CopySinkType);
@@ -62,8 +73,22 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteEndObject();
         }
 
-        internal static CopySink DeserializeCopySink(JsonElement element)
+        CopySink IJsonModel<CopySink>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<CopySink>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(CopySink)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeCopySink(document.RootElement, options);
+        }
+
+        internal static CopySink DeserializeCopySink(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -95,6 +120,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     case "FileSystemSink": return FileSystemSink.DeserializeFileSystemSink(element);
                     case "InformixSink": return InformixSink.DeserializeInformixSink(element);
                     case "JsonSink": return JsonSink.DeserializeJsonSink(element);
+                    case "LakeHouseTableSink": return LakeHouseTableSink.DeserializeLakeHouseTableSink(element);
                     case "MicrosoftAccessSink": return MicrosoftAccessSink.DeserializeMicrosoftAccessSink(element);
                     case "MongoDbAtlasSink": return MongoDBAtlasSink.DeserializeMongoDBAtlasSink(element);
                     case "MongoDbV2Sink": return MongoDBV2Sink.DeserializeMongoDBV2Sink(element);
@@ -104,16 +130,51 @@ namespace Azure.ResourceManager.DataFactory.Models
                     case "ParquetSink": return ParquetSink.DeserializeParquetSink(element);
                     case "RestSink": return RestSink.DeserializeRestSink(element);
                     case "SalesforceServiceCloudSink": return SalesforceServiceCloudSink.DeserializeSalesforceServiceCloudSink(element);
+                    case "SalesforceServiceCloudV2Sink": return SalesforceServiceCloudV2Sink.DeserializeSalesforceServiceCloudV2Sink(element);
                     case "SalesforceSink": return SalesforceSink.DeserializeSalesforceSink(element);
+                    case "SalesforceV2Sink": return SalesforceV2Sink.DeserializeSalesforceV2Sink(element);
                     case "SapCloudForCustomerSink": return SapCloudForCustomerSink.DeserializeSapCloudForCustomerSink(element);
                     case "SnowflakeSink": return SnowflakeSink.DeserializeSnowflakeSink(element);
+                    case "SnowflakeV2Sink": return SnowflakeV2Sink.DeserializeSnowflakeV2Sink(element);
                     case "SqlDWSink": return SqlDWSink.DeserializeSqlDWSink(element);
                     case "SqlMISink": return SqlMISink.DeserializeSqlMISink(element);
                     case "SqlServerSink": return SqlServerSink.DeserializeSqlServerSink(element);
                     case "SqlSink": return SqlSink.DeserializeSqlSink(element);
+                    case "WarehouseSink": return WarehouseSink.DeserializeWarehouseSink(element);
                 }
             }
             return UnknownCopySink.DeserializeUnknownCopySink(element);
         }
+
+        BinaryData IPersistableModel<CopySink>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<CopySink>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(CopySink)} does not support '{options.Format}' format.");
+            }
+        }
+
+        CopySink IPersistableModel<CopySink>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<CopySink>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeCopySink(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(CopySink)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<CopySink>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

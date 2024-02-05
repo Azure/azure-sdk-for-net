@@ -14,7 +14,39 @@ namespace Azure.ResourceManager.Reservations.Models
     /// <summary> Exchange response properties. </summary>
     public partial class ExchangeResultProperties
     {
-        /// <summary> Initializes a new instance of ExchangeResultProperties. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ExchangeResultProperties"/>. </summary>
         internal ExchangeResultProperties()
         {
             ReservationsToPurchase = new ChangeTrackingList<ReservationToPurchaseExchange>();
@@ -22,7 +54,7 @@ namespace Azure.ResourceManager.Reservations.Models
             ReservationsToExchange = new ChangeTrackingList<ReservationToReturnForExchange>();
         }
 
-        /// <summary> Initializes a new instance of ExchangeResultProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExchangeResultProperties"/>. </summary>
         /// <param name="sessionId"> Exchange session identifier. </param>
         /// <param name="netPayable"> Pricing information containing the amount and the currency code. </param>
         /// <param name="refundsTotal"> Pricing information containing the amount and the currency code. </param>
@@ -31,7 +63,8 @@ namespace Azure.ResourceManager.Reservations.Models
         /// <param name="savingsPlansToPurchase"> Details of the savings plans being purchased. </param>
         /// <param name="reservationsToExchange"> Details of the reservations being returned. </param>
         /// <param name="policyResult"> Exchange policy errors. </param>
-        internal ExchangeResultProperties(Guid? sessionId, PurchasePrice netPayable, PurchasePrice refundsTotal, PurchasePrice purchasesTotal, IReadOnlyList<ReservationToPurchaseExchange> reservationsToPurchase, IReadOnlyList<SavingsPlanToPurchaseExchange> savingsPlansToPurchase, IReadOnlyList<ReservationToReturnForExchange> reservationsToExchange, ExchangePolicyErrors policyResult)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ExchangeResultProperties(Guid? sessionId, PurchasePrice netPayable, PurchasePrice refundsTotal, PurchasePrice purchasesTotal, IReadOnlyList<ReservationToPurchaseExchange> reservationsToPurchase, IReadOnlyList<SavingsPlanToPurchaseExchange> savingsPlansToPurchase, IReadOnlyList<ReservationToReturnForExchange> reservationsToExchange, ExchangePolicyErrors policyResult, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             SessionId = sessionId;
             NetPayable = netPayable;
@@ -41,6 +74,7 @@ namespace Azure.ResourceManager.Reservations.Models
             SavingsPlansToPurchase = savingsPlansToPurchase;
             ReservationsToExchange = reservationsToExchange;
             PolicyResult = policyResult;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Exchange session identifier. </summary>

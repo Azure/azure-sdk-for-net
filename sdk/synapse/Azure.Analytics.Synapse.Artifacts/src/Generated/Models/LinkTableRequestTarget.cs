@@ -10,12 +10,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> The LinkTableRequestTarget. </summary>
     public partial class LinkTableRequestTarget
     {
-        /// <summary> Initializes a new instance of LinkTableRequestTarget. </summary>
+        /// <summary> Initializes a new instance of <see cref="LinkTableRequestTarget"/>. </summary>
         public LinkTableRequestTarget()
         {
         }
 
-        /// <summary> Initializes a new instance of LinkTableRequestTarget. </summary>
+        /// <summary> Initializes a new instance of <see cref="LinkTableRequestTarget"/>. </summary>
         /// <param name="tableName"> Target table table name. </param>
         /// <param name="schemaName"> Target table schema name. </param>
         /// <param name="distributionOptions"> Target table distribution options for link table request. </param>

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,19 +14,53 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
     /// <summary> Common properties for Layer2 Configuration. </summary>
     public partial class Layer2Configuration
     {
-        /// <summary> Initializes a new instance of Layer2Configuration. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="Layer2Configuration"/>. </summary>
         public Layer2Configuration()
         {
             Interfaces = new ChangeTrackingList<ResourceIdentifier>();
         }
 
-        /// <summary> Initializes a new instance of Layer2Configuration. </summary>
+        /// <summary> Initializes a new instance of <see cref="Layer2Configuration"/>. </summary>
         /// <param name="mtu"> MTU of the packets between PE &amp; CE. </param>
         /// <param name="interfaces"> List of network device interfaces resource IDs. </param>
-        internal Layer2Configuration(int? mtu, IList<ResourceIdentifier> interfaces)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal Layer2Configuration(int? mtu, IList<ResourceIdentifier> interfaces, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Mtu = mtu;
             Interfaces = interfaces;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> MTU of the packets between PE &amp; CE. </summary>
