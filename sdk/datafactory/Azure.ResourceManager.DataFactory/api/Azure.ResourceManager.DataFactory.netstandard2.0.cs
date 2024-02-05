@@ -919,6 +919,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         public Azure.Core.Expressions.DataFactory.DataFactoryElement<string> AvroCompressionCodec { get { throw null; } set { } }
         public int? AvroCompressionLevel { get { throw null; } set { } }
         public Azure.ResourceManager.DataFactory.Models.DatasetLocation DataLocation { get { throw null; } set { } }
+        public new Azure.Core.Expressions.DataFactory.DataFactoryElement<System.BinaryData> Schema { get { throw null; } set { } }
     }
     public partial class AvroSink : Azure.ResourceManager.DataFactory.Models.CopySink
     {
@@ -4566,6 +4567,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         public Azure.ResourceManager.DataFactory.Models.DatasetCompression Compression { get { throw null; } set { } }
         public Azure.ResourceManager.DataFactory.Models.DatasetLocation DataLocation { get { throw null; } set { } }
         public Azure.Core.Expressions.DataFactory.DataFactoryElement<string> EncodingName { get { throw null; } set { } }
+        public new Azure.Core.Expressions.DataFactory.DataFactoryElement<System.BinaryData> Schema { get { throw null; } set { } }
     }
     public partial class JsonReadSettings : Azure.ResourceManager.DataFactory.Models.FormatReadSettings
     {
