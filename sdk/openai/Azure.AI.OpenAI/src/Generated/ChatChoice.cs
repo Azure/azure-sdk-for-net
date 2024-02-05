@@ -50,16 +50,19 @@ namespace Azure.AI.OpenAI
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="ChatChoice"/>. </summary>
+        /// <param name="logProbabilityInfo"> The log probability information for this choice, as enabled via the 'logprobs' request option. </param>
         /// <param name="index"> The ordered index associated with this chat completions choice. </param>
         /// <param name="finishReason"> The reason that this chat completions choice completed its generated. </param>
-        internal ChatChoice(int index, CompletionsFinishReason? finishReason)
+        internal ChatChoice(ChatChoiceLogProbabilityInfo logProbabilityInfo, int index, CompletionsFinishReason? finishReason)
         {
+            LogProbabilityInfo = logProbabilityInfo;
             Index = index;
             FinishReason = finishReason;
         }
 
         /// <summary> Initializes a new instance of <see cref="ChatChoice"/>. </summary>
         /// <param name="message"> The chat message for a given chat completions prompt. </param>
+        /// <param name="logProbabilityInfo"> The log probability information for this choice, as enabled via the 'logprobs' request option. </param>
         /// <param name="index"> The ordered index associated with this chat completions choice. </param>
         /// <param name="finishReason"> The reason that this chat completions choice completed its generated. </param>
         /// <param name="finishDetails">
@@ -78,9 +81,10 @@ namespace Azure.AI.OpenAI
         /// request is configured to use enhancements.
         /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ChatChoice(ChatResponseMessage message, int index, CompletionsFinishReason? finishReason, ChatFinishDetails finishDetails, ChatResponseMessage internalStreamingDeltaMessage, ContentFilterResultsForChoice contentFilterResults, AzureChatEnhancements enhancements, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ChatChoice(ChatResponseMessage message, ChatChoiceLogProbabilityInfo logProbabilityInfo, int index, CompletionsFinishReason? finishReason, ChatFinishDetails finishDetails, ChatResponseMessage internalStreamingDeltaMessage, ContentFilterResultsForChoice contentFilterResults, AzureChatEnhancements enhancements, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Message = message;
+            LogProbabilityInfo = logProbabilityInfo;
             Index = index;
             FinishReason = finishReason;
             FinishDetails = finishDetails;
@@ -97,6 +101,8 @@ namespace Azure.AI.OpenAI
 
         /// <summary> The chat message for a given chat completions prompt. </summary>
         public ChatResponseMessage Message { get; }
+        /// <summary> The log probability information for this choice, as enabled via the 'logprobs' request option. </summary>
+        public ChatChoiceLogProbabilityInfo LogProbabilityInfo { get; }
         /// <summary> The ordered index associated with this chat completions choice. </summary>
         public int Index { get; }
         /// <summary> The reason that this chat completions choice completed its generated. </summary>

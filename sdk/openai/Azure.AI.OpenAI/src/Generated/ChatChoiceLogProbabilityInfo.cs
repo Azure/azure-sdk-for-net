@@ -7,12 +7,12 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
+using System.Linq;
 
 namespace Azure.AI.OpenAI
 {
-    /// <summary> Represents the response for speech synthesis. </summary>
-    public partial class AudioSpeechResponse
+    /// <summary> Log probability information for a choice, as requested via 'logprobs' and 'top_logprobs'. </summary>
+    public partial class ChatChoiceLogProbabilityInfo
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -46,46 +46,28 @@ namespace Azure.AI.OpenAI
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="AudioSpeechResponse"/>. </summary>
-        /// <param name="audio"> The synthesized audio. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="audio"/> is null. </exception>
-        internal AudioSpeechResponse(BinaryData audio)
+        /// <summary> Initializes a new instance of <see cref="ChatChoiceLogProbabilityInfo"/>. </summary>
+        /// <param name="tokenLogProbabilityResults"> The list of log probability information entries for the choice's message content tokens, as requested via the 'logprobs' option. </param>
+        internal ChatChoiceLogProbabilityInfo(IEnumerable<ChatTokenLogProbabilityResult> tokenLogProbabilityResults)
         {
-            Argument.AssertNotNull(audio, nameof(audio));
-
-            Audio = audio;
+            TokenLogProbabilityResults = tokenLogProbabilityResults?.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="AudioSpeechResponse"/>. </summary>
-        /// <param name="audio"> The synthesized audio. </param>
+        /// <summary> Initializes a new instance of <see cref="ChatChoiceLogProbabilityInfo"/>. </summary>
+        /// <param name="tokenLogProbabilityResults"> The list of log probability information entries for the choice's message content tokens, as requested via the 'logprobs' option. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AudioSpeechResponse(BinaryData audio, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ChatChoiceLogProbabilityInfo(IReadOnlyList<ChatTokenLogProbabilityResult> tokenLogProbabilityResults, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Audio = audio;
+            TokenLogProbabilityResults = tokenLogProbabilityResults;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="AudioSpeechResponse"/> for deserialization. </summary>
-        internal AudioSpeechResponse()
+        /// <summary> Initializes a new instance of <see cref="ChatChoiceLogProbabilityInfo"/> for deserialization. </summary>
+        internal ChatChoiceLogProbabilityInfo()
         {
         }
 
-        /// <summary>
-        /// The synthesized audio.
-        /// <para>
-        /// To assign a byte[] to this property use <see cref="BinaryData.FromBytes(byte[])"/>.
-        /// The byte[] will be serialized to a Base64 encoded string.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromBytes(new byte[] { 1, 2, 3 })</term>
-        /// <description>Creates a payload of "AQID".</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        public BinaryData Audio { get; }
+        /// <summary> The list of log probability information entries for the choice's message content tokens, as requested via the 'logprobs' option. </summary>
+        public IReadOnlyList<ChatTokenLogProbabilityResult> TokenLogProbabilityResults { get; }
     }
 }

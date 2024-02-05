@@ -307,18 +307,67 @@ namespace Azure.AI.OpenAI
         }
 
         /// <summary> Initializes a new instance of <see cref="OpenAI.AzureChatExtensionsMessageContext"/>. </summary>
-        /// <param name="messages">
-        ///   The contextual message payload associated with the Azure chat extensions used for a chat completions request.
+        /// <param name="citations">
+        ///   The contextual information associated with the Azure chat extensions used for a chat completions request.
         ///   These messages describe the data source retrievals, plugin invocations, and other intermediate steps taken in the
         ///   course of generating a chat completions response that was augmented by capabilities from Azure OpenAI chat
         ///   extensions.
         /// </param>
+        /// <param name="intent"> The detected intent from the chat history, used to pass to the next turn to carry over the context. </param>
         /// <returns> A new <see cref="OpenAI.AzureChatExtensionsMessageContext"/> instance for mocking. </returns>
-        public static AzureChatExtensionsMessageContext AzureChatExtensionsMessageContext(IEnumerable<ChatResponseMessage> messages = null)
+        public static AzureChatExtensionsMessageContext AzureChatExtensionsMessageContext(IEnumerable<AzureChatExtensionDataSourceResponseCitation> citations = null, string intent = null)
         {
-            messages ??= new List<ChatResponseMessage>();
+            citations ??= new List<AzureChatExtensionDataSourceResponseCitation>();
 
-            return new AzureChatExtensionsMessageContext(messages?.ToList(), serializedAdditionalRawData: null);
+            return new AzureChatExtensionsMessageContext(citations?.ToList(), intent, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="OpenAI.AzureChatExtensionDataSourceResponseCitation"/>. </summary>
+        /// <param name="content"> The content of the citation. </param>
+        /// <param name="title"> The title of the citation. </param>
+        /// <param name="url"> The URL of the citation. </param>
+        /// <param name="filepath"> The file path of the citation. </param>
+        /// <param name="chunkId"> The chunk ID of the citation. </param>
+        /// <returns> A new <see cref="OpenAI.AzureChatExtensionDataSourceResponseCitation"/> instance for mocking. </returns>
+        public static AzureChatExtensionDataSourceResponseCitation AzureChatExtensionDataSourceResponseCitation(string content = null, string title = null, string url = null, string filepath = null, string chunkId = null)
+        {
+            return new AzureChatExtensionDataSourceResponseCitation(content, title, url, filepath, chunkId, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="OpenAI.ChatChoiceLogProbabilityInfo"/>. </summary>
+        /// <param name="tokenLogProbabilityResults"> The list of log probability information entries for the choice's message content tokens, as requested via the 'logprobs' option. </param>
+        /// <returns> A new <see cref="OpenAI.ChatChoiceLogProbabilityInfo"/> instance for mocking. </returns>
+        public static ChatChoiceLogProbabilityInfo ChatChoiceLogProbabilityInfo(IEnumerable<ChatTokenLogProbabilityResult> tokenLogProbabilityResults = null)
+        {
+            tokenLogProbabilityResults ??= new List<ChatTokenLogProbabilityResult>();
+
+            return new ChatChoiceLogProbabilityInfo(tokenLogProbabilityResults?.ToList(), serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="OpenAI.ChatTokenLogProbabilityResult"/>. </summary>
+        /// <param name="token"> The message content token. </param>
+        /// <param name="logProbability"> The log probability of the message content token. </param>
+        /// <param name="utf8ByteValues"> A list of integers representing the UTF-8 bytes representation of the token. Useful in instances where characters are represented by multiple tokens and their byte representations must be combined to generate the correct text representation. Can be null if there is no bytes representation for the token. </param>
+        /// <param name="topLogProbabilityEntries"> The list of most likely tokens and their log probability information, as requested via 'top_logprobs'. </param>
+        /// <returns> A new <see cref="OpenAI.ChatTokenLogProbabilityResult"/> instance for mocking. </returns>
+        public static ChatTokenLogProbabilityResult ChatTokenLogProbabilityResult(string token = null, float logProbability = default, IEnumerable<int> utf8ByteValues = null, IEnumerable<ChatTokenLogProbabilityInfo> topLogProbabilityEntries = null)
+        {
+            utf8ByteValues ??= new List<int>();
+            topLogProbabilityEntries ??= new List<ChatTokenLogProbabilityInfo>();
+
+            return new ChatTokenLogProbabilityResult(token, logProbability, utf8ByteValues?.ToList(), topLogProbabilityEntries?.ToList(), serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="OpenAI.ChatTokenLogProbabilityInfo"/>. </summary>
+        /// <param name="token"> The message content token. </param>
+        /// <param name="logProbability"> The log probability of the message content token. </param>
+        /// <param name="utf8ByteValues"> A list of integers representing the UTF-8 bytes representation of the token. Useful in instances where characters are represented by multiple tokens and their byte representations must be combined to generate the correct text representation. Can be null if there is no bytes representation for the token. </param>
+        /// <returns> A new <see cref="OpenAI.ChatTokenLogProbabilityInfo"/> instance for mocking. </returns>
+        public static ChatTokenLogProbabilityInfo ChatTokenLogProbabilityInfo(string token = null, float logProbability = default, IEnumerable<int> utf8ByteValues = null)
+        {
+            utf8ByteValues ??= new List<int>();
+
+            return new ChatTokenLogProbabilityInfo(token, logProbability, utf8ByteValues?.ToList(), serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="OpenAI.AzureChatEnhancements"/>. </summary>
@@ -444,14 +493,6 @@ namespace Azure.AI.OpenAI
         public static EmbeddingsUsage EmbeddingsUsage(int promptTokens = default, int totalTokens = default)
         {
             return new EmbeddingsUsage(promptTokens, totalTokens, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="OpenAI.AudioSpeechResponse"/>. </summary>
-        /// <param name="audio"> The synthesized audio. </param>
-        /// <returns> A new <see cref="OpenAI.AudioSpeechResponse"/> instance for mocking. </returns>
-        public static AudioSpeechResponse AudioSpeechResponse(BinaryData audio = null)
-        {
-            return new AudioSpeechResponse(audio, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="OpenAI.StopFinishDetails"/>. </summary>

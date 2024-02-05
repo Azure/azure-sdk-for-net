@@ -19,6 +19,7 @@ public static partial class AzureOpenAIModelFactory
 
     /// <summary> Initializes a new instance of ChatChoice. </summary>
     /// <param name="message"> The chat message associated with this chat completions choice. </param>
+    /// <param name="logProbabilityInfo"> The log probability information for this choice, as enabled via the 'logprobs' request option. </param>
     /// <param name="index"> The ordered index associated with this chat completions choice. </param>
     /// <param name="finishReason"> The reason that this chat completions choice completed. </param>
     /// <param name="finishDetails"> The reason, with details, that this choice completed. </param>
@@ -28,6 +29,7 @@ public static partial class AzureOpenAIModelFactory
     /// <returns> A new <see cref="OpenAI.ChatChoice"/> instance for mocking. </returns>
     public static ChatChoice ChatChoice(
         ChatResponseMessage message = null,
+        ChatChoiceLogProbabilityInfo logProbabilityInfo = null,
         int index = default,
         CompletionsFinishReason? finishReason = null,
         ChatFinishDetails finishDetails = null,
@@ -35,7 +37,7 @@ public static partial class AzureOpenAIModelFactory
         ContentFilterResultsForChoice contentFilterResults = null,
         AzureChatEnhancements enhancements = null)
     {
-        return new ChatChoice(message, index, finishReason, finishDetails, deltaMessage, contentFilterResults, enhancements, serializedAdditionalRawData: null);
+        return new ChatChoice(message, logProbabilityInfo, index, finishReason, finishDetails, deltaMessage, contentFilterResults, enhancements, serializedAdditionalRawData: null);
     }
 
     public static StreamingChatCompletionsUpdate StreamingChatCompletionsUpdate(
