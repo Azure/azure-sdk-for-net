@@ -14,5 +14,47 @@ namespace Azure.ResourceManager.NetApp.Models
 {
     public partial class NetAppVolumeBackupConfiguration : IUtf8JsonSerializable, IJsonModel<NetAppVolumeBackupConfiguration>
     {
+        NetAppVolumeBackupConfiguration IJsonModel<NetAppVolumeBackupConfiguration>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<NetAppVolumeBackupConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(NetAppVolumeBackupConfiguration)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeNetAppVolumeBackupConfiguration(document.RootElement, options);
+        }
+
+        BinaryData IPersistableModel<NetAppVolumeBackupConfiguration>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<NetAppVolumeBackupConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(NetAppVolumeBackupConfiguration)} does not support '{options.Format}' format.");
+            }
+        }
+
+        NetAppVolumeBackupConfiguration IPersistableModel<NetAppVolumeBackupConfiguration>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<NetAppVolumeBackupConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeNetAppVolumeBackupConfiguration(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(NetAppVolumeBackupConfiguration)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<NetAppVolumeBackupConfiguration>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

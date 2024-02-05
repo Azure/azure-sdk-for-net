@@ -77,6 +77,38 @@ namespace Azure.ResourceManager.NetApp.Models
             IsBackupEnabled = isBackupEnabled;
         }
 
+        /// <summary> Initializes a new instance of <see cref="NetAppVolumeBackupConfiguration"/>. </summary>
+        /// <param name="backupPolicyId">
+        /// Backup Policy Resource ID
+        /// Serialized Name: VolumeBackupProperties.backupPolicyId
+        /// </param>
+        /// <param name="isPolicyEnforced">
+        /// Policy Enforced
+        /// Serialized Name: VolumeBackupProperties.policyEnforced
+        /// </param>
+        /// <param name="isBackupEnabled">
+        /// Backup Enabled
+        /// Serialized Name: VolumeBackupProperties.backupEnabled
+        /// </param>
+        /// <param name="backupVaultId">
+        /// Backup Vault Resource ID
+        /// Serialized Name: VolumeBackupProperties.backupVaultId
+        /// </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal NetAppVolumeBackupConfiguration(ResourceIdentifier backupPolicyId, bool? isPolicyEnforced, bool? isBackupEnabled, ResourceIdentifier backupVaultId, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            BackupPolicyId = backupPolicyId;
+            IsPolicyEnforced = isPolicyEnforced;
+            IsBackupEnabled = isBackupEnabled;
+            BackupVaultId = backupVaultId;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+        /// <summary>
+        /// Backup Vault Resource ID
+        /// Serialized Name: VolumeBackupProperties.backupVaultId
+        /// </summary>
+        public ResourceIdentifier BackupVaultId { get; set; }
+
         /// <summary> Backup Policy Resource ID. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public ResourceIdentifier BackupPolicyId { get; set; }
