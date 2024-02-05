@@ -48,11 +48,6 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore
         /// </summary>
         public string StorageDirectory { get; set; }
 
-        /// <summary>
-        /// When set to true, logs emitted within an active tracing context would follow the Activity's sampling decision.
-        /// </summary>
-        internal bool EnableLogSampling { get; set; } = false;
-
         internal void SetValueToExporterOptions(AzureMonitorExporterOptions exporterOptions)
         {
             exporterOptions.ConnectionString = ConnectionString;

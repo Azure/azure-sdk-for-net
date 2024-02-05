@@ -13,7 +13,6 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore
     {
         private const string AzureMonitorSectionFromConfig = "AzureMonitor";
         private const string ConnectionStringEnvironmentVariable = "APPLICATIONINSIGHTS_CONNECTION_STRING";
-        private const string EnableLogSamplingEnvVar = "OTEL_DOTNET_AZURE_MONITOR_EXPERIMENTAL_ENABLE_LOG_SAMPLING";
         private readonly IConfiguration? _configuration;
 
         /// <summary>
