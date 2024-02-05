@@ -13,7 +13,7 @@ namespace Azure.Monitor.Query.Tests
     // Increment the DataVersion when changing the values to force a re-send
     public class LogsTestData
     {
-        private static readonly string DataVersion = "1";
+        //private static readonly string DataVersion = "1";
         private static Task _initialization;
         private static readonly object _initializationLock = new object();
         // The data retention time is 31 day by-default so we need to make sure the data we posted is still
@@ -38,7 +38,8 @@ namespace Azure.Monitor.Query.Tests
 
         public readonly List<Dictionary<string, object>> TableA;
 
-        private string TableANameSent => nameof(TableA) + DataVersion + "_" + RetentionWindowStart.DayOfYear;
+        //private string TableANameSent => nameof(TableA) + DataVersion + "_" + RetentionWindowStart.DayOfYear;
+        private string TableANameSent => "TableA1_18";
         public string TableAName => TableANameSent + "_CL";
         public QueryTimeRange DataTimeRange => new QueryTimeRange(RetentionWindowStart, TimeSpan.FromDays(15));
 

@@ -8,7 +8,7 @@ namespace Azure.Monitor.Query.Tests
 {
     public class MonitorQueryTestEnvironment : TestEnvironment
     {
-        public string WorkspaceId => GetRecordedVariable("WORKSPACE_ID");
+        public string WorkspaceId = "40712a32-9002-4a78-a699-bd27fd863f86";
         public string SecondaryWorkspaceId => GetRecordedVariable("SECONDARY_WORKSPACE_ID");
         public string WorkspaceKey => GetRecordedVariable("WORKSPACE_KEY", options => options.IsSecret(SanitizedValue.Base64));
         public string SecondaryWorkspaceKey => GetRecordedVariable("SECONDARY_WORKSPACE_KEY", options => options.IsSecret(SanitizedValue.Base64));
