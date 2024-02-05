@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -315,6 +317,151 @@ namespace Azure.ResourceManager.Sql.Models
             return new ServiceObjectiveCapability(Optional.ToNullable(id), name.Value, Optional.ToList(supportedMaxSizes), performanceLevel.Value, sku.Value, Optional.ToList(supportedLicenseTypes), includedMaxSize.Value, Optional.ToNullable(zoneRedundant), supportedAutoPauseDelay.Value, Optional.ToList(supportedMinCapacities), computeModel.Value, Optional.ToList(supportedMaintenanceConfigurations), Optional.ToNullable(status), reason.Value, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(Id))
+            {
+                builder.Append("  id:");
+                builder.AppendLine($" '{Id.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                builder.AppendLine($" '{Name}'");
+            }
+
+            if (Optional.IsCollectionDefined(SupportedMaxSizes))
+            {
+                if (SupportedMaxSizes.Any())
+                {
+                    builder.Append("  supportedMaxSizes:");
+                    builder.AppendLine(" [");
+                    foreach (var item in SupportedMaxSizes)
+                    {
+                        AppendChildObject(builder, item, options, 4, true);
+                    }
+                    builder.AppendLine("  ]");
+                }
+            }
+
+            if (Optional.IsDefined(PerformanceLevel))
+            {
+                builder.Append("  performanceLevel:");
+                AppendChildObject(builder, PerformanceLevel, options, 2, false);
+            }
+
+            if (Optional.IsDefined(Sku))
+            {
+                builder.Append("  sku:");
+                AppendChildObject(builder, Sku, options, 2, false);
+            }
+
+            if (Optional.IsCollectionDefined(SupportedLicenseTypes))
+            {
+                if (SupportedLicenseTypes.Any())
+                {
+                    builder.Append("  supportedLicenseTypes:");
+                    builder.AppendLine(" [");
+                    foreach (var item in SupportedLicenseTypes)
+                    {
+                        AppendChildObject(builder, item, options, 4, true);
+                    }
+                    builder.AppendLine("  ]");
+                }
+            }
+
+            if (Optional.IsDefined(IncludedMaxSize))
+            {
+                builder.Append("  includedMaxSize:");
+                AppendChildObject(builder, IncludedMaxSize, options, 2, false);
+            }
+
+            if (Optional.IsDefined(IsZoneRedundant))
+            {
+                builder.Append("  zoneRedundant:");
+                var boolValue = IsZoneRedundant.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(SupportedAutoPauseDelay))
+            {
+                builder.Append("  supportedAutoPauseDelay:");
+                AppendChildObject(builder, SupportedAutoPauseDelay, options, 2, false);
+            }
+
+            if (Optional.IsCollectionDefined(SupportedMinCapacities))
+            {
+                if (SupportedMinCapacities.Any())
+                {
+                    builder.Append("  supportedMinCapacities:");
+                    builder.AppendLine(" [");
+                    foreach (var item in SupportedMinCapacities)
+                    {
+                        AppendChildObject(builder, item, options, 4, true);
+                    }
+                    builder.AppendLine("  ]");
+                }
+            }
+
+            if (Optional.IsDefined(ComputeModel))
+            {
+                builder.Append("  computeModel:");
+                builder.AppendLine($" '{ComputeModel}'");
+            }
+
+            if (Optional.IsCollectionDefined(SupportedMaintenanceConfigurations))
+            {
+                if (SupportedMaintenanceConfigurations.Any())
+                {
+                    builder.Append("  supportedMaintenanceConfigurations:");
+                    builder.AppendLine(" [");
+                    foreach (var item in SupportedMaintenanceConfigurations)
+                    {
+                        AppendChildObject(builder, item, options, 4, true);
+                    }
+                    builder.AppendLine("  ]");
+                }
+            }
+
+            if (Optional.IsDefined(Status))
+            {
+                builder.Append("  status:");
+                builder.AppendLine($" '{Status.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Reason))
+            {
+                builder.Append("  reason:");
+                builder.AppendLine($" '{Reason}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<ServiceObjectiveCapability>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ServiceObjectiveCapability>)this).GetFormatFromOptions(options) : options.Format;
@@ -323,6 +470,8 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(ServiceObjectiveCapability)} does not support '{options.Format}' format.");
             }
@@ -339,6 +488,8 @@ namespace Azure.ResourceManager.Sql.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeServiceObjectiveCapability(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(ServiceObjectiveCapability)} does not support '{options.Format}' format.");
             }

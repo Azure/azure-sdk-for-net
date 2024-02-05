@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -943,6 +945,421 @@ namespace Azure.ResourceManager.Sql
             return new SqlDatabaseData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, sku.Value, kind.Value, managedBy.Value, identity.Value, Optional.ToNullable(createMode), collation.Value, Optional.ToNullable(maxSizeBytes), Optional.ToNullable(sampleName), elasticPoolId.Value, sourceDatabaseId.Value, Optional.ToNullable(status), Optional.ToNullable(databaseId), Optional.ToNullable(creationDate), currentServiceObjectiveName.Value, requestedServiceObjectiveName.Value, Optional.ToNullable(defaultSecondaryLocation), failoverGroupId.Value, Optional.ToNullable(restorePointInTime), Optional.ToNullable(sourceDatabaseDeletionDate), recoveryServicesRecoveryPointId.Value, longTermRetentionBackupResourceId.Value, recoverableDatabaseId.Value, restorableDroppedDatabaseId.Value, Optional.ToNullable(catalogCollation), Optional.ToNullable(zoneRedundant), Optional.ToNullable(licenseType), Optional.ToNullable(maxLogSizeBytes), Optional.ToNullable(earliestRestoreDate), Optional.ToNullable(readScale), Optional.ToNullable(highAvailabilityReplicaCount), Optional.ToNullable(secondaryType), currentSku.Value, Optional.ToNullable(autoPauseDelay), Optional.ToNullable(currentBackupStorageRedundancy), Optional.ToNullable(requestedBackupStorageRedundancy), Optional.ToNullable(minCapacity), Optional.ToNullable(pausedDate), Optional.ToNullable(resumedDate), maintenanceConfigurationId.Value, Optional.ToNullable(isLedgerOn), Optional.ToNullable(isInfraEncryptionEnabled), Optional.ToNullable(federatedClientId), Optional.ToDictionary(keys), encryptionProtector.Value, Optional.ToNullable(preferredEnclaveType), Optional.ToNullable(useFreeLimit), Optional.ToNullable(freeLimitExhaustionBehavior), sourceResourceId.Value, Optional.ToNullable(manualCutover), Optional.ToNullable(performCutover), Optional.ToNullable(availabilityZone), Optional.ToNullable(encryptionProtectorAutoRotation), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(Sku))
+            {
+                builder.Append("  sku:");
+                AppendChildObject(builder, Sku, options, 2, false);
+            }
+
+            if (Optional.IsDefined(Kind))
+            {
+                builder.Append("  kind:");
+                builder.AppendLine($" '{Kind}'");
+            }
+
+            if (Optional.IsDefined(ManagedBy))
+            {
+                builder.Append("  managedBy:");
+                builder.AppendLine($" '{ManagedBy}'");
+            }
+
+            if (Optional.IsDefined(Identity))
+            {
+                builder.Append("  identity:");
+                AppendChildObject(builder, Identity, options, 2, false);
+            }
+
+            if (Optional.IsCollectionDefined(Tags))
+            {
+                if (Tags.Any())
+                {
+                    builder.Append("  tags:");
+                    builder.AppendLine(" {");
+                    foreach (var item in Tags)
+                    {
+                        builder.Append($"    {item.Key}: ");
+                        if (item.Value == null)
+                        {
+                            builder.Append("null");
+                            continue;
+                        }
+                        builder.AppendLine($" '{item.Value}'");
+                    }
+                    builder.AppendLine("  }");
+                }
+            }
+
+            if (Optional.IsDefined(Location))
+            {
+                builder.Append("  location:");
+                builder.AppendLine($" '{Location.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Id))
+            {
+                builder.Append("  id:");
+                builder.AppendLine($" '{Id.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                builder.AppendLine($" '{Name}'");
+            }
+
+            if (Optional.IsDefined(ResourceType))
+            {
+                builder.Append("  type:");
+                builder.AppendLine($" '{ResourceType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SystemData))
+            {
+                builder.Append("  systemData:");
+                builder.AppendLine($" '{SystemData.ToString()}'");
+            }
+
+            builder.Append("  properties:");
+            builder.AppendLine(" {");
+            if (Optional.IsDefined(CreateMode))
+            {
+                builder.Append("    createMode:");
+                builder.AppendLine($" '{CreateMode.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Collation))
+            {
+                builder.Append("    collation:");
+                builder.AppendLine($" '{Collation}'");
+            }
+
+            if (Optional.IsDefined(MaxSizeBytes))
+            {
+                builder.Append("    maxSizeBytes:");
+                builder.AppendLine($" '{MaxSizeBytes.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SampleName))
+            {
+                builder.Append("    sampleName:");
+                builder.AppendLine($" '{SampleName.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ElasticPoolId))
+            {
+                builder.Append("    elasticPoolId:");
+                builder.AppendLine($" '{ElasticPoolId.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SourceDatabaseId))
+            {
+                builder.Append("    sourceDatabaseId:");
+                builder.AppendLine($" '{SourceDatabaseId.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Status))
+            {
+                builder.Append("    status:");
+                builder.AppendLine($" '{Status.ToString()}'");
+            }
+
+            if (Optional.IsDefined(DatabaseId))
+            {
+                builder.Append("    databaseId:");
+                builder.AppendLine($" '{DatabaseId.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(CreatedOn))
+            {
+                builder.Append("    creationDate:");
+                var formattedDateTimeString = TypeFormatters.ToString(CreatedOn.Value, "o");
+                builder.AppendLine($" '{formattedDateTimeString}'");
+            }
+
+            if (Optional.IsDefined(CurrentServiceObjectiveName))
+            {
+                builder.Append("    currentServiceObjectiveName:");
+                builder.AppendLine($" '{CurrentServiceObjectiveName}'");
+            }
+
+            if (Optional.IsDefined(RequestedServiceObjectiveName))
+            {
+                builder.Append("    requestedServiceObjectiveName:");
+                builder.AppendLine($" '{RequestedServiceObjectiveName}'");
+            }
+
+            if (Optional.IsDefined(DefaultSecondaryLocation))
+            {
+                builder.Append("    defaultSecondaryLocation:");
+                builder.AppendLine($" '{DefaultSecondaryLocation.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(FailoverGroupId))
+            {
+                builder.Append("    failoverGroupId:");
+                builder.AppendLine($" '{FailoverGroupId.ToString()}'");
+            }
+
+            if (Optional.IsDefined(RestorePointInTime))
+            {
+                builder.Append("    restorePointInTime:");
+                var formattedDateTimeString = TypeFormatters.ToString(RestorePointInTime.Value, "o");
+                builder.AppendLine($" '{formattedDateTimeString}'");
+            }
+
+            if (Optional.IsDefined(SourceDatabaseDeletedOn))
+            {
+                builder.Append("    sourceDatabaseDeletionDate:");
+                var formattedDateTimeString = TypeFormatters.ToString(SourceDatabaseDeletedOn.Value, "o");
+                builder.AppendLine($" '{formattedDateTimeString}'");
+            }
+
+            if (Optional.IsDefined(RecoveryServicesRecoveryPointId))
+            {
+                builder.Append("    recoveryServicesRecoveryPointId:");
+                builder.AppendLine($" '{RecoveryServicesRecoveryPointId.ToString()}'");
+            }
+
+            if (Optional.IsDefined(LongTermRetentionBackupResourceId))
+            {
+                builder.Append("    longTermRetentionBackupResourceId:");
+                builder.AppendLine($" '{LongTermRetentionBackupResourceId.ToString()}'");
+            }
+
+            if (Optional.IsDefined(RecoverableDatabaseId))
+            {
+                builder.Append("    recoverableDatabaseId:");
+                builder.AppendLine($" '{RecoverableDatabaseId.ToString()}'");
+            }
+
+            if (Optional.IsDefined(RestorableDroppedDatabaseId))
+            {
+                builder.Append("    restorableDroppedDatabaseId:");
+                builder.AppendLine($" '{RestorableDroppedDatabaseId.ToString()}'");
+            }
+
+            if (Optional.IsDefined(CatalogCollation))
+            {
+                builder.Append("    catalogCollation:");
+                builder.AppendLine($" '{CatalogCollation.ToString()}'");
+            }
+
+            if (Optional.IsDefined(IsZoneRedundant))
+            {
+                builder.Append("    zoneRedundant:");
+                var boolValue = IsZoneRedundant.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(LicenseType))
+            {
+                builder.Append("    licenseType:");
+                builder.AppendLine($" '{LicenseType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(MaxLogSizeBytes))
+            {
+                builder.Append("    maxLogSizeBytes:");
+                builder.AppendLine($" '{MaxLogSizeBytes.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(EarliestRestoreOn))
+            {
+                builder.Append("    earliestRestoreDate:");
+                var formattedDateTimeString = TypeFormatters.ToString(EarliestRestoreOn.Value, "o");
+                builder.AppendLine($" '{formattedDateTimeString}'");
+            }
+
+            if (Optional.IsDefined(ReadScale))
+            {
+                builder.Append("    readScale:");
+                builder.AppendLine($" '{ReadScale.ToString()}'");
+            }
+
+            if (Optional.IsDefined(HighAvailabilityReplicaCount))
+            {
+                builder.Append("    highAvailabilityReplicaCount:");
+                builder.AppendLine($" {HighAvailabilityReplicaCount.Value}");
+            }
+
+            if (Optional.IsDefined(SecondaryType))
+            {
+                builder.Append("    secondaryType:");
+                builder.AppendLine($" '{SecondaryType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(CurrentSku))
+            {
+                builder.Append("    currentSku:");
+                AppendChildObject(builder, CurrentSku, options, 4, false);
+            }
+
+            if (Optional.IsDefined(AutoPauseDelay))
+            {
+                builder.Append("    autoPauseDelay:");
+                builder.AppendLine($" {AutoPauseDelay.Value}");
+            }
+
+            if (Optional.IsDefined(CurrentBackupStorageRedundancy))
+            {
+                builder.Append("    currentBackupStorageRedundancy:");
+                builder.AppendLine($" '{CurrentBackupStorageRedundancy.ToString()}'");
+            }
+
+            if (Optional.IsDefined(RequestedBackupStorageRedundancy))
+            {
+                builder.Append("    requestedBackupStorageRedundancy:");
+                builder.AppendLine($" '{RequestedBackupStorageRedundancy.ToString()}'");
+            }
+
+            if (Optional.IsDefined(MinCapacity))
+            {
+                builder.Append("    minCapacity:");
+                builder.AppendLine($" '{MinCapacity.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(PausedOn))
+            {
+                builder.Append("    pausedDate:");
+                var formattedDateTimeString = TypeFormatters.ToString(PausedOn.Value, "o");
+                builder.AppendLine($" '{formattedDateTimeString}'");
+            }
+
+            if (Optional.IsDefined(ResumedOn))
+            {
+                builder.Append("    resumedDate:");
+                var formattedDateTimeString = TypeFormatters.ToString(ResumedOn.Value, "o");
+                builder.AppendLine($" '{formattedDateTimeString}'");
+            }
+
+            if (Optional.IsDefined(MaintenanceConfigurationId))
+            {
+                builder.Append("    maintenanceConfigurationId:");
+                builder.AppendLine($" '{MaintenanceConfigurationId.ToString()}'");
+            }
+
+            if (Optional.IsDefined(IsLedgerOn))
+            {
+                builder.Append("    isLedgerOn:");
+                var boolValue = IsLedgerOn.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(IsInfraEncryptionEnabled))
+            {
+                builder.Append("    isInfraEncryptionEnabled:");
+                var boolValue = IsInfraEncryptionEnabled.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(FederatedClientId))
+            {
+                builder.Append("    federatedClientId:");
+                builder.AppendLine($" '{FederatedClientId.Value.ToString()}'");
+            }
+
+            if (Optional.IsCollectionDefined(Keys))
+            {
+                if (Keys.Any())
+                {
+                    builder.Append("    keys:");
+                    builder.AppendLine(" {");
+                    foreach (var item in Keys)
+                    {
+                        builder.Append($"        {item.Key}: ");
+                        AppendChildObject(builder, item.Value, options, 6, false);
+                    }
+                    builder.AppendLine("    }");
+                }
+            }
+
+            if (Optional.IsDefined(EncryptionProtector))
+            {
+                builder.Append("    encryptionProtector:");
+                builder.AppendLine($" '{EncryptionProtector}'");
+            }
+
+            if (Optional.IsDefined(PreferredEnclaveType))
+            {
+                builder.Append("    preferredEnclaveType:");
+                builder.AppendLine($" '{PreferredEnclaveType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(UseFreeLimit))
+            {
+                builder.Append("    useFreeLimit:");
+                var boolValue = UseFreeLimit.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(FreeLimitExhaustionBehavior))
+            {
+                builder.Append("    freeLimitExhaustionBehavior:");
+                builder.AppendLine($" '{FreeLimitExhaustionBehavior.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SourceResourceId))
+            {
+                builder.Append("    sourceResourceId:");
+                builder.AppendLine($" '{SourceResourceId.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ManualCutover))
+            {
+                builder.Append("    manualCutover:");
+                var boolValue = ManualCutover.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(PerformCutover))
+            {
+                builder.Append("    performCutover:");
+                var boolValue = PerformCutover.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(AvailabilityZone))
+            {
+                builder.Append("    availabilityZone:");
+                builder.AppendLine($" '{AvailabilityZone.ToString()}'");
+            }
+
+            if (Optional.IsDefined(EncryptionProtectorAutoRotation))
+            {
+                builder.Append("    encryptionProtectorAutoRotation:");
+                var boolValue = EncryptionProtectorAutoRotation.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            builder.AppendLine("  }");
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<SqlDatabaseData>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<SqlDatabaseData>)this).GetFormatFromOptions(options) : options.Format;
@@ -951,6 +1368,8 @@ namespace Azure.ResourceManager.Sql
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(SqlDatabaseData)} does not support '{options.Format}' format.");
             }
@@ -967,6 +1386,8 @@ namespace Azure.ResourceManager.Sql
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeSqlDatabaseData(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(SqlDatabaseData)} does not support '{options.Format}' format.");
             }

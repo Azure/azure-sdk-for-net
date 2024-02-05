@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -430,6 +432,203 @@ namespace Azure.ResourceManager.Sql
             return new SqlServerData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, identity, kind.Value, administratorLogin.Value, administratorLoginPassword.Value, version.Value, state.Value, fullyQualifiedDomainName.Value, Optional.ToList(privateEndpointConnections), minimalTlsVersion.Value, Optional.ToNullable(publicNetworkAccess), Optional.ToNullable(workspaceFeature), primaryUserAssignedIdentityId.Value, Optional.ToNullable(federatedClientId), keyId.Value, administrators.Value, Optional.ToNullable(restrictOutboundNetworkAccess), Optional.ToNullable(isIPv6Enabled), Optional.ToNullable(externalGovernanceStatus), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(Identity))
+            {
+                builder.Append("  identity:");
+                AppendChildObject(builder, Identity, options, 2, false);
+            }
+
+            if (Optional.IsDefined(Kind))
+            {
+                builder.Append("  kind:");
+                builder.AppendLine($" '{Kind}'");
+            }
+
+            if (Optional.IsCollectionDefined(Tags))
+            {
+                if (Tags.Any())
+                {
+                    builder.Append("  tags:");
+                    builder.AppendLine(" {");
+                    foreach (var item in Tags)
+                    {
+                        builder.Append($"    {item.Key}: ");
+                        if (item.Value == null)
+                        {
+                            builder.Append("null");
+                            continue;
+                        }
+                        builder.AppendLine($" '{item.Value}'");
+                    }
+                    builder.AppendLine("  }");
+                }
+            }
+
+            if (Optional.IsDefined(Location))
+            {
+                builder.Append("  location:");
+                builder.AppendLine($" '{Location.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Id))
+            {
+                builder.Append("  id:");
+                builder.AppendLine($" '{Id.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                builder.AppendLine($" '{Name}'");
+            }
+
+            if (Optional.IsDefined(ResourceType))
+            {
+                builder.Append("  type:");
+                builder.AppendLine($" '{ResourceType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SystemData))
+            {
+                builder.Append("  systemData:");
+                builder.AppendLine($" '{SystemData.ToString()}'");
+            }
+
+            builder.Append("  properties:");
+            builder.AppendLine(" {");
+            if (Optional.IsDefined(AdministratorLogin))
+            {
+                builder.Append("    administratorLogin:");
+                builder.AppendLine($" '{AdministratorLogin}'");
+            }
+
+            if (Optional.IsDefined(AdministratorLoginPassword))
+            {
+                builder.Append("    administratorLoginPassword:");
+                builder.AppendLine($" '{AdministratorLoginPassword}'");
+            }
+
+            if (Optional.IsDefined(Version))
+            {
+                builder.Append("    version:");
+                builder.AppendLine($" '{Version}'");
+            }
+
+            if (Optional.IsDefined(State))
+            {
+                builder.Append("    state:");
+                builder.AppendLine($" '{State}'");
+            }
+
+            if (Optional.IsDefined(FullyQualifiedDomainName))
+            {
+                builder.Append("    fullyQualifiedDomainName:");
+                builder.AppendLine($" '{FullyQualifiedDomainName}'");
+            }
+
+            if (Optional.IsCollectionDefined(PrivateEndpointConnections))
+            {
+                if (PrivateEndpointConnections.Any())
+                {
+                    builder.Append("    privateEndpointConnections:");
+                    builder.AppendLine(" [");
+                    foreach (var item in PrivateEndpointConnections)
+                    {
+                        AppendChildObject(builder, item, options, 6, true);
+                    }
+                    builder.AppendLine("    ]");
+                }
+            }
+
+            if (Optional.IsDefined(MinimalTlsVersion))
+            {
+                builder.Append("    minimalTlsVersion:");
+                builder.AppendLine($" '{MinimalTlsVersion}'");
+            }
+
+            if (Optional.IsDefined(PublicNetworkAccess))
+            {
+                builder.Append("    publicNetworkAccess:");
+                builder.AppendLine($" '{PublicNetworkAccess.ToString()}'");
+            }
+
+            if (Optional.IsDefined(WorkspaceFeature))
+            {
+                builder.Append("    workspaceFeature:");
+                builder.AppendLine($" '{WorkspaceFeature.ToString()}'");
+            }
+
+            if (Optional.IsDefined(PrimaryUserAssignedIdentityId))
+            {
+                builder.Append("    primaryUserAssignedIdentityId:");
+                builder.AppendLine($" '{PrimaryUserAssignedIdentityId.ToString()}'");
+            }
+
+            if (Optional.IsDefined(FederatedClientId))
+            {
+                builder.Append("    federatedClientId:");
+                builder.AppendLine($" '{FederatedClientId.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(KeyId))
+            {
+                builder.Append("    keyId:");
+                builder.AppendLine($" '{KeyId.AbsoluteUri}'");
+            }
+
+            if (Optional.IsDefined(Administrators))
+            {
+                builder.Append("    administrators:");
+                AppendChildObject(builder, Administrators, options, 4, false);
+            }
+
+            if (Optional.IsDefined(RestrictOutboundNetworkAccess))
+            {
+                builder.Append("    restrictOutboundNetworkAccess:");
+                builder.AppendLine($" '{RestrictOutboundNetworkAccess.ToString()}'");
+            }
+
+            if (Optional.IsDefined(IsIPv6Enabled))
+            {
+                builder.Append("    isIPv6Enabled:");
+                builder.AppendLine($" '{IsIPv6Enabled.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ExternalGovernanceStatus))
+            {
+                builder.Append("    externalGovernanceStatus:");
+                builder.AppendLine($" '{ExternalGovernanceStatus.ToString()}'");
+            }
+
+            builder.AppendLine("  }");
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<SqlServerData>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<SqlServerData>)this).GetFormatFromOptions(options) : options.Format;
@@ -438,6 +637,8 @@ namespace Azure.ResourceManager.Sql
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(SqlServerData)} does not support '{options.Format}' format.");
             }
@@ -454,6 +655,8 @@ namespace Azure.ResourceManager.Sql
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeSqlServerData(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(SqlServerData)} does not support '{options.Format}' format.");
             }

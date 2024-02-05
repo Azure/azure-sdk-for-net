@@ -8,7 +8,9 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -336,6 +338,155 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             return new SecurityInsightsSubmissionMailEntity(id, name, type, systemData.Value, kind, serializedAdditionalRawData, Optional.ToDictionary(additionalData), friendlyName.Value, Optional.ToNullable(networkMessageId), Optional.ToNullable(submissionId), submitter.Value, Optional.ToNullable(submissionDate), Optional.ToNullable(timestamp), recipient.Value, sender.Value, senderIP.Value, subject.Value, reportType.Value);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(Kind))
+            {
+                builder.Append("  kind:");
+                builder.AppendLine($" '{Kind.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Id))
+            {
+                builder.Append("  id:");
+                builder.AppendLine($" '{Id.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                builder.AppendLine($" '{Name}'");
+            }
+
+            if (Optional.IsDefined(ResourceType))
+            {
+                builder.Append("  type:");
+                builder.AppendLine($" '{ResourceType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SystemData))
+            {
+                builder.Append("  systemData:");
+                builder.AppendLine($" '{SystemData.ToString()}'");
+            }
+
+            builder.Append("  properties:");
+            builder.AppendLine(" {");
+            if (Optional.IsCollectionDefined(AdditionalData))
+            {
+                if (AdditionalData.Any())
+                {
+                    builder.Append("    additionalData:");
+                    builder.AppendLine(" {");
+                    foreach (var item in AdditionalData)
+                    {
+                        builder.Append($"        {item.Key}: ");
+                        if (item.Value == null)
+                        {
+                            builder.Append("null");
+                            continue;
+                        }
+                        builder.AppendLine($" '{item.Value.ToString()}'");
+                    }
+                    builder.AppendLine("    }");
+                }
+            }
+
+            if (Optional.IsDefined(FriendlyName))
+            {
+                builder.Append("    friendlyName:");
+                builder.AppendLine($" '{FriendlyName}'");
+            }
+
+            if (Optional.IsDefined(NetworkMessageId))
+            {
+                builder.Append("    networkMessageId:");
+                builder.AppendLine($" '{NetworkMessageId.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SubmissionId))
+            {
+                builder.Append("    submissionId:");
+                builder.AppendLine($" '{SubmissionId.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Submitter))
+            {
+                builder.Append("    submitter:");
+                builder.AppendLine($" '{Submitter}'");
+            }
+
+            if (Optional.IsDefined(SubmitOn))
+            {
+                builder.Append("    submissionDate:");
+                var formattedDateTimeString = TypeFormatters.ToString(SubmitOn.Value, "o");
+                builder.AppendLine($" '{formattedDateTimeString}'");
+            }
+
+            if (Optional.IsDefined(MessageReceivedOn))
+            {
+                builder.Append("    timestamp:");
+                var formattedDateTimeString = TypeFormatters.ToString(MessageReceivedOn.Value, "o");
+                builder.AppendLine($" '{formattedDateTimeString}'");
+            }
+
+            if (Optional.IsDefined(Recipient))
+            {
+                builder.Append("    recipient:");
+                builder.AppendLine($" '{Recipient}'");
+            }
+
+            if (Optional.IsDefined(Sender))
+            {
+                builder.Append("    sender:");
+                builder.AppendLine($" '{Sender}'");
+            }
+
+            if (Optional.IsDefined(SenderIP))
+            {
+                builder.Append("    senderIp:");
+                builder.AppendLine($" '{SenderIP.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Subject))
+            {
+                builder.Append("    subject:");
+                builder.AppendLine($" '{Subject}'");
+            }
+
+            if (Optional.IsDefined(ReportType))
+            {
+                builder.Append("    reportType:");
+                builder.AppendLine($" '{ReportType}'");
+            }
+
+            builder.AppendLine("  }");
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<SecurityInsightsSubmissionMailEntity>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<SecurityInsightsSubmissionMailEntity>)this).GetFormatFromOptions(options) : options.Format;
@@ -344,6 +495,8 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(SecurityInsightsSubmissionMailEntity)} does not support '{options.Format}' format.");
             }
@@ -360,6 +513,8 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeSecurityInsightsSubmissionMailEntity(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(SecurityInsightsSubmissionMailEntity)} does not support '{options.Format}' format.");
             }

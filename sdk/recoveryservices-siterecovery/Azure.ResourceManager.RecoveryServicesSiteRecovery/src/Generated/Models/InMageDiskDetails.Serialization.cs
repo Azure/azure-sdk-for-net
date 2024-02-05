@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -157,6 +159,78 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             return new InMageDiskDetails(diskId.Value, diskName.Value, diskSizeInMB.Value, diskType.Value, diskConfiguration.Value, Optional.ToList(volumeList), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(DiskId))
+            {
+                builder.Append("  diskId:");
+                builder.AppendLine($" '{DiskId}'");
+            }
+
+            if (Optional.IsDefined(DiskName))
+            {
+                builder.Append("  diskName:");
+                builder.AppendLine($" '{DiskName}'");
+            }
+
+            if (Optional.IsDefined(DiskSizeInMB))
+            {
+                builder.Append("  diskSizeInMB:");
+                builder.AppendLine($" '{DiskSizeInMB}'");
+            }
+
+            if (Optional.IsDefined(DiskType))
+            {
+                builder.Append("  diskType:");
+                builder.AppendLine($" '{DiskType}'");
+            }
+
+            if (Optional.IsDefined(DiskConfiguration))
+            {
+                builder.Append("  diskConfiguration:");
+                builder.AppendLine($" '{DiskConfiguration}'");
+            }
+
+            if (Optional.IsCollectionDefined(VolumeList))
+            {
+                if (VolumeList.Any())
+                {
+                    builder.Append("  volumeList:");
+                    builder.AppendLine(" [");
+                    foreach (var item in VolumeList)
+                    {
+                        AppendChildObject(builder, item, options, 4, true);
+                    }
+                    builder.AppendLine("  ]");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<InMageDiskDetails>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<InMageDiskDetails>)this).GetFormatFromOptions(options) : options.Format;
@@ -165,6 +239,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(InMageDiskDetails)} does not support '{options.Format}' format.");
             }
@@ -181,6 +257,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeInMageDiskDetails(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(InMageDiskDetails)} does not support '{options.Format}' format.");
             }

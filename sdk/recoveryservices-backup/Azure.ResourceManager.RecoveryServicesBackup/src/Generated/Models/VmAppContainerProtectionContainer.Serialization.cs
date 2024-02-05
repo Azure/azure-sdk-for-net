@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -219,6 +220,101 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             return new VmAppContainerProtectionContainer(friendlyName.Value, Optional.ToNullable(backupManagementType), registrationStatus.Value, healthStatus.Value, containerType, protectableObjectType.Value, serializedAdditionalRawData, sourceResourceId.Value, Optional.ToNullable(lastUpdatedTime), extendedInfo.Value, Optional.ToNullable(workloadType), Optional.ToNullable(operationType));
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(SourceResourceId))
+            {
+                builder.Append("  sourceResourceId:");
+                builder.AppendLine($" '{SourceResourceId.ToString()}'");
+            }
+
+            if (Optional.IsDefined(LastUpdatedOn))
+            {
+                builder.Append("  lastUpdatedTime:");
+                var formattedDateTimeString = TypeFormatters.ToString(LastUpdatedOn.Value, "o");
+                builder.AppendLine($" '{formattedDateTimeString}'");
+            }
+
+            if (Optional.IsDefined(ExtendedInfo))
+            {
+                builder.Append("  extendedInfo:");
+                AppendChildObject(builder, ExtendedInfo, options, 2, false);
+            }
+
+            if (Optional.IsDefined(WorkloadType))
+            {
+                builder.Append("  workloadType:");
+                builder.AppendLine($" '{WorkloadType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(OperationType))
+            {
+                builder.Append("  operationType:");
+                builder.AppendLine($" '{OperationType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(FriendlyName))
+            {
+                builder.Append("  friendlyName:");
+                builder.AppendLine($" '{FriendlyName}'");
+            }
+
+            if (Optional.IsDefined(BackupManagementType))
+            {
+                builder.Append("  backupManagementType:");
+                builder.AppendLine($" '{BackupManagementType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(RegistrationStatus))
+            {
+                builder.Append("  registrationStatus:");
+                builder.AppendLine($" '{RegistrationStatus}'");
+            }
+
+            if (Optional.IsDefined(HealthStatus))
+            {
+                builder.Append("  healthStatus:");
+                builder.AppendLine($" '{HealthStatus}'");
+            }
+
+            if (Optional.IsDefined(ContainerType))
+            {
+                builder.Append("  containerType:");
+                builder.AppendLine($" '{ContainerType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ProtectableObjectType))
+            {
+                builder.Append("  protectableObjectType:");
+                builder.AppendLine($" '{ProtectableObjectType}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<VmAppContainerProtectionContainer>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<VmAppContainerProtectionContainer>)this).GetFormatFromOptions(options) : options.Format;
@@ -227,6 +323,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(VmAppContainerProtectionContainer)} does not support '{options.Format}' format.");
             }
@@ -243,6 +341,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeVmAppContainerProtectionContainer(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(VmAppContainerProtectionContainer)} does not support '{options.Format}' format.");
             }

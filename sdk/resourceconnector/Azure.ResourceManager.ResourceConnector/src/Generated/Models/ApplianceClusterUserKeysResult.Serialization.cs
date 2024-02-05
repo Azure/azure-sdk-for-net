@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -154,6 +156,78 @@ namespace Azure.ResourceManager.ResourceConnector.Models
             return new ApplianceClusterUserKeysResult(Optional.ToDictionary(artifactProfiles), Optional.ToList(kubeconfigs), Optional.ToDictionary(sshKeys), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsCollectionDefined(ArtifactProfiles))
+            {
+                if (ArtifactProfiles.Any())
+                {
+                    builder.Append("  artifactProfiles:");
+                    builder.AppendLine(" {");
+                    foreach (var item in ArtifactProfiles)
+                    {
+                        builder.Append($"    {item.Key}: ");
+                        AppendChildObject(builder, item.Value, options, 4, false);
+                    }
+                    builder.AppendLine("  }");
+                }
+            }
+
+            if (Optional.IsCollectionDefined(Kubeconfigs))
+            {
+                if (Kubeconfigs.Any())
+                {
+                    builder.Append("  kubeconfigs:");
+                    builder.AppendLine(" [");
+                    foreach (var item in Kubeconfigs)
+                    {
+                        AppendChildObject(builder, item, options, 4, true);
+                    }
+                    builder.AppendLine("  ]");
+                }
+            }
+
+            if (Optional.IsCollectionDefined(SshKeys))
+            {
+                if (SshKeys.Any())
+                {
+                    builder.Append("  sshKeys:");
+                    builder.AppendLine(" {");
+                    foreach (var item in SshKeys)
+                    {
+                        builder.Append($"    {item.Key}: ");
+                        AppendChildObject(builder, item.Value, options, 4, false);
+                    }
+                    builder.AppendLine("  }");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<ApplianceClusterUserKeysResult>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ApplianceClusterUserKeysResult>)this).GetFormatFromOptions(options) : options.Format;
@@ -162,6 +236,8 @@ namespace Azure.ResourceManager.ResourceConnector.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(ApplianceClusterUserKeysResult)} does not support '{options.Format}' format.");
             }
@@ -178,6 +254,8 @@ namespace Azure.ResourceManager.ResourceConnector.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeApplianceClusterUserKeysResult(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(ApplianceClusterUserKeysResult)} does not support '{options.Format}' format.");
             }

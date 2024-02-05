@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -269,6 +270,144 @@ namespace Azure.ResourceManager.Redis.Models
             return new RedisCommonConfiguration(Optional.ToNullable(rdbBackupEnabled), rdbBackupFrequency.Value, Optional.ToNullable(rdbBackupMaxSnapshotCount), rdbStorageConnectionString.Value, Optional.ToNullable(aofBackupEnabled), aofStorageConnectionString0.Value, aofStorageConnectionString1.Value, maxfragmentationmemoryReserved.Value, maxmemoryPolicy.Value, maxmemoryReserved.Value, maxmemoryDelta.Value, maxclients.Value, preferredDataArchiveAuthMethod.Value, preferredDataPersistenceAuthMethod.Value, zonalConfiguration.Value, authnotrequired.Value, storageSubscriptionId.Value, aadEnabled.Value, additionalProperties);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(IsRdbBackupEnabled))
+            {
+                builder.Append("  rdb-backup-enabled:");
+                var boolValue = IsRdbBackupEnabled.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(RdbBackupFrequency))
+            {
+                builder.Append("  rdb-backup-frequency:");
+                builder.AppendLine($" '{RdbBackupFrequency}'");
+            }
+
+            if (Optional.IsDefined(RdbBackupMaxSnapshotCount))
+            {
+                builder.Append("  rdb-backup-max-snapshot-count:");
+                builder.AppendLine($" {RdbBackupMaxSnapshotCount.Value}");
+            }
+
+            if (Optional.IsDefined(RdbStorageConnectionString))
+            {
+                builder.Append("  rdb-storage-connection-string:");
+                builder.AppendLine($" '{RdbStorageConnectionString}'");
+            }
+
+            if (Optional.IsDefined(IsAofBackupEnabled))
+            {
+                builder.Append("  aof-backup-enabled:");
+                var boolValue = IsAofBackupEnabled.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(AofStorageConnectionString0))
+            {
+                builder.Append("  aof-storage-connection-string-0:");
+                builder.AppendLine($" '{AofStorageConnectionString0}'");
+            }
+
+            if (Optional.IsDefined(AofStorageConnectionString1))
+            {
+                builder.Append("  aof-storage-connection-string-1:");
+                builder.AppendLine($" '{AofStorageConnectionString1}'");
+            }
+
+            if (Optional.IsDefined(MaxFragmentationMemoryReserved))
+            {
+                builder.Append("  maxfragmentationmemory-reserved:");
+                builder.AppendLine($" '{MaxFragmentationMemoryReserved}'");
+            }
+
+            if (Optional.IsDefined(MaxMemoryPolicy))
+            {
+                builder.Append("  maxmemory-policy:");
+                builder.AppendLine($" '{MaxMemoryPolicy}'");
+            }
+
+            if (Optional.IsDefined(MaxMemoryReserved))
+            {
+                builder.Append("  maxmemory-reserved:");
+                builder.AppendLine($" '{MaxMemoryReserved}'");
+            }
+
+            if (Optional.IsDefined(MaxMemoryDelta))
+            {
+                builder.Append("  maxmemory-delta:");
+                builder.AppendLine($" '{MaxMemoryDelta}'");
+            }
+
+            if (Optional.IsDefined(MaxClients))
+            {
+                builder.Append("  maxclients:");
+                builder.AppendLine($" '{MaxClients}'");
+            }
+
+            if (Optional.IsDefined(PreferredDataArchiveAuthMethod))
+            {
+                builder.Append("  preferred-data-archive-auth-method:");
+                builder.AppendLine($" '{PreferredDataArchiveAuthMethod}'");
+            }
+
+            if (Optional.IsDefined(PreferredDataPersistenceAuthMethod))
+            {
+                builder.Append("  preferred-data-persistence-auth-method:");
+                builder.AppendLine($" '{PreferredDataPersistenceAuthMethod}'");
+            }
+
+            if (Optional.IsDefined(ZonalConfiguration))
+            {
+                builder.Append("  zonal-configuration:");
+                builder.AppendLine($" '{ZonalConfiguration}'");
+            }
+
+            if (Optional.IsDefined(AuthNotRequired))
+            {
+                builder.Append("  authnotrequired:");
+                builder.AppendLine($" '{AuthNotRequired}'");
+            }
+
+            if (Optional.IsDefined(StorageSubscriptionId))
+            {
+                builder.Append("  storage-subscription-id:");
+                builder.AppendLine($" '{StorageSubscriptionId}'");
+            }
+
+            if (Optional.IsDefined(IsAadEnabled))
+            {
+                builder.Append("  aad-enabled:");
+                builder.AppendLine($" '{IsAadEnabled}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<RedisCommonConfiguration>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<RedisCommonConfiguration>)this).GetFormatFromOptions(options) : options.Format;
@@ -277,6 +416,8 @@ namespace Azure.ResourceManager.Redis.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(RedisCommonConfiguration)} does not support '{options.Format}' format.");
             }
@@ -293,6 +434,8 @@ namespace Azure.ResourceManager.Redis.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeRedisCommonConfiguration(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(RedisCommonConfiguration)} does not support '{options.Format}' format.");
             }

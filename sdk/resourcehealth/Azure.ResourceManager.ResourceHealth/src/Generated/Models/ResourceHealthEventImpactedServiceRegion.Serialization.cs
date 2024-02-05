@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -193,6 +195,105 @@ namespace Azure.ResourceManager.ResourceHealth.Models
             return new ResourceHealthEventImpactedServiceRegion(impactedRegion.Value, Optional.ToNullable(status), Optional.ToList(impactedSubscriptions), Optional.ToList(impactedTenants), Optional.ToNullable(lastUpdateTime), Optional.ToList(updates), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(ImpactedRegion))
+            {
+                builder.Append("  impactedRegion:");
+                builder.AppendLine($" '{ImpactedRegion}'");
+            }
+
+            if (Optional.IsDefined(Status))
+            {
+                builder.Append("  status:");
+                builder.AppendLine($" '{Status.ToString()}'");
+            }
+
+            if (Optional.IsCollectionDefined(ImpactedSubscriptions))
+            {
+                if (ImpactedSubscriptions.Any())
+                {
+                    builder.Append("  impactedSubscriptions:");
+                    builder.AppendLine(" [");
+                    foreach (var item in ImpactedSubscriptions)
+                    {
+                        if (item == null)
+                        {
+                            builder.Append("null");
+                            continue;
+                        }
+                        builder.AppendLine($"    '{item}'");
+                    }
+                    builder.AppendLine("  ]");
+                }
+            }
+
+            if (Optional.IsCollectionDefined(ImpactedTenants))
+            {
+                if (ImpactedTenants.Any())
+                {
+                    builder.Append("  impactedTenants:");
+                    builder.AppendLine(" [");
+                    foreach (var item in ImpactedTenants)
+                    {
+                        if (item == null)
+                        {
+                            builder.Append("null");
+                            continue;
+                        }
+                        builder.AppendLine($"    '{item}'");
+                    }
+                    builder.AppendLine("  ]");
+                }
+            }
+
+            if (Optional.IsDefined(LastUpdateOn))
+            {
+                builder.Append("  lastUpdateTime:");
+                var formattedDateTimeString = TypeFormatters.ToString(LastUpdateOn.Value, "o");
+                builder.AppendLine($" '{formattedDateTimeString}'");
+            }
+
+            if (Optional.IsCollectionDefined(Updates))
+            {
+                if (Updates.Any())
+                {
+                    builder.Append("  updates:");
+                    builder.AppendLine(" [");
+                    foreach (var item in Updates)
+                    {
+                        AppendChildObject(builder, item, options, 4, true);
+                    }
+                    builder.AppendLine("  ]");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<ResourceHealthEventImpactedServiceRegion>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ResourceHealthEventImpactedServiceRegion>)this).GetFormatFromOptions(options) : options.Format;
@@ -201,6 +302,8 @@ namespace Azure.ResourceManager.ResourceHealth.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(ResourceHealthEventImpactedServiceRegion)} does not support '{options.Format}' format.");
             }
@@ -217,6 +320,8 @@ namespace Azure.ResourceManager.ResourceHealth.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeResourceHealthEventImpactedServiceRegion(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(ResourceHealthEventImpactedServiceRegion)} does not support '{options.Format}' format.");
             }

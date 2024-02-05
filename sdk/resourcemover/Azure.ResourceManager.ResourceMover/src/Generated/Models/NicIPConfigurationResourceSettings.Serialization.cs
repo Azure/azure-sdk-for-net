@@ -8,7 +8,9 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -210,6 +212,99 @@ namespace Azure.ResourceManager.ResourceMover.Models
             return new NicIPConfigurationResourceSettings(name.Value, privateIPAddress.Value, privateIPAllocationMethod.Value, subnet.Value, Optional.ToNullable(primary), Optional.ToList(loadBalancerBackendAddressPools), Optional.ToList(loadBalancerNatRules), publicIP.Value, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                builder.AppendLine($" '{Name}'");
+            }
+
+            if (Optional.IsDefined(PrivateIPAddress))
+            {
+                builder.Append("  privateIpAddress:");
+                builder.AppendLine($" '{PrivateIPAddress.ToString()}'");
+            }
+
+            if (Optional.IsDefined(PrivateIPAllocationMethod))
+            {
+                builder.Append("  privateIpAllocationMethod:");
+                builder.AppendLine($" '{PrivateIPAllocationMethod}'");
+            }
+
+            if (Optional.IsDefined(Subnet))
+            {
+                builder.Append("  subnet:");
+                AppendChildObject(builder, Subnet, options, 2, false);
+            }
+
+            if (Optional.IsDefined(IsPrimary))
+            {
+                builder.Append("  primary:");
+                var boolValue = IsPrimary.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsCollectionDefined(LoadBalancerBackendAddressPools))
+            {
+                if (LoadBalancerBackendAddressPools.Any())
+                {
+                    builder.Append("  loadBalancerBackendAddressPools:");
+                    builder.AppendLine(" [");
+                    foreach (var item in LoadBalancerBackendAddressPools)
+                    {
+                        AppendChildObject(builder, item, options, 4, true);
+                    }
+                    builder.AppendLine("  ]");
+                }
+            }
+
+            if (Optional.IsCollectionDefined(LoadBalancerNatRules))
+            {
+                if (LoadBalancerNatRules.Any())
+                {
+                    builder.Append("  loadBalancerNatRules:");
+                    builder.AppendLine(" [");
+                    foreach (var item in LoadBalancerNatRules)
+                    {
+                        AppendChildObject(builder, item, options, 4, true);
+                    }
+                    builder.AppendLine("  ]");
+                }
+            }
+
+            if (Optional.IsDefined(PublicIP))
+            {
+                builder.Append("  publicIp:");
+                AppendChildObject(builder, PublicIP, options, 2, false);
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<NicIPConfigurationResourceSettings>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<NicIPConfigurationResourceSettings>)this).GetFormatFromOptions(options) : options.Format;
@@ -218,6 +313,8 @@ namespace Azure.ResourceManager.ResourceMover.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(NicIPConfigurationResourceSettings)} does not support '{options.Format}' format.");
             }
@@ -234,6 +331,8 @@ namespace Azure.ResourceManager.ResourceMover.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeNicIPConfigurationResourceSettings(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(NicIPConfigurationResourceSettings)} does not support '{options.Format}' format.");
             }

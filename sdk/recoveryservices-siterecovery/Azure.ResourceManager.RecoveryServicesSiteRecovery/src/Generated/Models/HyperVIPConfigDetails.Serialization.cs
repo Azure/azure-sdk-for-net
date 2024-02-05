@@ -8,7 +8,9 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -299,6 +301,152 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             return new HyperVIPConfigDetails(name.Value, Optional.ToNullable(isPrimary), subnetName.Value, staticIPAddress.Value, ipAddressType.Value, Optional.ToNullable(isSeletedForFailover), recoverySubnetName.Value, recoveryStaticIPAddress.Value, recoveryIPAddressType.Value, recoveryPublicIPAddressId.Value, Optional.ToList(recoveryLBBackendAddressPoolIds), tfoSubnetName.Value, tfoStaticIPAddress.Value, tfoPublicIPAddressId.Value, Optional.ToList(tfoLBBackendAddressPoolIds), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                builder.AppendLine($" '{Name}'");
+            }
+
+            if (Optional.IsDefined(IsPrimary))
+            {
+                builder.Append("  isPrimary:");
+                var boolValue = IsPrimary.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(SubnetName))
+            {
+                builder.Append("  subnetName:");
+                builder.AppendLine($" '{SubnetName}'");
+            }
+
+            if (Optional.IsDefined(StaticIPAddress))
+            {
+                builder.Append("  staticIPAddress:");
+                builder.AppendLine($" '{StaticIPAddress.ToString()}'");
+            }
+
+            if (Optional.IsDefined(IPAddressType))
+            {
+                builder.Append("  ipAddressType:");
+                builder.AppendLine($" '{IPAddressType}'");
+            }
+
+            if (Optional.IsDefined(IsSeletedForFailover))
+            {
+                builder.Append("  isSeletedForFailover:");
+                var boolValue = IsSeletedForFailover.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(RecoverySubnetName))
+            {
+                builder.Append("  recoverySubnetName:");
+                builder.AppendLine($" '{RecoverySubnetName}'");
+            }
+
+            if (Optional.IsDefined(RecoveryStaticIPAddress))
+            {
+                builder.Append("  recoveryStaticIPAddress:");
+                builder.AppendLine($" '{RecoveryStaticIPAddress.ToString()}'");
+            }
+
+            if (Optional.IsDefined(RecoveryIPAddressType))
+            {
+                builder.Append("  recoveryIPAddressType:");
+                builder.AppendLine($" '{RecoveryIPAddressType}'");
+            }
+
+            if (Optional.IsDefined(RecoveryPublicIPAddressId))
+            {
+                builder.Append("  recoveryPublicIPAddressId:");
+                builder.AppendLine($" '{RecoveryPublicIPAddressId.ToString()}'");
+            }
+
+            if (Optional.IsCollectionDefined(RecoveryLBBackendAddressPoolIds))
+            {
+                if (RecoveryLBBackendAddressPoolIds.Any())
+                {
+                    builder.Append("  recoveryLBBackendAddressPoolIds:");
+                    builder.AppendLine(" [");
+                    foreach (var item in RecoveryLBBackendAddressPoolIds)
+                    {
+                        if (item == null)
+                        {
+                            builder.Append("null");
+                            continue;
+                        }
+                        builder.AppendLine($"    '{item}'");
+                    }
+                    builder.AppendLine("  ]");
+                }
+            }
+
+            if (Optional.IsDefined(TfoSubnetName))
+            {
+                builder.Append("  tfoSubnetName:");
+                builder.AppendLine($" '{TfoSubnetName}'");
+            }
+
+            if (Optional.IsDefined(TfoStaticIPAddress))
+            {
+                builder.Append("  tfoStaticIPAddress:");
+                builder.AppendLine($" '{TfoStaticIPAddress.ToString()}'");
+            }
+
+            if (Optional.IsDefined(TfoPublicIPAddressId))
+            {
+                builder.Append("  tfoPublicIPAddressId:");
+                builder.AppendLine($" '{TfoPublicIPAddressId.ToString()}'");
+            }
+
+            if (Optional.IsCollectionDefined(TfoLBBackendAddressPoolIds))
+            {
+                if (TfoLBBackendAddressPoolIds.Any())
+                {
+                    builder.Append("  tfoLBBackendAddressPoolIds:");
+                    builder.AppendLine(" [");
+                    foreach (var item in TfoLBBackendAddressPoolIds)
+                    {
+                        if (item == null)
+                        {
+                            builder.Append("null");
+                            continue;
+                        }
+                        builder.AppendLine($"    '{item}'");
+                    }
+                    builder.AppendLine("  ]");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<HyperVIPConfigDetails>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<HyperVIPConfigDetails>)this).GetFormatFromOptions(options) : options.Format;
@@ -307,6 +455,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(HyperVIPConfigDetails)} does not support '{options.Format}' format.");
             }
@@ -323,6 +473,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeHyperVIPConfigDetails(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(HyperVIPConfigDetails)} does not support '{options.Format}' format.");
             }

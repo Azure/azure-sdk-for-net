@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -180,6 +182,103 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             return new SecurityHealthReportIssue(issueKey, issueName.Value, Optional.ToList(securityValues), issueDescription.Value, remediationSteps.Value, remediationScript.Value, Optional.ToDictionary(issueAdditionalData), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(IssueKey))
+            {
+                builder.Append("  issueKey:");
+                builder.AppendLine($" '{IssueKey}'");
+            }
+
+            if (Optional.IsDefined(IssueName))
+            {
+                builder.Append("  issueName:");
+                builder.AppendLine($" '{IssueName}'");
+            }
+
+            if (Optional.IsCollectionDefined(SecurityValues))
+            {
+                if (SecurityValues.Any())
+                {
+                    builder.Append("  securityValues:");
+                    builder.AppendLine(" [");
+                    foreach (var item in SecurityValues)
+                    {
+                        if (item == null)
+                        {
+                            builder.Append("null");
+                            continue;
+                        }
+                        builder.AppendLine($"    '{item}'");
+                    }
+                    builder.AppendLine("  ]");
+                }
+            }
+
+            if (Optional.IsDefined(IssueDescription))
+            {
+                builder.Append("  issueDescription:");
+                builder.AppendLine($" '{IssueDescription}'");
+            }
+
+            if (Optional.IsDefined(RemediationSteps))
+            {
+                builder.Append("  remediationSteps:");
+                builder.AppendLine($" '{RemediationSteps}'");
+            }
+
+            if (Optional.IsDefined(RemediationScript))
+            {
+                builder.Append("  remediationScript:");
+                builder.AppendLine($" '{RemediationScript}'");
+            }
+
+            if (Optional.IsCollectionDefined(IssueAdditionalData))
+            {
+                if (IssueAdditionalData.Any())
+                {
+                    builder.Append("  issueAdditionalData:");
+                    builder.AppendLine(" {");
+                    foreach (var item in IssueAdditionalData)
+                    {
+                        builder.Append($"    {item.Key}: ");
+                        if (item.Value == null)
+                        {
+                            builder.Append("null");
+                            continue;
+                        }
+                        builder.AppendLine($" '{item.Value}'");
+                    }
+                    builder.AppendLine("  }");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<SecurityHealthReportIssue>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<SecurityHealthReportIssue>)this).GetFormatFromOptions(options) : options.Format;
@@ -188,6 +287,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(SecurityHealthReportIssue)} does not support '{options.Format}' format.");
             }
@@ -204,6 +305,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeSecurityHealthReportIssue(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(SecurityHealthReportIssue)} does not support '{options.Format}' format.");
             }

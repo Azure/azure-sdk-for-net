@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -224,6 +226,108 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             return new ProtectionContainerMappingProperties(targetProtectionContainerId.Value, targetProtectionContainerFriendlyName.Value, providerSpecificDetails.Value, health.Value, Optional.ToList(healthErrorDetails), policyId.Value, state.Value, sourceProtectionContainerFriendlyName.Value, sourceFabricFriendlyName.Value, targetFabricFriendlyName.Value, policyFriendlyName.Value, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(TargetProtectionContainerId))
+            {
+                builder.Append("  targetProtectionContainerId:");
+                builder.AppendLine($" '{TargetProtectionContainerId.ToString()}'");
+            }
+
+            if (Optional.IsDefined(TargetProtectionContainerFriendlyName))
+            {
+                builder.Append("  targetProtectionContainerFriendlyName:");
+                builder.AppendLine($" '{TargetProtectionContainerFriendlyName}'");
+            }
+
+            if (Optional.IsDefined(ProviderSpecificDetails))
+            {
+                builder.Append("  providerSpecificDetails:");
+                AppendChildObject(builder, ProviderSpecificDetails, options, 2, false);
+            }
+
+            if (Optional.IsDefined(Health))
+            {
+                builder.Append("  health:");
+                builder.AppendLine($" '{Health}'");
+            }
+
+            if (Optional.IsCollectionDefined(HealthErrorDetails))
+            {
+                if (HealthErrorDetails.Any())
+                {
+                    builder.Append("  healthErrorDetails:");
+                    builder.AppendLine(" [");
+                    foreach (var item in HealthErrorDetails)
+                    {
+                        AppendChildObject(builder, item, options, 4, true);
+                    }
+                    builder.AppendLine("  ]");
+                }
+            }
+
+            if (Optional.IsDefined(PolicyId))
+            {
+                builder.Append("  policyId:");
+                builder.AppendLine($" '{PolicyId.ToString()}'");
+            }
+
+            if (Optional.IsDefined(State))
+            {
+                builder.Append("  state:");
+                builder.AppendLine($" '{State}'");
+            }
+
+            if (Optional.IsDefined(SourceProtectionContainerFriendlyName))
+            {
+                builder.Append("  sourceProtectionContainerFriendlyName:");
+                builder.AppendLine($" '{SourceProtectionContainerFriendlyName}'");
+            }
+
+            if (Optional.IsDefined(SourceFabricFriendlyName))
+            {
+                builder.Append("  sourceFabricFriendlyName:");
+                builder.AppendLine($" '{SourceFabricFriendlyName}'");
+            }
+
+            if (Optional.IsDefined(TargetFabricFriendlyName))
+            {
+                builder.Append("  targetFabricFriendlyName:");
+                builder.AppendLine($" '{TargetFabricFriendlyName}'");
+            }
+
+            if (Optional.IsDefined(PolicyFriendlyName))
+            {
+                builder.Append("  policyFriendlyName:");
+                builder.AppendLine($" '{PolicyFriendlyName}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<ProtectionContainerMappingProperties>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ProtectionContainerMappingProperties>)this).GetFormatFromOptions(options) : options.Format;
@@ -232,6 +336,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(ProtectionContainerMappingProperties)} does not support '{options.Format}' format.");
             }
@@ -248,6 +354,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeProtectionContainerMappingProperties(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(ProtectionContainerMappingProperties)} does not support '{options.Format}' format.");
             }

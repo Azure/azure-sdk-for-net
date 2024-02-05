@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -166,6 +167,76 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             return new SecurityInsightsIPEntityGeoLocation(Optional.ToNullable(asn), city.Value, countryCode.Value, countryName.Value, Optional.ToNullable(latitude), Optional.ToNullable(longitude), state.Value, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(Asn))
+            {
+                builder.Append("  asn:");
+                builder.AppendLine($" {Asn.Value}");
+            }
+
+            if (Optional.IsDefined(City))
+            {
+                builder.Append("  city:");
+                builder.AppendLine($" '{City}'");
+            }
+
+            if (Optional.IsDefined(CountryCode))
+            {
+                builder.Append("  countryCode:");
+                builder.AppendLine($" '{CountryCode}'");
+            }
+
+            if (Optional.IsDefined(CountryName))
+            {
+                builder.Append("  countryName:");
+                builder.AppendLine($" '{CountryName}'");
+            }
+
+            if (Optional.IsDefined(Latitude))
+            {
+                builder.Append("  latitude:");
+                builder.AppendLine($" '{Latitude.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Longitude))
+            {
+                builder.Append("  longitude:");
+                builder.AppendLine($" '{Longitude.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(State))
+            {
+                builder.Append("  state:");
+                builder.AppendLine($" '{State}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<SecurityInsightsIPEntityGeoLocation>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<SecurityInsightsIPEntityGeoLocation>)this).GetFormatFromOptions(options) : options.Format;
@@ -174,6 +245,8 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(SecurityInsightsIPEntityGeoLocation)} does not support '{options.Format}' format.");
             }
@@ -190,6 +263,8 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeSecurityInsightsIPEntityGeoLocation(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(SecurityInsightsIPEntityGeoLocation)} does not support '{options.Format}' format.");
             }

@@ -8,7 +8,9 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -525,6 +527,230 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             return new SiteRecoveryProcessServerDetails(id.Value, name.Value, biosId.Value, fabricObjectId.Value, fqdn.Value, Optional.ToList(ipAddresses), version.Value, Optional.ToNullable(lastHeartbeatUtc), Optional.ToNullable(totalMemoryInBytes), Optional.ToNullable(availableMemoryInBytes), Optional.ToNullable(usedMemoryInBytes), Optional.ToNullable(memoryUsagePercentage), Optional.ToNullable(totalSpaceInBytes), Optional.ToNullable(availableSpaceInBytes), Optional.ToNullable(usedSpaceInBytes), Optional.ToNullable(freeSpacePercentage), Optional.ToNullable(throughputUploadPendingDataInBytes), Optional.ToNullable(throughputInBytes), Optional.ToNullable(processorUsagePercentage), Optional.ToNullable(throughputStatus), Optional.ToNullable(systemLoad), Optional.ToNullable(systemLoadStatus), Optional.ToNullable(diskUsageStatus), Optional.ToNullable(memoryUsageStatus), Optional.ToNullable(processorUsageStatus), Optional.ToNullable(health), Optional.ToList(healthErrors), Optional.ToNullable(protectedItemCount), Optional.ToNullable(historicHealth), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(Id))
+            {
+                builder.Append("  id:");
+                builder.AppendLine($" '{Id}'");
+            }
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                builder.AppendLine($" '{Name}'");
+            }
+
+            if (Optional.IsDefined(BiosId))
+            {
+                builder.Append("  biosId:");
+                builder.AppendLine($" '{BiosId}'");
+            }
+
+            if (Optional.IsDefined(FabricObjectId))
+            {
+                builder.Append("  fabricObjectId:");
+                builder.AppendLine($" '{FabricObjectId.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Fqdn))
+            {
+                builder.Append("  fqdn:");
+                builder.AppendLine($" '{Fqdn}'");
+            }
+
+            if (Optional.IsCollectionDefined(IPAddresses))
+            {
+                if (IPAddresses.Any())
+                {
+                    builder.Append("  ipAddresses:");
+                    builder.AppendLine(" [");
+                    foreach (var item in IPAddresses)
+                    {
+                        if (item == null)
+                        {
+                            builder.Append("null");
+                            continue;
+                        }
+                        builder.AppendLine($"    '{item.ToString()}'");
+                    }
+                    builder.AppendLine("  ]");
+                }
+            }
+
+            if (Optional.IsDefined(Version))
+            {
+                builder.Append("  version:");
+                builder.AppendLine($" '{Version}'");
+            }
+
+            if (Optional.IsDefined(LastHeartbeatReceivedOn))
+            {
+                builder.Append("  lastHeartbeatUtc:");
+                var formattedDateTimeString = TypeFormatters.ToString(LastHeartbeatReceivedOn.Value, "o");
+                builder.AppendLine($" '{formattedDateTimeString}'");
+            }
+
+            if (Optional.IsDefined(TotalMemoryInBytes))
+            {
+                builder.Append("  totalMemoryInBytes:");
+                builder.AppendLine($" '{TotalMemoryInBytes.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(AvailableMemoryInBytes))
+            {
+                builder.Append("  availableMemoryInBytes:");
+                builder.AppendLine($" '{AvailableMemoryInBytes.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(UsedMemoryInBytes))
+            {
+                builder.Append("  usedMemoryInBytes:");
+                builder.AppendLine($" '{UsedMemoryInBytes.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(MemoryUsagePercentage))
+            {
+                builder.Append("  memoryUsagePercentage:");
+                builder.AppendLine($" '{MemoryUsagePercentage.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(TotalSpaceInBytes))
+            {
+                builder.Append("  totalSpaceInBytes:");
+                builder.AppendLine($" '{TotalSpaceInBytes.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(AvailableSpaceInBytes))
+            {
+                builder.Append("  availableSpaceInBytes:");
+                builder.AppendLine($" '{AvailableSpaceInBytes.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(UsedSpaceInBytes))
+            {
+                builder.Append("  usedSpaceInBytes:");
+                builder.AppendLine($" '{UsedSpaceInBytes.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(FreeSpacePercentage))
+            {
+                builder.Append("  freeSpacePercentage:");
+                builder.AppendLine($" '{FreeSpacePercentage.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ThroughputUploadPendingDataInBytes))
+            {
+                builder.Append("  throughputUploadPendingDataInBytes:");
+                builder.AppendLine($" '{ThroughputUploadPendingDataInBytes.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ThroughputInBytes))
+            {
+                builder.Append("  throughputInBytes:");
+                builder.AppendLine($" '{ThroughputInBytes.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ProcessorUsagePercentage))
+            {
+                builder.Append("  processorUsagePercentage:");
+                builder.AppendLine($" '{ProcessorUsagePercentage.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ThroughputStatus))
+            {
+                builder.Append("  throughputStatus:");
+                builder.AppendLine($" '{ThroughputStatus.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SystemLoad))
+            {
+                builder.Append("  systemLoad:");
+                builder.AppendLine($" '{SystemLoad.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SystemLoadStatus))
+            {
+                builder.Append("  systemLoadStatus:");
+                builder.AppendLine($" '{SystemLoadStatus.ToString()}'");
+            }
+
+            if (Optional.IsDefined(DiskUsageStatus))
+            {
+                builder.Append("  diskUsageStatus:");
+                builder.AppendLine($" '{DiskUsageStatus.ToString()}'");
+            }
+
+            if (Optional.IsDefined(MemoryUsageStatus))
+            {
+                builder.Append("  memoryUsageStatus:");
+                builder.AppendLine($" '{MemoryUsageStatus.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ProcessorUsageStatus))
+            {
+                builder.Append("  processorUsageStatus:");
+                builder.AppendLine($" '{ProcessorUsageStatus.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Health))
+            {
+                builder.Append("  health:");
+                builder.AppendLine($" '{Health.ToString()}'");
+            }
+
+            if (Optional.IsCollectionDefined(HealthErrors))
+            {
+                if (HealthErrors.Any())
+                {
+                    builder.Append("  healthErrors:");
+                    builder.AppendLine(" [");
+                    foreach (var item in HealthErrors)
+                    {
+                        AppendChildObject(builder, item, options, 4, true);
+                    }
+                    builder.AppendLine("  ]");
+                }
+            }
+
+            if (Optional.IsDefined(ProtectedItemCount))
+            {
+                builder.Append("  protectedItemCount:");
+                builder.AppendLine($" {ProtectedItemCount.Value}");
+            }
+
+            if (Optional.IsDefined(HistoricHealth))
+            {
+                builder.Append("  historicHealth:");
+                builder.AppendLine($" '{HistoricHealth.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<SiteRecoveryProcessServerDetails>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<SiteRecoveryProcessServerDetails>)this).GetFormatFromOptions(options) : options.Format;
@@ -533,6 +759,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(SiteRecoveryProcessServerDetails)} does not support '{options.Format}' format.");
             }
@@ -549,6 +777,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeSiteRecoveryProcessServerDetails(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(SiteRecoveryProcessServerDetails)} does not support '{options.Format}' format.");
             }
