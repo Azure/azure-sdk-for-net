@@ -32,6 +32,15 @@ namespace Azure.AI.OpenAI
                 writer.WritePropertyName("message"u8);
                 writer.WriteObjectValue(Message);
             }
+            if (LogProbabilityInfo != null)
+            {
+                writer.WritePropertyName("logprobs"u8);
+                writer.WriteObjectValue(LogProbabilityInfo);
+            }
+            else
+            {
+                writer.WriteNull("logprobs");
+            }
             writer.WritePropertyName("index"u8);
             writer.WriteNumberValue(Index);
             if (FinishReason != null)
@@ -102,6 +111,7 @@ namespace Azure.AI.OpenAI
                 return null;
             }
             Optional<ChatResponseMessage> message = default;
+            ChatChoiceLogProbabilityInfo logprobs = default;
             int index = default;
             CompletionsFinishReason? finishReason = default;
             Optional<ChatFinishDetails> finishDetails = default;
@@ -119,6 +129,16 @@ namespace Azure.AI.OpenAI
                         continue;
                     }
                     message = ChatResponseMessage.DeserializeChatResponseMessage(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("logprobs"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        logprobs = null;
+                        continue;
+                    }
+                    logprobs = ChatChoiceLogProbabilityInfo.DeserializeChatChoiceLogProbabilityInfo(property.Value);
                     continue;
                 }
                 if (property.NameEquals("index"u8))
@@ -178,7 +198,7 @@ namespace Azure.AI.OpenAI
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ChatChoice(message.Value, index, finishReason, finishDetails.Value, delta.Value, contentFilterResults.Value, enhancements.Value, serializedAdditionalRawData);
+            return new ChatChoice(message.Value, logprobs, index, finishReason, finishDetails.Value, delta.Value, contentFilterResults.Value, enhancements.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ChatChoice>.Write(ModelReaderWriterOptions options)

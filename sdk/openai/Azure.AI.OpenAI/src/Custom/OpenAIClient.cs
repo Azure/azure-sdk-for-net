@@ -956,9 +956,7 @@ public partial class OpenAIClient
         RequestContent content,
         RequestContext context)
     {
-        string operationPath = chatCompletionsOptions.AzureExtensionsOptions != null
-            ? "extensions/chat/completions"
-            : "chat/completions";
+        string operationPath = "chat/completions";
         return CreatePostRequestMessage(chatCompletionsOptions.DeploymentName, operationPath, content, context);
     }
 

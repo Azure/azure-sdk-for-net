@@ -127,6 +127,30 @@ namespace Azure.AI.OpenAI
                 writer.WritePropertyName("seed"u8);
                 writer.WriteNumberValue(Seed.Value);
             }
+            if (Optional.IsDefined(EnableLogProbabilities))
+            {
+                if (EnableLogProbabilities != null)
+                {
+                    writer.WritePropertyName("logprobs"u8);
+                    writer.WriteBooleanValue(EnableLogProbabilities.Value);
+                }
+                else
+                {
+                    writer.WriteNull("logprobs");
+                }
+            }
+            if (Optional.IsDefined(LogProbabilitiesPerToken))
+            {
+                if (LogProbabilitiesPerToken != null)
+                {
+                    writer.WritePropertyName("top_logprobs"u8);
+                    writer.WriteNumberValue(LogProbabilitiesPerToken.Value);
+                }
+                else
+                {
+                    writer.WriteNull("top_logprobs");
+                }
+            }
             if (Optional.IsDefined(ResponseFormat))
             {
                 writer.WritePropertyName("response_format"u8);
@@ -209,6 +233,8 @@ namespace Azure.AI.OpenAI
             Optional<IList<AzureChatExtensionConfiguration>> dataSources = default;
             Optional<AzureChatEnhancementConfiguration> enhancements = default;
             Optional<long> seed = default;
+            Optional<bool?> logprobs = default;
+            Optional<int?> topLogprobs = default;
             Optional<ChatCompletionsResponseFormat> responseFormat = default;
             Optional<IList<ChatCompletionsToolDefinition>> tools = default;
             Optional<BinaryData> toolChoice = default;
@@ -373,6 +399,26 @@ namespace Azure.AI.OpenAI
                     seed = property.Value.GetInt64();
                     continue;
                 }
+                if (property.NameEquals("logprobs"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        logprobs = null;
+                        continue;
+                    }
+                    logprobs = property.Value.GetBoolean();
+                    continue;
+                }
+                if (property.NameEquals("top_logprobs"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        topLogprobs = null;
+                        continue;
+                    }
+                    topLogprobs = property.Value.GetInt32();
+                    continue;
+                }
                 if (property.NameEquals("response_format"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -411,7 +457,7 @@ namespace Azure.AI.OpenAI
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ChatCompletionsOptions(messages, Optional.ToList(functions), functionCall.Value, Optional.ToNullable(maxTokens), Optional.ToNullable(temperature), Optional.ToNullable(topP), Optional.ToDictionary(logitBias), user.Value, Optional.ToNullable(n), Optional.ToList(stop), Optional.ToNullable(presencePenalty), Optional.ToNullable(frequencyPenalty), Optional.ToNullable(stream), model.Value, Optional.ToList(dataSources), enhancements.Value, Optional.ToNullable(seed), responseFormat.Value, Optional.ToList(tools), toolChoice.Value, serializedAdditionalRawData);
+            return new ChatCompletionsOptions(messages, Optional.ToList(functions), functionCall.Value, Optional.ToNullable(maxTokens), Optional.ToNullable(temperature), Optional.ToNullable(topP), Optional.ToDictionary(logitBias), user.Value, Optional.ToNullable(n), Optional.ToList(stop), Optional.ToNullable(presencePenalty), Optional.ToNullable(frequencyPenalty), Optional.ToNullable(stream), model.Value, Optional.ToList(dataSources), enhancements.Value, Optional.ToNullable(seed), Optional.ToNullable(logprobs), Optional.ToNullable(topLogprobs), responseFormat.Value, Optional.ToList(tools), toolChoice.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ChatCompletionsOptions>.Write(ModelReaderWriterOptions options)
