@@ -58,6 +58,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             LinkedServiceType = linkedServiceType ?? "AzureDataLakeStore";
         }
 
+        /// <summary> Initializes a new instance of <see cref="AzureDataLakeStoreLinkedService"/> for deserialization. </summary>
+        internal AzureDataLakeStoreLinkedService()
+        {
+        }
+
         /// <summary> Data Lake Store service URI. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> DataLakeStoreUri { get; set; }
         /// <summary> The ID of the application used to authenticate against the Azure Data Lake Store account. Type: string (or Expression with resultType string). </summary>

@@ -49,6 +49,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             DatasetType = datasetType ?? "SapOpenHubTable";
         }
 
+        /// <summary> Initializes a new instance of <see cref="SapOpenHubTableDataset"/> for deserialization. </summary>
+        internal SapOpenHubTableDataset()
+        {
+        }
+
         /// <summary> The name of the Open Hub Destination with destination type as Database Table. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> OpenHubDestinationName { get; set; }
         /// <summary> Whether to exclude the records of the last request. The default value is true. Type: boolean (or Expression with resultType boolean). </summary>

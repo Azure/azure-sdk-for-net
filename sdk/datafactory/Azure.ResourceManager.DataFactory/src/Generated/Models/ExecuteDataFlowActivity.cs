@@ -60,6 +60,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             ActivityType = activityType ?? "ExecuteDataFlow";
         }
 
+        /// <summary> Initializes a new instance of <see cref="ExecuteDataFlowActivity"/> for deserialization. </summary>
+        internal ExecuteDataFlowActivity()
+        {
+        }
+
         /// <summary> Data flow reference. </summary>
         public DataFlowReference DataFlow { get; set; }
         /// <summary> Staging info for execute data flow activity. </summary>

@@ -62,6 +62,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             LinkedServiceType = linkedServiceType ?? "Impala";
         }
 
+        /// <summary> Initializes a new instance of <see cref="ImpalaLinkedService"/> for deserialization. </summary>
+        internal ImpalaLinkedService()
+        {
+        }
+
         /// <summary> The IP address or host name of the Impala server. (i.e. 192.168.222.160). </summary>
         public DataFactoryElement<string> Host { get; set; }
         /// <summary> The TCP port that the Impala server uses to listen for client connections. The default value is 21050. </summary>

@@ -8,11 +8,11 @@ using Azure.Core;
 
 namespace Azure.Communication.JobRouter
 {
+    [CodeGenSerialization(nameof(ExpiresAfter), SerializationValueHook = nameof(WriteExpiresAfter), DeserializationValueHook = nameof(ReadExpiresAfter))]
     public partial class RouterWorkerSelector : IUtf8JsonSerializable
     {
         /// <summary> Describes how long this label selector is valid for. </summary>
         [CodeGenMember("ExpiresAfterSeconds")]
-        [CodeGenMemberSerializationHooks(SerializationValueHook = nameof(WriteExpiresAfter), DeserializationValueHook = nameof(ReadExpiresAfter))]
         public TimeSpan? ExpiresAfter { get; set; }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]

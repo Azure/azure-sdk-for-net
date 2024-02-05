@@ -52,6 +52,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             ActivityType = activityType ?? "DatabricksNotebook";
         }
 
+        /// <summary> Initializes a new instance of <see cref="DatabricksNotebookActivity"/> for deserialization. </summary>
+        internal DatabricksNotebookActivity()
+        {
+        }
+
         /// <summary> The absolute path of the notebook to be run in the Databricks Workspace. This path must begin with a slash. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> NotebookPath { get; set; }
         /// <summary>

@@ -42,6 +42,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             DatasetType = datasetType ?? "OdbcTable";
         }
 
+        /// <summary> Initializes a new instance of <see cref="OdbcTableDataset"/> for deserialization. </summary>
+        internal OdbcTableDataset()
+        {
+        }
+
         /// <summary> The ODBC table name. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> TableName { get; set; }
     }
