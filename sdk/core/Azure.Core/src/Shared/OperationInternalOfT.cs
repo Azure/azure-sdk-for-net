@@ -56,7 +56,7 @@ namespace Azure.Core
     {
         private readonly IOperation<T> _operation;
         private readonly AsyncLockWithValue<OperationState<T>> _stateLock;
-        private Response _rawResponse;
+        private Response? _rawResponse;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="OperationInternal"/> class in a final successful state.
@@ -98,13 +98,15 @@ namespace Azure.Core
         /// <param name="scopeAttributes">The attributes to use during diagnostic scope creation.</param>
         /// <param name="fallbackStrategy">The delay strategy when Retry-After header is not present.  When it is present, the longer of the two delays will be used.
         ///     Default is <see cref="FixedDelayWithNoJitterStrategy"/>.</param>
+        /// <param name="rehydrationToken">The rehydration token.</param>
         public OperationInternal(IOperation<T> operation,
             ClientDiagnostics clientDiagnostics,
-            Response rawResponse,
+            Response? rawResponse,
             string? operationTypeName = null,
             IEnumerable<KeyValuePair<string, string>>? scopeAttributes = null,
-            DelayStrategy? fallbackStrategy = null)
-            : base(clientDiagnostics, operationTypeName ?? operation.GetType().Name, scopeAttributes, fallbackStrategy)
+            DelayStrategy? fallbackStrategy = null,
+            RehydrationToken? rehydrationToken = null)
+            : base(clientDiagnostics, operationTypeName ?? operation.GetType().Name, scopeAttributes, fallbackStrategy, rehydrationToken)
         {
             _operation = operation;
             _rawResponse = rawResponse;
@@ -285,8 +287,8 @@ namespace Azure.Core
             {
                 return null;
             }
-            var lroDetails = ModelReaderWriter.Write(rehydrationToken).ToObjectFromJson<Dictionary<string, string>>();
-            return new RequestMethod(lroDetails["RequestMethod"]);
+            var lroDetails = ((IPersistableModel<RehydrationToken>)rehydrationToken!).Write(new ModelReaderWriterOptions("J")).ToObjectFromJson<Dictionary<string, string>>();
+            return new RequestMethod(lroDetails["requestMethod"]);
         }
 
         private static Response GetResponseFromState(OperationState<T> state, RequestMethod? requestmethod = null)

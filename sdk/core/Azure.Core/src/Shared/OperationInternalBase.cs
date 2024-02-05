@@ -36,7 +36,7 @@ namespace Azure.Core
             _rehydrationToken = rehydrationToken;
         }
 
-        protected OperationInternalBase(ClientDiagnostics clientDiagnostics, string operationTypeName, IEnumerable<KeyValuePair<string, string>>? scopeAttributes = null, DelayStrategy? fallbackStrategy = null)
+        protected OperationInternalBase(ClientDiagnostics clientDiagnostics, string operationTypeName, IEnumerable<KeyValuePair<string, string>>? scopeAttributes = null, DelayStrategy? fallbackStrategy = null, RehydrationToken? rehydrationToken = null)
         {
             _diagnostics = clientDiagnostics;
             _updateStatusScopeName = $"{operationTypeName}.{nameof(UpdateStatus)}";
@@ -45,6 +45,7 @@ namespace Azure.Core
             _scopeAttributes = scopeAttributes?.ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
             _fallbackStrategy = fallbackStrategy;
             _responseLock = new AsyncLockWithValue<Response>();
+            _rehydrationToken = rehydrationToken;
         }
 
         /// <summary>

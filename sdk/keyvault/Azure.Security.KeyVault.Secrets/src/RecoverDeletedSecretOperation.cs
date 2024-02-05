@@ -100,7 +100,5 @@ namespace Azure.Security.KeyVault.Secrets
                     return OperationState.Failure(response, new RequestFailedException(response));
             }
         }
-
-        string IOperation.GetOperationId() => null;
     }
 }

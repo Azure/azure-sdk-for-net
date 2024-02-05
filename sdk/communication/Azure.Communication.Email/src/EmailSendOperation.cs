@@ -3,9 +3,11 @@
 
 using System;
 using System.Collections.Generic;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
+using Azure.Core.Pipeline;
 
 namespace Azure.Communication.Email
 {
@@ -195,7 +197,5 @@ namespace Azure.Communication.Email
 
             return additionalInformationToReturn;
         }
-
-        string IOperation<EmailSendResult>.GetOperationId() => null;
     }
 }

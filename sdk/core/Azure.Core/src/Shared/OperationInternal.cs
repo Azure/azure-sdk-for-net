@@ -85,17 +85,17 @@ namespace Azure.Core
         /// </param>
         /// <param name="scopeAttributes">The attributes to use during diagnostic scope creation.</param>
         /// <param name="fallbackStrategy"> The delay strategy to use. Default is <see cref="FixedDelayWithNoJitterStrategy"/>.</param>
-        /// <param name="rehydrationToken">The token used to rehydrate an operation.</param>
+        /// <param name="rehydrationToken">The rehydration token.</param>
         public OperationInternal(IOperation operation,
             ClientDiagnostics clientDiagnostics,
-            Response rawResponse,
+            Response? rawResponse,
             string? operationTypeName = null,
             IEnumerable<KeyValuePair<string, string>>? scopeAttributes = null,
             DelayStrategy? fallbackStrategy = null,
             RehydrationToken? rehydrationToken = null)
-            : base(clientDiagnostics, operationTypeName ?? operation.GetType().Name, scopeAttributes, fallbackStrategy)
+            : base(clientDiagnostics, operationTypeName ?? operation.GetType().Name, scopeAttributes, fallbackStrategy, rehydrationToken)
         {
-            _internalOperation = new OperationInternal<VoidValue>(new OperationToOperationOfTProxy(operation), clientDiagnostics, rawResponse, operationTypeName ?? operation.GetType().Name, scopeAttributes, fallbackStrategy);
+            _internalOperation = new OperationInternal<VoidValue>(new OperationToOperationOfTProxy(operation), clientDiagnostics, rawResponse, operationTypeName ?? operation.GetType().Name, scopeAttributes, fallbackStrategy, rehydrationToken);
         }
 
         private OperationInternal(OperationState finalState, RehydrationToken? rehydrationToken)

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -24,9 +25,15 @@ namespace Azure.ResourceManager.Resources.Models
         /// <param name="location"> The location of the ACI and the storage account for the deployment script. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="kind"> Type of the script. </param>
-        internal UnknownArmDeploymentScript(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ArmDeploymentScriptManagedIdentity identity, AzureLocation location, IDictionary<string, string> tags, ScriptType kind) : base(id, name, resourceType, systemData, identity, location, tags, kind)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal UnknownArmDeploymentScript(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ArmDeploymentScriptManagedIdentity identity, AzureLocation location, IDictionary<string, string> tags, ScriptType kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, identity, location, tags, kind, serializedAdditionalRawData)
         {
             Kind = kind;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="UnknownArmDeploymentScript"/> for deserialization. </summary>
+        internal UnknownArmDeploymentScript()
+        {
         }
     }
 }

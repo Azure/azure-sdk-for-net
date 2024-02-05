@@ -213,7 +213,5 @@ namespace Azure.AI.FormRecognizer.Training
                 result.CreatedDateTime,
                 result.LastUpdatedDateTime);
         }
-
-        string IOperation<CustomFormModelInfo>.GetOperationId() => null;
     }
 }

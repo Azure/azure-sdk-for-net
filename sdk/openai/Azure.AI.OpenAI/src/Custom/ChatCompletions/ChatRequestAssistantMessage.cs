@@ -4,7 +4,6 @@
 #nullable disable
 
 using System;
-using Azure.Core;
 
 namespace Azure.AI.OpenAI;
 
@@ -19,13 +18,9 @@ public partial class ChatRequestAssistantMessage
     ///     <paramref name="responseMessage"/> is not a valid response message to use.
     /// </exception>
     public ChatRequestAssistantMessage(ChatResponseMessage responseMessage)
-        : this(
-              responseMessage.Role,
-              responseMessage.Content,
-              name: null,
-              new ChangeTrackingList<ChatCompletionsToolCall>(),
-              responseMessage.FunctionCall)
+        : this(responseMessage.Content)
     {
+        FunctionCall = responseMessage.FunctionCall;
         if (Role != ChatRole.Assistant)
         {
             throw new ArgumentException($"Assistant message request messages may only be instantiated from response "

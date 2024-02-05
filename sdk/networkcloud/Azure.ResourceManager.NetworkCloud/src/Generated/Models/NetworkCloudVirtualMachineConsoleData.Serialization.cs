@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -14,10 +15,18 @@ using Azure.ResourceManager.NetworkCloud.Models;
 
 namespace Azure.ResourceManager.NetworkCloud
 {
-    public partial class NetworkCloudVirtualMachineConsoleData : IUtf8JsonSerializable
+    public partial class NetworkCloudVirtualMachineConsoleData : IUtf8JsonSerializable, IJsonModel<NetworkCloudVirtualMachineConsoleData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NetworkCloudVirtualMachineConsoleData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<NetworkCloudVirtualMachineConsoleData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<NetworkCloudVirtualMachineConsoleData>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(NetworkCloudVirtualMachineConsoleData)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("extendedLocation"u8);
             writer.WriteObjectValue(ExtendedLocation);
@@ -34,8 +43,38 @@ namespace Azure.ResourceManager.NetworkCloud
             }
             writer.WritePropertyName("location"u8);
             writer.WriteStringValue(Location);
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(ResourceType);
+            }
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            {
+                writer.WritePropertyName("systemData"u8);
+                JsonSerializer.Serialize(writer, SystemData);
+            }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
+            if (options.Format != "W" && Optional.IsDefined(DetailedStatus))
+            {
+                writer.WritePropertyName("detailedStatus"u8);
+                writer.WriteStringValue(DetailedStatus.Value.ToString());
+            }
+            if (options.Format != "W" && Optional.IsDefined(DetailedStatusMessage))
+            {
+                writer.WritePropertyName("detailedStatusMessage"u8);
+                writer.WriteStringValue(DetailedStatusMessage);
+            }
             writer.WritePropertyName("enabled"u8);
             writer.WriteStringValue(Enabled.ToString());
             if (Optional.IsDefined(ExpireOn))
@@ -43,14 +82,58 @@ namespace Azure.ResourceManager.NetworkCloud
                 writer.WritePropertyName("expiration"u8);
                 writer.WriteStringValue(ExpireOn.Value, "O");
             }
+            if (options.Format != "W" && Optional.IsDefined(PrivateLinkServiceId))
+            {
+                writer.WritePropertyName("privateLinkServiceId"u8);
+                writer.WriteStringValue(PrivateLinkServiceId);
+            }
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            {
+                writer.WritePropertyName("provisioningState"u8);
+                writer.WriteStringValue(ProvisioningState.Value.ToString());
+            }
             writer.WritePropertyName("sshPublicKey"u8);
             writer.WriteObjectValue(SshPublicKey);
+            if (options.Format != "W" && Optional.IsDefined(VirtualMachineAccessId))
+            {
+                writer.WritePropertyName("virtualMachineAccessId"u8);
+                writer.WriteStringValue(VirtualMachineAccessId.Value);
+            }
             writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static NetworkCloudVirtualMachineConsoleData DeserializeNetworkCloudVirtualMachineConsoleData(JsonElement element)
+        NetworkCloudVirtualMachineConsoleData IJsonModel<NetworkCloudVirtualMachineConsoleData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<NetworkCloudVirtualMachineConsoleData>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(NetworkCloudVirtualMachineConsoleData)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeNetworkCloudVirtualMachineConsoleData(document.RootElement, options);
+        }
+
+        internal static NetworkCloudVirtualMachineConsoleData DeserializeNetworkCloudVirtualMachineConsoleData(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -70,6 +153,8 @@ namespace Azure.ResourceManager.NetworkCloud
             Optional<ConsoleProvisioningState> provisioningState = default;
             NetworkCloudSshPublicKey sshPublicKey = default;
             Optional<Guid> virtualMachineAccessId = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("extendedLocation"u8))
@@ -192,8 +277,44 @@ namespace Azure.ResourceManager.NetworkCloud
                     }
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new NetworkCloudVirtualMachineConsoleData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, extendedLocation, Optional.ToNullable(detailedStatus), detailedStatusMessage.Value, enabled, Optional.ToNullable(expiration), privateLinkServiceId.Value, Optional.ToNullable(provisioningState), sshPublicKey, Optional.ToNullable(virtualMachineAccessId));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new NetworkCloudVirtualMachineConsoleData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, extendedLocation, Optional.ToNullable(detailedStatus), detailedStatusMessage.Value, enabled, Optional.ToNullable(expiration), privateLinkServiceId.Value, Optional.ToNullable(provisioningState), sshPublicKey, Optional.ToNullable(virtualMachineAccessId), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<NetworkCloudVirtualMachineConsoleData>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<NetworkCloudVirtualMachineConsoleData>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(NetworkCloudVirtualMachineConsoleData)} does not support '{options.Format}' format.");
+            }
+        }
+
+        NetworkCloudVirtualMachineConsoleData IPersistableModel<NetworkCloudVirtualMachineConsoleData>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<NetworkCloudVirtualMachineConsoleData>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeNetworkCloudVirtualMachineConsoleData(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(NetworkCloudVirtualMachineConsoleData)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<NetworkCloudVirtualMachineConsoleData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

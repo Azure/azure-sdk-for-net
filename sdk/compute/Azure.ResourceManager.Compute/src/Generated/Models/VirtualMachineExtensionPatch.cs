@@ -20,6 +20,7 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <summary> Initializes a new instance of <see cref="VirtualMachineExtensionPatch"/>. </summary>
         /// <param name="tags"> Resource tags. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="forceUpdateTag"> How the extension handler should be forced to update even if the extension configuration has not changed. </param>
         /// <param name="publisher"> The name of the extension handler publisher. </param>
         /// <param name="extensionType"> Specifies the type of the extension; an example is "CustomScriptExtension". </param>
@@ -30,7 +31,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="protectedSettings"> The extension can contain either protectedSettings or protectedSettingsFromKeyVault or no protected settings at all. </param>
         /// <param name="suppressFailures"> Indicates whether failures stemming from the extension will be suppressed (Operational failures such as not connecting to the VM will not be suppressed regardless of this value). The default is false. </param>
         /// <param name="keyVaultProtectedSettings"> The extensions protected settings that are passed by reference, and consumed from key vault. </param>
-        internal VirtualMachineExtensionPatch(IDictionary<string, string> tags, string forceUpdateTag, string publisher, string extensionType, string typeHandlerVersion, bool? autoUpgradeMinorVersion, bool? enableAutomaticUpgrade, BinaryData settings, BinaryData protectedSettings, bool? suppressFailures, KeyVaultSecretReference keyVaultProtectedSettings) : base(tags)
+        internal VirtualMachineExtensionPatch(IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData, string forceUpdateTag, string publisher, string extensionType, string typeHandlerVersion, bool? autoUpgradeMinorVersion, bool? enableAutomaticUpgrade, BinaryData settings, BinaryData protectedSettings, bool? suppressFailures, KeyVaultSecretReference keyVaultProtectedSettings) : base(tags, serializedAdditionalRawData)
         {
             ForceUpdateTag = forceUpdateTag;
             Publisher = publisher;

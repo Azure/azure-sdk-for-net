@@ -27,6 +27,7 @@ namespace Azure.AI.Vision.ImageAnalysis.Tests
 
             // Print object detection results to the console
             Console.WriteLine($"Image analysis results:");
+            Console.WriteLine($" Metadata: Model: {result.ModelVersion} Image dimensions: {result.Metadata.Width} x {result.Metadata.Height}");
             Console.WriteLine($" Objects:");
             foreach (DetectedObject detectedObject in result.Objects.Values)
             {
@@ -43,42 +44,16 @@ namespace Azure.AI.Vision.ImageAnalysis.Tests
             #region Snippet:ImageAnalysisObjectsFromUrl
             // Detect objects in the image.
             ImageAnalysisResult result = client.Analyze(
-                new Uri("https://aka.ms/azai/vision/image-analysis-sample.jpg"),
+                new Uri("https://aka.ms/azsdk/image-analysis/sample.jpg"),
                 VisualFeatures.Objects);
 
             // Print object detection results to the console
             Console.WriteLine($"Image analysis results:");
+            Console.WriteLine($" Metadata: Model: {result.ModelVersion} Image dimensions: {result.Metadata.Width} x {result.Metadata.Height}");
             Console.WriteLine($" Objects:");
             foreach (DetectedObject detectedObject in result.Objects.Values)
             {
                 Console.WriteLine($"   Object: '{detectedObject.Tags.First().Name}', Bounding box {detectedObject.BoundingBox.ToString()}");
-            }
-            #endregion
-        }
-
-        [TestCase]
-        public void ImageAnalysisObjectsException()
-        {
-            var client = ImageAnalysisAuth();
-
-            #region Snippet:ImageAnalysisObjectsException
-            var imageUrl = new Uri("https://aka.ms.invalid/azai/vision/image-analysis-sample.jpg");
-
-            try
-            {
-                var result = client.Analyze(imageUrl, VisualFeatures.Objects);
-            }
-            catch (RequestFailedException e)
-            {
-                if (e.Status == 400)
-                {
-                    Console.WriteLine("Error analyzing image.");
-                    Console.WriteLine("HTTP status code 400: The request is invalid or malformed.");
-                }
-                else
-                {
-                    throw;
-                }
             }
             #endregion
         }

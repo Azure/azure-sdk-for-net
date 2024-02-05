@@ -5,39 +5,61 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.HybridContainerService.Models
 {
     /// <summary> The InfraVnetProfile. </summary>
-    public partial class InfraVnetProfile
+    internal partial class InfraVnetProfile
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="InfraVnetProfile"/>. </summary>
         public InfraVnetProfile()
         {
         }
 
         /// <summary> Initializes a new instance of <see cref="InfraVnetProfile"/>. </summary>
-        /// <param name="hci"> Infra network profile for HCI platform. </param>
-        /// <param name="vmware"> Infra network profile for VMware platform. </param>
-        internal InfraVnetProfile(HciInfraVnetProfile hci, VMwareInfraVnetProfile vmware)
+        /// <param name="hci"> Infrastructure network profile for HCI platform. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal InfraVnetProfile(HciInfraVnetProfile hci, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Hci = hci;
-            Vmware = vmware;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Infra network profile for HCI platform. </summary>
+        /// <summary> Infrastructure network profile for HCI platform. </summary>
         public HciInfraVnetProfile Hci { get; set; }
-        /// <summary> Infra network profile for VMware platform. </summary>
-        internal VMwareInfraVnetProfile Vmware { get; set; }
-        /// <summary> Name of the network segment in VSphere. </summary>
-        public string VmwareSegmentName
-        {
-            get => Vmware is null ? default : Vmware.SegmentName;
-            set
-            {
-                if (Vmware is null)
-                    Vmware = new VMwareInfraVnetProfile();
-                Vmware.SegmentName = value;
-            }
-        }
     }
 }

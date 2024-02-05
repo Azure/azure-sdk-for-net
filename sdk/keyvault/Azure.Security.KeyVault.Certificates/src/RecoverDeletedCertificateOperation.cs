@@ -104,7 +104,5 @@ namespace Azure.Security.KeyVault.Certificates
                     return OperationState.Failure(response, new RequestFailedException(response));
             }
         }
-
-        string IOperation.GetOperationId() => null;
     }
 }

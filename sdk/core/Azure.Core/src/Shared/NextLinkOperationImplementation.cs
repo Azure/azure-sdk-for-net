@@ -79,17 +79,17 @@ namespace Azure.Core
         {
             Argument.AssertNotNull(rehydrationToken, nameof(rehydrationToken));
 
-            var lroDetails = ModelReaderWriter.Write(rehydrationToken!).ToObjectFromJson<Dictionary<string, string>>();
-            if (!Uri.TryCreate(lroDetails["InitialUri"], UriKind.Absolute, out var startRequestUri))
+            var lroDetails = ((IPersistableModel<RehydrationToken>)rehydrationToken!).Write(new ModelReaderWriterOptions("J")).ToObjectFromJson<Dictionary<string, string>>();
+            if (!Uri.TryCreate(lroDetails["initialUri"], UriKind.Absolute, out var startRequestUri))
                 throw new InvalidOperationException("Invalid initial URI");
-            if (!lroDetails.TryGetValue("NextRequestUri", out var nextRequestUri))
+            if (!lroDetails.TryGetValue("nextRequestUri", out var nextRequestUri))
                 throw new InvalidOperationException("Invalid next request URI");
-            RequestMethod requestMethod = new RequestMethod(lroDetails["RequestMethod"]);
-            string lastKnownLocation = lroDetails["LastKnownLocation"];
-            if (!Enum.TryParse(lroDetails["FinalStateVia"], out OperationFinalStateVia finalStateVia))
+            RequestMethod requestMethod = new RequestMethod(lroDetails["requestMethod"]);
+            string lastKnownLocation = lroDetails["lastKnownLocation"];
+            if (!Enum.TryParse(lroDetails["finalStateVia"], out OperationFinalStateVia finalStateVia))
                 finalStateVia = OperationFinalStateVia.Location;
             string? apiVersionStr = apiVersionOverride ?? (TryGetApiVersion(startRequestUri, out ReadOnlySpan<char> apiVersion) ? apiVersion.ToString() : null);
-            if (!Enum.TryParse(lroDetails["HeaderSource"], out HeaderSource headerSource))
+            if (!Enum.TryParse(lroDetails["headerSource"], out HeaderSource headerSource))
                 headerSource = HeaderSource.None;
 
             return new NextLinkOperationImplementation(pipeline, requestMethod, startRequestUri, nextRequestUri, headerSource, lastKnownLocation, finalStateVia, apiVersionStr);
@@ -125,24 +125,38 @@ namespace Azure.Core
             _apiVersion = apiVersion;
         }
 
-        internal static RehydrationToken? GetRehydrationToken(
+        public static RehydrationToken? GetRehydrationToken(
+            RequestMethod requestMethod,
+            Uri startRequestUri,
+            Response response,
+            OperationFinalStateVia finalStateVia,
+            bool skipApiVersionOverride = false,
+            string? apiVersionOverrideValue = null)
+        {
+            string? apiVersionStr;
+            if (apiVersionOverrideValue is not null)
+            {
+                apiVersionStr = apiVersionOverrideValue;
+            }
+            else
+            {
+                apiVersionStr = !skipApiVersionOverride && TryGetApiVersion(startRequestUri, out ReadOnlySpan<char> apiVersion) ? apiVersion.ToString() : null;
+            }
+            var headerSource = GetHeaderSource(requestMethod, startRequestUri, response, apiVersionStr, out var nextRequestUri);
+            response.Headers.TryGetValue("Location", out var lastKnownLocation);
+            return GetRehydrationToken(requestMethod, startRequestUri, nextRequestUri, headerSource.ToString(), lastKnownLocation, finalStateVia.ToString());
+        }
+
+        public static RehydrationToken? GetRehydrationToken(
             RequestMethod requestMethod,
             Uri startRequestUri,
             string nextRequestUri,
             string headerSource,
-            bool originalResponseHasLocation,
             string? lastKnownLocation,
-            OperationFinalStateVia finalStateVia)
+            string finalStateVia)
         {
-            var parameters = new object?[] { null, null, headerSource, nextRequestUri, startRequestUri.AbsoluteUri, requestMethod, originalResponseHasLocation, lastKnownLocation, finalStateVia };
-            var rehydrationToken = Activator.CreateInstance(typeof(RehydrationToken), BindingFlags.NonPublic | BindingFlags.Instance, parameters, null);
-            return rehydrationToken is null ? null : (RehydrationToken)rehydrationToken;
-        }
-
-        public RehydrationToken? GetRehydrationToken()
-        {
-            var parameters = new object?[] { null, null, _headerSource.ToString(), _nextRequestUri, _startRequestUri.AbsoluteUri, _requestMethod, _lastKnownLocation, _finalStateVia };
-            var rehydrationToken = Activator.CreateInstance(typeof(RehydrationToken), BindingFlags.NonPublic | BindingFlags.Instance, parameters, null);
+            var parameters = new object?[] { null, null, headerSource, nextRequestUri, startRequestUri.AbsoluteUri, requestMethod, lastKnownLocation, finalStateVia };
+            var rehydrationToken = Activator.CreateInstance(typeof(RehydrationToken), BindingFlags.NonPublic | BindingFlags.Instance, null, parameters, null);
             return rehydrationToken is null ? null : (RehydrationToken)rehydrationToken;
         }
 

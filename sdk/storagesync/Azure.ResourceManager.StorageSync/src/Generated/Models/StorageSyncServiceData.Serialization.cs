@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -14,10 +15,18 @@ using Azure.ResourceManager.StorageSync.Models;
 
 namespace Azure.ResourceManager.StorageSync
 {
-    public partial class StorageSyncServiceData : IUtf8JsonSerializable
+    public partial class StorageSyncServiceData : IUtf8JsonSerializable, IJsonModel<StorageSyncServiceData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<StorageSyncServiceData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<StorageSyncServiceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<StorageSyncServiceData>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(StorageSyncServiceData)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -32,6 +41,26 @@ namespace Azure.ResourceManager.StorageSync
             }
             writer.WritePropertyName("location"u8);
             writer.WriteStringValue(Location);
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(ResourceType);
+            }
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            {
+                writer.WritePropertyName("systemData"u8);
+                JsonSerializer.Serialize(writer, SystemData);
+            }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(IncomingTrafficPolicy))
@@ -39,12 +68,76 @@ namespace Azure.ResourceManager.StorageSync
                 writer.WritePropertyName("incomingTrafficPolicy"u8);
                 writer.WriteStringValue(IncomingTrafficPolicy.Value.ToString());
             }
+            if (options.Format != "W" && Optional.IsDefined(StorageSyncServiceStatus))
+            {
+                writer.WritePropertyName("storageSyncServiceStatus"u8);
+                writer.WriteNumberValue(StorageSyncServiceStatus.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(StorageSyncServiceUid))
+            {
+                writer.WritePropertyName("storageSyncServiceUid"u8);
+                writer.WriteStringValue(StorageSyncServiceUid.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            {
+                writer.WritePropertyName("provisioningState"u8);
+                writer.WriteStringValue(ProvisioningState);
+            }
+            if (options.Format != "W" && Optional.IsDefined(LastWorkflowId))
+            {
+                writer.WritePropertyName("lastWorkflowId"u8);
+                writer.WriteStringValue(LastWorkflowId);
+            }
+            if (options.Format != "W" && Optional.IsDefined(LastOperationName))
+            {
+                writer.WritePropertyName("lastOperationName"u8);
+                writer.WriteStringValue(LastOperationName);
+            }
+            if (options.Format != "W" && Optional.IsCollectionDefined(PrivateEndpointConnections))
+            {
+                writer.WritePropertyName("privateEndpointConnections"u8);
+                writer.WriteStartArray();
+                foreach (var item in PrivateEndpointConnections)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
             writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static StorageSyncServiceData DeserializeStorageSyncServiceData(JsonElement element)
+        StorageSyncServiceData IJsonModel<StorageSyncServiceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<StorageSyncServiceData>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(StorageSyncServiceData)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeStorageSyncServiceData(document.RootElement, options);
+        }
+
+        internal static StorageSyncServiceData DeserializeStorageSyncServiceData(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -62,6 +155,8 @@ namespace Azure.ResourceManager.StorageSync
             Optional<string> lastWorkflowId = default;
             Optional<string> lastOperationName = default;
             Optional<IReadOnlyList<StorageSyncPrivateEndpointConnectionData>> privateEndpointConnections = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"u8))
@@ -175,8 +270,44 @@ namespace Azure.ResourceManager.StorageSync
                     }
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new StorageSyncServiceData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(incomingTrafficPolicy), Optional.ToNullable(storageSyncServiceStatus), Optional.ToNullable(storageSyncServiceUid), provisioningState.Value, lastWorkflowId.Value, lastOperationName.Value, Optional.ToList(privateEndpointConnections));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new StorageSyncServiceData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(incomingTrafficPolicy), Optional.ToNullable(storageSyncServiceStatus), Optional.ToNullable(storageSyncServiceUid), provisioningState.Value, lastWorkflowId.Value, lastOperationName.Value, Optional.ToList(privateEndpointConnections), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<StorageSyncServiceData>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<StorageSyncServiceData>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(StorageSyncServiceData)} does not support '{options.Format}' format.");
+            }
+        }
+
+        StorageSyncServiceData IPersistableModel<StorageSyncServiceData>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<StorageSyncServiceData>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeStorageSyncServiceData(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(StorageSyncServiceData)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<StorageSyncServiceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

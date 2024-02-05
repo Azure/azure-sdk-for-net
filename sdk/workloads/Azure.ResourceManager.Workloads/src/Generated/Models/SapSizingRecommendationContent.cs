@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Workloads.Models
@@ -12,6 +14,38 @@ namespace Azure.ResourceManager.Workloads.Models
     /// <summary> The SAP Sizing Recommendation request. </summary>
     public partial class SapSizingRecommendationContent
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="SapSizingRecommendationContent"/>. </summary>
         /// <param name="appLocation"> The geo-location where the resource is to be created. </param>
         /// <param name="environment"> Defines the environment type - Production/Non Production. </param>
@@ -41,7 +75,8 @@ namespace Azure.ResourceManager.Workloads.Models
         /// <param name="databaseType"> The database type. </param>
         /// <param name="dbScaleMethod"> The DB scale method. </param>
         /// <param name="highAvailabilityType"> The high availability type. </param>
-        internal SapSizingRecommendationContent(AzureLocation appLocation, SapEnvironmentType environment, SapProductType sapProduct, SapDeploymentType deploymentType, long saps, long dbMemory, SapDatabaseType databaseType, SapDatabaseScaleMethod? dbScaleMethod, SapHighAvailabilityType? highAvailabilityType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SapSizingRecommendationContent(AzureLocation appLocation, SapEnvironmentType environment, SapProductType sapProduct, SapDeploymentType deploymentType, long saps, long dbMemory, SapDatabaseType databaseType, SapDatabaseScaleMethod? dbScaleMethod, SapHighAvailabilityType? highAvailabilityType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             AppLocation = appLocation;
             Environment = environment;
@@ -52,6 +87,12 @@ namespace Azure.ResourceManager.Workloads.Models
             DatabaseType = databaseType;
             DBScaleMethod = dbScaleMethod;
             HighAvailabilityType = highAvailabilityType;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SapSizingRecommendationContent"/> for deserialization. </summary>
+        internal SapSizingRecommendationContent()
+        {
         }
 
         /// <summary> The geo-location where the resource is to be created. </summary>

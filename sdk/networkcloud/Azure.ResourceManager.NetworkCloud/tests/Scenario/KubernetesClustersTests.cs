@@ -17,6 +17,7 @@ namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
         public KubernetesClustersTests(bool isAsync) : base(isAsync) {}
 
         [Test]
+        [RecordedTest]
         public async Task KubernetesClusters()
         {
             string resourceGroupName = TestEnvironment.ResourceGroup;
@@ -105,7 +106,7 @@ namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
             {
                 AadAdminGroupObjectIds = new List<string>() { "3d4c8620-ac8c-4bd6-9a92-f2b75923ef9f" },
                 AdministratorConfiguration = administratorConfiguration,
-                ManagedResourceGroupConfiguration = new ManagedResourceGroupConfiguration(new AzureLocation("East US"), kubernetesClusterName + "-MRG")
+                ManagedResourceGroupConfiguration = new ManagedResourceGroupConfiguration(new AzureLocation("East US"), kubernetesClusterName + "-MRG", null)
             };
 
             ArmOperation<NetworkCloudKubernetesClusterResource> createResult = await collection.CreateOrUpdateAsync(WaitUntil.Completed, kubernetesClusterName, createData);

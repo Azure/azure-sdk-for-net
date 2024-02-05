@@ -5,21 +5,81 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    public partial class SubAssessmentStatus : IUtf8JsonSerializable
+    public partial class SubAssessmentStatus : IUtf8JsonSerializable, IJsonModel<SubAssessmentStatus>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SubAssessmentStatus>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<SubAssessmentStatus>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<SubAssessmentStatus>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SubAssessmentStatus)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
+            if (options.Format != "W" && Optional.IsDefined(Code))
+            {
+                writer.WritePropertyName("code"u8);
+                writer.WriteStringValue(Code.Value.ToString());
+            }
+            if (options.Format != "W" && Optional.IsDefined(Cause))
+            {
+                writer.WritePropertyName("cause"u8);
+                writer.WriteStringValue(Cause);
+            }
+            if (options.Format != "W" && Optional.IsDefined(Description))
+            {
+                writer.WritePropertyName("description"u8);
+                writer.WriteStringValue(Description);
+            }
+            if (options.Format != "W" && Optional.IsDefined(Severity))
+            {
+                writer.WritePropertyName("severity"u8);
+                writer.WriteStringValue(Severity.Value.ToString());
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static SubAssessmentStatus DeserializeSubAssessmentStatus(JsonElement element)
+        SubAssessmentStatus IJsonModel<SubAssessmentStatus>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<SubAssessmentStatus>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SubAssessmentStatus)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeSubAssessmentStatus(document.RootElement, options);
+        }
+
+        internal static SubAssessmentStatus DeserializeSubAssessmentStatus(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -28,6 +88,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             Optional<string> cause = default;
             Optional<string> description = default;
             Optional<SecurityAssessmentSeverity> severity = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("code"u8))
@@ -58,8 +120,44 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     severity = new SecurityAssessmentSeverity(property.Value.GetString());
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new SubAssessmentStatus(Optional.ToNullable(code), cause.Value, description.Value, Optional.ToNullable(severity));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new SubAssessmentStatus(Optional.ToNullable(code), cause.Value, description.Value, Optional.ToNullable(severity), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<SubAssessmentStatus>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SubAssessmentStatus>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(SubAssessmentStatus)} does not support '{options.Format}' format.");
+            }
+        }
+
+        SubAssessmentStatus IPersistableModel<SubAssessmentStatus>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SubAssessmentStatus>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeSubAssessmentStatus(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(SubAssessmentStatus)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<SubAssessmentStatus>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

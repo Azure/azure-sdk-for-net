@@ -50,7 +50,7 @@ namespace Azure.Core.Tests
         [Test]
         public void SetStateFails()
         {
-            var operationInternal = OperationInternal.Failed(InitialResponse, new RequestFailedException(InitialResponse), null);
+            var operationInternal = OperationInternal.Failed(InitialResponse, new RequestFailedException(InitialResponse));
             Assert.IsTrue(operationInternal.HasCompleted);
         }
 
@@ -438,8 +438,6 @@ namespace Azure.Core.Tests
             }
 
             public ValueTask<OperationState> UpdateStateAsync(bool async, CancellationToken cancellationToken) => _updateStateAsyncHandler(async, cancellationToken);
-
-            public string GetOperationId() => string.Empty;
         }
 
         private class CallCountStrategy : DelayStrategy

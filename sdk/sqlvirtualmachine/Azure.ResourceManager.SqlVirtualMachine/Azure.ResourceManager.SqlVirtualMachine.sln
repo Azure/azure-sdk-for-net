@@ -1,21 +1,15 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.30309.148
+# Visual Studio Version 17
+VisualStudioVersion = 17.8.34408.163
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{99710766-8803-452A-8599-B9B8C3B5B529}") = "Azure.ResourceManager.SqlVirtualMachine", "src\Azure.ResourceManager.SqlVirtualMachine.csproj", "{B91CECD6-5AAE-4E03-B5E3-39D324BD1141}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.ResourceManager.SqlVirtualMachine", "src\Azure.ResourceManager.SqlVirtualMachine.csproj", "{B91CECD6-5AAE-4E03-B5E3-39D324BD1141}"
 EndProject
-Project("{99710766-8803-452A-8599-B9B8C3B5B529}") = "Azure.ResourceManager.SqlVirtualMachine.Tests", "tests\Azure.ResourceManager.SqlVirtualMachine.Tests.csproj", "{3A9E0776-313D-4E9D-AB84-674265FCBF9D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.ResourceManager.SqlVirtualMachine.Tests", "tests\Azure.ResourceManager.SqlVirtualMachine.Tests.csproj", "{3A9E0776-313D-4E9D-AB84-674265FCBF9D}"
 EndProject
-Project("{99710766-8803-452A-8599-B9B8C3B5B529}") = "Azure.ResourceManager.SqlVirtualMachine.Samples", "samples\Azure.ResourceManager.SqlVirtualMachine.Samples.csproj", "{4f46eba6-003c-488d-aabf-e7e681f82c0d}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.ResourceManager.SqlVirtualMachine.Samples", "samples\Azure.ResourceManager.SqlVirtualMachine.Samples.csproj", "{4F46EBA6-003C-488D-AABF-E7E681F82C0D}"
 EndProject
 Global
-	GlobalSection(SolutionProperties) = preSolution
-		HideSolutionNode = FALSE
-	EndGlobalSection
-	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {14D18D6D-D9D0-47A5-8770-2D82C7D813CA}
-	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Debug|x64 = Debug|x64
@@ -49,5 +43,23 @@ Global
 		{3A9E0776-313D-4E9D-AB84-674265FCBF9D}.Release|x64.Build.0 = Release|Any CPU
 		{3A9E0776-313D-4E9D-AB84-674265FCBF9D}.Release|x86.ActiveCfg = Release|Any CPU
 		{3A9E0776-313D-4E9D-AB84-674265FCBF9D}.Release|x86.Build.0 = Release|Any CPU
+		{4F46EBA6-003C-488D-AABF-E7E681F82C0D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4F46EBA6-003C-488D-AABF-E7E681F82C0D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4F46EBA6-003C-488D-AABF-E7E681F82C0D}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{4F46EBA6-003C-488D-AABF-E7E681F82C0D}.Debug|x64.Build.0 = Debug|Any CPU
+		{4F46EBA6-003C-488D-AABF-E7E681F82C0D}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{4F46EBA6-003C-488D-AABF-E7E681F82C0D}.Debug|x86.Build.0 = Debug|Any CPU
+		{4F46EBA6-003C-488D-AABF-E7E681F82C0D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4F46EBA6-003C-488D-AABF-E7E681F82C0D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4F46EBA6-003C-488D-AABF-E7E681F82C0D}.Release|x64.ActiveCfg = Release|Any CPU
+		{4F46EBA6-003C-488D-AABF-E7E681F82C0D}.Release|x64.Build.0 = Release|Any CPU
+		{4F46EBA6-003C-488D-AABF-E7E681F82C0D}.Release|x86.ActiveCfg = Release|Any CPU
+		{4F46EBA6-003C-488D-AABF-E7E681F82C0D}.Release|x86.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {14D18D6D-D9D0-47A5-8770-2D82C7D813CA}
 	EndGlobalSection
 EndGlobal

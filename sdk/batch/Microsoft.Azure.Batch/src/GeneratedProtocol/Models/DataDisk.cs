@@ -86,7 +86,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// </summary>
         /// <remarks>
         /// If omitted, the default is "standard_lrs". Possible values include:
-        /// 'StandardLRS', 'PremiumLRS'
+        /// 'StandardLRS', 'PremiumLRS', 'StandardSSDLRS'
         /// </remarks>
         [JsonProperty(PropertyName = "storageAccountType")]
         public StorageAccountType? StorageAccountType { get; set; }

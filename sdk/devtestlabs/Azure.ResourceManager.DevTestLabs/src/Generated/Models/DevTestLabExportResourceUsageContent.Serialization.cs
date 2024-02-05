@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DevTestLabs.Models
 {
-    public partial class DevTestLabExportResourceUsageContent : IUtf8JsonSerializable
+    public partial class DevTestLabExportResourceUsageContent : IUtf8JsonSerializable, IJsonModel<DevTestLabExportResourceUsageContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DevTestLabExportResourceUsageContent>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<DevTestLabExportResourceUsageContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<DevTestLabExportResourceUsageContent>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DevTestLabExportResourceUsageContent)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(BlobStorageAbsoluteSasUri))
             {
@@ -25,7 +36,106 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 writer.WritePropertyName("usageStartDate"u8);
                 writer.WriteStringValue(UsageStartOn.Value, "O");
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
+
+        DevTestLabExportResourceUsageContent IJsonModel<DevTestLabExportResourceUsageContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DevTestLabExportResourceUsageContent>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DevTestLabExportResourceUsageContent)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeDevTestLabExportResourceUsageContent(document.RootElement, options);
+        }
+
+        internal static DevTestLabExportResourceUsageContent DeserializeDevTestLabExportResourceUsageContent(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<Uri> blobStorageAbsoluteSasUri = default;
+            Optional<DateTimeOffset> usageStartDate = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("blobStorageAbsoluteSasUri"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    blobStorageAbsoluteSasUri = new Uri(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("usageStartDate"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    usageStartDate = property.Value.GetDateTimeOffset("O");
+                    continue;
+                }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
+            }
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new DevTestLabExportResourceUsageContent(blobStorageAbsoluteSasUri.Value, Optional.ToNullable(usageStartDate), serializedAdditionalRawData);
+        }
+
+        BinaryData IPersistableModel<DevTestLabExportResourceUsageContent>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DevTestLabExportResourceUsageContent>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(DevTestLabExportResourceUsageContent)} does not support '{options.Format}' format.");
+            }
+        }
+
+        DevTestLabExportResourceUsageContent IPersistableModel<DevTestLabExportResourceUsageContent>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DevTestLabExportResourceUsageContent>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeDevTestLabExportResourceUsageContent(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(DevTestLabExportResourceUsageContent)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<DevTestLabExportResourceUsageContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

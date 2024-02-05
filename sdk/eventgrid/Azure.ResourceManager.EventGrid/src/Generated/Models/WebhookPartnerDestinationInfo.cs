@@ -32,6 +32,7 @@ namespace Azure.ResourceManager.EventGrid.Models
         /// <param name="endpointType"> Type of the endpoint for the partner destination. </param>
         /// <param name="endpointServiceContext"> Additional context of the partner destination endpoint. </param>
         /// <param name="resourceMoveChangeHistory"> Change history of the resource move. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="endpointUri"> The URL that represents the endpoint of the partner destination. </param>
         /// <param name="endpointBaseUri"> The base URL that represents the endpoint of the partner destination. </param>
         /// <param name="clientAuthentication">
@@ -39,7 +40,7 @@ namespace Azure.ResourceManager.EventGrid.Models
         /// Please note <see cref="PartnerClientAuthentication"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="AzureADPartnerClientAuthentication"/>.
         /// </param>
-        internal WebhookPartnerDestinationInfo(string azureSubscriptionId, string resourceGroupName, string name, PartnerEndpointType endpointType, string endpointServiceContext, IList<ResourceMoveChangeHistory> resourceMoveChangeHistory, Uri endpointUri, Uri endpointBaseUri, PartnerClientAuthentication clientAuthentication) : base(azureSubscriptionId, resourceGroupName, name, endpointType, endpointServiceContext, resourceMoveChangeHistory)
+        internal WebhookPartnerDestinationInfo(string azureSubscriptionId, string resourceGroupName, string name, PartnerEndpointType endpointType, string endpointServiceContext, IList<ResourceMoveChangeHistory> resourceMoveChangeHistory, IDictionary<string, BinaryData> serializedAdditionalRawData, Uri endpointUri, Uri endpointBaseUri, PartnerClientAuthentication clientAuthentication) : base(azureSubscriptionId, resourceGroupName, name, endpointType, endpointServiceContext, resourceMoveChangeHistory, serializedAdditionalRawData)
         {
             EndpointUri = endpointUri;
             EndpointBaseUri = endpointBaseUri;
