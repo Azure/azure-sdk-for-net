@@ -4,6 +4,7 @@
 #nullable enable
 
 using System.Reflection;
+using Azure.Core;
 using Azure.Monitor.OpenTelemetry.Exporter;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
@@ -24,6 +25,8 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore
     public static class OpenTelemetryBuilderExtensions
     {
         private const string SqlClientInstrumentationPackageName = "OpenTelemetry.Instrumentation.SqlClient";
+
+        private const string EnableLogSamplingEnvVar = "OTEL_DOTNET_AZURE_MONITOR_EXPERIMENTAL_ENABLE_LOG_SAMPLING";
 
         /// <summary>
         /// Configures Azure Monitor for logging, distributed tracing, and metrics.
@@ -133,7 +136,9 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore
                     .Configure<IOptionsMonitor<AzureMonitorOptions>>((loggingOptions, azureOptions) =>
                     {
                         var azureMonitorOptions = azureOptions.Get(Options.DefaultName);
-                        if (azureMonitorOptions.EnableLogSampling)
+
+                        var enableLogSamplingEnvVar = Environment.GetEnvironmentVariable(EnableLogSamplingEnvVar);
+                        if (enableLogSamplingEnvVar != null && enableLogSamplingEnvVar.Equals("true", StringComparison.OrdinalIgnoreCase))
                         {
                             var azureMonitorExporterOptions = new AzureMonitorExporterOptions();
                             azureMonitorOptions.SetValueToExporterOptions(azureMonitorExporterOptions);
