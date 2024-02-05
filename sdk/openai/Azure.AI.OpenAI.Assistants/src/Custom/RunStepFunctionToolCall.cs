@@ -12,16 +12,16 @@ namespace Azure.AI.OpenAI.Assistants;
  * is to avoid having types that contain nothing meaningful beyond a property to another type.
  */
 
-public partial class FunctionToolCall
+public partial class RunStepFunctionToolCall
 {
-    /// <inheritdoc cref="InternalFunctionToolCallDetails.Name"/>
+    /// <inheritdoc cref="InternalRunStepFunctionToolCallDetails.Name"/>
     public string Name => InternalDetails.Name;
 
-    /// <inheritdoc cref="InternalFunctionToolCallDetails.Arguments"/>
+    /// <inheritdoc cref="InternalRunStepFunctionToolCallDetails.Arguments"/>
     public string Arguments => InternalDetails.Arguments;
 
-    /// <inheritdoc cref="InternalFunctionToolCallDetails.Output"/>
+    /// <inheritdoc cref="InternalRunStepFunctionToolCallDetails.Output"/>
     public string Output => InternalDetails.Output;
 
-    internal InternalFunctionToolCallDetails InternalDetails { get; }
+    internal InternalRunStepFunctionToolCallDetails InternalDetails { get; }
 }

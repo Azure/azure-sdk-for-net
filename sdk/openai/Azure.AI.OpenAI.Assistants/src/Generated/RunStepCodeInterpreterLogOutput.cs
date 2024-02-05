@@ -12,12 +12,12 @@ using Azure.Core;
 namespace Azure.AI.OpenAI.Assistants
 {
     /// <summary> A representation of a log output emitted by a code interpreter tool in response to a tool call by the model. </summary>
-    public partial class CodeInterpreterLogOutput : CodeInterpreterToolCallOutput
+    public partial class RunStepCodeInterpreterLogOutput : RunStepCodeInterpreterToolCallOutput
     {
-        /// <summary> Initializes a new instance of <see cref="CodeInterpreterLogOutput"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="RunStepCodeInterpreterLogOutput"/>. </summary>
         /// <param name="logs"> The serialized log output emitted by the code interpreter. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="logs"/> is null. </exception>
-        internal CodeInterpreterLogOutput(string logs)
+        internal RunStepCodeInterpreterLogOutput(string logs)
         {
             Argument.AssertNotNull(logs, nameof(logs));
 
@@ -25,17 +25,17 @@ namespace Azure.AI.OpenAI.Assistants
             Logs = logs;
         }
 
-        /// <summary> Initializes a new instance of <see cref="CodeInterpreterLogOutput"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="RunStepCodeInterpreterLogOutput"/>. </summary>
         /// <param name="type"> The object type. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="logs"> The serialized log output emitted by the code interpreter. </param>
-        internal CodeInterpreterLogOutput(string type, IDictionary<string, BinaryData> serializedAdditionalRawData, string logs) : base(type, serializedAdditionalRawData)
+        internal RunStepCodeInterpreterLogOutput(string type, IDictionary<string, BinaryData> serializedAdditionalRawData, string logs) : base(type, serializedAdditionalRawData)
         {
             Logs = logs;
         }
 
-        /// <summary> Initializes a new instance of <see cref="CodeInterpreterLogOutput"/> for deserialization. </summary>
-        internal CodeInterpreterLogOutput()
+        /// <summary> Initializes a new instance of <see cref="RunStepCodeInterpreterLogOutput"/> for deserialization. </summary>
+        internal RunStepCodeInterpreterLogOutput()
         {
         }
 

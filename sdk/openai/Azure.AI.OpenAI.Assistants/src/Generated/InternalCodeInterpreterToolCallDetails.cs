@@ -51,7 +51,7 @@ namespace Azure.AI.OpenAI.Assistants
         /// <param name="input"> The input provided by the model to the code interpreter tool. </param>
         /// <param name="outputs"> The outputs produced by the code interpreter tool back to the model in response to the tool call. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="input"/> or <paramref name="outputs"/> is null. </exception>
-        internal InternalCodeInterpreterToolCallDetails(string input, IEnumerable<CodeInterpreterToolCallOutput> outputs)
+        internal InternalCodeInterpreterToolCallDetails(string input, IEnumerable<RunStepCodeInterpreterToolCallOutput> outputs)
         {
             Argument.AssertNotNull(input, nameof(input));
             Argument.AssertNotNull(outputs, nameof(outputs));
@@ -64,7 +64,7 @@ namespace Azure.AI.OpenAI.Assistants
         /// <param name="input"> The input provided by the model to the code interpreter tool. </param>
         /// <param name="outputs"> The outputs produced by the code interpreter tool back to the model in response to the tool call. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal InternalCodeInterpreterToolCallDetails(string input, IReadOnlyList<CodeInterpreterToolCallOutput> outputs, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal InternalCodeInterpreterToolCallDetails(string input, IReadOnlyList<RunStepCodeInterpreterToolCallOutput> outputs, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Input = input;
             Outputs = outputs;
@@ -80,9 +80,9 @@ namespace Azure.AI.OpenAI.Assistants
         public string Input { get; }
         /// <summary>
         /// The outputs produced by the code interpreter tool back to the model in response to the tool call.
-        /// Please note <see cref="CodeInterpreterToolCallOutput"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="CodeInterpreterLogOutput"/> and <see cref="CodeInterpreterImageOutput"/>.
+        /// Please note <see cref="RunStepCodeInterpreterToolCallOutput"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="RunStepCodeInterpreterLogOutput"/> and <see cref="RunStepCodeInterpreterImageOutput"/>.
         /// </summary>
-        public IReadOnlyList<CodeInterpreterToolCallOutput> Outputs { get; }
+        public IReadOnlyList<RunStepCodeInterpreterToolCallOutput> Outputs { get; }
     }
 }

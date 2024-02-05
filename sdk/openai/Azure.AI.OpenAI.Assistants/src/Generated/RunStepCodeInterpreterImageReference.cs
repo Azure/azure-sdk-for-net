@@ -12,7 +12,7 @@ using Azure.Core;
 namespace Azure.AI.OpenAI.Assistants
 {
     /// <summary> An image reference emitted by a code interpreter tool in response to a tool call by the model. </summary>
-    public partial class CodeInterpreterImageReference
+    public partial class RunStepCodeInterpreterImageReference
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -46,27 +46,27 @@ namespace Azure.AI.OpenAI.Assistants
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="CodeInterpreterImageReference"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="RunStepCodeInterpreterImageReference"/>. </summary>
         /// <param name="fileId"> The ID of the file associated with this image. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="fileId"/> is null. </exception>
-        internal CodeInterpreterImageReference(string fileId)
+        internal RunStepCodeInterpreterImageReference(string fileId)
         {
             Argument.AssertNotNull(fileId, nameof(fileId));
 
             FileId = fileId;
         }
 
-        /// <summary> Initializes a new instance of <see cref="CodeInterpreterImageReference"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="RunStepCodeInterpreterImageReference"/>. </summary>
         /// <param name="fileId"> The ID of the file associated with this image. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CodeInterpreterImageReference(string fileId, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal RunStepCodeInterpreterImageReference(string fileId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             FileId = fileId;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="CodeInterpreterImageReference"/> for deserialization. </summary>
-        internal CodeInterpreterImageReference()
+        /// <summary> Initializes a new instance of <see cref="RunStepCodeInterpreterImageReference"/> for deserialization. </summary>
+        internal RunStepCodeInterpreterImageReference()
         {
         }
 

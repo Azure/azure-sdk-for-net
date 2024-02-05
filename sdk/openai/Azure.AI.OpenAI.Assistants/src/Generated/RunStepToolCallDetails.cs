@@ -18,7 +18,7 @@ namespace Azure.AI.OpenAI.Assistants
         /// <summary> Initializes a new instance of <see cref="RunStepToolCallDetails"/>. </summary>
         /// <param name="toolCalls"> A list of tool call details for this run step. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="toolCalls"/> is null. </exception>
-        internal RunStepToolCallDetails(IEnumerable<ToolCall> toolCalls)
+        internal RunStepToolCallDetails(IEnumerable<RunStepToolCall> toolCalls)
         {
             Argument.AssertNotNull(toolCalls, nameof(toolCalls));
 
@@ -30,7 +30,7 @@ namespace Azure.AI.OpenAI.Assistants
         /// <param name="type"> The object type. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="toolCalls"> A list of tool call details for this run step. </param>
-        internal RunStepToolCallDetails(RunStepType type, IDictionary<string, BinaryData> serializedAdditionalRawData, IReadOnlyList<ToolCall> toolCalls) : base(type, serializedAdditionalRawData)
+        internal RunStepToolCallDetails(RunStepType type, IDictionary<string, BinaryData> serializedAdditionalRawData, IReadOnlyList<RunStepToolCall> toolCalls) : base(type, serializedAdditionalRawData)
         {
             ToolCalls = toolCalls;
         }
@@ -42,9 +42,9 @@ namespace Azure.AI.OpenAI.Assistants
 
         /// <summary>
         /// A list of tool call details for this run step.
-        /// Please note <see cref="ToolCall"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="CodeInterpreterToolCall"/>, <see cref="RetrievalToolCall"/> and <see cref="FunctionToolCall"/>.
+        /// Please note <see cref="RunStepToolCall"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="RunStepCodeInterpreterToolCall"/>, <see cref="RunStepRetrievalToolCall"/> and <see cref="RunStepFunctionToolCall"/>.
         /// </summary>
-        public IReadOnlyList<ToolCall> ToolCalls { get; }
+        public IReadOnlyList<RunStepToolCall> ToolCalls { get; }
     }
 }

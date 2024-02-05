@@ -14,16 +14,16 @@ using Azure.Core;
 
 namespace Azure.AI.OpenAI.Assistants
 {
-    public partial class CodeInterpreterImageReference : IUtf8JsonSerializable, IJsonModel<CodeInterpreterImageReference>
+    public partial class RunStepCodeInterpreterImageReference : IUtf8JsonSerializable, IJsonModel<RunStepCodeInterpreterImageReference>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CodeInterpreterImageReference>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RunStepCodeInterpreterImageReference>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
-        void IJsonModel<CodeInterpreterImageReference>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<RunStepCodeInterpreterImageReference>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<CodeInterpreterImageReference>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<RunStepCodeInterpreterImageReference>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CodeInterpreterImageReference)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RunStepCodeInterpreterImageReference)} does not support '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -47,19 +47,19 @@ namespace Azure.AI.OpenAI.Assistants
             writer.WriteEndObject();
         }
 
-        CodeInterpreterImageReference IJsonModel<CodeInterpreterImageReference>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        RunStepCodeInterpreterImageReference IJsonModel<RunStepCodeInterpreterImageReference>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<CodeInterpreterImageReference>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<RunStepCodeInterpreterImageReference>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CodeInterpreterImageReference)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RunStepCodeInterpreterImageReference)} does not support '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeCodeInterpreterImageReference(document.RootElement, options);
+            return DeserializeRunStepCodeInterpreterImageReference(document.RootElement, options);
         }
 
-        internal static CodeInterpreterImageReference DeserializeCodeInterpreterImageReference(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static RunStepCodeInterpreterImageReference DeserializeRunStepCodeInterpreterImageReference(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= new ModelReaderWriterOptions("W");
 
@@ -83,46 +83,46 @@ namespace Azure.AI.OpenAI.Assistants
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CodeInterpreterImageReference(fileId, serializedAdditionalRawData);
+            return new RunStepCodeInterpreterImageReference(fileId, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<CodeInterpreterImageReference>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<RunStepCodeInterpreterImageReference>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<CodeInterpreterImageReference>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<RunStepCodeInterpreterImageReference>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(CodeInterpreterImageReference)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RunStepCodeInterpreterImageReference)} does not support '{options.Format}' format.");
             }
         }
 
-        CodeInterpreterImageReference IPersistableModel<CodeInterpreterImageReference>.Create(BinaryData data, ModelReaderWriterOptions options)
+        RunStepCodeInterpreterImageReference IPersistableModel<RunStepCodeInterpreterImageReference>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<CodeInterpreterImageReference>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<RunStepCodeInterpreterImageReference>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeCodeInterpreterImageReference(document.RootElement, options);
+                        return DeserializeRunStepCodeInterpreterImageReference(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CodeInterpreterImageReference)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RunStepCodeInterpreterImageReference)} does not support '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<CodeInterpreterImageReference>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<RunStepCodeInterpreterImageReference>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static CodeInterpreterImageReference FromResponse(Response response)
+        internal static RunStepCodeInterpreterImageReference FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content);
-            return DeserializeCodeInterpreterImageReference(document.RootElement);
+            return DeserializeRunStepCodeInterpreterImageReference(document.RootElement);
         }
 
         /// <summary> Convert into a Utf8JsonRequestContent. </summary>
