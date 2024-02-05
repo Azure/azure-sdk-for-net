@@ -94,13 +94,13 @@ public abstract class PipelineResponse : IDisposable
         return false;
     }
 
-    internal void ProcessContent(bool bufferResponse, CancellationToken userToken, CancellationTokenSource joinedTokenSource)
-        => ProcessContentSyncOrAsync(bufferResponse, userToken, joinedTokenSource, async: false).EnsureCompleted();
+    internal void ProcessContent(bool bufferResponse, CancellationToken messageToken, CancellationTokenSource joinedTokenSource)
+        => ProcessContentSyncOrAsync(bufferResponse, messageToken, joinedTokenSource, async: false).EnsureCompleted();
 
-    internal async Task ProcessContentAsync(bool bufferResponse, CancellationToken userToken, CancellationTokenSource joinedTokenSource)
-        => await ProcessContentSyncOrAsync(bufferResponse, userToken, joinedTokenSource, async: true).ConfigureAwait(false);
+    internal async Task ProcessContentAsync(bool bufferResponse, CancellationToken messageToken, CancellationTokenSource joinedTokenSource)
+        => await ProcessContentSyncOrAsync(bufferResponse, messageToken, joinedTokenSource, async: true).ConfigureAwait(false);
 
-    internal async Task ProcessContentSyncOrAsync(bool bufferResponse, CancellationToken userToken, CancellationTokenSource joinedTokenSource, bool async)
+    internal async Task ProcessContentSyncOrAsync(bool bufferResponse, CancellationToken messageToken, CancellationTokenSource joinedTokenSource, bool async)
     {
         if (ContentStream is null)
         {
@@ -124,7 +124,7 @@ public abstract class PipelineResponse : IDisposable
         // If cancellation is possible (whether due to network timeout or a user
         // cancellation token being passed), then register a callback to dispose
         // the stream on cancellation.
-        if (NetworkTimeout != Timeout.InfiniteTimeSpan || userToken.CanBeCanceled)
+        if (NetworkTimeout != Timeout.InfiniteTimeSpan || messageToken.CanBeCanceled)
         {
             joinedTokenSource.Token.Register(state => ((Stream?)state)?.Dispose(), ContentStream);
         }
@@ -148,7 +148,7 @@ public abstract class PipelineResponse : IDisposable
                       or OperationCanceledException
                       or NotSupportedException)
         {
-            CancellationHelper.ThrowIfCancellationRequestedOrTimeout(userToken, joinedTokenSource.Token, ex, NetworkTimeout);
+            CancellationHelper.ThrowIfCancellationRequestedOrTimeout(messageToken, joinedTokenSource.Token, ex, NetworkTimeout);
             throw;
         }
     }

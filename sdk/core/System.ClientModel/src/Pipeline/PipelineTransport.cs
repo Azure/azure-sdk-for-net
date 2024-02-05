@@ -59,8 +59,8 @@ public abstract class PipelineTransport : PipelinePolicy
 
         // Implement network timeout behavior around call to ProcessCore.
         TimeSpan networkTimeout = (TimeSpan)message.NetworkTimeout!;
-        CancellationToken userToken = message.CancellationToken;
-        using CancellationTokenSource joinedTokenSource = CancellationTokenSource.CreateLinkedTokenSource(userToken);
+        CancellationToken messageToken = message.CancellationToken;
+        using CancellationTokenSource joinedTokenSource = CancellationTokenSource.CreateLinkedTokenSource(messageToken);
         joinedTokenSource.CancelAfter(networkTimeout);
 
         try
@@ -78,12 +78,12 @@ public abstract class PipelineTransport : PipelinePolicy
         }
         catch (OperationCanceledException ex)
         {
-            CancellationHelper.ThrowIfCancellationRequestedOrTimeout(userToken, joinedTokenSource.Token, ex, networkTimeout);
+            CancellationHelper.ThrowIfCancellationRequestedOrTimeout(messageToken, joinedTokenSource.Token, ex, networkTimeout);
             throw;
         }
         finally
         {
-            message.CancellationToken = userToken;
+            message.CancellationToken = messageToken;
             joinedTokenSource.CancelAfter(Timeout.Infinite);
         }
 
@@ -98,11 +98,11 @@ public abstract class PipelineTransport : PipelinePolicy
         // Either buffer the response, or wrap it in a timeout stream.
         if (async)
         {
-            await message.Response.ProcessContentAsync(message.BufferResponse, userToken, joinedTokenSource).ConfigureAwait(false);
+            await message.Response.ProcessContentAsync(message.BufferResponse, messageToken, joinedTokenSource).ConfigureAwait(false);
         }
         else
         {
-            message.Response.ProcessContent(message.BufferResponse, userToken, joinedTokenSource);
+            message.Response.ProcessContent(message.BufferResponse, messageToken, joinedTokenSource);
         }
     }
 
