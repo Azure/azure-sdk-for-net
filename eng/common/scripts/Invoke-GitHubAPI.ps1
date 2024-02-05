@@ -403,7 +403,7 @@ function Update-GitHubIssue {
           -Uri $uri `
           -Headers (Get-GitHubApiHeaders -token $AuthToken) `
           -MaximumRetryCount 3
-          -ContentType "application/x-www-form-urlencoded"
+          -ContentType "application/json"
 }
 
 function Remove-GitHubSourceReferences  {
