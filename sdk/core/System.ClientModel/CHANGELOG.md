@@ -6,9 +6,13 @@
 
 ### Breaking Changes
 
+- Change `HttpClientPipelineTransport.Shared` from a field to a property.
+
 ### Bugs Fixed
 
 ### Other Changes
+
+- Made `CancellationToken` parameter passed to `BinaryContent.WriteTo` optional.
 
 ## 1.1.0-beta.1 (2024-02-01)
 
