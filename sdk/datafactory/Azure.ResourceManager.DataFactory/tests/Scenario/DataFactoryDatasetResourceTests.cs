@@ -2218,39 +2218,36 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
         [RecordedTest]
         public async Task Dataset_Avro_Create()
         {
-            string name = "avro";
-            // Get the resource group
-            string rgName = Recording.GenerateAssetName($"adf-rg-{name}-");
-            var resourceGroup = await CreateResourceGroup(rgName, AzureLocation.WestUS2);
-            // Create a DataFactory
-            string dataFactoryName = Recording.GenerateAssetName($"adf-{name}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(resourceGroup, dataFactoryName);
-            // Create a LinkedService
-            string accessKey = GetStorageAccountAccessKey(resourceGroup);
-            string linkedServiceName = Recording.GenerateAssetName($"adf-linkedservice-{name}-");
-            //await CreateLinkedService(dataFactory, linkedServiceName, accessKey);
-
-            // Create Dataset
-            string datasetName = Recording.GenerateAssetName($"adf-dataset-{name}-");
-            //var result = await dataFactory.GetDataFactoryDatasets().CreateOrUpdateAsync(WaitUntil.Completed, datasetName, dataFunc(linkedServiceName));
-            //Assert.NotNull(result.Value.Id);
-
-            await CreateAzureDataLakeGen2LinkedService(dataFactory, linkedServiceName, "fakePassword");
-
-            DataFactoryLinkedServiceReference dataFactoryLinkedServiceReference = new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceName);
-            DataFactoryDatasetData data = new DataFactoryDatasetData(new AvroDataset(dataFactoryLinkedServiceReference)
+            await DatasetCreate("avro", CreateAzureBlobStorageLinkedService, (string linkedServiceName) =>
             {
-                //Schema = DataFactoryElement<BinaryData>.FromLiteral(BinaryData.FromString("{\"type\": \"record\",\"name\": \"HybridDelivery.ClientLibraryJob\",\"fields\": [{\"name\": \"TIMESTAMP\",\"type\": [\"string\",\"null\"]}]}")),
-                Schema = DataFactoryElement<BinaryData>.FromLiteral(BinaryData.FromString("123")),
-                DataLocation = new AzureBlobFSLocation()
+                return new DataFactoryDatasetData(new AvroDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceName))
                 {
-                    FileName = "TestQuerySchema.avro",
-                    FileSystem = "0-querytest",
-                    FolderPath = "querytest"
-                }
+                    Schema = DataFactoryElement<BinaryData>.FromLiteral(BinaryData.FromString("{\"type\": \"record\",\"name\": \"HybridDelivery.ClientLibraryJob\",\"fields\": [{\"name\": \"TIMESTAMP\",\"type\": [\"string\",\"null\"]}]}")),
+                    DataLocation = new AzureBlobStorageLocation()
+                    {
+                        FileName = "TestQuerySchema.avro",
+                        FolderPath = "querytest"
+                    }
+                });
             });
+        }
 
-            await dataFactory.GetDataFactoryDatasets().CreateOrUpdateAsync(WaitUntil.Completed, datasetName, data);
+        [Test]
+        [RecordedTest]
+        public async Task Dataset_Json_Create()
+        {
+            await DatasetCreate("json", CreateAzureBlobStorageLinkedService, (string linkedServiceName) =>
+            {
+                return new DataFactoryDatasetData(new JsonDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceName))
+                {
+                    Schema = DataFactoryElement<BinaryData>.FromLiteral(BinaryData.FromString("{\"type\": \"object\",\"properties\": {\"studentName\": {\"type\": \"string\"},\"age\": {\"type\": \"integer\"},\"gender\": {\"type\": \"string\"},\"studentID\": {\"type\": \"string\"},\"major\": {\"type\": \"string\"},\"grades\": {\"type\": \"object\",\"properties\": {\"math\": {\"type\": \"integer\"},\"english\": {\"type\": \"integer\"},\"programming\": {\"type\": \"integer\"}}},\"contact\": {\"type\":\"object\",\"properties\": {\"phone\": {\"type\": \"string\"},\"email\": {\"type\": \"string\"}}}}}")),
+                    DataLocation = new AzureBlobStorageLocation()
+                    {
+                        FileName = "TestQuerySchema.json",
+                        FolderPath = "querytest"
+                    }
+                });
+            });
         }
     }
 }
