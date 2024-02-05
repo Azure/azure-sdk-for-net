@@ -12,7 +12,10 @@ using Azure.ResourceManager.NetApp;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
-    /// <summary> List of volume resources. </summary>
+    /// <summary>
+    /// List of volume resources
+    /// Serialized Name: VolumeList
+    /// </summary>
     internal partial class VolumeList
     {
         /// <summary>
@@ -54,8 +57,14 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="VolumeList"/>. </summary>
-        /// <param name="value"> List of volumes. </param>
-        /// <param name="nextLink"> URL to get the next set of results. </param>
+        /// <param name="value">
+        /// List of volumes
+        /// Serialized Name: VolumeList.value
+        /// </param>
+        /// <param name="nextLink">
+        /// URL to get the next set of results.
+        /// Serialized Name: VolumeList.nextLink
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal VolumeList(IReadOnlyList<NetAppVolumeData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -64,9 +73,15 @@ namespace Azure.ResourceManager.NetApp.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> List of volumes. </summary>
+        /// <summary>
+        /// List of volumes
+        /// Serialized Name: VolumeList.value
+        /// </summary>
         public IReadOnlyList<NetAppVolumeData> Value { get; }
-        /// <summary> URL to get the next set of results. </summary>
+        /// <summary>
+        /// URL to get the next set of results.
+        /// Serialized Name: VolumeList.nextLink
+        /// </summary>
         public string NextLink { get; }
     }
 }

@@ -11,7 +11,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
-    /// <summary> Describes the contents of a network sibling set. </summary>
+    /// <summary>
+    /// Describes the contents of a network sibling set.
+    /// Serialized Name: NetworkSiblingSet
+    /// </summary>
     public partial class NetworkSiblingSet
     {
         /// <summary>
@@ -53,12 +56,30 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="NetworkSiblingSet"/>. </summary>
-        /// <param name="networkSiblingSetId"> Network Sibling Set ID for a group of volumes sharing networking resources in a subnet. </param>
-        /// <param name="subnetId"> The Azure Resource URI for a delegated subnet. Must have the delegation Microsoft.NetApp/volumes. Example /subscriptions/subscriptionId/resourceGroups/resourceGroup/providers/Microsoft.Network/virtualNetworks/testVnet/subnets/{mySubnet}. </param>
-        /// <param name="networkSiblingSetStateId"> Network sibling set state Id identifying the current state of the sibling set. </param>
-        /// <param name="networkFeatures"> Network features available to the volume, or current state of update. </param>
-        /// <param name="provisioningState"> Gets the status of the NetworkSiblingSet at the time the operation was called. </param>
-        /// <param name="nicInfoList"> List of NIC information. </param>
+        /// <param name="networkSiblingSetId">
+        /// Network Sibling Set ID for a group of volumes sharing networking resources in a subnet.
+        /// Serialized Name: NetworkSiblingSet.networkSiblingSetId
+        /// </param>
+        /// <param name="subnetId">
+        /// The Azure Resource URI for a delegated subnet. Must have the delegation Microsoft.NetApp/volumes. Example /subscriptions/subscriptionId/resourceGroups/resourceGroup/providers/Microsoft.Network/virtualNetworks/testVnet/subnets/{mySubnet}
+        /// Serialized Name: NetworkSiblingSet.subnetId
+        /// </param>
+        /// <param name="networkSiblingSetStateId">
+        /// Network sibling set state Id identifying the current state of the sibling set.
+        /// Serialized Name: NetworkSiblingSet.networkSiblingSetStateId
+        /// </param>
+        /// <param name="networkFeatures">
+        /// Network features available to the volume, or current state of update.
+        /// Serialized Name: NetworkSiblingSet.networkFeatures
+        /// </param>
+        /// <param name="provisioningState">
+        /// Gets the status of the NetworkSiblingSet at the time the operation was called.
+        /// Serialized Name: NetworkSiblingSet.provisioningState
+        /// </param>
+        /// <param name="nicInfoList">
+        /// List of NIC information
+        /// Serialized Name: NetworkSiblingSet.nicInfoList
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal NetworkSiblingSet(string networkSiblingSetId, ResourceIdentifier subnetId, string networkSiblingSetStateId, NetAppNetworkFeature? networkFeatures, NetworkSiblingSetProvisioningState? provisioningState, IReadOnlyList<NicInfo> nicInfoList, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -71,17 +92,35 @@ namespace Azure.ResourceManager.NetApp.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Network Sibling Set ID for a group of volumes sharing networking resources in a subnet. </summary>
+        /// <summary>
+        /// Network Sibling Set ID for a group of volumes sharing networking resources in a subnet.
+        /// Serialized Name: NetworkSiblingSet.networkSiblingSetId
+        /// </summary>
         public string NetworkSiblingSetId { get; }
-        /// <summary> The Azure Resource URI for a delegated subnet. Must have the delegation Microsoft.NetApp/volumes. Example /subscriptions/subscriptionId/resourceGroups/resourceGroup/providers/Microsoft.Network/virtualNetworks/testVnet/subnets/{mySubnet}. </summary>
+        /// <summary>
+        /// The Azure Resource URI for a delegated subnet. Must have the delegation Microsoft.NetApp/volumes. Example /subscriptions/subscriptionId/resourceGroups/resourceGroup/providers/Microsoft.Network/virtualNetworks/testVnet/subnets/{mySubnet}
+        /// Serialized Name: NetworkSiblingSet.subnetId
+        /// </summary>
         public ResourceIdentifier SubnetId { get; }
-        /// <summary> Network sibling set state Id identifying the current state of the sibling set. </summary>
+        /// <summary>
+        /// Network sibling set state Id identifying the current state of the sibling set.
+        /// Serialized Name: NetworkSiblingSet.networkSiblingSetStateId
+        /// </summary>
         public string NetworkSiblingSetStateId { get; }
-        /// <summary> Network features available to the volume, or current state of update. </summary>
+        /// <summary>
+        /// Network features available to the volume, or current state of update.
+        /// Serialized Name: NetworkSiblingSet.networkFeatures
+        /// </summary>
         public NetAppNetworkFeature? NetworkFeatures { get; }
-        /// <summary> Gets the status of the NetworkSiblingSet at the time the operation was called. </summary>
+        /// <summary>
+        /// Gets the status of the NetworkSiblingSet at the time the operation was called.
+        /// Serialized Name: NetworkSiblingSet.provisioningState
+        /// </summary>
         public NetworkSiblingSetProvisioningState? ProvisioningState { get; }
-        /// <summary> List of NIC information. </summary>
+        /// <summary>
+        /// List of NIC information
+        /// Serialized Name: NetworkSiblingSet.nicInfoList
+        /// </summary>
         public IReadOnlyList<NicInfo> NicInfoList { get; }
     }
 }

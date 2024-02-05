@@ -38,6 +38,9 @@ namespace Azure.ResourceManager.NetApp
         private readonly NetAppResourceRegionInfosRestOperations _regionInfoResourceNetAppResourceRegionInfosRestClient;
         private readonly RegionInfoResourceData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.NetApp/locations/regionInfos";
+
         /// <summary> Initializes a new instance of the <see cref="RegionInfoResource"/> class for mocking. </summary>
         protected RegionInfoResource()
         {
@@ -64,9 +67,6 @@ namespace Azure.ResourceManager.NetApp
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.NetApp/locations/regionInfos";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -100,6 +100,14 @@ namespace Azure.ResourceManager.NetApp
         /// <term>Operation Id</term>
         /// <description>NetAppResourceRegionInfos_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RegionInfoResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -131,6 +139,14 @@ namespace Azure.ResourceManager.NetApp
         /// <item>
         /// <term>Operation Id</term>
         /// <description>NetAppResourceRegionInfos_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RegionInfoResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

@@ -24,6 +24,11 @@ namespace Azure.ResourceManager.NetApp.Models
             }
 
             writer.WriteStartObject();
+            if (Optional.IsDefined(Backup))
+            {
+                writer.WritePropertyName("backup"u8);
+                writer.WriteObjectValue(Backup);
+            }
             if (Optional.IsDefined(Snapshot))
             {
                 writer.WritePropertyName("snapshot"u8);
@@ -67,11 +72,21 @@ namespace Azure.ResourceManager.NetApp.Models
             {
                 return null;
             }
+            Optional<NetAppVolumeBackupConfiguration> backup = default;
             Optional<VolumeSnapshotProperties> snapshot = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("backup"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    backup = NetAppVolumeBackupConfiguration.DeserializeNetAppVolumeBackupConfiguration(property.Value);
+                    continue;
+                }
                 if (property.NameEquals("snapshot"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -87,7 +102,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetAppVolumePatchDataProtection(snapshot.Value, serializedAdditionalRawData);
+            return new NetAppVolumePatchDataProtection(backup.Value, snapshot.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetAppVolumePatchDataProtection>.Write(ModelReaderWriterOptions options)

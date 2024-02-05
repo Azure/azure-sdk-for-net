@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.NetApp.Tests
         private readonly string _vgVnet = "vnetnortheurope-anf";
         private readonly ResourceIdentifier _proximityPlacementGroup = new ResourceIdentifier("/subscriptions/69a75bda-882e-44d5-8431-63421204132a/resourceGroups/sdk-net-test-qa2/providers/Microsoft.Compute/proximityPlacementGroups/sdk_test_northeurope_ppg");
         //private readonly string _gENPOPDeploymentSpecID = "30542149-bfca-5618-1879-9863dc6767f1";
-        private readonly string _sAPHANAOnGENPOPDeploymentSpecID = "20542149-bfca-5618-1879-9863dc6767f1";
+        //private readonly string _sAPHANAOnGENPOPDeploymentSpecID = "20542149-bfca-5618-1879-9863dc6767f1";
         private ResourceGroupResource _volumeGroupResourceGroup;
         private NetAppAccountCollection _netAppAccountCollection { get => _volumeGroupResourceGroup.GetNetAppAccounts(); }
         private NetAppVolumeGroupCollection _volumeGroupCollection { get => _netAppAccount.GetNetAppVolumeGroups(); }
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.NetApp.Tests
 
             NetAppVolumeGroupData volumeGroupDetailsData = new();
             volumeGroupDetailsData.Location = _volumeGroupLocation;
-            volumeGroupDetailsData.GroupMetaData = new("group description", NetAppApplicationType.SapHana, "SH1", globalPlacementRules, _sAPHANAOnGENPOPDeploymentSpecID, null, serializedAdditionalRawData: null);
+            volumeGroupDetailsData.GroupMetaData = new("group description", NetAppApplicationType.SapHana, "SH1", globalPlacementRules, null, serializedAdditionalRawData: null);
             volumeGroupDetailsData.Volumes.InitializeFrom(volumeGroupVolumeProperties);
 
             NetAppVolumeGroupResource volumeGroupDetails = (await volumeGroupCollection.CreateOrUpdateAsync(WaitUntil.Completed, volumeGroupName, volumeGroupDetailsData)).Value;

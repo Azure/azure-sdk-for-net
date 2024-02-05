@@ -406,6 +406,18 @@ namespace Azure.ResourceManager.NetApp.Models
                     writer.WriteNull("originatingResourceId");
                 }
             }
+            if (options.Format != "W" && Optional.IsDefined(InheritedSizeInBytes))
+            {
+                if (InheritedSizeInBytes != null)
+                {
+                    writer.WritePropertyName("inheritedSizeInBytes"u8);
+                    writer.WriteNumberValue(InheritedSizeInBytes.Value);
+                }
+                else
+                {
+                    writer.WriteNull("inheritedSizeInBytes");
+                }
+            }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -504,6 +516,7 @@ namespace Azure.ResourceManager.NetApp.Models
             Optional<string> provisionedAvailabilityZone = default;
             Optional<bool> isLargeVolume = default;
             Optional<ResourceIdentifier> originatingResourceId = default;
+            Optional<long?> inheritedSizeInBytes = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -1053,6 +1066,16 @@ namespace Azure.ResourceManager.NetApp.Models
                             originatingResourceId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
+                        if (property0.NameEquals("inheritedSizeInBytes"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                inheritedSizeInBytes = null;
+                                continue;
+                            }
+                            inheritedSizeInBytes = property0.Value.GetInt64();
+                            continue;
+                        }
                     }
                     continue;
                 }
@@ -1062,7 +1085,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetAppVolumeGroupVolume(id.Value, name.Value, Optional.ToNullable(type), Optional.ToDictionary(tags), Optional.ToList(zones), Optional.ToNullable(fileSystemId), creationToken, Optional.ToNullable(serviceLevel), usageThreshold, exportPolicy.Value, Optional.ToList(protocolTypes), provisioningState.Value, snapshotId.Value, Optional.ToNullable(deleteBaseSnapshot), backupId.Value, baremetalTenantId.Value, subnetId, Optional.ToNullable(networkFeatures), Optional.ToNullable(networkSiblingSetId), Optional.ToNullable(storageToNetworkProximity), Optional.ToList(mountTargets), volumeType.Value, dataProtection.Value, Optional.ToNullable(isRestoring), Optional.ToNullable(snapshotDirectoryVisible), Optional.ToNullable(kerberosEnabled), Optional.ToNullable(securityStyle), Optional.ToNullable(smbEncryption), Optional.ToNullable(smbAccessBasedEnumeration), Optional.ToNullable(smbNonBrowsable), Optional.ToNullable(smbContinuouslyAvailable), Optional.ToNullable(throughputMibps), Optional.ToNullable(actualThroughputMibps), Optional.ToNullable(encryptionKeySource), keyVaultPrivateEndpointResourceId.Value, Optional.ToNullable(ldapEnabled), Optional.ToNullable(coolAccess), Optional.ToNullable(coolnessPeriod), Optional.ToNullable(coolAccessRetrievalPolicy), unixPermissions.Value, Optional.ToNullable(cloneProgress), Optional.ToNullable(fileAccessLogs), Optional.ToNullable(avsDataStore), Optional.ToList(dataStoreResourceId), Optional.ToNullable(isDefaultQuotaEnabled), Optional.ToNullable(defaultUserQuotaInKiBs), Optional.ToNullable(defaultGroupQuotaInKiBs), Optional.ToNullable(maximumNumberOfFiles), volumeGroupName.Value, capacityPoolResourceId.Value, proximityPlacementGroup.Value, t2Network.Value, volumeSpecName.Value, Optional.ToNullable(encrypted), Optional.ToList(placementRules), Optional.ToNullable(enableSubvolumes), provisionedAvailabilityZone.Value, Optional.ToNullable(isLargeVolume), originatingResourceId.Value, serializedAdditionalRawData);
+            return new NetAppVolumeGroupVolume(id.Value, name.Value, Optional.ToNullable(type), Optional.ToDictionary(tags), Optional.ToList(zones), Optional.ToNullable(fileSystemId), creationToken, Optional.ToNullable(serviceLevel), usageThreshold, exportPolicy.Value, Optional.ToList(protocolTypes), provisioningState.Value, snapshotId.Value, Optional.ToNullable(deleteBaseSnapshot), backupId.Value, baremetalTenantId.Value, subnetId, Optional.ToNullable(networkFeatures), Optional.ToNullable(networkSiblingSetId), Optional.ToNullable(storageToNetworkProximity), Optional.ToList(mountTargets), volumeType.Value, dataProtection.Value, Optional.ToNullable(isRestoring), Optional.ToNullable(snapshotDirectoryVisible), Optional.ToNullable(kerberosEnabled), Optional.ToNullable(securityStyle), Optional.ToNullable(smbEncryption), Optional.ToNullable(smbAccessBasedEnumeration), Optional.ToNullable(smbNonBrowsable), Optional.ToNullable(smbContinuouslyAvailable), Optional.ToNullable(throughputMibps), Optional.ToNullable(actualThroughputMibps), Optional.ToNullable(encryptionKeySource), keyVaultPrivateEndpointResourceId.Value, Optional.ToNullable(ldapEnabled), Optional.ToNullable(coolAccess), Optional.ToNullable(coolnessPeriod), Optional.ToNullable(coolAccessRetrievalPolicy), unixPermissions.Value, Optional.ToNullable(cloneProgress), Optional.ToNullable(fileAccessLogs), Optional.ToNullable(avsDataStore), Optional.ToList(dataStoreResourceId), Optional.ToNullable(isDefaultQuotaEnabled), Optional.ToNullable(defaultUserQuotaInKiBs), Optional.ToNullable(defaultGroupQuotaInKiBs), Optional.ToNullable(maximumNumberOfFiles), volumeGroupName.Value, capacityPoolResourceId.Value, proximityPlacementGroup.Value, t2Network.Value, volumeSpecName.Value, Optional.ToNullable(encrypted), Optional.ToList(placementRules), Optional.ToNullable(enableSubvolumes), provisionedAvailabilityZone.Value, Optional.ToNullable(isLargeVolume), originatingResourceId.Value, Optional.ToNullable(inheritedSizeInBytes), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetAppVolumeGroupVolume>.Write(ModelReaderWriterOptions options)

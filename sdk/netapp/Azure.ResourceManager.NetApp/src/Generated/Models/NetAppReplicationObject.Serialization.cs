@@ -43,6 +43,11 @@ namespace Azure.ResourceManager.NetApp.Models
             }
             writer.WritePropertyName("remoteVolumeResourceId"u8);
             writer.WriteStringValue(RemoteVolumeResourceId);
+            if (Optional.IsDefined(RemotePath))
+            {
+                writer.WritePropertyName("remotePath"u8);
+                writer.WriteObjectValue(RemotePath);
+            }
             if (Optional.IsDefined(RemoteVolumeRegion))
             {
                 writer.WritePropertyName("remoteVolumeRegion"u8);
@@ -90,6 +95,7 @@ namespace Azure.ResourceManager.NetApp.Models
             Optional<NetAppEndpointType> endpointType = default;
             Optional<NetAppReplicationSchedule> replicationSchedule = default;
             ResourceIdentifier remoteVolumeResourceId = default;
+            Optional<RemotePath> remotePath = default;
             Optional<string> remoteVolumeRegion = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -123,6 +129,15 @@ namespace Azure.ResourceManager.NetApp.Models
                     remoteVolumeResourceId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
+                if (property.NameEquals("remotePath"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    remotePath = RemotePath.DeserializeRemotePath(property.Value);
+                    continue;
+                }
                 if (property.NameEquals("remoteVolumeRegion"u8))
                 {
                     remoteVolumeRegion = property.Value.GetString();
@@ -134,7 +149,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetAppReplicationObject(replicationId.Value, Optional.ToNullable(endpointType), Optional.ToNullable(replicationSchedule), remoteVolumeResourceId, remoteVolumeRegion.Value, serializedAdditionalRawData);
+            return new NetAppReplicationObject(replicationId.Value, Optional.ToNullable(endpointType), Optional.ToNullable(replicationSchedule), remoteVolumeResourceId, remotePath.Value, remoteVolumeRegion.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetAppReplicationObject>.Write(ModelReaderWriterOptions options)

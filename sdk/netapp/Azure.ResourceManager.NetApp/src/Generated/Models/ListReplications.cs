@@ -11,7 +11,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
-    /// <summary> List Replications. </summary>
+    /// <summary>
+    /// List Replications
+    /// Serialized Name: ListReplications
+    /// </summary>
     internal partial class ListReplications
     {
         /// <summary>
@@ -53,7 +56,10 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ListReplications"/>. </summary>
-        /// <param name="value"> A list of replications. </param>
+        /// <param name="value">
+        /// A list of replications
+        /// Serialized Name: ListReplications.value
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ListReplications(IReadOnlyList<NetAppVolumeReplication> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -61,7 +67,10 @@ namespace Azure.ResourceManager.NetApp.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> A list of replications. </summary>
+        /// <summary>
+        /// A list of replications
+        /// Serialized Name: ListReplications.value
+        /// </summary>
         public IReadOnlyList<NetAppVolumeReplication> Value { get; }
     }
 }

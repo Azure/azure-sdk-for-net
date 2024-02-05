@@ -11,7 +11,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
-    /// <summary> Volume Snapshot Properties. </summary>
+    /// <summary>
+    /// Volume Snapshot Properties
+    /// Serialized Name: VolumeSnapshotProperties
+    /// </summary>
     internal partial class VolumeSnapshotProperties
     {
         /// <summary>
@@ -52,7 +55,10 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="VolumeSnapshotProperties"/>. </summary>
-        /// <param name="snapshotPolicyId"> Snapshot Policy ResourceId. </param>
+        /// <param name="snapshotPolicyId">
+        /// Snapshot Policy ResourceId
+        /// Serialized Name: VolumeSnapshotProperties.snapshotPolicyId
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal VolumeSnapshotProperties(ResourceIdentifier snapshotPolicyId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -60,7 +66,10 @@ namespace Azure.ResourceManager.NetApp.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Snapshot Policy ResourceId. </summary>
+        /// <summary>
+        /// Snapshot Policy ResourceId
+        /// Serialized Name: VolumeSnapshotProperties.snapshotPolicyId
+        /// </summary>
         public ResourceIdentifier SnapshotPolicyId { get; set; }
     }
 }

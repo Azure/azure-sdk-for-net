@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
-    public partial class RemotePath : IUtf8JsonSerializable
+    public partial class RemotePath : IUtf8JsonSerializable, IJsonModel<RemotePath>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RemotePath>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<RemotePath>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<RemotePath>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(RemotePath)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("externalHostName"u8);
             writer.WriteStringValue(ExternalHostName);
@@ -21,11 +32,40 @@ namespace Azure.ResourceManager.NetApp.Models
             writer.WriteStringValue(ServerName);
             writer.WritePropertyName("volumeName"u8);
             writer.WriteStringValue(VolumeName);
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static RemotePath DeserializeRemotePath(JsonElement element)
+        RemotePath IJsonModel<RemotePath>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<RemotePath>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(RemotePath)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeRemotePath(document.RootElement, options);
+        }
+
+        internal static RemotePath DeserializeRemotePath(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -33,6 +73,8 @@ namespace Azure.ResourceManager.NetApp.Models
             string externalHostName = default;
             string serverName = default;
             string volumeName = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("externalHostName"u8))
@@ -50,8 +92,44 @@ namespace Azure.ResourceManager.NetApp.Models
                     volumeName = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new RemotePath(externalHostName, serverName, volumeName);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new RemotePath(externalHostName, serverName, volumeName, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<RemotePath>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<RemotePath>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(RemotePath)} does not support '{options.Format}' format.");
+            }
+        }
+
+        RemotePath IPersistableModel<RemotePath>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<RemotePath>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeRemotePath(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(RemotePath)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<RemotePath>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

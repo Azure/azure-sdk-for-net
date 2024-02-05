@@ -11,7 +11,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
-    /// <summary> Group Id list for Ldap user. </summary>
+    /// <summary>
+    /// Group Id list for Ldap user
+    /// Serialized Name: GetGroupIdListForLdapUserResponse
+    /// </summary>
     public partial class GetGroupIdListForLdapUserResult
     {
         /// <summary>
@@ -53,7 +56,10 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="GetGroupIdListForLdapUserResult"/>. </summary>
-        /// <param name="groupIdsForLdapUser"> Group Id list. </param>
+        /// <param name="groupIdsForLdapUser">
+        /// Group Id list
+        /// Serialized Name: GetGroupIdListForLdapUserResponse.groupIdsForLdapUser
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal GetGroupIdListForLdapUserResult(IReadOnlyList<string> groupIdsForLdapUser, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -61,7 +67,10 @@ namespace Azure.ResourceManager.NetApp.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Group Id list. </summary>
+        /// <summary>
+        /// Group Id list
+        /// Serialized Name: GetGroupIdListForLdapUserResponse.groupIdsForLdapUser
+        /// </summary>
         public IReadOnlyList<string> GroupIdsForLdapUser { get; }
     }
 }

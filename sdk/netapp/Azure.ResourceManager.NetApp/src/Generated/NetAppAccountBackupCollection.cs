@@ -37,6 +37,14 @@ namespace Azure.ResourceManager.NetApp
         /// <term>Operation Id</term>
         /// <description>AccountBackups_ListByNetAppAccount</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetAppAccountBackupResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="includeOnlyBackupsFromDeletedVolumes"> An option to specify whether to return backups only from deleted volumes. </param>
@@ -58,6 +66,14 @@ namespace Azure.ResourceManager.NetApp
         /// <item>
         /// <term>Operation Id</term>
         /// <description>AccountBackups_ListByNetAppAccount</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetAppAccountBackupResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

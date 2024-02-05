@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
-    public partial class NetAppVolumeBackupConfiguration : IUtf8JsonSerializable
+    public partial class NetAppVolumeBackupConfiguration : IUtf8JsonSerializable, IJsonModel<NetAppVolumeBackupConfiguration>
     {
     }
 }

@@ -44,6 +44,11 @@ namespace Azure.ResourceManager.NetApp.Models
                 writer.WritePropertyName("backupEnabled"u8);
                 writer.WriteBooleanValue(IsBackupEnabled.Value);
             }
+            if (Optional.IsDefined(BackupVaultId))
+            {
+                writer.WritePropertyName("backupVaultId");
+                writer.WriteStringValue(BackupVaultId);
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -86,6 +91,7 @@ namespace Azure.ResourceManager.NetApp.Models
             Optional<bool> policyEnforced = default;
             Optional<bool> backupEnabled = default;
             Optional<ResourceIdentifier> vaultId = default;
+            Optional<ResourceIdentifier> backupVaultId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -130,13 +136,23 @@ namespace Azure.ResourceManager.NetApp.Models
                     vaultId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
+                if (property.NameEquals("backupVaultId"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    backupVaultId = new ResourceIdentifier(property.Value.GetString());
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetAppVolumeBackupConfiguration(backupPolicyId.Value, Optional.ToNullable(policyEnforced), vaultId.Value, Optional.ToNullable(backupEnabled), serializedAdditionalRawData);
+            return new NetAppVolumeBackupConfiguration(backupPolicyId.Value, Optional.ToNullable(policyEnforced), vaultId.Value, Optional.ToNullable(backupEnabled), serializedAdditionalRawData) { BackupVaultId = backupVaultId };
         }
 
         BinaryData IPersistableModel<NetAppVolumeBackupConfiguration>.Write(ModelReaderWriterOptions options)
