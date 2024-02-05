@@ -89,14 +89,13 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests
             try
             {
                 Environment.SetEnvironmentVariable("OTEL_DOTNET_AZURE_MONITOR_EXPERIMENTAL_ENABLE_LOG_SAMPLING", enableLogSampling);
+
                 var sv = new ServiceCollection();
                 sv.AddOpenTelemetry().UseAzureMonitor(o => o.ConnectionString = "InstrumentationKey=00000000-0000-0000-0000-000000000000");
+
                 var sp = sv.BuildServiceProvider();
-
                 var loggerProvider = sp.GetRequiredService<ILoggerProvider>();
-
                 var sdkProvider = typeof(OpenTelemetryLoggerProvider).GetField("Provider", BindingFlags.Instance | BindingFlags.NonPublic)?.GetValue(loggerProvider);
-
                 var processor =  sdkProvider?.GetType().GetProperty("Processor", BindingFlags.Instance | BindingFlags.Public)?.GetMethod?.Invoke(sdkProvider, null);
 
                 if (processor != null)

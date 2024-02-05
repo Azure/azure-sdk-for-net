@@ -138,7 +138,15 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore
                     {
                         var azureMonitorOptions = azureOptions.Get(Options.DefaultName);
 
-                        var enableLogSamplingEnvVar = Environment.GetEnvironmentVariable(EnableLogSamplingEnvVar);
+                        string? enableLogSamplingEnvVar = null;
+                        try
+                        {
+                            enableLogSamplingEnvVar = Environment.GetEnvironmentVariable(EnableLogSamplingEnvVar);
+                        }
+                        catch
+                        {
+                        }
+
                         if (enableLogSamplingEnvVar != null && enableLogSamplingEnvVar.Equals("true", StringComparison.OrdinalIgnoreCase))
                         {
                             var azureMonitorExporterOptions = new AzureMonitorExporterOptions();
