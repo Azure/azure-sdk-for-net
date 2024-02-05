@@ -143,8 +143,9 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore
                         {
                             enableLogSamplingEnvVar = Environment.GetEnvironmentVariable(EnableLogSamplingEnvVar);
                         }
-                        catch
+                        catch (Exception ex)
                         {
+                            AzureMonitorAspNetCoreEventSource.Log.GetEnvironmentVariableFailed(EnableLogSamplingEnvVar, ex);
                         }
 
                         if (enableLogSamplingEnvVar != null && enableLogSamplingEnvVar.Equals("true", StringComparison.OrdinalIgnoreCase))
