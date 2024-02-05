@@ -54,11 +54,10 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests
             // Wait for the backend/ingestion to receive requests
             WaitForRequest(transport);
 
-            // Should dispose the providers and flush out telemetry.
-            await app.DisposeAsync();
-
             // Assert
             Assert.True(transport.Requests.Count > 0);
+
+            await app.DisposeAsync();
 
             // Telemetry is serialized as json, and then byte encoded.
             // Need to parse the request content into something assertable.
