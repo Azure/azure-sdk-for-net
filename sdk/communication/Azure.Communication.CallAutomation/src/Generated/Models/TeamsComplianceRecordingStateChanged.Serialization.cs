@@ -5,48 +5,59 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.Communication.CallAutomation
 {
-    public partial class TranscriptionResumed
+    public partial class TeamsComplianceRecordingStateChanged
     {
-        internal static TranscriptionResumed DeserializeTranscriptionResumed(JsonElement element)
+        internal static TeamsComplianceRecordingStateChanged DeserializeTeamsComplianceRecordingStateChanged(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<string> operationContext = default;
-            Optional<ResultInformation> resultInformation = default;
-            Optional<TranscriptionUpdate> transcriptionUpdate = default;
+            Optional<string> recordingId = default;
+            Optional<RecordingState> state = default;
+            Optional<DateTimeOffset> startDateTime = default;
+            Optional<RecordingType> recordingType = default;
             Optional<string> callConnectionId = default;
             Optional<string> serverCallId = default;
             Optional<string> correlationId = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("operationContext"u8))
+                if (property.NameEquals("recordingId"u8))
                 {
-                    operationContext = property.Value.GetString();
+                    recordingId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("resultInformation"u8))
+                if (property.NameEquals("state"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    resultInformation = ResultInformation.DeserializeResultInformation(property.Value);
+                    state = new RecordingState(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("transcriptionUpdate"u8))
+                if (property.NameEquals("startDateTime"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    transcriptionUpdate = TranscriptionUpdate.DeserializeTranscriptionUpdate(property.Value);
+                    startDateTime = property.Value.GetDateTimeOffset("O");
+                    continue;
+                }
+                if (property.NameEquals("recordingType"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    recordingType = new RecordingType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("callConnectionId"u8))
@@ -65,7 +76,7 @@ namespace Azure.Communication.CallAutomation
                     continue;
                 }
             }
-            return new TranscriptionResumed(operationContext.Value, resultInformation.Value, transcriptionUpdate.Value, callConnectionId.Value, serverCallId.Value, correlationId.Value);
+            return new TeamsComplianceRecordingStateChanged(recordingId.Value, state, Optional.ToNullable(startDateTime), Optional.ToNullable(recordingType), callConnectionId.Value, serverCallId.Value, correlationId.Value);
         }
     }
 }
