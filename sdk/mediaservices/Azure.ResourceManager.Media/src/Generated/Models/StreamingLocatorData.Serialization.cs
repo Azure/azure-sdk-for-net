@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Media.Models;
@@ -296,6 +298,145 @@ namespace Azure.ResourceManager.Media
             return new StreamingLocatorData(id, name, type, systemData.Value, assetName.Value, Optional.ToNullable(created), Optional.ToNullable(startTime), Optional.ToNullable(endTime), Optional.ToNullable(streamingLocatorId), streamingPolicyName.Value, defaultContentKeyPolicyName.Value, Optional.ToList(contentKeys), alternativeMediaId.Value, Optional.ToList(filters), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(Id))
+            {
+                builder.Append("  id:");
+                builder.AppendLine($" '{Id.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                builder.AppendLine($" '{Name}'");
+            }
+
+            if (Optional.IsDefined(ResourceType))
+            {
+                builder.Append("  type:");
+                builder.AppendLine($" '{ResourceType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SystemData))
+            {
+                builder.Append("  systemData:");
+                builder.AppendLine($" '{SystemData.ToString()}'");
+            }
+
+            builder.Append("  properties:");
+            builder.AppendLine(" {");
+            if (Optional.IsDefined(AssetName))
+            {
+                builder.Append("    assetName:");
+                builder.AppendLine($" '{AssetName}'");
+            }
+
+            if (Optional.IsDefined(CreatedOn))
+            {
+                builder.Append("    created:");
+                var formattedDateTimeString = TypeFormatters.ToString(CreatedOn.Value, "o");
+                builder.AppendLine($" '{formattedDateTimeString}'");
+            }
+
+            if (Optional.IsDefined(StartOn))
+            {
+                builder.Append("    startTime:");
+                var formattedDateTimeString = TypeFormatters.ToString(StartOn.Value, "o");
+                builder.AppendLine($" '{formattedDateTimeString}'");
+            }
+
+            if (Optional.IsDefined(EndOn))
+            {
+                builder.Append("    endTime:");
+                var formattedDateTimeString = TypeFormatters.ToString(EndOn.Value, "o");
+                builder.AppendLine($" '{formattedDateTimeString}'");
+            }
+
+            if (Optional.IsDefined(StreamingLocatorId))
+            {
+                builder.Append("    streamingLocatorId:");
+                builder.AppendLine($" '{StreamingLocatorId.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(StreamingPolicyName))
+            {
+                builder.Append("    streamingPolicyName:");
+                builder.AppendLine($" '{StreamingPolicyName}'");
+            }
+
+            if (Optional.IsDefined(DefaultContentKeyPolicyName))
+            {
+                builder.Append("    defaultContentKeyPolicyName:");
+                builder.AppendLine($" '{DefaultContentKeyPolicyName}'");
+            }
+
+            if (Optional.IsCollectionDefined(ContentKeys))
+            {
+                if (ContentKeys.Any())
+                {
+                    builder.Append("    contentKeys:");
+                    builder.AppendLine(" [");
+                    foreach (var item in ContentKeys)
+                    {
+                        AppendChildObject(builder, item, options, 6, true);
+                    }
+                    builder.AppendLine("    ]");
+                }
+            }
+
+            if (Optional.IsDefined(AlternativeMediaId))
+            {
+                builder.Append("    alternativeMediaId:");
+                builder.AppendLine($" '{AlternativeMediaId}'");
+            }
+
+            if (Optional.IsCollectionDefined(Filters))
+            {
+                if (Filters.Any())
+                {
+                    builder.Append("    filters:");
+                    builder.AppendLine(" [");
+                    foreach (var item in Filters)
+                    {
+                        if (item == null)
+                        {
+                            builder.Append("null");
+                            continue;
+                        }
+                        builder.AppendLine($"      '{item}'");
+                    }
+                    builder.AppendLine("    ]");
+                }
+            }
+
+            builder.AppendLine("  }");
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<StreamingLocatorData>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<StreamingLocatorData>)this).GetFormatFromOptions(options) : options.Format;
@@ -304,6 +445,8 @@ namespace Azure.ResourceManager.Media
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(StreamingLocatorData)} does not support '{options.Format}' format.");
             }
@@ -320,6 +463,8 @@ namespace Azure.ResourceManager.Media
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeStreamingLocatorData(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(StreamingLocatorData)} does not support '{options.Format}' format.");
             }

@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -163,6 +164,70 @@ namespace Azure.ResourceManager.Logic.Models
             return new IntegrationServiceEnvironmentProperties(Optional.ToNullable(provisioningState), Optional.ToNullable(state), integrationServiceEnvironmentId.Value, endpointsConfiguration.Value, networkConfiguration.Value, encryptionConfiguration.Value, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(ProvisioningState))
+            {
+                builder.Append("  provisioningState:");
+                builder.AppendLine($" '{ProvisioningState.ToString()}'");
+            }
+
+            if (Optional.IsDefined(State))
+            {
+                builder.Append("  state:");
+                builder.AppendLine($" '{State.ToString()}'");
+            }
+
+            if (Optional.IsDefined(IntegrationServiceEnvironmentId))
+            {
+                builder.Append("  integrationServiceEnvironmentId:");
+                builder.AppendLine($" '{IntegrationServiceEnvironmentId}'");
+            }
+
+            if (Optional.IsDefined(EndpointsConfiguration))
+            {
+                builder.Append("  endpointsConfiguration:");
+                AppendChildObject(builder, EndpointsConfiguration, options, 2, false);
+            }
+
+            if (Optional.IsDefined(NetworkConfiguration))
+            {
+                builder.Append("  networkConfiguration:");
+                AppendChildObject(builder, NetworkConfiguration, options, 2, false);
+            }
+
+            if (Optional.IsDefined(EncryptionConfiguration))
+            {
+                builder.Append("  encryptionConfiguration:");
+                AppendChildObject(builder, EncryptionConfiguration, options, 2, false);
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<IntegrationServiceEnvironmentProperties>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<IntegrationServiceEnvironmentProperties>)this).GetFormatFromOptions(options) : options.Format;
@@ -171,6 +236,8 @@ namespace Azure.ResourceManager.Logic.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(IntegrationServiceEnvironmentProperties)} does not support '{options.Format}' format.");
             }
@@ -187,6 +254,8 @@ namespace Azure.ResourceManager.Logic.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeIntegrationServiceEnvironmentProperties(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(IntegrationServiceEnvironmentProperties)} does not support '{options.Format}' format.");
             }

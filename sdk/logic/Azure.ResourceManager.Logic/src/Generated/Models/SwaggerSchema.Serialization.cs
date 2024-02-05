@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -410,6 +412,186 @@ namespace Azure.ResourceManager.Logic.Models
             return new SwaggerSchema(@ref.Value, Optional.ToNullable(type), title.Value, items.Value, Optional.ToDictionary(properties), additionalProperties.Value, Optional.ToList(required), Optional.ToNullable(maxProperties), Optional.ToNullable(minProperties), Optional.ToList(allOf), discriminator.Value, Optional.ToNullable(readOnly), xml.Value, externalDocs.Value, example.Value, Optional.ToNullable(notificationUrlExtension), dynamicSchemaOld.Value, dynamicSchemaNew.Value, dynamicListNew.Value, dynamicTree.Value, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(Reference))
+            {
+                builder.Append("  ref:");
+                builder.AppendLine($" '{Reference}'");
+            }
+
+            if (Optional.IsDefined(SchemaType))
+            {
+                builder.Append("  type:");
+                builder.AppendLine($" '{SchemaType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Title))
+            {
+                builder.Append("  title:");
+                builder.AppendLine($" '{Title}'");
+            }
+
+            if (Optional.IsDefined(Items))
+            {
+                builder.Append("  items:");
+                AppendChildObject(builder, Items, options, 2, false);
+            }
+
+            if (Optional.IsCollectionDefined(Properties))
+            {
+                if (Properties.Any())
+                {
+                    builder.Append("  properties:");
+                    builder.AppendLine(" {");
+                    foreach (var item in Properties)
+                    {
+                        builder.Append($"    {item.Key}: ");
+                        AppendChildObject(builder, item.Value, options, 4, false);
+                    }
+                    builder.AppendLine("  }");
+                }
+            }
+
+            if (Optional.IsDefined(AdditionalProperties))
+            {
+                builder.Append("  additionalProperties:");
+                builder.AppendLine($" '{AdditionalProperties.ToString()}'");
+            }
+
+            if (Optional.IsCollectionDefined(RequiredProperties))
+            {
+                if (RequiredProperties.Any())
+                {
+                    builder.Append("  required:");
+                    builder.AppendLine(" [");
+                    foreach (var item in RequiredProperties)
+                    {
+                        if (item == null)
+                        {
+                            builder.Append("null");
+                            continue;
+                        }
+                        builder.AppendLine($"    '{item}'");
+                    }
+                    builder.AppendLine("  ]");
+                }
+            }
+
+            if (Optional.IsDefined(MaxProperties))
+            {
+                builder.Append("  maxProperties:");
+                builder.AppendLine($" {MaxProperties.Value}");
+            }
+
+            if (Optional.IsDefined(MinProperties))
+            {
+                builder.Append("  minProperties:");
+                builder.AppendLine($" {MinProperties.Value}");
+            }
+
+            if (Optional.IsCollectionDefined(AllOf))
+            {
+                if (AllOf.Any())
+                {
+                    builder.Append("  allOf:");
+                    builder.AppendLine(" [");
+                    foreach (var item in AllOf)
+                    {
+                        AppendChildObject(builder, item, options, 4, true);
+                    }
+                    builder.AppendLine("  ]");
+                }
+            }
+
+            if (Optional.IsDefined(Discriminator))
+            {
+                builder.Append("  discriminator:");
+                builder.AppendLine($" '{Discriminator}'");
+            }
+
+            if (Optional.IsDefined(IsReadOnly))
+            {
+                builder.Append("  readOnly:");
+                var boolValue = IsReadOnly.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(Xml))
+            {
+                builder.Append("  xml:");
+                AppendChildObject(builder, Xml, options, 2, false);
+            }
+
+            if (Optional.IsDefined(ExternalDocs))
+            {
+                builder.Append("  externalDocs:");
+                AppendChildObject(builder, ExternalDocs, options, 2, false);
+            }
+
+            if (Optional.IsDefined(Example))
+            {
+                builder.Append("  example:");
+                builder.AppendLine($" '{Example.ToString()}'");
+            }
+
+            if (Optional.IsDefined(IsNotificationUrlExtension))
+            {
+                builder.Append("  notificationUrlExtension:");
+                var boolValue = IsNotificationUrlExtension.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(DynamicSchemaOld))
+            {
+                builder.Append("  dynamicSchemaOld:");
+                AppendChildObject(builder, DynamicSchemaOld, options, 2, false);
+            }
+
+            if (Optional.IsDefined(DynamicSchemaNew))
+            {
+                builder.Append("  dynamicSchemaNew:");
+                AppendChildObject(builder, DynamicSchemaNew, options, 2, false);
+            }
+
+            if (Optional.IsDefined(DynamicListNew))
+            {
+                builder.Append("  dynamicListNew:");
+                AppendChildObject(builder, DynamicListNew, options, 2, false);
+            }
+
+            if (Optional.IsDefined(DynamicTree))
+            {
+                builder.Append("  dynamicTree:");
+                AppendChildObject(builder, DynamicTree, options, 2, false);
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<SwaggerSchema>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<SwaggerSchema>)this).GetFormatFromOptions(options) : options.Format;
@@ -418,6 +600,8 @@ namespace Azure.ResourceManager.Logic.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(SwaggerSchema)} does not support '{options.Format}' format.");
             }
@@ -434,6 +618,8 @@ namespace Azure.ResourceManager.Logic.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeSwaggerSchema(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(SwaggerSchema)} does not support '{options.Format}' format.");
             }

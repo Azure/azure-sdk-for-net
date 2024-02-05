@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.ManagedNetworkFabric.Models;
@@ -357,6 +359,170 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             return new NetworkTapRuleData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, annotation.Value, Optional.ToNullable(configurationType), tapRulesUrl.Value, Optional.ToList(matchConfigurations), Optional.ToList(dynamicMatchConfigurations), networkTapId.Value, Optional.ToNullable(pollingIntervalInSeconds), Optional.ToNullable(lastSyncedTime), Optional.ToNullable(configurationState), Optional.ToNullable(provisioningState), Optional.ToNullable(administrativeState), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsCollectionDefined(Tags))
+            {
+                if (Tags.Any())
+                {
+                    builder.Append("  tags:");
+                    builder.AppendLine(" {");
+                    foreach (var item in Tags)
+                    {
+                        builder.Append($"    {item.Key}: ");
+                        if (item.Value == null)
+                        {
+                            builder.Append("null");
+                            continue;
+                        }
+                        builder.AppendLine($" '{item.Value}'");
+                    }
+                    builder.AppendLine("  }");
+                }
+            }
+
+            if (Optional.IsDefined(Location))
+            {
+                builder.Append("  location:");
+                builder.AppendLine($" '{Location.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Id))
+            {
+                builder.Append("  id:");
+                builder.AppendLine($" '{Id.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                builder.AppendLine($" '{Name}'");
+            }
+
+            if (Optional.IsDefined(ResourceType))
+            {
+                builder.Append("  type:");
+                builder.AppendLine($" '{ResourceType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SystemData))
+            {
+                builder.Append("  systemData:");
+                builder.AppendLine($" '{SystemData.ToString()}'");
+            }
+
+            builder.Append("  properties:");
+            builder.AppendLine(" {");
+            if (Optional.IsDefined(Annotation))
+            {
+                builder.Append("    annotation:");
+                builder.AppendLine($" '{Annotation}'");
+            }
+
+            if (Optional.IsDefined(ConfigurationType))
+            {
+                builder.Append("    configurationType:");
+                builder.AppendLine($" '{ConfigurationType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(TapRulesUri))
+            {
+                builder.Append("    tapRulesUrl:");
+                builder.AppendLine($" '{TapRulesUri.AbsoluteUri}'");
+            }
+
+            if (Optional.IsCollectionDefined(MatchConfigurations))
+            {
+                if (MatchConfigurations.Any())
+                {
+                    builder.Append("    matchConfigurations:");
+                    builder.AppendLine(" [");
+                    foreach (var item in MatchConfigurations)
+                    {
+                        AppendChildObject(builder, item, options, 6, true);
+                    }
+                    builder.AppendLine("    ]");
+                }
+            }
+
+            if (Optional.IsCollectionDefined(DynamicMatchConfigurations))
+            {
+                if (DynamicMatchConfigurations.Any())
+                {
+                    builder.Append("    dynamicMatchConfigurations:");
+                    builder.AppendLine(" [");
+                    foreach (var item in DynamicMatchConfigurations)
+                    {
+                        AppendChildObject(builder, item, options, 6, true);
+                    }
+                    builder.AppendLine("    ]");
+                }
+            }
+
+            if (Optional.IsDefined(NetworkTapId))
+            {
+                builder.Append("    networkTapId:");
+                builder.AppendLine($" '{NetworkTapId.ToString()}'");
+            }
+
+            if (Optional.IsDefined(PollingIntervalInSeconds))
+            {
+                builder.Append("    pollingIntervalInSeconds:");
+                builder.AppendLine($" '{PollingIntervalInSeconds.ToString()}'");
+            }
+
+            if (Optional.IsDefined(LastSyncedOn))
+            {
+                builder.Append("    lastSyncedTime:");
+                var formattedDateTimeString = TypeFormatters.ToString(LastSyncedOn.Value, "o");
+                builder.AppendLine($" '{formattedDateTimeString}'");
+            }
+
+            if (Optional.IsDefined(ConfigurationState))
+            {
+                builder.Append("    configurationState:");
+                builder.AppendLine($" '{ConfigurationState.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ProvisioningState))
+            {
+                builder.Append("    provisioningState:");
+                builder.AppendLine($" '{ProvisioningState.ToString()}'");
+            }
+
+            if (Optional.IsDefined(AdministrativeState))
+            {
+                builder.Append("    administrativeState:");
+                builder.AppendLine($" '{AdministrativeState.ToString()}'");
+            }
+
+            builder.AppendLine("  }");
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<NetworkTapRuleData>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<NetworkTapRuleData>)this).GetFormatFromOptions(options) : options.Format;
@@ -365,6 +531,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(NetworkTapRuleData)} does not support '{options.Format}' format.");
             }
@@ -381,6 +549,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeNetworkTapRuleData(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(NetworkTapRuleData)} does not support '{options.Format}' format.");
             }

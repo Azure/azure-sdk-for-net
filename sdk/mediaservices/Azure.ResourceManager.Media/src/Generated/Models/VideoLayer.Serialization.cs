@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -189,6 +190,89 @@ namespace Azure.ResourceManager.Media.Models
             return new VideoLayer(width.Value, height.Value, label.Value, serializedAdditionalRawData, bitrate, Optional.ToNullable(maxBitrate), Optional.ToNullable(bFrames), frameRate.Value, Optional.ToNullable(slices), Optional.ToNullable(adaptiveBFrame));
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(Bitrate))
+            {
+                builder.Append("  bitrate:");
+                builder.AppendLine($" {Bitrate}");
+            }
+
+            if (Optional.IsDefined(MaxBitrate))
+            {
+                builder.Append("  maxBitrate:");
+                builder.AppendLine($" {MaxBitrate.Value}");
+            }
+
+            if (Optional.IsDefined(BFrames))
+            {
+                builder.Append("  bFrames:");
+                builder.AppendLine($" {BFrames.Value}");
+            }
+
+            if (Optional.IsDefined(FrameRate))
+            {
+                builder.Append("  frameRate:");
+                builder.AppendLine($" '{FrameRate}'");
+            }
+
+            if (Optional.IsDefined(Slices))
+            {
+                builder.Append("  slices:");
+                builder.AppendLine($" {Slices.Value}");
+            }
+
+            if (Optional.IsDefined(UseAdaptiveBFrame))
+            {
+                builder.Append("  adaptiveBFrame:");
+                var boolValue = UseAdaptiveBFrame.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(Width))
+            {
+                builder.Append("  width:");
+                builder.AppendLine($" '{Width}'");
+            }
+
+            if (Optional.IsDefined(Height))
+            {
+                builder.Append("  height:");
+                builder.AppendLine($" '{Height}'");
+            }
+
+            if (Optional.IsDefined(Label))
+            {
+                builder.Append("  label:");
+                builder.AppendLine($" '{Label}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<VideoLayer>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<VideoLayer>)this).GetFormatFromOptions(options) : options.Format;
@@ -197,6 +281,8 @@ namespace Azure.ResourceManager.Media.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(VideoLayer)} does not support '{options.Format}' format.");
             }
@@ -213,6 +299,8 @@ namespace Azure.ResourceManager.Media.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeVideoLayer(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(VideoLayer)} does not support '{options.Format}' format.");
             }

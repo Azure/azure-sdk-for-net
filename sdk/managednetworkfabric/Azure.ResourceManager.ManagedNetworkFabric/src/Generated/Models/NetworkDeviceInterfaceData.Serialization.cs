@@ -9,6 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Net;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.ManagedNetworkFabric.Models;
@@ -247,6 +248,109 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             return new NetworkDeviceInterfaceData(id, name, type, systemData.Value, annotation.Value, physicalIdentifier.Value, connectedTo.Value, Optional.ToNullable(interfaceType), ipv4Address.Value, ipv6Address.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(administrativeState), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(Id))
+            {
+                builder.Append("  id:");
+                builder.AppendLine($" '{Id.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                builder.AppendLine($" '{Name}'");
+            }
+
+            if (Optional.IsDefined(ResourceType))
+            {
+                builder.Append("  type:");
+                builder.AppendLine($" '{ResourceType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SystemData))
+            {
+                builder.Append("  systemData:");
+                builder.AppendLine($" '{SystemData.ToString()}'");
+            }
+
+            builder.Append("  properties:");
+            builder.AppendLine(" {");
+            if (Optional.IsDefined(Annotation))
+            {
+                builder.Append("    annotation:");
+                builder.AppendLine($" '{Annotation}'");
+            }
+
+            if (Optional.IsDefined(PhysicalIdentifier))
+            {
+                builder.Append("    physicalIdentifier:");
+                builder.AppendLine($" '{PhysicalIdentifier}'");
+            }
+
+            if (Optional.IsDefined(ConnectedTo))
+            {
+                builder.Append("    connectedTo:");
+                builder.AppendLine($" '{ConnectedTo}'");
+            }
+
+            if (Optional.IsDefined(InterfaceType))
+            {
+                builder.Append("    interfaceType:");
+                builder.AppendLine($" '{InterfaceType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(IPv4Address))
+            {
+                builder.Append("    ipv4Address:");
+                builder.AppendLine($" '{IPv4Address.ToString()}'");
+            }
+
+            if (Optional.IsDefined(IPv6Address))
+            {
+                builder.Append("    ipv6Address:");
+                builder.AppendLine($" '{IPv6Address}'");
+            }
+
+            if (Optional.IsDefined(ProvisioningState))
+            {
+                builder.Append("    provisioningState:");
+                builder.AppendLine($" '{ProvisioningState.ToString()}'");
+            }
+
+            if (Optional.IsDefined(AdministrativeState))
+            {
+                builder.Append("    administrativeState:");
+                builder.AppendLine($" '{AdministrativeState.ToString()}'");
+            }
+
+            builder.AppendLine("  }");
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<NetworkDeviceInterfaceData>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<NetworkDeviceInterfaceData>)this).GetFormatFromOptions(options) : options.Format;
@@ -255,6 +359,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(NetworkDeviceInterfaceData)} does not support '{options.Format}' format.");
             }
@@ -271,6 +377,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeNetworkDeviceInterfaceData(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(NetworkDeviceInterfaceData)} does not support '{options.Format}' format.");
             }

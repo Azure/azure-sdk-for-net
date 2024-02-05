@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -742,6 +744,327 @@ namespace Azure.ResourceManager.MachineLearning.Models
             return new SparkJob(description.Value, Optional.ToDictionary(properties), Optional.ToDictionary(tags), serializedAdditionalRawData, componentId.Value, computeId.Value, displayName.Value, experimentName.Value, identity.Value, Optional.ToNullable(isArchived), jobType, notificationSetting.Value, Optional.ToDictionary(secretsConfiguration), Optional.ToDictionary(services), Optional.ToNullable(status), Optional.ToList(archives), args.Value, codeId, Optional.ToDictionary(conf), entry, environmentId.Value, Optional.ToList(files), Optional.ToDictionary(inputs), Optional.ToList(jars), Optional.ToDictionary(outputs), Optional.ToList(pyFiles), queueSettings.Value, resources.Value);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsCollectionDefined(Archives))
+            {
+                if (Archives.Any())
+                {
+                    builder.Append("  archives:");
+                    builder.AppendLine(" [");
+                    foreach (var item in Archives)
+                    {
+                        if (item == null)
+                        {
+                            builder.Append("null");
+                            continue;
+                        }
+                        builder.AppendLine($"    '{item}'");
+                    }
+                    builder.AppendLine("  ]");
+                }
+            }
+
+            if (Optional.IsDefined(Args))
+            {
+                builder.Append("  args:");
+                builder.AppendLine($" '{Args}'");
+            }
+
+            if (Optional.IsDefined(CodeId))
+            {
+                builder.Append("  codeId:");
+                builder.AppendLine($" '{CodeId}'");
+            }
+
+            if (Optional.IsCollectionDefined(Conf))
+            {
+                if (Conf.Any())
+                {
+                    builder.Append("  conf:");
+                    builder.AppendLine(" {");
+                    foreach (var item in Conf)
+                    {
+                        builder.Append($"    {item.Key}: ");
+                        if (item.Value == null)
+                        {
+                            builder.Append("null");
+                            continue;
+                        }
+                        builder.AppendLine($" '{item.Value}'");
+                    }
+                    builder.AppendLine("  }");
+                }
+            }
+
+            if (Optional.IsDefined(Entry))
+            {
+                builder.Append("  entry:");
+                AppendChildObject(builder, Entry, options, 2, false);
+            }
+
+            if (Optional.IsDefined(EnvironmentId))
+            {
+                builder.Append("  environmentId:");
+                builder.AppendLine($" '{EnvironmentId}'");
+            }
+
+            if (Optional.IsCollectionDefined(Files))
+            {
+                if (Files.Any())
+                {
+                    builder.Append("  files:");
+                    builder.AppendLine(" [");
+                    foreach (var item in Files)
+                    {
+                        if (item == null)
+                        {
+                            builder.Append("null");
+                            continue;
+                        }
+                        builder.AppendLine($"    '{item}'");
+                    }
+                    builder.AppendLine("  ]");
+                }
+            }
+
+            if (Optional.IsCollectionDefined(Inputs))
+            {
+                if (Inputs.Any())
+                {
+                    builder.Append("  inputs:");
+                    builder.AppendLine(" {");
+                    foreach (var item in Inputs)
+                    {
+                        builder.Append($"    {item.Key}: ");
+                        AppendChildObject(builder, item.Value, options, 4, false);
+                    }
+                    builder.AppendLine("  }");
+                }
+            }
+
+            if (Optional.IsCollectionDefined(Jars))
+            {
+                if (Jars.Any())
+                {
+                    builder.Append("  jars:");
+                    builder.AppendLine(" [");
+                    foreach (var item in Jars)
+                    {
+                        if (item == null)
+                        {
+                            builder.Append("null");
+                            continue;
+                        }
+                        builder.AppendLine($"    '{item}'");
+                    }
+                    builder.AppendLine("  ]");
+                }
+            }
+
+            if (Optional.IsCollectionDefined(Outputs))
+            {
+                if (Outputs.Any())
+                {
+                    builder.Append("  outputs:");
+                    builder.AppendLine(" {");
+                    foreach (var item in Outputs)
+                    {
+                        builder.Append($"    {item.Key}: ");
+                        AppendChildObject(builder, item.Value, options, 4, false);
+                    }
+                    builder.AppendLine("  }");
+                }
+            }
+
+            if (Optional.IsCollectionDefined(PyFiles))
+            {
+                if (PyFiles.Any())
+                {
+                    builder.Append("  pyFiles:");
+                    builder.AppendLine(" [");
+                    foreach (var item in PyFiles)
+                    {
+                        if (item == null)
+                        {
+                            builder.Append("null");
+                            continue;
+                        }
+                        builder.AppendLine($"    '{item}'");
+                    }
+                    builder.AppendLine("  ]");
+                }
+            }
+
+            if (Optional.IsDefined(QueueSettings))
+            {
+                builder.Append("  queueSettings:");
+                AppendChildObject(builder, QueueSettings, options, 2, false);
+            }
+
+            if (Optional.IsDefined(Resources))
+            {
+                builder.Append("  resources:");
+                AppendChildObject(builder, Resources, options, 2, false);
+            }
+
+            if (Optional.IsDefined(ComponentId))
+            {
+                builder.Append("  componentId:");
+                builder.AppendLine($" '{ComponentId.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ComputeId))
+            {
+                builder.Append("  computeId:");
+                builder.AppendLine($" '{ComputeId.ToString()}'");
+            }
+
+            if (Optional.IsDefined(DisplayName))
+            {
+                builder.Append("  displayName:");
+                builder.AppendLine($" '{DisplayName}'");
+            }
+
+            if (Optional.IsDefined(ExperimentName))
+            {
+                builder.Append("  experimentName:");
+                builder.AppendLine($" '{ExperimentName}'");
+            }
+
+            if (Optional.IsDefined(Identity))
+            {
+                builder.Append("  identity:");
+                AppendChildObject(builder, Identity, options, 2, false);
+            }
+
+            if (Optional.IsDefined(IsArchived))
+            {
+                builder.Append("  isArchived:");
+                var boolValue = IsArchived.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(JobType))
+            {
+                builder.Append("  jobType:");
+                builder.AppendLine($" '{JobType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(NotificationSetting))
+            {
+                builder.Append("  notificationSetting:");
+                AppendChildObject(builder, NotificationSetting, options, 2, false);
+            }
+
+            if (Optional.IsCollectionDefined(SecretsConfiguration))
+            {
+                if (SecretsConfiguration.Any())
+                {
+                    builder.Append("  secretsConfiguration:");
+                    builder.AppendLine(" {");
+                    foreach (var item in SecretsConfiguration)
+                    {
+                        builder.Append($"    {item.Key}: ");
+                        AppendChildObject(builder, item.Value, options, 4, false);
+                    }
+                    builder.AppendLine("  }");
+                }
+            }
+
+            if (Optional.IsCollectionDefined(Services))
+            {
+                if (Services.Any())
+                {
+                    builder.Append("  services:");
+                    builder.AppendLine(" {");
+                    foreach (var item in Services)
+                    {
+                        builder.Append($"    {item.Key}: ");
+                        AppendChildObject(builder, item.Value, options, 4, false);
+                    }
+                    builder.AppendLine("  }");
+                }
+            }
+
+            if (Optional.IsDefined(Status))
+            {
+                builder.Append("  status:");
+                builder.AppendLine($" '{Status.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Description))
+            {
+                builder.Append("  description:");
+                builder.AppendLine($" '{Description}'");
+            }
+
+            if (Optional.IsCollectionDefined(Properties))
+            {
+                if (Properties.Any())
+                {
+                    builder.Append("  properties:");
+                    builder.AppendLine(" {");
+                    foreach (var item in Properties)
+                    {
+                        builder.Append($"    {item.Key}: ");
+                        if (item.Value == null)
+                        {
+                            builder.Append("null");
+                            continue;
+                        }
+                        builder.AppendLine($" '{item.Value}'");
+                    }
+                    builder.AppendLine("  }");
+                }
+            }
+
+            if (Optional.IsCollectionDefined(Tags))
+            {
+                if (Tags.Any())
+                {
+                    builder.Append("  tags:");
+                    builder.AppendLine(" {");
+                    foreach (var item in Tags)
+                    {
+                        builder.Append($"    {item.Key}: ");
+                        if (item.Value == null)
+                        {
+                            builder.Append("null");
+                            continue;
+                        }
+                        builder.AppendLine($" '{item.Value}'");
+                    }
+                    builder.AppendLine("  }");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<SparkJob>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<SparkJob>)this).GetFormatFromOptions(options) : options.Format;
@@ -750,6 +1073,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(SparkJob)} does not support '{options.Format}' format.");
             }
@@ -766,6 +1091,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeSparkJob(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(SparkJob)} does not support '{options.Format}' format.");
             }

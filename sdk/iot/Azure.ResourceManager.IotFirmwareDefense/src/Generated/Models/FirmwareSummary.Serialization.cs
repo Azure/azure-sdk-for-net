@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -238,6 +239,76 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             return new FirmwareSummary(Optional.ToNullable(extractedSize), Optional.ToNullable(fileSize), Optional.ToNullable(extractedFileCount), Optional.ToNullable(componentCount), Optional.ToNullable(binaryCount), Optional.ToNullable(analysisTimeSeconds), Optional.ToNullable(rootFileSystems), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(ExtractedSize))
+            {
+                builder.Append("  extractedSize:");
+                builder.AppendLine($" '{ExtractedSize.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(FileSize))
+            {
+                builder.Append("  fileSize:");
+                builder.AppendLine($" '{FileSize.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ExtractedFileCount))
+            {
+                builder.Append("  extractedFileCount:");
+                builder.AppendLine($" '{ExtractedFileCount.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ComponentCount))
+            {
+                builder.Append("  componentCount:");
+                builder.AppendLine($" '{ComponentCount.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(BinaryCount))
+            {
+                builder.Append("  binaryCount:");
+                builder.AppendLine($" '{BinaryCount.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(AnalysisTimeSeconds))
+            {
+                builder.Append("  analysisTimeSeconds:");
+                builder.AppendLine($" '{AnalysisTimeSeconds.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(RootFileSystems))
+            {
+                builder.Append("  rootFileSystems:");
+                builder.AppendLine($" '{RootFileSystems.Value.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<FirmwareSummary>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<FirmwareSummary>)this).GetFormatFromOptions(options) : options.Format;
@@ -246,6 +317,8 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(FirmwareSummary)} does not support '{options.Format}' format.");
             }
@@ -262,6 +335,8 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeFirmwareSummary(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(FirmwareSummary)} does not support '{options.Format}' format.");
             }

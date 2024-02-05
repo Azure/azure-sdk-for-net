@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -154,6 +155,76 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             return new NetworkFabricPatchablePropertiesTerminalServerConfiguration(username.Value, password.Value, serialNumber.Value, serializedAdditionalRawData, primaryIPv4Prefix.Value, primaryIPv6Prefix.Value, secondaryIPv4Prefix.Value, secondaryIPv6Prefix.Value);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(PrimaryIPv4Prefix))
+            {
+                builder.Append("  primaryIpv4Prefix:");
+                builder.AppendLine($" '{PrimaryIPv4Prefix}'");
+            }
+
+            if (Optional.IsDefined(PrimaryIPv6Prefix))
+            {
+                builder.Append("  primaryIpv6Prefix:");
+                builder.AppendLine($" '{PrimaryIPv6Prefix}'");
+            }
+
+            if (Optional.IsDefined(SecondaryIPv4Prefix))
+            {
+                builder.Append("  secondaryIpv4Prefix:");
+                builder.AppendLine($" '{SecondaryIPv4Prefix}'");
+            }
+
+            if (Optional.IsDefined(SecondaryIPv6Prefix))
+            {
+                builder.Append("  secondaryIpv6Prefix:");
+                builder.AppendLine($" '{SecondaryIPv6Prefix}'");
+            }
+
+            if (Optional.IsDefined(Username))
+            {
+                builder.Append("  username:");
+                builder.AppendLine($" '{Username}'");
+            }
+
+            if (Optional.IsDefined(Password))
+            {
+                builder.Append("  password:");
+                builder.AppendLine($" '{Password}'");
+            }
+
+            if (Optional.IsDefined(SerialNumber))
+            {
+                builder.Append("  serialNumber:");
+                builder.AppendLine($" '{SerialNumber}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<NetworkFabricPatchablePropertiesTerminalServerConfiguration>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<NetworkFabricPatchablePropertiesTerminalServerConfiguration>)this).GetFormatFromOptions(options) : options.Format;
@@ -162,6 +233,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(NetworkFabricPatchablePropertiesTerminalServerConfiguration)} does not support '{options.Format}' format.");
             }
@@ -178,6 +251,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeNetworkFabricPatchablePropertiesTerminalServerConfiguration(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(NetworkFabricPatchablePropertiesTerminalServerConfiguration)} does not support '{options.Format}' format.");
             }

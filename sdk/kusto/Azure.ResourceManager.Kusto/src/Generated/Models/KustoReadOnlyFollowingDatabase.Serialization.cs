@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -317,6 +318,141 @@ namespace Azure.ResourceManager.Kusto.Models
             return new KustoReadOnlyFollowingDatabase(id, name, type, systemData.Value, Optional.ToNullable(location), kind, serializedAdditionalRawData, Optional.ToNullable(provisioningState), Optional.ToNullable(softDeletePeriod), Optional.ToNullable(hotCachePeriod), statistics.Value, leaderClusterResourceId.Value, attachedDatabaseConfigurationName.Value, Optional.ToNullable(principalsModificationKind), tableLevelSharingProperties.Value, originalDatabaseName.Value, Optional.ToNullable(databaseShareOrigin), suspensionDetails.Value);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(Location))
+            {
+                builder.Append("  location:");
+                builder.AppendLine($" '{Location.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Kind))
+            {
+                builder.Append("  kind:");
+                builder.AppendLine($" '{Kind.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Id))
+            {
+                builder.Append("  id:");
+                builder.AppendLine($" '{Id.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                builder.AppendLine($" '{Name}'");
+            }
+
+            if (Optional.IsDefined(ResourceType))
+            {
+                builder.Append("  type:");
+                builder.AppendLine($" '{ResourceType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SystemData))
+            {
+                builder.Append("  systemData:");
+                builder.AppendLine($" '{SystemData.ToString()}'");
+            }
+
+            builder.Append("  properties:");
+            builder.AppendLine(" {");
+            if (Optional.IsDefined(ProvisioningState))
+            {
+                builder.Append("    provisioningState:");
+                builder.AppendLine($" '{ProvisioningState.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SoftDeletePeriod))
+            {
+                builder.Append("    softDeletePeriod:");
+                var formattedTimeSpan = TypeFormatters.ToString(SoftDeletePeriod.Value, "P");
+                builder.AppendLine($" '{formattedTimeSpan}'");
+            }
+
+            if (Optional.IsDefined(HotCachePeriod))
+            {
+                builder.Append("    hotCachePeriod:");
+                var formattedTimeSpan = TypeFormatters.ToString(HotCachePeriod.Value, "P");
+                builder.AppendLine($" '{formattedTimeSpan}'");
+            }
+
+            if (Optional.IsDefined(Statistics))
+            {
+                builder.Append("    statistics:");
+                AppendChildObject(builder, Statistics, options, 4, false);
+            }
+
+            if (Optional.IsDefined(LeaderClusterResourceId))
+            {
+                builder.Append("    leaderClusterResourceId:");
+                builder.AppendLine($" '{LeaderClusterResourceId}'");
+            }
+
+            if (Optional.IsDefined(AttachedDatabaseConfigurationName))
+            {
+                builder.Append("    attachedDatabaseConfigurationName:");
+                builder.AppendLine($" '{AttachedDatabaseConfigurationName}'");
+            }
+
+            if (Optional.IsDefined(PrincipalsModificationKind))
+            {
+                builder.Append("    principalsModificationKind:");
+                builder.AppendLine($" '{PrincipalsModificationKind.ToString()}'");
+            }
+
+            if (Optional.IsDefined(TableLevelSharingProperties))
+            {
+                builder.Append("    tableLevelSharingProperties:");
+                AppendChildObject(builder, TableLevelSharingProperties, options, 4, false);
+            }
+
+            if (Optional.IsDefined(OriginalDatabaseName))
+            {
+                builder.Append("    originalDatabaseName:");
+                builder.AppendLine($" '{OriginalDatabaseName}'");
+            }
+
+            if (Optional.IsDefined(DatabaseShareOrigin))
+            {
+                builder.Append("    databaseShareOrigin:");
+                builder.AppendLine($" '{DatabaseShareOrigin.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SuspensionDetails))
+            {
+                builder.Append("    suspensionDetails:");
+                AppendChildObject(builder, SuspensionDetails, options, 4, false);
+            }
+
+            builder.AppendLine("  }");
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<KustoReadOnlyFollowingDatabase>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<KustoReadOnlyFollowingDatabase>)this).GetFormatFromOptions(options) : options.Format;
@@ -325,6 +461,8 @@ namespace Azure.ResourceManager.Kusto.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(KustoReadOnlyFollowingDatabase)} does not support '{options.Format}' format.");
             }
@@ -341,6 +479,8 @@ namespace Azure.ResourceManager.Kusto.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeKustoReadOnlyFollowingDatabase(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(KustoReadOnlyFollowingDatabase)} does not support '{options.Format}' format.");
             }

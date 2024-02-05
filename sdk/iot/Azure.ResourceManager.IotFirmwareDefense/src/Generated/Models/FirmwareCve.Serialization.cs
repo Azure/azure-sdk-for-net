@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -338,6 +340,116 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             return new FirmwareCve(cveId.Value, component.Value, severity.Value, name.Value, cvssScore.Value, cvssVersion.Value, cvssV2Score.Value, cvssV3Score.Value, Optional.ToNullable(publishDate), Optional.ToNullable(updatedDate), Optional.ToList(links), description.Value, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(CveId))
+            {
+                builder.Append("  cveId:");
+                builder.AppendLine($" '{CveId}'");
+            }
+
+            if (Optional.IsDefined(Component))
+            {
+                builder.Append("  component:");
+                builder.AppendLine($" '{Component.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Severity))
+            {
+                builder.Append("  severity:");
+                builder.AppendLine($" '{Severity}'");
+            }
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                builder.AppendLine($" '{Name}'");
+            }
+
+            if (Optional.IsDefined(CvssScore))
+            {
+                builder.Append("  cvssScore:");
+                builder.AppendLine($" '{CvssScore}'");
+            }
+
+            if (Optional.IsDefined(CvssVersion))
+            {
+                builder.Append("  cvssVersion:");
+                builder.AppendLine($" '{CvssVersion}'");
+            }
+
+            if (Optional.IsDefined(CvssV2Score))
+            {
+                builder.Append("  cvssV2Score:");
+                builder.AppendLine($" '{CvssV2Score}'");
+            }
+
+            if (Optional.IsDefined(CvssV3Score))
+            {
+                builder.Append("  cvssV3Score:");
+                builder.AppendLine($" '{CvssV3Score}'");
+            }
+
+            if (Optional.IsDefined(PublishOn))
+            {
+                builder.Append("  publishDate:");
+                var formattedDateTimeString = TypeFormatters.ToString(PublishOn.Value, "o");
+                builder.AppendLine($" '{formattedDateTimeString}'");
+            }
+
+            if (Optional.IsDefined(UpdatedOn))
+            {
+                builder.Append("  updatedDate:");
+                var formattedDateTimeString = TypeFormatters.ToString(UpdatedOn.Value, "o");
+                builder.AppendLine($" '{formattedDateTimeString}'");
+            }
+
+            if (Optional.IsCollectionDefined(Links))
+            {
+                if (Links.Any())
+                {
+                    builder.Append("  links:");
+                    builder.AppendLine(" [");
+                    foreach (var item in Links)
+                    {
+                        AppendChildObject(builder, item, options, 4, true);
+                    }
+                    builder.AppendLine("  ]");
+                }
+            }
+
+            if (Optional.IsDefined(Description))
+            {
+                builder.Append("  description:");
+                builder.AppendLine($" '{Description}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<FirmwareCve>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<FirmwareCve>)this).GetFormatFromOptions(options) : options.Format;
@@ -346,6 +458,8 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(FirmwareCve)} does not support '{options.Format}' format.");
             }
@@ -362,6 +476,8 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeFirmwareCve(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(FirmwareCve)} does not support '{options.Format}' format.");
             }

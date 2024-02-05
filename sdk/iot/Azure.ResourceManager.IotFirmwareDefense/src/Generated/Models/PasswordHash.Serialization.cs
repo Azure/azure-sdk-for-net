@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -238,6 +239,76 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             return new PasswordHash(passwordHashId.Value, filePath.Value, salt.Value, hash.Value, context.Value, username.Value, algorithm.Value, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(PasswordHashId))
+            {
+                builder.Append("  passwordHashId:");
+                builder.AppendLine($" '{PasswordHashId}'");
+            }
+
+            if (Optional.IsDefined(FilePath))
+            {
+                builder.Append("  filePath:");
+                builder.AppendLine($" '{FilePath}'");
+            }
+
+            if (Optional.IsDefined(Salt))
+            {
+                builder.Append("  salt:");
+                builder.AppendLine($" '{Salt}'");
+            }
+
+            if (Optional.IsDefined(Hash))
+            {
+                builder.Append("  hash:");
+                builder.AppendLine($" '{Hash}'");
+            }
+
+            if (Optional.IsDefined(Context))
+            {
+                builder.Append("  context:");
+                builder.AppendLine($" '{Context}'");
+            }
+
+            if (Optional.IsDefined(Username))
+            {
+                builder.Append("  username:");
+                builder.AppendLine($" '{Username}'");
+            }
+
+            if (Optional.IsDefined(Algorithm))
+            {
+                builder.Append("  algorithm:");
+                builder.AppendLine($" '{Algorithm}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<PasswordHash>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<PasswordHash>)this).GetFormatFromOptions(options) : options.Format;
@@ -246,6 +317,8 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(PasswordHash)} does not support '{options.Format}' format.");
             }
@@ -262,6 +335,8 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializePasswordHash(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(PasswordHash)} does not support '{options.Format}' format.");
             }

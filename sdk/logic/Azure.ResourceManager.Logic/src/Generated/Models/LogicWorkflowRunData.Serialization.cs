@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Logic.Models;
@@ -332,6 +334,145 @@ namespace Azure.ResourceManager.Logic
             return new LogicWorkflowRunData(id, name, type, systemData.Value, Optional.ToNullable(waitEndTime), Optional.ToNullable(startTime), Optional.ToNullable(endTime), Optional.ToNullable(status), code.Value, error.Value, correlationId.Value, correlation.Value, workflow.Value, trigger.Value, Optional.ToDictionary(outputs), response.Value, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(Id))
+            {
+                builder.Append("  id:");
+                builder.AppendLine($" '{Id.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                builder.AppendLine($" '{Name}'");
+            }
+
+            if (Optional.IsDefined(ResourceType))
+            {
+                builder.Append("  type:");
+                builder.AppendLine($" '{ResourceType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SystemData))
+            {
+                builder.Append("  systemData:");
+                builder.AppendLine($" '{SystemData.ToString()}'");
+            }
+
+            builder.Append("  properties:");
+            builder.AppendLine(" {");
+            if (Optional.IsDefined(WaitEndOn))
+            {
+                builder.Append("    waitEndTime:");
+                var formattedDateTimeString = TypeFormatters.ToString(WaitEndOn.Value, "o");
+                builder.AppendLine($" '{formattedDateTimeString}'");
+            }
+
+            if (Optional.IsDefined(StartOn))
+            {
+                builder.Append("    startTime:");
+                var formattedDateTimeString = TypeFormatters.ToString(StartOn.Value, "o");
+                builder.AppendLine($" '{formattedDateTimeString}'");
+            }
+
+            if (Optional.IsDefined(EndOn))
+            {
+                builder.Append("    endTime:");
+                var formattedDateTimeString = TypeFormatters.ToString(EndOn.Value, "o");
+                builder.AppendLine($" '{formattedDateTimeString}'");
+            }
+
+            if (Optional.IsDefined(Status))
+            {
+                builder.Append("    status:");
+                builder.AppendLine($" '{Status.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Code))
+            {
+                builder.Append("    code:");
+                builder.AppendLine($" '{Code}'");
+            }
+
+            if (Optional.IsDefined(Error))
+            {
+                builder.Append("    error:");
+                builder.AppendLine($" '{Error.ToString()}'");
+            }
+
+            if (Optional.IsDefined(CorrelationId))
+            {
+                builder.Append("    correlationId:");
+                builder.AppendLine($" '{CorrelationId}'");
+            }
+
+            if (Optional.IsDefined(Correlation))
+            {
+                builder.Append("    correlation:");
+                AppendChildObject(builder, Correlation, options, 4, false);
+            }
+
+            if (Optional.IsDefined(Workflow))
+            {
+                builder.Append("    workflow:");
+                AppendChildObject(builder, Workflow, options, 4, false);
+            }
+
+            if (Optional.IsDefined(Trigger))
+            {
+                builder.Append("    trigger:");
+                AppendChildObject(builder, Trigger, options, 4, false);
+            }
+
+            if (Optional.IsCollectionDefined(Outputs))
+            {
+                if (Outputs.Any())
+                {
+                    builder.Append("    outputs:");
+                    builder.AppendLine(" {");
+                    foreach (var item in Outputs)
+                    {
+                        builder.Append($"        {item.Key}: ");
+                        AppendChildObject(builder, item.Value, options, 6, false);
+                    }
+                    builder.AppendLine("    }");
+                }
+            }
+
+            if (Optional.IsDefined(Response))
+            {
+                builder.Append("    response:");
+                AppendChildObject(builder, Response, options, 4, false);
+            }
+
+            builder.AppendLine("  }");
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<LogicWorkflowRunData>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<LogicWorkflowRunData>)this).GetFormatFromOptions(options) : options.Format;
@@ -340,6 +481,8 @@ namespace Azure.ResourceManager.Logic
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(LogicWorkflowRunData)} does not support '{options.Format}' format.");
             }
@@ -356,6 +499,8 @@ namespace Azure.ResourceManager.Logic
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeLogicWorkflowRunData(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(LogicWorkflowRunData)} does not support '{options.Format}' format.");
             }
