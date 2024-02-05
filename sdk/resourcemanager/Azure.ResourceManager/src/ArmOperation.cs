@@ -15,9 +15,13 @@ namespace Azure.ResourceManager
 {
     /// <inheritdoc/>
     public class ArmOperation : Operation
-    {
+{
         private readonly OperationInternal? _operation;
-        private readonly RehydrationToken? _rehydrationToken;
+
+        /// <summary>
+        /// The token to rehydration the operation.
+        /// </summary>
+        protected readonly RehydrationToken? _rehydrationToken;
 
         /// <summary> Initializes a new instance of ArmOperation for mocking. </summary>
         protected ArmOperation()

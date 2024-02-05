@@ -19,7 +19,11 @@ namespace Azure.ResourceManager
     public class ArmOperation<T> : Operation<T> where T : notnull
     {
         private readonly OperationInternal<T>? _operation;
-        private readonly RehydrationToken? _rehydrationToken;
+
+        /// <summary>
+        /// The token to rehydration the operation.
+        /// </summary>
+        protected readonly RehydrationToken? _rehydrationToken;
 
         /// <summary> Initializes a new instance of ArmOperation. </summary>
         public ArmOperation(ArmClient client, RehydrationToken? rehydrationToken)
