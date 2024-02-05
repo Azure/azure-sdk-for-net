@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -114,6 +115,52 @@ namespace Azure.ResourceManager.DataMigration.Models
             return new SchemaMigrationSetting(Optional.ToNullable(schemaOption), fileId.Value, fileName.Value, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(SchemaOption))
+            {
+                builder.Append("  schemaOption:");
+                builder.AppendLine($" '{SchemaOption.ToString()}'");
+            }
+
+            if (Optional.IsDefined(FileId))
+            {
+                builder.Append("  fileId:");
+                builder.AppendLine($" '{FileId}'");
+            }
+
+            if (Optional.IsDefined(FileName))
+            {
+                builder.Append("  fileName:");
+                builder.AppendLine($" '{FileName}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<SchemaMigrationSetting>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<SchemaMigrationSetting>)this).GetFormatFromOptions(options) : options.Format;
@@ -122,6 +169,8 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(SchemaMigrationSetting)} does not support '{options.Format}' format.");
             }
@@ -138,6 +187,8 @@ namespace Azure.ResourceManager.DataMigration.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeSchemaMigrationSetting(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(SchemaMigrationSetting)} does not support '{options.Format}' format.");
             }

@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -191,6 +192,94 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
             return new VCenterInfrastructureProfile(templateId.Value, vCenterId.Value, moRefId.Value, inventoryItemId.Value, moName.Value, folderPath.Value, instanceUuid.Value, smbiosUuid.Value, Optional.ToNullable(firmwareType), customResourceName.Value, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(TemplateId))
+            {
+                builder.Append("  templateId:");
+                builder.AppendLine($" '{TemplateId}'");
+            }
+
+            if (Optional.IsDefined(VCenterId))
+            {
+                builder.Append("  vCenterId:");
+                builder.AppendLine($" '{VCenterId}'");
+            }
+
+            if (Optional.IsDefined(MoRefId))
+            {
+                builder.Append("  moRefId:");
+                builder.AppendLine($" '{MoRefId}'");
+            }
+
+            if (Optional.IsDefined(InventoryItemId))
+            {
+                builder.Append("  inventoryItemId:");
+                builder.AppendLine($" '{InventoryItemId}'");
+            }
+
+            if (Optional.IsDefined(MoName))
+            {
+                builder.Append("  moName:");
+                builder.AppendLine($" '{MoName}'");
+            }
+
+            if (Optional.IsDefined(FolderPath))
+            {
+                builder.Append("  folderPath:");
+                builder.AppendLine($" '{FolderPath}'");
+            }
+
+            if (Optional.IsDefined(InstanceUuid))
+            {
+                builder.Append("  instanceUuid:");
+                builder.AppendLine($" '{InstanceUuid}'");
+            }
+
+            if (Optional.IsDefined(SmbiosUuid))
+            {
+                builder.Append("  smbiosUuid:");
+                builder.AppendLine($" '{SmbiosUuid}'");
+            }
+
+            if (Optional.IsDefined(FirmwareType))
+            {
+                builder.Append("  firmwareType:");
+                builder.AppendLine($" '{FirmwareType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(CustomResourceName))
+            {
+                builder.Append("  customResourceName:");
+                builder.AppendLine($" '{CustomResourceName}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<VCenterInfrastructureProfile>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<VCenterInfrastructureProfile>)this).GetFormatFromOptions(options) : options.Format;
@@ -199,6 +288,8 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(VCenterInfrastructureProfile)} does not support '{options.Format}' format.");
             }
@@ -215,6 +306,8 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeVCenterInfrastructureProfile(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(VCenterInfrastructureProfile)} does not support '{options.Format}' format.");
             }

@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -263,6 +265,116 @@ namespace Azure.ResourceManager.Compute.Models
             return new VirtualMachineInstallPatchesResult(Optional.ToNullable(status), installationActivityId.Value, Optional.ToNullable(rebootStatus), Optional.ToNullable(maintenanceWindowExceeded), Optional.ToNullable(excludedPatchCount), Optional.ToNullable(notSelectedPatchCount), Optional.ToNullable(pendingPatchCount), Optional.ToNullable(installedPatchCount), Optional.ToNullable(failedPatchCount), Optional.ToList(patches), Optional.ToNullable(startDateTime), error.Value, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(Status))
+            {
+                builder.Append("  status:");
+                builder.AppendLine($" '{Status.ToString()}'");
+            }
+
+            if (Optional.IsDefined(InstallationActivityId))
+            {
+                builder.Append("  installationActivityId:");
+                builder.AppendLine($" '{InstallationActivityId}'");
+            }
+
+            if (Optional.IsDefined(RebootStatus))
+            {
+                builder.Append("  rebootStatus:");
+                builder.AppendLine($" '{RebootStatus.ToString()}'");
+            }
+
+            if (Optional.IsDefined(MaintenanceWindowExceeded))
+            {
+                builder.Append("  maintenanceWindowExceeded:");
+                var boolValue = MaintenanceWindowExceeded.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(ExcludedPatchCount))
+            {
+                builder.Append("  excludedPatchCount:");
+                builder.AppendLine($" {ExcludedPatchCount.Value}");
+            }
+
+            if (Optional.IsDefined(NotSelectedPatchCount))
+            {
+                builder.Append("  notSelectedPatchCount:");
+                builder.AppendLine($" {NotSelectedPatchCount.Value}");
+            }
+
+            if (Optional.IsDefined(PendingPatchCount))
+            {
+                builder.Append("  pendingPatchCount:");
+                builder.AppendLine($" {PendingPatchCount.Value}");
+            }
+
+            if (Optional.IsDefined(InstalledPatchCount))
+            {
+                builder.Append("  installedPatchCount:");
+                builder.AppendLine($" {InstalledPatchCount.Value}");
+            }
+
+            if (Optional.IsDefined(FailedPatchCount))
+            {
+                builder.Append("  failedPatchCount:");
+                builder.AppendLine($" {FailedPatchCount.Value}");
+            }
+
+            if (Optional.IsCollectionDefined(Patches))
+            {
+                if (Patches.Any())
+                {
+                    builder.Append("  patches:");
+                    builder.AppendLine(" [");
+                    foreach (var item in Patches)
+                    {
+                        AppendChildObject(builder, item, options, 4, true);
+                    }
+                    builder.AppendLine("  ]");
+                }
+            }
+
+            if (Optional.IsDefined(StartOn))
+            {
+                builder.Append("  startDateTime:");
+                var formattedDateTimeString = TypeFormatters.ToString(StartOn.Value, "o");
+                builder.AppendLine($" '{formattedDateTimeString}'");
+            }
+
+            if (Optional.IsDefined(Error))
+            {
+                builder.Append("  error:");
+                AppendChildObject(builder, Error, options, 2, false);
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<VirtualMachineInstallPatchesResult>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<VirtualMachineInstallPatchesResult>)this).GetFormatFromOptions(options) : options.Format;
@@ -271,6 +383,8 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(VirtualMachineInstallPatchesResult)} does not support '{options.Format}' format.");
             }
@@ -287,6 +401,8 @@ namespace Azure.ResourceManager.Compute.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeVirtualMachineInstallPatchesResult(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(VirtualMachineInstallPatchesResult)} does not support '{options.Format}' format.");
             }

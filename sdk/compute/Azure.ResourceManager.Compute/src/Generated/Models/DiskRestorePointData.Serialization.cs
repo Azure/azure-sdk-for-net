@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Compute.Models;
@@ -385,6 +386,165 @@ namespace Azure.ResourceManager.Compute
             return new DiskRestorePointData(id, name, type, systemData.Value, Optional.ToNullable(timeCreated), sourceResourceId.Value, Optional.ToNullable(osType), Optional.ToNullable(hyperVGeneration), purchasePlan.Value, supportedCapabilities.Value, familyId.Value, sourceUniqueId.Value, encryption.Value, Optional.ToNullable(supportsHibernation), Optional.ToNullable(networkAccessPolicy), Optional.ToNullable(publicNetworkAccess), diskAccessId.Value, Optional.ToNullable(completionPercent), replicationState.Value, Optional.ToNullable(sourceResourceLocation), securityProfile.Value, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(Id))
+            {
+                builder.Append("  id:");
+                builder.AppendLine($" '{Id.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                builder.AppendLine($" '{Name}'");
+            }
+
+            if (Optional.IsDefined(ResourceType))
+            {
+                builder.Append("  type:");
+                builder.AppendLine($" '{ResourceType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SystemData))
+            {
+                builder.Append("  systemData:");
+                builder.AppendLine($" '{SystemData.ToString()}'");
+            }
+
+            builder.Append("  properties:");
+            builder.AppendLine(" {");
+            if (Optional.IsDefined(TimeCreated))
+            {
+                builder.Append("    timeCreated:");
+                var formattedDateTimeString = TypeFormatters.ToString(TimeCreated.Value, "o");
+                builder.AppendLine($" '{formattedDateTimeString}'");
+            }
+
+            if (Optional.IsDefined(SourceResourceId))
+            {
+                builder.Append("    sourceResourceId:");
+                builder.AppendLine($" '{SourceResourceId.ToString()}'");
+            }
+
+            if (Optional.IsDefined(OSType))
+            {
+                builder.Append("    osType:");
+                builder.AppendLine($" '{OSType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(HyperVGeneration))
+            {
+                builder.Append("    hyperVGeneration:");
+                builder.AppendLine($" '{HyperVGeneration.ToString()}'");
+            }
+
+            if (Optional.IsDefined(PurchasePlan))
+            {
+                builder.Append("    purchasePlan:");
+                AppendChildObject(builder, PurchasePlan, options, 4, false);
+            }
+
+            if (Optional.IsDefined(SupportedCapabilities))
+            {
+                builder.Append("    supportedCapabilities:");
+                AppendChildObject(builder, SupportedCapabilities, options, 4, false);
+            }
+
+            if (Optional.IsDefined(FamilyId))
+            {
+                builder.Append("    familyId:");
+                builder.AppendLine($" '{FamilyId}'");
+            }
+
+            if (Optional.IsDefined(SourceUniqueId))
+            {
+                builder.Append("    sourceUniqueId:");
+                builder.AppendLine($" '{SourceUniqueId}'");
+            }
+
+            if (Optional.IsDefined(Encryption))
+            {
+                builder.Append("    encryption:");
+                AppendChildObject(builder, Encryption, options, 4, false);
+            }
+
+            if (Optional.IsDefined(SupportsHibernation))
+            {
+                builder.Append("    supportsHibernation:");
+                var boolValue = SupportsHibernation.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(NetworkAccessPolicy))
+            {
+                builder.Append("    networkAccessPolicy:");
+                builder.AppendLine($" '{NetworkAccessPolicy.ToString()}'");
+            }
+
+            if (Optional.IsDefined(PublicNetworkAccess))
+            {
+                builder.Append("    publicNetworkAccess:");
+                builder.AppendLine($" '{PublicNetworkAccess.ToString()}'");
+            }
+
+            if (Optional.IsDefined(DiskAccessId))
+            {
+                builder.Append("    diskAccessId:");
+                builder.AppendLine($" '{DiskAccessId.ToString()}'");
+            }
+
+            if (Optional.IsDefined(CompletionPercent))
+            {
+                builder.Append("    completionPercent:");
+                builder.AppendLine($" '{CompletionPercent.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ReplicationState))
+            {
+                builder.Append("    replicationState:");
+                builder.AppendLine($" '{ReplicationState}'");
+            }
+
+            if (Optional.IsDefined(SourceResourceLocation))
+            {
+                builder.Append("    sourceResourceLocation:");
+                builder.AppendLine($" '{SourceResourceLocation.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SecurityProfile))
+            {
+                builder.Append("    securityProfile:");
+                AppendChildObject(builder, SecurityProfile, options, 4, false);
+            }
+
+            builder.AppendLine("  }");
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<DiskRestorePointData>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<DiskRestorePointData>)this).GetFormatFromOptions(options) : options.Format;
@@ -393,6 +553,8 @@ namespace Azure.ResourceManager.Compute
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(DiskRestorePointData)} does not support '{options.Format}' format.");
             }
@@ -409,6 +571,8 @@ namespace Azure.ResourceManager.Compute
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeDiskRestorePointData(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(DiskRestorePointData)} does not support '{options.Format}' format.");
             }

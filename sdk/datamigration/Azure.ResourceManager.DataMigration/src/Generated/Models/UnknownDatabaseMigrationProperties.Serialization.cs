@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -244,6 +245,120 @@ namespace Azure.ResourceManager.DataMigration.Models
             return new UnknownDatabaseMigrationProperties(kind, scope.Value, provisioningState.Value, migrationStatus.Value, Optional.ToNullable(startedOn), Optional.ToNullable(endedOn), sourceSqlConnection.Value, sourceDatabaseName.Value, sourceServerName.Value, migrationService.Value, migrationOperationId.Value, migrationFailureError.Value, targetDatabaseCollation.Value, provisioningError.Value, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(Kind))
+            {
+                builder.Append("  kind:");
+                builder.AppendLine($" '{Kind.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Scope))
+            {
+                builder.Append("  scope:");
+                builder.AppendLine($" '{Scope}'");
+            }
+
+            if (Optional.IsDefined(ProvisioningState))
+            {
+                builder.Append("  provisioningState:");
+                builder.AppendLine($" '{ProvisioningState}'");
+            }
+
+            if (Optional.IsDefined(MigrationStatus))
+            {
+                builder.Append("  migrationStatus:");
+                builder.AppendLine($" '{MigrationStatus}'");
+            }
+
+            if (Optional.IsDefined(StartedOn))
+            {
+                builder.Append("  startedOn:");
+                var formattedDateTimeString = TypeFormatters.ToString(StartedOn.Value, "o");
+                builder.AppendLine($" '{formattedDateTimeString}'");
+            }
+
+            if (Optional.IsDefined(EndedOn))
+            {
+                builder.Append("  endedOn:");
+                var formattedDateTimeString = TypeFormatters.ToString(EndedOn.Value, "o");
+                builder.AppendLine($" '{formattedDateTimeString}'");
+            }
+
+            if (Optional.IsDefined(SourceSqlConnection))
+            {
+                builder.Append("  sourceSqlConnection:");
+                AppendChildObject(builder, SourceSqlConnection, options, 2, false);
+            }
+
+            if (Optional.IsDefined(SourceDatabaseName))
+            {
+                builder.Append("  sourceDatabaseName:");
+                builder.AppendLine($" '{SourceDatabaseName}'");
+            }
+
+            if (Optional.IsDefined(SourceServerName))
+            {
+                builder.Append("  sourceServerName:");
+                builder.AppendLine($" '{SourceServerName}'");
+            }
+
+            if (Optional.IsDefined(MigrationService))
+            {
+                builder.Append("  migrationService:");
+                builder.AppendLine($" '{MigrationService}'");
+            }
+
+            if (Optional.IsDefined(MigrationOperationId))
+            {
+                builder.Append("  migrationOperationId:");
+                builder.AppendLine($" '{MigrationOperationId}'");
+            }
+
+            if (Optional.IsDefined(MigrationFailureError))
+            {
+                builder.Append("  migrationFailureError:");
+                AppendChildObject(builder, MigrationFailureError, options, 2, false);
+            }
+
+            if (Optional.IsDefined(TargetDatabaseCollation))
+            {
+                builder.Append("  targetDatabaseCollation:");
+                builder.AppendLine($" '{TargetDatabaseCollation}'");
+            }
+
+            if (Optional.IsDefined(ProvisioningError))
+            {
+                builder.Append("  provisioningError:");
+                builder.AppendLine($" '{ProvisioningError}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<DatabaseMigrationProperties>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<DatabaseMigrationProperties>)this).GetFormatFromOptions(options) : options.Format;
@@ -252,6 +367,8 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(DatabaseMigrationProperties)} does not support '{options.Format}' format.");
             }
@@ -268,6 +385,8 @@ namespace Azure.ResourceManager.DataMigration.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeUnknownDatabaseMigrationProperties(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(DatabaseMigrationProperties)} does not support '{options.Format}' format.");
             }

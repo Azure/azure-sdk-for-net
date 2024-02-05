@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -219,6 +220,109 @@ namespace Azure.ResourceManager.DataShare.Models
             return new SqlDWTableDataSetMapping(id, name, type, systemData.Value, kind, serializedAdditionalRawData, dataSetId, Optional.ToNullable(dataSetMappingStatus), dataWarehouseName, Optional.ToNullable(provisioningState), schemaName, sqlServerResourceId, tableName);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(Kind))
+            {
+                builder.Append("  kind:");
+                builder.AppendLine($" '{Kind.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Id))
+            {
+                builder.Append("  id:");
+                builder.AppendLine($" '{Id.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                builder.AppendLine($" '{Name}'");
+            }
+
+            if (Optional.IsDefined(ResourceType))
+            {
+                builder.Append("  type:");
+                builder.AppendLine($" '{ResourceType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SystemData))
+            {
+                builder.Append("  systemData:");
+                builder.AppendLine($" '{SystemData.ToString()}'");
+            }
+
+            builder.Append("  properties:");
+            builder.AppendLine(" {");
+            if (Optional.IsDefined(DataSetId))
+            {
+                builder.Append("    dataSetId:");
+                builder.AppendLine($" '{DataSetId.ToString()}'");
+            }
+
+            if (Optional.IsDefined(DataSetMappingStatus))
+            {
+                builder.Append("    dataSetMappingStatus:");
+                builder.AppendLine($" '{DataSetMappingStatus.ToString()}'");
+            }
+
+            if (Optional.IsDefined(DataWarehouseName))
+            {
+                builder.Append("    dataWarehouseName:");
+                builder.AppendLine($" '{DataWarehouseName}'");
+            }
+
+            if (Optional.IsDefined(ProvisioningState))
+            {
+                builder.Append("    provisioningState:");
+                builder.AppendLine($" '{ProvisioningState.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SchemaName))
+            {
+                builder.Append("    schemaName:");
+                builder.AppendLine($" '{SchemaName}'");
+            }
+
+            if (Optional.IsDefined(SqlServerResourceId))
+            {
+                builder.Append("    sqlServerResourceId:");
+                builder.AppendLine($" '{SqlServerResourceId.ToString()}'");
+            }
+
+            if (Optional.IsDefined(TableName))
+            {
+                builder.Append("    tableName:");
+                builder.AppendLine($" '{TableName}'");
+            }
+
+            builder.AppendLine("  }");
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<SqlDWTableDataSetMapping>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<SqlDWTableDataSetMapping>)this).GetFormatFromOptions(options) : options.Format;
@@ -227,6 +331,8 @@ namespace Azure.ResourceManager.DataShare.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(SqlDWTableDataSetMapping)} does not support '{options.Format}' format.");
             }
@@ -243,6 +349,8 @@ namespace Azure.ResourceManager.DataShare.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeSqlDWTableDataSetMapping(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(SqlDWTableDataSetMapping)} does not support '{options.Format}' format.");
             }

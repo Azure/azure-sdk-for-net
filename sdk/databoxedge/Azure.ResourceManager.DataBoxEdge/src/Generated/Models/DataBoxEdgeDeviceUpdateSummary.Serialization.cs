@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -528,6 +530,240 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             return new DataBoxEdgeDeviceUpdateSummary(id, name, type, systemData.Value, deviceVersionNumber.Value, friendlyDeviceVersionName.Value, Optional.ToNullable(deviceLastScannedDateTime), Optional.ToNullable(lastCompletedScanJobDateTime), Optional.ToNullable(lastSuccessfulScanJobTime), Optional.ToNullable(lastCompletedDownloadJobDateTime), lastCompletedDownloadJobId.Value, Optional.ToNullable(lastDownloadJobStatus), Optional.ToNullable(lastSuccessfulInstallJobDateTime), Optional.ToNullable(lastCompletedInstallJobDateTime), lastCompletedInstallJobId.Value, Optional.ToNullable(lastInstallJobStatus), Optional.ToNullable(totalNumberOfUpdatesAvailable), Optional.ToNullable(totalNumberOfUpdatesPendingDownload), Optional.ToNullable(totalNumberOfUpdatesPendingInstall), Optional.ToNullable(rebootBehavior), Optional.ToNullable(ongoingUpdateOperation), inProgressDownloadJobId.Value, inProgressInstallJobId.Value, Optional.ToNullable(inProgressDownloadJobStartedDateTime), Optional.ToNullable(inProgressInstallJobStartedDateTime), Optional.ToList(updateTitles), Optional.ToList(updates), Optional.ToNullable(totalUpdateSizeInBytes), Optional.ToNullable(totalTimeInMinutes), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(Id))
+            {
+                builder.Append("  id:");
+                builder.AppendLine($" '{Id.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                builder.AppendLine($" '{Name}'");
+            }
+
+            if (Optional.IsDefined(ResourceType))
+            {
+                builder.Append("  type:");
+                builder.AppendLine($" '{ResourceType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SystemData))
+            {
+                builder.Append("  systemData:");
+                builder.AppendLine($" '{SystemData.ToString()}'");
+            }
+
+            builder.Append("  properties:");
+            builder.AppendLine(" {");
+            if (Optional.IsDefined(DeviceVersionNumber))
+            {
+                builder.Append("    deviceVersionNumber:");
+                builder.AppendLine($" '{DeviceVersionNumber}'");
+            }
+
+            if (Optional.IsDefined(FriendlyDeviceVersionName))
+            {
+                builder.Append("    friendlyDeviceVersionName:");
+                builder.AppendLine($" '{FriendlyDeviceVersionName}'");
+            }
+
+            if (Optional.IsDefined(DeviceLastScannedOn))
+            {
+                builder.Append("    deviceLastScannedDateTime:");
+                var formattedDateTimeString = TypeFormatters.ToString(DeviceLastScannedOn.Value, "o");
+                builder.AppendLine($" '{formattedDateTimeString}'");
+            }
+
+            if (Optional.IsDefined(LastCompletedScanJobOn))
+            {
+                builder.Append("    lastCompletedScanJobDateTime:");
+                var formattedDateTimeString = TypeFormatters.ToString(LastCompletedScanJobOn.Value, "o");
+                builder.AppendLine($" '{formattedDateTimeString}'");
+            }
+
+            if (Optional.IsDefined(LastSuccessfulScanJobOn))
+            {
+                builder.Append("    lastSuccessfulScanJobTime:");
+                var formattedDateTimeString = TypeFormatters.ToString(LastSuccessfulScanJobOn.Value, "o");
+                builder.AppendLine($" '{formattedDateTimeString}'");
+            }
+
+            if (Optional.IsDefined(LastCompletedDownloadJobOn))
+            {
+                builder.Append("    lastCompletedDownloadJobDateTime:");
+                var formattedDateTimeString = TypeFormatters.ToString(LastCompletedDownloadJobOn.Value, "o");
+                builder.AppendLine($" '{formattedDateTimeString}'");
+            }
+
+            if (Optional.IsDefined(LastCompletedDownloadJobId))
+            {
+                builder.Append("    lastCompletedDownloadJobId:");
+                builder.AppendLine($" '{LastCompletedDownloadJobId.ToString()}'");
+            }
+
+            if (Optional.IsDefined(LastDownloadJobStatus))
+            {
+                builder.Append("    lastDownloadJobStatus:");
+                builder.AppendLine($" '{LastDownloadJobStatus.ToString()}'");
+            }
+
+            if (Optional.IsDefined(LastSuccessfulInstallJobOn))
+            {
+                builder.Append("    lastSuccessfulInstallJobDateTime:");
+                var formattedDateTimeString = TypeFormatters.ToString(LastSuccessfulInstallJobOn.Value, "o");
+                builder.AppendLine($" '{formattedDateTimeString}'");
+            }
+
+            if (Optional.IsDefined(LastCompletedInstallJobOn))
+            {
+                builder.Append("    lastCompletedInstallJobDateTime:");
+                var formattedDateTimeString = TypeFormatters.ToString(LastCompletedInstallJobOn.Value, "o");
+                builder.AppendLine($" '{formattedDateTimeString}'");
+            }
+
+            if (Optional.IsDefined(LastCompletedInstallJobId))
+            {
+                builder.Append("    lastCompletedInstallJobId:");
+                builder.AppendLine($" '{LastCompletedInstallJobId.ToString()}'");
+            }
+
+            if (Optional.IsDefined(LastInstallJobStatus))
+            {
+                builder.Append("    lastInstallJobStatus:");
+                builder.AppendLine($" '{LastInstallJobStatus.ToString()}'");
+            }
+
+            if (Optional.IsDefined(TotalNumberOfUpdatesAvailable))
+            {
+                builder.Append("    totalNumberOfUpdatesAvailable:");
+                builder.AppendLine($" {TotalNumberOfUpdatesAvailable.Value}");
+            }
+
+            if (Optional.IsDefined(TotalNumberOfUpdatesPendingDownload))
+            {
+                builder.Append("    totalNumberOfUpdatesPendingDownload:");
+                builder.AppendLine($" {TotalNumberOfUpdatesPendingDownload.Value}");
+            }
+
+            if (Optional.IsDefined(TotalNumberOfUpdatesPendingInstall))
+            {
+                builder.Append("    totalNumberOfUpdatesPendingInstall:");
+                builder.AppendLine($" {TotalNumberOfUpdatesPendingInstall.Value}");
+            }
+
+            if (Optional.IsDefined(RebootBehavior))
+            {
+                builder.Append("    rebootBehavior:");
+                builder.AppendLine($" '{RebootBehavior.ToString()}'");
+            }
+
+            if (Optional.IsDefined(OngoingUpdateOperation))
+            {
+                builder.Append("    ongoingUpdateOperation:");
+                builder.AppendLine($" '{OngoingUpdateOperation.ToString()}'");
+            }
+
+            if (Optional.IsDefined(InProgressDownloadJobId))
+            {
+                builder.Append("    inProgressDownloadJobId:");
+                builder.AppendLine($" '{InProgressDownloadJobId.ToString()}'");
+            }
+
+            if (Optional.IsDefined(InProgressInstallJobId))
+            {
+                builder.Append("    inProgressInstallJobId:");
+                builder.AppendLine($" '{InProgressInstallJobId.ToString()}'");
+            }
+
+            if (Optional.IsDefined(InProgressDownloadJobStartedOn))
+            {
+                builder.Append("    inProgressDownloadJobStartedDateTime:");
+                var formattedDateTimeString = TypeFormatters.ToString(InProgressDownloadJobStartedOn.Value, "o");
+                builder.AppendLine($" '{formattedDateTimeString}'");
+            }
+
+            if (Optional.IsDefined(InProgressInstallJobStartedOn))
+            {
+                builder.Append("    inProgressInstallJobStartedDateTime:");
+                var formattedDateTimeString = TypeFormatters.ToString(InProgressInstallJobStartedOn.Value, "o");
+                builder.AppendLine($" '{formattedDateTimeString}'");
+            }
+
+            if (Optional.IsCollectionDefined(UpdateTitles))
+            {
+                if (UpdateTitles.Any())
+                {
+                    builder.Append("    updateTitles:");
+                    builder.AppendLine(" [");
+                    foreach (var item in UpdateTitles)
+                    {
+                        if (item == null)
+                        {
+                            builder.Append("null");
+                            continue;
+                        }
+                        builder.AppendLine($"      '{item}'");
+                    }
+                    builder.AppendLine("    ]");
+                }
+            }
+
+            if (Optional.IsCollectionDefined(Updates))
+            {
+                if (Updates.Any())
+                {
+                    builder.Append("    updates:");
+                    builder.AppendLine(" [");
+                    foreach (var item in Updates)
+                    {
+                        AppendChildObject(builder, item, options, 6, true);
+                    }
+                    builder.AppendLine("    ]");
+                }
+            }
+
+            if (Optional.IsDefined(TotalUpdateSizeInBytes))
+            {
+                builder.Append("    totalUpdateSizeInBytes:");
+                builder.AppendLine($" '{TotalUpdateSizeInBytes.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(TotalTimeInMinutes))
+            {
+                builder.Append("    totalTimeInMinutes:");
+                builder.AppendLine($" {TotalTimeInMinutes.Value}");
+            }
+
+            builder.AppendLine("  }");
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<DataBoxEdgeDeviceUpdateSummary>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<DataBoxEdgeDeviceUpdateSummary>)this).GetFormatFromOptions(options) : options.Format;
@@ -536,6 +772,8 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(DataBoxEdgeDeviceUpdateSummary)} does not support '{options.Format}' format.");
             }
@@ -552,6 +790,8 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeDataBoxEdgeDeviceUpdateSummary(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(DataBoxEdgeDeviceUpdateSummary)} does not support '{options.Format}' format.");
             }

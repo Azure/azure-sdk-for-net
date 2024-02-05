@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -337,6 +339,160 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             return new DataBoxEdgeDeviceExtendedInfo(id, name, type, systemData.Value, encryptionKeyThumbprint.Value, encryptionKey.Value, resourceKey.Value, clientSecretStoreId.Value, clientSecretStoreUrl.Value, channelIntegrityKeyName.Value, channelIntegrityKeyVersion.Value, Optional.ToNullable(keyVaultSyncStatus), Optional.ToDictionary(deviceSecrets), Optional.ToNullable(clusterWitnessType), fileShareWitnessLocation.Value, fileShareWitnessUsername.Value, cloudWitnessStorageAccountName.Value, cloudWitnessContainerName.Value, cloudWitnessStorageEndpoint.Value, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(Id))
+            {
+                builder.Append("  id:");
+                builder.AppendLine($" '{Id.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                builder.AppendLine($" '{Name}'");
+            }
+
+            if (Optional.IsDefined(ResourceType))
+            {
+                builder.Append("  type:");
+                builder.AppendLine($" '{ResourceType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SystemData))
+            {
+                builder.Append("  systemData:");
+                builder.AppendLine($" '{SystemData.ToString()}'");
+            }
+
+            builder.Append("  properties:");
+            builder.AppendLine(" {");
+            if (Optional.IsDefined(EncryptionKeyThumbprint))
+            {
+                builder.Append("    encryptionKeyThumbprint:");
+                builder.AppendLine($" '{EncryptionKeyThumbprint}'");
+            }
+
+            if (Optional.IsDefined(EncryptionKey))
+            {
+                builder.Append("    encryptionKey:");
+                builder.AppendLine($" '{EncryptionKey}'");
+            }
+
+            if (Optional.IsDefined(ResourceKey))
+            {
+                builder.Append("    resourceKey:");
+                builder.AppendLine($" '{ResourceKey}'");
+            }
+
+            if (Optional.IsDefined(ClientSecretStoreId))
+            {
+                builder.Append("    clientSecretStoreId:");
+                builder.AppendLine($" '{ClientSecretStoreId.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ClientSecretStoreUri))
+            {
+                builder.Append("    clientSecretStoreUrl:");
+                builder.AppendLine($" '{ClientSecretStoreUri.AbsoluteUri}'");
+            }
+
+            if (Optional.IsDefined(ChannelIntegrityKeyName))
+            {
+                builder.Append("    channelIntegrityKeyName:");
+                builder.AppendLine($" '{ChannelIntegrityKeyName}'");
+            }
+
+            if (Optional.IsDefined(ChannelIntegrityKeyVersion))
+            {
+                builder.Append("    channelIntegrityKeyVersion:");
+                builder.AppendLine($" '{ChannelIntegrityKeyVersion}'");
+            }
+
+            if (Optional.IsDefined(KeyVaultSyncStatus))
+            {
+                builder.Append("    keyVaultSyncStatus:");
+                builder.AppendLine($" '{KeyVaultSyncStatus.ToString()}'");
+            }
+
+            if (Optional.IsCollectionDefined(DeviceSecrets))
+            {
+                if (DeviceSecrets.Any())
+                {
+                    builder.Append("    deviceSecrets:");
+                    builder.AppendLine(" {");
+                    foreach (var item in DeviceSecrets)
+                    {
+                        builder.Append($"        {item.Key}: ");
+                        AppendChildObject(builder, item.Value, options, 6, false);
+                    }
+                    builder.AppendLine("    }");
+                }
+            }
+
+            if (Optional.IsDefined(ClusterWitnessType))
+            {
+                builder.Append("    clusterWitnessType:");
+                builder.AppendLine($" '{ClusterWitnessType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(FileShareWitnessLocation))
+            {
+                builder.Append("    fileShareWitnessLocation:");
+                builder.AppendLine($" '{FileShareWitnessLocation}'");
+            }
+
+            if (Optional.IsDefined(FileShareWitnessUsername))
+            {
+                builder.Append("    fileShareWitnessUsername:");
+                builder.AppendLine($" '{FileShareWitnessUsername}'");
+            }
+
+            if (Optional.IsDefined(CloudWitnessStorageAccountName))
+            {
+                builder.Append("    cloudWitnessStorageAccountName:");
+                builder.AppendLine($" '{CloudWitnessStorageAccountName}'");
+            }
+
+            if (Optional.IsDefined(CloudWitnessContainerName))
+            {
+                builder.Append("    cloudWitnessContainerName:");
+                builder.AppendLine($" '{CloudWitnessContainerName}'");
+            }
+
+            if (Optional.IsDefined(CloudWitnessStorageEndpoint))
+            {
+                builder.Append("    cloudWitnessStorageEndpoint:");
+                builder.AppendLine($" '{CloudWitnessStorageEndpoint}'");
+            }
+
+            builder.AppendLine("  }");
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<DataBoxEdgeDeviceExtendedInfo>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<DataBoxEdgeDeviceExtendedInfo>)this).GetFormatFromOptions(options) : options.Format;
@@ -345,6 +501,8 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(DataBoxEdgeDeviceExtendedInfo)} does not support '{options.Format}' format.");
             }
@@ -361,6 +519,8 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeDataBoxEdgeDeviceExtendedInfo(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(DataBoxEdgeDeviceExtendedInfo)} does not support '{options.Format}' format.");
             }

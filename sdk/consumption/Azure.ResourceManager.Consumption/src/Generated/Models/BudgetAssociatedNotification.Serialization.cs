@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -199,6 +201,122 @@ namespace Azure.ResourceManager.Consumption.Models
             return new BudgetAssociatedNotification(enabled, @operator, threshold, contactEmails, Optional.ToList(contactRoles), Optional.ToList(contactGroups), Optional.ToNullable(thresholdType), Optional.ToNullable(locale), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(IsEnabled))
+            {
+                builder.Append("  enabled:");
+                var boolValue = IsEnabled == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(Operator))
+            {
+                builder.Append("  operator:");
+                builder.AppendLine($" '{Operator.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Threshold))
+            {
+                builder.Append("  threshold:");
+                builder.AppendLine($" '{Threshold.ToString()}'");
+            }
+
+            if (Optional.IsCollectionDefined(ContactEmails))
+            {
+                if (ContactEmails.Any())
+                {
+                    builder.Append("  contactEmails:");
+                    builder.AppendLine(" [");
+                    foreach (var item in ContactEmails)
+                    {
+                        if (item == null)
+                        {
+                            builder.Append("null");
+                            continue;
+                        }
+                        builder.AppendLine($"    '{item}'");
+                    }
+                    builder.AppendLine("  ]");
+                }
+            }
+
+            if (Optional.IsCollectionDefined(ContactRoles))
+            {
+                if (ContactRoles.Any())
+                {
+                    builder.Append("  contactRoles:");
+                    builder.AppendLine(" [");
+                    foreach (var item in ContactRoles)
+                    {
+                        if (item == null)
+                        {
+                            builder.Append("null");
+                            continue;
+                        }
+                        builder.AppendLine($"    '{item}'");
+                    }
+                    builder.AppendLine("  ]");
+                }
+            }
+
+            if (Optional.IsCollectionDefined(ContactGroups))
+            {
+                if (ContactGroups.Any())
+                {
+                    builder.Append("  contactGroups:");
+                    builder.AppendLine(" [");
+                    foreach (var item in ContactGroups)
+                    {
+                        if (item == null)
+                        {
+                            builder.Append("null");
+                            continue;
+                        }
+                        builder.AppendLine($"    '{item}'");
+                    }
+                    builder.AppendLine("  ]");
+                }
+            }
+
+            if (Optional.IsDefined(ThresholdType))
+            {
+                builder.Append("  thresholdType:");
+                builder.AppendLine($" '{ThresholdType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Locale))
+            {
+                builder.Append("  locale:");
+                builder.AppendLine($" '{Locale.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<BudgetAssociatedNotification>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<BudgetAssociatedNotification>)this).GetFormatFromOptions(options) : options.Format;
@@ -207,6 +325,8 @@ namespace Azure.ResourceManager.Consumption.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(BudgetAssociatedNotification)} does not support '{options.Format}' format.");
             }
@@ -223,6 +343,8 @@ namespace Azure.ResourceManager.Consumption.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeBudgetAssociatedNotification(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(BudgetAssociatedNotification)} does not support '{options.Format}' format.");
             }

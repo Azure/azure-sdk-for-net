@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
@@ -420,6 +422,246 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             return new DataProtectionBackupJobProperties(activityId, backupInstanceFriendlyName, backupInstanceId.Value, dataSourceId, dataSourceLocation, dataSourceName, dataSourceSetName.Value, dataSourceType, Optional.ToNullable(duration), Optional.ToNullable(endTime), Optional.ToList(errorDetails), extendedInfo.Value, isUserTriggered, operation, operationCategory, policyId.Value, policyName.Value, progressEnabled, progressUrl.Value, rehydrationPriority.Value, restoreType.Value, sourceResourceGroup, sourceSubscriptionId, startTime, status, subscriptionId, supportedActions, vaultName, Optional.ToNullable(etag), sourceDataStoreName.Value, destinationDataStoreName.Value, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(ActivityId))
+            {
+                builder.Append("  activityID:");
+                builder.AppendLine($" '{ActivityId}'");
+            }
+
+            if (Optional.IsDefined(BackupInstanceFriendlyName))
+            {
+                builder.Append("  backupInstanceFriendlyName:");
+                builder.AppendLine($" '{BackupInstanceFriendlyName}'");
+            }
+
+            if (Optional.IsDefined(BackupInstanceId))
+            {
+                builder.Append("  backupInstanceId:");
+                builder.AppendLine($" '{BackupInstanceId.ToString()}'");
+            }
+
+            if (Optional.IsDefined(DataSourceId))
+            {
+                builder.Append("  dataSourceId:");
+                builder.AppendLine($" '{DataSourceId.ToString()}'");
+            }
+
+            if (Optional.IsDefined(DataSourceLocation))
+            {
+                builder.Append("  dataSourceLocation:");
+                builder.AppendLine($" '{DataSourceLocation.ToString()}'");
+            }
+
+            if (Optional.IsDefined(DataSourceName))
+            {
+                builder.Append("  dataSourceName:");
+                builder.AppendLine($" '{DataSourceName}'");
+            }
+
+            if (Optional.IsDefined(DataSourceSetName))
+            {
+                builder.Append("  dataSourceSetName:");
+                builder.AppendLine($" '{DataSourceSetName}'");
+            }
+
+            if (Optional.IsDefined(DataSourceType))
+            {
+                builder.Append("  dataSourceType:");
+                builder.AppendLine($" '{DataSourceType}'");
+            }
+
+            if (Optional.IsDefined(Duration))
+            {
+                builder.Append("  duration:");
+                var formattedTimeSpan = TypeFormatters.ToString(Duration.Value, "P");
+                builder.AppendLine($" '{formattedTimeSpan}'");
+            }
+
+            if (Optional.IsDefined(EndOn))
+            {
+                builder.Append("  endTime:");
+                var formattedDateTimeString = TypeFormatters.ToString(EndOn.Value, "o");
+                builder.AppendLine($" '{formattedDateTimeString}'");
+            }
+
+            if (Optional.IsCollectionDefined(ErrorDetails))
+            {
+                if (ErrorDetails.Any())
+                {
+                    builder.Append("  errorDetails:");
+                    builder.AppendLine(" [");
+                    foreach (var item in ErrorDetails)
+                    {
+                        AppendChildObject(builder, item, options, 4, true);
+                    }
+                    builder.AppendLine("  ]");
+                }
+            }
+
+            if (Optional.IsDefined(ExtendedInfo))
+            {
+                builder.Append("  extendedInfo:");
+                AppendChildObject(builder, ExtendedInfo, options, 2, false);
+            }
+
+            if (Optional.IsDefined(IsUserTriggered))
+            {
+                builder.Append("  isUserTriggered:");
+                var boolValue = IsUserTriggered == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(Operation))
+            {
+                builder.Append("  operation:");
+                builder.AppendLine($" '{Operation}'");
+            }
+
+            if (Optional.IsDefined(OperationCategory))
+            {
+                builder.Append("  operationCategory:");
+                builder.AppendLine($" '{OperationCategory}'");
+            }
+
+            if (Optional.IsDefined(PolicyId))
+            {
+                builder.Append("  policyId:");
+                builder.AppendLine($" '{PolicyId.ToString()}'");
+            }
+
+            if (Optional.IsDefined(PolicyName))
+            {
+                builder.Append("  policyName:");
+                builder.AppendLine($" '{PolicyName}'");
+            }
+
+            if (Optional.IsDefined(IsProgressEnabled))
+            {
+                builder.Append("  progressEnabled:");
+                var boolValue = IsProgressEnabled == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(ProgressUri))
+            {
+                builder.Append("  progressUrl:");
+                builder.AppendLine($" '{ProgressUri.AbsoluteUri}'");
+            }
+
+            if (Optional.IsDefined(RehydrationPriority))
+            {
+                builder.Append("  rehydrationPriority:");
+                builder.AppendLine($" '{RehydrationPriority}'");
+            }
+
+            if (Optional.IsDefined(RestoreType))
+            {
+                builder.Append("  restoreType:");
+                builder.AppendLine($" '{RestoreType}'");
+            }
+
+            if (Optional.IsDefined(SourceResourceGroup))
+            {
+                builder.Append("  sourceResourceGroup:");
+                builder.AppendLine($" '{SourceResourceGroup}'");
+            }
+
+            if (Optional.IsDefined(SourceSubscriptionId))
+            {
+                builder.Append("  sourceSubscriptionID:");
+                builder.AppendLine($" '{SourceSubscriptionId}'");
+            }
+
+            if (Optional.IsDefined(StartOn))
+            {
+                builder.Append("  startTime:");
+                var formattedDateTimeString = TypeFormatters.ToString(StartOn, "o");
+                builder.AppendLine($" '{formattedDateTimeString}'");
+            }
+
+            if (Optional.IsDefined(Status))
+            {
+                builder.Append("  status:");
+                builder.AppendLine($" '{Status}'");
+            }
+
+            if (Optional.IsDefined(SubscriptionId))
+            {
+                builder.Append("  subscriptionId:");
+                builder.AppendLine($" '{SubscriptionId}'");
+            }
+
+            if (Optional.IsCollectionDefined(SupportedActions))
+            {
+                if (SupportedActions.Any())
+                {
+                    builder.Append("  supportedActions:");
+                    builder.AppendLine(" [");
+                    foreach (var item in SupportedActions)
+                    {
+                        if (item == null)
+                        {
+                            builder.Append("null");
+                            continue;
+                        }
+                        builder.AppendLine($"    '{item}'");
+                    }
+                    builder.AppendLine("  ]");
+                }
+            }
+
+            if (Optional.IsDefined(VaultName))
+            {
+                builder.Append("  vaultName:");
+                builder.AppendLine($" '{VaultName}'");
+            }
+
+            if (Optional.IsDefined(ETag))
+            {
+                builder.Append("  etag:");
+                builder.AppendLine($" '{ETag.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SourceDataStoreName))
+            {
+                builder.Append("  sourceDataStoreName:");
+                builder.AppendLine($" '{SourceDataStoreName}'");
+            }
+
+            if (Optional.IsDefined(DestinationDataStoreName))
+            {
+                builder.Append("  destinationDataStoreName:");
+                builder.AppendLine($" '{DestinationDataStoreName}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<DataProtectionBackupJobProperties>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<DataProtectionBackupJobProperties>)this).GetFormatFromOptions(options) : options.Format;
@@ -428,6 +670,8 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(DataProtectionBackupJobProperties)} does not support '{options.Format}' format.");
             }
@@ -444,6 +688,8 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeDataProtectionBackupJobProperties(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(DataProtectionBackupJobProperties)} does not support '{options.Format}' format.");
             }

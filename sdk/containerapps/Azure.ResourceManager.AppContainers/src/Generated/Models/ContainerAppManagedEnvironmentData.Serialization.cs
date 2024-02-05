@@ -8,7 +8,9 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.AppContainers.Models;
@@ -414,6 +416,198 @@ namespace Azure.ResourceManager.AppContainers
             return new ContainerAppManagedEnvironmentData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, kind.Value, Optional.ToNullable(provisioningState), daprAIInstrumentationKey.Value, daprAIConnectionString.Value, vnetConfiguration.Value, deploymentErrors.Value, defaultDomain.Value, staticIP.Value, appLogsConfiguration.Value, Optional.ToNullable(zoneRedundant), customDomainConfiguration.Value, eventStreamEndpoint.Value, Optional.ToList(workloadProfiles), kedaConfiguration.Value, daprConfiguration.Value, infrastructureResourceGroup.Value, peerAuthentication.Value, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(Kind))
+            {
+                builder.Append("  kind:");
+                builder.AppendLine($" '{Kind}'");
+            }
+
+            if (Optional.IsCollectionDefined(Tags))
+            {
+                if (Tags.Any())
+                {
+                    builder.Append("  tags:");
+                    builder.AppendLine(" {");
+                    foreach (var item in Tags)
+                    {
+                        builder.Append($"    {item.Key}: ");
+                        if (item.Value == null)
+                        {
+                            builder.Append("null");
+                            continue;
+                        }
+                        builder.AppendLine($" '{item.Value}'");
+                    }
+                    builder.AppendLine("  }");
+                }
+            }
+
+            if (Optional.IsDefined(Location))
+            {
+                builder.Append("  location:");
+                builder.AppendLine($" '{Location.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Id))
+            {
+                builder.Append("  id:");
+                builder.AppendLine($" '{Id.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                builder.AppendLine($" '{Name}'");
+            }
+
+            if (Optional.IsDefined(ResourceType))
+            {
+                builder.Append("  type:");
+                builder.AppendLine($" '{ResourceType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SystemData))
+            {
+                builder.Append("  systemData:");
+                builder.AppendLine($" '{SystemData.ToString()}'");
+            }
+
+            builder.Append("  properties:");
+            builder.AppendLine(" {");
+            if (Optional.IsDefined(ProvisioningState))
+            {
+                builder.Append("    provisioningState:");
+                builder.AppendLine($" '{ProvisioningState.ToString()}'");
+            }
+
+            if (Optional.IsDefined(DaprAIInstrumentationKey))
+            {
+                builder.Append("    daprAIInstrumentationKey:");
+                builder.AppendLine($" '{DaprAIInstrumentationKey}'");
+            }
+
+            if (Optional.IsDefined(DaprAIConnectionString))
+            {
+                builder.Append("    daprAIConnectionString:");
+                builder.AppendLine($" '{DaprAIConnectionString}'");
+            }
+
+            if (Optional.IsDefined(VnetConfiguration))
+            {
+                builder.Append("    vnetConfiguration:");
+                AppendChildObject(builder, VnetConfiguration, options, 4, false);
+            }
+
+            if (Optional.IsDefined(DeploymentErrors))
+            {
+                builder.Append("    deploymentErrors:");
+                builder.AppendLine($" '{DeploymentErrors}'");
+            }
+
+            if (Optional.IsDefined(DefaultDomain))
+            {
+                builder.Append("    defaultDomain:");
+                builder.AppendLine($" '{DefaultDomain}'");
+            }
+
+            if (Optional.IsDefined(StaticIP))
+            {
+                builder.Append("    staticIp:");
+                builder.AppendLine($" '{StaticIP.ToString()}'");
+            }
+
+            if (Optional.IsDefined(AppLogsConfiguration))
+            {
+                builder.Append("    appLogsConfiguration:");
+                AppendChildObject(builder, AppLogsConfiguration, options, 4, false);
+            }
+
+            if (Optional.IsDefined(IsZoneRedundant))
+            {
+                builder.Append("    zoneRedundant:");
+                var boolValue = IsZoneRedundant.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(CustomDomainConfiguration))
+            {
+                builder.Append("    customDomainConfiguration:");
+                AppendChildObject(builder, CustomDomainConfiguration, options, 4, false);
+            }
+
+            if (Optional.IsDefined(EventStreamEndpoint))
+            {
+                builder.Append("    eventStreamEndpoint:");
+                builder.AppendLine($" '{EventStreamEndpoint}'");
+            }
+
+            if (Optional.IsCollectionDefined(WorkloadProfiles))
+            {
+                if (WorkloadProfiles.Any())
+                {
+                    builder.Append("    workloadProfiles:");
+                    builder.AppendLine(" [");
+                    foreach (var item in WorkloadProfiles)
+                    {
+                        AppendChildObject(builder, item, options, 6, true);
+                    }
+                    builder.AppendLine("    ]");
+                }
+            }
+
+            if (Optional.IsDefined(KedaConfiguration))
+            {
+                builder.Append("    kedaConfiguration:");
+                AppendChildObject(builder, KedaConfiguration, options, 4, false);
+            }
+
+            if (Optional.IsDefined(DaprConfiguration))
+            {
+                builder.Append("    daprConfiguration:");
+                AppendChildObject(builder, DaprConfiguration, options, 4, false);
+            }
+
+            if (Optional.IsDefined(InfrastructureResourceGroup))
+            {
+                builder.Append("    infrastructureResourceGroup:");
+                builder.AppendLine($" '{InfrastructureResourceGroup}'");
+            }
+
+            if (Optional.IsDefined(PeerAuthentication))
+            {
+                builder.Append("    peerAuthentication:");
+                AppendChildObject(builder, PeerAuthentication, options, 4, false);
+            }
+
+            builder.AppendLine("  }");
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<ContainerAppManagedEnvironmentData>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ContainerAppManagedEnvironmentData>)this).GetFormatFromOptions(options) : options.Format;
@@ -422,6 +616,8 @@ namespace Azure.ResourceManager.AppContainers
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(ContainerAppManagedEnvironmentData)} does not support '{options.Format}' format.");
             }
@@ -438,6 +634,8 @@ namespace Azure.ResourceManager.AppContainers
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeContainerAppManagedEnvironmentData(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(ContainerAppManagedEnvironmentData)} does not support '{options.Format}' format.");
             }

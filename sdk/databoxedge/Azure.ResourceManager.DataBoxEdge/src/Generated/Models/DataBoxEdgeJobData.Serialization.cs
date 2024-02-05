@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.DataBoxEdge.Models;
@@ -329,6 +330,141 @@ namespace Azure.ResourceManager.DataBoxEdge
             return new DataBoxEdgeJobData(id, name, type, systemData.Value, Optional.ToNullable(status), Optional.ToNullable(startTime), Optional.ToNullable(endTime), Optional.ToNullable(percentComplete), error.Value, Optional.ToNullable(jobType), Optional.ToNullable(currentStage), downloadProgress.Value, installProgress.Value, Optional.ToNullable(totalRefreshErrors), errorManifestFile.Value, refreshedEntityId.Value, folder.Value, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(Status))
+            {
+                builder.Append("  status:");
+                builder.AppendLine($" '{Status.ToString()}'");
+            }
+
+            if (Optional.IsDefined(StartOn))
+            {
+                builder.Append("  startTime:");
+                var formattedDateTimeString = TypeFormatters.ToString(StartOn.Value, "o");
+                builder.AppendLine($" '{formattedDateTimeString}'");
+            }
+
+            if (Optional.IsDefined(EndOn))
+            {
+                builder.Append("  endTime:");
+                var formattedDateTimeString = TypeFormatters.ToString(EndOn.Value, "o");
+                builder.AppendLine($" '{formattedDateTimeString}'");
+            }
+
+            if (Optional.IsDefined(PercentComplete))
+            {
+                builder.Append("  percentComplete:");
+                builder.AppendLine($" {PercentComplete.Value}");
+            }
+
+            if (Optional.IsDefined(Error))
+            {
+                builder.Append("  error:");
+                AppendChildObject(builder, Error, options, 2, false);
+            }
+
+            if (Optional.IsDefined(Id))
+            {
+                builder.Append("  id:");
+                builder.AppendLine($" '{Id.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                builder.AppendLine($" '{Name}'");
+            }
+
+            if (Optional.IsDefined(ResourceType))
+            {
+                builder.Append("  type:");
+                builder.AppendLine($" '{ResourceType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SystemData))
+            {
+                builder.Append("  systemData:");
+                builder.AppendLine($" '{SystemData.ToString()}'");
+            }
+
+            builder.Append("  properties:");
+            builder.AppendLine(" {");
+            if (Optional.IsDefined(JobType))
+            {
+                builder.Append("    jobType:");
+                builder.AppendLine($" '{JobType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(CurrentStage))
+            {
+                builder.Append("    currentStage:");
+                builder.AppendLine($" '{CurrentStage.ToString()}'");
+            }
+
+            if (Optional.IsDefined(DownloadProgress))
+            {
+                builder.Append("    downloadProgress:");
+                AppendChildObject(builder, DownloadProgress, options, 4, false);
+            }
+
+            if (Optional.IsDefined(InstallProgress))
+            {
+                builder.Append("    installProgress:");
+                AppendChildObject(builder, InstallProgress, options, 4, false);
+            }
+
+            if (Optional.IsDefined(TotalRefreshErrors))
+            {
+                builder.Append("    totalRefreshErrors:");
+                builder.AppendLine($" {TotalRefreshErrors.Value}");
+            }
+
+            if (Optional.IsDefined(ErrorManifestFile))
+            {
+                builder.Append("    errorManifestFile:");
+                builder.AppendLine($" '{ErrorManifestFile}'");
+            }
+
+            if (Optional.IsDefined(RefreshedEntityId))
+            {
+                builder.Append("    refreshedEntityId:");
+                builder.AppendLine($" '{RefreshedEntityId.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Folder))
+            {
+                builder.Append("    folder:");
+                builder.AppendLine($" '{Folder}'");
+            }
+
+            builder.AppendLine("  }");
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<DataBoxEdgeJobData>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<DataBoxEdgeJobData>)this).GetFormatFromOptions(options) : options.Format;
@@ -337,6 +473,8 @@ namespace Azure.ResourceManager.DataBoxEdge
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(DataBoxEdgeJobData)} does not support '{options.Format}' format.");
             }
@@ -353,6 +491,8 @@ namespace Azure.ResourceManager.DataBoxEdge
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeDataBoxEdgeJobData(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(DataBoxEdgeJobData)} does not support '{options.Format}' format.");
             }
