@@ -36,10 +36,12 @@ public class HttpPipelineBenchmark
         await _pipeline.SendAsync(message, CancellationToken.None);
     }
 
-    private class BenchmarkOptions : ClientOptions
-    {
-    }
+    #region Helpers
 
+    /// <summary>
+    /// Mock out the network to isolate the performance test to only
+    /// Azure.Core pipeline code.
+    /// </summary>
     private class MockHttpMessageHandler : HttpMessageHandler
     {
         protected override Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
@@ -56,4 +58,10 @@ public class HttpPipelineBenchmark
             return Task.FromResult(httpResponse);
         }
     }
+
+    private class BenchmarkOptions : ClientOptions
+    {
+    }
+
+    #endregion
 }
