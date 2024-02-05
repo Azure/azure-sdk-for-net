@@ -9,6 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Net;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -155,6 +156,76 @@ namespace Azure.ResourceManager.StorageCache.Models
             return new StorageCacheActiveDirectorySettings(primaryDnsIPAddress, secondaryDnsIPAddress.Value, domainName, domainNetBiosName, cacheNetBiosName, Optional.ToNullable(domainJoined), credentials.Value, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(PrimaryDnsIPAddress))
+            {
+                builder.Append("  primaryDnsIpAddress:");
+                builder.AppendLine($" '{PrimaryDnsIPAddress.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SecondaryDnsIPAddress))
+            {
+                builder.Append("  secondaryDnsIpAddress:");
+                builder.AppendLine($" '{SecondaryDnsIPAddress.ToString()}'");
+            }
+
+            if (Optional.IsDefined(DomainName))
+            {
+                builder.Append("  domainName:");
+                builder.AppendLine($" '{DomainName}'");
+            }
+
+            if (Optional.IsDefined(DomainNetBiosName))
+            {
+                builder.Append("  domainNetBiosName:");
+                builder.AppendLine($" '{DomainNetBiosName}'");
+            }
+
+            if (Optional.IsDefined(CacheNetBiosName))
+            {
+                builder.Append("  cacheNetBiosName:");
+                builder.AppendLine($" '{CacheNetBiosName}'");
+            }
+
+            if (Optional.IsDefined(DomainJoined))
+            {
+                builder.Append("  domainJoined:");
+                builder.AppendLine($" '{DomainJoined.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Credentials))
+            {
+                builder.Append("  credentials:");
+                AppendChildObject(builder, Credentials, options, 2, false);
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<StorageCacheActiveDirectorySettings>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<StorageCacheActiveDirectorySettings>)this).GetFormatFromOptions(options) : options.Format;
@@ -163,6 +234,8 @@ namespace Azure.ResourceManager.StorageCache.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(StorageCacheActiveDirectorySettings)} does not support '{options.Format}' format.");
             }
@@ -179,6 +252,8 @@ namespace Azure.ResourceManager.StorageCache.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeStorageCacheActiveDirectorySettings(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(StorageCacheActiveDirectorySettings)} does not support '{options.Format}' format.");
             }

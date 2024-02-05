@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -119,6 +120,58 @@ namespace Azure.ResourceManager.Storage.Models
             return new ObjectReplicationPolicyRule(ruleId.Value, sourceContainer, destinationContainer, filters.Value, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(RuleId))
+            {
+                builder.Append("  ruleId:");
+                builder.AppendLine($" '{RuleId}'");
+            }
+
+            if (Optional.IsDefined(SourceContainer))
+            {
+                builder.Append("  sourceContainer:");
+                builder.AppendLine($" '{SourceContainer}'");
+            }
+
+            if (Optional.IsDefined(DestinationContainer))
+            {
+                builder.Append("  destinationContainer:");
+                builder.AppendLine($" '{DestinationContainer}'");
+            }
+
+            if (Optional.IsDefined(Filters))
+            {
+                builder.Append("  filters:");
+                AppendChildObject(builder, Filters, options, 2, false);
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<ObjectReplicationPolicyRule>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ObjectReplicationPolicyRule>)this).GetFormatFromOptions(options) : options.Format;
@@ -127,6 +180,8 @@ namespace Azure.ResourceManager.Storage.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(ObjectReplicationPolicyRule)} does not support '{options.Format}' format.");
             }
@@ -143,6 +198,8 @@ namespace Azure.ResourceManager.Storage.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeObjectReplicationPolicyRule(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(ObjectReplicationPolicyRule)} does not support '{options.Format}' format.");
             }

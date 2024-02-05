@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.AppService.Models;
@@ -268,6 +269,121 @@ namespace Azure.ResourceManager.AppService
             return new HostNameBindingData(id, name, type, systemData.Value, siteName.Value, domainId.Value, azureResourceName.Value, Optional.ToNullable(azureResourceType), Optional.ToNullable(customHostNameDnsRecordType), Optional.ToNullable(hostNameType), Optional.ToNullable(sslState), thumbprint.Value, virtualIP.Value, kind.Value, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(Kind))
+            {
+                builder.Append("  kind:");
+                builder.AppendLine($" '{Kind}'");
+            }
+
+            if (Optional.IsDefined(Id))
+            {
+                builder.Append("  id:");
+                builder.AppendLine($" '{Id.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                builder.AppendLine($" '{Name}'");
+            }
+
+            if (Optional.IsDefined(ResourceType))
+            {
+                builder.Append("  type:");
+                builder.AppendLine($" '{ResourceType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SystemData))
+            {
+                builder.Append("  systemData:");
+                builder.AppendLine($" '{SystemData.ToString()}'");
+            }
+
+            builder.Append("  properties:");
+            builder.AppendLine(" {");
+            if (Optional.IsDefined(SiteName))
+            {
+                builder.Append("    siteName:");
+                builder.AppendLine($" '{SiteName}'");
+            }
+
+            if (Optional.IsDefined(DomainId))
+            {
+                builder.Append("    domainId:");
+                builder.AppendLine($" '{DomainId}'");
+            }
+
+            if (Optional.IsDefined(AzureResourceName))
+            {
+                builder.Append("    azureResourceName:");
+                builder.AppendLine($" '{AzureResourceName}'");
+            }
+
+            if (Optional.IsDefined(AzureResourceType))
+            {
+                builder.Append("    azureResourceType:");
+                builder.AppendLine($" '{AzureResourceType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(CustomHostNameDnsRecordType))
+            {
+                builder.Append("    customHostNameDnsRecordType:");
+                builder.AppendLine($" '{CustomHostNameDnsRecordType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(HostNameType))
+            {
+                builder.Append("    hostNameType:");
+                builder.AppendLine($" '{HostNameType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SslState))
+            {
+                builder.Append("    sslState:");
+                builder.AppendLine($" '{SslState.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ThumbprintString))
+            {
+                builder.Append("    thumbprint:");
+                builder.AppendLine($" '{ThumbprintString}'");
+            }
+
+            if (Optional.IsDefined(VirtualIP))
+            {
+                builder.Append("    virtualIP:");
+                builder.AppendLine($" '{VirtualIP}'");
+            }
+
+            builder.AppendLine("  }");
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<HostNameBindingData>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<HostNameBindingData>)this).GetFormatFromOptions(options) : options.Format;
@@ -276,6 +392,8 @@ namespace Azure.ResourceManager.AppService
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(HostNameBindingData)} does not support '{options.Format}' format.");
             }
@@ -292,6 +410,8 @@ namespace Azure.ResourceManager.AppService
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeHostNameBindingData(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(HostNameBindingData)} does not support '{options.Format}' format.");
             }

@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -257,6 +259,113 @@ namespace Azure.ResourceManager.Synapse
             return new SynapseMaintenanceWindowOptionData(id, name, type, systemData.Value, Optional.ToNullable(isEnabled), Optional.ToList(maintenanceWindowCycles), Optional.ToNullable(minDurationInMinutes), Optional.ToNullable(defaultDurationInMinutes), Optional.ToNullable(minCycles), Optional.ToNullable(timeGranularityInMinutes), Optional.ToNullable(allowMultipleMaintenanceWindowsPerCycle), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(Id))
+            {
+                builder.Append("  id:");
+                builder.AppendLine($" '{Id.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                builder.AppendLine($" '{Name}'");
+            }
+
+            if (Optional.IsDefined(ResourceType))
+            {
+                builder.Append("  type:");
+                builder.AppendLine($" '{ResourceType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SystemData))
+            {
+                builder.Append("  systemData:");
+                builder.AppendLine($" '{SystemData.ToString()}'");
+            }
+
+            builder.Append("  properties:");
+            builder.AppendLine(" {");
+            if (Optional.IsDefined(IsEnabled))
+            {
+                builder.Append("    isEnabled:");
+                var boolValue = IsEnabled.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsCollectionDefined(MaintenanceWindowCycles))
+            {
+                if (MaintenanceWindowCycles.Any())
+                {
+                    builder.Append("    maintenanceWindowCycles:");
+                    builder.AppendLine(" [");
+                    foreach (var item in MaintenanceWindowCycles)
+                    {
+                        AppendChildObject(builder, item, options, 6, true);
+                    }
+                    builder.AppendLine("    ]");
+                }
+            }
+
+            if (Optional.IsDefined(MinDurationInMinutes))
+            {
+                builder.Append("    minDurationInMinutes:");
+                builder.AppendLine($" {MinDurationInMinutes.Value}");
+            }
+
+            if (Optional.IsDefined(DefaultDurationInMinutes))
+            {
+                builder.Append("    defaultDurationInMinutes:");
+                builder.AppendLine($" {DefaultDurationInMinutes.Value}");
+            }
+
+            if (Optional.IsDefined(MinCycles))
+            {
+                builder.Append("    minCycles:");
+                builder.AppendLine($" {MinCycles.Value}");
+            }
+
+            if (Optional.IsDefined(TimeGranularityInMinutes))
+            {
+                builder.Append("    timeGranularityInMinutes:");
+                builder.AppendLine($" {TimeGranularityInMinutes.Value}");
+            }
+
+            if (Optional.IsDefined(AllowMultipleMaintenanceWindowsPerCycle))
+            {
+                builder.Append("    allowMultipleMaintenanceWindowsPerCycle:");
+                var boolValue = AllowMultipleMaintenanceWindowsPerCycle.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            builder.AppendLine("  }");
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<SynapseMaintenanceWindowOptionData>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<SynapseMaintenanceWindowOptionData>)this).GetFormatFromOptions(options) : options.Format;
@@ -265,6 +374,8 @@ namespace Azure.ResourceManager.Synapse
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(SynapseMaintenanceWindowOptionData)} does not support '{options.Format}' format.");
             }
@@ -281,6 +392,8 @@ namespace Azure.ResourceManager.Synapse
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeSynapseMaintenanceWindowOptionData(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(SynapseMaintenanceWindowOptionData)} does not support '{options.Format}' format.");
             }

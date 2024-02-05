@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -214,6 +216,97 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
             return new SqlTempDBSettings(Optional.ToNullable(dataFileSize), Optional.ToNullable(dataGrowth), Optional.ToNullable(logFileSize), Optional.ToNullable(logGrowth), Optional.ToNullable(dataFileCount), Optional.ToNullable(persistFolder), persistFolderPath.Value, Optional.ToList(luns), defaultFilePath.Value, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(DataFileSize))
+            {
+                builder.Append("  dataFileSize:");
+                builder.AppendLine($" {DataFileSize.Value}");
+            }
+
+            if (Optional.IsDefined(DataGrowth))
+            {
+                builder.Append("  dataGrowth:");
+                builder.AppendLine($" {DataGrowth.Value}");
+            }
+
+            if (Optional.IsDefined(LogFileSize))
+            {
+                builder.Append("  logFileSize:");
+                builder.AppendLine($" {LogFileSize.Value}");
+            }
+
+            if (Optional.IsDefined(LogGrowth))
+            {
+                builder.Append("  logGrowth:");
+                builder.AppendLine($" {LogGrowth.Value}");
+            }
+
+            if (Optional.IsDefined(DataFileCount))
+            {
+                builder.Append("  dataFileCount:");
+                builder.AppendLine($" {DataFileCount.Value}");
+            }
+
+            if (Optional.IsDefined(PersistFolder))
+            {
+                builder.Append("  persistFolder:");
+                var boolValue = PersistFolder.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(PersistFolderPath))
+            {
+                builder.Append("  persistFolderPath:");
+                builder.AppendLine($" '{PersistFolderPath}'");
+            }
+
+            if (Optional.IsCollectionDefined(LogicalUnitNumbers))
+            {
+                if (LogicalUnitNumbers.Any())
+                {
+                    builder.Append("  luns:");
+                    builder.AppendLine(" [");
+                    foreach (var item in LogicalUnitNumbers)
+                    {
+                        builder.AppendLine($"    {item}");
+                    }
+                    builder.AppendLine("  ]");
+                }
+            }
+
+            if (Optional.IsDefined(DefaultFilePath))
+            {
+                builder.Append("  defaultFilePath:");
+                builder.AppendLine($" '{DefaultFilePath}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<SqlTempDBSettings>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<SqlTempDBSettings>)this).GetFormatFromOptions(options) : options.Format;
@@ -222,6 +315,8 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(SqlTempDBSettings)} does not support '{options.Format}' format.");
             }
@@ -238,6 +333,8 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeSqlTempDBSettings(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(SqlTempDBSettings)} does not support '{options.Format}' format.");
             }

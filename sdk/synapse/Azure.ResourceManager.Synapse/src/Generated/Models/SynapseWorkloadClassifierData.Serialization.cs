@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -207,6 +208,97 @@ namespace Azure.ResourceManager.Synapse
             return new SynapseWorkloadClassifierData(id, name, type, systemData.Value, memberName.Value, label.Value, context.Value, startTime.Value, endTime.Value, importance.Value, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(Id))
+            {
+                builder.Append("  id:");
+                builder.AppendLine($" '{Id.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                builder.AppendLine($" '{Name}'");
+            }
+
+            if (Optional.IsDefined(ResourceType))
+            {
+                builder.Append("  type:");
+                builder.AppendLine($" '{ResourceType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SystemData))
+            {
+                builder.Append("  systemData:");
+                builder.AppendLine($" '{SystemData.ToString()}'");
+            }
+
+            builder.Append("  properties:");
+            builder.AppendLine(" {");
+            if (Optional.IsDefined(MemberName))
+            {
+                builder.Append("    memberName:");
+                builder.AppendLine($" '{MemberName}'");
+            }
+
+            if (Optional.IsDefined(Label))
+            {
+                builder.Append("    label:");
+                builder.AppendLine($" '{Label}'");
+            }
+
+            if (Optional.IsDefined(Context))
+            {
+                builder.Append("    context:");
+                builder.AppendLine($" '{Context}'");
+            }
+
+            if (Optional.IsDefined(StartTime))
+            {
+                builder.Append("    startTime:");
+                builder.AppendLine($" '{StartTime}'");
+            }
+
+            if (Optional.IsDefined(EndTime))
+            {
+                builder.Append("    endTime:");
+                builder.AppendLine($" '{EndTime}'");
+            }
+
+            if (Optional.IsDefined(Importance))
+            {
+                builder.Append("    importance:");
+                builder.AppendLine($" '{Importance}'");
+            }
+
+            builder.AppendLine("  }");
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<SynapseWorkloadClassifierData>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<SynapseWorkloadClassifierData>)this).GetFormatFromOptions(options) : options.Format;
@@ -215,6 +307,8 @@ namespace Azure.ResourceManager.Synapse
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(SynapseWorkloadClassifierData)} does not support '{options.Format}' format.");
             }
@@ -231,6 +325,8 @@ namespace Azure.ResourceManager.Synapse
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeSynapseWorkloadClassifierData(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(SynapseWorkloadClassifierData)} does not support '{options.Format}' format.");
             }

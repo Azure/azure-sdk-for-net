@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -336,6 +338,182 @@ namespace Azure.ResourceManager.AppService.Models
             return new MetricSpecification(name.Value, displayName.Value, displayDescription.Value, unit.Value, aggregationType.Value, Optional.ToNullable(supportsInstanceLevelAggregation), Optional.ToNullable(enableRegionalMdmAccount), sourceMdmAccount.Value, sourceMdmNamespace.Value, metricFilterPattern.Value, Optional.ToNullable(fillGapWithZero), Optional.ToNullable(isInternal), Optional.ToList(dimensions), category.Value, Optional.ToList(availabilities), Optional.ToList(supportedTimeGrainTypes), Optional.ToList(supportedAggregationTypes), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                builder.AppendLine($" '{Name}'");
+            }
+
+            if (Optional.IsDefined(DisplayName))
+            {
+                builder.Append("  displayName:");
+                builder.AppendLine($" '{DisplayName}'");
+            }
+
+            if (Optional.IsDefined(DisplayDescription))
+            {
+                builder.Append("  displayDescription:");
+                builder.AppendLine($" '{DisplayDescription}'");
+            }
+
+            if (Optional.IsDefined(Unit))
+            {
+                builder.Append("  unit:");
+                builder.AppendLine($" '{Unit}'");
+            }
+
+            if (Optional.IsDefined(AggregationType))
+            {
+                builder.Append("  aggregationType:");
+                builder.AppendLine($" '{AggregationType}'");
+            }
+
+            if (Optional.IsDefined(IsInstanceLevelAggregationSupported))
+            {
+                builder.Append("  supportsInstanceLevelAggregation:");
+                var boolValue = IsInstanceLevelAggregationSupported.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(IsRegionalMdmAccountEnabled))
+            {
+                builder.Append("  enableRegionalMdmAccount:");
+                var boolValue = IsRegionalMdmAccountEnabled.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(SourceMdmAccount))
+            {
+                builder.Append("  sourceMdmAccount:");
+                builder.AppendLine($" '{SourceMdmAccount}'");
+            }
+
+            if (Optional.IsDefined(SourceMdmNamespace))
+            {
+                builder.Append("  sourceMdmNamespace:");
+                builder.AppendLine($" '{SourceMdmNamespace}'");
+            }
+
+            if (Optional.IsDefined(MetricFilterPattern))
+            {
+                builder.Append("  metricFilterPattern:");
+                builder.AppendLine($" '{MetricFilterPattern}'");
+            }
+
+            if (Optional.IsDefined(FillGapWithZero))
+            {
+                builder.Append("  fillGapWithZero:");
+                var boolValue = FillGapWithZero.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(IsInternal))
+            {
+                builder.Append("  isInternal:");
+                var boolValue = IsInternal.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsCollectionDefined(Dimensions))
+            {
+                if (Dimensions.Any())
+                {
+                    builder.Append("  dimensions:");
+                    builder.AppendLine(" [");
+                    foreach (var item in Dimensions)
+                    {
+                        AppendChildObject(builder, item, options, 4, true);
+                    }
+                    builder.AppendLine("  ]");
+                }
+            }
+
+            if (Optional.IsDefined(Category))
+            {
+                builder.Append("  category:");
+                builder.AppendLine($" '{Category}'");
+            }
+
+            if (Optional.IsCollectionDefined(Availabilities))
+            {
+                if (Availabilities.Any())
+                {
+                    builder.Append("  availabilities:");
+                    builder.AppendLine(" [");
+                    foreach (var item in Availabilities)
+                    {
+                        AppendChildObject(builder, item, options, 4, true);
+                    }
+                    builder.AppendLine("  ]");
+                }
+            }
+
+            if (Optional.IsCollectionDefined(SupportedTimeGrainTypes))
+            {
+                if (SupportedTimeGrainTypes.Any())
+                {
+                    builder.Append("  supportedTimeGrainTypes:");
+                    builder.AppendLine(" [");
+                    foreach (var item in SupportedTimeGrainTypes)
+                    {
+                        if (item == null)
+                        {
+                            builder.Append("null");
+                            continue;
+                        }
+                        builder.AppendLine($"    '{item}'");
+                    }
+                    builder.AppendLine("  ]");
+                }
+            }
+
+            if (Optional.IsCollectionDefined(SupportedAggregationTypes))
+            {
+                if (SupportedAggregationTypes.Any())
+                {
+                    builder.Append("  supportedAggregationTypes:");
+                    builder.AppendLine(" [");
+                    foreach (var item in SupportedAggregationTypes)
+                    {
+                        if (item == null)
+                        {
+                            builder.Append("null");
+                            continue;
+                        }
+                        builder.AppendLine($"    '{item}'");
+                    }
+                    builder.AppendLine("  ]");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<MetricSpecification>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<MetricSpecification>)this).GetFormatFromOptions(options) : options.Format;
@@ -344,6 +522,8 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(MetricSpecification)} does not support '{options.Format}' format.");
             }
@@ -360,6 +540,8 @@ namespace Azure.ResourceManager.AppService.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeMetricSpecification(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(MetricSpecification)} does not support '{options.Format}' format.");
             }

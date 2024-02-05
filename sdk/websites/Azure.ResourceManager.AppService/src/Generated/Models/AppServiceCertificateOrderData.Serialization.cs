@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.AppService.Models;
@@ -492,6 +494,235 @@ namespace Azure.ResourceManager.AppService
             return new AppServiceCertificateOrderData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToDictionary(certificates), distinguishedName.Value, domainVerificationToken.Value, Optional.ToNullable(validityInYears), Optional.ToNullable(keySize), Optional.ToNullable(productType), Optional.ToNullable(autoRenew), Optional.ToNullable(provisioningState), Optional.ToNullable(status), signedCertificate.Value, csr.Value, intermediate.Value, root.Value, serialNumber.Value, Optional.ToNullable(lastCertificateIssuanceTime), Optional.ToNullable(expirationTime), Optional.ToNullable(isPrivateKeyExternal), Optional.ToList(appServiceCertificateNotRenewableReasons), Optional.ToNullable(nextAutoRenewalTimeStamp), contact.Value, kind.Value, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(Kind))
+            {
+                builder.Append("  kind:");
+                builder.AppendLine($" '{Kind}'");
+            }
+
+            if (Optional.IsCollectionDefined(Tags))
+            {
+                if (Tags.Any())
+                {
+                    builder.Append("  tags:");
+                    builder.AppendLine(" {");
+                    foreach (var item in Tags)
+                    {
+                        builder.Append($"    {item.Key}: ");
+                        if (item.Value == null)
+                        {
+                            builder.Append("null");
+                            continue;
+                        }
+                        builder.AppendLine($" '{item.Value}'");
+                    }
+                    builder.AppendLine("  }");
+                }
+            }
+
+            if (Optional.IsDefined(Location))
+            {
+                builder.Append("  location:");
+                builder.AppendLine($" '{Location.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Id))
+            {
+                builder.Append("  id:");
+                builder.AppendLine($" '{Id.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                builder.AppendLine($" '{Name}'");
+            }
+
+            if (Optional.IsDefined(ResourceType))
+            {
+                builder.Append("  type:");
+                builder.AppendLine($" '{ResourceType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SystemData))
+            {
+                builder.Append("  systemData:");
+                builder.AppendLine($" '{SystemData.ToString()}'");
+            }
+
+            builder.Append("  properties:");
+            builder.AppendLine(" {");
+            if (Optional.IsCollectionDefined(Certificates))
+            {
+                if (Certificates.Any())
+                {
+                    builder.Append("    certificates:");
+                    builder.AppendLine(" {");
+                    foreach (var item in Certificates)
+                    {
+                        builder.Append($"        {item.Key}: ");
+                        AppendChildObject(builder, item.Value, options, 6, false);
+                    }
+                    builder.AppendLine("    }");
+                }
+            }
+
+            if (Optional.IsDefined(DistinguishedName))
+            {
+                builder.Append("    distinguishedName:");
+                builder.AppendLine($" '{DistinguishedName}'");
+            }
+
+            if (Optional.IsDefined(DomainVerificationToken))
+            {
+                builder.Append("    domainVerificationToken:");
+                builder.AppendLine($" '{DomainVerificationToken}'");
+            }
+
+            if (Optional.IsDefined(ValidityInYears))
+            {
+                builder.Append("    validityInYears:");
+                builder.AppendLine($" {ValidityInYears.Value}");
+            }
+
+            if (Optional.IsDefined(KeySize))
+            {
+                builder.Append("    keySize:");
+                builder.AppendLine($" {KeySize.Value}");
+            }
+
+            if (Optional.IsDefined(ProductType))
+            {
+                builder.Append("    productType:");
+                builder.AppendLine($" '{ProductType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(IsAutoRenew))
+            {
+                builder.Append("    autoRenew:");
+                var boolValue = IsAutoRenew.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(ProvisioningState))
+            {
+                builder.Append("    provisioningState:");
+                builder.AppendLine($" '{ProvisioningState.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Status))
+            {
+                builder.Append("    status:");
+                builder.AppendLine($" '{Status.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SignedCertificate))
+            {
+                builder.Append("    signedCertificate:");
+                AppendChildObject(builder, SignedCertificate, options, 4, false);
+            }
+
+            if (Optional.IsDefined(Csr))
+            {
+                builder.Append("    csr:");
+                builder.AppendLine($" '{Csr}'");
+            }
+
+            if (Optional.IsDefined(Intermediate))
+            {
+                builder.Append("    intermediate:");
+                AppendChildObject(builder, Intermediate, options, 4, false);
+            }
+
+            if (Optional.IsDefined(Root))
+            {
+                builder.Append("    root:");
+                AppendChildObject(builder, Root, options, 4, false);
+            }
+
+            if (Optional.IsDefined(SerialNumber))
+            {
+                builder.Append("    serialNumber:");
+                builder.AppendLine($" '{SerialNumber}'");
+            }
+
+            if (Optional.IsDefined(LastCertificateIssuedOn))
+            {
+                builder.Append("    lastCertificateIssuanceTime:");
+                var formattedDateTimeString = TypeFormatters.ToString(LastCertificateIssuedOn.Value, "o");
+                builder.AppendLine($" '{formattedDateTimeString}'");
+            }
+
+            if (Optional.IsDefined(ExpireOn))
+            {
+                builder.Append("    expirationTime:");
+                var formattedDateTimeString = TypeFormatters.ToString(ExpireOn.Value, "o");
+                builder.AppendLine($" '{formattedDateTimeString}'");
+            }
+
+            if (Optional.IsDefined(IsPrivateKeyExternal))
+            {
+                builder.Append("    isPrivateKeyExternal:");
+                var boolValue = IsPrivateKeyExternal.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsCollectionDefined(AppServiceCertificateNotRenewableReasons))
+            {
+                if (AppServiceCertificateNotRenewableReasons.Any())
+                {
+                    builder.Append("    appServiceCertificateNotRenewableReasons:");
+                    builder.AppendLine(" [");
+                    foreach (var item in AppServiceCertificateNotRenewableReasons)
+                    {
+                        builder.AppendLine($"      '{item.ToString()}'");
+                    }
+                    builder.AppendLine("    ]");
+                }
+            }
+
+            if (Optional.IsDefined(NextAutoRenewTimeStamp))
+            {
+                builder.Append("    nextAutoRenewalTimeStamp:");
+                var formattedDateTimeString = TypeFormatters.ToString(NextAutoRenewTimeStamp.Value, "o");
+                builder.AppendLine($" '{formattedDateTimeString}'");
+            }
+
+            if (Optional.IsDefined(Contact))
+            {
+                builder.Append("    contact:");
+                AppendChildObject(builder, Contact, options, 4, false);
+            }
+
+            builder.AppendLine("  }");
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<AppServiceCertificateOrderData>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<AppServiceCertificateOrderData>)this).GetFormatFromOptions(options) : options.Format;
@@ -500,6 +731,8 @@ namespace Azure.ResourceManager.AppService
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(AppServiceCertificateOrderData)} does not support '{options.Format}' format.");
             }
@@ -516,6 +749,8 @@ namespace Azure.ResourceManager.AppService
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeAppServiceCertificateOrderData(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(AppServiceCertificateOrderData)} does not support '{options.Format}' format.");
             }

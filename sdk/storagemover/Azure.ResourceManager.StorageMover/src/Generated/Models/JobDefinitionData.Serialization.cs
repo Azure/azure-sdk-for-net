@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -311,6 +312,145 @@ namespace Azure.ResourceManager.StorageMover
             return new JobDefinitionData(id, name, type, systemData.Value, description.Value, copyMode, sourceName, sourceResourceId.Value, sourceSubpath.Value, targetName, targetResourceId.Value, targetSubpath.Value, latestJobRunName.Value, latestJobRunResourceId.Value, Optional.ToNullable(latestJobRunStatus), agentName.Value, agentResourceId.Value, Optional.ToNullable(provisioningState), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(Id))
+            {
+                builder.Append("  id:");
+                builder.AppendLine($" '{Id.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                builder.AppendLine($" '{Name}'");
+            }
+
+            if (Optional.IsDefined(ResourceType))
+            {
+                builder.Append("  type:");
+                builder.AppendLine($" '{ResourceType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SystemData))
+            {
+                builder.Append("  systemData:");
+                builder.AppendLine($" '{SystemData.ToString()}'");
+            }
+
+            builder.Append("  properties:");
+            builder.AppendLine(" {");
+            if (Optional.IsDefined(Description))
+            {
+                builder.Append("    description:");
+                builder.AppendLine($" '{Description}'");
+            }
+
+            if (Optional.IsDefined(CopyMode))
+            {
+                builder.Append("    copyMode:");
+                builder.AppendLine($" '{CopyMode.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SourceName))
+            {
+                builder.Append("    sourceName:");
+                builder.AppendLine($" '{SourceName}'");
+            }
+
+            if (Optional.IsDefined(SourceResourceId))
+            {
+                builder.Append("    sourceResourceId:");
+                builder.AppendLine($" '{SourceResourceId.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SourceSubpath))
+            {
+                builder.Append("    sourceSubpath:");
+                builder.AppendLine($" '{SourceSubpath}'");
+            }
+
+            if (Optional.IsDefined(TargetName))
+            {
+                builder.Append("    targetName:");
+                builder.AppendLine($" '{TargetName}'");
+            }
+
+            if (Optional.IsDefined(TargetResourceId))
+            {
+                builder.Append("    targetResourceId:");
+                builder.AppendLine($" '{TargetResourceId.ToString()}'");
+            }
+
+            if (Optional.IsDefined(TargetSubpath))
+            {
+                builder.Append("    targetSubpath:");
+                builder.AppendLine($" '{TargetSubpath}'");
+            }
+
+            if (Optional.IsDefined(LatestJobRunName))
+            {
+                builder.Append("    latestJobRunName:");
+                builder.AppendLine($" '{LatestJobRunName}'");
+            }
+
+            if (Optional.IsDefined(LatestJobRunResourceId))
+            {
+                builder.Append("    latestJobRunResourceId:");
+                builder.AppendLine($" '{LatestJobRunResourceId.ToString()}'");
+            }
+
+            if (Optional.IsDefined(LatestJobRunStatus))
+            {
+                builder.Append("    latestJobRunStatus:");
+                builder.AppendLine($" '{LatestJobRunStatus.ToString()}'");
+            }
+
+            if (Optional.IsDefined(AgentName))
+            {
+                builder.Append("    agentName:");
+                builder.AppendLine($" '{AgentName}'");
+            }
+
+            if (Optional.IsDefined(AgentResourceId))
+            {
+                builder.Append("    agentResourceId:");
+                builder.AppendLine($" '{AgentResourceId.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ProvisioningState))
+            {
+                builder.Append("    provisioningState:");
+                builder.AppendLine($" '{ProvisioningState.ToString()}'");
+            }
+
+            builder.AppendLine("  }");
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<JobDefinitionData>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<JobDefinitionData>)this).GetFormatFromOptions(options) : options.Format;
@@ -319,6 +459,8 @@ namespace Azure.ResourceManager.StorageMover
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(JobDefinitionData)} does not support '{options.Format}' format.");
             }
@@ -335,6 +477,8 @@ namespace Azure.ResourceManager.StorageMover
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeJobDefinitionData(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(JobDefinitionData)} does not support '{options.Format}' format.");
             }

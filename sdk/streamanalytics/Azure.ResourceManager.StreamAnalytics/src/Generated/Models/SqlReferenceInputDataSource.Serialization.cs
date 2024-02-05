@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -211,6 +212,98 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             return new SqlReferenceInputDataSource(type, serializedAdditionalRawData, server.Value, database.Value, user.Value, password.Value, Optional.ToNullable(refreshType), Optional.ToNullable(refreshRate), fullSnapshotQuery.Value, deltaSnapshotQuery.Value, Optional.ToNullable(authenticationMode));
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(ReferenceInputDataSourceType))
+            {
+                builder.Append("  type:");
+                builder.AppendLine($" '{ReferenceInputDataSourceType}'");
+            }
+
+            builder.Append("  properties:");
+            builder.AppendLine(" {");
+            if (Optional.IsDefined(Server))
+            {
+                builder.Append("    server:");
+                builder.AppendLine($" '{Server}'");
+            }
+
+            if (Optional.IsDefined(Database))
+            {
+                builder.Append("    database:");
+                builder.AppendLine($" '{Database}'");
+            }
+
+            if (Optional.IsDefined(User))
+            {
+                builder.Append("    user:");
+                builder.AppendLine($" '{User}'");
+            }
+
+            if (Optional.IsDefined(Password))
+            {
+                builder.Append("    password:");
+                builder.AppendLine($" '{Password}'");
+            }
+
+            if (Optional.IsDefined(RefreshType))
+            {
+                builder.Append("    refreshType:");
+                builder.AppendLine($" '{RefreshType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(RefreshInterval))
+            {
+                builder.Append("    refreshRate:");
+                var formattedTimeSpan = TypeFormatters.ToString(RefreshInterval.Value, "P");
+                builder.AppendLine($" '{formattedTimeSpan}'");
+            }
+
+            if (Optional.IsDefined(FullSnapshotQuery))
+            {
+                builder.Append("    fullSnapshotQuery:");
+                builder.AppendLine($" '{FullSnapshotQuery}'");
+            }
+
+            if (Optional.IsDefined(DeltaSnapshotQuery))
+            {
+                builder.Append("    deltaSnapshotQuery:");
+                builder.AppendLine($" '{DeltaSnapshotQuery}'");
+            }
+
+            if (Optional.IsDefined(AuthenticationMode))
+            {
+                builder.Append("    authenticationMode:");
+                builder.AppendLine($" '{AuthenticationMode.ToString()}'");
+            }
+
+            builder.AppendLine("  }");
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<SqlReferenceInputDataSource>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<SqlReferenceInputDataSource>)this).GetFormatFromOptions(options) : options.Format;
@@ -219,6 +312,8 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(SqlReferenceInputDataSource)} does not support '{options.Format}' format.");
             }
@@ -235,6 +330,8 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeSqlReferenceInputDataSource(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(SqlReferenceInputDataSource)} does not support '{options.Format}' format.");
             }

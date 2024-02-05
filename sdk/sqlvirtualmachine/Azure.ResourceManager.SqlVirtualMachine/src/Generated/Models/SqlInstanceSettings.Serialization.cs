@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -178,6 +179,79 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
             return new SqlInstanceSettings(collation.Value, Optional.ToNullable(maxDop), Optional.ToNullable(isOptimizeForAdHocWorkloadsEnabled), Optional.ToNullable(minServerMemoryMB), Optional.ToNullable(maxServerMemoryMB), Optional.ToNullable(isLpimEnabled), Optional.ToNullable(isIfiEnabled), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(Collation))
+            {
+                builder.Append("  collation:");
+                builder.AppendLine($" '{Collation}'");
+            }
+
+            if (Optional.IsDefined(MaxDop))
+            {
+                builder.Append("  maxDop:");
+                builder.AppendLine($" {MaxDop.Value}");
+            }
+
+            if (Optional.IsDefined(IsOptimizeForAdHocWorkloadsEnabled))
+            {
+                builder.Append("  isOptimizeForAdHocWorkloadsEnabled:");
+                var boolValue = IsOptimizeForAdHocWorkloadsEnabled.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(MinServerMemoryInMB))
+            {
+                builder.Append("  minServerMemoryMB:");
+                builder.AppendLine($" {MinServerMemoryInMB.Value}");
+            }
+
+            if (Optional.IsDefined(MaxServerMemoryInMB))
+            {
+                builder.Append("  maxServerMemoryMB:");
+                builder.AppendLine($" {MaxServerMemoryInMB.Value}");
+            }
+
+            if (Optional.IsDefined(IsLpimEnabled))
+            {
+                builder.Append("  isLpimEnabled:");
+                var boolValue = IsLpimEnabled.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(IsIfiEnabled))
+            {
+                builder.Append("  isIfiEnabled:");
+                var boolValue = IsIfiEnabled.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<SqlInstanceSettings>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<SqlInstanceSettings>)this).GetFormatFromOptions(options) : options.Format;
@@ -186,6 +260,8 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(SqlInstanceSettings)} does not support '{options.Format}' format.");
             }
@@ -202,6 +278,8 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeSqlInstanceSettings(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(SqlInstanceSettings)} does not support '{options.Format}' format.");
             }
