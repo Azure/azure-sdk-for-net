@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -202,6 +204,92 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             return new UpdatableClusterProfile(Optional.ToList(serviceConfigsProfiles), sshProfile.Value, autoscaleProfile.Value, authorizationProfile.Value, logAnalyticsProfile.Value, prometheusProfile.Value, Optional.ToList(scriptActionProfiles), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsCollectionDefined(ServiceConfigsProfiles))
+            {
+                if (ServiceConfigsProfiles.Any())
+                {
+                    builder.Append("  serviceConfigsProfiles:");
+                    builder.AppendLine(" [");
+                    foreach (var item in ServiceConfigsProfiles)
+                    {
+                        AppendChildObject(builder, item, options, 4, true);
+                    }
+                    builder.AppendLine("  ]");
+                }
+            }
+
+            if (Optional.IsDefined(SshProfile))
+            {
+                builder.Append("  sshProfile:");
+                AppendChildObject(builder, SshProfile, options, 2, false);
+            }
+
+            if (Optional.IsDefined(AutoscaleProfile))
+            {
+                builder.Append("  autoscaleProfile:");
+                AppendChildObject(builder, AutoscaleProfile, options, 2, false);
+            }
+
+            if (Optional.IsDefined(AuthorizationProfile))
+            {
+                builder.Append("  authorizationProfile:");
+                AppendChildObject(builder, AuthorizationProfile, options, 2, false);
+            }
+
+            if (Optional.IsDefined(LogAnalyticsProfile))
+            {
+                builder.Append("  logAnalyticsProfile:");
+                AppendChildObject(builder, LogAnalyticsProfile, options, 2, false);
+            }
+
+            if (Optional.IsDefined(PrometheusProfile))
+            {
+                builder.Append("  prometheusProfile:");
+                AppendChildObject(builder, PrometheusProfile, options, 2, false);
+            }
+
+            if (Optional.IsCollectionDefined(ScriptActionProfiles))
+            {
+                if (ScriptActionProfiles.Any())
+                {
+                    builder.Append("  scriptActionProfiles:");
+                    builder.AppendLine(" [");
+                    foreach (var item in ScriptActionProfiles)
+                    {
+                        AppendChildObject(builder, item, options, 4, true);
+                    }
+                    builder.AppendLine("  ]");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<UpdatableClusterProfile>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<UpdatableClusterProfile>)this).GetFormatFromOptions(options) : options.Format;
@@ -210,6 +298,8 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(UpdatableClusterProfile)} does not support '{options.Format}' format.");
             }
@@ -226,6 +316,8 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeUpdatableClusterProfile(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(UpdatableClusterProfile)} does not support '{options.Format}' format.");
             }

@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
@@ -326,6 +328,159 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             return new EdgeOrderItemDetails(productDetails, orderItemType, currentStage.Value, Optional.ToList(orderItemStageHistory), preferences.Value, forwardShippingDetails.Value, reverseShippingDetails.Value, Optional.ToList(notificationEmailList), cancellationReason.Value, Optional.ToNullable(cancellationStatus), Optional.ToNullable(deletionStatus), returnReason.Value, Optional.ToNullable(returnStatus), managementRPDetails.Value, Optional.ToList(managementRPDetailsList), error.Value, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(ProductDetails))
+            {
+                builder.Append("  productDetails:");
+                AppendChildObject(builder, ProductDetails, options, 2, false);
+            }
+
+            if (Optional.IsDefined(OrderItemType))
+            {
+                builder.Append("  orderItemType:");
+                builder.AppendLine($" '{OrderItemType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(CurrentStage))
+            {
+                builder.Append("  currentStage:");
+                AppendChildObject(builder, CurrentStage, options, 2, false);
+            }
+
+            if (Optional.IsCollectionDefined(OrderItemStageHistory))
+            {
+                if (OrderItemStageHistory.Any())
+                {
+                    builder.Append("  orderItemStageHistory:");
+                    builder.AppendLine(" [");
+                    foreach (var item in OrderItemStageHistory)
+                    {
+                        AppendChildObject(builder, item, options, 4, true);
+                    }
+                    builder.AppendLine("  ]");
+                }
+            }
+
+            if (Optional.IsDefined(Preferences))
+            {
+                builder.Append("  preferences:");
+                AppendChildObject(builder, Preferences, options, 2, false);
+            }
+
+            if (Optional.IsDefined(ForwardShippingDetails))
+            {
+                builder.Append("  forwardShippingDetails:");
+                AppendChildObject(builder, ForwardShippingDetails, options, 2, false);
+            }
+
+            if (Optional.IsDefined(ReverseShippingDetails))
+            {
+                builder.Append("  reverseShippingDetails:");
+                AppendChildObject(builder, ReverseShippingDetails, options, 2, false);
+            }
+
+            if (Optional.IsCollectionDefined(NotificationEmailList))
+            {
+                if (NotificationEmailList.Any())
+                {
+                    builder.Append("  notificationEmailList:");
+                    builder.AppendLine(" [");
+                    foreach (var item in NotificationEmailList)
+                    {
+                        if (item == null)
+                        {
+                            builder.Append("null");
+                            continue;
+                        }
+                        builder.AppendLine($"    '{item}'");
+                    }
+                    builder.AppendLine("  ]");
+                }
+            }
+
+            if (Optional.IsDefined(CancellationReason))
+            {
+                builder.Append("  cancellationReason:");
+                builder.AppendLine($" '{CancellationReason}'");
+            }
+
+            if (Optional.IsDefined(CancellationStatus))
+            {
+                builder.Append("  cancellationStatus:");
+                builder.AppendLine($" '{CancellationStatus.ToString()}'");
+            }
+
+            if (Optional.IsDefined(DeletionStatus))
+            {
+                builder.Append("  deletionStatus:");
+                builder.AppendLine($" '{DeletionStatus.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ReturnReason))
+            {
+                builder.Append("  returnReason:");
+                builder.AppendLine($" '{ReturnReason}'");
+            }
+
+            if (Optional.IsDefined(ReturnStatus))
+            {
+                builder.Append("  returnStatus:");
+                builder.AppendLine($" '{ReturnStatus.ToString()}'");
+            }
+
+            if (Optional.IsDefined(FirstOrDefaultManagement))
+            {
+                builder.Append("  managementRpDetails:");
+                AppendChildObject(builder, FirstOrDefaultManagement, options, 2, false);
+            }
+
+            if (Optional.IsCollectionDefined(ManagementRPDetailsList))
+            {
+                if (ManagementRPDetailsList.Any())
+                {
+                    builder.Append("  managementRpDetailsList:");
+                    builder.AppendLine(" [");
+                    foreach (var item in ManagementRPDetailsList)
+                    {
+                        AppendChildObject(builder, item, options, 4, true);
+                    }
+                    builder.AppendLine("  ]");
+                }
+            }
+
+            if (Optional.IsDefined(Error))
+            {
+                builder.Append("  error:");
+                AppendChildObject(builder, Error, options, 2, false);
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<EdgeOrderItemDetails>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<EdgeOrderItemDetails>)this).GetFormatFromOptions(options) : options.Format;
@@ -334,6 +489,8 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(EdgeOrderItemDetails)} does not support '{options.Format}' format.");
             }
@@ -350,6 +507,8 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeEdgeOrderItemDetails(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(EdgeOrderItemDetails)} does not support '{options.Format}' format.");
             }

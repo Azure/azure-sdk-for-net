@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
@@ -452,6 +454,211 @@ namespace Azure.ResourceManager.HDInsight.Models
             return new HDInsightClusterProperties(clusterVersion.Value, clusterHdpVersion.Value, Optional.ToNullable(osType), Optional.ToNullable(tier), clusterId.Value, clusterDefinition, kafkaRestProperties.Value, securityProfile.Value, computeProfile.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(createdDate), clusterState.Value, quotaInfo.Value, Optional.ToList(errors), Optional.ToList(connectivityEndpoints), diskEncryptionProperties.Value, encryptionInTransitProperties.Value, storageProfile.Value, minSupportedTlsVersion.Value, excludedServicesConfig.Value, networkProperties.Value, computeIsolationProperties.Value, Optional.ToList(privateLinkConfigurations), Optional.ToList(privateEndpointConnections), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(ClusterVersion))
+            {
+                builder.Append("  clusterVersion:");
+                builder.AppendLine($" '{ClusterVersion}'");
+            }
+
+            if (Optional.IsDefined(ClusterHdpVersion))
+            {
+                builder.Append("  clusterHdpVersion:");
+                builder.AppendLine($" '{ClusterHdpVersion}'");
+            }
+
+            if (Optional.IsDefined(OSType))
+            {
+                builder.Append("  osType:");
+                builder.AppendLine($" '{OSType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Tier))
+            {
+                builder.Append("  tier:");
+                builder.AppendLine($" '{Tier.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ClusterId))
+            {
+                builder.Append("  clusterId:");
+                builder.AppendLine($" '{ClusterId}'");
+            }
+
+            if (Optional.IsDefined(ClusterDefinition))
+            {
+                builder.Append("  clusterDefinition:");
+                AppendChildObject(builder, ClusterDefinition, options, 2, false);
+            }
+
+            if (Optional.IsDefined(KafkaRestProperties))
+            {
+                builder.Append("  kafkaRestProperties:");
+                AppendChildObject(builder, KafkaRestProperties, options, 2, false);
+            }
+
+            if (Optional.IsDefined(SecurityProfile))
+            {
+                builder.Append("  securityProfile:");
+                AppendChildObject(builder, SecurityProfile, options, 2, false);
+            }
+
+            if (Optional.IsDefined(ComputeProfile))
+            {
+                builder.Append("  computeProfile:");
+                AppendChildObject(builder, ComputeProfile, options, 2, false);
+            }
+
+            if (Optional.IsDefined(ProvisioningState))
+            {
+                builder.Append("  provisioningState:");
+                builder.AppendLine($" '{ProvisioningState.ToString()}'");
+            }
+
+            if (Optional.IsDefined(CreatedOn))
+            {
+                builder.Append("  createdDate:");
+                var formattedDateTimeString = TypeFormatters.ToString(CreatedOn.Value, "o");
+                builder.AppendLine($" '{formattedDateTimeString}'");
+            }
+
+            if (Optional.IsDefined(ClusterState))
+            {
+                builder.Append("  clusterState:");
+                builder.AppendLine($" '{ClusterState}'");
+            }
+
+            if (Optional.IsDefined(QuotaInfo))
+            {
+                builder.Append("  quotaInfo:");
+                AppendChildObject(builder, QuotaInfo, options, 2, false);
+            }
+
+            if (Optional.IsCollectionDefined(Errors))
+            {
+                if (Errors.Any())
+                {
+                    builder.Append("  errors:");
+                    builder.AppendLine(" [");
+                    foreach (var item in Errors)
+                    {
+                        AppendChildObject(builder, item, options, 4, true);
+                    }
+                    builder.AppendLine("  ]");
+                }
+            }
+
+            if (Optional.IsCollectionDefined(ConnectivityEndpoints))
+            {
+                if (ConnectivityEndpoints.Any())
+                {
+                    builder.Append("  connectivityEndpoints:");
+                    builder.AppendLine(" [");
+                    foreach (var item in ConnectivityEndpoints)
+                    {
+                        AppendChildObject(builder, item, options, 4, true);
+                    }
+                    builder.AppendLine("  ]");
+                }
+            }
+
+            if (Optional.IsDefined(DiskEncryptionProperties))
+            {
+                builder.Append("  diskEncryptionProperties:");
+                AppendChildObject(builder, DiskEncryptionProperties, options, 2, false);
+            }
+
+            if (Optional.IsDefined(EncryptionInTransitProperties))
+            {
+                builder.Append("  encryptionInTransitProperties:");
+                AppendChildObject(builder, EncryptionInTransitProperties, options, 2, false);
+            }
+
+            if (Optional.IsDefined(StorageProfile))
+            {
+                builder.Append("  storageProfile:");
+                AppendChildObject(builder, StorageProfile, options, 2, false);
+            }
+
+            if (Optional.IsDefined(MinSupportedTlsVersion))
+            {
+                builder.Append("  minSupportedTlsVersion:");
+                builder.AppendLine($" '{MinSupportedTlsVersion}'");
+            }
+
+            if (Optional.IsDefined(ExcludedServicesConfig))
+            {
+                builder.Append("  excludedServicesConfig:");
+                AppendChildObject(builder, ExcludedServicesConfig, options, 2, false);
+            }
+
+            if (Optional.IsDefined(NetworkProperties))
+            {
+                builder.Append("  networkProperties:");
+                AppendChildObject(builder, NetworkProperties, options, 2, false);
+            }
+
+            if (Optional.IsDefined(ComputeIsolationProperties))
+            {
+                builder.Append("  computeIsolationProperties:");
+                AppendChildObject(builder, ComputeIsolationProperties, options, 2, false);
+            }
+
+            if (Optional.IsCollectionDefined(PrivateLinkConfigurations))
+            {
+                if (PrivateLinkConfigurations.Any())
+                {
+                    builder.Append("  privateLinkConfigurations:");
+                    builder.AppendLine(" [");
+                    foreach (var item in PrivateLinkConfigurations)
+                    {
+                        AppendChildObject(builder, item, options, 4, true);
+                    }
+                    builder.AppendLine("  ]");
+                }
+            }
+
+            if (Optional.IsCollectionDefined(PrivateEndpointConnections))
+            {
+                if (PrivateEndpointConnections.Any())
+                {
+                    builder.Append("  privateEndpointConnections:");
+                    builder.AppendLine(" [");
+                    foreach (var item in PrivateEndpointConnections)
+                    {
+                        AppendChildObject(builder, item, options, 4, true);
+                    }
+                    builder.AppendLine("  ]");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<HDInsightClusterProperties>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<HDInsightClusterProperties>)this).GetFormatFromOptions(options) : options.Format;
@@ -460,6 +667,8 @@ namespace Azure.ResourceManager.HDInsight.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(HDInsightClusterProperties)} does not support '{options.Format}' format.");
             }
@@ -476,6 +685,8 @@ namespace Azure.ResourceManager.HDInsight.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeHDInsightClusterProperties(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(HDInsightClusterProperties)} does not support '{options.Format}' format.");
             }
