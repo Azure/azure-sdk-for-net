@@ -73,6 +73,6 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore
         public void VendorInstrumentationAdded(string packageName) => WriteEvent(4, packageName);
 
         [Event(5, Message = "Failed to Read environment variable {0}, exception: {1}", Level = EventLevel.Error)]
-        public void GetEnvironmentVariableFailed(string envVarName, string exceptionMessage) => WriteEvent(1, envVarName, exceptionMessage);
+        public void GetEnvironmentVariableFailed(string envVarName, string exceptionMessage) => WriteEvent(5, envVarName, exceptionMessage);
     }
 }
