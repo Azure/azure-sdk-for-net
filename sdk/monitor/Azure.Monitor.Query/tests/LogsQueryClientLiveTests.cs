@@ -23,10 +23,9 @@ namespace Azure.Monitor.Query.Tests
         }
 
         [SetUp]
-        public async Task SetUp()
+        public void SetUp()
         {
             _logsTestData = new LogsTestData(this);
-            await _logsTestData.InitializeAsync();
         }
 
         private LogsQueryClient CreateClient()
@@ -46,12 +45,16 @@ namespace Azure.Monitor.Query.Tests
         {
             var client = CreateClient();
 
-            var results = await client.QueryWorkspaceAsync(TestEnvironment.WorkspaceId,
-                $"{_logsTestData.TableAName} | distinct * |" +
-                $"project {LogsTestData.StringColumnName}, {LogsTestData.IntColumnName}, {LogsTestData.BoolColumnName}, {LogsTestData.FloatColumnName} |" +
-                $"order by {LogsTestData.StringColumnName} asc",
-                _logsTestData.DataTimeRange);
+            string mockQuery = "let dt = datatable (Int: int, String: string, Bool:bool, Double: double)\n" +
+                "[" +
+                "1, 'a', false, 0.0, " +
+                "2, 'b', true, 1.2," +
+                "3, 'c', false, 1.1]; " +
+                "dt |distinct * | project String, Int, Bool, Double | order by String asc";
 
+            var results = await client.QueryWorkspaceAsync(TestEnvironment.WorkspaceId,
+                mockQuery,
+                _logsTestData.DataTimeRange);
             var resultTable = results.Value.Table;
             CollectionAssert.IsNotEmpty(resultTable.Columns);
 
@@ -66,8 +69,8 @@ namespace Azure.Monitor.Query.Tests
             Assert.AreEqual(false, resultTable.Rows[0].GetBoolean(2));
             Assert.AreEqual(false, resultTable.Rows[0].GetBoolean(LogsTestData.BoolColumnName));
 
-            Assert.AreEqual(0d, resultTable.Rows[0].GetDouble(3));
-            Assert.AreEqual(0d, resultTable.Rows[0].GetDouble(LogsTestData.FloatColumnName));
+            Assert.AreEqual(0.0, resultTable.Rows[0].GetDouble(3));
+            Assert.AreEqual(0.0, resultTable.Rows[0].GetDouble(LogsTestData.DoubleColumnName));
         }
 
         [RecordedTest]
@@ -75,8 +78,15 @@ namespace Azure.Monitor.Query.Tests
         {
             var client = CreateClient();
 
+            string mockQuery = "let dt = datatable (Int: int, String: string, Bool:bool, Double: double)\n" +
+                "[" +
+                "1, 'a', false, 0.0, " +
+                "2, 'b', true, 1.2," +
+                "3, 'c', false, 1.1]; " +
+                "dt |distinct * | project String, Int, Bool, Double | order by String asc";
+
             var results = await client.QueryWorkspaceAsync<string>(TestEnvironment.WorkspaceId,
-                $"{_logsTestData.TableAName} | distinct {LogsTestData.StringColumnName}, {LogsTestData.IntColumnName} | project {LogsTestData.StringColumnName} | order by {LogsTestData.StringColumnName} asc",
+               mockQuery,
                 _logsTestData.DataTimeRange);
 
             CollectionAssert.AreEqual(new[] {"a", "b", "c"}, results.Value);
@@ -116,8 +126,15 @@ namespace Azure.Monitor.Query.Tests
         {
             var client = CreateClient();
 
+            string mockQuery = "let dt = datatable (Int: int, String: string, Bool:bool, Double: double)\n" +
+                "[" +
+                "1, 'a', false, 0.0, " +
+                "2, 'b', true, 1.2," +
+                "3, 'c', false, 1.1]; " +
+                "dt |distinct * | project String, Int, Bool, Double | order by String asc";
+
             var results = await client.QueryWorkspaceAsync<string>(TestEnvironment.WorkspaceId,
-                $"{_logsTestData.TableAName} | distinct * | project {LogsTestData.StringColumnName} | order by {LogsTestData.StringColumnName} asc",
+                mockQuery,
                 _logsTestData.DataTimeRange, new LogsQueryOptions()
                 {
                     AdditionalWorkspaces = { TestEnvironment.SecondaryWorkspaceId }
@@ -133,7 +150,15 @@ namespace Azure.Monitor.Query.Tests
         {
             var client = CreateClient();
 
-            var results = await client.QueryWorkspaceAsync<int>(TestEnvironment.WorkspaceId, $"{_logsTestData.TableAName} | distinct {LogsTestData.StringColumnName}, {LogsTestData.IntColumnName} | count",
+            string mockQuery = "let dt = datatable (Int: int, String: string, Bool:bool, Double: double)\n" +
+                "[" +
+                "1, 'a', false, 0.0, " +
+                "2, 'b', true, 1.2," +
+                "3, 'c', false, 1.1]; " +
+                "dt |distinct String, Int | count";
+
+            var results = await client.QueryWorkspaceAsync<int>(TestEnvironment.WorkspaceId,
+                mockQuery,
                 _logsTestData.DataTimeRange);
 
             Assert.GreaterOrEqual(_logsTestData.TableA.Count, results.Value[0]);
@@ -144,10 +169,15 @@ namespace Azure.Monitor.Query.Tests
         {
             var client = CreateClient();
 
+            string mockQuery = "let dt = datatable (Int: int, String: string, Bool:bool, Double: double)\n" +
+                "[" +
+                "1, 'a', false, 0.0, " +
+                "2, 'b', true, 1.2," +
+                "3, 'c', false, 1.1]; " +
+                "dt |distinct * | project-rename Name = String, Age = Int | order by Name asc";
+
             var results = await client.QueryWorkspaceAsync<TestModel>(TestEnvironment.WorkspaceId,
-                $"{_logsTestData.TableAName} | distinct * |" +
-                $"project-rename Name = {LogsTestData.StringColumnName}, Age = {LogsTestData.IntColumnName} |" +
-                $"order by Name asc",
+                mockQuery,
                 _logsTestData.DataTimeRange);
 
             Assert.IsTrue(results.Value.Contains(new TestModel() { Age = 1, Name = "a" }));
@@ -160,11 +190,15 @@ namespace Azure.Monitor.Query.Tests
         {
             var client = CreateClient();
 
+            string mockQuery = "let dt = datatable (Int: int, String: string, Bool:bool, Double: double)\n" +
+                "[" +
+                "1, 'a', false, 0.0, " +
+                "2, 'b', true, 1.2," +
+                "3, 'c', false, 1.1]; " +
+                "dt |distinct * | project-rename Name = String, Age = Int | project Name, Age | order by Name asc";
+
             var results = await client.QueryWorkspaceAsync<Dictionary<string, object>>(TestEnvironment.WorkspaceId,
-                $"{_logsTestData.TableAName} | distinct {LogsTestData.StringColumnName}, {LogsTestData.IntColumnName} |" +
-                $"project-rename Name = {LogsTestData.StringColumnName}, Age = {LogsTestData.IntColumnName} |" +
-                $"project Name, Age |" +
-                $"order by Name asc",
+               mockQuery,
                 _logsTestData.DataTimeRange);
 
             CollectionAssert.AreEqual(new[]
@@ -180,11 +214,15 @@ namespace Azure.Monitor.Query.Tests
         {
             var client = CreateClient();
 
+            string mockQuery = "let dt = datatable (Int: int, String: string, Bool:bool, Double: double)\n" +
+                "[" +
+                "1, 'a', false, 0.0, " +
+                "2, 'b', true, 1.2," +
+                "3, 'c', false, 1.1]; " +
+                "dt |distinct * | project-rename Name = String, Age = Int | project Name, Age | order by Name asc";
+
             Response<IReadOnlyList<IDictionary<string, object>>> results = await client.QueryWorkspaceAsync<IDictionary<string, object>>(TestEnvironment.WorkspaceId,
-                $"{_logsTestData.TableAName} | distinct {LogsTestData.StringColumnName}, {LogsTestData.IntColumnName} |" +
-                $"project-rename Name = {LogsTestData.StringColumnName}, Age = {LogsTestData.IntColumnName} |" +
-                $"project Name, Age |" +
-                $"order by Name asc",
+                mockQuery,
                 _logsTestData.DataTimeRange);
 
             CollectionAssert.AreEqual(new[]

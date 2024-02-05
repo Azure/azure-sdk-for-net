@@ -13,7 +13,7 @@ namespace Azure.Monitor.Query.Tests
     // Increment the DataVersion when changing the values to force a re-send
     public class LogsTestData
     {
-        //private static readonly string DataVersion = "1";
+        private static readonly string DataVersion = "1";
         private static Task _initialization;
         private static readonly object _initializationLock = new object();
         // The data retention time is 31 day by-default so we need to make sure the data we posted is still
@@ -22,24 +22,26 @@ namespace Azure.Monitor.Query.Tests
         private DateTimeOffset RetentionWindowStart;
 
         public static string IntColumnNameSent = "IntColumn";
-        public static string IntColumnName = IntColumnNameSent + "_d";
+        public static string IntColumnName = "Int";
 
         public static string StringColumnNameSent = "StringColumn";
-        public static string StringColumnName = StringColumnNameSent + "_s";
+        public static string StringColumnName = "String";
 
         public static string BoolColumnNameSent = "BoolColumn";
-        public static string BoolColumnName = BoolColumnNameSent + "_b";
+        public static string BoolColumnName = "Bool";
 
         public static string FloatColumnNameSent = "FloatColumn";
-        public static string FloatColumnName = FloatColumnNameSent + "_d";
+        public static string FloatColumnName = "Float";
+
+        public static string DoubleColumnName = "Double";
 
         public static string TimeGeneratedColumnNameSent = "EventTimeGenerated";
         public static string TimeGeneratedColumnName = "TimeGenerated";
 
         public readonly List<Dictionary<string, object>> TableA;
 
-        //private string TableANameSent => nameof(TableA) + DataVersion + "_" + RetentionWindowStart.DayOfYear;
-        private string TableANameSent => "TableA1_18";
+        private string TableANameSent => nameof(TableA) + DataVersion + "_" + RetentionWindowStart.DayOfYear;
+
         public string TableAName => TableANameSent + "_CL";
         public QueryTimeRange DataTimeRange => new QueryTimeRange(RetentionWindowStart, TimeSpan.FromDays(15));
 
