@@ -20,7 +20,7 @@ To recognize entities in multiple documents, call `AnalyzeText` on the `AnalyzeT
 
 `.
 
-```C# Snippet:Sample4_RecognizeEntitiesBatchConvenience
+```C# Snippet:Sample4_AnalyzeText_RecognizeEntities
 string documentA =
     "We love this trail and make the trip every year. The views are breathtaking and well worth the hike!"
     + " Yesterday was foggy though, so we missed the spectacular views. We tried again today and it was"
@@ -50,7 +50,7 @@ AnalyzeTextTask body = new AnalyzeTextEntityRecognitionInput()
             new MultiLanguageInput("A", documentA, "en"),
             new MultiLanguageInput("B", documentB, "es"),
             new MultiLanguageInput("C", documentC, "en"),
-            new MultiLanguageInput("D", documentD, "en"),
+            new MultiLanguageInput("D", documentD),
         }
     },
     Parameters = new EntitiesTaskParameters()

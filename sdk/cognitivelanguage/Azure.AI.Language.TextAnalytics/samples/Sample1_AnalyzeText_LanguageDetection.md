@@ -76,7 +76,7 @@ To detect the language of a document, call `AnalyzeText` on the `AnalyzeTextClie
 
 If the country where a document originates from is known, you can aid the language detection model if you call `AnalyzeText` on the `AnalyzeTextClient` while passing the documents as an `IEnumerable<LanguageInput>` parameter, having set the `CountryHint` property on each `LanguageInput` object accordingly.
 
-```C# Snippet:Sample1_AnalyzeText_LanguageDetection
+```C# Snippet:Sample1_AnalyzeText_LanguageDetection_CountryHint
 string documentA =
     "Este documento está escrito en un lenguaje diferente al inglés. Su objectivo es demostrar cómo"
     + " invocar el método de detección de lenguaje del servicio de Text Analytics en Microsoft Azure."

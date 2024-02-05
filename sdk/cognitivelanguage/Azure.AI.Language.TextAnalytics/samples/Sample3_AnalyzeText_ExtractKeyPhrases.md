@@ -18,7 +18,7 @@ The values of the `endpoint` and `apiKey` variables can be retrieved from enviro
 
 To extract key phrases from multiple documents, call `AnalyzeText` on an `AnalyzeTextTask`.  The results are returned as a `KeyPhraseTaskResult`.
 
-```C# Snippet:Sample3_ExtractKeyPhrasesBatchConvenience
+```C# Snippet:Sample3_AnalyzeText_ExtractKeyPhrases
 string documentA =
     "We love this trail and make the trip every year. The views are breathtaking and well worth the hike!"
     + " Yesterday was foggy though, so we missed the spectacular views. We tried again today and it was"
@@ -48,7 +48,7 @@ AnalyzeTextTask body = new AnalyzeTextKeyPhraseExtractionInput()
             new MultiLanguageInput("A", documentA, "en"),
             new MultiLanguageInput("B", documentB, "es"),
             new MultiLanguageInput("C", documentC, "en"),
-            new MultiLanguageInput("D", documentD, "en"),
+            new MultiLanguageInput("D", documentD),
         }
     },
     Parameters = new KeyPhraseTaskParameters()

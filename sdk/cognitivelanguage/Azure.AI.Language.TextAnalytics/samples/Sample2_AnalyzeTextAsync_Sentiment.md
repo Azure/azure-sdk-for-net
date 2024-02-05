@@ -18,7 +18,7 @@ The values of the `endpoint` and `apiKey` variables can be retrieved from enviro
 
 To analyze the sentiment of a document, use the `AnalyzeText` method.  The returned `SentimentTaskResult` describes the sentiment of the document, as well as a collection of `Sentences` indicating the sentiment of each individual sentence.
 
-```C# Snippet:Sample2_AnalyzeSentiment
+```C# Snippet:Sample2_AnalyzeTextAsync_Sentiment
 string documentA =
     "The food and service were unacceptable, but the concierge were nice. After talking to them about the"
     + " quality of the food and the process to get room service they refunded the money we spent at the"
@@ -53,12 +53,15 @@ try
     Response<AnalyzeTextTaskResult> response = await client.AnalyzeTextAsync(body);
     SentimentTaskResult sentimentTaskResult = (SentimentTaskResult)response.Value;
 
-    foreach (SentimentDocumentResult docSentiment in sentimentTaskResult.Results.Documents)
+    foreach (SentimentResponseWithDocumentDetectedLanguage sentimentResponseWithDocumentDetectedLanguage in sentimentTaskResult.Results.Documents)
     {
-        Console.WriteLine($"Document {docSentiment.Id} sentiment is {docSentiment.Sentiment} with: ");
-        Console.WriteLine($"  Positive confidence score: {docSentiment.ConfidenceScores.Positive}");
-        Console.WriteLine($"  Neutral confidence score: {docSentiment.ConfidenceScores.Neutral}");
-        Console.WriteLine($"  Negative confidence score: {docSentiment.ConfidenceScores.Negative}");
+        foreach (SentimentDocumentResult sentimentDocumentResult in sentimentResponseWithDocumentDetectedLanguage.Documents)
+        {
+            Console.WriteLine($"Document {sentimentDocumentResult.Id} sentiment is {sentimentDocumentResult.Sentiment} with: ");
+            Console.WriteLine($"  Positive confidence score: {sentimentDocumentResult.ConfidenceScores.Positive}");
+            Console.WriteLine($"  Neutral confidence score: {sentimentDocumentResult.ConfidenceScores.Neutral}");
+            Console.WriteLine($"  Negative confidence score: {sentimentDocumentResult.ConfidenceScores.Negative}");
+        }
     }
 
     foreach (AnalyzeTextDocumentError analyzeTextDocumentError in sentimentTaskResult.Results.Errors)
@@ -74,6 +77,118 @@ catch (RequestFailedException exception)
 {
     Console.WriteLine($"Error Code: {exception.ErrorCode}");
     Console.WriteLine($"Message: {exception.Message}");
+}
+```
+
+## Analyze sentiment with Opinion Mining
+
+This sample demonstrates how to analyze sentiment of documents and get more granular information about the opinions related to targets of a product/service, also knows as Aspect-based Sentiment Analysis in Natural Language Processing (NLP). This feature is only available for clients with api version v3.1 and higher.
+
+For example, if a customer leaves feedback about a hotel such as "The room was great, but the staff was unfriendly.", Opinion Mining will locate targets in the text, and their associated opinion and sentiments. Sentiment Analysis might only report a negative sentiment.
+
+For the purpose of the sample, we will be the administrator of a hotel and we've set a system to look at the online reviews customers are posting to identify the major complaints about our hotel.
+In order to do so, we will use the Sentiment Analysis feature of the Text Analytics client library.
+
+### Identify complaints
+
+To get a deeper analysis into which are the targets that people considered good or bad, we will need to set the `OpinionMining` type into the `SentimentAnalysisTaskParameters`.
+
+```C# Snippet:Sample2_AnalyzeSentimentWithOpinionMining
+string reviewA =
+    "The food and service were unacceptable, but the concierge were nice. After talking to them about the"
+    + " quality of the food and the process to get room service they refunded the money we spent at the"
+    + " restaurant and gave us a voucher for nearby restaurants.";
+
+string reviewB =
+    "The rooms were beautiful. The AC was good and quiet, which was key for us as outside it was 100F and"
+    + "our baby was getting uncomfortable because of the heat. The breakfast was good too with good"
+    + " options and good servicing times. The thing we didn't like was that the toilet in our bathroom was"
+    + "smelly. It could have been that the toilet was not cleaned before we arrived. Either way it was"
+    + "very uncomfortable. Once we notified the staff, they came and cleaned it and left candles.";
+
+string reviewC =
+    "Nice rooms! I had a great unobstructed view of the Microsoft campus but bathrooms were old and the"
+    + "toilet was dirty when we arrived. It was close to bus stops and groceries stores. If you want to"
+    + "be close to campus I will recommend it, otherwise, might be better to stay in a cleaner one.";
+
+// Prepare the input of the text analysis operation. You can add multiple documents to this list and
+// perform the same operation on all of them simultaneously.
+List<string> batchedDocuments = new()
+{
+    reviewA,
+    reviewB,
+    reviewC
+};
+
+AnalyzeTextTask body = new AnalyzeTextSentimentAnalysisInput()
+{
+    AnalysisInput = new MultiLanguageAnalysisInput()
+    {
+        Documents =
+        {
+            new MultiLanguageInput("A", reviewA, "en"),
+            new MultiLanguageInput("B", reviewB, "en"),
+            new MultiLanguageInput("C", reviewC, "en"),
+        }
+    },
+    Parameters = new SentimentAnalysisTaskParameters()
+    {
+        OpinionMining = true,
+    }
+};
+
+Response<AnalyzeTextTaskResult> response = await client.AnalyzeTextAsync(body);
+SentimentTaskResult reviews = (SentimentTaskResult)response.Value;
+
+Dictionary<string, int> complaints = GetComplaints(reviews);
+
+string negativeAspect = complaints.Aggregate((l, r) => l.Value > r.Value ? l : r).Key;
+Console.WriteLine($"Alert! major complaint is *{negativeAspect}*");
+Console.WriteLine();
+Console.WriteLine("---All complaints:");
+foreach (KeyValuePair<string, int> complaint in complaints)
+{
+    Console.WriteLine($"   {complaint.Key}, {complaint.Value}");
+}
+```
+
+Output:
+
+```text
+Alert! major complaint is *toilet*
+
+---All complaints:
+   food, 1
+   service, 1
+   toilet, 3
+```
+
+### Define method `GetComplaints`
+
+Implementation for calculating complaints:
+
+```C# Snippet:Sample2_AnalyzeSentimentWithOpinionMining_GetComplaints
+private Dictionary<string, int> GetComplaints(SentimentTaskResult reviews)
+{
+    Dictionary<string, int> complaints = new();
+    foreach (SentimentResponseWithDocumentDetectedLanguage sentimentResponseWithDocument in reviews.Results.Documents)
+    {
+        foreach (SentimentDocumentResult review in sentimentResponseWithDocument.Documents)
+        {
+            foreach (SentenceSentiment sentence in review.Sentences)
+            {
+                foreach (SentenceTarget target in sentence.Targets)
+                {
+                    if (target.Sentiment == SentimentValue.Negative)
+                    {
+                        complaints.TryGetValue(target.Text, out int value);
+                        complaints[target.Text] = value + 1;
+                    }
+                }
+            }
+        }
+    }
+    return complaints;
 }
 ```
 

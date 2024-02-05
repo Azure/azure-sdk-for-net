@@ -18,7 +18,7 @@ The values of the `endpoint` and `apiKey` variables can be retrieved from enviro
 
 To recognize Personally Identifiable Information in a document, use the `RecognizePiiEntities` method.  The returned value is the collection of `PiiEntity` containing Personally Identifiable Information that were recognized in the document.
 
-```C# Snippet:Sample5_RecognizePiiEntities
+```C# Snippet:Sample5_AnalyzeTextAsync_RecognizePii
 string document =
     "Parker Doe has repaid all of their loans as of 2020-04-25. Their SSN is 859-98-0987. To contact them,"
     + " use their phone number 800-102-1100. They are originally from Brazil and have document ID number"
