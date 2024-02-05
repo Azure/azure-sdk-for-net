@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -194,6 +195,94 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             return new ServiceLoadBalancerBgpPeer(Optional.ToNullable(bfdEnabled), Optional.ToNullable(bgpMultiHop), holdTime.Value, keepAliveTime.Value, Optional.ToNullable(myAsn), name, password.Value, peerAddress, peerAsn, Optional.ToNullable(peerPort), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(BfdEnabled))
+            {
+                builder.Append("  bfdEnabled:");
+                builder.AppendLine($" '{BfdEnabled.ToString()}'");
+            }
+
+            if (Optional.IsDefined(BgpMultiHop))
+            {
+                builder.Append("  bgpMultiHop:");
+                builder.AppendLine($" '{BgpMultiHop.ToString()}'");
+            }
+
+            if (Optional.IsDefined(HoldTime))
+            {
+                builder.Append("  holdTime:");
+                builder.AppendLine($" '{HoldTime}'");
+            }
+
+            if (Optional.IsDefined(KeepAliveTime))
+            {
+                builder.Append("  keepAliveTime:");
+                builder.AppendLine($" '{KeepAliveTime}'");
+            }
+
+            if (Optional.IsDefined(MyAsn))
+            {
+                builder.Append("  myAsn:");
+                builder.AppendLine($" '{MyAsn.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                builder.AppendLine($" '{Name}'");
+            }
+
+            if (Optional.IsDefined(Password))
+            {
+                builder.Append("  password:");
+                builder.AppendLine($" '{Password}'");
+            }
+
+            if (Optional.IsDefined(PeerAddress))
+            {
+                builder.Append("  peerAddress:");
+                builder.AppendLine($" '{PeerAddress}'");
+            }
+
+            if (Optional.IsDefined(PeerAsn))
+            {
+                builder.Append("  peerAsn:");
+                builder.AppendLine($" '{PeerAsn.ToString()}'");
+            }
+
+            if (Optional.IsDefined(PeerPort))
+            {
+                builder.Append("  peerPort:");
+                builder.AppendLine($" '{PeerPort.Value.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<ServiceLoadBalancerBgpPeer>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ServiceLoadBalancerBgpPeer>)this).GetFormatFromOptions(options) : options.Format;
@@ -202,6 +291,8 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(ServiceLoadBalancerBgpPeer)} does not support '{options.Format}' format.");
             }
@@ -218,6 +309,8 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeServiceLoadBalancerBgpPeer(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(ServiceLoadBalancerBgpPeer)} does not support '{options.Format}' format.");
             }

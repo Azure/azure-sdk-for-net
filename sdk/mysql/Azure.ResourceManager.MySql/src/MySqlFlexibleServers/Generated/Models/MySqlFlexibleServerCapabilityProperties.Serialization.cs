@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -163,6 +165,92 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
             return new MySqlFlexibleServerCapabilityProperties(zone.Value, Optional.ToList(supportedHAMode), Optional.ToList(supportedGeoBackupRegions), Optional.ToList(supportedFlexibleServerEditions), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(Zone))
+            {
+                builder.Append("  zone:");
+                builder.AppendLine($" '{Zone}'");
+            }
+
+            if (Optional.IsCollectionDefined(SupportedHAMode))
+            {
+                if (SupportedHAMode.Any())
+                {
+                    builder.Append("  supportedHAMode:");
+                    builder.AppendLine(" [");
+                    foreach (var item in SupportedHAMode)
+                    {
+                        if (item == null)
+                        {
+                            builder.Append("null");
+                            continue;
+                        }
+                        builder.AppendLine($"    '{item}'");
+                    }
+                    builder.AppendLine("  ]");
+                }
+            }
+
+            if (Optional.IsCollectionDefined(SupportedGeoBackupRegions))
+            {
+                if (SupportedGeoBackupRegions.Any())
+                {
+                    builder.Append("  supportedGeoBackupRegions:");
+                    builder.AppendLine(" [");
+                    foreach (var item in SupportedGeoBackupRegions)
+                    {
+                        if (item == null)
+                        {
+                            builder.Append("null");
+                            continue;
+                        }
+                        builder.AppendLine($"    '{item}'");
+                    }
+                    builder.AppendLine("  ]");
+                }
+            }
+
+            if (Optional.IsCollectionDefined(SupportedFlexibleServerEditions))
+            {
+                if (SupportedFlexibleServerEditions.Any())
+                {
+                    builder.Append("  supportedFlexibleServerEditions:");
+                    builder.AppendLine(" [");
+                    foreach (var item in SupportedFlexibleServerEditions)
+                    {
+                        AppendChildObject(builder, item, options, 4, true);
+                    }
+                    builder.AppendLine("  ]");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<MySqlFlexibleServerCapabilityProperties>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<MySqlFlexibleServerCapabilityProperties>)this).GetFormatFromOptions(options) : options.Format;
@@ -171,6 +259,8 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(MySqlFlexibleServerCapabilityProperties)} does not support '{options.Format}' format.");
             }
@@ -187,6 +277,8 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeMySqlFlexibleServerCapabilityProperties(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(MySqlFlexibleServerCapabilityProperties)} does not support '{options.Format}' format.");
             }

@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
@@ -430,6 +432,225 @@ namespace Azure.ResourceManager.Network
             return new SecurityRuleData(id.Value, name.Value, Optional.ToNullable(type), serializedAdditionalRawData, Optional.ToNullable(etag), description.Value, Optional.ToNullable(protocol), sourcePortRange.Value, destinationPortRange.Value, sourceAddressPrefix.Value, Optional.ToList(sourceAddressPrefixes), Optional.ToList(sourceApplicationSecurityGroups), destinationAddressPrefix.Value, Optional.ToList(destinationAddressPrefixes), Optional.ToList(destinationApplicationSecurityGroups), Optional.ToList(sourcePortRanges), Optional.ToList(destinationPortRanges), Optional.ToNullable(access), Optional.ToNullable(priority), Optional.ToNullable(direction), Optional.ToNullable(provisioningState));
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(ETag))
+            {
+                builder.Append("  etag:");
+                builder.AppendLine($" '{ETag.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Id))
+            {
+                builder.Append("  id:");
+                builder.AppendLine($" '{Id.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                builder.AppendLine($" '{Name}'");
+            }
+
+            if (Optional.IsDefined(ResourceType))
+            {
+                builder.Append("  type:");
+                builder.AppendLine($" '{ResourceType.Value.ToString()}'");
+            }
+
+            builder.Append("  properties:");
+            builder.AppendLine(" {");
+            if (Optional.IsDefined(Description))
+            {
+                builder.Append("    description:");
+                builder.AppendLine($" '{Description}'");
+            }
+
+            if (Optional.IsDefined(Protocol))
+            {
+                builder.Append("    protocol:");
+                builder.AppendLine($" '{Protocol.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SourcePortRange))
+            {
+                builder.Append("    sourcePortRange:");
+                builder.AppendLine($" '{SourcePortRange}'");
+            }
+
+            if (Optional.IsDefined(DestinationPortRange))
+            {
+                builder.Append("    destinationPortRange:");
+                builder.AppendLine($" '{DestinationPortRange}'");
+            }
+
+            if (Optional.IsDefined(SourceAddressPrefix))
+            {
+                builder.Append("    sourceAddressPrefix:");
+                builder.AppendLine($" '{SourceAddressPrefix}'");
+            }
+
+            if (Optional.IsCollectionDefined(SourceAddressPrefixes))
+            {
+                if (SourceAddressPrefixes.Any())
+                {
+                    builder.Append("    sourceAddressPrefixes:");
+                    builder.AppendLine(" [");
+                    foreach (var item in SourceAddressPrefixes)
+                    {
+                        if (item == null)
+                        {
+                            builder.Append("null");
+                            continue;
+                        }
+                        builder.AppendLine($"      '{item}'");
+                    }
+                    builder.AppendLine("    ]");
+                }
+            }
+
+            if (Optional.IsCollectionDefined(SourceApplicationSecurityGroups))
+            {
+                if (SourceApplicationSecurityGroups.Any())
+                {
+                    builder.Append("    sourceApplicationSecurityGroups:");
+                    builder.AppendLine(" [");
+                    foreach (var item in SourceApplicationSecurityGroups)
+                    {
+                        AppendChildObject(builder, item, options, 6, true);
+                    }
+                    builder.AppendLine("    ]");
+                }
+            }
+
+            if (Optional.IsDefined(DestinationAddressPrefix))
+            {
+                builder.Append("    destinationAddressPrefix:");
+                builder.AppendLine($" '{DestinationAddressPrefix}'");
+            }
+
+            if (Optional.IsCollectionDefined(DestinationAddressPrefixes))
+            {
+                if (DestinationAddressPrefixes.Any())
+                {
+                    builder.Append("    destinationAddressPrefixes:");
+                    builder.AppendLine(" [");
+                    foreach (var item in DestinationAddressPrefixes)
+                    {
+                        if (item == null)
+                        {
+                            builder.Append("null");
+                            continue;
+                        }
+                        builder.AppendLine($"      '{item}'");
+                    }
+                    builder.AppendLine("    ]");
+                }
+            }
+
+            if (Optional.IsCollectionDefined(DestinationApplicationSecurityGroups))
+            {
+                if (DestinationApplicationSecurityGroups.Any())
+                {
+                    builder.Append("    destinationApplicationSecurityGroups:");
+                    builder.AppendLine(" [");
+                    foreach (var item in DestinationApplicationSecurityGroups)
+                    {
+                        AppendChildObject(builder, item, options, 6, true);
+                    }
+                    builder.AppendLine("    ]");
+                }
+            }
+
+            if (Optional.IsCollectionDefined(SourcePortRanges))
+            {
+                if (SourcePortRanges.Any())
+                {
+                    builder.Append("    sourcePortRanges:");
+                    builder.AppendLine(" [");
+                    foreach (var item in SourcePortRanges)
+                    {
+                        if (item == null)
+                        {
+                            builder.Append("null");
+                            continue;
+                        }
+                        builder.AppendLine($"      '{item}'");
+                    }
+                    builder.AppendLine("    ]");
+                }
+            }
+
+            if (Optional.IsCollectionDefined(DestinationPortRanges))
+            {
+                if (DestinationPortRanges.Any())
+                {
+                    builder.Append("    destinationPortRanges:");
+                    builder.AppendLine(" [");
+                    foreach (var item in DestinationPortRanges)
+                    {
+                        if (item == null)
+                        {
+                            builder.Append("null");
+                            continue;
+                        }
+                        builder.AppendLine($"      '{item}'");
+                    }
+                    builder.AppendLine("    ]");
+                }
+            }
+
+            if (Optional.IsDefined(Access))
+            {
+                builder.Append("    access:");
+                builder.AppendLine($" '{Access.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Priority))
+            {
+                builder.Append("    priority:");
+                builder.AppendLine($" {Priority.Value}");
+            }
+
+            if (Optional.IsDefined(Direction))
+            {
+                builder.Append("    direction:");
+                builder.AppendLine($" '{Direction.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ProvisioningState))
+            {
+                builder.Append("    provisioningState:");
+                builder.AppendLine($" '{ProvisioningState.ToString()}'");
+            }
+
+            builder.AppendLine("  }");
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<SecurityRuleData>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<SecurityRuleData>)this).GetFormatFromOptions(options) : options.Format;
@@ -438,6 +659,8 @@ namespace Azure.ResourceManager.Network
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(SecurityRuleData)} does not support '{options.Format}' format.");
             }
@@ -454,6 +677,8 @@ namespace Azure.ResourceManager.Network
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeSecurityRuleData(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(SecurityRuleData)} does not support '{options.Format}' format.");
             }

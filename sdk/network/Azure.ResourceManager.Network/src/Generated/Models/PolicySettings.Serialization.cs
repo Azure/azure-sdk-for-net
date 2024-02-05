@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -238,6 +239,103 @@ namespace Azure.ResourceManager.Network.Models
             return new PolicySettings(Optional.ToNullable(state), Optional.ToNullable(mode), Optional.ToNullable(requestBodyCheck), Optional.ToNullable(requestBodyInspectLimitInKB), Optional.ToNullable(requestBodyEnforcement), Optional.ToNullable(maxRequestBodySizeInKb), Optional.ToNullable(fileUploadEnforcement), Optional.ToNullable(fileUploadLimitInMb), Optional.ToNullable(customBlockResponseStatusCode), customBlockResponseBody.Value, logScrubbing.Value, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(State))
+            {
+                builder.Append("  state:");
+                builder.AppendLine($" '{State.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Mode))
+            {
+                builder.Append("  mode:");
+                builder.AppendLine($" '{Mode.ToString()}'");
+            }
+
+            if (Optional.IsDefined(RequestBodyCheck))
+            {
+                builder.Append("  requestBodyCheck:");
+                var boolValue = RequestBodyCheck.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(RequestBodyInspectLimitInKB))
+            {
+                builder.Append("  requestBodyInspectLimitInKB:");
+                builder.AppendLine($" {RequestBodyInspectLimitInKB.Value}");
+            }
+
+            if (Optional.IsDefined(RequestBodyEnforcement))
+            {
+                builder.Append("  requestBodyEnforcement:");
+                var boolValue = RequestBodyEnforcement.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(MaxRequestBodySizeInKb))
+            {
+                builder.Append("  maxRequestBodySizeInKb:");
+                builder.AppendLine($" {MaxRequestBodySizeInKb.Value}");
+            }
+
+            if (Optional.IsDefined(FileUploadEnforcement))
+            {
+                builder.Append("  fileUploadEnforcement:");
+                var boolValue = FileUploadEnforcement.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(FileUploadLimitInMb))
+            {
+                builder.Append("  fileUploadLimitInMb:");
+                builder.AppendLine($" {FileUploadLimitInMb.Value}");
+            }
+
+            if (Optional.IsDefined(CustomBlockResponseStatusCode))
+            {
+                builder.Append("  customBlockResponseStatusCode:");
+                builder.AppendLine($" {CustomBlockResponseStatusCode.Value}");
+            }
+
+            if (Optional.IsDefined(CustomBlockResponseBody))
+            {
+                builder.Append("  customBlockResponseBody:");
+                builder.AppendLine($" '{CustomBlockResponseBody}'");
+            }
+
+            if (Optional.IsDefined(LogScrubbing))
+            {
+                builder.Append("  logScrubbing:");
+                AppendChildObject(builder, LogScrubbing, options, 2, false);
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<PolicySettings>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<PolicySettings>)this).GetFormatFromOptions(options) : options.Format;
@@ -246,6 +344,8 @@ namespace Azure.ResourceManager.Network.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(PolicySettings)} does not support '{options.Format}' format.");
             }
@@ -262,6 +362,8 @@ namespace Azure.ResourceManager.Network.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializePolicySettings(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(PolicySettings)} does not support '{options.Format}' format.");
             }

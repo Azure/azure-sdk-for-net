@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -298,6 +299,136 @@ namespace Azure.ResourceManager.NetApp.Models
             return new NetAppVolumeExportPolicyRule(Optional.ToNullable(ruleIndex), Optional.ToNullable(unixReadOnly), Optional.ToNullable(unixReadWrite), Optional.ToNullable(kerberos5ReadOnly), Optional.ToNullable(kerberos5ReadWrite), Optional.ToNullable(kerberos5iReadOnly), Optional.ToNullable(kerberos5iReadWrite), Optional.ToNullable(kerberos5pReadOnly), Optional.ToNullable(kerberos5pReadWrite), Optional.ToNullable(cifs), Optional.ToNullable(nfsv3), Optional.ToNullable(nfsv41), allowedClients.Value, Optional.ToNullable(hasRootAccess), Optional.ToNullable(chownMode), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(RuleIndex))
+            {
+                builder.Append("  ruleIndex:");
+                builder.AppendLine($" {RuleIndex.Value}");
+            }
+
+            if (Optional.IsDefined(IsUnixReadOnly))
+            {
+                builder.Append("  unixReadOnly:");
+                var boolValue = IsUnixReadOnly.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(IsUnixReadWrite))
+            {
+                builder.Append("  unixReadWrite:");
+                var boolValue = IsUnixReadWrite.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(IsKerberos5ReadOnly))
+            {
+                builder.Append("  kerberos5ReadOnly:");
+                var boolValue = IsKerberos5ReadOnly.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(IsKerberos5ReadWrite))
+            {
+                builder.Append("  kerberos5ReadWrite:");
+                var boolValue = IsKerberos5ReadWrite.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(IsKerberos5iReadOnly))
+            {
+                builder.Append("  kerberos5iReadOnly:");
+                var boolValue = IsKerberos5iReadOnly.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(IsKerberos5iReadWrite))
+            {
+                builder.Append("  kerberos5iReadWrite:");
+                var boolValue = IsKerberos5iReadWrite.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(IsKerberos5pReadOnly))
+            {
+                builder.Append("  kerberos5pReadOnly:");
+                var boolValue = IsKerberos5pReadOnly.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(IsKerberos5pReadWrite))
+            {
+                builder.Append("  kerberos5pReadWrite:");
+                var boolValue = IsKerberos5pReadWrite.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(AllowCifsProtocol))
+            {
+                builder.Append("  cifs:");
+                var boolValue = AllowCifsProtocol.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(AllowNfsV3Protocol))
+            {
+                builder.Append("  nfsv3:");
+                var boolValue = AllowNfsV3Protocol.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(AllowNfsV41Protocol))
+            {
+                builder.Append("  nfsv41:");
+                var boolValue = AllowNfsV41Protocol.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(AllowedClients))
+            {
+                builder.Append("  allowedClients:");
+                builder.AppendLine($" '{AllowedClients}'");
+            }
+
+            if (Optional.IsDefined(HasRootAccess))
+            {
+                builder.Append("  hasRootAccess:");
+                var boolValue = HasRootAccess.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(ChownMode))
+            {
+                builder.Append("  chownMode:");
+                builder.AppendLine($" '{ChownMode.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<NetAppVolumeExportPolicyRule>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<NetAppVolumeExportPolicyRule>)this).GetFormatFromOptions(options) : options.Format;
@@ -306,6 +437,8 @@ namespace Azure.ResourceManager.NetApp.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(NetAppVolumeExportPolicyRule)} does not support '{options.Format}' format.");
             }
@@ -322,6 +455,8 @@ namespace Azure.ResourceManager.NetApp.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeNetAppVolumeExportPolicyRule(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(NetAppVolumeExportPolicyRule)} does not support '{options.Format}' format.");
             }

@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
@@ -457,6 +459,211 @@ namespace Azure.ResourceManager.Network
             return new VirtualNetworkData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(location), Optional.ToDictionary(tags), serializedAdditionalRawData, extendedLocation, Optional.ToNullable(etag), addressSpace.Value, dhcpOptions.Value, Optional.ToNullable(flowTimeoutInMinutes), Optional.ToList(subnets), Optional.ToList(virtualNetworkPeerings), Optional.ToNullable(resourceGuid), Optional.ToNullable(provisioningState), Optional.ToNullable(enableDdosProtection), Optional.ToNullable(enableVmProtection), ddosProtectionPlan, bgpCommunities.Value, encryption.Value, Optional.ToList(ipAllocations), Optional.ToList(flowLogs));
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(ExtendedLocation))
+            {
+                builder.Append("  extendedLocation:");
+                AppendChildObject(builder, ExtendedLocation, options, 2, false);
+            }
+
+            if (Optional.IsDefined(ETag))
+            {
+                builder.Append("  etag:");
+                builder.AppendLine($" '{ETag.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Id))
+            {
+                builder.Append("  id:");
+                builder.AppendLine($" '{Id.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                builder.AppendLine($" '{Name}'");
+            }
+
+            if (Optional.IsDefined(ResourceType))
+            {
+                builder.Append("  type:");
+                builder.AppendLine($" '{ResourceType.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Location))
+            {
+                builder.Append("  location:");
+                builder.AppendLine($" '{Location.Value.ToString()}'");
+            }
+
+            if (Optional.IsCollectionDefined(Tags))
+            {
+                if (Tags.Any())
+                {
+                    builder.Append("  tags:");
+                    builder.AppendLine(" {");
+                    foreach (var item in Tags)
+                    {
+                        builder.Append($"    {item.Key}: ");
+                        if (item.Value == null)
+                        {
+                            builder.Append("null");
+                            continue;
+                        }
+                        builder.AppendLine($" '{item.Value}'");
+                    }
+                    builder.AppendLine("  }");
+                }
+            }
+
+            builder.Append("  properties:");
+            builder.AppendLine(" {");
+            if (Optional.IsDefined(AddressSpace))
+            {
+                builder.Append("    addressSpace:");
+                AppendChildObject(builder, AddressSpace, options, 4, false);
+            }
+
+            if (Optional.IsDefined(DhcpOptions))
+            {
+                builder.Append("    dhcpOptions:");
+                AppendChildObject(builder, DhcpOptions, options, 4, false);
+            }
+
+            if (Optional.IsDefined(FlowTimeoutInMinutes))
+            {
+                builder.Append("    flowTimeoutInMinutes:");
+                builder.AppendLine($" {FlowTimeoutInMinutes.Value}");
+            }
+
+            if (Optional.IsCollectionDefined(Subnets))
+            {
+                if (Subnets.Any())
+                {
+                    builder.Append("    subnets:");
+                    builder.AppendLine(" [");
+                    foreach (var item in Subnets)
+                    {
+                        AppendChildObject(builder, item, options, 6, true);
+                    }
+                    builder.AppendLine("    ]");
+                }
+            }
+
+            if (Optional.IsCollectionDefined(VirtualNetworkPeerings))
+            {
+                if (VirtualNetworkPeerings.Any())
+                {
+                    builder.Append("    virtualNetworkPeerings:");
+                    builder.AppendLine(" [");
+                    foreach (var item in VirtualNetworkPeerings)
+                    {
+                        AppendChildObject(builder, item, options, 6, true);
+                    }
+                    builder.AppendLine("    ]");
+                }
+            }
+
+            if (Optional.IsDefined(ResourceGuid))
+            {
+                builder.Append("    resourceGuid:");
+                builder.AppendLine($" '{ResourceGuid.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ProvisioningState))
+            {
+                builder.Append("    provisioningState:");
+                builder.AppendLine($" '{ProvisioningState.ToString()}'");
+            }
+
+            if (Optional.IsDefined(EnableDdosProtection))
+            {
+                builder.Append("    enableDdosProtection:");
+                var boolValue = EnableDdosProtection.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(EnableVmProtection))
+            {
+                builder.Append("    enableVmProtection:");
+                var boolValue = EnableVmProtection.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(DdosProtectionPlan))
+            {
+                builder.Append("    ddosProtectionPlan:");
+                AppendChildObject(builder, DdosProtectionPlan, options, 4, false);
+            }
+
+            if (Optional.IsDefined(BgpCommunities))
+            {
+                builder.Append("    bgpCommunities:");
+                AppendChildObject(builder, BgpCommunities, options, 4, false);
+            }
+
+            if (Optional.IsDefined(Encryption))
+            {
+                builder.Append("    encryption:");
+                AppendChildObject(builder, Encryption, options, 4, false);
+            }
+
+            if (Optional.IsCollectionDefined(IPAllocations))
+            {
+                if (IPAllocations.Any())
+                {
+                    builder.Append("    ipAllocations:");
+                    builder.AppendLine(" [");
+                    foreach (var item in IPAllocations)
+                    {
+                        AppendChildObject(builder, item, options, 6, true);
+                    }
+                    builder.AppendLine("    ]");
+                }
+            }
+
+            if (Optional.IsCollectionDefined(FlowLogs))
+            {
+                if (FlowLogs.Any())
+                {
+                    builder.Append("    flowLogs:");
+                    builder.AppendLine(" [");
+                    foreach (var item in FlowLogs)
+                    {
+                        AppendChildObject(builder, item, options, 6, true);
+                    }
+                    builder.AppendLine("    ]");
+                }
+            }
+
+            builder.AppendLine("  }");
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<VirtualNetworkData>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<VirtualNetworkData>)this).GetFormatFromOptions(options) : options.Format;
@@ -465,6 +672,8 @@ namespace Azure.ResourceManager.Network
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(VirtualNetworkData)} does not support '{options.Format}' format.");
             }
@@ -481,6 +690,8 @@ namespace Azure.ResourceManager.Network
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeVirtualNetworkData(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(VirtualNetworkData)} does not support '{options.Format}' format.");
             }

@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -129,6 +130,58 @@ namespace Azure.ResourceManager.Peering.Models
             return new DirectPeeringFacility(address.Value, Optional.ToNullable(directPeeringType), Optional.ToNullable(peeringDBFacilityId), peeringDBFacilityLink.Value, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(Address))
+            {
+                builder.Append("  address:");
+                builder.AppendLine($" '{Address}'");
+            }
+
+            if (Optional.IsDefined(DirectPeeringType))
+            {
+                builder.Append("  directPeeringType:");
+                builder.AppendLine($" '{DirectPeeringType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(PeeringDBFacilityId))
+            {
+                builder.Append("  peeringDBFacilityId:");
+                builder.AppendLine($" {PeeringDBFacilityId.Value}");
+            }
+
+            if (Optional.IsDefined(PeeringDBFacilityLink))
+            {
+                builder.Append("  peeringDBFacilityLink:");
+                builder.AppendLine($" '{PeeringDBFacilityLink}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<DirectPeeringFacility>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<DirectPeeringFacility>)this).GetFormatFromOptions(options) : options.Format;
@@ -137,6 +190,8 @@ namespace Azure.ResourceManager.Peering.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(DirectPeeringFacility)} does not support '{options.Format}' format.");
             }
@@ -153,6 +208,8 @@ namespace Azure.ResourceManager.Peering.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeDirectPeeringFacility(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(DirectPeeringFacility)} does not support '{options.Format}' format.");
             }

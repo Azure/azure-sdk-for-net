@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -167,6 +168,70 @@ namespace Azure.ResourceManager.NetworkAnalytics.Models
             return new ConsumptionEndpointsProperties(ingestionUrl.Value, ingestionResourceId.Value, fileAccessUrl.Value, fileAccessResourceId.Value, queryUrl.Value, queryResourceId.Value, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(IngestionUri))
+            {
+                builder.Append("  ingestionUrl:");
+                builder.AppendLine($" '{IngestionUri.AbsoluteUri}'");
+            }
+
+            if (Optional.IsDefined(IngestionResourceId))
+            {
+                builder.Append("  ingestionResourceId:");
+                builder.AppendLine($" '{IngestionResourceId.ToString()}'");
+            }
+
+            if (Optional.IsDefined(FileAccessUri))
+            {
+                builder.Append("  fileAccessUrl:");
+                builder.AppendLine($" '{FileAccessUri.AbsoluteUri}'");
+            }
+
+            if (Optional.IsDefined(FileAccessResourceId))
+            {
+                builder.Append("  fileAccessResourceId:");
+                builder.AppendLine($" '{FileAccessResourceId.ToString()}'");
+            }
+
+            if (Optional.IsDefined(QueryUri))
+            {
+                builder.Append("  queryUrl:");
+                builder.AppendLine($" '{QueryUri.AbsoluteUri}'");
+            }
+
+            if (Optional.IsDefined(QueryResourceId))
+            {
+                builder.Append("  queryResourceId:");
+                builder.AppendLine($" '{QueryResourceId.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<ConsumptionEndpointsProperties>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ConsumptionEndpointsProperties>)this).GetFormatFromOptions(options) : options.Format;
@@ -175,6 +240,8 @@ namespace Azure.ResourceManager.NetworkAnalytics.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(ConsumptionEndpointsProperties)} does not support '{options.Format}' format.");
             }
@@ -191,6 +258,8 @@ namespace Azure.ResourceManager.NetworkAnalytics.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeConsumptionEndpointsProperties(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(ConsumptionEndpointsProperties)} does not support '{options.Format}' format.");
             }

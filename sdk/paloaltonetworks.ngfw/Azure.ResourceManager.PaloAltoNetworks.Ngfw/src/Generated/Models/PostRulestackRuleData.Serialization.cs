@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
@@ -450,6 +452,215 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
             return new PostRulestackRuleData(id, name, type, systemData.Value, Optional.ToNullable(etag), ruleName, Optional.ToNullable(priority), description.Value, Optional.ToNullable(ruleState), source.Value, Optional.ToNullable(negateSource), destination.Value, Optional.ToNullable(negateDestination), Optional.ToList(applications), category.Value, protocol.Value, Optional.ToList(protocolPortList), inboundInspectionCertificate.Value, auditComment.Value, Optional.ToNullable(actionType), Optional.ToNullable(enableLogging), Optional.ToNullable(decryptionRuleType), Optional.ToList(tags), Optional.ToNullable(provisioningState), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(Id))
+            {
+                builder.Append("  id:");
+                builder.AppendLine($" '{Id.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                builder.AppendLine($" '{Name}'");
+            }
+
+            if (Optional.IsDefined(ResourceType))
+            {
+                builder.Append("  type:");
+                builder.AppendLine($" '{ResourceType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SystemData))
+            {
+                builder.Append("  systemData:");
+                builder.AppendLine($" '{SystemData.ToString()}'");
+            }
+
+            builder.Append("  properties:");
+            builder.AppendLine(" {");
+            if (Optional.IsDefined(ETag))
+            {
+                builder.Append("    etag:");
+                builder.AppendLine($" '{ETag.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(RuleName))
+            {
+                builder.Append("    ruleName:");
+                builder.AppendLine($" '{RuleName}'");
+            }
+
+            if (Optional.IsDefined(Priority))
+            {
+                builder.Append("    priority:");
+                builder.AppendLine($" {Priority.Value}");
+            }
+
+            if (Optional.IsDefined(Description))
+            {
+                builder.Append("    description:");
+                builder.AppendLine($" '{Description}'");
+            }
+
+            if (Optional.IsDefined(RuleState))
+            {
+                builder.Append("    ruleState:");
+                builder.AppendLine($" '{RuleState.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Source))
+            {
+                builder.Append("    source:");
+                AppendChildObject(builder, Source, options, 4, false);
+            }
+
+            if (Optional.IsDefined(NegateSource))
+            {
+                builder.Append("    negateSource:");
+                builder.AppendLine($" '{NegateSource.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Destination))
+            {
+                builder.Append("    destination:");
+                AppendChildObject(builder, Destination, options, 4, false);
+            }
+
+            if (Optional.IsDefined(NegateDestination))
+            {
+                builder.Append("    negateDestination:");
+                builder.AppendLine($" '{NegateDestination.ToString()}'");
+            }
+
+            if (Optional.IsCollectionDefined(Applications))
+            {
+                if (Applications.Any())
+                {
+                    builder.Append("    applications:");
+                    builder.AppendLine(" [");
+                    foreach (var item in Applications)
+                    {
+                        if (item == null)
+                        {
+                            builder.Append("null");
+                            continue;
+                        }
+                        builder.AppendLine($"      '{item}'");
+                    }
+                    builder.AppendLine("    ]");
+                }
+            }
+
+            if (Optional.IsDefined(Category))
+            {
+                builder.Append("    category:");
+                AppendChildObject(builder, Category, options, 4, false);
+            }
+
+            if (Optional.IsDefined(Protocol))
+            {
+                builder.Append("    protocol:");
+                builder.AppendLine($" '{Protocol}'");
+            }
+
+            if (Optional.IsCollectionDefined(ProtocolPortList))
+            {
+                if (ProtocolPortList.Any())
+                {
+                    builder.Append("    protocolPortList:");
+                    builder.AppendLine(" [");
+                    foreach (var item in ProtocolPortList)
+                    {
+                        if (item == null)
+                        {
+                            builder.Append("null");
+                            continue;
+                        }
+                        builder.AppendLine($"      '{item}'");
+                    }
+                    builder.AppendLine("    ]");
+                }
+            }
+
+            if (Optional.IsDefined(InboundInspectionCertificate))
+            {
+                builder.Append("    inboundInspectionCertificate:");
+                builder.AppendLine($" '{InboundInspectionCertificate}'");
+            }
+
+            if (Optional.IsDefined(AuditComment))
+            {
+                builder.Append("    auditComment:");
+                builder.AppendLine($" '{AuditComment}'");
+            }
+
+            if (Optional.IsDefined(ActionType))
+            {
+                builder.Append("    actionType:");
+                builder.AppendLine($" '{ActionType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(EnableLogging))
+            {
+                builder.Append("    enableLogging:");
+                builder.AppendLine($" '{EnableLogging.ToString()}'");
+            }
+
+            if (Optional.IsDefined(DecryptionRuleType))
+            {
+                builder.Append("    decryptionRuleType:");
+                builder.AppendLine($" '{DecryptionRuleType.ToString()}'");
+            }
+
+            if (Optional.IsCollectionDefined(Tags))
+            {
+                if (Tags.Any())
+                {
+                    builder.Append("    tags:");
+                    builder.AppendLine(" [");
+                    foreach (var item in Tags)
+                    {
+                        AppendChildObject(builder, item, options, 6, true);
+                    }
+                    builder.AppendLine("    ]");
+                }
+            }
+
+            if (Optional.IsDefined(ProvisioningState))
+            {
+                builder.Append("    provisioningState:");
+                builder.AppendLine($" '{ProvisioningState.ToString()}'");
+            }
+
+            builder.AppendLine("  }");
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<PostRulestackRuleData>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<PostRulestackRuleData>)this).GetFormatFromOptions(options) : options.Format;
@@ -458,6 +669,8 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(PostRulestackRuleData)} does not support '{options.Format}' format.");
             }
@@ -474,6 +687,8 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializePostRulestackRuleData(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(PostRulestackRuleData)} does not support '{options.Format}' format.");
             }

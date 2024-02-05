@@ -8,7 +8,9 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -417,6 +419,216 @@ namespace Azure.ResourceManager.NetApp.Models
             return new NetAppAccountActiveDirectory(activeDirectoryId.Value, username.Value, password.Value, domain.Value, dns.Value, Optional.ToNullable(status), statusDetails.Value, smbServerName.Value, organizationalUnit.Value, site.Value, Optional.ToList(backupOperators), Optional.ToList(administrators), kdcIP.Value, adName.Value, serverRootCACertificate.Value, Optional.ToNullable(aesEncryption), Optional.ToNullable(ldapSigning), Optional.ToList(securityOperators), Optional.ToNullable(ldapOverTls), Optional.ToNullable(allowLocalNfsUsersWithLdap), Optional.ToNullable(encryptDCConnections), ldapSearchScope.Value, preferredServersForLdapClient.Value, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(ActiveDirectoryId))
+            {
+                builder.Append("  activeDirectoryId:");
+                builder.AppendLine($" '{ActiveDirectoryId}'");
+            }
+
+            if (Optional.IsDefined(Username))
+            {
+                builder.Append("  username:");
+                builder.AppendLine($" '{Username}'");
+            }
+
+            if (Optional.IsDefined(Password))
+            {
+                builder.Append("  password:");
+                builder.AppendLine($" '{Password}'");
+            }
+
+            if (Optional.IsDefined(Domain))
+            {
+                builder.Append("  domain:");
+                builder.AppendLine($" '{Domain}'");
+            }
+
+            if (Optional.IsDefined(Dns))
+            {
+                builder.Append("  dns:");
+                builder.AppendLine($" '{Dns}'");
+            }
+
+            if (Optional.IsDefined(Status))
+            {
+                builder.Append("  status:");
+                builder.AppendLine($" '{Status.ToString()}'");
+            }
+
+            if (Optional.IsDefined(StatusDetails))
+            {
+                builder.Append("  statusDetails:");
+                builder.AppendLine($" '{StatusDetails}'");
+            }
+
+            if (Optional.IsDefined(SmbServerName))
+            {
+                builder.Append("  smbServerName:");
+                builder.AppendLine($" '{SmbServerName}'");
+            }
+
+            if (Optional.IsDefined(OrganizationalUnit))
+            {
+                builder.Append("  organizationalUnit:");
+                builder.AppendLine($" '{OrganizationalUnit}'");
+            }
+
+            if (Optional.IsDefined(Site))
+            {
+                builder.Append("  site:");
+                builder.AppendLine($" '{Site}'");
+            }
+
+            if (Optional.IsCollectionDefined(BackupOperators))
+            {
+                if (BackupOperators.Any())
+                {
+                    builder.Append("  backupOperators:");
+                    builder.AppendLine(" [");
+                    foreach (var item in BackupOperators)
+                    {
+                        if (item == null)
+                        {
+                            builder.Append("null");
+                            continue;
+                        }
+                        builder.AppendLine($"    '{item}'");
+                    }
+                    builder.AppendLine("  ]");
+                }
+            }
+
+            if (Optional.IsCollectionDefined(Administrators))
+            {
+                if (Administrators.Any())
+                {
+                    builder.Append("  administrators:");
+                    builder.AppendLine(" [");
+                    foreach (var item in Administrators)
+                    {
+                        if (item == null)
+                        {
+                            builder.Append("null");
+                            continue;
+                        }
+                        builder.AppendLine($"    '{item}'");
+                    }
+                    builder.AppendLine("  ]");
+                }
+            }
+
+            if (Optional.IsDefined(KdcIP))
+            {
+                builder.Append("  kdcIP:");
+                builder.AppendLine($" '{KdcIP.ToString()}'");
+            }
+
+            if (Optional.IsDefined(AdName))
+            {
+                builder.Append("  adName:");
+                builder.AppendLine($" '{AdName}'");
+            }
+
+            if (Optional.IsDefined(ServerRootCACertificate))
+            {
+                builder.Append("  serverRootCACertificate:");
+                builder.AppendLine($" '{ServerRootCACertificate}'");
+            }
+
+            if (Optional.IsDefined(IsAesEncryptionEnabled))
+            {
+                builder.Append("  aesEncryption:");
+                var boolValue = IsAesEncryptionEnabled.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(IsLdapSigningEnabled))
+            {
+                builder.Append("  ldapSigning:");
+                var boolValue = IsLdapSigningEnabled.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsCollectionDefined(SecurityOperators))
+            {
+                if (SecurityOperators.Any())
+                {
+                    builder.Append("  securityOperators:");
+                    builder.AppendLine(" [");
+                    foreach (var item in SecurityOperators)
+                    {
+                        if (item == null)
+                        {
+                            builder.Append("null");
+                            continue;
+                        }
+                        builder.AppendLine($"    '{item}'");
+                    }
+                    builder.AppendLine("  ]");
+                }
+            }
+
+            if (Optional.IsDefined(IsLdapOverTlsEnabled))
+            {
+                builder.Append("  ldapOverTLS:");
+                var boolValue = IsLdapOverTlsEnabled.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(AllowLocalNfsUsersWithLdap))
+            {
+                builder.Append("  allowLocalNfsUsersWithLdap:");
+                var boolValue = AllowLocalNfsUsersWithLdap.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(EncryptDCConnections))
+            {
+                builder.Append("  encryptDCConnections:");
+                var boolValue = EncryptDCConnections.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(LdapSearchScope))
+            {
+                builder.Append("  ldapSearchScope:");
+                AppendChildObject(builder, LdapSearchScope, options, 2, false);
+            }
+
+            if (Optional.IsDefined(PreferredServersForLdapClient))
+            {
+                builder.Append("  preferredServersForLdapClient:");
+                builder.AppendLine($" '{PreferredServersForLdapClient}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<NetAppAccountActiveDirectory>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<NetAppAccountActiveDirectory>)this).GetFormatFromOptions(options) : options.Format;
@@ -425,6 +637,8 @@ namespace Azure.ResourceManager.NetApp.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(NetAppAccountActiveDirectory)} does not support '{options.Format}' format.");
             }
@@ -441,6 +655,8 @@ namespace Azure.ResourceManager.NetApp.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeNetAppAccountActiveDirectory(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(NetAppAccountActiveDirectory)} does not support '{options.Format}' format.");
             }
