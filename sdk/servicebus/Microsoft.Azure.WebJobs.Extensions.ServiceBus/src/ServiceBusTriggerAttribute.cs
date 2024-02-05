@@ -115,7 +115,7 @@ namespace Microsoft.Azure.WebJobs
         {
             get
             {
-                return _maxMessageBatchSize.HasValue ? _maxMessageBatchSize.Value : 0;
+                return _maxMessageBatchSize.HasValue ? _maxMessageBatchSize.Value : 1000;
             }
             set
             {
