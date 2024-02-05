@@ -49,7 +49,10 @@ namespace Azure.Core
                 if (_response == null)
                 {
 #pragma warning disable CA1065 // Do not raise exceptions in unexpected locations
-                    throw new InvalidOperationException("Response was not set, make sure SendAsync was called");
+                    throw new InvalidOperationException("Response is not set on this message. "
+                        + "This is may be because the message was not sent via pipeline.Send, "
+                        + "the pipeline transport did not populate the response, or because "
+                        + "TransferResponseDisposeOwnership was called.");
 #pragma warning restore CA1065 // Do not raise exceptions in unexpected locations
                 }
                 return _response;
@@ -179,9 +182,11 @@ namespace Azure.Core
             _propertyBag.Set((ulong)type.TypeHandle.Value, value);
 
         /// <summary>
-        /// Returns the response content stream and releases it ownership to the caller.
-        /// After calling this methods using <see cref="Azure.Response.ContentStream"/>
-        /// or <see cref="Azure.Response.Content"/> would result in exception.
+        /// Returns the response content stream and releases its ownership to the caller.
+        /// After this method has been called, any use of the
+        /// <see cref="Azure.Response.ContentStream"/> or <see cref="Azure.Response.Content"/>
+        /// properties on this message will result in an <see cref="InvalidOperationException"/>
+        /// being thrown.
         /// </summary>
         /// <returns>The content stream or null if response didn't have any.</returns>
         public Stream? ExtractResponseContent()
