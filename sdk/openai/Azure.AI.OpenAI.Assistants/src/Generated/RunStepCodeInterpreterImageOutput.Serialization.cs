@@ -14,25 +14,23 @@ using Azure.Core;
 
 namespace Azure.AI.OpenAI.Assistants
 {
-    public partial class RequiredFunctionToolCall : IUtf8JsonSerializable, IJsonModel<RequiredFunctionToolCall>
+    public partial class RunStepCodeInterpreterImageOutput : IUtf8JsonSerializable, IJsonModel<RunStepCodeInterpreterImageOutput>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RequiredFunctionToolCall>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RunStepCodeInterpreterImageOutput>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
-        void IJsonModel<RequiredFunctionToolCall>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<RunStepCodeInterpreterImageOutput>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<RequiredFunctionToolCall>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<RunStepCodeInterpreterImageOutput>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RequiredFunctionToolCall)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RunStepCodeInterpreterImageOutput)} does not support '{format}' format.");
             }
 
             writer.WriteStartObject();
-            writer.WritePropertyName("function"u8);
-            writer.WriteObjectValue(InternalDetails);
+            writer.WritePropertyName("image"u8);
+            writer.WriteObjectValue(Image);
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type);
-            writer.WritePropertyName("id"u8);
-            writer.WriteStringValue(Id);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -51,19 +49,19 @@ namespace Azure.AI.OpenAI.Assistants
             writer.WriteEndObject();
         }
 
-        RequiredFunctionToolCall IJsonModel<RequiredFunctionToolCall>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        RunStepCodeInterpreterImageOutput IJsonModel<RunStepCodeInterpreterImageOutput>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<RequiredFunctionToolCall>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<RunStepCodeInterpreterImageOutput>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RequiredFunctionToolCall)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RunStepCodeInterpreterImageOutput)} does not support '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeRequiredFunctionToolCall(document.RootElement, options);
+            return DeserializeRunStepCodeInterpreterImageOutput(document.RootElement, options);
         }
 
-        internal static RequiredFunctionToolCall DeserializeRequiredFunctionToolCall(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static RunStepCodeInterpreterImageOutput DeserializeRunStepCodeInterpreterImageOutput(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= new ModelReaderWriterOptions("W");
 
@@ -71,26 +69,20 @@ namespace Azure.AI.OpenAI.Assistants
             {
                 return null;
             }
-            InternalRequiredFunctionToolCallDetails function = default;
+            RunStepCodeInterpreterImageReference image = default;
             string type = default;
-            string id = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("function"u8))
+                if (property.NameEquals("image"u8))
                 {
-                    function = InternalRequiredFunctionToolCallDetails.DeserializeInternalRequiredFunctionToolCallDetails(property.Value);
+                    image = RunStepCodeInterpreterImageReference.DeserializeRunStepCodeInterpreterImageReference(property.Value);
                     continue;
                 }
                 if (property.NameEquals("type"u8))
                 {
                     type = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("id"u8))
-                {
-                    id = property.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
@@ -99,46 +91,46 @@ namespace Azure.AI.OpenAI.Assistants
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RequiredFunctionToolCall(type, id, serializedAdditionalRawData, function);
+            return new RunStepCodeInterpreterImageOutput(type, serializedAdditionalRawData, image);
         }
 
-        BinaryData IPersistableModel<RequiredFunctionToolCall>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<RunStepCodeInterpreterImageOutput>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<RequiredFunctionToolCall>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<RunStepCodeInterpreterImageOutput>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(RequiredFunctionToolCall)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RunStepCodeInterpreterImageOutput)} does not support '{options.Format}' format.");
             }
         }
 
-        RequiredFunctionToolCall IPersistableModel<RequiredFunctionToolCall>.Create(BinaryData data, ModelReaderWriterOptions options)
+        RunStepCodeInterpreterImageOutput IPersistableModel<RunStepCodeInterpreterImageOutput>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<RequiredFunctionToolCall>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<RunStepCodeInterpreterImageOutput>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeRequiredFunctionToolCall(document.RootElement, options);
+                        return DeserializeRunStepCodeInterpreterImageOutput(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(RequiredFunctionToolCall)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RunStepCodeInterpreterImageOutput)} does not support '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<RequiredFunctionToolCall>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<RunStepCodeInterpreterImageOutput>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static new RequiredFunctionToolCall FromResponse(Response response)
+        internal static new RunStepCodeInterpreterImageOutput FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content);
-            return DeserializeRequiredFunctionToolCall(document.RootElement);
+            return DeserializeRunStepCodeInterpreterImageOutput(document.RootElement);
         }
 
         /// <summary> Convert into a Utf8JsonRequestContent. </summary>

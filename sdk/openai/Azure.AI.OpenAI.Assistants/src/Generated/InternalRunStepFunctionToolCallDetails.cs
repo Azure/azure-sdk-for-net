@@ -12,7 +12,7 @@ using Azure.Core;
 namespace Azure.AI.OpenAI.Assistants
 {
     /// <summary> The detailed information about the function called by the model. </summary>
-    internal partial class InternalFunctionToolCallDetails
+    internal partial class InternalRunStepFunctionToolCallDetails
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -46,12 +46,12 @@ namespace Azure.AI.OpenAI.Assistants
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="InternalFunctionToolCallDetails"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="InternalRunStepFunctionToolCallDetails"/>. </summary>
         /// <param name="name"> The name of the function. </param>
         /// <param name="arguments"> The arguments that the model requires are provided to the named function. </param>
         /// <param name="output"> The output of the function, only populated for function calls that have already have had their outputs submitted. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="arguments"/> is null. </exception>
-        internal InternalFunctionToolCallDetails(string name, string arguments, string output)
+        internal InternalRunStepFunctionToolCallDetails(string name, string arguments, string output)
         {
             Argument.AssertNotNull(name, nameof(name));
             Argument.AssertNotNull(arguments, nameof(arguments));
@@ -61,12 +61,12 @@ namespace Azure.AI.OpenAI.Assistants
             Output = output;
         }
 
-        /// <summary> Initializes a new instance of <see cref="InternalFunctionToolCallDetails"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="InternalRunStepFunctionToolCallDetails"/>. </summary>
         /// <param name="name"> The name of the function. </param>
         /// <param name="arguments"> The arguments that the model requires are provided to the named function. </param>
         /// <param name="output"> The output of the function, only populated for function calls that have already have had their outputs submitted. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal InternalFunctionToolCallDetails(string name, string arguments, string output, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal InternalRunStepFunctionToolCallDetails(string name, string arguments, string output, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             Arguments = arguments;
@@ -74,8 +74,8 @@ namespace Azure.AI.OpenAI.Assistants
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="InternalFunctionToolCallDetails"/> for deserialization. </summary>
-        internal InternalFunctionToolCallDetails()
+        /// <summary> Initializes a new instance of <see cref="InternalRunStepFunctionToolCallDetails"/> for deserialization. </summary>
+        internal InternalRunStepFunctionToolCallDetails()
         {
         }
 
