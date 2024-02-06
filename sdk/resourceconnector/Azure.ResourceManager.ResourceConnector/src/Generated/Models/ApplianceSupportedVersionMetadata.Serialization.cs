@@ -29,7 +29,15 @@ namespace Azure.ResourceManager.ResourceConnector.Models
             if (options.Format != "W" && Optional.IsDefined(CatalogVersion))
             {
                 writer.WritePropertyName("catalogVersion"u8);
-                writer.WriteObjectValue(CatalogVersion);
+                BinaryData data = ModelReaderWriter.Write(CatalogVersion, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

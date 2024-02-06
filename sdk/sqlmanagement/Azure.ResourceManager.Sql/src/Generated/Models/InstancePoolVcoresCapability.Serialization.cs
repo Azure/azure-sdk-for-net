@@ -39,7 +39,15 @@ namespace Azure.ResourceManager.Sql.Models
             if (options.Format != "W" && Optional.IsDefined(StorageLimit))
             {
                 writer.WritePropertyName("storageLimit"u8);
-                writer.WriteObjectValue(StorageLimit);
+                BinaryData data = ModelReaderWriter.Write(StorageLimit, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (options.Format != "W" && Optional.IsDefined(Status))
             {

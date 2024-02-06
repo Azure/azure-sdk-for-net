@@ -34,12 +34,28 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
             if (Optional.IsDefined(LocationInfo))
             {
                 writer.WritePropertyName("locationInfo"u8);
-                writer.WriteObjectValue(LocationInfo);
+                BinaryData data = ModelReaderWriter.Write(LocationInfo, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsDefined(SkuDetails))
             {
                 writer.WritePropertyName("skuDetails"u8);
-                writer.WriteObjectValue(SkuDetails);
+                BinaryData data = ModelReaderWriter.Write(SkuDetails, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

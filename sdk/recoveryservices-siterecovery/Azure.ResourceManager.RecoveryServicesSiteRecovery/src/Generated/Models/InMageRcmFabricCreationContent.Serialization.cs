@@ -31,7 +31,15 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             writer.WritePropertyName("physicalSiteId"u8);
             writer.WriteStringValue(PhysicalSiteId);
             writer.WritePropertyName("sourceAgentIdentity"u8);
-            writer.WriteObjectValue(SourceAgentIdentity);
+            BinaryData data = ModelReaderWriter.Write(SourceAgentIdentity, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+            using (JsonDocument document = JsonDocument.Parse(data))
+            {
+                JsonSerializer.Serialize(writer, document.RootElement);
+            }
+#endif
             writer.WritePropertyName("instanceType"u8);
             writer.WriteStringValue(InstanceType);
             if (options.Format != "W" && _serializedAdditionalRawData != null)

@@ -49,7 +49,15 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             if (Optional.IsDefined(MipInformation))
             {
                 writer.WritePropertyName("mipInformation"u8);
-                writer.WriteObjectValue(MipInformation);
+                BinaryData data = ModelReaderWriter.Write(MipInformation, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

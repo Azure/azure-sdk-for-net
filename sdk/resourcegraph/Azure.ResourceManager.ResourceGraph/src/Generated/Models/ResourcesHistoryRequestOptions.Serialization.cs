@@ -29,7 +29,15 @@ namespace Azure.ResourceManager.ResourceGraph.Models
             if (Optional.IsDefined(Interval))
             {
                 writer.WritePropertyName("interval"u8);
-                writer.WriteObjectValue(Interval);
+                BinaryData data = ModelReaderWriter.Write(Interval, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsDefined(Top))
             {

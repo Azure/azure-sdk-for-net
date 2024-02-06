@@ -118,12 +118,28 @@ namespace Azure.ResourceManager.SecurityCenter
             if (Optional.IsDefined(PartnerData))
             {
                 writer.WritePropertyName("partnerData"u8);
-                writer.WriteObjectValue(PartnerData);
+                BinaryData data = ModelReaderWriter.Write(PartnerData, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsDefined(PublishDates))
             {
                 writer.WritePropertyName("publishDates"u8);
-                writer.WriteObjectValue(PublishDates);
+                BinaryData data = ModelReaderWriter.Write(PublishDates, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsDefined(PlannedDeprecationDate))
             {
