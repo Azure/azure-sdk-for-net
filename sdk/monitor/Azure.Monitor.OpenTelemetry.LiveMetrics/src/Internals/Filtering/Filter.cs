@@ -39,7 +39,9 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Filtering
 
         private static readonly MethodInfo ValueTypeToStringMethodInfo = GetMethodInfo<ValueType, string>(x => x.ToString());
 
-        private static readonly MethodInfo UriToStringMethodInfo = GetMethodInfo<Uri, string>(x => x.AbsoluteUri);
+#pragma warning disable RS0030 // Do not used banned APIs. Using AbsoluteUri will fail test case FilterIntContains and FilterIntDoesNotContain.
+        private static readonly MethodInfo UriToStringMethodInfo = GetMethodInfo<Uri, string>(x => x.ToString());
+#pragma warning restore RS0030 // Do not used banned APIs
 
         private static readonly MethodInfo StringIndexOfMethodInfo =
             GetMethodInfo<string, string, int>((x, y) => x.IndexOf(y, StringComparison.OrdinalIgnoreCase));
