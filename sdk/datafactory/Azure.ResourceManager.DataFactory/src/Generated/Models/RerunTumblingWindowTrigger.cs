@@ -50,6 +50,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             TriggerType = triggerType ?? "RerunTumblingWindowTrigger";
         }
 
+        /// <summary> Initializes a new instance of <see cref="RerunTumblingWindowTrigger"/> for deserialization. </summary>
+        internal RerunTumblingWindowTrigger()
+        {
+        }
+
         /// <summary>
         /// The parent trigger reference.
         /// <para>

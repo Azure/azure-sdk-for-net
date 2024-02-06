@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.ServiceFabric
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-06-01</description>
+        /// <description>2023-11-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.ServiceFabric
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-06-01</description>
+        /// <description>2023-11-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.ServiceFabric
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-06-01</description>
+        /// <description>2023-11-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.ServiceFabric
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-06-01</description>
+        /// <description>2023-11-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -255,7 +255,7 @@ namespace Azure.ResourceManager.ServiceFabric
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-06-01</description>
+        /// <description>2023-11-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -268,7 +268,8 @@ namespace Azure.ResourceManager.ServiceFabric
         public virtual AsyncPageable<ServiceFabricClusterResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _serviceFabricClusterClustersRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new ServiceFabricClusterResource(Client, ServiceFabricClusterData.DeserializeServiceFabricClusterData(e)), _serviceFabricClusterClustersClientDiagnostics, Pipeline, "ServiceFabricClusterCollection.GetAll", "value", null, cancellationToken);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _serviceFabricClusterClustersRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ServiceFabricClusterResource(Client, ServiceFabricClusterData.DeserializeServiceFabricClusterData(e)), _serviceFabricClusterClustersClientDiagnostics, Pipeline, "ServiceFabricClusterCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -284,7 +285,7 @@ namespace Azure.ResourceManager.ServiceFabric
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-06-01</description>
+        /// <description>2023-11-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -297,7 +298,8 @@ namespace Azure.ResourceManager.ServiceFabric
         public virtual Pageable<ServiceFabricClusterResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _serviceFabricClusterClustersRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => new ServiceFabricClusterResource(Client, ServiceFabricClusterData.DeserializeServiceFabricClusterData(e)), _serviceFabricClusterClustersClientDiagnostics, Pipeline, "ServiceFabricClusterCollection.GetAll", "value", null, cancellationToken);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _serviceFabricClusterClustersRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ServiceFabricClusterResource(Client, ServiceFabricClusterData.DeserializeServiceFabricClusterData(e)), _serviceFabricClusterClustersClientDiagnostics, Pipeline, "ServiceFabricClusterCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -313,7 +315,7 @@ namespace Azure.ResourceManager.ServiceFabric
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-06-01</description>
+        /// <description>2023-11-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -356,7 +358,7 @@ namespace Azure.ResourceManager.ServiceFabric
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-06-01</description>
+        /// <description>2023-11-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -399,7 +401,7 @@ namespace Azure.ResourceManager.ServiceFabric
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-06-01</description>
+        /// <description>2023-11-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -444,7 +446,7 @@ namespace Azure.ResourceManager.ServiceFabric
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-06-01</description>
+        /// <description>2023-11-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>

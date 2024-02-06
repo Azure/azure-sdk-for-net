@@ -52,6 +52,11 @@ namespace Azure.ResourceManager.AppContainers
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="ContainerAppJobExecutionData"/>. </summary>
+        internal ContainerAppJobExecutionData()
+        {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ContainerAppJobExecutionData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -69,5 +74,14 @@ namespace Azure.ResourceManager.AppContainers
             Template = template;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
+
+        /// <summary> Current running State of the job. </summary>
+        public JobExecutionRunningState? Status { get; }
+        /// <summary> Job execution start time. </summary>
+        public DateTimeOffset? StartOn { get; }
+        /// <summary> Job execution end time. </summary>
+        public DateTimeOffset? EndOn { get; }
+        /// <summary> Job's execution container. </summary>
+        public ContainerAppJobExecutionTemplate Template { get; }
     }
 }

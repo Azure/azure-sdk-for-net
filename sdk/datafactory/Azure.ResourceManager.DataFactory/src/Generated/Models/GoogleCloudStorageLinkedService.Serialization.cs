@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -13,10 +14,18 @@ using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class GoogleCloudStorageLinkedService : IUtf8JsonSerializable
+    public partial class GoogleCloudStorageLinkedService : IUtf8JsonSerializable, IJsonModel<GoogleCloudStorageLinkedService>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<GoogleCloudStorageLinkedService>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<GoogleCloudStorageLinkedService>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<GoogleCloudStorageLinkedService>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(GoogleCloudStorageLinkedService)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(LinkedServiceType);
@@ -101,8 +110,22 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteEndObject();
         }
 
-        internal static GoogleCloudStorageLinkedService DeserializeGoogleCloudStorageLinkedService(JsonElement element)
+        GoogleCloudStorageLinkedService IJsonModel<GoogleCloudStorageLinkedService>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<GoogleCloudStorageLinkedService>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(GoogleCloudStorageLinkedService)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeGoogleCloudStorageLinkedService(document.RootElement, options);
+        }
+
+        internal static GoogleCloudStorageLinkedService DeserializeGoogleCloudStorageLinkedService(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -223,5 +246,36 @@ namespace Azure.ResourceManager.DataFactory.Models
             additionalProperties = additionalPropertiesDictionary;
             return new GoogleCloudStorageLinkedService(type, connectVia.Value, description.Value, Optional.ToDictionary(parameters), Optional.ToList(annotations), additionalProperties, accessKeyId.Value, secretAccessKey, serviceUrl.Value, encryptedCredential.Value);
         }
+
+        BinaryData IPersistableModel<GoogleCloudStorageLinkedService>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<GoogleCloudStorageLinkedService>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(GoogleCloudStorageLinkedService)} does not support '{options.Format}' format.");
+            }
+        }
+
+        GoogleCloudStorageLinkedService IPersistableModel<GoogleCloudStorageLinkedService>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<GoogleCloudStorageLinkedService>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeGoogleCloudStorageLinkedService(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(GoogleCloudStorageLinkedService)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<GoogleCloudStorageLinkedService>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

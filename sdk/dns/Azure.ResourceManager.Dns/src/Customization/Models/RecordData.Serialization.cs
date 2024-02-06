@@ -27,6 +27,26 @@ namespace Azure.ResourceManager.Dns
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(ResourceType);
+            }
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            {
+                writer.WritePropertyName("systemData"u8);
+                JsonSerializer.Serialize(writer, SystemData);
+            }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Metadata))
@@ -44,6 +64,11 @@ namespace Azure.ResourceManager.Dns
             {
                 writer.WritePropertyName("TTL"u8);
                 writer.WriteNumberValue(TtlInSeconds.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            {
+                writer.WritePropertyName("provisioningState"u8);
+                writer.WriteStringValue(ProvisioningState);
             }
             if (Optional.IsDefined(TargetResource))
             {
@@ -250,7 +275,6 @@ namespace Azure.ResourceManager.Dns
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -265,7 +289,6 @@ namespace Azure.ResourceManager.Dns
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             ttl = property0.Value.GetInt64();
@@ -285,7 +308,6 @@ namespace Azure.ResourceManager.Dns
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             targetResource = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.ToString());
@@ -295,7 +317,6 @@ namespace Azure.ResourceManager.Dns
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<DnsARecordInfo> array = new List<DnsARecordInfo>();
@@ -310,7 +331,6 @@ namespace Azure.ResourceManager.Dns
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<DnsAaaaRecordInfo> array = new List<DnsAaaaRecordInfo>();
@@ -325,7 +345,6 @@ namespace Azure.ResourceManager.Dns
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<DnsMXRecordInfo> array = new List<DnsMXRecordInfo>();
@@ -340,7 +359,6 @@ namespace Azure.ResourceManager.Dns
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<DnsNSRecordInfo> array = new List<DnsNSRecordInfo>();
@@ -355,7 +373,6 @@ namespace Azure.ResourceManager.Dns
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<DnsPtrRecordInfo> array = new List<DnsPtrRecordInfo>();
@@ -370,7 +387,6 @@ namespace Azure.ResourceManager.Dns
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<DnsSrvRecordInfo> array = new List<DnsSrvRecordInfo>();
@@ -385,7 +401,6 @@ namespace Azure.ResourceManager.Dns
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<DnsTxtRecordInfo> array = new List<DnsTxtRecordInfo>();
@@ -400,7 +415,6 @@ namespace Azure.ResourceManager.Dns
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             cnameRecord = DnsCnameRecordInfo.DeserializeDnsCnameRecordInfo(property0.Value);
@@ -410,7 +424,6 @@ namespace Azure.ResourceManager.Dns
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             soaRecord = DnsSoaRecordInfo.DeserializeDnsSoaRecordInfo(property0.Value);
@@ -420,7 +433,6 @@ namespace Azure.ResourceManager.Dns
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<DnsCaaRecordInfo> array = new List<DnsCaaRecordInfo>();

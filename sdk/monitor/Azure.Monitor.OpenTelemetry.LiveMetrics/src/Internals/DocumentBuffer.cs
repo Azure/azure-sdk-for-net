@@ -4,6 +4,7 @@
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Threading;
+using Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Diagnostics;
 using Azure.Monitor.OpenTelemetry.LiveMetrics.Models;
 
 namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals
@@ -29,7 +30,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals
             }
             else
             {
-                // TODO: Log dropped documents message to event source.
+                LiveMetricsExporterEventSource.Log.DroppedDocument(documentType: document.DocumentType);
             }
         }
 

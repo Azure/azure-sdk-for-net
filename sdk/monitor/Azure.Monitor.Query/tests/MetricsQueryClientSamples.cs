@@ -153,28 +153,28 @@ namespace Azure.Monitor.Query.Tests
             #endregion
         }
 
-        [Test]
-        public async Task QueryBatchMetrics()
-        {
-            #region Snippet:QueryBatchMetrics
-#if SNIPPET
-            string resourceId =
-                "/subscriptions/<id>/resourceGroups/<rg-name>/providers/<source>/storageAccounts/<resource-name-1>";
-#else
-            string resourceId = TestEnvironment.StorageAccountId;
-#endif
-            MetricsBatchQueryClient client = new MetricsBatchQueryClient(new Uri("https://metrics.monitor.azure.com/.default"), new DefaultAzureCredential());
-            Response<MetricsBatchResult> metricsResultsResponse = await client.QueryBatchAsync(
-                resourceIds: new List<string> { resourceId },
-                metricNames: new List<string> { "Ingress" },
-                metricNamespace: "Microsoft.Storage/storageAccounts").ConfigureAwait(false);
+//        [Test]
+//        public async Task QueryBatchMetrics()
+//        {
+//            #region Snippet:QueryBatchMetrics
+//#if SNIPPET
+//            string resourceId =
+//                "/subscriptions/<id>/resourceGroups/<rg-name>/providers/<source>/storageAccounts/<resource-name-1>";
+//#else
+//            string resourceId = TestEnvironment.StorageAccountId;
+//#endif
+//            MetricsBatchQueryClient client = new MetricsBatchQueryClient(new Uri("https://metrics.monitor.azure.com/.default"), new DefaultAzureCredential());
+//            Response<MetricsBatchResult> metricsResultsResponse = await client.QueryBatchAsync(
+//                resourceIds: new List<string> { resourceId },
+//                metricNames: new List<string> { "Ingress" },
+//                metricNamespace: "Microsoft.Storage/storageAccounts").ConfigureAwait(false);
 
-            MetricsBatchResult metricsQueryResults = metricsResultsResponse.Value;
-            foreach (var value in metricsQueryResults.Values)
-            {
-                Console.WriteLine(value.Interval);
-            }
-            #endregion
-        }
+//            MetricsBatchResult metricsQueryResults = metricsResultsResponse.Value;
+//            foreach (var value in metricsQueryResults.Values)
+//            {
+//                Console.WriteLine(value.Interval);
+//            }
+//            #endregion
+//        }
     }
 }

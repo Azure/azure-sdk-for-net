@@ -62,25 +62,6 @@ namespace Azure.Monitor.Query
         public bool IncludeVisualization { get { throw null; } set { } }
         public System.TimeSpan? ServerTimeout { get { throw null; } set { } }
     }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct MetricsQueryAudience : System.IEquatable<Azure.Monitor.Query.MetricsQueryAudience>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public MetricsQueryAudience(string value) { throw null; }
-        public static Azure.Monitor.Query.MetricsQueryAudience AzureChina { get { throw null; } }
-        public static Azure.Monitor.Query.MetricsQueryAudience AzureGovernment { get { throw null; } }
-        public static Azure.Monitor.Query.MetricsQueryAudience AzurePublicCloud { get { throw null; } }
-        public bool Equals(Azure.Monitor.Query.MetricsQueryAudience other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.Monitor.Query.MetricsQueryAudience left, Azure.Monitor.Query.MetricsQueryAudience right) { throw null; }
-        public static implicit operator Azure.Monitor.Query.MetricsQueryAudience (string value) { throw null; }
-        public static bool operator !=(Azure.Monitor.Query.MetricsQueryAudience left, Azure.Monitor.Query.MetricsQueryAudience right) { throw null; }
-        public override string ToString() { throw null; }
-    }
     public partial class MetricsQueryClient
     {
         protected MetricsQueryClient() { }
