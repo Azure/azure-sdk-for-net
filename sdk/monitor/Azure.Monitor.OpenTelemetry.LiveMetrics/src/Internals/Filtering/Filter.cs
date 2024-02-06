@@ -1,6 +1,8 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+#nullable disable
+
 namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Filtering
 {
     using System;
@@ -76,7 +78,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Filtering
 
         private readonly string comparand;
 
-        private readonly Predicate? predicate;
+        private readonly Predicate predicate;
 
         private readonly string fieldName;
 
@@ -89,11 +91,11 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Filtering
             this.info = filterInfo;
 
             this.fieldName = filterInfo.FieldName;
-            this.predicate = FilterInfoPredicateUtility.ToPredicate(filterInfo.Predicate);
+            this.predicate = (Predicate)FilterInfoPredicateUtility.ToPredicate(filterInfo.Predicate);
             this.comparand = filterInfo.Comparand;
 
             FieldNameType fieldNameType;
-            Type? fieldType = GetFieldType(filterInfo.FieldName, out fieldNameType);
+            Type fieldType = GetFieldType(filterInfo.FieldName, out fieldNameType);
             this.ThrowOnInvalidFilter(
                 null,
                 fieldNameType == FieldNameType.AnyField && this.predicate != Predicate.Contains && this.predicate != Predicate.DoesNotContain);
@@ -208,7 +210,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Filtering
             }
         }
 
-        internal static Type? GetFieldType(string fieldName, out FieldNameType fieldNameType)
+        internal static Type GetFieldType(string fieldName, out FieldNameType fieldNameType)
         {
             if (fieldName.StartsWith(FieldNameCustomDimensionsPrefix, StringComparison.Ordinal))
             {
@@ -328,7 +330,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Filtering
                    ?? false;
         }
 
-        private Expression ProduceComparatorExpressionForSingleFieldCondition(Expression fieldExpression, Type? fieldType, bool isFieldTypeNullable = false)
+        private Expression ProduceComparatorExpressionForSingleFieldCondition(Expression fieldExpression, Type fieldType, bool isFieldTypeNullable = false)
         {
             // this must determine an appropriate runtime comparison given the field type, the predicate, and the comparand
             TypeCode fieldTypeCode = Type.GetTypeCode(fieldType);
@@ -337,10 +339,6 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Filtering
                 case TypeCode.Boolean:
                     {
                         this.ThrowOnInvalidFilter(fieldType, !this.comparandBoolean.HasValue);
-                        if (!this.comparandBoolean.HasValue)
-                        {
-                            throw new ArgumentException("The comparandBoolean variable doesn't have value.", nameof(comparandDouble));
-                        }
 
                         switch (this.predicate)
                         {
@@ -371,7 +369,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Filtering
                         if (fieldType.GetTypeInfo().IsEnum)
                         {
                             // this is actually an Enum
-                            object? enumValue = null;
+                            object enumValue = null;
                             try
                             {
                                 enumValue = Enum.Parse(fieldType, this.comparand, true);
@@ -448,7 +446,6 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Filtering
                             {
                                 case Predicate.Equal:
                                     this.ThrowOnInvalidFilter(fieldType, !this.comparandDouble.HasValue);
-#pragma warning disable CS8629 // Nullable value type will not be null. ThrowOnInvalidFilter would have thrown if it was null.
                                     return Expression.Equal(
                                         fieldConvertedExpression,
                                         Expression.Constant(this.comparandDouble.Value, isFieldTypeNullable ? typeof(Nullable<>).MakeGenericType(typeof(double)) : typeof(double)));
@@ -477,7 +474,6 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Filtering
                                     return Expression.GreaterThanOrEqual(
                                         fieldConvertedExpression,
                                         Expression.Constant(this.comparandDouble.Value, isFieldTypeNullable ? typeof(Nullable<>).MakeGenericType(typeof(double)) : typeof(double)));
-#pragma warning restore CS8629 // Nullable value type will not be null. ThrowOnInvalidFilter would have thrown if it was null.
                                 case Predicate.Contains:
                                     // fieldValue.ToString(CultureInfo.InvariantCulture).IndexOf(this.comparand, StringComparison.OrdinalIgnoreCase) != -1
                                     Expression toStringCall = isFieldTypeNullable
@@ -543,7 +539,6 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Filtering
                         switch (this.predicate)
                         {
                             case Predicate.Equal:
-#pragma warning disable CS8629 // Nullable value type will not be null. ThrowOnInvalidFilter would have thrown if it was null.
                                 Func<TimeSpan, bool> comparator = fieldValue => fieldValue == this.comparandTimeSpan.Value;
                                 return Expression.Call(Expression.Constant(comparator.Target), comparator.GetMethodInfo(), fieldExpression);
                             case Predicate.NotEqual:
@@ -561,7 +556,6 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Filtering
                             case Predicate.GreaterThanOrEqual:
                                 comparator = fieldValue => fieldValue >= this.comparandTimeSpan.Value;
                                 return Expression.Call(Expression.Constant(comparator.Target), comparator.GetMethodInfo(), fieldExpression);
-#pragma warning restore CS8629 // Nullable value type will not be null. ThrowOnInvalidFilter would have thrown if it was null.
                             default:
                                 this.ThrowOnInvalidFilter(fieldType);
                                 break;
@@ -607,9 +601,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Filtering
                     break;
             }
 
-            // TODO: Throwing an exception for now instead of returning null. This is an unknown state and should be investigated.
-            // return null;
-            throw new ArgumentException("Unknown state");
+            return null;
         }
 
         private Expression ProduceComparatorExpressionForAnyFieldCondition(ParameterExpression documentExpression)
@@ -678,11 +670,10 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Filtering
             return comparisonExpression;
         }
 
-        private Expression CreateStringToDoubleComparisonBlock(Expression fieldExpression, Predicate? predicate)
+        private Expression CreateStringToDoubleComparisonBlock(Expression fieldExpression, Predicate predicate)
         {
             ParameterExpression tempVariable = Expression.Variable(typeof(double));
             MethodCallExpression doubleTryParseCall = Expression.Call(DoubleTryParseMethodInfo, fieldExpression, DoubleDefaultNumberStyles, InvariantCulture, tempVariable);
-
 
             BinaryExpression comparisonExpression;
             switch (predicate)
@@ -710,7 +701,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Filtering
             return Expression.Block(typeof(bool), new[] { tempVariable }, andExpression);
         }
 
-        private void ThrowOnInvalidFilter(Type? fieldType, bool conditionToThrow = true)
+        private void ThrowOnInvalidFilter(Type fieldType, bool conditionToThrow = true)
         {
             if (conditionToThrow)
             {
