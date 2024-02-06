@@ -54,6 +54,7 @@ namespace Azure.Security.Attestation
             {
                 writer.WriteObjectValue(model);
             }
+
             public override PolicyCertificateModification Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);
