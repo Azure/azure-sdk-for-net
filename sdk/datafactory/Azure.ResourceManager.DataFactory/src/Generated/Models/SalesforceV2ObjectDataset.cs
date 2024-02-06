@@ -44,6 +44,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             DatasetType = datasetType ?? "SalesforceV2Object";
         }
 
+        /// <summary> Initializes a new instance of <see cref="SalesforceV2ObjectDataset"/> for deserialization. </summary>
+        internal SalesforceV2ObjectDataset()
+        {
+        }
+
         /// <summary> The Salesforce V2 object API name. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> ObjectApiName { get; set; }
         /// <summary> The Salesforce V2 report Id. Type: string (or Expression with resultType string). </summary>

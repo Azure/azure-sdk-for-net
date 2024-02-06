@@ -42,6 +42,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             CopySourceType = copySourceType ?? "SnowflakeV2Source";
         }
 
+        /// <summary> Initializes a new instance of <see cref="SnowflakeV2Source"/> for deserialization. </summary>
+        internal SnowflakeV2Source()
+        {
+        }
+
         /// <summary> Snowflake Sql query. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> Query { get; set; }
         /// <summary> Snowflake export settings. </summary>

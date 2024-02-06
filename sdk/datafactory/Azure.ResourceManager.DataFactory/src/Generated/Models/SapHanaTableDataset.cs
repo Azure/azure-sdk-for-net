@@ -44,6 +44,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             DatasetType = datasetType ?? "SapHanaTable";
         }
 
+        /// <summary> Initializes a new instance of <see cref="SapHanaTableDataset"/> for deserialization. </summary>
+        internal SapHanaTableDataset()
+        {
+        }
+
         /// <summary> The schema name of SAP HANA. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> SchemaTypePropertiesSchema { get; set; }
         /// <summary> The table name of SAP HANA. Type: string (or Expression with resultType string). </summary>

@@ -24,5 +24,10 @@ namespace Azure.ResourceManager.DataFactory.Models
         {
             LinkedServiceType = linkedServiceType ?? "Unknown";
         }
+
+        /// <summary> Initializes a new instance of <see cref="UnknownLinkedService"/> for deserialization. </summary>
+        internal UnknownLinkedService()
+        {
+        }
     }
 }

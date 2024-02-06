@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -13,10 +14,18 @@ using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class HttpServerLocation : IUtf8JsonSerializable
+    public partial class HttpServerLocation : IUtf8JsonSerializable, IJsonModel<HttpServerLocation>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HttpServerLocation>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<HttpServerLocation>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<HttpServerLocation>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(HttpServerLocation)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(RelativeUri))
             {
@@ -50,8 +59,22 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteEndObject();
         }
 
-        internal static HttpServerLocation DeserializeHttpServerLocation(JsonElement element)
+        HttpServerLocation IJsonModel<HttpServerLocation>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<HttpServerLocation>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(HttpServerLocation)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeHttpServerLocation(document.RootElement, options);
+        }
+
+        internal static HttpServerLocation DeserializeHttpServerLocation(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -101,5 +124,36 @@ namespace Azure.ResourceManager.DataFactory.Models
             additionalProperties = additionalPropertiesDictionary;
             return new HttpServerLocation(type, folderPath.Value, fileName.Value, additionalProperties, relativeUrl.Value);
         }
+
+        BinaryData IPersistableModel<HttpServerLocation>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<HttpServerLocation>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(HttpServerLocation)} does not support '{options.Format}' format.");
+            }
+        }
+
+        HttpServerLocation IPersistableModel<HttpServerLocation>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<HttpServerLocation>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeHttpServerLocation(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(HttpServerLocation)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<HttpServerLocation>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

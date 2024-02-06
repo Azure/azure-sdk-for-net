@@ -59,6 +59,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             LinkedServiceType = linkedServiceType ?? "Warehouse";
         }
 
+        /// <summary> Initializes a new instance of <see cref="WarehouseLinkedService"/> for deserialization. </summary>
+        internal WarehouseLinkedService()
+        {
+        }
+
         /// <summary> The ID of Microsoft Fabric Warehouse artifact. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> ArtifactId { get; set; }
         /// <summary> The endpoint of Microsoft Fabric Warehouse server. Type: string (or Expression with resultType string). </summary>

@@ -17,6 +17,7 @@ namespace Azure.AI.OpenAI;
 // parameterized constructor that receives the deployment name as well.
 
 [CodeGenSuppress("ChatCompletionsOptions", typeof(IEnumerable<ChatRequestMessage>))]
+[CodeGenSerialization(nameof(TokenSelectionBiases), SerializationValueHook = nameof(SerializeTokenSelectionBiases), DeserializationValueHook = nameof(DeserializeTokenSelectionBiases))]
 public partial class ChatCompletionsOptions
 {
     // CUSTOM CODE NOTE:
@@ -152,7 +153,6 @@ public partial class ChatCompletionsOptions
     ///
     ///     <see cref="TokenSelectionBiases"/> is equivalent to 'logit_bias' in the REST request schema.
     /// </remarks>
-    [CodeGenMemberSerializationHooks(SerializationValueHook = nameof(SerializeTokenSelectionBiases), DeserializationValueHook = nameof(DeserializeTokenSelectionBiases))]
     public IDictionary<int, int> TokenSelectionBiases { get; }
 
     /// <summary> A list of functions the model may generate JSON inputs for. </summary>

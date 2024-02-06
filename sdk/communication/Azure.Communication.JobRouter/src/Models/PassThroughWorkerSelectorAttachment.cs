@@ -8,6 +8,7 @@ using Azure.Core;
 
 namespace Azure.Communication.JobRouter
 {
+    [CodeGenSerialization(nameof(ExpiresAfter), SerializationValueHook = nameof(WriteExpiresAfter), DeserializationValueHook = nameof(ReadExpiresAfter))]
     public partial class PassThroughWorkerSelectorAttachment : IUtf8JsonSerializable
     {
         /// <summary> Describes how the value of the label is compared to the value passed through. </summary>
@@ -15,7 +16,6 @@ namespace Azure.Communication.JobRouter
 
         /// <summary> Describes how long the attached worker selector is valid. </summary>
         [CodeGenMember("ExpiresAfterSeconds")]
-        [CodeGenMemberSerializationHooks(SerializationValueHook = nameof(WriteExpiresAfter), DeserializationValueHook = nameof(ReadExpiresAfter))]
         public TimeSpan? ExpiresAfter { get; }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]

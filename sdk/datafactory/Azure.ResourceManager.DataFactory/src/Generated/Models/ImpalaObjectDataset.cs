@@ -46,6 +46,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             DatasetType = datasetType ?? "ImpalaObject";
         }
 
+        /// <summary> Initializes a new instance of <see cref="ImpalaObjectDataset"/> for deserialization. </summary>
+        internal ImpalaObjectDataset()
+        {
+        }
+
         /// <summary>
         /// This property will be retired. Please consider using schema + table properties instead.
         /// <para>
