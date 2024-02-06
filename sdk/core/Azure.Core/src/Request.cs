@@ -122,7 +122,7 @@ namespace Azure.Core
         /// </summary>
         /// <returns></returns>
         protected override PipelineRequestHeaders GetHeadersCore()
-            => new AzureCoreMessageHeaders(Headers);
+            => new ClientModelRequestHeaders(Headers);
 
         #endregion
 
@@ -180,16 +180,21 @@ namespace Azure.Core
         protected internal abstract IEnumerable<HttpHeader> EnumerateHeaders();
 
         /// <summary>
-        /// Backwards adapter to MessageHeaders to implement GetHeadersCore
+        /// This type adapts the Azure.Core RequestHeaders type to the System.ClientModel
+        /// PipelineRequestHeaders API.  This enables <see cref="GetHeadersCore"/> to return
+        /// a PipelineRequestHeaders type without requiring that <see cref="RequestHeaders"/>
+        /// inherit from <see cref="PipelineRequestHeaders"/>.  It calls through to the
+        /// implementation of Azure.Core RequestHeaders so that this functionality can
+        /// be maintained.
         /// </summary>
-        private sealed class AzureCoreMessageHeaders : PipelineRequestHeaders
+        private sealed class ClientModelRequestHeaders : PipelineRequestHeaders
         {
             /// <summary>
             /// Headers on the Azure.Core.Request type to adapt to.
             /// </summary>
             private readonly RequestHeaders _headers;
 
-            public AzureCoreMessageHeaders(RequestHeaders headers)
+            public ClientModelRequestHeaders(RequestHeaders headers)
                 => _headers = headers;
 
             public override void Add(string name, string value)
