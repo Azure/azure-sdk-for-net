@@ -88,7 +88,7 @@ namespace Azure.Communication.Messages
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         public virtual async Task<Response<Stream>> DownloadMediaAsync(string mediaContentId, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(NotificationMessagesClient)}.{nameof(DownloadMediaAsync)}");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(NotificationMessagesClient)}.{nameof(DownloadMedia)}");
             scope.Start();
             _ = mediaContentId ?? throw new ArgumentNullException(nameof(mediaContentId));
 
@@ -141,7 +141,7 @@ namespace Azure.Communication.Messages
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         public virtual async Task<Response> DownloadMediaToAsync(string mediaContentId, Stream destinationStream, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(NotificationMessagesClient)}.{nameof(DownloadMediaAsync)}");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(NotificationMessagesClient)}.{nameof(DownloadMediaTo)}");
             scope.Start();
             _ = mediaContentId ?? throw new ArgumentNullException(nameof(mediaContentId));
 
@@ -166,7 +166,7 @@ namespace Azure.Communication.Messages
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         public virtual Response DownloadMediaTo(string mediaContentId, Stream destinationStream, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(NotificationMessagesClient)}.{nameof(DownloadMedia)}");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(NotificationMessagesClient)}.{nameof(DownloadMediaTo)}");
             scope.Start();
             _ = mediaContentId ?? throw new ArgumentNullException(nameof(mediaContentId));
 
@@ -191,7 +191,7 @@ namespace Azure.Communication.Messages
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         public virtual async Task<Response> DownloadMediaToAsync(string mediaContentId, string destinationPath, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(NotificationMessagesClient)}.{nameof(DownloadMediaAsync)}");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(NotificationMessagesClient)}.{nameof(DownloadMediaTo)}");
             scope.Start();
             _ = mediaContentId ?? throw new ArgumentNullException(nameof(mediaContentId));
 
@@ -218,7 +218,7 @@ namespace Azure.Communication.Messages
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         public virtual Response DownloadMediaTo(string mediaContentId, string destinationPath, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(NotificationMessagesClient)}.{nameof(DownloadMedia)}");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(NotificationMessagesClient)}.{nameof(DownloadMediaTo)}");
             scope.Start();
             _ = mediaContentId ?? throw new ArgumentNullException(nameof(mediaContentId));
 

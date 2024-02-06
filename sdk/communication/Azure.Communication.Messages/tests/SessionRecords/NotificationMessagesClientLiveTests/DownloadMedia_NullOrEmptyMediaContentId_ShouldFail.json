@@ -1,0 +1,42 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://sanitized.communication.azure.com/messages/streams/%20%20?api-version=2024-02-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-0cffbcd65cba8fdae7820a2e69e59f70-2e3fa15e4964ee1a-00",
+        "User-Agent": "azsdk-net-Communication.Messages/1.0.0-alpha.20240206.1 (.NET Framework 4.8.9181.0; Microsoft Windows 10.0.22631 )",
+        "x-ms-client-request-id": "f11d610d9356f943057a35b53a42176f",
+        "x-ms-content-sha256": "Sanitized",
+        "x-ms-date": "Tue, 06 Feb 2024 16:05:30 GMT",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 400,
+      "ResponseHeaders": {
+        "Connection": "keep-alive",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 06 Feb 2024 16:05:31 GMT",
+        "MS-CV": "S28lYWydqkSv\u002Bee6g\u002Bv3uQ.0",
+        "Request-Context": "appId=",
+        "Strict-Transport-Security": "max-age=2592000",
+        "Transfer-Encoding": "chunked",
+        "x-azure-ref": "20240206T160531Z-xhkbvcbuh904z65z6s670wdw5w0000000cv0000000001qqc",
+        "X-Cache": "CONFIG_NOCACHE",
+        "X-Processing-Time": "13ms"
+      },
+      "ResponseBody": {
+        "error": {
+          "code": "ModelValidationError",
+          "message": "id",
+          "target": "id: The id field is required."
+        }
+      }
+    }
+  ],
+  "Variables": {
+    "RandomSeed": "703669091"
+  }
+}

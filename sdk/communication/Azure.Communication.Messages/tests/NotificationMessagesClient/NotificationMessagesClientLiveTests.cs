@@ -18,8 +18,8 @@ namespace Azure.Communication.Messages.Tests
         }
 
         public const string ImageUrl = "https://upload.wikimedia.org/wikipedia/commons/3/30/Building92microsoft.jpg";
-        public const string VideoUrl = "https://sample-videos.com/video123/mp4/720/big_buck_bunny_720p_1mb.mp4";
-        public const string DocumentUrl = "https://go.microsoft.com/fwlink/?linkid=2131549";
+        public const string VideoUrl = "https://sample-videos.com/video321/mp4/720/big_buck_bunny_720p_1mb.mp4";
+        public const string DocumentUrl = "https://file-examples.com/storage/fe63e96e0365c0e1e99a842/2017/10/file-sample_150kB.pdf";
 
         [Test]
         public void Constructor_NullEndpoint_ShouldThrowArgumentNullException()
@@ -357,7 +357,6 @@ namespace Azure.Communication.Messages.Tests
         }
 
         [Test]
-        [Ignore("wait until service side changes are in PROD to run tests.")]
         public async Task DownloadMedia_ShouldSucceed()
         {
             // Arrange
@@ -373,24 +372,34 @@ namespace Azure.Communication.Messages.Tests
         }
 
         [Test]
-        [Ignore("wait until service side changes are in PROD to run tests.")]
-        public Task DownloadMedia_InvalidMediaContentId_ShouldFail()
+        public void DownloadMedia_NullOrEmptyMediaContentId_ShouldFail()
         {
             // Arrange
             NotificationMessagesClient notificationMessagesClient = CreateInstrumentedNotificationMessagesClient();
 
             // Act & Assert
-            Assert.Throws<ArgumentNullException>(async () => await notificationMessagesClient.DownloadMediaAsync(null));
-            Assert.Throws<ArgumentException>(async () => await notificationMessagesClient.DownloadMediaAsync(string.Empty));
-            Assert.Throws<ArgumentException>(async () => await notificationMessagesClient.DownloadMediaAsync(""));
-            Assert.Throws<ArgumentException>(async () => await notificationMessagesClient.DownloadMediaAsync("  "));
-            Assert.Throws<ArgumentException>(async () => await notificationMessagesClient.DownloadMediaAsync("test"));
-
-            return Task.CompletedTask;
+            Assert.ThrowsAsync<ArgumentNullException>(async () => await notificationMessagesClient.DownloadMediaAsync(null));
+            Assert.ThrowsAsync<ArgumentException>(async () => await notificationMessagesClient.DownloadMediaAsync(string.Empty));
+            Assert.ThrowsAsync<ArgumentException>(async () => await notificationMessagesClient.DownloadMediaAsync(""));
+            RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(async () => await notificationMessagesClient.DownloadMediaAsync("  "));
+            Assert.NotNull(ex);
+            Assert.AreEqual(ex?.Status, 400);
         }
 
         [Test]
-        [Ignore("wait until service side changes are in PROD to run tests.")]
+        public void DownloadMedia_InvalidMediaContentId_ShouldFail()
+        {
+            // Arrange
+            NotificationMessagesClient notificationMessagesClient = CreateInstrumentedNotificationMessagesClient();
+
+            // Act & Assert
+            RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(async () => await notificationMessagesClient.DownloadMediaAsync("test"));
+            Assert.NotNull(ex);
+            Assert.AreEqual(ex?.Status, 404);
+            Assert.AreEqual(ex?.ErrorCode, "MediaNotFound");
+        }
+
+        [Test]
         public async Task DownloadMediaToStream_ShouldSucceed()
         {
             // Arrange
@@ -408,7 +417,6 @@ namespace Azure.Communication.Messages.Tests
         }
 
         [Test]
-        [Ignore("wait until service side changes are in PROD to run tests.")]
         public async Task DownloadMediaToFilePath_ShouldSucceed()
         {
             // Arrange

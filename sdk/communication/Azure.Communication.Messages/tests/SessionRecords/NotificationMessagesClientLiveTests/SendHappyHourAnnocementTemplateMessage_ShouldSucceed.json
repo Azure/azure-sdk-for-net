@@ -10,11 +10,11 @@
         "Content-Type": "application/json",
         "Repeatability-First-Sent": "Sanitized",
         "Repeatability-Request-ID": "Sanitized",
-        "traceparent": "00-50844a129f83c1ae4c0ff5bfc7ec8cf7-104810ef4e6e47ae-00",
-        "User-Agent": "azsdk-net-Communication.Messages/1.0.0-alpha.20240131.1 (.NET 7.0.15; Microsoft Windows 10.0.22631)",
-        "x-ms-client-request-id": "a2c3f4edd70d77dcb53c9531f317f278",
+        "traceparent": "00-029c5d855d633aef77b86fae9c09503c-61568375628e409b-00",
+        "User-Agent": "azsdk-net-Communication.Messages/1.0.0-alpha.20240205.1 (.NET 7.0.15; Microsoft Windows 10.0.22631)",
+        "x-ms-client-request-id": "269cc87c3edbdab4df5206cd32135e78",
         "x-ms-content-sha256": "Sanitized",
-        "x-ms-date": "Wed, 31 Jan 2024 17:57:10 GMT",
+        "x-ms-date": "Tue, 06 Feb 2024 07:08:15 GMT",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -33,7 +33,7 @@
               "kind": "text"
             },
             {
-              "url": "https://sample-videos.com/video123/mp4/720/big_buck_bunny_720p_1mb.mp4",
+              "url": "https://sample-videos.com/video321/mp4/720/big_buck_bunny_720p_1mb.mp4",
               "name": "video",
               "kind": "video"
             }
@@ -55,7 +55,7 @@
             "kind": "whatsApp"
           }
         },
-        "channelRegistrationId": "75da05b7-831f-45cf-923d-98e9a9f4c16a",
+        "channelRegistrationId": "77ffd898-ec44-42cd-b560-57a8903d05c7",
         "to": [
           "\u002B16041234567"
         ],
@@ -67,19 +67,19 @@
         "Connection": "keep-alive",
         "Content-Length": "87",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 31 Jan 2024 17:57:11 GMT",
-        "MS-CV": "/kAL\u002Bz1A2k61oy/wcx1MPA.0",
+        "Date": "Tue, 06 Feb 2024 07:08:16 GMT",
+        "MS-CV": "NkH3c51FU0S/tlOB47UChA.0",
         "Repeatability-Result": "accepted",
         "Request-Context": "appId=",
         "Strict-Transport-Security": "max-age=2592000",
-        "x-azure-ref": "20240131T175711Z-xhkbvcbuh904z65z6s670wdw5w00000003z000000000k8ep",
+        "x-azure-ref": "20240206T070816Z-61cmrwvmbh7v9az4pvzdmug0b000000006m0000000002fz7",
         "X-Cache": "CONFIG_NOCACHE",
-        "X-Processing-Time": "318ms"
+        "X-Processing-Time": "375ms"
       },
       "ResponseBody": {
         "receipts": [
           {
-            "messageId": "f879da61-e71a-4c31-8538-05dd7a010b5f",
+            "messageId": "cfdefc21-3f5d-4bc7-b298-5cecce1ebfe4",
             "to": "\u002B16041234567"
           }
         ]
@@ -87,6 +87,6 @@
     }
   ],
   "Variables": {
-    "RandomSeed": "900278457"
+    "RandomSeed": "937628220"
   }
 }

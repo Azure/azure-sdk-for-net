@@ -10,16 +10,16 @@
         "Content-Type": "application/json",
         "Repeatability-First-Sent": "Sanitized",
         "Repeatability-Request-ID": "Sanitized",
-        "traceparent": "00-c4b6434a5b8f143f4b7b42346dd7c1d7-7be3f6b2974a45c1-00",
-        "User-Agent": "azsdk-net-Communication.Messages/1.0.0-alpha.20240131.1 (.NET 7.0.15; Microsoft Windows 10.0.22631)",
-        "x-ms-client-request-id": "feef7fe644d251d0f17a618db5a1e8b5",
+        "traceparent": "00-daea59cebe1a0b9714162d3898576861-5f1fba282c9e0965-00",
+        "User-Agent": "azsdk-net-Communication.Messages/1.0.0-alpha.20240205.1 (.NET 7.0.15; Microsoft Windows 10.0.22631)",
+        "x-ms-client-request-id": "e2e7d0c6ce4b2aeaf4b769b3913b75c1",
         "x-ms-content-sha256": "Sanitized",
-        "x-ms-date": "Wed, 31 Jan 2024 17:57:19 GMT",
+        "x-ms-date": "Tue, 06 Feb 2024 07:08:26 GMT",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
         "content": "",
-        "channelRegistrationId": "75da05b7-831f-45cf-923d-98e9a9f4c16a",
+        "channelRegistrationId": "77ffd898-ec44-42cd-b560-57a8903d05c7",
         "to": [
           "\u002B16041234567"
         ],
@@ -30,15 +30,15 @@
         "api-supported-versions": "2023-08-24-preview, 2024-02-01",
         "Connection": "keep-alive",
         "Content-Type": "application/json",
-        "Date": "Wed, 31 Jan 2024 17:57:20 GMT",
-        "MS-CV": "rRzUHk4DvU\u002BgcgJxYj4DjA.0",
+        "Date": "Tue, 06 Feb 2024 07:08:27 GMT",
+        "MS-CV": "GFaxYA/hdEKY8VHTsmNmTg.0",
         "Repeatability-Result": "accepted",
         "Request-Context": "appId=",
         "Strict-Transport-Security": "max-age=2592000",
         "Transfer-Encoding": "chunked",
-        "x-azure-ref": "20240131T175720Z-xhkbvcbuh904z65z6s670wdw5w00000003z000000000k994",
+        "x-azure-ref": "20240206T070827Z-61cmrwvmbh7v9az4pvzdmug0b000000006m0000000002gbk",
         "X-Cache": "CONFIG_NOCACHE",
-        "X-Processing-Time": "23ms"
+        "X-Processing-Time": "24ms"
       },
       "ResponseBody": {
         "error": {
@@ -49,6 +49,6 @@
     }
   ],
   "Variables": {
-    "RandomSeed": "1287473726"
+    "RandomSeed": "1681536647"
   }
 }

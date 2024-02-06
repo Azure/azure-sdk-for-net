@@ -10,11 +10,11 @@
         "Content-Type": "application/json",
         "Repeatability-First-Sent": "Sanitized",
         "Repeatability-Request-ID": "Sanitized",
-        "traceparent": "00-f11bc6176641761585181a14ff0c194a-779506de855f6e01-00",
-        "User-Agent": "azsdk-net-Communication.Messages/1.0.0-alpha.20240131.1 (.NET 7.0.15; Microsoft Windows 10.0.22631)",
-        "x-ms-client-request-id": "40fcfafbeb74e2d569ebc2b0cf8942ec",
+        "traceparent": "00-1c3a697008382e41cae5a786509a6062-4c31e3cc2a4e7e11-00",
+        "User-Agent": "azsdk-net-Communication.Messages/1.0.0-alpha.20240205.1 (.NET 7.0.15; Microsoft Windows 10.0.22631)",
+        "x-ms-client-request-id": "0715c637c3f8f6c5c41d5f64d204e85d",
         "x-ms-content-sha256": "Sanitized",
-        "x-ms-date": "Wed, 31 Jan 2024 17:57:12 GMT",
+        "x-ms-date": "Tue, 06 Feb 2024 07:08:17 GMT",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -37,7 +37,7 @@
             "kind": "whatsApp"
           }
         },
-        "channelRegistrationId": "75da05b7-831f-45cf-923d-98e9a9f4c16a",
+        "channelRegistrationId": "77ffd898-ec44-42cd-b560-57a8903d05c7",
         "to": [
           "\u002B16041234567"
         ],
@@ -49,19 +49,19 @@
         "Connection": "keep-alive",
         "Content-Length": "87",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 31 Jan 2024 17:57:14 GMT",
-        "MS-CV": "csI8BjY8SU\u002B74cqoOj0heQ.0",
+        "Date": "Tue, 06 Feb 2024 07:08:18 GMT",
+        "MS-CV": "94RtTtGm\u002BkyKQvVs2utRGg.0",
         "Repeatability-Result": "accepted",
         "Request-Context": "appId=",
         "Strict-Transport-Security": "max-age=2592000",
-        "x-azure-ref": "20240131T175713Z-xhkbvcbuh904z65z6s670wdw5w00000003z000000000k8nw",
+        "x-azure-ref": "20240206T070818Z-61cmrwvmbh7v9az4pvzdmug0b000000006m0000000002g1k",
         "X-Cache": "CONFIG_NOCACHE",
-        "X-Processing-Time": "327ms"
+        "X-Processing-Time": "350ms"
       },
       "ResponseBody": {
         "receipts": [
           {
-            "messageId": "71bc2508-652f-4b45-9193-c81661e44386",
+            "messageId": "d04d485d-de0a-4854-b6d7-9b606b652ad4",
             "to": "\u002B16041234567"
           }
         ]
@@ -69,6 +69,6 @@
     }
   ],
   "Variables": {
-    "RandomSeed": "247007428"
+    "RandomSeed": "1056285247"
   }
 }

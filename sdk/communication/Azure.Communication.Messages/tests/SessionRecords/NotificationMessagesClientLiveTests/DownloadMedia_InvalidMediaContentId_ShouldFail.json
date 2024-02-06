@@ -1,0 +1,47 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://sanitized.communication.azure.com/messages/streams/test?api-version=2024-02-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Connection": "keep-alive",
+        "traceparent": "00-3c6c99a050c168f0cba9875b15d192e3-3a64b872bcf24e66-00",
+        "User-Agent": "azsdk-net-Communication.Messages/1.0.0-alpha.20240206.1 (.NET Framework 4.8.9181.0; Microsoft Windows 10.0.22631 )",
+        "x-ms-client-request-id": "3e2bc057c92bca148fb0d416749d5565",
+        "x-ms-content-sha256": "Sanitized",
+        "x-ms-date": "Tue, 06 Feb 2024 16:05:28 GMT",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 404,
+      "ResponseHeaders": {
+        "api-supported-versions": "2023-08-24-preview, 2024-02-01",
+        "Connection": "keep-alive",
+        "Content-Type": "application/json",
+        "Date": "Tue, 06 Feb 2024 16:05:30 GMT",
+        "MS-CV": "gNjZHctqZEKr3A1\u002BuIC8KQ.0",
+        "Request-Context": "appId=",
+        "Strict-Transport-Security": "max-age=2592000",
+        "Transfer-Encoding": "chunked",
+        "x-azure-ref": "20240206T160530Z-xhkbvcbuh904z65z6s670wdw5w0000000cv0000000001qmx",
+        "X-Cache": "CONFIG_NOCACHE",
+        "X-Processing-Time": "67ms"
+      },
+      "ResponseBody": {
+        "error": {
+          "code": "MediaNotFound",
+          "message": "Given media object does not exist",
+          "innererror": {
+            "code": "ErrorCode.IdentifierNotFound",
+            "message": "IdentifierNotFound"
+          }
+        }
+      }
+    }
+  ],
+  "Variables": {
+    "RandomSeed": "104164120"
+  }
+}
