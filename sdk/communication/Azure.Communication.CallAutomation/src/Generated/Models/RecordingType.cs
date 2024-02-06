@@ -24,11 +24,14 @@ namespace Azure.Communication.CallAutomation
 
         private const string AcsValue = "acs";
         private const string TeamsValue = "teams";
+        private const string TeamsComplianceValue = "teamsCompliance";
 
         /// <summary> acs. </summary>
         public static RecordingType Acs { get; } = new RecordingType(AcsValue);
         /// <summary> teams. </summary>
         public static RecordingType Teams { get; } = new RecordingType(TeamsValue);
+        /// <summary> teamsCompliance. </summary>
+        public static RecordingType TeamsCompliance { get; } = new RecordingType(TeamsComplianceValue);
         /// <summary> Determines if two <see cref="RecordingType"/> values are the same. </summary>
         public static bool operator ==(RecordingType left, RecordingType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="RecordingType"/> values are not the same. </summary>

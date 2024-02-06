@@ -14,16 +14,16 @@ using Azure.Core;
 
 namespace Azure.AI.OpenAI.Assistants
 {
-    internal partial class InternalFunctionToolCallDetails : IUtf8JsonSerializable, IJsonModel<InternalFunctionToolCallDetails>
+    internal partial class InternalRunStepFunctionToolCallDetails : IUtf8JsonSerializable, IJsonModel<InternalRunStepFunctionToolCallDetails>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<InternalFunctionToolCallDetails>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<InternalRunStepFunctionToolCallDetails>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
-        void IJsonModel<InternalFunctionToolCallDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<InternalRunStepFunctionToolCallDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<InternalFunctionToolCallDetails>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<InternalRunStepFunctionToolCallDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(InternalFunctionToolCallDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(InternalRunStepFunctionToolCallDetails)} does not support '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -58,19 +58,19 @@ namespace Azure.AI.OpenAI.Assistants
             writer.WriteEndObject();
         }
 
-        InternalFunctionToolCallDetails IJsonModel<InternalFunctionToolCallDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        InternalRunStepFunctionToolCallDetails IJsonModel<InternalRunStepFunctionToolCallDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<InternalFunctionToolCallDetails>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<InternalRunStepFunctionToolCallDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(InternalFunctionToolCallDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(InternalRunStepFunctionToolCallDetails)} does not support '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeInternalFunctionToolCallDetails(document.RootElement, options);
+            return DeserializeInternalRunStepFunctionToolCallDetails(document.RootElement, options);
         }
 
-        internal static InternalFunctionToolCallDetails DeserializeInternalFunctionToolCallDetails(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static InternalRunStepFunctionToolCallDetails DeserializeInternalRunStepFunctionToolCallDetails(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= new ModelReaderWriterOptions("W");
 
@@ -111,46 +111,46 @@ namespace Azure.AI.OpenAI.Assistants
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new InternalFunctionToolCallDetails(name, arguments, output, serializedAdditionalRawData);
+            return new InternalRunStepFunctionToolCallDetails(name, arguments, output, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<InternalFunctionToolCallDetails>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<InternalRunStepFunctionToolCallDetails>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<InternalFunctionToolCallDetails>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<InternalRunStepFunctionToolCallDetails>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(InternalFunctionToolCallDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(InternalRunStepFunctionToolCallDetails)} does not support '{options.Format}' format.");
             }
         }
 
-        InternalFunctionToolCallDetails IPersistableModel<InternalFunctionToolCallDetails>.Create(BinaryData data, ModelReaderWriterOptions options)
+        InternalRunStepFunctionToolCallDetails IPersistableModel<InternalRunStepFunctionToolCallDetails>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<InternalFunctionToolCallDetails>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<InternalRunStepFunctionToolCallDetails>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeInternalFunctionToolCallDetails(document.RootElement, options);
+                        return DeserializeInternalRunStepFunctionToolCallDetails(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(InternalFunctionToolCallDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(InternalRunStepFunctionToolCallDetails)} does not support '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<InternalFunctionToolCallDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<InternalRunStepFunctionToolCallDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static InternalFunctionToolCallDetails FromResponse(Response response)
+        internal static InternalRunStepFunctionToolCallDetails FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content);
-            return DeserializeInternalFunctionToolCallDetails(document.RootElement);
+            return DeserializeInternalRunStepFunctionToolCallDetails(document.RootElement);
         }
 
         /// <summary> Convert into a Utf8JsonRequestContent. </summary>

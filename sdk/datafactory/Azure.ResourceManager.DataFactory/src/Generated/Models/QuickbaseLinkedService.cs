@@ -47,6 +47,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             LinkedServiceType = linkedServiceType ?? "Quickbase";
         }
 
+        /// <summary> Initializes a new instance of <see cref="QuickbaseLinkedService"/> for deserialization. </summary>
+        internal QuickbaseLinkedService()
+        {
+        }
+
         /// <summary> The url to connect Quickbase source. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> Uri { get; set; }
         /// <summary> The user token for the Quickbase source. </summary>

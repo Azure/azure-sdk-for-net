@@ -14,16 +14,16 @@ using Azure.Core;
 
 namespace Azure.AI.OpenAI.Assistants
 {
-    public partial class FunctionToolCall : IUtf8JsonSerializable, IJsonModel<FunctionToolCall>
+    public partial class RunStepFunctionToolCall : IUtf8JsonSerializable, IJsonModel<RunStepFunctionToolCall>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FunctionToolCall>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RunStepFunctionToolCall>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
-        void IJsonModel<FunctionToolCall>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<RunStepFunctionToolCall>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<FunctionToolCall>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<RunStepFunctionToolCall>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FunctionToolCall)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RunStepFunctionToolCall)} does not support '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -51,19 +51,19 @@ namespace Azure.AI.OpenAI.Assistants
             writer.WriteEndObject();
         }
 
-        FunctionToolCall IJsonModel<FunctionToolCall>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        RunStepFunctionToolCall IJsonModel<RunStepFunctionToolCall>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<FunctionToolCall>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<RunStepFunctionToolCall>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FunctionToolCall)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RunStepFunctionToolCall)} does not support '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeFunctionToolCall(document.RootElement, options);
+            return DeserializeRunStepFunctionToolCall(document.RootElement, options);
         }
 
-        internal static FunctionToolCall DeserializeFunctionToolCall(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static RunStepFunctionToolCall DeserializeRunStepFunctionToolCall(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= new ModelReaderWriterOptions("W");
 
@@ -71,7 +71,7 @@ namespace Azure.AI.OpenAI.Assistants
             {
                 return null;
             }
-            InternalFunctionToolCallDetails function = default;
+            InternalRunStepFunctionToolCallDetails function = default;
             string type = default;
             string id = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -80,7 +80,7 @@ namespace Azure.AI.OpenAI.Assistants
             {
                 if (property.NameEquals("function"u8))
                 {
-                    function = InternalFunctionToolCallDetails.DeserializeInternalFunctionToolCallDetails(property.Value);
+                    function = InternalRunStepFunctionToolCallDetails.DeserializeInternalRunStepFunctionToolCallDetails(property.Value);
                     continue;
                 }
                 if (property.NameEquals("type"u8))
@@ -99,46 +99,46 @@ namespace Azure.AI.OpenAI.Assistants
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FunctionToolCall(type, id, serializedAdditionalRawData, function);
+            return new RunStepFunctionToolCall(type, id, serializedAdditionalRawData, function);
         }
 
-        BinaryData IPersistableModel<FunctionToolCall>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<RunStepFunctionToolCall>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<FunctionToolCall>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<RunStepFunctionToolCall>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(FunctionToolCall)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RunStepFunctionToolCall)} does not support '{options.Format}' format.");
             }
         }
 
-        FunctionToolCall IPersistableModel<FunctionToolCall>.Create(BinaryData data, ModelReaderWriterOptions options)
+        RunStepFunctionToolCall IPersistableModel<RunStepFunctionToolCall>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<FunctionToolCall>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<RunStepFunctionToolCall>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeFunctionToolCall(document.RootElement, options);
+                        return DeserializeRunStepFunctionToolCall(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(FunctionToolCall)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RunStepFunctionToolCall)} does not support '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<FunctionToolCall>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<RunStepFunctionToolCall>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static new FunctionToolCall FromResponse(Response response)
+        internal static new RunStepFunctionToolCall FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content);
-            return DeserializeFunctionToolCall(document.RootElement);
+            return DeserializeRunStepFunctionToolCall(document.RootElement);
         }
 
         /// <summary> Convert into a Utf8JsonRequestContent. </summary>

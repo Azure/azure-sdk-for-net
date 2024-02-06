@@ -105,6 +105,8 @@ namespace Azure.ResourceManager.SecurityCenter
 
         /// <summary> User friendly display name of the assessment. </summary>
         public string DisplayName { get; set; }
+        /// <summary> Azure resource ID of the policy definition that turns this assessment calculation on. </summary>
+        public ResourceIdentifier PolicyDefinitionId { get; }
         /// <summary> Human readable description of the assessment. </summary>
         public string Description { get; set; }
         /// <summary> Human readable description of what you should do to mitigate this security issue. </summary>

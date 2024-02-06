@@ -7,15 +7,16 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.AI.OpenAI.Assistants
 {
     /// <summary>
-    /// An abstract representation of an emitted output from a code interpreter tool.
-    /// Please note <see cref="CodeInterpreterToolCallOutput"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-    /// The available derived classes include <see cref="CodeInterpreterLogOutput"/> and <see cref="CodeInterpreterImageOutput"/>.
+    /// An abstract representation of a detailed tool call as recorded within a run step for an existing run.
+    /// Please note <see cref="RunStepToolCall"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+    /// The available derived classes include <see cref="RunStepCodeInterpreterToolCall"/>, <see cref="RunStepRetrievalToolCall"/> and <see cref="RunStepFunctionToolCall"/>.
     /// </summary>
-    public abstract partial class CodeInterpreterToolCallOutput
+    public abstract partial class RunStepToolCall
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -49,21 +50,35 @@ namespace Azure.AI.OpenAI.Assistants
         /// </summary>
         private protected IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="CodeInterpreterToolCallOutput"/>. </summary>
-        protected CodeInterpreterToolCallOutput()
+        /// <summary> Initializes a new instance of <see cref="RunStepToolCall"/>. </summary>
+        /// <param name="id"> The ID of the tool call. This ID must be referenced when you submit tool outputs. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
+        protected RunStepToolCall(string id)
         {
+            Argument.AssertNotNull(id, nameof(id));
+
+            Id = id;
         }
 
-        /// <summary> Initializes a new instance of <see cref="CodeInterpreterToolCallOutput"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="RunStepToolCall"/>. </summary>
         /// <param name="type"> The object type. </param>
+        /// <param name="id"> The ID of the tool call. This ID must be referenced when you submit tool outputs. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CodeInterpreterToolCallOutput(string type, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal RunStepToolCall(string type, string id, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Type = type;
+            Id = id;
             _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="RunStepToolCall"/> for deserialization. </summary>
+        internal RunStepToolCall()
+        {
         }
 
         /// <summary> The object type. </summary>
         internal string Type { get; set; }
+        /// <summary> The ID of the tool call. This ID must be referenced when you submit tool outputs. </summary>
+        public string Id { get; }
     }
 }

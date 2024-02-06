@@ -60,6 +60,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             LinkedServiceType = linkedServiceType ?? "Sftp";
         }
 
+        /// <summary> Initializes a new instance of <see cref="SftpServerLinkedService"/> for deserialization. </summary>
+        internal SftpServerLinkedService()
+        {
+        }
+
         /// <summary> The SFTP server host name. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> Host { get; set; }
         /// <summary> The TCP port number that the SFTP server uses to listen for client connections. Default value is 22. Type: integer (or Expression with resultType integer), minimum: 0. </summary>

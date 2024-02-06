@@ -3,23 +3,29 @@
 
 #nullable disable
 
-using System;
-using System.Collections.Generic;
+using System.Runtime.CompilerServices;
+using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.SecurityCenter.Models;
 
 namespace Azure.ResourceManager.SecurityCenter
 {
-    /// <summary>
-    /// A class representing the SecurityAssessmentMetadata data model.
-    /// Security assessment metadata response
-    /// Serialized Name: SecurityAssessmentMetadataResponse
-    /// </summary>
+    [CodeGenSerialization(nameof(PolicyDefinitionId), DeserializationValueHook = nameof(DeserializePolicyDefinitionId))]
     public partial class SecurityAssessmentMetadataData : ResourceData
     {
-        /// <summary> Azure resource ID of the policy definition that turns this assessment calculation on. </summary>
-        [CodeGenMemberSerializationHooks(DeserializationValueHook = nameof(DeserializePolicyDefinitionId))]
-        public ResourceIdentifier PolicyDefinitionId { get; }
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        internal static void DeserializePolicyDefinitionId(JsonProperty property, ref Optional<ResourceIdentifier> policyDefinitionId)
+        {
+            if (property.Value.ValueKind == JsonValueKind.Null)
+            {
+                return;
+            }
+            var idString = property.Value.GetString();
+            if (string.IsNullOrEmpty(idString))
+            {
+                return;
+            }
+            policyDefinitionId = new ResourceIdentifier(idString);
+        }
     }
 }
