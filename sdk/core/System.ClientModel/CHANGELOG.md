@@ -2,9 +2,9 @@
 
 ## 1.1.0-beta.2 (Unreleased)
 
-- Added `TransferResponseDisposeOwnership` to `PipelineMessage` to enable returning an undisposed `PipelineResponse` from protocol methods.
-
 ### Features Added
+
+- Added `ExtractResponse` method to `PipelineMessage` to enable returning an undisposed `PipelineResponse` from protocol methods.
 
 ### Breaking Changes
 

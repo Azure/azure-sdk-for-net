@@ -45,7 +45,7 @@ public class PipelineMessage : IDisposable
     {
         if (Response is null)
         {
-            throw new InvalidOperationException($"{nameof(Response)} is not set on message.");
+            throw new InvalidOperationException($"'{nameof(Response)}' property is not set on message.");
         }
     }
 
