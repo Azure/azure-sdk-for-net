@@ -402,7 +402,7 @@ function Update-GitHubIssue {
           -Body ($parameters | ConvertTo-Json) `
           -Uri $uri `
           -Headers (Get-GitHubApiHeaders -token $AuthToken) `
-          -MaximumRetryCount 3
+          -MaximumRetryCount 3 `
           -ContentType "application/json"
 }
 
