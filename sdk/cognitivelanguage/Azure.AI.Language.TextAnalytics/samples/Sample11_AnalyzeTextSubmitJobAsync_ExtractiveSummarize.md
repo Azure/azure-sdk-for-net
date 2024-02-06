@@ -18,7 +18,7 @@ The values of the `endpoint` and `apiKey` variables can be retrieved from enviro
 
 To summarize one or more text documents using extractive summarization, call `ExtractiveSummarize` on the `TextAnalyticsClient` by passing the documents as either an `IEnumerable<string>` parameter or an `IEnumerable<TextDocumentInput>` parameter. This returns an `ExtractiveSummarizeOperation`.
 
-```C# Snippet:Sample11_ExtractiveSummarizeConvenienceAsync
+```C# Snippet:Sample11_AnalyzeTextSubmitJobAsync_ExtractiveSummarizationLROTask
 string document =
     "Windows 365 was in the works before COVID-19 sent companies around the world on a scramble to secure"
     + " solutions to support employees suddenly forced to work from home, but “what really put the"
@@ -70,24 +70,12 @@ AnalyzeTextJobsInput analyzeTextJobsInput = new AnalyzeTextJobsInput(multiLangua
 {
     new ExtractiveSummarizationLROTask()
 });
-Operation operation = client.MultiLanguageAnalysisInput multiLanguageAnalysisInput = new MultiLanguageAnalysisInput()
-{
-    Documents =
-        {
-            new MultiLanguageInput("A", documentA, "en"),
-        }
-};
-
-AnalyzeTextJobsInput analyzeTextJobsInput = new AnalyzeTextJobsInput(multiLanguageAnalysisInput, new AnalyzeTextLROTask[]
-{
-    new ExtractiveSummarizationLROTask()
-});
-Operation operation = await client.AnalyzeTextSubmitJobAsync(WaitUntil.Completed, analyzeTextJobsInput);(WaitUntil.Completed, analyzeTextJobsInput);
+Operation operation = await client.AnalyzeTextSubmitJobAsync(WaitUntil.Completed, analyzeTextJobsInput);
 ```
 
 Using `WaitUntil.Completed` means that the long-running operation will be automatically polled until it has completed. You can then view the results of the extractive summarization, including any errors that might have occurred:
 
-```C# Snippet:Sample11_ExtractiveSummarizeConvenienceAsync_ViewResults
+```C# Snippet:Sample11_AnalyzeTextSubmitJobAsync_ExtractiveSummarizationLROTask_ViewResults
 // View the operation results.
 AnalyzeTextJobState analyzeTextJobState = AnalyzeTextJobState.FromResponse(operation.GetRawResponse());
 

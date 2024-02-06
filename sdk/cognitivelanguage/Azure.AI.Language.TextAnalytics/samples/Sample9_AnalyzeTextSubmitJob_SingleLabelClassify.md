@@ -18,7 +18,7 @@ The values of the `endpoint` and `apiKey` variables can be retrieved from enviro
 
 To perform custom single-label classification one or more text documents, call `SingleLabelClassifyAsync` on the `TextAnalyticsClient` by passing the documents as either an `IEnumerable<string>` parameter or an `IEnumerable<TextDocumentInput>` parameter. This returns a `ClassifyDocumentOperation`.
 
-```C# Snippet:Sample9_SingleLabelClassifyConvenienceAsync
+```C# Snippet:Sample9_AnalyzeTextSubmitJob_CustomSingleLabelClassificationLROTask
 string documentA =
     "I need a reservation for an indoor restaurant in China. Please don't stop the music. Play music and"
     + " add it to my playlist.";
@@ -34,7 +34,10 @@ MultiLanguageAnalysisInput multiLanguageAnalysisInput = new MultiLanguageAnalysi
 };
 
 // Specify the project and deployment names of the desired custom model. To train your own custom model to
-// classify your documents, see https://aka.ms/azsdk/textanalytics/customfunctionalities.
+// recognize custom entities, see https://aka.ms/azsdk/textanalytics/customentityrecognition.
+string projectName = "<projectName>";
+string deploymentName = "<deploymentName>";
+
 AnalyzeTextJobsInput analyzeTextJobsInput = new AnalyzeTextJobsInput(multiLanguageAnalysisInput, new AnalyzeTextLROTask[]
 {
     new CustomSingleLabelClassificationLROTask()
@@ -47,7 +50,7 @@ Operation operation = client.AnalyzeTextSubmitJob(WaitUntil.Completed, analyzeTe
 
 Using `WaitUntil.Completed` means that the long-running operation will be automatically polled until it has completed. You can then view the results of the custom single-label classification, including any errors that might have occurred:
 
-```C# Snippet:Sample9_SingleLabelClassifyConvenienceAsync_ViewResults
+```C# Snippet:Sample9_AnalyzeTextSubmitJob_CustomSingleLabelClassificationLROTask_ViewResults
 // View the operation results.
 AnalyzeTextJobState analyzeTextJobState = AnalyzeTextJobState.FromResponse(operation.GetRawResponse());
 

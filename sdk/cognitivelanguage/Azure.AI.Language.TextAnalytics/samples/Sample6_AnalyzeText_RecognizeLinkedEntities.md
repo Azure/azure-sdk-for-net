@@ -18,7 +18,7 @@ The values of the `endpoint` and `apiKey` variables can be retrieved from enviro
 
 To recognize linked entities in multiple documents, call `AnalyzeText` on an AnalyzeTextEntityLinkingInput.  The results are returned as a `EntityLinkingTaskResult`.
 
-```C# Snippet:Sample6_RecognizeLinkedEntitiesBatchConvenience
+```C# Snippet:Sample6_AnalyzeText_RecognizeLinkedEntities
 string documentA =
     "Microsoft was founded by Bill Gates with some friends he met at Harvard. One of his friends, Steve"
     + " Ballmer, eventually became CEO after Bill Gates as well.Steve Ballmer eventually stepped down as"

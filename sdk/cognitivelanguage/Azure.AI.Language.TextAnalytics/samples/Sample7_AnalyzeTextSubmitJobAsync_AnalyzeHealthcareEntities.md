@@ -18,7 +18,7 @@ The values of the `endpoint` and `apiKey` variables can be retrieved from enviro
 
 To analyze healthcare entities in one or more text documents, call `AnalyzeHealthcareEntitiesAsync` on the `TextAnalyticsClient` by passing the documents as either an `IEnumerable<string>` parameter or an `IEnumerable<TextDocumentInput>` parameter. This returns an `AnalyzeHealthcareEntitiesOperation`.
 
-```C# Snippet:Sample7_AnalyzeHealthcareEntitiesConvenienceAsync_PerformOperation
+```C# Snippet:Sample7_AnalyzeTextSubmitJobAsync_HealthcareLROTask_PerformOperation
 string documentA =
     "RECORD #333582770390100 | MH | 85986313 | | 054351 | 2/14/2001 12:00:00 AM |"
     + " CORONARY ARTERY DISEASE | Signed | DIS |"
@@ -60,7 +60,7 @@ Operation operation = await client.AnalyzeTextSubmitJobAsync(WaitUntil.Completed
 
 Using `WaitUntil.Completed` means that the long-running operation will be automatically polled until it has completed. You can then view the results of the healthcare entities analysis, including any errors that might have occurred:
 
-```C# Snippet:Sample7_AnalyzeHealthcareEntitiesConvenienceAsync_ViewResults
+```C# Snippet:Sample7_AnalyzeTextSubmitJob_HealthcareLROTask_ViewResults
 AnalyzeTextJobState analyzeTextJobState = AnalyzeTextJobState.FromResponse(operation.GetRawResponse());
 
 foreach (AnalyzeTextLROResult analyzeTextLROResult in analyzeTextJobState.Tasks.Items)

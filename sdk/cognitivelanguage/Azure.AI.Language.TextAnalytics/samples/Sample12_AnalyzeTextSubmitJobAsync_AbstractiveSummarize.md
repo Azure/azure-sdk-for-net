@@ -18,7 +18,7 @@ The values of the `endpoint` and `apiKey` variables can be retrieved from enviro
 
 To summarize one or more text documents using abstractive summarization, call `AbstractiveSummarize` on the `TextAnalyticsClient` by passing the documents as either an `IEnumerable<string>` parameter or an `IEnumerable<TextDocumentInput>` parameter. This returns an `AbstractiveSummarizeOperation`.
 
-```C# Snippet:Sample12_AbstractiveSummarizeConvenienceAsync
+```C# Snippet:Sample12_AnalyzeTextSubmitJobAsync_AbstractiveSummarizationLROTask
 string document =
     "Windows 365 was in the works before COVID-19 sent companies around the world on a scramble to secure"
     + " solutions to support employees suddenly forced to work from home, but “what really put the"
@@ -75,7 +75,7 @@ Operation operation = await client.AnalyzeTextSubmitJobAsync(WaitUntil.Completed
 
 Using `WaitUntil.Completed` means that the long-running operation will be automatically polled until it has completed. You can then view the results of the abstractive summarization, including any errors that might have occurred:
 
-```C# Snippet:Sample12_AbstractiveSummarizeConvenienceAsync_ViewResults
+```C# Snippet:Sample12_AnalyzeTextSubmitJobAsync_AbstractiveSummarizationLROTask_ViewResults
 // View the operation results.
 AnalyzeTextJobState analyzeTextJobState = AnalyzeTextJobState.FromResponse(operation.GetRawResponse());
 

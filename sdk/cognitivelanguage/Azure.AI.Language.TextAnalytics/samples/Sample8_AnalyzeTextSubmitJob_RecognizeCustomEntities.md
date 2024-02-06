@@ -18,7 +18,7 @@ The values of the `endpoint` and `apiKey` variables can be retrieved from enviro
 
 To perform custom NER on one or more text documents, call `RecognizeCustomEntitiesAsync` on the `TextAnalyticsClient` by passing the documents as either an `IEnumerable<string>` parameter or an `IEnumerable<TextDocumentInput>` parameter. This returns a `RecognizeCustomEntitiesOperation`.
 
-```C# Snippet:Sample8_RecognizeCustomEntitiesAsync
+```C# Snippet:Sample8_AnalyzeTextSubmitJob_CustomEntitiesLROTask
 string documentA =
     "We love this trail and make the trip every year. The views are breathtaking and well worth the hike!"
     + " Yesterday was foggy though, so we missed the spectacular views. We tried again today and it was"
@@ -59,7 +59,7 @@ Operation operation = client.AnalyzeTextSubmitJob(WaitUntil.Completed, analyzeTe
 
 Using `WaitUntil.Completed` means that the long-running operation will be automatically polled until it has completed. You can then view the results of the custom NER, including any errors that might have occurred:
 
-```C# Snippet:Sample8_RecognizeCustomEntitiesAsync_ViewResults
+```C# Snippet:Sample8_AnalyzeTextSubmitJob_CustomEntitiesLROTask_ViewResults
 AnalyzeTextJobState analyzeTextJobState = AnalyzeTextJobState.FromResponse(operation.GetRawResponse());
 
 foreach (AnalyzeTextLROResult analyzeTextLROResult in analyzeTextJobState.Tasks.Items)
@@ -81,7 +81,7 @@ foreach (AnalyzeTextLROResult analyzeTextLROResult in analyzeTextJobState.Tasks.
                 Console.WriteLine($"  Offset: {entity.Offset}");
                 Console.WriteLine($"  Length: {entity.Length}");
                 Console.WriteLine($"  ConfidenceScore: {entity.ConfidenceScore}");
-                Console.WriteLine($"  SubCategory: {entity.SubCategory}");
+                Console.WriteLine($"  Subcategory: {entity.Subcategory}");
                 Console.WriteLine();
             }
         }
