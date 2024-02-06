@@ -42,7 +42,15 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             if (Optional.IsDefined(ControlPlaneNodeConfiguration))
             {
                 writer.WritePropertyName("controlPlaneNodeConfiguration"u8);
-                writer.WriteObjectValue(ControlPlaneNodeConfiguration);
+                BinaryData data = ModelReaderWriter.Write(ControlPlaneNodeConfiguration, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsDefined(KubernetesVersion))
             {

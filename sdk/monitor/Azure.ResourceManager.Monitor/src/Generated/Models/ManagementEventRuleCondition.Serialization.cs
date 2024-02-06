@@ -29,14 +29,30 @@ namespace Azure.ResourceManager.Monitor.Models
             if (Optional.IsDefined(Aggregation))
             {
                 writer.WritePropertyName("aggregation"u8);
-                writer.WriteObjectValue(Aggregation);
+                BinaryData data = ModelReaderWriter.Write(Aggregation, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             writer.WritePropertyName("odata.type"u8);
             writer.WriteStringValue(OdataType);
             if (Optional.IsDefined(DataSource))
             {
                 writer.WritePropertyName("dataSource"u8);
-                writer.WriteObjectValue(DataSource);
+                BinaryData data = ModelReaderWriter.Write(DataSource, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

@@ -30,7 +30,15 @@ namespace Azure.AI.OpenAI
             writer.WritePropertyName("prompt_index"u8);
             writer.WriteNumberValue(PromptIndex);
             writer.WritePropertyName("content_filter_results"u8);
-            writer.WriteObjectValue(ContentFilterResults);
+            BinaryData data = ModelReaderWriter.Write(ContentFilterResults, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+            using (JsonDocument document = JsonDocument.Parse(data))
+            {
+                JsonSerializer.Serialize(writer, document.RootElement);
+            }
+#endif
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)

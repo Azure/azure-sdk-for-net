@@ -32,7 +32,15 @@ namespace Azure.AI.OpenAI.Assistants
             if (Optional.IsDefined(Thread))
             {
                 writer.WritePropertyName("thread"u8);
-                writer.WriteObjectValue(Thread);
+                BinaryData data = ModelReaderWriter.Write(Thread, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsDefined(OverrideModelName))
             {
@@ -50,7 +58,15 @@ namespace Azure.AI.OpenAI.Assistants
                 writer.WriteStartArray();
                 foreach (var item in OverrideTools)
                 {
-                    writer.WriteObjectValue(item);
+                    BinaryData data = ModelReaderWriter.Write(item, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(data))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
                 }
                 writer.WriteEndArray();
             }

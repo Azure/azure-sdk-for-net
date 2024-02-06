@@ -30,12 +30,28 @@ namespace Azure.AI.OpenAI
             if (Optional.IsDefined(Grounding))
             {
                 writer.WritePropertyName("grounding"u8);
-                writer.WriteObjectValue(Grounding);
+                BinaryData data = ModelReaderWriter.Write(Grounding, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsDefined(Ocr))
             {
                 writer.WritePropertyName("ocr"u8);
-                writer.WriteObjectValue(Ocr);
+                BinaryData data = ModelReaderWriter.Write(Ocr, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

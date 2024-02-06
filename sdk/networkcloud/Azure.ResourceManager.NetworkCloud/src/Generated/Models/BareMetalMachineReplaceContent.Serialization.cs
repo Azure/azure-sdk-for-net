@@ -29,7 +29,15 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             if (Optional.IsDefined(BmcCredentials))
             {
                 writer.WritePropertyName("bmcCredentials"u8);
-                writer.WriteObjectValue(BmcCredentials);
+                BinaryData data = ModelReaderWriter.Write(BmcCredentials, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsDefined(BmcMacAddress))
             {

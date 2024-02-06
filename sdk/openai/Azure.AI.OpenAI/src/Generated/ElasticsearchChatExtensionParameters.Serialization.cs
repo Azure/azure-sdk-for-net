@@ -30,7 +30,15 @@ namespace Azure.AI.OpenAI
             if (Optional.IsDefined(Authentication))
             {
                 writer.WritePropertyName("authentication"u8);
-                writer.WriteObjectValue(Authentication);
+                BinaryData data = ModelReaderWriter.Write(Authentication, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsDefined(DocumentCount))
             {
@@ -59,7 +67,15 @@ namespace Azure.AI.OpenAI
             if (Optional.IsDefined(FieldMappingOptions))
             {
                 writer.WritePropertyName("fieldsMapping"u8);
-                writer.WriteObjectValue(FieldMappingOptions);
+                BinaryData data = ModelReaderWriter.Write(FieldMappingOptions, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsDefined(QueryType))
             {
@@ -69,7 +85,15 @@ namespace Azure.AI.OpenAI
             if (Optional.IsDefined(EmbeddingDependency))
             {
                 writer.WritePropertyName("embeddingDependency"u8);
-                writer.WriteObjectValue(EmbeddingDependency);
+                BinaryData data = ModelReaderWriter.Write(EmbeddingDependency, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
