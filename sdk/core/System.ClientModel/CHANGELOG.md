@@ -4,7 +4,7 @@
 
 ### Features Added
 
-- Added `ExtractResponse` to `PipelineMessage` to enable returning an undisposed `PipelineResponse` from protocol methods.
+- Added `ExtractResponse` method to `PipelineMessage` to enable returning an undisposed `PipelineResponse` from protocol methods.
 
 ### Breaking Changes
 
