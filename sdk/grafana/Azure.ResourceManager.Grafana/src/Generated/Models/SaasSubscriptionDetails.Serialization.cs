@@ -44,7 +44,15 @@ namespace Azure.ResourceManager.Grafana.Models
             if (Optional.IsDefined(Term))
             {
                 writer.WritePropertyName("term"u8);
-                writer.WriteObjectValue(Term);
+                BinaryData data = ModelReaderWriter.Write(Term, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

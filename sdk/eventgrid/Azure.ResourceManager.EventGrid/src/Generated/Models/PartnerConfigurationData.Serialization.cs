@@ -66,7 +66,15 @@ namespace Azure.ResourceManager.EventGrid
             if (Optional.IsDefined(PartnerAuthorization))
             {
                 writer.WritePropertyName("partnerAuthorization"u8);
-                writer.WriteObjectValue(PartnerAuthorization);
+                BinaryData data = ModelReaderWriter.Write(PartnerAuthorization, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsDefined(ProvisioningState))
             {

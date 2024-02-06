@@ -99,7 +99,15 @@ namespace Azure.ResourceManager.FrontDoor
                 if (CustomHttpsConfiguration != null)
                 {
                     writer.WritePropertyName("customHttpsConfiguration"u8);
-                    writer.WriteObjectValue(CustomHttpsConfiguration);
+                    BinaryData data = ModelReaderWriter.Write(CustomHttpsConfiguration, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(data))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
                 }
                 else
                 {

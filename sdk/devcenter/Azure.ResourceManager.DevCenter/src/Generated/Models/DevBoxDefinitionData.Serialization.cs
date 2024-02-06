@@ -66,12 +66,28 @@ namespace Azure.ResourceManager.DevCenter
             if (Optional.IsDefined(ImageReference))
             {
                 writer.WritePropertyName("imageReference"u8);
-                writer.WriteObjectValue(ImageReference);
+                BinaryData data = ModelReaderWriter.Write(ImageReference, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku);
+                BinaryData data = ModelReaderWriter.Write(Sku, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsDefined(OSStorageType))
             {
@@ -96,12 +112,28 @@ namespace Azure.ResourceManager.DevCenter
             if (options.Format != "W" && Optional.IsDefined(ImageValidationErrorDetails))
             {
                 writer.WritePropertyName("imageValidationErrorDetails"u8);
-                writer.WriteObjectValue(ImageValidationErrorDetails);
+                BinaryData data = ModelReaderWriter.Write(ImageValidationErrorDetails, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (options.Format != "W" && Optional.IsDefined(ActiveImageReference))
             {
                 writer.WritePropertyName("activeImageReference"u8);
-                writer.WriteObjectValue(ActiveImageReference);
+                BinaryData data = ModelReaderWriter.Write(ActiveImageReference, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)

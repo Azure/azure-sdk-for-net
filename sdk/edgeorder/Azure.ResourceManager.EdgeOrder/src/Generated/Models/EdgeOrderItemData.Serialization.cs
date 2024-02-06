@@ -64,9 +64,25 @@ namespace Azure.ResourceManager.EdgeOrder
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             writer.WritePropertyName("orderItemDetails"u8);
-            writer.WriteObjectValue(OrderItemDetails);
+            BinaryData data = ModelReaderWriter.Write(OrderItemDetails, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+            using (JsonDocument document = JsonDocument.Parse(data))
+            {
+                JsonSerializer.Serialize(writer, document.RootElement);
+            }
+#endif
             writer.WritePropertyName("addressDetails"u8);
-            writer.WriteObjectValue(AddressDetails);
+            BinaryData data0 = ModelReaderWriter.Write(AddressDetails, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data0);
+#else
+            using (JsonDocument document = JsonDocument.Parse(data0))
+            {
+                JsonSerializer.Serialize(writer, document.RootElement);
+            }
+#endif
             if (options.Format != "W" && Optional.IsDefined(StartOn))
             {
                 writer.WritePropertyName("startTime"u8);

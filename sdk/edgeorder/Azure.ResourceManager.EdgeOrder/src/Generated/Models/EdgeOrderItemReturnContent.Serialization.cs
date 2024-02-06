@@ -29,7 +29,15 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             if (Optional.IsDefined(ReturnAddress))
             {
                 writer.WritePropertyName("returnAddress"u8);
-                writer.WriteObjectValue(ReturnAddress);
+                BinaryData data = ModelReaderWriter.Write(ReturnAddress, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             writer.WritePropertyName("returnReason"u8);
             writer.WriteStringValue(ReturnReason);

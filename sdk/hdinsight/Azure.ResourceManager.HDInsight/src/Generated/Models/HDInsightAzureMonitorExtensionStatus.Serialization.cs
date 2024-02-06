@@ -39,7 +39,15 @@ namespace Azure.ResourceManager.HDInsight.Models
             if (Optional.IsDefined(SelectedConfigurations))
             {
                 writer.WritePropertyName("selectedConfigurations"u8);
-                writer.WriteObjectValue(SelectedConfigurations);
+                BinaryData data = ModelReaderWriter.Write(SelectedConfigurations, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

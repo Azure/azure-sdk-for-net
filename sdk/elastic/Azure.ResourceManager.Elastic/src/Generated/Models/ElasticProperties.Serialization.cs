@@ -29,12 +29,28 @@ namespace Azure.ResourceManager.Elastic.Models
             if (Optional.IsDefined(ElasticCloudUser))
             {
                 writer.WritePropertyName("elasticCloudUser"u8);
-                writer.WriteObjectValue(ElasticCloudUser);
+                BinaryData data = ModelReaderWriter.Write(ElasticCloudUser, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsDefined(ElasticCloudDeployment))
             {
                 writer.WritePropertyName("elasticCloudDeployment"u8);
-                writer.WriteObjectValue(ElasticCloudDeployment);
+                BinaryData data = ModelReaderWriter.Write(ElasticCloudDeployment, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

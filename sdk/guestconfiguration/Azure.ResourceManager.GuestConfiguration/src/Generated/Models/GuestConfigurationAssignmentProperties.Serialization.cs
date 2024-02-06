@@ -41,7 +41,15 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
             if (Optional.IsDefined(GuestConfiguration))
             {
                 writer.WritePropertyName("guestConfiguration"u8);
-                writer.WriteObjectValue(GuestConfiguration);
+                BinaryData data = ModelReaderWriter.Write(GuestConfiguration, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (options.Format != "W" && Optional.IsDefined(ComplianceStatus))
             {
@@ -87,7 +95,15 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
             if (Optional.IsDefined(LatestAssignmentReport))
             {
                 writer.WritePropertyName("latestAssignmentReport"u8);
-                writer.WriteObjectValue(LatestAssignmentReport);
+                BinaryData data = ModelReaderWriter.Write(LatestAssignmentReport, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsDefined(Context))
             {
@@ -138,7 +154,15 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                     writer.WriteStartArray();
                     foreach (var item in VmssVmList)
                     {
-                        writer.WriteObjectValue(item);
+                        BinaryData data = ModelReaderWriter.Write(item, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                        using (JsonDocument document = JsonDocument.Parse(data))
+                        {
+                            JsonSerializer.Serialize(writer, document.RootElement);
+                        }
+#endif
                     }
                     writer.WriteEndArray();
                 }

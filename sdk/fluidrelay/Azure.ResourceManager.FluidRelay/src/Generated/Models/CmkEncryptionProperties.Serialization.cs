@@ -29,7 +29,15 @@ namespace Azure.ResourceManager.FluidRelay.Models
             if (Optional.IsDefined(KeyEncryptionKeyIdentity))
             {
                 writer.WritePropertyName("keyEncryptionKeyIdentity"u8);
-                writer.WriteObjectValue(KeyEncryptionKeyIdentity);
+                BinaryData data = ModelReaderWriter.Write(KeyEncryptionKeyIdentity, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsDefined(KeyEncryptionKeyUri))
             {

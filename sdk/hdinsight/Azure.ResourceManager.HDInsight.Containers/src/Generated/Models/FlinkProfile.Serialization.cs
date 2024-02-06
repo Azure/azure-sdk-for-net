@@ -27,25 +27,65 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
 
             writer.WriteStartObject();
             writer.WritePropertyName("storage"u8);
-            writer.WriteObjectValue(Storage);
+            BinaryData data = ModelReaderWriter.Write(Storage, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+            using (JsonDocument document = JsonDocument.Parse(data))
+            {
+                JsonSerializer.Serialize(writer, document.RootElement);
+            }
+#endif
             if (Optional.IsDefined(NumReplicas))
             {
                 writer.WritePropertyName("numReplicas"u8);
                 writer.WriteNumberValue(NumReplicas.Value);
             }
             writer.WritePropertyName("jobManager"u8);
-            writer.WriteObjectValue(JobManager);
+            BinaryData data0 = ModelReaderWriter.Write(JobManager, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data0);
+#else
+            using (JsonDocument document = JsonDocument.Parse(data0))
+            {
+                JsonSerializer.Serialize(writer, document.RootElement);
+            }
+#endif
             if (Optional.IsDefined(HistoryServer))
             {
                 writer.WritePropertyName("historyServer"u8);
-                writer.WriteObjectValue(HistoryServer);
+                BinaryData data1 = ModelReaderWriter.Write(HistoryServer, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data1);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data1))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             writer.WritePropertyName("taskManager"u8);
-            writer.WriteObjectValue(TaskManager);
+            BinaryData data2 = ModelReaderWriter.Write(TaskManager, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data2);
+#else
+            using (JsonDocument document = JsonDocument.Parse(data2))
+            {
+                JsonSerializer.Serialize(writer, document.RootElement);
+            }
+#endif
             if (Optional.IsDefined(CatalogOptions))
             {
                 writer.WritePropertyName("catalogOptions"u8);
-                writer.WriteObjectValue(CatalogOptions);
+                BinaryData data1 = ModelReaderWriter.Write(CatalogOptions, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data1);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data1))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

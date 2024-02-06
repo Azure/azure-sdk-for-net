@@ -82,7 +82,15 @@ namespace Azure.ResourceManager.FrontDoor.Models
             if (Optional.IsDefined(RouteConfiguration))
             {
                 writer.WritePropertyName("routeConfiguration"u8);
-                writer.WriteObjectValue(RouteConfiguration);
+                BinaryData data = ModelReaderWriter.Write(RouteConfiguration, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsDefined(RulesEngine))
             {

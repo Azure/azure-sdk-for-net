@@ -44,12 +44,28 @@ namespace Azure.ResourceManager.EventGrid.Models
             if (Optional.IsDefined(RoutingEnrichments))
             {
                 writer.WritePropertyName("routingEnrichments"u8);
-                writer.WriteObjectValue(RoutingEnrichments);
+                BinaryData data = ModelReaderWriter.Write(RoutingEnrichments, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsDefined(ClientAuthentication))
             {
                 writer.WritePropertyName("clientAuthentication"u8);
-                writer.WriteObjectValue(ClientAuthentication);
+                BinaryData data = ModelReaderWriter.Write(ClientAuthentication, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsDefined(MaximumSessionExpiryInHours))
             {
@@ -64,7 +80,15 @@ namespace Azure.ResourceManager.EventGrid.Models
             if (Optional.IsDefined(RoutingIdentityInfo))
             {
                 writer.WritePropertyName("routingIdentityInfo"u8);
-                writer.WriteObjectValue(RoutingIdentityInfo);
+                BinaryData data = ModelReaderWriter.Write(RoutingIdentityInfo, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

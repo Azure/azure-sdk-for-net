@@ -29,7 +29,15 @@ namespace Azure.ResourceManager.HDInsight.Models
             if (Optional.IsDefined(ClientGroupInfo))
             {
                 writer.WritePropertyName("clientGroupInfo"u8);
-                writer.WriteObjectValue(ClientGroupInfo);
+                BinaryData data = ModelReaderWriter.Write(ClientGroupInfo, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsCollectionDefined(ConfigurationOverride))
             {

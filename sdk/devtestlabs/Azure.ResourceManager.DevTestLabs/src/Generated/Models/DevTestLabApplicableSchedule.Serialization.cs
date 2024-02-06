@@ -66,12 +66,28 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             if (Optional.IsDefined(LabVmsShutdown))
             {
                 writer.WritePropertyName("labVmsShutdown"u8);
-                writer.WriteObjectValue(LabVmsShutdown);
+                BinaryData data = ModelReaderWriter.Write(LabVmsShutdown, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsDefined(LabVmsStartup))
             {
                 writer.WritePropertyName("labVmsStartup"u8);
-                writer.WriteObjectValue(LabVmsStartup);
+                BinaryData data = ModelReaderWriter.Write(LabVmsStartup, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)

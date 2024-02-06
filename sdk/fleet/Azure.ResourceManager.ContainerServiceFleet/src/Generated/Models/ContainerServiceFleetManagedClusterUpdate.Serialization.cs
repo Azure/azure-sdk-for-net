@@ -27,11 +27,27 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
 
             writer.WriteStartObject();
             writer.WritePropertyName("upgrade"u8);
-            writer.WriteObjectValue(Upgrade);
+            BinaryData data = ModelReaderWriter.Write(Upgrade, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+            using (JsonDocument document = JsonDocument.Parse(data))
+            {
+                JsonSerializer.Serialize(writer, document.RootElement);
+            }
+#endif
             if (Optional.IsDefined(NodeImageSelection))
             {
                 writer.WritePropertyName("nodeImageSelection"u8);
-                writer.WriteObjectValue(NodeImageSelection);
+                BinaryData data0 = ModelReaderWriter.Write(NodeImageSelection, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data0);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data0))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

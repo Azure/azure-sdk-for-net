@@ -66,12 +66,28 @@ namespace Azure.ResourceManager.DevTestLabs
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
-                writer.WriteObjectValue(Identity);
+                BinaryData data = ModelReaderWriter.Write(Identity, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsDefined(SecretStore))
             {
                 writer.WritePropertyName("secretStore"u8);
-                writer.WriteObjectValue(SecretStore);
+                BinaryData data = ModelReaderWriter.Write(SecretStore, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (options.Format != "W" && Optional.IsDefined(CreatedOn))
             {

@@ -30,12 +30,28 @@ namespace Azure.Health.Insights.ClinicalMatching
             if (Optional.IsDefined(MinimumAge))
             {
                 writer.WritePropertyName("minimumAge"u8);
-                writer.WriteObjectValue(MinimumAge);
+                BinaryData data = ModelReaderWriter.Write(MinimumAge, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsDefined(MaximumAge))
             {
                 writer.WritePropertyName("maximumAge"u8);
-                writer.WriteObjectValue(MaximumAge);
+                BinaryData data = ModelReaderWriter.Write(MaximumAge, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

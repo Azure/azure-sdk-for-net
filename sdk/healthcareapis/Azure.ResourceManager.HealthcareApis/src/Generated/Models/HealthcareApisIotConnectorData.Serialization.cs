@@ -83,12 +83,28 @@ namespace Azure.ResourceManager.HealthcareApis
             if (Optional.IsDefined(IngestionEndpointConfiguration))
             {
                 writer.WritePropertyName("ingestionEndpointConfiguration"u8);
-                writer.WriteObjectValue(IngestionEndpointConfiguration);
+                BinaryData data = ModelReaderWriter.Write(IngestionEndpointConfiguration, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsDefined(DeviceMapping))
             {
                 writer.WritePropertyName("deviceMapping"u8);
-                writer.WriteObjectValue(DeviceMapping);
+                BinaryData data = ModelReaderWriter.Write(DeviceMapping, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)

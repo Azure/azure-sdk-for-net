@@ -30,12 +30,28 @@ namespace Azure.Health.Insights.CancerProfiling
             if (Optional.IsDefined(PatientDataEvidence))
             {
                 writer.WritePropertyName("patientDataEvidence"u8);
-                writer.WriteObjectValue(PatientDataEvidence);
+                BinaryData data = ModelReaderWriter.Write(PatientDataEvidence, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsDefined(PatientInfoEvidence))
             {
                 writer.WritePropertyName("patientInfoEvidence"u8);
-                writer.WriteObjectValue(PatientInfoEvidence);
+                BinaryData data = ModelReaderWriter.Write(PatientInfoEvidence, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsDefined(Importance))
             {

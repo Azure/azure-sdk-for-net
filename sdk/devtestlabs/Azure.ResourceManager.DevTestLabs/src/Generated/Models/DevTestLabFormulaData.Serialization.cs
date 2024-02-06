@@ -86,12 +86,28 @@ namespace Azure.ResourceManager.DevTestLabs
             if (Optional.IsDefined(FormulaContent))
             {
                 writer.WritePropertyName("formulaContent"u8);
-                writer.WriteObjectValue(FormulaContent);
+                BinaryData data = ModelReaderWriter.Write(FormulaContent, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsDefined(Vm))
             {
                 writer.WritePropertyName("vm"u8);
-                writer.WriteObjectValue(Vm);
+                BinaryData data = ModelReaderWriter.Write(Vm, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {

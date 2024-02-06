@@ -35,7 +35,15 @@ namespace Azure.Health.Insights.ClinicalMatching
             if (Optional.IsDefined(AcceptedAgeRange))
             {
                 writer.WritePropertyName("acceptedAgeRange"u8);
-                writer.WriteObjectValue(AcceptedAgeRange);
+                BinaryData data = ModelReaderWriter.Write(AcceptedAgeRange, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

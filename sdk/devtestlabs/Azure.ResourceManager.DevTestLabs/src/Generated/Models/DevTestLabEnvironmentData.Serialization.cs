@@ -66,7 +66,15 @@ namespace Azure.ResourceManager.DevTestLabs
             if (Optional.IsDefined(DeploymentProperties))
             {
                 writer.WritePropertyName("deploymentProperties"u8);
-                writer.WriteObjectValue(DeploymentProperties);
+                BinaryData data = ModelReaderWriter.Write(DeploymentProperties, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsDefined(ArmTemplateDisplayName))
             {

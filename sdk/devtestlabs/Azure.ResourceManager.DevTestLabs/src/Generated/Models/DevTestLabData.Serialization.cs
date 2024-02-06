@@ -131,12 +131,28 @@ namespace Azure.ResourceManager.DevTestLabs
             if (Optional.IsDefined(Announcement))
             {
                 writer.WritePropertyName("announcement"u8);
-                writer.WriteObjectValue(Announcement);
+                BinaryData data = ModelReaderWriter.Write(Announcement, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsDefined(Support))
             {
                 writer.WritePropertyName("support"u8);
-                writer.WriteObjectValue(Support);
+                BinaryData data = ModelReaderWriter.Write(Support, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (options.Format != "W" && Optional.IsDefined(VmCreationResourceGroup))
             {

@@ -58,7 +58,15 @@ namespace Azure.ResourceManager.EventGrid
             if (Optional.IsDefined(DeliveryConfiguration))
             {
                 writer.WritePropertyName("deliveryConfiguration"u8);
-                writer.WriteObjectValue(DeliveryConfiguration);
+                BinaryData data = ModelReaderWriter.Write(DeliveryConfiguration, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsDefined(EventDeliverySchema))
             {
@@ -68,7 +76,15 @@ namespace Azure.ResourceManager.EventGrid
             if (Optional.IsDefined(FiltersConfiguration))
             {
                 writer.WritePropertyName("filtersConfiguration"u8);
-                writer.WriteObjectValue(FiltersConfiguration);
+                BinaryData data = ModelReaderWriter.Write(FiltersConfiguration, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)

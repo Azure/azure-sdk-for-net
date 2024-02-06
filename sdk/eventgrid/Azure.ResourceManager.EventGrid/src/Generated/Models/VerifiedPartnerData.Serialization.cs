@@ -68,12 +68,28 @@ namespace Azure.ResourceManager.EventGrid
             if (Optional.IsDefined(PartnerTopicDetails))
             {
                 writer.WritePropertyName("partnerTopicDetails"u8);
-                writer.WriteObjectValue(PartnerTopicDetails);
+                BinaryData data = ModelReaderWriter.Write(PartnerTopicDetails, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsDefined(PartnerDestinationDetails))
             {
                 writer.WritePropertyName("partnerDestinationDetails"u8);
-                writer.WriteObjectValue(PartnerDestinationDetails);
+                BinaryData data = ModelReaderWriter.Write(PartnerDestinationDetails, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsDefined(ProvisioningState))
             {

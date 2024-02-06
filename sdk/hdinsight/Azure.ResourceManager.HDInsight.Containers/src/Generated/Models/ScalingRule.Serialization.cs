@@ -33,7 +33,15 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             writer.WritePropertyName("scalingMetric"u8);
             writer.WriteStringValue(ScalingMetric);
             writer.WritePropertyName("comparisonRule"u8);
-            writer.WriteObjectValue(ComparisonRule);
+            BinaryData data = ModelReaderWriter.Write(ComparisonRule, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+            using (JsonDocument document = JsonDocument.Parse(data))
+            {
+                JsonSerializer.Serialize(writer, document.RootElement);
+            }
+#endif
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
