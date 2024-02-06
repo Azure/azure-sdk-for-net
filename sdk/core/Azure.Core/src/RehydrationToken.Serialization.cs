@@ -5,18 +5,23 @@ using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
 
-#nullable enable
-
 namespace Azure.Core
 {
     public partial struct RehydrationToken : IJsonModel<RehydrationToken>
     {
         internal RehydrationToken DeserializeRehydrationToken(JsonElement element, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<RehydrationToken>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(RehydrationToken)} does not support '{format}' format.");
+            }
+
             if (element.ValueKind == JsonValueKind.Null)
             {
-                return default;
+                throw new InvalidOperationException("Cannot deserialize a null value to a non-nullable RehydrationToken");
             }
+
             string? id = null;
             string version = string.Empty;
             string headerSource = string.Empty;
@@ -34,7 +39,7 @@ namespace Azure.Core
                     {
                         continue;
                     }
-                    id = property.Value.GetString()!;
+                    id = property.Value.GetString();
                 }
                 if (property.NameEquals("version"u8))
                 {
