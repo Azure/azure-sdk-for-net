@@ -37,6 +37,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             AdditionalProperties = additionalProperties;
         }
 
+        /// <summary> Initializes a new instance of <see cref="DatasetCompression"/> for deserialization. </summary>
+        internal DatasetCompression()
+        {
+        }
+
         /// <summary> Type of dataset compression. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> DatasetCompressionType { get; set; }
         /// <summary> The dataset compression level. Type: string (or Expression with resultType string). </summary>

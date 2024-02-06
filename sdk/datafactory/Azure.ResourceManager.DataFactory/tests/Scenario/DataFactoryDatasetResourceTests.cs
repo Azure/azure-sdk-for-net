@@ -462,7 +462,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
 
         private async Task<DataFactoryLinkedServiceResource> CreateWebLinkedService(DataFactoryResource dataFactory, string linkedServiceName)
         {
-            WebLinkedServiceTypeProperties webLinkedServiceTypeProperties = new UnknownWebLinkedServiceTypeProperties("http://localhost", WebAuthenticationType.ClientCertificate);
+            WebLinkedServiceTypeProperties webLinkedServiceTypeProperties = new UnknownWebLinkedServiceTypeProperties("http://localhost", WebAuthenticationType.ClientCertificate, null);
 
             DataFactoryLinkedServiceData linkedService = new DataFactoryLinkedServiceData(new WebLinkedService(webLinkedServiceTypeProperties) { });
             var result = await dataFactory.GetDataFactoryLinkedServices().CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, linkedService);

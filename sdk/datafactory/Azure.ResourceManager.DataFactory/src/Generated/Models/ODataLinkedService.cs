@@ -66,6 +66,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             LinkedServiceType = linkedServiceType ?? "OData";
         }
 
+        /// <summary> Initializes a new instance of <see cref="ODataLinkedService"/> for deserialization. </summary>
+        internal ODataLinkedService()
+        {
+        }
+
         /// <summary> The URL of the OData service endpoint. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> Uri { get; set; }
         /// <summary> Type of authentication used to connect to the OData service. </summary>

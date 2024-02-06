@@ -70,6 +70,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             LinkedServiceType = linkedServiceType ?? "SnowflakeV2";
         }
 
+        /// <summary> Initializes a new instance of <see cref="SnowflakeV2LinkedService"/> for deserialization. </summary>
+        internal SnowflakeV2LinkedService()
+        {
+        }
+
         /// <summary> The account identifier of your Snowflake account, e.g. xy12345.east-us-2.azure. </summary>
         public DataFactoryElement<string> AccountIdentifier { get; set; }
         /// <summary> The name of the Snowflake user. </summary>

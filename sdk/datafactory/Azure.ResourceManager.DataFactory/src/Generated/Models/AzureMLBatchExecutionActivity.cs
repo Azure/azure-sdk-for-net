@@ -50,6 +50,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             ActivityType = activityType ?? "AzureMLBatchExecution";
         }
 
+        /// <summary> Initializes a new instance of <see cref="AzureMLBatchExecutionActivity"/> for deserialization. </summary>
+        internal AzureMLBatchExecutionActivity()
+        {
+        }
+
         /// <summary>
         /// Key,Value pairs to be passed to the Azure ML Batch Execution Service endpoint. Keys must match the names of web service parameters defined in the published Azure ML web service. Values will be passed in the GlobalParameters property of the Azure ML batch execution request.
         /// <para>

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -13,10 +14,18 @@ using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class CosmosDBSqlApiCollectionDataset : IUtf8JsonSerializable
+    public partial class CosmosDBSqlApiCollectionDataset : IUtf8JsonSerializable, IJsonModel<CosmosDBSqlApiCollectionDataset>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CosmosDBSqlApiCollectionDataset>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<CosmosDBSqlApiCollectionDataset>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<CosmosDBSqlApiCollectionDataset>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(CosmosDBSqlApiCollectionDataset)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(DatasetType);
@@ -95,8 +104,22 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteEndObject();
         }
 
-        internal static CosmosDBSqlApiCollectionDataset DeserializeCosmosDBSqlApiCollectionDataset(JsonElement element)
+        CosmosDBSqlApiCollectionDataset IJsonModel<CosmosDBSqlApiCollectionDataset>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<CosmosDBSqlApiCollectionDataset>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(CosmosDBSqlApiCollectionDataset)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeCosmosDBSqlApiCollectionDataset(document.RootElement, options);
+        }
+
+        internal static CosmosDBSqlApiCollectionDataset DeserializeCosmosDBSqlApiCollectionDataset(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -213,5 +236,36 @@ namespace Azure.ResourceManager.DataFactory.Models
             additionalProperties = additionalPropertiesDictionary;
             return new CosmosDBSqlApiCollectionDataset(type, description.Value, structure.Value, schema.Value, linkedServiceName, Optional.ToDictionary(parameters), Optional.ToList(annotations), folder.Value, additionalProperties, collectionName);
         }
+
+        BinaryData IPersistableModel<CosmosDBSqlApiCollectionDataset>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<CosmosDBSqlApiCollectionDataset>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(CosmosDBSqlApiCollectionDataset)} does not support '{options.Format}' format.");
+            }
+        }
+
+        CosmosDBSqlApiCollectionDataset IPersistableModel<CosmosDBSqlApiCollectionDataset>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<CosmosDBSqlApiCollectionDataset>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeCosmosDBSqlApiCollectionDataset(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(CosmosDBSqlApiCollectionDataset)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<CosmosDBSqlApiCollectionDataset>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

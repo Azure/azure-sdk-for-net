@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -13,10 +14,18 @@ using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class MicrosoftAccessSource : IUtf8JsonSerializable
+    public partial class MicrosoftAccessSource : IUtf8JsonSerializable, IJsonModel<MicrosoftAccessSource>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MicrosoftAccessSource>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<MicrosoftAccessSource>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<MicrosoftAccessSource>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(MicrosoftAccessSource)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Query))
             {
@@ -72,8 +81,22 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteEndObject();
         }
 
-        internal static MicrosoftAccessSource DeserializeMicrosoftAccessSource(JsonElement element)
+        MicrosoftAccessSource IJsonModel<MicrosoftAccessSource>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<MicrosoftAccessSource>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(MicrosoftAccessSource)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeMicrosoftAccessSource(document.RootElement, options);
+        }
+
+        internal static MicrosoftAccessSource DeserializeMicrosoftAccessSource(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -153,5 +176,36 @@ namespace Azure.ResourceManager.DataFactory.Models
             additionalProperties = additionalPropertiesDictionary;
             return new MicrosoftAccessSource(type, sourceRetryCount.Value, sourceRetryWait.Value, maxConcurrentConnections.Value, disableMetricsCollection.Value, additionalProperties, query.Value, additionalColumns.Value);
         }
+
+        BinaryData IPersistableModel<MicrosoftAccessSource>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MicrosoftAccessSource>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(MicrosoftAccessSource)} does not support '{options.Format}' format.");
+            }
+        }
+
+        MicrosoftAccessSource IPersistableModel<MicrosoftAccessSource>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MicrosoftAccessSource>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeMicrosoftAccessSource(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(MicrosoftAccessSource)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<MicrosoftAccessSource>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }
