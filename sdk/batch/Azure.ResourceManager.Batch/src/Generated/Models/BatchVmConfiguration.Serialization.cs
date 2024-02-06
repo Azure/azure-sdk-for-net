@@ -28,13 +28,29 @@ namespace Azure.ResourceManager.Batch.Models
 
             writer.WriteStartObject();
             writer.WritePropertyName("imageReference"u8);
-            writer.WriteObjectValue(ImageReference);
+            BinaryData data = ModelReaderWriter.Write(ImageReference, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+            using (JsonDocument document = JsonDocument.Parse(data))
+            {
+                JsonSerializer.Serialize(writer, document.RootElement);
+            }
+#endif
             writer.WritePropertyName("nodeAgentSkuId"u8);
             writer.WriteStringValue(NodeAgentSkuId);
             if (Optional.IsDefined(WindowsConfiguration))
             {
                 writer.WritePropertyName("windowsConfiguration"u8);
-                writer.WriteObjectValue(WindowsConfiguration);
+                BinaryData data0 = ModelReaderWriter.Write(WindowsConfiguration, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data0);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data0))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsCollectionDefined(DataDisks))
             {
@@ -42,7 +58,15 @@ namespace Azure.ResourceManager.Batch.Models
                 writer.WriteStartArray();
                 foreach (var item in DataDisks)
                 {
-                    writer.WriteObjectValue(item);
+                    BinaryData data0 = ModelReaderWriter.Write(item, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data0);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(data0))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
                 }
                 writer.WriteEndArray();
             }
@@ -54,17 +78,41 @@ namespace Azure.ResourceManager.Batch.Models
             if (Optional.IsDefined(ContainerConfiguration))
             {
                 writer.WritePropertyName("containerConfiguration"u8);
-                writer.WriteObjectValue(ContainerConfiguration);
+                BinaryData data0 = ModelReaderWriter.Write(ContainerConfiguration, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data0);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data0))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsDefined(DiskEncryptionConfiguration))
             {
                 writer.WritePropertyName("diskEncryptionConfiguration"u8);
-                writer.WriteObjectValue(DiskEncryptionConfiguration);
+                BinaryData data0 = ModelReaderWriter.Write(DiskEncryptionConfiguration, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data0);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data0))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsDefined(NodePlacementConfiguration))
             {
                 writer.WritePropertyName("nodePlacementConfiguration"u8);
-                writer.WriteObjectValue(NodePlacementConfiguration);
+                BinaryData data0 = ModelReaderWriter.Write(NodePlacementConfiguration, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data0);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data0))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsCollectionDefined(Extensions))
             {
@@ -72,19 +120,43 @@ namespace Azure.ResourceManager.Batch.Models
                 writer.WriteStartArray();
                 foreach (var item in Extensions)
                 {
-                    writer.WriteObjectValue(item);
+                    BinaryData data0 = ModelReaderWriter.Write(item, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data0);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(data0))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(OSDisk))
             {
                 writer.WritePropertyName("osDisk"u8);
-                writer.WriteObjectValue(OSDisk);
+                BinaryData data0 = ModelReaderWriter.Write(OSDisk, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data0);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data0))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsDefined(SecurityProfile))
             {
                 writer.WritePropertyName("securityProfile"u8);
-                writer.WriteObjectValue(SecurityProfile);
+                BinaryData data0 = ModelReaderWriter.Write(SecurityProfile, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data0);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data0))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsDefined(ServiceArtifactReference))
             {

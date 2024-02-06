@@ -108,7 +108,15 @@ namespace Azure.ResourceManager.Authorization
             if (Optional.IsDefined(TicketInfo))
             {
                 writer.WritePropertyName("ticketInfo"u8);
-                writer.WriteObjectValue(TicketInfo);
+                BinaryData data = ModelReaderWriter.Write(TicketInfo, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsDefined(Condition))
             {
@@ -133,7 +141,15 @@ namespace Azure.ResourceManager.Authorization
             if (options.Format != "W" && Optional.IsDefined(ExpandedProperties))
             {
                 writer.WritePropertyName("expandedProperties"u8);
-                writer.WriteObjectValue(ExpandedProperties);
+                BinaryData data = ModelReaderWriter.Write(ExpandedProperties, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             writer.WritePropertyName("scheduleInfo"u8);
             writer.WriteStartObject();

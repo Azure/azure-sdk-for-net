@@ -49,22 +49,54 @@ namespace Azure.ResourceManager.AppPlatform.Models
             if (Optional.IsDefined(SsoProperties))
             {
                 writer.WritePropertyName("ssoProperties"u8);
-                writer.WriteObjectValue(SsoProperties);
+                BinaryData data = ModelReaderWriter.Write(SsoProperties, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsDefined(ApiMetadataProperties))
             {
                 writer.WritePropertyName("apiMetadataProperties"u8);
-                writer.WriteObjectValue(ApiMetadataProperties);
+                BinaryData data = ModelReaderWriter.Write(ApiMetadataProperties, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsDefined(CorsProperties))
             {
                 writer.WritePropertyName("corsProperties"u8);
-                writer.WriteObjectValue(CorsProperties);
+                BinaryData data = ModelReaderWriter.Write(CorsProperties, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsDefined(ResourceRequests))
             {
                 writer.WritePropertyName("resourceRequests"u8);
-                writer.WriteObjectValue(ResourceRequests);
+                BinaryData data = ModelReaderWriter.Write(ResourceRequests, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(Instances))
             {
@@ -72,14 +104,30 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 writer.WriteStartArray();
                 foreach (var item in Instances)
                 {
-                    writer.WriteObjectValue(item);
+                    BinaryData data = ModelReaderWriter.Write(item, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(data))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
                 }
                 writer.WriteEndArray();
             }
             if (options.Format != "W" && Optional.IsDefined(OperatorProperties))
             {
                 writer.WritePropertyName("operatorProperties"u8);
-                writer.WriteObjectValue(OperatorProperties);
+                BinaryData data = ModelReaderWriter.Write(OperatorProperties, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

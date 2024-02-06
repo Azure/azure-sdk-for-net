@@ -29,7 +29,15 @@ namespace Azure.ResourceManager.Analysis.Models
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku);
+                BinaryData data = ModelReaderWriter.Write(Sku, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -47,7 +55,15 @@ namespace Azure.ResourceManager.Analysis.Models
             if (Optional.IsDefined(AsAdministrators))
             {
                 writer.WritePropertyName("asAdministrators"u8);
-                writer.WriteObjectValue(AsAdministrators);
+                BinaryData data = ModelReaderWriter.Write(AsAdministrators, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsDefined(BackupBlobContainerUri))
             {
@@ -57,12 +73,28 @@ namespace Azure.ResourceManager.Analysis.Models
             if (Optional.IsDefined(GatewayDetails))
             {
                 writer.WritePropertyName("gatewayDetails"u8);
-                writer.WriteObjectValue(GatewayDetails);
+                BinaryData data = ModelReaderWriter.Write(GatewayDetails, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsDefined(IPV4FirewallSettings))
             {
                 writer.WritePropertyName("ipV4FirewallSettings"u8);
-                writer.WriteObjectValue(IPV4FirewallSettings);
+                BinaryData data = ModelReaderWriter.Write(IPV4FirewallSettings, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsDefined(QuerypoolConnectionMode))
             {

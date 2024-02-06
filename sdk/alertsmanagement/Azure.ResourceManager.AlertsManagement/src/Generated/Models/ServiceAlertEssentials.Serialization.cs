@@ -114,7 +114,15 @@ namespace Azure.ResourceManager.AlertsManagement.Models
             if (Optional.IsDefined(ActionStatus))
             {
                 writer.WritePropertyName("actionStatus"u8);
-                writer.WriteObjectValue(ActionStatus);
+                BinaryData data = ModelReaderWriter.Write(ActionStatus, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsDefined(Description))
             {

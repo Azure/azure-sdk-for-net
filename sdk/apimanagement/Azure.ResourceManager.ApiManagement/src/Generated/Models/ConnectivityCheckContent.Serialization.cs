@@ -27,9 +27,25 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
             writer.WriteStartObject();
             writer.WritePropertyName("source"u8);
-            writer.WriteObjectValue(Source);
+            BinaryData data = ModelReaderWriter.Write(Source, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+            using (JsonDocument document = JsonDocument.Parse(data))
+            {
+                JsonSerializer.Serialize(writer, document.RootElement);
+            }
+#endif
             writer.WritePropertyName("destination"u8);
-            writer.WriteObjectValue(Destination);
+            BinaryData data0 = ModelReaderWriter.Write(Destination, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data0);
+#else
+            using (JsonDocument document = JsonDocument.Parse(data0))
+            {
+                JsonSerializer.Serialize(writer, document.RootElement);
+            }
+#endif
             if (Optional.IsDefined(PreferredIPVersion))
             {
                 writer.WritePropertyName("preferredIPVersion"u8);
@@ -43,7 +59,15 @@ namespace Azure.ResourceManager.ApiManagement.Models
             if (Optional.IsDefined(ProtocolConfiguration))
             {
                 writer.WritePropertyName("protocolConfiguration"u8);
-                writer.WriteObjectValue(ProtocolConfiguration);
+                BinaryData data1 = ModelReaderWriter.Write(ProtocolConfiguration, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data1);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data1))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

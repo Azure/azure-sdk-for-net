@@ -54,7 +54,15 @@ namespace Azure.ResourceManager.ArcScVmm.Models
             if (Optional.IsDefined(Cloud))
             {
                 writer.WritePropertyName("cloud"u8);
-                writer.WriteObjectValue(Cloud);
+                BinaryData data = ModelReaderWriter.Write(Cloud, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             writer.WritePropertyName("inventoryType"u8);
             writer.WriteStringValue(InventoryType.ToString());

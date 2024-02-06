@@ -50,7 +50,15 @@ namespace Azure.ResourceManager.Batch.Models
             if (Optional.IsDefined(AutoStorage))
             {
                 writer.WritePropertyName("autoStorage"u8);
-                writer.WriteObjectValue(AutoStorage);
+                BinaryData data = ModelReaderWriter.Write(AutoStorage, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsDefined(PoolAllocationMode))
             {
@@ -60,7 +68,15 @@ namespace Azure.ResourceManager.Batch.Models
             if (Optional.IsDefined(KeyVaultReference))
             {
                 writer.WritePropertyName("keyVaultReference"u8);
-                writer.WriteObjectValue(KeyVaultReference);
+                BinaryData data = ModelReaderWriter.Write(KeyVaultReference, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsDefined(PublicNetworkAccess))
             {
@@ -70,12 +86,28 @@ namespace Azure.ResourceManager.Batch.Models
             if (Optional.IsDefined(NetworkProfile))
             {
                 writer.WritePropertyName("networkProfile"u8);
-                writer.WriteObjectValue(NetworkProfile);
+                BinaryData data = ModelReaderWriter.Write(NetworkProfile, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsDefined(Encryption))
             {
                 writer.WritePropertyName("encryption"u8);
-                writer.WriteObjectValue(Encryption);
+                BinaryData data = ModelReaderWriter.Write(Encryption, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsCollectionDefined(AllowedAuthenticationModes))
             {

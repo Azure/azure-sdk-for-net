@@ -30,12 +30,28 @@ namespace Azure.AI.AnomalyDetector
             writer.WritePropertyName("resultId"u8);
             writer.WriteStringValue(ResultId);
             writer.WritePropertyName("summary"u8);
-            writer.WriteObjectValue(Summary);
+            BinaryData data = ModelReaderWriter.Write(Summary, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+            using (JsonDocument document = JsonDocument.Parse(data))
+            {
+                JsonSerializer.Serialize(writer, document.RootElement);
+            }
+#endif
             writer.WritePropertyName("results"u8);
             writer.WriteStartArray();
             foreach (var item in Results)
             {
-                writer.WriteObjectValue(item);
+                BinaryData data0 = ModelReaderWriter.Write(item, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data0);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data0))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             writer.WriteEndArray();
             if (options.Format != "W" && _serializedAdditionalRawData != null)

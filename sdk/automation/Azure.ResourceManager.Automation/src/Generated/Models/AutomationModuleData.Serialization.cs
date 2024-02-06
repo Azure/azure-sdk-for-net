@@ -97,12 +97,28 @@ namespace Azure.ResourceManager.Automation
             if (Optional.IsDefined(ContentLink))
             {
                 writer.WritePropertyName("contentLink"u8);
-                writer.WriteObjectValue(ContentLink);
+                BinaryData data = ModelReaderWriter.Write(ContentLink, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsDefined(Error))
             {
                 writer.WritePropertyName("error"u8);
-                writer.WriteObjectValue(Error);
+                BinaryData data = ModelReaderWriter.Write(Error, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsDefined(CreatedOn))
             {

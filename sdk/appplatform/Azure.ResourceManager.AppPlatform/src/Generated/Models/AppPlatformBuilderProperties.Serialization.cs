@@ -34,7 +34,15 @@ namespace Azure.ResourceManager.AppPlatform.Models
             if (Optional.IsDefined(Stack))
             {
                 writer.WritePropertyName("stack"u8);
-                writer.WriteObjectValue(Stack);
+                BinaryData data = ModelReaderWriter.Write(Stack, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsCollectionDefined(BuildpackGroups))
             {
@@ -42,7 +50,15 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 writer.WriteStartArray();
                 foreach (var item in BuildpackGroups)
                 {
-                    writer.WriteObjectValue(item);
+                    BinaryData data = ModelReaderWriter.Write(item, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(data))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
                 }
                 writer.WriteEndArray();
             }

@@ -37,7 +37,15 @@ namespace Azure.ResourceManager.Cdn.Models
             if (Optional.IsDefined(TlsSettings))
             {
                 writer.WritePropertyName("tlsSettings"u8);
-                writer.WriteObjectValue(TlsSettings);
+                BinaryData data = ModelReaderWriter.Write(TlsSettings, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsDefined(DnsZone))
             {
@@ -49,7 +57,15 @@ namespace Azure.ResourceManager.Cdn.Models
                 if (PreValidatedCustomDomainResource != null)
                 {
                     writer.WritePropertyName("preValidatedCustomDomainResourceId"u8);
-                    writer.WriteObjectValue(PreValidatedCustomDomainResource);
+                    BinaryData data = ModelReaderWriter.Write(PreValidatedCustomDomainResource, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(data))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
                 }
                 else
                 {

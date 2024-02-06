@@ -59,12 +59,28 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             if (Optional.IsDefined(Quota))
             {
                 writer.WritePropertyName("quota"u8);
-                writer.WriteObjectValue(Quota);
+                BinaryData data = ModelReaderWriter.Write(Quota, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsDefined(Cost))
             {
                 writer.WritePropertyName("cost"u8);
-                writer.WriteObjectValue(Cost);
+                BinaryData data = ModelReaderWriter.Write(Cost, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

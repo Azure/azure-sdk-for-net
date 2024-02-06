@@ -29,7 +29,15 @@ namespace Azure.ResourceManager.AppPlatform.Models
             if (Optional.IsDefined(CustomPersistentDiskProperties))
             {
                 writer.WritePropertyName("customPersistentDiskProperties"u8);
-                writer.WriteObjectValue(CustomPersistentDiskProperties);
+                BinaryData data = ModelReaderWriter.Write(CustomPersistentDiskProperties, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             writer.WritePropertyName("storageId"u8);
             writer.WriteStringValue(StorageId);

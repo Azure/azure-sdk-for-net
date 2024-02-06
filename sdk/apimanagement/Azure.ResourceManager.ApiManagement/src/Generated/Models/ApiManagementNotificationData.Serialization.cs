@@ -63,7 +63,15 @@ namespace Azure.ResourceManager.ApiManagement
             if (Optional.IsDefined(Recipients))
             {
                 writer.WritePropertyName("recipients"u8);
-                writer.WriteObjectValue(Recipients);
+                BinaryData data = ModelReaderWriter.Write(Recipients, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)

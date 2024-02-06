@@ -51,9 +51,25 @@ namespace Azure.ResourceManager.Automation
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             writer.WritePropertyName("updateConfiguration"u8);
-            writer.WriteObjectValue(UpdateConfiguration);
+            BinaryData data = ModelReaderWriter.Write(UpdateConfiguration, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+            using (JsonDocument document = JsonDocument.Parse(data))
+            {
+                JsonSerializer.Serialize(writer, document.RootElement);
+            }
+#endif
             writer.WritePropertyName("scheduleInfo"u8);
-            writer.WriteObjectValue(ScheduleInfo);
+            BinaryData data0 = ModelReaderWriter.Write(ScheduleInfo, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data0);
+#else
+            using (JsonDocument document = JsonDocument.Parse(data0))
+            {
+                JsonSerializer.Serialize(writer, document.RootElement);
+            }
+#endif
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
@@ -62,7 +78,15 @@ namespace Azure.ResourceManager.Automation
             if (Optional.IsDefined(Error))
             {
                 writer.WritePropertyName("error"u8);
-                writer.WriteObjectValue(Error);
+                BinaryData data1 = ModelReaderWriter.Write(Error, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data1);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data1))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (options.Format != "W" && Optional.IsDefined(CreatedOn))
             {
@@ -87,7 +111,15 @@ namespace Azure.ResourceManager.Automation
             if (Optional.IsDefined(Tasks))
             {
                 writer.WritePropertyName("tasks"u8);
-                writer.WriteObjectValue(Tasks);
+                BinaryData data1 = ModelReaderWriter.Write(Tasks, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data1);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data1))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)

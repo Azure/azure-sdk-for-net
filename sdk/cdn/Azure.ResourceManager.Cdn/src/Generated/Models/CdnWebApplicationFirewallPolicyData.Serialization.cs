@@ -36,7 +36,15 @@ namespace Azure.ResourceManager.Cdn
                 writer.WriteStringValue(ETag.Value.ToString());
             }
             writer.WritePropertyName("sku"u8);
-            writer.WriteObjectValue(Sku);
+            BinaryData data = ModelReaderWriter.Write(Sku, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+            using (JsonDocument document = JsonDocument.Parse(data))
+            {
+                JsonSerializer.Serialize(writer, document.RootElement);
+            }
+#endif
             if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
@@ -75,22 +83,54 @@ namespace Azure.ResourceManager.Cdn
             if (Optional.IsDefined(PolicySettings))
             {
                 writer.WritePropertyName("policySettings"u8);
-                writer.WriteObjectValue(PolicySettings);
+                BinaryData data0 = ModelReaderWriter.Write(PolicySettings, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data0);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data0))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsDefined(RateLimitSettings))
             {
                 writer.WritePropertyName("rateLimitRules"u8);
-                writer.WriteObjectValue(RateLimitSettings);
+                BinaryData data0 = ModelReaderWriter.Write(RateLimitSettings, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data0);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data0))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsDefined(CustomSettings))
             {
                 writer.WritePropertyName("customRules"u8);
-                writer.WriteObjectValue(CustomSettings);
+                BinaryData data0 = ModelReaderWriter.Write(CustomSettings, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data0);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data0))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsDefined(ManagedRules))
             {
                 writer.WritePropertyName("managedRules"u8);
-                writer.WriteObjectValue(ManagedRules);
+                BinaryData data0 = ModelReaderWriter.Write(ManagedRules, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data0);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data0))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(EndpointLinks))
             {

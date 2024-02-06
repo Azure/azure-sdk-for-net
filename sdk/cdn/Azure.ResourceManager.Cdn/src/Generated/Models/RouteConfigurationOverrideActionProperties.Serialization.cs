@@ -33,7 +33,15 @@ namespace Azure.ResourceManager.Cdn.Models
                 if (OriginGroupOverride != null)
                 {
                     writer.WritePropertyName("originGroupOverride"u8);
-                    writer.WriteObjectValue(OriginGroupOverride);
+                    BinaryData data = ModelReaderWriter.Write(OriginGroupOverride, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(data))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
                 }
                 else
                 {
@@ -43,7 +51,15 @@ namespace Azure.ResourceManager.Cdn.Models
             if (Optional.IsDefined(CacheConfiguration))
             {
                 writer.WritePropertyName("cacheConfiguration"u8);
-                writer.WriteObjectValue(CacheConfiguration);
+                BinaryData data = ModelReaderWriter.Write(CacheConfiguration, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

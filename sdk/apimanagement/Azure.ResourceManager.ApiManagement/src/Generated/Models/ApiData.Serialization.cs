@@ -58,12 +58,28 @@ namespace Azure.ResourceManager.ApiManagement
             if (Optional.IsDefined(AuthenticationSettings))
             {
                 writer.WritePropertyName("authenticationSettings"u8);
-                writer.WriteObjectValue(AuthenticationSettings);
+                BinaryData data = ModelReaderWriter.Write(AuthenticationSettings, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsDefined(SubscriptionKeyParameterNames))
             {
                 writer.WritePropertyName("subscriptionKeyParameterNames"u8);
-                writer.WriteObjectValue(SubscriptionKeyParameterNames);
+                BinaryData data = ModelReaderWriter.Write(SubscriptionKeyParameterNames, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsDefined(ApiType))
             {
@@ -118,12 +134,28 @@ namespace Azure.ResourceManager.ApiManagement
             if (Optional.IsDefined(Contact))
             {
                 writer.WritePropertyName("contact"u8);
-                writer.WriteObjectValue(Contact);
+                BinaryData data = ModelReaderWriter.Write(Contact, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsDefined(License))
             {
                 writer.WritePropertyName("license"u8);
-                writer.WriteObjectValue(License);
+                BinaryData data = ModelReaderWriter.Write(License, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsDefined(SourceApiId))
             {
@@ -158,7 +190,15 @@ namespace Azure.ResourceManager.ApiManagement
             if (Optional.IsDefined(ApiVersionSet))
             {
                 writer.WritePropertyName("apiVersionSet"u8);
-                writer.WriteObjectValue(ApiVersionSet);
+                BinaryData data = ModelReaderWriter.Write(ApiVersionSet, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)

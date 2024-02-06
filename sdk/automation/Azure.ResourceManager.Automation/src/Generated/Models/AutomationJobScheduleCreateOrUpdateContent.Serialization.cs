@@ -29,9 +29,25 @@ namespace Azure.ResourceManager.Automation.Models
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             writer.WritePropertyName("schedule"u8);
-            writer.WriteObjectValue(Schedule);
+            BinaryData data = ModelReaderWriter.Write(Schedule, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+            using (JsonDocument document = JsonDocument.Parse(data))
+            {
+                JsonSerializer.Serialize(writer, document.RootElement);
+            }
+#endif
             writer.WritePropertyName("runbook"u8);
-            writer.WriteObjectValue(Runbook);
+            BinaryData data0 = ModelReaderWriter.Write(Runbook, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data0);
+#else
+            using (JsonDocument document = JsonDocument.Parse(data0))
+            {
+                JsonSerializer.Serialize(writer, document.RootElement);
+            }
+#endif
             if (Optional.IsDefined(RunOn))
             {
                 writer.WritePropertyName("runOn"u8);

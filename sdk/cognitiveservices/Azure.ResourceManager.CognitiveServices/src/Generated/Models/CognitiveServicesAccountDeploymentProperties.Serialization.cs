@@ -34,12 +34,28 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             if (Optional.IsDefined(Model))
             {
                 writer.WritePropertyName("model"u8);
-                writer.WriteObjectValue(Model);
+                BinaryData data = ModelReaderWriter.Write(Model, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsDefined(ScaleSettings))
             {
                 writer.WritePropertyName("scaleSettings"u8);
-                writer.WriteObjectValue(ScaleSettings);
+                BinaryData data = ModelReaderWriter.Write(ScaleSettings, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(Capabilities))
             {
@@ -60,7 +76,15 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             if (options.Format != "W" && Optional.IsDefined(CallRateLimit))
             {
                 writer.WritePropertyName("callRateLimit"u8);
-                writer.WriteObjectValue(CallRateLimit);
+                BinaryData data = ModelReaderWriter.Write(CallRateLimit, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(RateLimits))
             {
@@ -68,7 +92,15 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 writer.WriteStartArray();
                 foreach (var item in RateLimits)
                 {
-                    writer.WriteObjectValue(item);
+                    BinaryData data = ModelReaderWriter.Write(item, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(data))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
                 }
                 writer.WriteEndArray();
             }

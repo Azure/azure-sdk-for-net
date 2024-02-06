@@ -29,12 +29,28 @@ namespace Azure.ResourceManager.Batch.Models
             if (Optional.IsDefined(CloudServiceConfiguration))
             {
                 writer.WritePropertyName("cloudServiceConfiguration"u8);
-                writer.WriteObjectValue(CloudServiceConfiguration);
+                BinaryData data = ModelReaderWriter.Write(CloudServiceConfiguration, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsDefined(VmConfiguration))
             {
                 writer.WritePropertyName("virtualMachineConfiguration"u8);
-                writer.WriteObjectValue(VmConfiguration);
+                BinaryData data = ModelReaderWriter.Write(VmConfiguration, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

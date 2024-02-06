@@ -88,12 +88,28 @@ namespace Azure.ResourceManager.AppPlatform.Models
             if (Optional.IsDefined(TemporaryDisk))
             {
                 writer.WritePropertyName("temporaryDisk"u8);
-                writer.WriteObjectValue(TemporaryDisk);
+                BinaryData data = ModelReaderWriter.Write(TemporaryDisk, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsDefined(PersistentDisk))
             {
                 writer.WritePropertyName("persistentDisk"u8);
-                writer.WriteObjectValue(PersistentDisk);
+                BinaryData data = ModelReaderWriter.Write(PersistentDisk, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsCollectionDefined(CustomPersistentDisks))
             {
@@ -101,7 +117,15 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 writer.WriteStartArray();
                 foreach (var item in CustomPersistentDisks)
                 {
-                    writer.WriteObjectValue(item);
+                    BinaryData data = ModelReaderWriter.Write(item, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(data))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
                 }
                 writer.WriteEndArray();
             }
@@ -116,19 +140,43 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 writer.WriteStartArray();
                 foreach (var item in LoadedCertificates)
                 {
-                    writer.WriteObjectValue(item);
+                    BinaryData data = ModelReaderWriter.Write(item, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(data))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(VnetAddons))
             {
                 writer.WritePropertyName("vnetAddons"u8);
-                writer.WriteObjectValue(VnetAddons);
+                BinaryData data = ModelReaderWriter.Write(VnetAddons, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsDefined(IngressSettings))
             {
                 writer.WritePropertyName("ingressSettings"u8);
-                writer.WriteObjectValue(IngressSettings);
+                BinaryData data = ModelReaderWriter.Write(IngressSettings, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

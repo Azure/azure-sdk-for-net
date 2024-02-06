@@ -32,7 +32,15 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                 writer.WriteStartArray();
                 foreach (var item in ResourceList)
                 {
-                    writer.WriteObjectValue(item);
+                    BinaryData data = ModelReaderWriter.Write(item, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(data))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
                 }
                 writer.WriteEndArray();
             }
@@ -42,19 +50,43 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                 writer.WriteStartArray();
                 foreach (var item in ComplianceReport)
                 {
-                    writer.WriteObjectValue(item);
+                    BinaryData data = ModelReaderWriter.Write(item, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(data))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
                 }
                 writer.WriteEndArray();
             }
             if (options.Format != "W" && Optional.IsDefined(CompliancePdfReport))
             {
                 writer.WritePropertyName("compliancePdfReport"u8);
-                writer.WriteObjectValue(CompliancePdfReport);
+                BinaryData data = ModelReaderWriter.Write(CompliancePdfReport, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (options.Format != "W" && Optional.IsDefined(ComplianceDetailedPdfReport))
             {
                 writer.WritePropertyName("complianceDetailedPdfReport"u8);
-                writer.WriteObjectValue(ComplianceDetailedPdfReport);
+                BinaryData data = ModelReaderWriter.Write(ComplianceDetailedPdfReport, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

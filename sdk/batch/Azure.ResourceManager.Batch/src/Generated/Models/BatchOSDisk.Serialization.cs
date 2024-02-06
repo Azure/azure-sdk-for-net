@@ -29,7 +29,15 @@ namespace Azure.ResourceManager.Batch.Models
             if (Optional.IsDefined(EphemeralOSDiskSettings))
             {
                 writer.WritePropertyName("ephemeralOSDiskSettings"u8);
-                writer.WriteObjectValue(EphemeralOSDiskSettings);
+                BinaryData data = ModelReaderWriter.Write(EphemeralOSDiskSettings, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsDefined(Caching))
             {
@@ -39,7 +47,15 @@ namespace Azure.ResourceManager.Batch.Models
             if (Optional.IsDefined(ManagedDisk))
             {
                 writer.WritePropertyName("managedDisk"u8);
-                writer.WriteObjectValue(ManagedDisk);
+                BinaryData data = ModelReaderWriter.Write(ManagedDisk, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsDefined(DiskSizeGB))
             {

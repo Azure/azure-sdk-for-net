@@ -59,7 +59,15 @@ namespace Azure.ResourceManager.LargeInstance.Models
             if (Optional.IsDefined(StorageBillingProperties))
             {
                 writer.WritePropertyName("storageBillingProperties"u8);
-                writer.WriteObjectValue(StorageBillingProperties);
+                BinaryData data = ModelReaderWriter.Write(StorageBillingProperties, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

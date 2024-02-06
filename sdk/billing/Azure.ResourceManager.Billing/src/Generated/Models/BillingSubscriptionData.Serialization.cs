@@ -139,17 +139,41 @@ namespace Azure.ResourceManager.Billing
             if (options.Format != "W" && Optional.IsDefined(LastMonthCharges))
             {
                 writer.WritePropertyName("lastMonthCharges"u8);
-                writer.WriteObjectValue(LastMonthCharges);
+                BinaryData data = ModelReaderWriter.Write(LastMonthCharges, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (options.Format != "W" && Optional.IsDefined(MonthToDateCharges))
             {
                 writer.WritePropertyName("monthToDateCharges"u8);
-                writer.WriteObjectValue(MonthToDateCharges);
+                BinaryData data = ModelReaderWriter.Write(MonthToDateCharges, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (options.Format != "W" && Optional.IsDefined(NextBillingCycleDetails))
             {
                 writer.WritePropertyName("nextBillingCycleDetails"u8);
-                writer.WriteObjectValue(NextBillingCycleDetails);
+                BinaryData data = ModelReaderWriter.Write(NextBillingCycleDetails, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (options.Format != "W" && Optional.IsDefined(OfferId))
             {
@@ -184,12 +208,28 @@ namespace Azure.ResourceManager.Billing
             if (options.Format != "W" && Optional.IsDefined(Reseller))
             {
                 writer.WritePropertyName("reseller"u8);
-                writer.WriteObjectValue(Reseller);
+                BinaryData data = ModelReaderWriter.Write(Reseller, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (options.Format != "W" && Optional.IsDefined(RenewalTermDetails))
             {
                 writer.WritePropertyName("renewalTermDetails"u8);
-                writer.WriteObjectValue(RenewalTermDetails);
+                BinaryData data = ModelReaderWriter.Write(RenewalTermDetails, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (options.Format != "W" && Optional.IsDefined(SkuDescription))
             {

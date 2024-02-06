@@ -53,7 +53,15 @@ namespace Azure.ResourceManager.Billing
             if (Optional.IsDefined(PaymentMethod))
             {
                 writer.WritePropertyName("paymentMethod"u8);
-                writer.WriteObjectValue(PaymentMethod);
+                BinaryData data = ModelReaderWriter.Write(PaymentMethod, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)

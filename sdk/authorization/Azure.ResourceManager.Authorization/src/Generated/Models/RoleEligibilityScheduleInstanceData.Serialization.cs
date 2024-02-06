@@ -113,7 +113,15 @@ namespace Azure.ResourceManager.Authorization
             if (Optional.IsDefined(ExpandedProperties))
             {
                 writer.WritePropertyName("expandedProperties"u8);
-                writer.WriteObjectValue(ExpandedProperties);
+                BinaryData data = ModelReaderWriter.Write(ExpandedProperties, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)

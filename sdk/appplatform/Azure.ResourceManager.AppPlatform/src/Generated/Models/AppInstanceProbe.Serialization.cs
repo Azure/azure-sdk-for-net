@@ -29,7 +29,15 @@ namespace Azure.ResourceManager.AppPlatform.Models
             if (Optional.IsDefined(ProbeAction))
             {
                 writer.WritePropertyName("probeAction"u8);
-                writer.WriteObjectValue(ProbeAction);
+                BinaryData data = ModelReaderWriter.Write(ProbeAction, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             writer.WritePropertyName("disableProbe"u8);
             writer.WriteBooleanValue(IsProbeDisabled);

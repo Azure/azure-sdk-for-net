@@ -29,7 +29,15 @@ namespace Azure.ResourceManager.BillingBenefits.Models
             if (Optional.IsDefined(PurchaseProperties))
             {
                 writer.WritePropertyName("purchaseProperties"u8);
-                writer.WriteObjectValue(PurchaseProperties);
+                BinaryData data = ModelReaderWriter.Write(PurchaseProperties, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

@@ -106,17 +106,41 @@ namespace Azure.ResourceManager.Hci
             if (Optional.IsDefined(SoftwareAssuranceProperties))
             {
                 writer.WritePropertyName("softwareAssuranceProperties"u8);
-                writer.WriteObjectValue(SoftwareAssuranceProperties);
+                BinaryData data = ModelReaderWriter.Write(SoftwareAssuranceProperties, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsDefined(DesiredProperties))
             {
                 writer.WritePropertyName("desiredProperties"u8);
-                writer.WriteObjectValue(DesiredProperties);
+                BinaryData data = ModelReaderWriter.Write(DesiredProperties, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (options.Format != "W" && Optional.IsDefined(ReportedProperties))
             {
                 writer.WritePropertyName("reportedProperties"u8);
-                writer.WriteObjectValue(ReportedProperties);
+                BinaryData data = ModelReaderWriter.Write(ReportedProperties, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (options.Format != "W" && Optional.IsDefined(TrialDaysRemaining))
             {

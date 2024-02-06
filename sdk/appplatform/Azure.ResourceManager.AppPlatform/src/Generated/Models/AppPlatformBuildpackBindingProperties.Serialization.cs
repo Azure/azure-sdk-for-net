@@ -39,7 +39,15 @@ namespace Azure.ResourceManager.AppPlatform.Models
             if (Optional.IsDefined(LaunchProperties))
             {
                 writer.WritePropertyName("launchProperties"u8);
-                writer.WriteObjectValue(LaunchProperties);
+                BinaryData data = ModelReaderWriter.Write(LaunchProperties, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

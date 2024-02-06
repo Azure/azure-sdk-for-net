@@ -29,7 +29,15 @@ namespace Azure.ResourceManager.Avs
 
             writer.WriteStartObject();
             writer.WritePropertyName("sku"u8);
-            writer.WriteObjectValue(Sku);
+            BinaryData data = ModelReaderWriter.Write(Sku, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+            using (JsonDocument document = JsonDocument.Parse(data))
+            {
+                JsonSerializer.Serialize(writer, document.RootElement);
+            }
+#endif
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
@@ -73,7 +81,15 @@ namespace Azure.ResourceManager.Avs
             if (Optional.IsDefined(ManagementCluster))
             {
                 writer.WritePropertyName("managementCluster"u8);
-                writer.WriteObjectValue(ManagementCluster);
+                BinaryData data0 = ModelReaderWriter.Write(ManagementCluster, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data0);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data0))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsDefined(Internet))
             {
@@ -86,19 +102,43 @@ namespace Azure.ResourceManager.Avs
                 writer.WriteStartArray();
                 foreach (var item in IdentitySources)
                 {
-                    writer.WriteObjectValue(item);
+                    BinaryData data0 = ModelReaderWriter.Write(item, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data0);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(data0))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(Availability))
             {
                 writer.WritePropertyName("availability"u8);
-                writer.WriteObjectValue(Availability);
+                BinaryData data0 = ModelReaderWriter.Write(Availability, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data0);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data0))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsDefined(Encryption))
             {
                 writer.WritePropertyName("encryption"u8);
-                writer.WriteObjectValue(Encryption);
+                BinaryData data0 = ModelReaderWriter.Write(Encryption, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data0);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data0))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsCollectionDefined(ExtendedNetworkBlocks))
             {
@@ -118,12 +158,28 @@ namespace Azure.ResourceManager.Avs
             if (Optional.IsDefined(Circuit))
             {
                 writer.WritePropertyName("circuit"u8);
-                writer.WriteObjectValue(Circuit);
+                BinaryData data0 = ModelReaderWriter.Write(Circuit, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data0);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data0))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (options.Format != "W" && Optional.IsDefined(Endpoints))
             {
                 writer.WritePropertyName("endpoints"u8);
-                writer.WriteObjectValue(Endpoints);
+                BinaryData data0 = ModelReaderWriter.Write(Endpoints, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data0);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data0))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsDefined(NetworkBlock))
             {
@@ -183,7 +239,15 @@ namespace Azure.ResourceManager.Avs
             if (Optional.IsDefined(SecondaryCircuit))
             {
                 writer.WritePropertyName("secondaryCircuit"u8);
-                writer.WriteObjectValue(SecondaryCircuit);
+                BinaryData data0 = ModelReaderWriter.Write(SecondaryCircuit, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data0);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data0))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (options.Format != "W" && Optional.IsDefined(NsxPublicIPQuotaRaised))
             {

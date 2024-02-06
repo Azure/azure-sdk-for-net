@@ -30,7 +30,15 @@ namespace Azure.ResourceManager.BotService.Models
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties);
+                BinaryData data = ModelReaderWriter.Write(Properties, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             writer.WritePropertyName("channelName"u8);
             writer.WriteStringValue(ChannelName);

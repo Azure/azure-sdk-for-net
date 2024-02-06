@@ -93,7 +93,15 @@ namespace Azure.ResourceManager.Automation.Models
             if (Optional.IsDefined(AdvancedSchedule))
             {
                 writer.WritePropertyName("advancedSchedule"u8);
-                writer.WriteObjectValue(AdvancedSchedule);
+                BinaryData data = ModelReaderWriter.Write(AdvancedSchedule, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsDefined(CreatedOn))
             {

@@ -31,7 +31,15 @@ namespace Azure.ResourceManager.Automation.Models
                 if (RawContent != null)
                 {
                     writer.WritePropertyName("rawContent"u8);
-                    writer.WriteObjectValue(RawContent);
+                    BinaryData data = ModelReaderWriter.Write(RawContent, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(data))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
                 }
                 else
                 {

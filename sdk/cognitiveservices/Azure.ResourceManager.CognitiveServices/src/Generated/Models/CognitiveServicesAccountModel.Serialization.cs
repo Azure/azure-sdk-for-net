@@ -30,7 +30,15 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             if (Optional.IsDefined(BaseModel))
             {
                 writer.WritePropertyName("baseModel"u8);
-                writer.WriteObjectValue(BaseModel);
+                BinaryData data = ModelReaderWriter.Write(BaseModel, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsDefined(IsDefaultVersion))
             {
@@ -43,7 +51,15 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 writer.WriteStartArray();
                 foreach (var item in Skus)
                 {
-                    writer.WriteObjectValue(item);
+                    BinaryData data = ModelReaderWriter.Write(item, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(data))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
                 }
                 writer.WriteEndArray();
             }
@@ -77,7 +93,15 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             if (Optional.IsDefined(Deprecation))
             {
                 writer.WritePropertyName("deprecation"u8);
-                writer.WriteObjectValue(Deprecation);
+                BinaryData data = ModelReaderWriter.Write(Deprecation, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsDefined(LifecycleStatus))
             {
@@ -112,7 +136,15 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             if (options.Format != "W" && Optional.IsDefined(CallRateLimit))
             {
                 writer.WritePropertyName("callRateLimit"u8);
-                writer.WriteObjectValue(CallRateLimit);
+                BinaryData data = ModelReaderWriter.Write(CallRateLimit, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

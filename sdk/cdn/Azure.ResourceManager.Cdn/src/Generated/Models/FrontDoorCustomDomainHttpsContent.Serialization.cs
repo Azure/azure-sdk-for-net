@@ -38,7 +38,15 @@ namespace Azure.ResourceManager.Cdn.Models
                 if (Secret != null)
                 {
                     writer.WritePropertyName("secret"u8);
-                    writer.WriteObjectValue(Secret);
+                    BinaryData data = ModelReaderWriter.Write(Secret, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(data))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
                 }
                 else
                 {

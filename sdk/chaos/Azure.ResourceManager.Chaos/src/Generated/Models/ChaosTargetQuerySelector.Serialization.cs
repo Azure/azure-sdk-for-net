@@ -42,7 +42,15 @@ namespace Azure.ResourceManager.Chaos.Models
             if (Optional.IsDefined(Filter))
             {
                 writer.WritePropertyName("filter"u8);
-                writer.WriteObjectValue(Filter);
+                BinaryData data = ModelReaderWriter.Write(Filter, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             foreach (var item in AdditionalProperties)
             {

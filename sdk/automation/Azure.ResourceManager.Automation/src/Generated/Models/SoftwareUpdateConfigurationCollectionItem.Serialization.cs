@@ -41,12 +41,28 @@ namespace Azure.ResourceManager.Automation.Models
             if (Optional.IsDefined(UpdateConfiguration))
             {
                 writer.WritePropertyName("updateConfiguration"u8);
-                writer.WriteObjectValue(UpdateConfiguration);
+                BinaryData data = ModelReaderWriter.Write(UpdateConfiguration, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsDefined(Tasks))
             {
                 writer.WritePropertyName("tasks"u8);
-                writer.WriteObjectValue(Tasks);
+                BinaryData data = ModelReaderWriter.Write(Tasks, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsDefined(Frequency))
             {

@@ -81,7 +81,15 @@ namespace Azure.ResourceManager.AgFoodPlatform
             if (Optional.IsDefined(SensorIntegration))
             {
                 writer.WritePropertyName("sensorIntegration"u8);
-                writer.WriteObjectValue(SensorIntegration);
+                BinaryData data = ModelReaderWriter.Write(SensorIntegration, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsDefined(PublicNetworkAccess))
             {
@@ -91,7 +99,15 @@ namespace Azure.ResourceManager.AgFoodPlatform
             if (options.Format != "W" && Optional.IsDefined(PrivateEndpointConnections))
             {
                 writer.WritePropertyName("privateEndpointConnections"u8);
-                writer.WriteObjectValue(PrivateEndpointConnections);
+                BinaryData data = ModelReaderWriter.Write(PrivateEndpointConnections, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)

@@ -63,12 +63,28 @@ namespace Azure.ResourceManager.ApiManagement
             if (Optional.IsDefined(Subscriptions))
             {
                 writer.WritePropertyName("subscriptions"u8);
-                writer.WriteObjectValue(Subscriptions);
+                BinaryData data = ModelReaderWriter.Write(Subscriptions, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsDefined(UserRegistration))
             {
                 writer.WritePropertyName("userRegistration"u8);
-                writer.WriteObjectValue(UserRegistration);
+                BinaryData data = ModelReaderWriter.Write(UserRegistration, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)

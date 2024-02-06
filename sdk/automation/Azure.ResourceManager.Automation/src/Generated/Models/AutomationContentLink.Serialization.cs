@@ -34,7 +34,15 @@ namespace Azure.ResourceManager.Automation.Models
             if (Optional.IsDefined(ContentHash))
             {
                 writer.WritePropertyName("contentHash"u8);
-                writer.WriteObjectValue(ContentHash);
+                BinaryData data = ModelReaderWriter.Write(ContentHash, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsDefined(Version))
             {

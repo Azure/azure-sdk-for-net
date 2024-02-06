@@ -49,7 +49,15 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             if (Optional.IsDefined(Current))
             {
                 writer.WritePropertyName("current"u8);
-                writer.WriteObjectValue(Current);
+                BinaryData data = ModelReaderWriter.Write(Current, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsDefined(AutoRenew))
             {
@@ -59,12 +67,28 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             if (Optional.IsDefined(Next))
             {
                 writer.WritePropertyName("next"u8);
-                writer.WriteObjectValue(Next);
+                BinaryData data = ModelReaderWriter.Write(Next, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (options.Format != "W" && Optional.IsDefined(Last))
             {
                 writer.WritePropertyName("last"u8);
-                writer.WriteObjectValue(Last);
+                BinaryData data = ModelReaderWriter.Write(Last, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(ProvisioningIssues))
             {

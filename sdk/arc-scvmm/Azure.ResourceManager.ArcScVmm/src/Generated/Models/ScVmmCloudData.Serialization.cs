@@ -89,7 +89,15 @@ namespace Azure.ResourceManager.ArcScVmm
             if (options.Format != "W" && Optional.IsDefined(CloudCapacity))
             {
                 writer.WritePropertyName("cloudCapacity"u8);
-                writer.WriteObjectValue(CloudCapacity);
+                BinaryData data = ModelReaderWriter.Write(CloudCapacity, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(StorageQoSPolicies))
             {
@@ -97,7 +105,15 @@ namespace Azure.ResourceManager.ArcScVmm
                 writer.WriteStartArray();
                 foreach (var item in StorageQoSPolicies)
                 {
-                    writer.WriteObjectValue(item);
+                    BinaryData data = ModelReaderWriter.Write(item, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(data))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
                 }
                 writer.WriteEndArray();
             }

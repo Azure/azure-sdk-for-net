@@ -34,7 +34,15 @@ namespace Azure.ResourceManager.Hci.Models
             if (Optional.IsDefined(Ssh))
             {
                 writer.WritePropertyName("ssh"u8);
-                writer.WriteObjectValue(Ssh);
+                BinaryData data = ModelReaderWriter.Write(Ssh, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsDefined(ProvisionVmAgent))
             {

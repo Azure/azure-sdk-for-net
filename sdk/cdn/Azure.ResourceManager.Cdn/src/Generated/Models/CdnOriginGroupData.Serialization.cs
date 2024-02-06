@@ -56,7 +56,15 @@ namespace Azure.ResourceManager.Cdn
                 if (HealthProbeSettings != null)
                 {
                     writer.WritePropertyName("healthProbeSettings"u8);
-                    writer.WriteObjectValue(HealthProbeSettings);
+                    BinaryData data = ModelReaderWriter.Write(HealthProbeSettings, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(data))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
                 }
                 else
                 {
@@ -90,7 +98,15 @@ namespace Azure.ResourceManager.Cdn
                 if (ResponseBasedOriginErrorDetectionSettings != null)
                 {
                     writer.WritePropertyName("responseBasedOriginErrorDetectionSettings"u8);
-                    writer.WriteObjectValue(ResponseBasedOriginErrorDetectionSettings);
+                    BinaryData data = ModelReaderWriter.Write(ResponseBasedOriginErrorDetectionSettings, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(data))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
                 }
                 else
                 {

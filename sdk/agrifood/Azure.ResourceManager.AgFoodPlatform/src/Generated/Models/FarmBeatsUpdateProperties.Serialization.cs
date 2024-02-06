@@ -29,7 +29,15 @@ namespace Azure.ResourceManager.AgFoodPlatform.Models
             if (Optional.IsDefined(SensorIntegration))
             {
                 writer.WritePropertyName("sensorIntegration"u8);
-                writer.WriteObjectValue(SensorIntegration);
+                BinaryData data = ModelReaderWriter.Write(SensorIntegration, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsDefined(PublicNetworkAccess))
             {

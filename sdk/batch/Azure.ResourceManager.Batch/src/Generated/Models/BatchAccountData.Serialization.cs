@@ -94,7 +94,15 @@ namespace Azure.ResourceManager.Batch
             if (options.Format != "W" && Optional.IsDefined(KeyVaultReference))
             {
                 writer.WritePropertyName("keyVaultReference"u8);
-                writer.WriteObjectValue(KeyVaultReference);
+                BinaryData data = ModelReaderWriter.Write(KeyVaultReference, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsDefined(PublicNetworkAccess))
             {
@@ -113,7 +121,15 @@ namespace Azure.ResourceManager.Batch
                 if (NetworkProfile != null)
                 {
                     writer.WritePropertyName("networkProfile"u8);
-                    writer.WriteObjectValue(NetworkProfile);
+                    BinaryData data = ModelReaderWriter.Write(NetworkProfile, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(data))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
                 }
                 else
                 {
@@ -128,7 +144,15 @@ namespace Azure.ResourceManager.Batch
                     writer.WriteStartArray();
                     foreach (var item in PrivateEndpointConnections)
                     {
-                        writer.WriteObjectValue(item);
+                        BinaryData data = ModelReaderWriter.Write(item, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                        using (JsonDocument document = JsonDocument.Parse(data))
+                        {
+                            JsonSerializer.Serialize(writer, document.RootElement);
+                        }
+#endif
                     }
                     writer.WriteEndArray();
                 }
@@ -140,12 +164,28 @@ namespace Azure.ResourceManager.Batch
             if (options.Format != "W" && Optional.IsDefined(AutoStorage))
             {
                 writer.WritePropertyName("autoStorage"u8);
-                writer.WriteObjectValue(AutoStorage);
+                BinaryData data = ModelReaderWriter.Write(AutoStorage, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (options.Format != "W" && Optional.IsDefined(Encryption))
             {
                 writer.WritePropertyName("encryption"u8);
-                writer.WriteObjectValue(Encryption);
+                BinaryData data = ModelReaderWriter.Write(Encryption, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (options.Format != "W" && Optional.IsDefined(DedicatedCoreQuota))
             {
@@ -179,7 +219,15 @@ namespace Azure.ResourceManager.Batch
                     writer.WriteStartArray();
                     foreach (var item in DedicatedCoreQuotaPerVmFamily)
                     {
-                        writer.WriteObjectValue(item);
+                        BinaryData data = ModelReaderWriter.Write(item, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                        using (JsonDocument document = JsonDocument.Parse(data))
+                        {
+                            JsonSerializer.Serialize(writer, document.RootElement);
+                        }
+#endif
                     }
                     writer.WriteEndArray();
                 }

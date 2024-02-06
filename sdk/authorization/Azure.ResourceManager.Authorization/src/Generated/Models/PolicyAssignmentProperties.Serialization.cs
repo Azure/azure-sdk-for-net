@@ -57,7 +57,15 @@ namespace Azure.ResourceManager.Authorization.Models
             if (options.Format != "W" && Optional.IsDefined(LastModifiedBy))
             {
                 writer.WritePropertyName("lastModifiedBy"u8);
-                writer.WriteObjectValue(LastModifiedBy);
+                BinaryData data = ModelReaderWriter.Write(LastModifiedBy, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsDefined(LastModifiedOn))
             {

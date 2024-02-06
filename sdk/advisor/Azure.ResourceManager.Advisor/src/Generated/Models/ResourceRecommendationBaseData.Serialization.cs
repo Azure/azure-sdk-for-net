@@ -111,7 +111,15 @@ namespace Azure.ResourceManager.Advisor
             if (Optional.IsDefined(ShortDescription))
             {
                 writer.WritePropertyName("shortDescription"u8);
-                writer.WriteObjectValue(ShortDescription);
+                BinaryData data = ModelReaderWriter.Write(ShortDescription, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsCollectionDefined(SuppressionIds))
             {
@@ -137,7 +145,15 @@ namespace Azure.ResourceManager.Advisor
             if (Optional.IsDefined(ResourceMetadata))
             {
                 writer.WritePropertyName("resourceMetadata"u8);
-                writer.WriteObjectValue(ResourceMetadata);
+                BinaryData data = ModelReaderWriter.Write(ResourceMetadata, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsDefined(Description))
             {

@@ -29,7 +29,15 @@ namespace Azure.ResourceManager.AppPlatform.Models
             if (Optional.IsDefined(ResourceRequests))
             {
                 writer.WritePropertyName("resourceRequests"u8);
-                writer.WriteObjectValue(ResourceRequests);
+                BinaryData data = ModelReaderWriter.Write(ResourceRequests, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsCollectionDefined(EnvironmentVariables))
             {
@@ -79,17 +87,41 @@ namespace Azure.ResourceManager.AppPlatform.Models
             if (Optional.IsDefined(LivenessProbe))
             {
                 writer.WritePropertyName("livenessProbe"u8);
-                writer.WriteObjectValue(LivenessProbe);
+                BinaryData data = ModelReaderWriter.Write(LivenessProbe, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsDefined(ReadinessProbe))
             {
                 writer.WritePropertyName("readinessProbe"u8);
-                writer.WriteObjectValue(ReadinessProbe);
+                BinaryData data = ModelReaderWriter.Write(ReadinessProbe, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsDefined(StartupProbe))
             {
                 writer.WritePropertyName("startupProbe"u8);
-                writer.WriteObjectValue(StartupProbe);
+                BinaryData data = ModelReaderWriter.Write(StartupProbe, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsDefined(TerminationGracePeriodInSeconds))
             {
@@ -99,7 +131,15 @@ namespace Azure.ResourceManager.AppPlatform.Models
             if (Optional.IsDefined(ContainerProbeSettings))
             {
                 writer.WritePropertyName("containerProbeSettings"u8);
-                writer.WriteObjectValue(ContainerProbeSettings);
+                BinaryData data = ModelReaderWriter.Write(ContainerProbeSettings, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

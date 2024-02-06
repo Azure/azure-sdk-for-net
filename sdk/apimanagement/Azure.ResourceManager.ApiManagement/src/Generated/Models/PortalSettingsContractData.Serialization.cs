@@ -62,12 +62,28 @@ namespace Azure.ResourceManager.ApiManagement.Models
             if (Optional.IsDefined(IsSubscriptions))
             {
                 writer.WritePropertyName("subscriptions"u8);
-                writer.WriteObjectValue(IsSubscriptions);
+                BinaryData data = ModelReaderWriter.Write(IsSubscriptions, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsDefined(IsUserRegistration))
             {
                 writer.WritePropertyName("userRegistration"u8);
-                writer.WriteObjectValue(IsUserRegistration);
+                BinaryData data = ModelReaderWriter.Write(IsUserRegistration, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsDefined(IsRedirectEnabled))
             {
@@ -77,7 +93,15 @@ namespace Azure.ResourceManager.ApiManagement.Models
             if (Optional.IsDefined(TermsOfService))
             {
                 writer.WritePropertyName("termsOfService"u8);
-                writer.WriteObjectValue(TermsOfService);
+                BinaryData data = ModelReaderWriter.Write(TermsOfService, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)

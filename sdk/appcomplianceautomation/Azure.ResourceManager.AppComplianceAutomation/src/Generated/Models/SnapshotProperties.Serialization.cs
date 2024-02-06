@@ -50,7 +50,15 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
             if (options.Format != "W" && Optional.IsDefined(ReportProperties))
             {
                 writer.WritePropertyName("reportProperties"u8);
-                writer.WriteObjectValue(ReportProperties);
+                BinaryData data = ModelReaderWriter.Write(ReportProperties, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (options.Format != "W" && Optional.IsDefined(ReportSystemData))
             {
@@ -63,7 +71,15 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                 writer.WriteStartArray();
                 foreach (var item in ComplianceResults)
                 {
-                    writer.WriteObjectValue(item);
+                    BinaryData data = ModelReaderWriter.Write(item, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(data))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
                 }
                 writer.WriteEndArray();
             }

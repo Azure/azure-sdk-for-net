@@ -39,12 +39,28 @@ namespace Azure.ResourceManager.Batch.Models
             if (Optional.IsDefined(EndpointConfiguration))
             {
                 writer.WritePropertyName("endpointConfiguration"u8);
-                writer.WriteObjectValue(EndpointConfiguration);
+                BinaryData data = ModelReaderWriter.Write(EndpointConfiguration, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsDefined(PublicIPAddressConfiguration))
             {
                 writer.WritePropertyName("publicIPAddressConfiguration"u8);
-                writer.WriteObjectValue(PublicIPAddressConfiguration);
+                BinaryData data = ModelReaderWriter.Write(PublicIPAddressConfiguration, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsDefined(EnableAcceleratedNetworking))
             {

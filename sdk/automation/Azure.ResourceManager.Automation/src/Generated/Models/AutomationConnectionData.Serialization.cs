@@ -53,7 +53,15 @@ namespace Azure.ResourceManager.Automation
             if (Optional.IsDefined(ConnectionType))
             {
                 writer.WritePropertyName("connectionType"u8);
-                writer.WriteObjectValue(ConnectionType);
+                BinaryData data = ModelReaderWriter.Write(ConnectionType, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(FieldDefinitionValues))
             {

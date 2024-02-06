@@ -34,7 +34,15 @@ namespace Azure.ResourceManager.Attestation.Models
             if (Optional.IsDefined(PolicySigningCertificates))
             {
                 writer.WritePropertyName("policySigningCertificates"u8);
-                writer.WriteObjectValue(PolicySigningCertificates);
+                BinaryData data = ModelReaderWriter.Write(PolicySigningCertificates, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

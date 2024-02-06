@@ -68,7 +68,15 @@ namespace Azure.ResourceManager.Cdn
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("parameters"u8);
-                writer.WriteObjectValue(Properties);
+                BinaryData data = ModelReaderWriter.Write(Properties, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)

@@ -102,7 +102,15 @@ namespace Azure.ResourceManager.Cdn.Models
                 writer.WriteStartArray();
                 foreach (var item in GeoFilters)
                 {
-                    writer.WriteObjectValue(item);
+                    BinaryData data = ModelReaderWriter.Write(item, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(data))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
                 }
                 writer.WriteEndArray();
             }
@@ -111,7 +119,15 @@ namespace Azure.ResourceManager.Cdn.Models
                 if (DefaultOriginGroup != null)
                 {
                     writer.WritePropertyName("defaultOriginGroup"u8);
-                    writer.WriteObjectValue(DefaultOriginGroup);
+                    BinaryData data = ModelReaderWriter.Write(DefaultOriginGroup, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(data))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
                 }
                 else
                 {
@@ -126,7 +142,15 @@ namespace Azure.ResourceManager.Cdn.Models
                     writer.WriteStartArray();
                     foreach (var item in UriSigningKeys)
                     {
-                        writer.WriteObjectValue(item);
+                        BinaryData data = ModelReaderWriter.Write(item, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                        using (JsonDocument document = JsonDocument.Parse(data))
+                        {
+                            JsonSerializer.Serialize(writer, document.RootElement);
+                        }
+#endif
                     }
                     writer.WriteEndArray();
                 }
@@ -140,7 +164,15 @@ namespace Azure.ResourceManager.Cdn.Models
                 if (DeliveryPolicy != null)
                 {
                     writer.WritePropertyName("deliveryPolicy"u8);
-                    writer.WriteObjectValue(DeliveryPolicy);
+                    BinaryData data = ModelReaderWriter.Write(DeliveryPolicy, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(data))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
                 }
                 else
                 {
@@ -152,7 +184,15 @@ namespace Azure.ResourceManager.Cdn.Models
                 if (WebApplicationFirewallPolicyLink != null)
                 {
                     writer.WritePropertyName("webApplicationFirewallPolicyLink"u8);
-                    writer.WriteObjectValue(WebApplicationFirewallPolicyLink);
+                    BinaryData data = ModelReaderWriter.Write(WebApplicationFirewallPolicyLink, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(data))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
                 }
                 else
                 {

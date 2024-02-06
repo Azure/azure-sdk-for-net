@@ -29,7 +29,15 @@ namespace Azure.ResourceManager.Authorization.Models
             if (Optional.IsDefined(Settings))
             {
                 writer.WritePropertyName("setting"u8);
-                writer.WriteObjectValue(Settings);
+                BinaryData data = ModelReaderWriter.Write(Settings, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsDefined(Id))
             {
@@ -41,7 +49,15 @@ namespace Azure.ResourceManager.Authorization.Models
             if (Optional.IsDefined(Target))
             {
                 writer.WritePropertyName("target"u8);
-                writer.WriteObjectValue(Target);
+                BinaryData data = ModelReaderWriter.Write(Target, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

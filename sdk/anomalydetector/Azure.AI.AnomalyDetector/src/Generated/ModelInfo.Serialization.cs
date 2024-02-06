@@ -51,7 +51,15 @@ namespace Azure.AI.AnomalyDetector
             if (Optional.IsDefined(AlignPolicy))
             {
                 writer.WritePropertyName("alignPolicy"u8);
-                writer.WriteObjectValue(AlignPolicy);
+                BinaryData data = ModelReaderWriter.Write(AlignPolicy, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (options.Format != "W" && Optional.IsDefined(Status))
             {
@@ -64,14 +72,30 @@ namespace Azure.AI.AnomalyDetector
                 writer.WriteStartArray();
                 foreach (var item in Errors)
                 {
-                    writer.WriteObjectValue(item);
+                    BinaryData data = ModelReaderWriter.Write(item, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(data))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
                 }
                 writer.WriteEndArray();
             }
             if (options.Format != "W" && Optional.IsDefined(DiagnosticsInfo))
             {
                 writer.WritePropertyName("diagnosticsInfo"u8);
-                writer.WriteObjectValue(DiagnosticsInfo);
+                BinaryData data = ModelReaderWriter.Write(DiagnosticsInfo, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

@@ -29,7 +29,15 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             if (Optional.IsDefined(ContentValidation))
             {
                 writer.WritePropertyName("ContentValidation"u8);
-                writer.WriteObjectValue(ContentValidation);
+                BinaryData data = ModelReaderWriter.Write(ContentValidation, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsDefined(CheckSsl))
             {

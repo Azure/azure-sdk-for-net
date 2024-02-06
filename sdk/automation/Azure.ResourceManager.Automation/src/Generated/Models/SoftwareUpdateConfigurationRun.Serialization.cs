@@ -41,7 +41,15 @@ namespace Azure.ResourceManager.Automation.Models
             if (Optional.IsDefined(SoftwareUpdateConfiguration))
             {
                 writer.WritePropertyName("softwareUpdateConfiguration"u8);
-                writer.WriteObjectValue(SoftwareUpdateConfiguration);
+                BinaryData data = ModelReaderWriter.Write(SoftwareUpdateConfiguration, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (options.Format != "W" && Optional.IsDefined(Status))
             {
@@ -108,7 +116,15 @@ namespace Azure.ResourceManager.Automation.Models
             if (Optional.IsDefined(Tasks))
             {
                 writer.WritePropertyName("tasks"u8);
-                writer.WriteObjectValue(Tasks);
+                BinaryData data = ModelReaderWriter.Write(Tasks, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)

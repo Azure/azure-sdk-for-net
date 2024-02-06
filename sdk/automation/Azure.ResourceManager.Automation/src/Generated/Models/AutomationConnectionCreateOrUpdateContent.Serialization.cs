@@ -36,7 +36,15 @@ namespace Azure.ResourceManager.Automation.Models
                 writer.WriteStringValue(Description);
             }
             writer.WritePropertyName("connectionType"u8);
-            writer.WriteObjectValue(ConnectionType);
+            BinaryData data = ModelReaderWriter.Write(ConnectionType, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+            using (JsonDocument document = JsonDocument.Parse(data))
+            {
+                JsonSerializer.Serialize(writer, document.RootElement);
+            }
+#endif
             if (Optional.IsCollectionDefined(FieldDefinitionValues))
             {
                 writer.WritePropertyName("fieldDefinitionValues"u8);

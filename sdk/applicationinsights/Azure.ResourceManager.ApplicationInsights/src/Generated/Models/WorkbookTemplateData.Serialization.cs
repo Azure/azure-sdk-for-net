@@ -91,7 +91,15 @@ namespace Azure.ResourceManager.ApplicationInsights
                 writer.WriteStartArray();
                 foreach (var item in Galleries)
                 {
-                    writer.WriteObjectValue(item);
+                    BinaryData data = ModelReaderWriter.Write(item, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(data))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
                 }
                 writer.WriteEndArray();
             }
@@ -110,7 +118,15 @@ namespace Azure.ResourceManager.ApplicationInsights
                     writer.WriteStartArray();
                     foreach (var item0 in item.Value)
                     {
-                        writer.WriteObjectValue(item0);
+                        BinaryData data = ModelReaderWriter.Write(item0, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                        using (JsonDocument document = JsonDocument.Parse(data))
+                        {
+                            JsonSerializer.Serialize(writer, document.RootElement);
+                        }
+#endif
                     }
                     writer.WriteEndArray();
                 }

@@ -36,7 +36,15 @@ namespace Azure.ResourceManager.Batch.Models
             if (Optional.IsDefined(NodeIdentity))
             {
                 writer.WritePropertyName("nodeIdentityReference"u8);
-                writer.WriteObjectValue(NodeIdentity);
+                BinaryData data = ModelReaderWriter.Write(NodeIdentity, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

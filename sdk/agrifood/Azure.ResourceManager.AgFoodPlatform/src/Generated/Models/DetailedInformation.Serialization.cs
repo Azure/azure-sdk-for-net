@@ -54,7 +54,15 @@ namespace Azure.ResourceManager.AgFoodPlatform.Models
             if (Optional.IsDefined(UnitsSupported))
             {
                 writer.WritePropertyName("unitsSupported"u8);
-                writer.WriteObjectValue(UnitsSupported);
+                BinaryData data = ModelReaderWriter.Write(UnitsSupported, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsCollectionDefined(ApiInputParameters))
             {

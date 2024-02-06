@@ -31,12 +31,28 @@ namespace Azure.ResourceManager.Automation.Models
             if (Optional.IsDefined(Windows))
             {
                 writer.WritePropertyName("windows"u8);
-                writer.WriteObjectValue(Windows);
+                BinaryData data = ModelReaderWriter.Write(Windows, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsDefined(Linux))
             {
                 writer.WritePropertyName("linux"u8);
-                writer.WriteObjectValue(Linux);
+                BinaryData data = ModelReaderWriter.Write(Linux, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsDefined(Duration))
             {
@@ -66,7 +82,15 @@ namespace Azure.ResourceManager.Automation.Models
             if (Optional.IsDefined(Targets))
             {
                 writer.WritePropertyName("targets"u8);
-                writer.WriteObjectValue(Targets);
+                BinaryData data = ModelReaderWriter.Write(Targets, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

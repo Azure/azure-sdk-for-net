@@ -58,7 +58,15 @@ namespace Azure.ResourceManager.Hci.Models
             if (Optional.IsDefined(DesiredProperties))
             {
                 writer.WritePropertyName("desiredProperties"u8);
-                writer.WriteObjectValue(DesiredProperties);
+                BinaryData data = ModelReaderWriter.Write(DesiredProperties, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             writer.WriteEndObject();
             writer.WritePropertyName("identity"u8);

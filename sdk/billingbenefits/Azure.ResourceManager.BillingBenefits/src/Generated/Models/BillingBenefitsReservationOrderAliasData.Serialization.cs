@@ -29,7 +29,15 @@ namespace Azure.ResourceManager.BillingBenefits
 
             writer.WriteStartObject();
             writer.WritePropertyName("sku"u8);
-            writer.WriteObjectValue(Sku);
+            BinaryData data = ModelReaderWriter.Write(Sku, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+            using (JsonDocument document = JsonDocument.Parse(data))
+            {
+                JsonSerializer.Serialize(writer, document.RootElement);
+            }
+#endif
             if (Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location"u8);
@@ -95,7 +103,15 @@ namespace Azure.ResourceManager.BillingBenefits
             if (Optional.IsDefined(AppliedScopeProperties))
             {
                 writer.WritePropertyName("appliedScopeProperties"u8);
-                writer.WriteObjectValue(AppliedScopeProperties);
+                BinaryData data0 = ModelReaderWriter.Write(AppliedScopeProperties, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data0);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data0))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsDefined(Quantity))
             {
@@ -120,7 +136,15 @@ namespace Azure.ResourceManager.BillingBenefits
             if (Optional.IsDefined(ReservedResourceProperties))
             {
                 writer.WritePropertyName("reservedResourceProperties"u8);
-                writer.WriteObjectValue(ReservedResourceProperties);
+                BinaryData data0 = ModelReaderWriter.Write(ReservedResourceProperties, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data0);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data0))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)

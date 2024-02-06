@@ -27,7 +27,15 @@ namespace Azure.ResourceManager.Cdn.Models
 
             writer.WriteStartObject();
             writer.WritePropertyName("certificateSourceParameters"u8);
-            writer.WriteObjectValue(CertificateSourceParameters);
+            BinaryData data = ModelReaderWriter.Write(CertificateSourceParameters, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+            using (JsonDocument document = JsonDocument.Parse(data))
+            {
+                JsonSerializer.Serialize(writer, document.RootElement);
+            }
+#endif
             writer.WritePropertyName("certificateSource"u8);
             writer.WriteStringValue(CertificateSource.ToString());
             writer.WritePropertyName("protocolType"u8);

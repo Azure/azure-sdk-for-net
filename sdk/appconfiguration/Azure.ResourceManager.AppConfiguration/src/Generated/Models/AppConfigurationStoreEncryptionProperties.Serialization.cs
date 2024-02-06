@@ -31,7 +31,15 @@ namespace Azure.ResourceManager.AppConfiguration.Models
                 if (KeyVaultProperties != null)
                 {
                     writer.WritePropertyName("keyVaultProperties"u8);
-                    writer.WriteObjectValue(KeyVaultProperties);
+                    BinaryData data = ModelReaderWriter.Write(KeyVaultProperties, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(data))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
                 }
                 else
                 {

@@ -61,7 +61,15 @@ namespace Azure.ResourceManager.Automation.Models
             if (Optional.IsDefined(SecurityToken))
             {
                 writer.WritePropertyName("securityToken"u8);
-                writer.WriteObjectValue(SecurityToken);
+                BinaryData data = ModelReaderWriter.Write(SecurityToken, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsDefined(Description))
             {

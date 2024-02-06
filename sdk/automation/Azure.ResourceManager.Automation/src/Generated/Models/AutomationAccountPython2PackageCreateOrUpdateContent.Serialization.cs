@@ -40,7 +40,15 @@ namespace Azure.ResourceManager.Automation.Models
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             writer.WritePropertyName("contentLink"u8);
-            writer.WriteObjectValue(ContentLink);
+            BinaryData data = ModelReaderWriter.Write(ContentLink, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+            using (JsonDocument document = JsonDocument.Parse(data))
+            {
+                JsonSerializer.Serialize(writer, document.RootElement);
+            }
+#endif
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

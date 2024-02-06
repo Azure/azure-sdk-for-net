@@ -39,7 +39,15 @@ namespace Azure.ResourceManager.Automation.Models
             if (Optional.IsDefined(Keys))
             {
                 writer.WritePropertyName("keys"u8);
-                writer.WriteObjectValue(Keys);
+                BinaryData data = ModelReaderWriter.Write(Keys, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsDefined(Id))
             {

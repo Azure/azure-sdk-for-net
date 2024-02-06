@@ -113,7 +113,15 @@ namespace Azure.ResourceManager.Chaos
             if (Optional.IsDefined(RuntimeProperties))
             {
                 writer.WritePropertyName("runtimeProperties"u8);
-                writer.WriteObjectValue(RuntimeProperties);
+                BinaryData data = ModelReaderWriter.Write(RuntimeProperties, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)

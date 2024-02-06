@@ -29,7 +29,15 @@ namespace Azure.ResourceManager.AppPlatform.Models
             if (Optional.IsDefined(GitPropertyValidationResult))
             {
                 writer.WritePropertyName("gitPropertyValidationResult"u8);
-                writer.WriteObjectValue(GitPropertyValidationResult);
+                BinaryData data = ModelReaderWriter.Write(GitPropertyValidationResult, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

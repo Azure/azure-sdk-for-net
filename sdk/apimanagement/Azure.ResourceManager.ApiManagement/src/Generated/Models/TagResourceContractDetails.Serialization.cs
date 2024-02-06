@@ -27,21 +27,53 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
             writer.WriteStartObject();
             writer.WritePropertyName("tag"u8);
-            writer.WriteObjectValue(Tag);
+            BinaryData data = ModelReaderWriter.Write(Tag, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+            using (JsonDocument document = JsonDocument.Parse(data))
+            {
+                JsonSerializer.Serialize(writer, document.RootElement);
+            }
+#endif
             if (Optional.IsDefined(Api))
             {
                 writer.WritePropertyName("api"u8);
-                writer.WriteObjectValue(Api);
+                BinaryData data0 = ModelReaderWriter.Write(Api, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data0);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data0))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsDefined(Operation))
             {
                 writer.WritePropertyName("operation"u8);
-                writer.WriteObjectValue(Operation);
+                BinaryData data0 = ModelReaderWriter.Write(Operation, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data0);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data0))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsDefined(Product))
             {
                 writer.WritePropertyName("product"u8);
-                writer.WriteObjectValue(Product);
+                BinaryData data0 = ModelReaderWriter.Write(Product, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data0);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data0))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

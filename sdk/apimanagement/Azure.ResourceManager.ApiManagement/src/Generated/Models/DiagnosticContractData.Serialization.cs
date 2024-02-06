@@ -63,17 +63,41 @@ namespace Azure.ResourceManager.ApiManagement
             if (Optional.IsDefined(Sampling))
             {
                 writer.WritePropertyName("sampling"u8);
-                writer.WriteObjectValue(Sampling);
+                BinaryData data = ModelReaderWriter.Write(Sampling, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsDefined(Frontend))
             {
                 writer.WritePropertyName("frontend"u8);
-                writer.WriteObjectValue(Frontend);
+                BinaryData data = ModelReaderWriter.Write(Frontend, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsDefined(Backend))
             {
                 writer.WritePropertyName("backend"u8);
-                writer.WriteObjectValue(Backend);
+                BinaryData data = ModelReaderWriter.Write(Backend, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsDefined(IsLogClientIPEnabled))
             {

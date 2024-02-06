@@ -71,14 +71,30 @@ namespace Azure.ResourceManager.Authorization
                 writer.WriteStartArray();
                 foreach (var item in EffectiveRules)
                 {
-                    writer.WriteObjectValue(item);
+                    BinaryData data = ModelReaderWriter.Write(item, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(data))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
                 }
                 writer.WriteEndArray();
             }
             if (options.Format != "W" && Optional.IsDefined(PolicyAssignmentProperties))
             {
                 writer.WritePropertyName("policyAssignmentProperties"u8);
-                writer.WriteObjectValue(PolicyAssignmentProperties);
+                BinaryData data = ModelReaderWriter.Write(PolicyAssignmentProperties, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)

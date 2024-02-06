@@ -29,7 +29,15 @@ namespace Azure.ResourceManager.AlertsManagement.Models
             if (Optional.IsDefined(Essentials))
             {
                 writer.WritePropertyName("essentials"u8);
-                writer.WriteObjectValue(Essentials);
+                BinaryData data = ModelReaderWriter.Write(Essentials, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (options.Format != "W" && Optional.IsDefined(Context))
             {

@@ -39,7 +39,15 @@ namespace Azure.ResourceManager.Hci.Models
             if (Optional.IsDefined(ProvisioningStatus))
             {
                 writer.WritePropertyName("provisioningStatus"u8);
-                writer.WriteObjectValue(ProvisioningStatus);
+                BinaryData data = ModelReaderWriter.Write(ProvisioningStatus, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

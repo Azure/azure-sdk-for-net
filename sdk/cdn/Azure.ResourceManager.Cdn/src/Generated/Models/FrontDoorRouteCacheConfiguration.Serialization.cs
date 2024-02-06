@@ -39,7 +39,15 @@ namespace Azure.ResourceManager.Cdn.Models
             if (Optional.IsDefined(CompressionSettings))
             {
                 writer.WritePropertyName("compressionSettings"u8);
-                writer.WriteObjectValue(CompressionSettings);
+                BinaryData data = ModelReaderWriter.Write(CompressionSettings, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

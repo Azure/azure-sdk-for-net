@@ -53,7 +53,15 @@ namespace Azure.ResourceManager.ApiManagement
             if (Optional.IsDefined(LocationData))
             {
                 writer.WritePropertyName("locationData"u8);
-                writer.WriteObjectValue(LocationData);
+                BinaryData data = ModelReaderWriter.Write(LocationData, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsDefined(Description))
             {

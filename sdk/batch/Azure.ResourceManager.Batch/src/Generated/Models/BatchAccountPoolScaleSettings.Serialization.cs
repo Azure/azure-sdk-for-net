@@ -29,12 +29,28 @@ namespace Azure.ResourceManager.Batch.Models
             if (Optional.IsDefined(FixedScale))
             {
                 writer.WritePropertyName("fixedScale"u8);
-                writer.WriteObjectValue(FixedScale);
+                BinaryData data = ModelReaderWriter.Write(FixedScale, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsDefined(AutoScale))
             {
                 writer.WritePropertyName("autoScale"u8);
-                writer.WriteObjectValue(AutoScale);
+                BinaryData data = ModelReaderWriter.Write(AutoScale, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

@@ -75,7 +75,15 @@ namespace Azure.ResourceManager.Cdn
                 if (CustomDomainHttpsContent != null)
                 {
                     writer.WritePropertyName("customHttpsParameters"u8);
-                    writer.WriteObjectValue(CustomDomainHttpsContent);
+                    BinaryData data = ModelReaderWriter.Write(CustomDomainHttpsContent, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(data))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
                 }
                 else
                 {

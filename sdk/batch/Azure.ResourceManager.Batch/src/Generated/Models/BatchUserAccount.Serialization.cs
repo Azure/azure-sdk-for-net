@@ -38,12 +38,28 @@ namespace Azure.ResourceManager.Batch.Models
             if (Optional.IsDefined(LinuxUserConfiguration))
             {
                 writer.WritePropertyName("linuxUserConfiguration"u8);
-                writer.WriteObjectValue(LinuxUserConfiguration);
+                BinaryData data = ModelReaderWriter.Write(LinuxUserConfiguration, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsDefined(WindowsUserConfiguration))
             {
                 writer.WritePropertyName("windowsUserConfiguration"u8);
-                writer.WriteObjectValue(WindowsUserConfiguration);
+                BinaryData data = ModelReaderWriter.Write(WindowsUserConfiguration, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

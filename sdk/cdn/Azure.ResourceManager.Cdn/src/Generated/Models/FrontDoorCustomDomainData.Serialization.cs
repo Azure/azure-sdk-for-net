@@ -59,7 +59,15 @@ namespace Azure.ResourceManager.Cdn
             if (Optional.IsDefined(TlsSettings))
             {
                 writer.WritePropertyName("tlsSettings"u8);
-                writer.WriteObjectValue(TlsSettings);
+                BinaryData data = ModelReaderWriter.Write(TlsSettings, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsDefined(DnsZone))
             {
@@ -71,7 +79,15 @@ namespace Azure.ResourceManager.Cdn
                 if (PreValidatedCustomDomainResource != null)
                 {
                     writer.WritePropertyName("preValidatedCustomDomainResourceId"u8);
-                    writer.WriteObjectValue(PreValidatedCustomDomainResource);
+                    BinaryData data = ModelReaderWriter.Write(PreValidatedCustomDomainResource, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(data))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
                 }
                 else
                 {
@@ -101,7 +117,15 @@ namespace Azure.ResourceManager.Cdn
             if (options.Format != "W" && Optional.IsDefined(ValidationProperties))
             {
                 writer.WritePropertyName("validationProperties"u8);
-                writer.WriteObjectValue(ValidationProperties);
+                BinaryData data = ModelReaderWriter.Write(ValidationProperties, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)

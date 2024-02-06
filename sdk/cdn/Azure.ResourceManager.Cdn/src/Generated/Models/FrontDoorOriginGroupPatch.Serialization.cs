@@ -36,12 +36,28 @@ namespace Azure.ResourceManager.Cdn.Models
             if (Optional.IsDefined(LoadBalancingSettings))
             {
                 writer.WritePropertyName("loadBalancingSettings"u8);
-                writer.WriteObjectValue(LoadBalancingSettings);
+                BinaryData data = ModelReaderWriter.Write(LoadBalancingSettings, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsDefined(HealthProbeSettings))
             {
                 writer.WritePropertyName("healthProbeSettings"u8);
-                writer.WriteObjectValue(HealthProbeSettings);
+                BinaryData data = ModelReaderWriter.Write(HealthProbeSettings, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsDefined(TrafficRestorationTimeInMinutes))
             {

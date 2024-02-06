@@ -39,7 +39,15 @@ namespace Azure.ResourceManager.AppPlatform.Models
             if (Optional.IsDefined(OpenApi))
             {
                 writer.WritePropertyName("openApi"u8);
-                writer.WriteObjectValue(OpenApi);
+                BinaryData data = ModelReaderWriter.Write(OpenApi, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsDefined(Protocol))
             {
@@ -52,7 +60,15 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 writer.WriteStartArray();
                 foreach (var item in Routes)
                 {
-                    writer.WriteObjectValue(item);
+                    BinaryData data = ModelReaderWriter.Write(item, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(data))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
                 }
                 writer.WriteEndArray();
             }

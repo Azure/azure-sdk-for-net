@@ -59,7 +59,15 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             if (Optional.IsDefined(RuleDefinitions))
             {
                 writer.WritePropertyName("RuleDefinitions"u8);
-                writer.WriteObjectValue(RuleDefinitions);
+                BinaryData data = ModelReaderWriter.Write(RuleDefinitions, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

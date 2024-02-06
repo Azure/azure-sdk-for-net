@@ -29,22 +29,54 @@ namespace Azure.ResourceManager.Batch.Models
             if (Optional.IsDefined(BlobFileSystemConfiguration))
             {
                 writer.WritePropertyName("azureBlobFileSystemConfiguration"u8);
-                writer.WriteObjectValue(BlobFileSystemConfiguration);
+                BinaryData data = ModelReaderWriter.Write(BlobFileSystemConfiguration, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsDefined(NfsMountConfiguration))
             {
                 writer.WritePropertyName("nfsMountConfiguration"u8);
-                writer.WriteObjectValue(NfsMountConfiguration);
+                BinaryData data = ModelReaderWriter.Write(NfsMountConfiguration, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsDefined(CifsMountConfiguration))
             {
                 writer.WritePropertyName("cifsMountConfiguration"u8);
-                writer.WriteObjectValue(CifsMountConfiguration);
+                BinaryData data = ModelReaderWriter.Write(CifsMountConfiguration, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsDefined(FileShareConfiguration))
             {
                 writer.WritePropertyName("azureFileShareConfiguration"u8);
-                writer.WriteObjectValue(FileShareConfiguration);
+                BinaryData data = ModelReaderWriter.Write(FileShareConfiguration, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

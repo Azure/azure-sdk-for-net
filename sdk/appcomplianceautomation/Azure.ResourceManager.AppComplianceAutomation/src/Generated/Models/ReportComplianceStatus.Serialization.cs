@@ -29,7 +29,15 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
             if (Optional.IsDefined(M365))
             {
                 writer.WritePropertyName("m365"u8);
-                writer.WriteObjectValue(M365);
+                BinaryData data = ModelReaderWriter.Write(M365, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
