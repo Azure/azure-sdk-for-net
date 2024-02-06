@@ -13,8 +13,8 @@
   `_OTELRESOURCE_` metrics.
   ([#41761](https://github.com/Azure/azure-sdk-for-net/pull/41761))
 
-* Fixed an issue where additional tags provider with `activity.RecordException`
-  were dropped.
+* Fixed an issue where additional tags provided with Exceptions were missing.
+  Now Tags provided as `ActivityEvent` are exported as Custom Properties.
   ([#41767](https://github.com/Azure/azure-sdk-for-net/pull/41767))
   
 ### Other Changes

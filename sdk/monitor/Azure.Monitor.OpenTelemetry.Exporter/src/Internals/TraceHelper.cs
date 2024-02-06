@@ -85,7 +85,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                 for (int i = 0; i < UnMappedTags.Length; i++)
                 {
                     var tag = UnMappedTags[i];
-                    TryAddKvp(destination, tag);
+                    TryAddKvpToDictionary(destination, tag);
                 }
             }
             catch (Exception ex)
@@ -95,7 +95,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        internal static void TryAddKvp(IDictionary<string, string> destination, KeyValuePair<string, object?> keyValuePair)
+        internal static void TryAddKvpToDictionary(IDictionary<string, string> destination, KeyValuePair<string, object?> keyValuePair)
         {
             if (keyValuePair.Key.Length <= SchemaConstants.KVP_MaxKeyLength && keyValuePair.Value != null)
             {
@@ -107,6 +107,24 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                 if (!destination.ContainsKey(keyValuePair.Key))
                 {
                     destination.Add(keyValuePair.Key, Convert.ToString(keyValuePair.Value, CultureInfo.InvariantCulture).Truncate(SchemaConstants.KVP_MaxValueLength) ?? "null");
+                }
+#endif
+            }
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        internal static void TryAddKvpToDictionary(IDictionary<string, string> destination, string key, string value)
+        {
+            if (key.Length <= SchemaConstants.KVP_MaxKeyLength && value != null)
+            {
+                // Note: if Key exceeds MaxLength or if Value is null, the entire KVP will be dropped.
+                // In case of duplicate keys, only the first occurence will be exported.
+#if NET6_0_OR_GREATER
+                destination.TryAdd(keyValuePair.Key, Convert.ToString(keyValuePair.Value, CultureInfo.InvariantCulture).Truncate(SchemaConstants.KVP_MaxValueLength) ?? "null");
+#else
+                if (!destination.ContainsKey(key))
+                {
+                    destination.Add(key, Convert.ToString(value, CultureInfo.InvariantCulture).Truncate(SchemaConstants.KVP_MaxValueLength) ?? "null");
                 }
 #endif
             }
@@ -255,11 +273,11 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             {
                 if (tag.Value is Array arrayValue)
                 {
-                    messageData.Properties.Add(tag.Key, arrayValue.ToCommaDelimitedString());
+                    TryAddKvpToDictionary(messageData.Properties, tag.Key, arrayValue.ToCommaDelimitedString());
                 }
                 else
                 {
-                    messageData.Properties.Add(tag.Key, tag.Value?.ToString());
+                    TryAddKvpToDictionary(messageData.Properties, tag);
                 }
             }
 
@@ -283,21 +301,18 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                 if (tag.Key == SemanticConventions.AttributeExceptionType)
                 {
                     exceptionType = tag.Value?.ToString();
-                    continue;
                 }
                 else if (tag.Key == SemanticConventions.AttributeExceptionMessage)
                 {
                     exceptionMessage = tag.Value?.ToString();
-                    continue;
                 }
                 else if (tag.Key == SemanticConventions.AttributeExceptionStacktrace)
                 {
                     exceptionStackTrace = tag.Value?.ToString();
-                    continue;
                 }
                 else
                 {
-                    TryAddKvp(properties, tag);
+                    TryAddKvpToDictionary(properties, tag);
                 }
             }
 
