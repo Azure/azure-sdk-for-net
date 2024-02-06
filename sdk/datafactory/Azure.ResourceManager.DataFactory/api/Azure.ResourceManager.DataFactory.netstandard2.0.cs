@@ -1099,12 +1099,12 @@ namespace Azure.ResourceManager.DataFactory.Models
         public Azure.Core.Expressions.DataFactory.DataFactoryElement<string> AvroCompressionCodec { get { throw null; } set { } }
         public int? AvroCompressionLevel { get { throw null; } set { } }
         public Azure.ResourceManager.DataFactory.Models.DatasetLocation DataLocation { get { throw null; } set { } }
+        public new Azure.Core.Expressions.DataFactory.DataFactoryElement<System.BinaryData> Schema { get { throw null; } set { } }
         Azure.ResourceManager.DataFactory.Models.AvroDataset System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataFactory.Models.AvroDataset>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataFactory.Models.AvroDataset>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataFactory.Models.AvroDataset System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataFactory.Models.AvroDataset>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataFactory.Models.AvroDataset>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataFactory.Models.AvroDataset>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        public new Azure.Core.Expressions.DataFactory.DataFactoryElement<System.BinaryData> Schema { get { throw null; } set { } }
     }
     public partial class AvroSink : Azure.ResourceManager.DataFactory.Models.CopySink, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataFactory.Models.AvroSink>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataFactory.Models.AvroSink>
     {
@@ -6487,6 +6487,12 @@ namespace Azure.ResourceManager.DataFactory.Models
         public Azure.ResourceManager.DataFactory.Models.DatasetCompression Compression { get { throw null; } set { } }
         public Azure.ResourceManager.DataFactory.Models.DatasetLocation DataLocation { get { throw null; } set { } }
         public Azure.Core.Expressions.DataFactory.DataFactoryElement<string> EncodingName { get { throw null; } set { } }
+        public new Azure.Core.Expressions.DataFactory.DataFactoryElement<System.BinaryData> Schema { get { throw null; } set { } }
+        Azure.ResourceManager.DataFactory.Models.JsonDataset System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataFactory.Models.JsonDataset>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataFactory.Models.JsonDataset>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DataFactory.Models.JsonDataset System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataFactory.Models.JsonDataset>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataFactory.Models.JsonDataset>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataFactory.Models.JsonDataset>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class JsonReadSettings : Azure.ResourceManager.DataFactory.Models.FormatReadSettings, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataFactory.Models.JsonReadSettings>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataFactory.Models.JsonReadSettings>
     {

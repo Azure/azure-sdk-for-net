@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -115,8 +116,6 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             writer.WriteEndObject();
         }
-<<<<<<< HEAD
-=======
 
         AvroDataset IJsonModel<AvroDataset>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
@@ -305,6 +304,5 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         string IPersistableModel<AvroDataset>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
->>>>>>> origin/main
     }
 }
