@@ -102,7 +102,18 @@ namespace Azure.Core
 
         internal List<(HttpPipelinePosition Position, HttpPipelinePolicy Policy)>? Policies { get; set; }
 
+        internal static HttpMessage AssertHttpMessage(PipelineMessage message)
+        {
+            if (message is not HttpMessage httpMessage)
+            {
+                throw new InvalidOperationException($"Invalid type for PipelineMessage: '{message?.GetType()}'.");
+            }
+
+            return httpMessage;
+        }
+
         #region Message Properties
+
         /// <summary>
         /// Gets a property that modifies the pipeline behavior. Please refer to individual policies documentation on what properties it supports.
         /// </summary>
@@ -144,6 +155,7 @@ namespace Azure.Core
         /// Exists as a private key entry into the property bag for stashing string keyed entries in the Type keyed dictionary.
         /// </summary>
         private class MessagePropertyKey { }
+
         #endregion
 
         /// <summary>

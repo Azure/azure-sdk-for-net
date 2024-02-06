@@ -13,5 +13,8 @@ public class ClientResult<T> : ClientResult
         Value = value;
     }
 
+    /// <summary>
+    /// TBD. Needed for inheritdoc.
+    /// </summary>
     public virtual T Value { get; }
 }
