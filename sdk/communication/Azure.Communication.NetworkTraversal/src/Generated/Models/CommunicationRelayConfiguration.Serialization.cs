@@ -66,6 +66,7 @@ namespace Azure.Communication.NetworkTraversal
             {
                 writer.WriteObjectValue(model);
             }
+
             public override CommunicationRelayConfiguration Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

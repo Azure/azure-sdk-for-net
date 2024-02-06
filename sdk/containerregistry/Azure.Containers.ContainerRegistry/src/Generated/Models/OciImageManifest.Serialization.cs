@@ -111,6 +111,7 @@ namespace Azure.Containers.ContainerRegistry
             {
                 writer.WriteObjectValue(model);
             }
+
             public override OciImageManifest Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);
