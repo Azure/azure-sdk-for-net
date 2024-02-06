@@ -16,7 +16,6 @@ namespace Azure.Core
     {
         private ArrayBackedPropertyBag<ulong, object> _propertyBag;
         private Response? _response;
-        private bool _ownsResponse;
 
         /// <summary>
         /// Creates a new instance of <see cref="HttpMessage"/>.
@@ -30,7 +29,6 @@ namespace Azure.Core
             ResponseClassifier = responseClassifier;
             BufferResponse = true;
             _propertyBag = new ArrayBackedPropertyBag<ulong, object>();
-            _ownsResponse = true;
         }
 
         /// <summary>
@@ -49,10 +47,7 @@ namespace Azure.Core
                 if (_response == null)
                 {
 #pragma warning disable CA1065 // Do not raise exceptions in unexpected locations
-                    throw new InvalidOperationException("Response is not set on this message. "
-                        + "This is may be because the message was not sent via pipeline.Send, "
-                        + "the pipeline transport did not populate the response, or because "
-                        + "TransferResponseDisposeOwnership was called.");
+                    throw new InvalidOperationException("Response was not set, make sure SendAsync was called");
 #pragma warning restore CA1065 // Do not raise exceptions in unexpected locations
                 }
                 return _response;
@@ -182,11 +177,7 @@ namespace Azure.Core
             _propertyBag.Set((ulong)type.TypeHandle.Value, value);
 
         /// <summary>
-        /// Returns the response content stream and releases its ownership to the caller.
-        /// After this method has been called, any use of the
-        /// <see cref="Response.ContentStream"/> or <see cref="Response.Content"/>
-        /// properties on this message will result in an <see cref="InvalidOperationException"/>
-        /// being thrown.
+        /// Returns the response content stream and releases it ownership to the caller. After calling this methods using <see cref="Azure.Response.ContentStream"/> or <see cref="Azure.Response.Content"/> would result in exception.
         /// </summary>
         /// <returns>The content stream or null if response didn't have any.</returns>
         public Stream? ExtractResponseContent()
@@ -204,21 +195,6 @@ namespace Azure.Core
         }
 
         /// <summary>
-        /// Returns the value of the <see cref="Response"/> property and
-        /// transfers dispose ownership of the response to the caller. After
-        /// calling this method, the <see cref="Response"/> property will be
-        /// null and the caller will be responsible for disposing the returned
-        /// Response value, which may hold a live network stream.
-        /// </summary>
-        public Response TransferResponseDisposeOwnership()
-        {
-            Response response = Response;
-            _response = null;
-            _ownsResponse = false;
-            return response;
-        }
-
-        /// <summary>
         /// Disposes the request and response.
         /// </summary>
         public void Dispose()
@@ -226,14 +202,11 @@ namespace Azure.Core
             Request.Dispose();
             _propertyBag.Dispose();
 
-            if (_ownsResponse)
+            var response = _response;
+            if (response != null)
             {
-                var response = _response;
-                if (response != null)
-                {
-                    _response = null;
-                    response.Dispose();
-                }
+                _response = null;
+                response.Dispose();
             }
         }
 

@@ -496,7 +496,6 @@ namespace Azure.Core
         public System.IO.Stream? ExtractResponseContent() { throw null; }
         public void SetProperty(string name, object value) { }
         public void SetProperty(System.Type type, object value) { }
-        public Azure.Response TransferResponseDisposeOwnership() { throw null; }
         public bool TryGetProperty(string name, out object? value) { throw null; }
         public bool TryGetProperty(System.Type type, out object? value) { throw null; }
     }

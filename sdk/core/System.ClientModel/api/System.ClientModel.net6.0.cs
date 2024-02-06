@@ -13,8 +13,8 @@ namespace System.ClientModel
         public static System.ClientModel.BinaryContent Create<T>(T model, System.ClientModel.Primitives.ModelReaderWriterOptions? options = null) where T : System.ClientModel.Primitives.IPersistableModel<T> { throw null; }
         public abstract void Dispose();
         public abstract bool TryComputeLength(out long length);
-        public abstract void WriteTo(System.IO.Stream stream, System.Threading.CancellationToken cancellationToken);
-        public abstract System.Threading.Tasks.Task WriteToAsync(System.IO.Stream stream, System.Threading.CancellationToken cancellationToken);
+        public abstract void WriteTo(System.IO.Stream stream, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        public abstract System.Threading.Tasks.Task WriteToAsync(System.IO.Stream stream, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
     }
     public partial class ClientResult
     {
@@ -94,9 +94,9 @@ namespace System.ClientModel.Primitives
     }
     public partial class HttpClientPipelineTransport : System.ClientModel.Primitives.PipelineTransport, System.IDisposable
     {
-        public static readonly System.ClientModel.Primitives.HttpClientPipelineTransport Shared;
         public HttpClientPipelineTransport() { }
         public HttpClientPipelineTransport(System.Net.Http.HttpClient client) { }
+        public static System.ClientModel.Primitives.HttpClientPipelineTransport Shared { get { throw null; } }
         protected override System.ClientModel.Primitives.PipelineMessage CreateMessageCore() { throw null; }
         public void Dispose() { }
         protected virtual void Dispose(bool disposing) { }
@@ -150,7 +150,6 @@ namespace System.ClientModel.Primitives
         public void Dispose() { }
         protected virtual void Dispose(bool disposing) { }
         public void SetProperty(System.Type type, object value) { }
-        public System.ClientModel.Primitives.PipelineResponse TransferResponseDisposeOwnership() { throw null; }
         public bool TryGetProperty(System.Type type, out object? value) { throw null; }
     }
     public abstract partial class PipelineMessageClassifier

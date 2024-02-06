@@ -10,7 +10,6 @@ public class PipelineMessage : IDisposable
 {
     private ArrayBackedPropertyBag<ulong, object> _propertyBag;
     private bool _disposed;
-    private bool _ownsResponse;
 
     protected internal PipelineMessage(PipelineRequest request)
     {
@@ -21,8 +20,6 @@ public class PipelineMessage : IDisposable
 
         BufferResponse = true;
         ResponseClassifier = PipelineMessageClassifier.Default;
-
-        _ownsResponse = true;
     }
 
     public PipelineRequest Request { get; }
@@ -128,45 +125,32 @@ public class PipelineMessage : IDisposable
         }
     }
 
-    public PipelineResponse TransferResponseDisposeOwnership()
-    {
-        AssertResponse();
-
-        PipelineResponse response = Response!;
-        Response = null;
-        _ownsResponse = false;
-        return response;
-    }
-
     #region IDisposable
-
-    public void Dispose()
-    {
-        Dispose(true);
-        GC.SuppressFinalize(this);
-    }
 
     protected virtual void Dispose(bool disposing)
     {
         if (disposing && !_disposed)
         {
-            PipelineRequest request = Request;
+            var request = Request;
             request?.Dispose();
 
             _propertyBag.Dispose();
 
-            if (_ownsResponse)
+            var response = Response;
+            if (response != null)
             {
-                PipelineResponse? response = Response;
-                if (response != null)
-                {
-                    response.Dispose();
-                    Response = null;
-                }
+                response.Dispose();
+                Response = null;
             }
 
             _disposed = true;
         }
+    }
+
+    public void Dispose()
+    {
+        Dispose(true);
+        GC.SuppressFinalize(this);
     }
 
     #endregion
