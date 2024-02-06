@@ -21,7 +21,7 @@ namespace Azure.ResourceManager
         /// <summary>
         /// The token to rehydration the operation.
         /// </summary>
-        protected readonly RehydrationToken? _rehydrationToken;
+        protected RehydrationToken? _rehydrationToken;
 
         /// <summary> Initializes a new instance of ArmOperation for mocking. </summary>
         protected ArmOperation()
