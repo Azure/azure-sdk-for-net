@@ -2,46 +2,46 @@
 // Licensed under the MIT License.
 
 using System;
+using System.ClientModel.Primitives;
 using System.Net;
 using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.Core.Pipeline;
 using BenchmarkDotNet.Attributes;
 using BenchmarkDotNet.Jobs;
 
-namespace Azure.Core.Perf;
+namespace ClientModel.Tests.Internal.Perf;
 
 [SimpleJob(RuntimeMoniker.Net60)]
 [MemoryDiagnoser]
-public class HttpPipelineBenchmark
+public class ClientPipelineBenchmark
 {
-    private HttpPipeline _pipeline;
+    private ClientPipeline _pipeline;
 
     [GlobalSetup]
     public void SetUp()
     {
-        ClientOptions options = new BenchmarkOptions
+        ClientPipelineOptions options = new()
         {
-            Transport = new HttpClientTransport(new HttpClient(new MockHttpMessageHandler()))
+            Transport = new HttpClientPipelineTransport(new HttpClient(new MockHttpMessageHandler()))
         };
 
-        _pipeline = HttpPipelineBuilder.Build(options);
+        _pipeline = ClientPipeline.Create(options);
     }
 
     [Benchmark]
     public async Task CreateAndSendMessage()
     {
-        HttpMessage message = _pipeline.CreateMessage();
-        message.Request.Uri.Reset(new Uri("https://www.example.com"));
-        await _pipeline.SendAsync(message, CancellationToken.None);
+        PipelineMessage message = _pipeline.CreateMessage();
+        message.Request.Uri = new Uri("https://www.example.com");
+        await _pipeline.SendAsync(message);
     }
 
     #region Helpers
 
     /// <summary>
     /// Mock out the network to isolate the performance test to only
-    /// Azure.Core pipeline code.
+    /// System.ClientModel pipeline code.
     /// </summary>
     private class MockHttpMessageHandler : HttpMessageHandler
     {
@@ -58,10 +58,6 @@ public class HttpPipelineBenchmark
 
             return Task.FromResult(httpResponse);
         }
-    }
-
-    private class BenchmarkOptions : ClientOptions
-    {
     }
 
     #endregion
