@@ -3,7 +3,6 @@
 
 using System;
 using System.ClientModel;
-using System.ClientModel.Primitives;
 using System.Diagnostics;
 using System.Net;
 using System.Net.Http;
@@ -24,8 +23,7 @@ namespace Azure.Core.Pipeline
         /// </summary>
         public static readonly HttpClientTransport Shared = new HttpClientTransport();
 
-        // The transport's private HttpClient has been made internal because it is used by tests.
-        // TODO: move these tests into System.Rest? - can we make it private when we do?
+        // The transport's private HttpClient is internal because it is used by tests.
         internal HttpClient Client { get; }
 
         private readonly AzureCoreHttpPipelineTransport _transport;
@@ -41,7 +39,8 @@ namespace Azure.Core.Pipeline
         /// Creates a new instance of <see cref="HttpClientTransport"/> using the provided client instance.
         /// </summary>
         /// <param name="messageHandler">The instance of <see cref="HttpMessageHandler"/> to use.</param>
-        public HttpClientTransport(HttpMessageHandler messageHandler) : this(new HttpClient(messageHandler))
+        public HttpClientTransport(HttpMessageHandler messageHandler)
+            : this(new HttpClient(messageHandler))
         {
         }
 
