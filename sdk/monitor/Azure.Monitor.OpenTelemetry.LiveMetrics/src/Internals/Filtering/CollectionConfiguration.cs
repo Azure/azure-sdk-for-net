@@ -12,7 +12,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Filtering
     using ExceptionDocument = Azure.Monitor.OpenTelemetry.LiveMetrics.Models.Exception;
 
     /// <summary>
-    /// Represents the collection configuration - a set of calculated metrics, performance counters, and full telemetry documents to be collected by the SDK.
+    /// Represents the collection configuration - a set of calculated metrics, and full telemetry documents to be collected by the SDK.
     /// </summary>
     /// <remarks>
     /// This class is a hub for all pieces of configurable collection configuration.
@@ -44,8 +44,6 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Filtering
 
         #region Metadata used by other components
         private readonly List<Tuple<string, DerivedMetricInfoAggregation?>> telemetryMetadata = new List<Tuple<string, DerivedMetricInfoAggregation?>>();
-
-        private readonly List<Tuple<string, string>> performanceCounters = new List<Tuple<string, string>>();
         #endregion
 
         public CollectionConfiguration(
@@ -108,14 +106,6 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Filtering
         ///// </summary>
         //public IEnumerable<DocumentStream> DocumentStreams => this.documentStreams;
 
-        ///// <summary>
-        ///// Gets a list of performance counters.
-        ///// </summary>
-        ///// <remarks>
-        ///// Performance counter name is stored in CalculatedMetricInfo.Projection.
-        ///// </remarks>
-        //public IEnumerable<Tuple<string, string>> PerformanceCounters => this.performanceCounters;
-
         public string ETag => this.info.Etag;
 
         private static void AddMetric<DocumentIngress>(
@@ -145,7 +135,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Filtering
             }
         }
 
-        // TODO: Add back the removed CreatePerformanceCounters method and CreateDocumentStreams.
+        // TODO: Add back the removed CreateDocumentStreams method.
 
         private void CreateTelemetryMetrics(out CollectionConfigurationError[] errors)
         {
