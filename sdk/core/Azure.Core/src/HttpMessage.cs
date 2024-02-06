@@ -44,7 +44,10 @@ namespace Azure.Core
                 if (base.Response is null)
                 {
 #pragma warning disable CA1065 // Do not raise exceptions in unexpected locations
-                    throw new InvalidOperationException("Response was not set, make sure SendAsync was called");
+                    throw new InvalidOperationException($"{nameof(Response)} is not set on this message. "
+                        + "This is may be because the message was not sent via pipeline.Send, "
+                        + "the pipeline transport did not populate the response, or because "
+                        + $"{nameof(ExtractResponse)} was called.");
 #pragma warning restore CA1065 // Do not raise exceptions in unexpected locations
                 }
                 return (Response)base.Response;
@@ -147,11 +150,11 @@ namespace Azure.Core
         #endregion
 
         /// <summary>
-        /// Returns the response content stream and releases it ownership to the caller.
-        ///
-        /// After calling this method, any attempt to use the
-        /// <see cref="PipelineResponse.ContentStream"/> or <see cref="PipelineResponse.Content"/>
-        /// properties on <see cref="Response"/> will result in an exception being thrown.
+        /// Returns the response content stream and releases its ownership to the caller.
+        /// After this method has been called, any use of the
+        /// <see cref="PipelineResponse.ContentStream"/> or <see cref="Response.Content"/>
+        /// properties on this message will result in an <see cref="InvalidOperationException"/>
+        /// being thrown.
         /// </summary>
         /// <returns>The content stream, or <code>null</code> if <see cref="Response"/>
         /// did not have content set.</returns>
@@ -173,6 +176,15 @@ namespace Azure.Core
                     return null;
             }
         }
+
+        /// <summary>
+        /// Returns the value of the <see cref="Response"/> property and
+        /// transfers dispose ownership of the response to the caller. After
+        /// calling this method, the <see cref="Response"/> property will be
+        /// null and the caller will be responsible for disposing the returned
+        /// value, which may hold a live network stream.
+        /// </summary>
+        public new Response ExtractResponse() => (Response)base.ExtractResponse();
 
         private class ResponseShouldNotBeUsedStream : Stream
         {

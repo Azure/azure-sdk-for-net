@@ -32,6 +32,23 @@ public class PipelineMessage : IDisposable
         protected internal set;
     }
 
+    public PipelineResponse ExtractResponse()
+    {
+        AssertResponse();
+
+        PipelineResponse response = Response!;
+        Response = null;
+        return response;
+    }
+
+    internal void AssertResponse()
+    {
+        if (Response is null)
+        {
+            throw new InvalidOperationException($"{nameof(Response)} is not set on message.");
+        }
+    }
+
     #region Pipeline invocation options
 
     public CancellationToken CancellationToken
@@ -117,26 +134,24 @@ public class PipelineMessage : IDisposable
 
     #endregion
 
-    internal void AssertResponse()
-    {
-        if (Response is null)
-        {
-            throw new InvalidOperationException("Response is not set on message.");
-        }
-    }
-
     #region IDisposable
+
+    public void Dispose()
+    {
+        Dispose(true);
+        GC.SuppressFinalize(this);
+    }
 
     protected virtual void Dispose(bool disposing)
     {
         if (disposing && !_disposed)
         {
-            var request = Request;
+            PipelineRequest request = Request;
             request?.Dispose();
 
             _propertyBag.Dispose();
 
-            var response = Response;
+            PipelineResponse? response = Response;
             if (response != null)
             {
                 response.Dispose();
@@ -145,12 +160,6 @@ public class PipelineMessage : IDisposable
 
             _disposed = true;
         }
-    }
-
-    public void Dispose()
-    {
-        Dispose(true);
-        GC.SuppressFinalize(this);
     }
 
     #endregion
