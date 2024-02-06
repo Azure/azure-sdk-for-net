@@ -63,7 +63,6 @@ namespace Azure.Analytics.Defender.Easm.Tests.Samples
                 request.Seeds.Add(seed);
             }
 
-            request.Name = discoveryGroupName;
             request.Description = discoveryGroupDescription;
             client.CreateOrReplaceDiscoGroup(discoveryGroupName, request);
             #endregion

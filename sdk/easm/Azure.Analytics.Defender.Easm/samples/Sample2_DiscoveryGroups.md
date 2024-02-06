@@ -45,7 +45,6 @@ foreach (var domain in domains)
     request.Seeds.Add(seed);
 }
 
-request.Name = discoveryGroupName;
 request.Description = discoveryGroupDescription;
 client.CreateOrReplaceDiscoGroup(discoveryGroupName, request);
 ```
