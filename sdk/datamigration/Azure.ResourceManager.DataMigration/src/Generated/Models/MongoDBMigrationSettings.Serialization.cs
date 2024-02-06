@@ -36,7 +36,15 @@ namespace Azure.ResourceManager.DataMigration.Models
             foreach (var item in Databases)
             {
                 writer.WritePropertyName(item.Key);
-                writer.WriteObjectValue(item.Value);
+                BinaryData data = ModelReaderWriter.Write(item.Value, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             writer.WriteEndObject();
             if (Optional.IsDefined(Replication))
@@ -45,13 +53,37 @@ namespace Azure.ResourceManager.DataMigration.Models
                 writer.WriteStringValue(Replication.Value.ToString());
             }
             writer.WritePropertyName("source"u8);
-            writer.WriteObjectValue(Source);
+            BinaryData data0 = ModelReaderWriter.Write(Source, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data0);
+#else
+            using (JsonDocument document = JsonDocument.Parse(data0))
+            {
+                JsonSerializer.Serialize(writer, document.RootElement);
+            }
+#endif
             writer.WritePropertyName("target"u8);
-            writer.WriteObjectValue(Target);
+            BinaryData data1 = ModelReaderWriter.Write(Target, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data1);
+#else
+            using (JsonDocument document = JsonDocument.Parse(data1))
+            {
+                JsonSerializer.Serialize(writer, document.RootElement);
+            }
+#endif
             if (Optional.IsDefined(Throttling))
             {
                 writer.WritePropertyName("throttling"u8);
-                writer.WriteObjectValue(Throttling);
+                BinaryData data = ModelReaderWriter.Write(Throttling, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

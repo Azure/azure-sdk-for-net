@@ -72,12 +72,28 @@ namespace Azure.ResourceManager.CosmosDB
             if (Optional.IsDefined(Resource))
             {
                 writer.WritePropertyName("resource"u8);
-                writer.WriteObjectValue(Resource);
+                BinaryData data = ModelReaderWriter.Write(Resource, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsDefined(Options))
             {
                 writer.WritePropertyName("options"u8);
-                writer.WriteObjectValue(Options);
+                BinaryData data = ModelReaderWriter.Write(Options, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)

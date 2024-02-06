@@ -35,7 +35,15 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(Policy))
             {
                 writer.WritePropertyName("policy"u8);
-                writer.WriteObjectValue(Policy);
+                BinaryData data = ModelReaderWriter.Write(Policy, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
@@ -62,7 +70,15 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WriteStartArray();
                 foreach (var item in DependsOn)
                 {
-                    writer.WriteObjectValue(item);
+                    BinaryData data = ModelReaderWriter.Write(item, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(data))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
                 }
                 writer.WriteEndArray();
             }
@@ -72,14 +88,30 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WriteStartArray();
                 foreach (var item in UserProperties)
                 {
-                    writer.WriteObjectValue(item);
+                    BinaryData data = ModelReaderWriter.Write(item, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(data))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
                 }
                 writer.WriteEndArray();
             }
             writer.WritePropertyName("typeProperties"u8);
             writer.WriteStartObject();
             writer.WritePropertyName("sparkJob"u8);
-            writer.WriteObjectValue(SparkJob);
+            BinaryData data0 = ModelReaderWriter.Write(SparkJob, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data0);
+#else
+            using (JsonDocument document = JsonDocument.Parse(data0))
+            {
+                JsonSerializer.Serialize(writer, document.RootElement);
+            }
+#endif
             if (Optional.IsCollectionDefined(Arguments))
             {
                 writer.WritePropertyName("args"u8);
@@ -186,7 +218,15 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(TargetBigDataPool))
             {
                 writer.WritePropertyName("targetBigDataPool"u8);
-                writer.WriteObjectValue(TargetBigDataPool);
+                BinaryData data = ModelReaderWriter.Write(TargetBigDataPool, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsDefined(ExecutorSize))
             {
@@ -223,7 +263,15 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(TargetSparkConfiguration))
             {
                 writer.WritePropertyName("targetSparkConfiguration"u8);
-                writer.WriteObjectValue(TargetSparkConfiguration);
+                BinaryData data = ModelReaderWriter.Write(TargetSparkConfiguration, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsCollectionDefined(SparkConfig))
             {

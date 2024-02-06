@@ -29,7 +29,15 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             writer.WritePropertyName("ruleName"u8);
             writer.WriteStringValue(RuleName);
             writer.WritePropertyName("triggerOption"u8);
-            writer.WriteObjectValue(BackupTrigger);
+            BinaryData data = ModelReaderWriter.Write(BackupTrigger, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+            using (JsonDocument document = JsonDocument.Parse(data))
+            {
+                JsonSerializer.Serialize(writer, document.RootElement);
+            }
+#endif
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)

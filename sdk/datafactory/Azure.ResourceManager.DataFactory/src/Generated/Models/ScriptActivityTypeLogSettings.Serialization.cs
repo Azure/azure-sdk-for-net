@@ -31,7 +31,15 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(LogLocationSettings))
             {
                 writer.WritePropertyName("logLocationSettings"u8);
-                writer.WriteObjectValue(LogLocationSettings);
+                BinaryData data = ModelReaderWriter.Write(LogLocationSettings, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

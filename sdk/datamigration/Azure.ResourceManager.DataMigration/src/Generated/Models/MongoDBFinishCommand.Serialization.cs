@@ -29,7 +29,15 @@ namespace Azure.ResourceManager.DataMigration.Models
             if (Optional.IsDefined(Input))
             {
                 writer.WritePropertyName("input"u8);
-                writer.WriteObjectValue(Input);
+                BinaryData data = ModelReaderWriter.Write(Input, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             writer.WritePropertyName("commandType"u8);
             writer.WriteStringValue(CommandType.ToString());
@@ -39,7 +47,15 @@ namespace Azure.ResourceManager.DataMigration.Models
                 writer.WriteStartArray();
                 foreach (var item in Errors)
                 {
-                    writer.WriteObjectValue(item);
+                    BinaryData data = ModelReaderWriter.Write(item, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(data))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
                 }
                 writer.WriteEndArray();
             }

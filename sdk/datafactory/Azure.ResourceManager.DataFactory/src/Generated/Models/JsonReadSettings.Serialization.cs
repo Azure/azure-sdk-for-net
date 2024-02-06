@@ -29,7 +29,15 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(CompressionProperties))
             {
                 writer.WritePropertyName("compressionProperties"u8);
-                writer.WriteObjectValue(CompressionProperties);
+                BinaryData data = ModelReaderWriter.Write(CompressionProperties, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(FormatReadSettingsType);

@@ -27,16 +27,40 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
 
             writer.WriteStartObject();
             writer.WritePropertyName("deleteAfter"u8);
-            writer.WriteObjectValue(DeleteAfter);
+            BinaryData data = ModelReaderWriter.Write(DeleteAfter, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+            using (JsonDocument document = JsonDocument.Parse(data))
+            {
+                JsonSerializer.Serialize(writer, document.RootElement);
+            }
+#endif
             writer.WritePropertyName("sourceDataStore"u8);
-            writer.WriteObjectValue(SourceDataStore);
+            BinaryData data0 = ModelReaderWriter.Write(SourceDataStore, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data0);
+#else
+            using (JsonDocument document = JsonDocument.Parse(data0))
+            {
+                JsonSerializer.Serialize(writer, document.RootElement);
+            }
+#endif
             if (Optional.IsCollectionDefined(TargetDataStoreCopySettings))
             {
                 writer.WritePropertyName("targetDataStoreCopySettings"u8);
                 writer.WriteStartArray();
                 foreach (var item in TargetDataStoreCopySettings)
                 {
-                    writer.WriteObjectValue(item);
+                    BinaryData data1 = ModelReaderWriter.Write(item, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data1);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(data1))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
                 }
                 writer.WriteEndArray();
             }

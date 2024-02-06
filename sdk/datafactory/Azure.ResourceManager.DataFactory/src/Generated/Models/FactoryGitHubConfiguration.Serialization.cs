@@ -39,7 +39,15 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(ClientSecret))
             {
                 writer.WritePropertyName("clientSecret"u8);
-                writer.WriteObjectValue(ClientSecret);
+                BinaryData data = ModelReaderWriter.Write(ClientSecret, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(FactoryRepoConfigurationType);

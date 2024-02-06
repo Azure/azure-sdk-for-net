@@ -29,12 +29,28 @@ namespace Azure.ResourceManager.ContainerService.Models
             if (Optional.IsDefined(Keda))
             {
                 writer.WritePropertyName("keda"u8);
-                writer.WriteObjectValue(Keda);
+                BinaryData data = ModelReaderWriter.Write(Keda, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsDefined(VerticalPodAutoscaler))
             {
                 writer.WritePropertyName("verticalPodAutoscaler"u8);
-                writer.WriteObjectValue(VerticalPodAutoscaler);
+                BinaryData data = ModelReaderWriter.Write(VerticalPodAutoscaler, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

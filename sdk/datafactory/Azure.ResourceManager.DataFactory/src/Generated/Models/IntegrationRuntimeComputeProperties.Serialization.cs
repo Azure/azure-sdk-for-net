@@ -49,22 +49,54 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(DataFlowProperties))
             {
                 writer.WritePropertyName("dataFlowProperties"u8);
-                writer.WriteObjectValue(DataFlowProperties);
+                BinaryData data = ModelReaderWriter.Write(DataFlowProperties, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsDefined(VnetProperties))
             {
                 writer.WritePropertyName("vNetProperties"u8);
-                writer.WriteObjectValue(VnetProperties);
+                BinaryData data = ModelReaderWriter.Write(VnetProperties, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsDefined(CopyComputeScaleProperties))
             {
                 writer.WritePropertyName("copyComputeScaleProperties"u8);
-                writer.WriteObjectValue(CopyComputeScaleProperties);
+                BinaryData data = ModelReaderWriter.Write(CopyComputeScaleProperties, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsDefined(PipelineExternalComputeScaleProperties))
             {
                 writer.WritePropertyName("pipelineExternalComputeScaleProperties"u8);
-                writer.WriteObjectValue(PipelineExternalComputeScaleProperties);
+                BinaryData data = ModelReaderWriter.Write(PipelineExternalComputeScaleProperties, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             foreach (var item in AdditionalProperties)
             {

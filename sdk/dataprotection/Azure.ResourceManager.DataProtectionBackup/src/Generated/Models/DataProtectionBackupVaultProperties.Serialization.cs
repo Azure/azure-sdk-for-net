@@ -29,7 +29,15 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             if (Optional.IsDefined(MonitoringSettings))
             {
                 writer.WritePropertyName("monitoringSettings"u8);
-                writer.WriteObjectValue(MonitoringSettings);
+                BinaryData data = ModelReaderWriter.Write(MonitoringSettings, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
@@ -44,18 +52,42 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             if (options.Format != "W" && Optional.IsDefined(ResourceMoveDetails))
             {
                 writer.WritePropertyName("resourceMoveDetails"u8);
-                writer.WriteObjectValue(ResourceMoveDetails);
+                BinaryData data = ModelReaderWriter.Write(ResourceMoveDetails, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsDefined(SecuritySettings))
             {
                 writer.WritePropertyName("securitySettings"u8);
-                writer.WriteObjectValue(SecuritySettings);
+                BinaryData data = ModelReaderWriter.Write(SecuritySettings, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             writer.WritePropertyName("storageSettings"u8);
             writer.WriteStartArray();
             foreach (var item in StorageSettings)
             {
-                writer.WriteObjectValue(item);
+                BinaryData data = ModelReaderWriter.Write(item, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             writer.WriteEndArray();
             if (options.Format != "W" && Optional.IsDefined(IsVaultProtectedByResourceGuard))
@@ -66,7 +98,15 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             if (Optional.IsDefined(FeatureSettings))
             {
                 writer.WritePropertyName("featureSettings"u8);
-                writer.WriteObjectValue(FeatureSettings);
+                BinaryData data = ModelReaderWriter.Write(FeatureSettings, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (options.Format != "W" && Optional.IsDefined(SecureScore))
             {

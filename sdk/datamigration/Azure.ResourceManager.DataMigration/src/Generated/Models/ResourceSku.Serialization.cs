@@ -59,7 +59,15 @@ namespace Azure.ResourceManager.DataMigration.Models
             if (options.Format != "W" && Optional.IsDefined(Capacity))
             {
                 writer.WritePropertyName("capacity"u8);
-                writer.WriteObjectValue(Capacity);
+                BinaryData data = ModelReaderWriter.Write(Capacity, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(Locations))
             {
@@ -87,7 +95,15 @@ namespace Azure.ResourceManager.DataMigration.Models
                 writer.WriteStartArray();
                 foreach (var item in Costs)
                 {
-                    writer.WriteObjectValue(item);
+                    BinaryData data = ModelReaderWriter.Write(item, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(data))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
                 }
                 writer.WriteEndArray();
             }
@@ -97,7 +113,15 @@ namespace Azure.ResourceManager.DataMigration.Models
                 writer.WriteStartArray();
                 foreach (var item in Capabilities)
                 {
-                    writer.WriteObjectValue(item);
+                    BinaryData data = ModelReaderWriter.Write(item, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(data))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
                 }
                 writer.WriteEndArray();
             }
@@ -107,7 +131,15 @@ namespace Azure.ResourceManager.DataMigration.Models
                 writer.WriteStartArray();
                 foreach (var item in Restrictions)
                 {
-                    writer.WriteObjectValue(item);
+                    BinaryData data = ModelReaderWriter.Write(item, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(data))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
                 }
                 writer.WriteEndArray();
             }

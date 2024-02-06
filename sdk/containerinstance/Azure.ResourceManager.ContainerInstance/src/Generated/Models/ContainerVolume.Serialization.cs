@@ -31,7 +31,15 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             if (Optional.IsDefined(AzureFile))
             {
                 writer.WritePropertyName("azureFile"u8);
-                writer.WriteObjectValue(AzureFile);
+                BinaryData data = ModelReaderWriter.Write(AzureFile, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsDefined(EmptyDir))
             {
@@ -59,7 +67,15 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             if (Optional.IsDefined(GitRepo))
             {
                 writer.WritePropertyName("gitRepo"u8);
-                writer.WriteObjectValue(GitRepo);
+                BinaryData data = ModelReaderWriter.Write(GitRepo, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

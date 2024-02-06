@@ -29,12 +29,36 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             if (Optional.IsDefined(BackupParameters))
             {
                 writer.WritePropertyName("backupParameters"u8);
-                writer.WriteObjectValue(BackupParameters);
+                BinaryData data = ModelReaderWriter.Write(BackupParameters, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             writer.WritePropertyName("dataStore"u8);
-            writer.WriteObjectValue(DataStore);
+            BinaryData data0 = ModelReaderWriter.Write(DataStore, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data0);
+#else
+            using (JsonDocument document = JsonDocument.Parse(data0))
+            {
+                JsonSerializer.Serialize(writer, document.RootElement);
+            }
+#endif
             writer.WritePropertyName("trigger"u8);
-            writer.WriteObjectValue(Trigger);
+            BinaryData data1 = ModelReaderWriter.Write(Trigger, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data1);
+#else
+            using (JsonDocument document = JsonDocument.Parse(data1))
+            {
+                JsonSerializer.Serialize(writer, document.RootElement);
+            }
+#endif
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
             writer.WritePropertyName("objectType"u8);

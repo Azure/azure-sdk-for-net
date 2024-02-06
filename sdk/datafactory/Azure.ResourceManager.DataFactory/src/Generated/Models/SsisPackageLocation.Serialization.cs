@@ -47,7 +47,15 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(AccessCredential))
             {
                 writer.WritePropertyName("accessCredential"u8);
-                writer.WriteObjectValue(AccessCredential);
+                BinaryData data = ModelReaderWriter.Write(AccessCredential, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsDefined(ConfigurationPath))
             {
@@ -57,7 +65,15 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(ConfigurationAccessCredential))
             {
                 writer.WritePropertyName("configurationAccessCredential"u8);
-                writer.WriteObjectValue(ConfigurationAccessCredential);
+                BinaryData data = ModelReaderWriter.Write(ConfigurationAccessCredential, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsDefined(PackageName))
             {
@@ -80,7 +96,15 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WriteStartArray();
                 foreach (var item in ChildPackages)
                 {
-                    writer.WriteObjectValue(item);
+                    BinaryData data = ModelReaderWriter.Write(item, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(data))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
                 }
                 writer.WriteEndArray();
             }

@@ -29,12 +29,28 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(ConnectVia))
             {
                 writer.WritePropertyName("connectVia"u8);
-                writer.WriteObjectValue(ConnectVia);
+                BinaryData data = ModelReaderWriter.Write(ConnectVia, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsDefined(StagingLinkedService))
             {
                 writer.WritePropertyName("stagingLinkedService"u8);
-                writer.WriteObjectValue(StagingLinkedService);
+                BinaryData data = ModelReaderWriter.Write(StagingLinkedService, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsDefined(Path))
             {

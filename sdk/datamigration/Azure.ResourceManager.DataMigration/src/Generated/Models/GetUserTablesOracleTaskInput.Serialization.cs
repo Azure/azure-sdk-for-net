@@ -27,7 +27,15 @@ namespace Azure.ResourceManager.DataMigration.Models
 
             writer.WriteStartObject();
             writer.WritePropertyName("connectionInfo"u8);
-            writer.WriteObjectValue(ConnectionInfo);
+            BinaryData data = ModelReaderWriter.Write(ConnectionInfo, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+            using (JsonDocument document = JsonDocument.Parse(data))
+            {
+                JsonSerializer.Serialize(writer, document.RootElement);
+            }
+#endif
             writer.WritePropertyName("selectedSchemas"u8);
             writer.WriteStartArray();
             foreach (var item in SelectedSchemas)

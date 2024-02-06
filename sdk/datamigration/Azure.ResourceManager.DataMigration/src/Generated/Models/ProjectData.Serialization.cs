@@ -77,7 +77,15 @@ namespace Azure.ResourceManager.DataMigration
             if (Optional.IsDefined(AzureAuthenticationInfo))
             {
                 writer.WritePropertyName("azureAuthenticationInfo"u8);
-                writer.WriteObjectValue(AzureAuthenticationInfo);
+                BinaryData data = ModelReaderWriter.Write(AzureAuthenticationInfo, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsDefined(TargetPlatform))
             {
@@ -92,12 +100,28 @@ namespace Azure.ResourceManager.DataMigration
             if (Optional.IsDefined(SourceConnectionInfo))
             {
                 writer.WritePropertyName("sourceConnectionInfo"u8);
-                writer.WriteObjectValue(SourceConnectionInfo);
+                BinaryData data = ModelReaderWriter.Write(SourceConnectionInfo, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsDefined(TargetConnectionInfo))
             {
                 writer.WritePropertyName("targetConnectionInfo"u8);
-                writer.WriteObjectValue(TargetConnectionInfo);
+                BinaryData data = ModelReaderWriter.Write(TargetConnectionInfo, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsCollectionDefined(DatabasesInfo))
             {
@@ -105,7 +129,15 @@ namespace Azure.ResourceManager.DataMigration
                 writer.WriteStartArray();
                 foreach (var item in DatabasesInfo)
                 {
-                    writer.WriteObjectValue(item);
+                    BinaryData data = ModelReaderWriter.Write(item, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(data))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
                 }
                 writer.WriteEndArray();
             }

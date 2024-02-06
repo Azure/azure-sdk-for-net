@@ -30,7 +30,15 @@ namespace Azure.ResourceManager.DataMigration.Models
             writer.WriteStartArray();
             foreach (var item in SelectedDatabases)
             {
-                writer.WriteObjectValue(item);
+                BinaryData data = ModelReaderWriter.Write(item, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             writer.WriteEndArray();
             if (Optional.IsDefined(StartedOn))
@@ -61,10 +69,26 @@ namespace Azure.ResourceManager.DataMigration.Models
             if (Optional.IsDefined(BackupFileShare))
             {
                 writer.WritePropertyName("backupFileShare"u8);
-                writer.WriteObjectValue(BackupFileShare);
+                BinaryData data = ModelReaderWriter.Write(BackupFileShare, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             writer.WritePropertyName("backupBlobShare"u8);
-            writer.WriteObjectValue(BackupBlobShare);
+            BinaryData data0 = ModelReaderWriter.Write(BackupBlobShare, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data0);
+#else
+            using (JsonDocument document = JsonDocument.Parse(data0))
+            {
+                JsonSerializer.Serialize(writer, document.RootElement);
+            }
+#endif
             if (Optional.IsDefined(BackupMode))
             {
                 writer.WritePropertyName("backupMode"u8);
@@ -81,9 +105,25 @@ namespace Azure.ResourceManager.DataMigration.Models
                 writer.WriteStringValue(EncryptedKeyForSecureFields);
             }
             writer.WritePropertyName("sourceConnectionInfo"u8);
-            writer.WriteObjectValue(SourceConnectionInfo);
+            BinaryData data1 = ModelReaderWriter.Write(SourceConnectionInfo, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data1);
+#else
+            using (JsonDocument document = JsonDocument.Parse(data1))
+            {
+                JsonSerializer.Serialize(writer, document.RootElement);
+            }
+#endif
             writer.WritePropertyName("targetConnectionInfo"u8);
-            writer.WriteObjectValue(TargetConnectionInfo);
+            BinaryData data2 = ModelReaderWriter.Write(TargetConnectionInfo, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data2);
+#else
+            using (JsonDocument document = JsonDocument.Parse(data2))
+            {
+                JsonSerializer.Serialize(writer, document.RootElement);
+            }
+#endif
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)

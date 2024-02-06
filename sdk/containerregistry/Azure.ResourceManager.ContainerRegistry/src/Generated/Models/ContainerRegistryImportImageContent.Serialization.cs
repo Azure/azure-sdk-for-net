@@ -27,7 +27,15 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
 
             writer.WriteStartObject();
             writer.WritePropertyName("source"u8);
-            writer.WriteObjectValue(Source);
+            BinaryData data = ModelReaderWriter.Write(Source, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+            using (JsonDocument document = JsonDocument.Parse(data))
+            {
+                JsonSerializer.Serialize(writer, document.RootElement);
+            }
+#endif
             if (Optional.IsCollectionDefined(TargetTags))
             {
                 writer.WritePropertyName("targetTags"u8);

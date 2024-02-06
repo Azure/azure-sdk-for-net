@@ -30,7 +30,15 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             if (options.Format != "W" && Optional.IsDefined(DeletionInfo))
             {
                 writer.WritePropertyName("deletionInfo"u8);
-                writer.WriteObjectValue(DeletionInfo);
+                BinaryData data = ModelReaderWriter.Write(DeletionInfo, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsDefined(FriendlyName))
             {
@@ -38,18 +46,50 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 writer.WriteStringValue(FriendlyName);
             }
             writer.WritePropertyName("dataSourceInfo"u8);
-            writer.WriteObjectValue(DataSourceInfo);
+            BinaryData data0 = ModelReaderWriter.Write(DataSourceInfo, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data0);
+#else
+            using (JsonDocument document = JsonDocument.Parse(data0))
+            {
+                JsonSerializer.Serialize(writer, document.RootElement);
+            }
+#endif
             if (Optional.IsDefined(DataSourceSetInfo))
             {
                 writer.WritePropertyName("dataSourceSetInfo"u8);
-                writer.WriteObjectValue(DataSourceSetInfo);
+                BinaryData data = ModelReaderWriter.Write(DataSourceSetInfo, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             writer.WritePropertyName("policyInfo"u8);
-            writer.WriteObjectValue(PolicyInfo);
+            BinaryData data1 = ModelReaderWriter.Write(PolicyInfo, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data1);
+#else
+            using (JsonDocument document = JsonDocument.Parse(data1))
+            {
+                JsonSerializer.Serialize(writer, document.RootElement);
+            }
+#endif
             if (options.Format != "W" && Optional.IsDefined(ProtectionStatus))
             {
                 writer.WritePropertyName("protectionStatus"u8);
-                writer.WriteObjectValue(ProtectionStatus);
+                BinaryData data = ModelReaderWriter.Write(ProtectionStatus, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (options.Format != "W" && Optional.IsDefined(CurrentProtectionState))
             {
@@ -69,7 +109,15 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             if (Optional.IsDefined(DataSourceAuthCredentials))
             {
                 writer.WritePropertyName("datasourceAuthCredentials"u8);
-                writer.WriteObjectValue(DataSourceAuthCredentials);
+                BinaryData data = ModelReaderWriter.Write(DataSourceAuthCredentials, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsDefined(ValidationType))
             {
@@ -79,7 +127,15 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             if (Optional.IsDefined(IdentityDetails))
             {
                 writer.WritePropertyName("identityDetails"u8);
-                writer.WriteObjectValue(IdentityDetails);
+                BinaryData data = ModelReaderWriter.Write(IdentityDetails, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             writer.WritePropertyName("objectType"u8);
             writer.WriteStringValue(ObjectType);

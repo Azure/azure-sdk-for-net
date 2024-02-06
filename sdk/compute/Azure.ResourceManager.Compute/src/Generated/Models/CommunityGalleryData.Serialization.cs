@@ -63,7 +63,15 @@ namespace Azure.ResourceManager.Compute
             if (Optional.IsDefined(CommunityMetadata))
             {
                 writer.WritePropertyName("communityMetadata"u8);
-                writer.WriteObjectValue(CommunityMetadata);
+                BinaryData data = ModelReaderWriter.Write(CommunityMetadata, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             writer.WriteEndObject();
             writer.WritePropertyName("identifier"u8);

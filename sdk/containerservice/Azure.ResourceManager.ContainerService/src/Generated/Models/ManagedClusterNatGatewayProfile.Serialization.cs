@@ -30,7 +30,15 @@ namespace Azure.ResourceManager.ContainerService.Models
             if (Optional.IsDefined(ManagedOutboundIPProfile))
             {
                 writer.WritePropertyName("managedOutboundIPProfile"u8);
-                writer.WriteObjectValue(ManagedOutboundIPProfile);
+                BinaryData data = ModelReaderWriter.Write(ManagedOutboundIPProfile, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsCollectionDefined(EffectiveOutboundIPs))
             {

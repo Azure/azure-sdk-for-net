@@ -49,7 +49,15 @@ namespace Azure.ResourceManager.CostManagement.Models
             if (Optional.IsDefined(Usage))
             {
                 writer.WritePropertyName("usage"u8);
-                writer.WriteObjectValue(Usage);
+                BinaryData data = ModelReaderWriter.Write(Usage, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (options.Format != "W" && Optional.IsDefined(ArmSkuName))
             {
@@ -79,12 +87,28 @@ namespace Azure.ResourceManager.CostManagement.Models
             if (Optional.IsDefined(RecommendationDetails))
             {
                 writer.WritePropertyName("recommendationDetails"u8);
-                writer.WriteObjectValue(RecommendationDetails);
+                BinaryData data = ModelReaderWriter.Write(RecommendationDetails, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (options.Format != "W" && Optional.IsDefined(AllRecommendationDetails))
             {
                 writer.WritePropertyName("allRecommendationDetails"u8);
-                writer.WriteObjectValue(AllRecommendationDetails);
+                BinaryData data = ModelReaderWriter.Write(AllRecommendationDetails, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             writer.WritePropertyName("scope"u8);
             writer.WriteStringValue(Scope.ToString());

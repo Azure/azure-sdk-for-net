@@ -27,14 +27,30 @@ namespace Azure.ResourceManager.DataBox.Models
 
             writer.WriteStartObject();
             writer.WritePropertyName("transferConfiguration"u8);
-            writer.WriteObjectValue(TransferConfiguration);
+            BinaryData data = ModelReaderWriter.Write(TransferConfiguration, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+            using (JsonDocument document = JsonDocument.Parse(data))
+            {
+                JsonSerializer.Serialize(writer, document.RootElement);
+            }
+#endif
             if (Optional.IsDefined(LogCollectionLevel))
             {
                 writer.WritePropertyName("logCollectionLevel"u8);
                 writer.WriteStringValue(LogCollectionLevel.Value.ToSerialString());
             }
             writer.WritePropertyName("accountDetails"u8);
-            writer.WriteObjectValue(AccountDetails);
+            BinaryData data0 = ModelReaderWriter.Write(AccountDetails, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data0);
+#else
+            using (JsonDocument document = JsonDocument.Parse(data0))
+            {
+                JsonSerializer.Serialize(writer, document.RootElement);
+            }
+#endif
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)

@@ -44,7 +44,15 @@ namespace Azure.ResourceManager.Compute.Models
             if (Optional.IsDefined(AutomaticByPlatformSettings))
             {
                 writer.WritePropertyName("automaticByPlatformSettings"u8);
-                writer.WriteObjectValue(AutomaticByPlatformSettings);
+                BinaryData data = ModelReaderWriter.Write(AutomaticByPlatformSettings, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

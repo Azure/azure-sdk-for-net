@@ -69,12 +69,28 @@ namespace Azure.ResourceManager.CostManagement
             if (Optional.IsDefined(FileDestination))
             {
                 writer.WritePropertyName("fileDestination"u8);
-                writer.WriteObjectValue(FileDestination);
+                BinaryData data = ModelReaderWriter.Write(FileDestination, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsDefined(Notification))
             {
                 writer.WritePropertyName("notification"u8);
-                writer.WriteObjectValue(Notification);
+                BinaryData data = ModelReaderWriter.Write(Notification, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsDefined(NotificationEmail))
             {
@@ -84,7 +100,15 @@ namespace Azure.ResourceManager.CostManagement
             if (Optional.IsDefined(Schedule))
             {
                 writer.WritePropertyName("schedule"u8);
-                writer.WriteObjectValue(Schedule);
+                BinaryData data = ModelReaderWriter.Write(Schedule, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsDefined(Scope))
             {

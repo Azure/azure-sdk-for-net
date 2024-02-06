@@ -27,13 +27,29 @@ namespace Azure.ResourceManager.DataBox.Models
 
             writer.WriteStartObject();
             writer.WritePropertyName("shippingAddress"u8);
-            writer.WriteObjectValue(ShippingAddress);
+            BinaryData data = ModelReaderWriter.Write(ShippingAddress, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+            using (JsonDocument document = JsonDocument.Parse(data))
+            {
+                JsonSerializer.Serialize(writer, document.RootElement);
+            }
+#endif
             writer.WritePropertyName("deviceType"u8);
             writer.WriteStringValue(DeviceType.ToSerialString());
             if (Optional.IsDefined(TransportPreferences))
             {
                 writer.WritePropertyName("transportPreferences"u8);
-                writer.WriteObjectValue(TransportPreferences);
+                BinaryData data0 = ModelReaderWriter.Write(TransportPreferences, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data0);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data0))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             writer.WritePropertyName("validationType"u8);
             writer.WriteStringValue(ValidationType.ToSerialString());

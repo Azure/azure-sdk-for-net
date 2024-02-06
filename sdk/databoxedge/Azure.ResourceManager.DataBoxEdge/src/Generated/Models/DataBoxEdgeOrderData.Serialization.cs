@@ -63,17 +63,41 @@ namespace Azure.ResourceManager.DataBoxEdge
             if (Optional.IsDefined(ContactInformation))
             {
                 writer.WritePropertyName("contactInformation"u8);
-                writer.WriteObjectValue(ContactInformation);
+                BinaryData data = ModelReaderWriter.Write(ContactInformation, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsDefined(ShippingAddress))
             {
                 writer.WritePropertyName("shippingAddress"u8);
-                writer.WriteObjectValue(ShippingAddress);
+                BinaryData data = ModelReaderWriter.Write(ShippingAddress, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (options.Format != "W" && Optional.IsDefined(CurrentStatus))
             {
                 writer.WritePropertyName("currentStatus"u8);
-                writer.WriteObjectValue(CurrentStatus);
+                BinaryData data = ModelReaderWriter.Write(CurrentStatus, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(OrderHistory))
             {
@@ -81,7 +105,15 @@ namespace Azure.ResourceManager.DataBoxEdge
                 writer.WriteStartArray();
                 foreach (var item in OrderHistory)
                 {
-                    writer.WriteObjectValue(item);
+                    BinaryData data = ModelReaderWriter.Write(item, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(data))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
                 }
                 writer.WriteEndArray();
             }
@@ -96,7 +128,15 @@ namespace Azure.ResourceManager.DataBoxEdge
                 writer.WriteStartArray();
                 foreach (var item in DeliveryTrackingInfo)
                 {
-                    writer.WriteObjectValue(item);
+                    BinaryData data = ModelReaderWriter.Write(item, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(data))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
                 }
                 writer.WriteEndArray();
             }
@@ -106,7 +146,15 @@ namespace Azure.ResourceManager.DataBoxEdge
                 writer.WriteStartArray();
                 foreach (var item in ReturnTrackingInfo)
                 {
-                    writer.WriteObjectValue(item);
+                    BinaryData data = ModelReaderWriter.Write(item, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(data))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
                 }
                 writer.WriteEndArray();
             }

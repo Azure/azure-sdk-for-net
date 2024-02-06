@@ -63,7 +63,15 @@ namespace Azure.ResourceManager.Compute.Models
             if (Optional.IsDefined(PublishingProfile))
             {
                 writer.WritePropertyName("publishingProfile"u8);
-                writer.WriteObjectValue(PublishingProfile);
+                BinaryData data = ModelReaderWriter.Write(PublishingProfile, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
@@ -73,22 +81,54 @@ namespace Azure.ResourceManager.Compute.Models
             if (Optional.IsDefined(StorageProfile))
             {
                 writer.WritePropertyName("storageProfile"u8);
-                writer.WriteObjectValue(StorageProfile);
+                BinaryData data = ModelReaderWriter.Write(StorageProfile, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsDefined(SafetyProfile))
             {
                 writer.WritePropertyName("safetyProfile"u8);
-                writer.WriteObjectValue(SafetyProfile);
+                BinaryData data = ModelReaderWriter.Write(SafetyProfile, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (options.Format != "W" && Optional.IsDefined(ReplicationStatus))
             {
                 writer.WritePropertyName("replicationStatus"u8);
-                writer.WriteObjectValue(ReplicationStatus);
+                BinaryData data = ModelReaderWriter.Write(ReplicationStatus, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsDefined(SecurityProfile))
             {
                 writer.WritePropertyName("securityProfile"u8);
-                writer.WriteObjectValue(SecurityProfile);
+                BinaryData data = ModelReaderWriter.Write(SecurityProfile, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)

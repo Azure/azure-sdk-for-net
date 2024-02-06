@@ -29,7 +29,15 @@ namespace Azure.ResourceManager.AppContainers.Models
             if (Optional.IsDefined(Mtls))
             {
                 writer.WritePropertyName("mtls"u8);
-                writer.WriteObjectValue(Mtls);
+                BinaryData data = ModelReaderWriter.Write(Mtls, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

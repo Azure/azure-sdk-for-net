@@ -64,17 +64,41 @@ namespace Azure.ResourceManager.CostManagement
             if (Optional.IsDefined(DeliveryInfo))
             {
                 writer.WritePropertyName("deliveryInfo"u8);
-                writer.WriteObjectValue(DeliveryInfo);
+                BinaryData data = ModelReaderWriter.Write(DeliveryInfo, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsDefined(Definition))
             {
                 writer.WritePropertyName("definition"u8);
-                writer.WriteObjectValue(Definition);
+                BinaryData data = ModelReaderWriter.Write(Definition, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsDefined(RunHistory))
             {
                 writer.WritePropertyName("runHistory"u8);
-                writer.WriteObjectValue(RunHistory);
+                BinaryData data = ModelReaderWriter.Write(RunHistory, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsDefined(PartitionData))
             {
@@ -89,7 +113,15 @@ namespace Azure.ResourceManager.CostManagement
             if (Optional.IsDefined(Schedule))
             {
                 writer.WritePropertyName("schedule"u8);
-                writer.WriteObjectValue(Schedule);
+                BinaryData data = ModelReaderWriter.Write(Schedule, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)

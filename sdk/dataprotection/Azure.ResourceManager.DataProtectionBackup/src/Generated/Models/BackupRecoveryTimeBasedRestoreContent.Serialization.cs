@@ -31,7 +31,15 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             writer.WritePropertyName("objectType"u8);
             writer.WriteStringValue(ObjectType);
             writer.WritePropertyName("restoreTargetInfo"u8);
-            writer.WriteObjectValue(RestoreTargetInfo);
+            BinaryData data = ModelReaderWriter.Write(RestoreTargetInfo, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+            using (JsonDocument document = JsonDocument.Parse(data))
+            {
+                JsonSerializer.Serialize(writer, document.RootElement);
+            }
+#endif
             writer.WritePropertyName("sourceDataStoreType"u8);
             writer.WriteStringValue(SourceDataStoreType.ToString());
             if (Optional.IsDefined(SourceResourceId))
@@ -42,7 +50,15 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             if (Optional.IsDefined(IdentityDetails))
             {
                 writer.WritePropertyName("identityDetails"u8);
-                writer.WriteObjectValue(IdentityDetails);
+                BinaryData data0 = ModelReaderWriter.Write(IdentityDetails, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data0);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data0))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

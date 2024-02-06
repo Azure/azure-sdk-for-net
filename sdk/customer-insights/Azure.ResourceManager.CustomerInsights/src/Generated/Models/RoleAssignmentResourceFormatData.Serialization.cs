@@ -98,74 +98,186 @@ namespace Azure.ResourceManager.CustomerInsights
                 writer.WriteStartArray();
                 foreach (var item in Principals)
                 {
-                    writer.WriteObjectValue(item);
+                    BinaryData data = ModelReaderWriter.Write(item, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(data))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(Profiles))
             {
                 writer.WritePropertyName("profiles"u8);
-                writer.WriteObjectValue(Profiles);
+                BinaryData data = ModelReaderWriter.Write(Profiles, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsDefined(Interactions))
             {
                 writer.WritePropertyName("interactions"u8);
-                writer.WriteObjectValue(Interactions);
+                BinaryData data = ModelReaderWriter.Write(Interactions, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsDefined(Links))
             {
                 writer.WritePropertyName("links"u8);
-                writer.WriteObjectValue(Links);
+                BinaryData data = ModelReaderWriter.Write(Links, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsDefined(Kpis))
             {
                 writer.WritePropertyName("kpis"u8);
-                writer.WriteObjectValue(Kpis);
+                BinaryData data = ModelReaderWriter.Write(Kpis, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsDefined(SasPolicies))
             {
                 writer.WritePropertyName("sasPolicies"u8);
-                writer.WriteObjectValue(SasPolicies);
+                BinaryData data = ModelReaderWriter.Write(SasPolicies, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsDefined(Connectors))
             {
                 writer.WritePropertyName("connectors"u8);
-                writer.WriteObjectValue(Connectors);
+                BinaryData data = ModelReaderWriter.Write(Connectors, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsDefined(Views))
             {
                 writer.WritePropertyName("views"u8);
-                writer.WriteObjectValue(Views);
+                BinaryData data = ModelReaderWriter.Write(Views, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsDefined(RelationshipLinks))
             {
                 writer.WritePropertyName("relationshipLinks"u8);
-                writer.WriteObjectValue(RelationshipLinks);
+                BinaryData data = ModelReaderWriter.Write(RelationshipLinks, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsDefined(Relationships))
             {
                 writer.WritePropertyName("relationships"u8);
-                writer.WriteObjectValue(Relationships);
+                BinaryData data = ModelReaderWriter.Write(Relationships, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsDefined(WidgetTypes))
             {
                 writer.WritePropertyName("widgetTypes"u8);
-                writer.WriteObjectValue(WidgetTypes);
+                BinaryData data = ModelReaderWriter.Write(WidgetTypes, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsDefined(RoleAssignments))
             {
                 writer.WritePropertyName("roleAssignments"u8);
-                writer.WriteObjectValue(RoleAssignments);
+                BinaryData data = ModelReaderWriter.Write(RoleAssignments, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsDefined(ConflationPolicies))
             {
                 writer.WritePropertyName("conflationPolicies"u8);
-                writer.WriteObjectValue(ConflationPolicies);
+                BinaryData data = ModelReaderWriter.Write(ConflationPolicies, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsDefined(Segments))
             {
                 writer.WritePropertyName("segments"u8);
-                writer.WriteObjectValue(Segments);
+                BinaryData data = ModelReaderWriter.Write(Segments, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)

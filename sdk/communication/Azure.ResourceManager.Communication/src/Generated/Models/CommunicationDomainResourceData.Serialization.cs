@@ -91,12 +91,28 @@ namespace Azure.ResourceManager.Communication
             if (options.Format != "W" && Optional.IsDefined(VerificationStates))
             {
                 writer.WritePropertyName("verificationStates"u8);
-                writer.WriteObjectValue(VerificationStates);
+                BinaryData data = ModelReaderWriter.Write(VerificationStates, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (options.Format != "W" && Optional.IsDefined(VerificationRecords))
             {
                 writer.WritePropertyName("verificationRecords"u8);
-                writer.WriteObjectValue(VerificationRecords);
+                BinaryData data = ModelReaderWriter.Write(VerificationRecords, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsDefined(UserEngagementTracking))
             {

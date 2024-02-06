@@ -31,12 +31,28 @@ namespace Azure.ResourceManager.DataBox.Models
             if (Optional.IsDefined(BlobFilterDetails))
             {
                 writer.WritePropertyName("blobFilterDetails"u8);
-                writer.WriteObjectValue(BlobFilterDetails);
+                BinaryData data = ModelReaderWriter.Write(BlobFilterDetails, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsDefined(AzureFileFilterDetails))
             {
                 writer.WritePropertyName("azureFileFilterDetails"u8);
-                writer.WriteObjectValue(AzureFileFilterDetails);
+                BinaryData data = ModelReaderWriter.Write(AzureFileFilterDetails, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsCollectionDefined(FilterFileDetails))
             {
@@ -44,7 +60,15 @@ namespace Azure.ResourceManager.DataBox.Models
                 writer.WriteStartArray();
                 foreach (var item in FilterFileDetails)
                 {
-                    writer.WriteObjectValue(item);
+                    BinaryData data = ModelReaderWriter.Write(item, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(data))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
                 }
                 writer.WriteEndArray();
             }

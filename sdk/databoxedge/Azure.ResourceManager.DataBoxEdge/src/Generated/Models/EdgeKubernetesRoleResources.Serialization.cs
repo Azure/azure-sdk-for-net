@@ -29,14 +29,38 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             if (Optional.IsDefined(Storage))
             {
                 writer.WritePropertyName("storage"u8);
-                writer.WriteObjectValue(Storage);
+                BinaryData data = ModelReaderWriter.Write(Storage, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             writer.WritePropertyName("compute"u8);
-            writer.WriteObjectValue(Compute);
+            BinaryData data0 = ModelReaderWriter.Write(Compute, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data0);
+#else
+            using (JsonDocument document = JsonDocument.Parse(data0))
+            {
+                JsonSerializer.Serialize(writer, document.RootElement);
+            }
+#endif
             if (options.Format != "W" && Optional.IsDefined(Network))
             {
                 writer.WritePropertyName("network"u8);
-                writer.WriteObjectValue(Network);
+                BinaryData data = ModelReaderWriter.Write(Network, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

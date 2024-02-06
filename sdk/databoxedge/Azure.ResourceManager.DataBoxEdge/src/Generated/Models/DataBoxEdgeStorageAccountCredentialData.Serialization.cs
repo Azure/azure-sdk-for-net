@@ -60,7 +60,15 @@ namespace Azure.ResourceManager.DataBoxEdge
             if (Optional.IsDefined(AccountKey))
             {
                 writer.WritePropertyName("accountKey"u8);
-                writer.WriteObjectValue(AccountKey);
+                BinaryData data = ModelReaderWriter.Write(AccountKey, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsDefined(ConnectionString))
             {

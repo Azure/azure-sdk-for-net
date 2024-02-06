@@ -38,7 +38,15 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             if (Optional.IsDefined(SourceControlAuthProperties))
             {
                 writer.WritePropertyName("sourceControlAuthProperties"u8);
-                writer.WriteObjectValue(SourceControlAuthProperties);
+                BinaryData data = ModelReaderWriter.Write(SourceControlAuthProperties, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

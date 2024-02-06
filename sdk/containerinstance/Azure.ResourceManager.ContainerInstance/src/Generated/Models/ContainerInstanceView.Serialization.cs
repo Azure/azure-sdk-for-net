@@ -34,12 +34,28 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             if (options.Format != "W" && Optional.IsDefined(CurrentState))
             {
                 writer.WritePropertyName("currentState"u8);
-                writer.WriteObjectValue(CurrentState);
+                BinaryData data = ModelReaderWriter.Write(CurrentState, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (options.Format != "W" && Optional.IsDefined(PreviousState))
             {
                 writer.WritePropertyName("previousState"u8);
-                writer.WriteObjectValue(PreviousState);
+                BinaryData data = ModelReaderWriter.Write(PreviousState, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(Events))
             {
@@ -47,7 +63,15 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 writer.WriteStartArray();
                 foreach (var item in Events)
                 {
-                    writer.WriteObjectValue(item);
+                    BinaryData data = ModelReaderWriter.Write(item, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(data))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
                 }
                 writer.WriteEndArray();
             }

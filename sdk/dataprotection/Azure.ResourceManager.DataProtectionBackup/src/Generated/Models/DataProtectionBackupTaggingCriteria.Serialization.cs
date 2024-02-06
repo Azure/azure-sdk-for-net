@@ -32,7 +32,15 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 writer.WriteStartArray();
                 foreach (var item in Criteria)
                 {
-                    writer.WriteObjectValue(item);
+                    BinaryData data = ModelReaderWriter.Write(item, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(data))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
                 }
                 writer.WriteEndArray();
             }
@@ -41,7 +49,15 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             writer.WritePropertyName("taggingPriority"u8);
             writer.WriteNumberValue(TaggingPriority);
             writer.WritePropertyName("tagInfo"u8);
-            writer.WriteObjectValue(TagInfo);
+            BinaryData data0 = ModelReaderWriter.Write(TagInfo, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data0);
+#else
+            using (JsonDocument document = JsonDocument.Parse(data0))
+            {
+                JsonSerializer.Serialize(writer, document.RootElement);
+            }
+#endif
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)

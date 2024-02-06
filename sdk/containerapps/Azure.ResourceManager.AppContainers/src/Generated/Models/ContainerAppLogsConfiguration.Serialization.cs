@@ -34,7 +34,15 @@ namespace Azure.ResourceManager.AppContainers.Models
             if (Optional.IsDefined(LogAnalyticsConfiguration))
             {
                 writer.WritePropertyName("logAnalyticsConfiguration"u8);
-                writer.WriteObjectValue(LogAnalyticsConfiguration);
+                BinaryData data = ModelReaderWriter.Write(LogAnalyticsConfiguration, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

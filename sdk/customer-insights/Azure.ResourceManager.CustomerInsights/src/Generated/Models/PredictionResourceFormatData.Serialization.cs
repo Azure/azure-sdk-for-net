@@ -145,7 +145,15 @@ namespace Azure.ResourceManager.CustomerInsights
             if (Optional.IsDefined(Mappings))
             {
                 writer.WritePropertyName("mappings"u8);
-                writer.WriteObjectValue(Mappings);
+                BinaryData data = ModelReaderWriter.Write(Mappings, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsDefined(ScoreLabel))
             {
@@ -158,14 +166,30 @@ namespace Azure.ResourceManager.CustomerInsights
                 writer.WriteStartArray();
                 foreach (var item in Grades)
                 {
-                    writer.WriteObjectValue(item);
+                    BinaryData data = ModelReaderWriter.Write(item, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(data))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
                 }
                 writer.WriteEndArray();
             }
             if (options.Format != "W" && Optional.IsDefined(SystemGeneratedEntities))
             {
                 writer.WritePropertyName("systemGeneratedEntities"u8);
-                writer.WriteObjectValue(SystemGeneratedEntities);
+                BinaryData data = ModelReaderWriter.Write(SystemGeneratedEntities, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)

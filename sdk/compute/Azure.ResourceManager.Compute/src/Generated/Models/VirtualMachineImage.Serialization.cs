@@ -57,12 +57,28 @@ namespace Azure.ResourceManager.Compute.Models
             if (Optional.IsDefined(Plan))
             {
                 writer.WritePropertyName("plan"u8);
-                writer.WriteObjectValue(Plan);
+                BinaryData data = ModelReaderWriter.Write(Plan, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsDefined(OSDiskImage))
             {
                 writer.WritePropertyName("osDiskImage"u8);
-                writer.WriteObjectValue(OSDiskImage);
+                BinaryData data = ModelReaderWriter.Write(OSDiskImage, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsCollectionDefined(DataDiskImages))
             {
@@ -70,14 +86,30 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WriteStartArray();
                 foreach (var item in DataDiskImages)
                 {
-                    writer.WriteObjectValue(item);
+                    BinaryData data = ModelReaderWriter.Write(item, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(data))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(AutomaticOSUpgradeProperties))
             {
                 writer.WritePropertyName("automaticOSUpgradeProperties"u8);
-                writer.WriteObjectValue(AutomaticOSUpgradeProperties);
+                BinaryData data = ModelReaderWriter.Write(AutomaticOSUpgradeProperties, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsDefined(HyperVGeneration))
             {
@@ -87,7 +119,15 @@ namespace Azure.ResourceManager.Compute.Models
             if (Optional.IsDefined(Disallowed))
             {
                 writer.WritePropertyName("disallowed"u8);
-                writer.WriteObjectValue(Disallowed);
+                BinaryData data = ModelReaderWriter.Write(Disallowed, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsCollectionDefined(Features))
             {
@@ -95,7 +135,15 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WriteStartArray();
                 foreach (var item in Features)
                 {
-                    writer.WriteObjectValue(item);
+                    BinaryData data = ModelReaderWriter.Write(item, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(data))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
                 }
                 writer.WriteEndArray();
             }
@@ -107,7 +155,15 @@ namespace Azure.ResourceManager.Compute.Models
             if (Optional.IsDefined(ImageDeprecationStatus))
             {
                 writer.WritePropertyName("imageDeprecationStatus"u8);
-                writer.WriteObjectValue(ImageDeprecationStatus);
+                BinaryData data = ModelReaderWriter.Write(ImageDeprecationStatus, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)

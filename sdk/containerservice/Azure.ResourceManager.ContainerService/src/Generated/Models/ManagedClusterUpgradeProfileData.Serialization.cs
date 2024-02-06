@@ -51,12 +51,28 @@ namespace Azure.ResourceManager.ContainerService
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             writer.WritePropertyName("controlPlaneProfile"u8);
-            writer.WriteObjectValue(ControlPlaneProfile);
+            BinaryData data = ModelReaderWriter.Write(ControlPlaneProfile, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+            using (JsonDocument document = JsonDocument.Parse(data))
+            {
+                JsonSerializer.Serialize(writer, document.RootElement);
+            }
+#endif
             writer.WritePropertyName("agentPoolProfiles"u8);
             writer.WriteStartArray();
             foreach (var item in AgentPoolProfiles)
             {
-                writer.WriteObjectValue(item);
+                BinaryData data0 = ModelReaderWriter.Write(item, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data0);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data0))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             writer.WriteEndArray();
             writer.WriteEndObject();

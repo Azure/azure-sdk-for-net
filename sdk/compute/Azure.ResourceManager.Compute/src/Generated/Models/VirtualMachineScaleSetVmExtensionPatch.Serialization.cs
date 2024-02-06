@@ -111,7 +111,15 @@ namespace Azure.ResourceManager.Compute.Models
             if (Optional.IsDefined(KeyVaultProtectedSettings))
             {
                 writer.WritePropertyName("protectedSettingsFromKeyVault"u8);
-                writer.WriteObjectValue(KeyVaultProtectedSettings);
+                BinaryData data = ModelReaderWriter.Write(KeyVaultProtectedSettings, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)

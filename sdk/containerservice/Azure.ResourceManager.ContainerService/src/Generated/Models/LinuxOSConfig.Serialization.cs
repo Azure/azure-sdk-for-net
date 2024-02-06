@@ -29,7 +29,15 @@ namespace Azure.ResourceManager.ContainerService.Models
             if (Optional.IsDefined(Sysctls))
             {
                 writer.WritePropertyName("sysctls"u8);
-                writer.WriteObjectValue(Sysctls);
+                BinaryData data = ModelReaderWriter.Write(Sysctls, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsDefined(TransparentHugePageEnabled))
             {

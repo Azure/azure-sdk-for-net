@@ -46,7 +46,15 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku);
+                BinaryData data = ModelReaderWriter.Write(Sku, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
@@ -58,17 +66,41 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             if (Optional.IsDefined(NetworkRuleSet))
             {
                 writer.WritePropertyName("networkRuleSet"u8);
-                writer.WriteObjectValue(NetworkRuleSet);
+                BinaryData data = ModelReaderWriter.Write(NetworkRuleSet, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsDefined(Policies))
             {
                 writer.WritePropertyName("policies"u8);
-                writer.WriteObjectValue(Policies);
+                BinaryData data = ModelReaderWriter.Write(Policies, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsDefined(Encryption))
             {
                 writer.WritePropertyName("encryption"u8);
-                writer.WriteObjectValue(Encryption);
+                BinaryData data = ModelReaderWriter.Write(Encryption, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsDefined(IsDataEndpointEnabled))
             {

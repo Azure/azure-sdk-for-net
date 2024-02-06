@@ -31,12 +31,28 @@ namespace Azure.ResourceManager.Compute.Models
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku);
+                BinaryData data = ModelReaderWriter.Write(Sku, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsDefined(Plan))
             {
                 writer.WritePropertyName("plan"u8);
-                writer.WriteObjectValue(Plan);
+                BinaryData data = ModelReaderWriter.Write(Plan, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsDefined(Identity))
             {
@@ -59,17 +75,41 @@ namespace Azure.ResourceManager.Compute.Models
             if (Optional.IsDefined(UpgradePolicy))
             {
                 writer.WritePropertyName("upgradePolicy"u8);
-                writer.WriteObjectValue(UpgradePolicy);
+                BinaryData data = ModelReaderWriter.Write(UpgradePolicy, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsDefined(AutomaticRepairsPolicy))
             {
                 writer.WritePropertyName("automaticRepairsPolicy"u8);
-                writer.WriteObjectValue(AutomaticRepairsPolicy);
+                BinaryData data = ModelReaderWriter.Write(AutomaticRepairsPolicy, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsDefined(VirtualMachineProfile))
             {
                 writer.WritePropertyName("virtualMachineProfile"u8);
-                writer.WriteObjectValue(VirtualMachineProfile);
+                BinaryData data = ModelReaderWriter.Write(VirtualMachineProfile, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsDefined(Overprovision))
             {
@@ -89,12 +129,28 @@ namespace Azure.ResourceManager.Compute.Models
             if (Optional.IsDefined(AdditionalCapabilities))
             {
                 writer.WritePropertyName("additionalCapabilities"u8);
-                writer.WriteObjectValue(AdditionalCapabilities);
+                BinaryData data = ModelReaderWriter.Write(AdditionalCapabilities, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsDefined(ScaleInPolicy))
             {
                 writer.WritePropertyName("scaleInPolicy"u8);
-                writer.WriteObjectValue(ScaleInPolicy);
+                BinaryData data = ModelReaderWriter.Write(ScaleInPolicy, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsDefined(ProximityPlacementGroup))
             {
@@ -104,17 +160,41 @@ namespace Azure.ResourceManager.Compute.Models
             if (Optional.IsDefined(PriorityMixPolicy))
             {
                 writer.WritePropertyName("priorityMixPolicy"u8);
-                writer.WriteObjectValue(PriorityMixPolicy);
+                BinaryData data = ModelReaderWriter.Write(PriorityMixPolicy, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsDefined(SpotRestorePolicy))
             {
                 writer.WritePropertyName("spotRestorePolicy"u8);
-                writer.WriteObjectValue(SpotRestorePolicy);
+                BinaryData data = ModelReaderWriter.Write(SpotRestorePolicy, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsDefined(ResiliencyPolicy))
             {
                 writer.WritePropertyName("resiliencyPolicy"u8);
-                writer.WriteObjectValue(ResiliencyPolicy);
+                BinaryData data = ModelReaderWriter.Write(ResiliencyPolicy, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)

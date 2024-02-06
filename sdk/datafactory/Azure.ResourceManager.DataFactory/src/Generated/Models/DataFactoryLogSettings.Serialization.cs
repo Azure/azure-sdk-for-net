@@ -35,10 +35,26 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(CopyActivityLogSettings))
             {
                 writer.WritePropertyName("copyActivityLogSettings"u8);
-                writer.WriteObjectValue(CopyActivityLogSettings);
+                BinaryData data = ModelReaderWriter.Write(CopyActivityLogSettings, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             writer.WritePropertyName("logLocationSettings"u8);
-            writer.WriteObjectValue(LogLocationSettings);
+            BinaryData data0 = ModelReaderWriter.Write(LogLocationSettings, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data0);
+#else
+            using (JsonDocument document = JsonDocument.Parse(data0))
+            {
+                JsonSerializer.Serialize(writer, document.RootElement);
+            }
+#endif
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)

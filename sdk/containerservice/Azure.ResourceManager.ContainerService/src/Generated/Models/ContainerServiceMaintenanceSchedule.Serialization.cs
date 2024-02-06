@@ -29,22 +29,54 @@ namespace Azure.ResourceManager.ContainerService.Models
             if (Optional.IsDefined(Daily))
             {
                 writer.WritePropertyName("daily"u8);
-                writer.WriteObjectValue(Daily);
+                BinaryData data = ModelReaderWriter.Write(Daily, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsDefined(Weekly))
             {
                 writer.WritePropertyName("weekly"u8);
-                writer.WriteObjectValue(Weekly);
+                BinaryData data = ModelReaderWriter.Write(Weekly, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsDefined(AbsoluteMonthly))
             {
                 writer.WritePropertyName("absoluteMonthly"u8);
-                writer.WriteObjectValue(AbsoluteMonthly);
+                BinaryData data = ModelReaderWriter.Write(AbsoluteMonthly, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsDefined(RelativeMonthly))
             {
                 writer.WritePropertyName("relativeMonthly"u8);
-                writer.WriteObjectValue(RelativeMonthly);
+                BinaryData data = ModelReaderWriter.Write(RelativeMonthly, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

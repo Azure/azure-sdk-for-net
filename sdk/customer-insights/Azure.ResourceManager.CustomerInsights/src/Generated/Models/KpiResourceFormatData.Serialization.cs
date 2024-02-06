@@ -138,7 +138,15 @@ namespace Azure.ResourceManager.CustomerInsights
                 writer.WriteStartArray();
                 foreach (var item in GroupByMetadata)
                 {
-                    writer.WriteObjectValue(item);
+                    BinaryData data = ModelReaderWriter.Write(item, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(data))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
                 }
                 writer.WriteEndArray();
             }
@@ -148,7 +156,15 @@ namespace Azure.ResourceManager.CustomerInsights
                 writer.WriteStartArray();
                 foreach (var item in ParticipantProfilesMetadata)
                 {
-                    writer.WriteObjectValue(item);
+                    BinaryData data = ModelReaderWriter.Write(item, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(data))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
                 }
                 writer.WriteEndArray();
             }
@@ -160,7 +176,15 @@ namespace Azure.ResourceManager.CustomerInsights
             if (Optional.IsDefined(ThresHolds))
             {
                 writer.WritePropertyName("thresHolds"u8);
-                writer.WriteObjectValue(ThresHolds);
+                BinaryData data = ModelReaderWriter.Write(ThresHolds, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsCollectionDefined(Aliases))
             {
@@ -168,7 +192,15 @@ namespace Azure.ResourceManager.CustomerInsights
                 writer.WriteStartArray();
                 foreach (var item in Aliases)
                 {
-                    writer.WriteObjectValue(item);
+                    BinaryData data = ModelReaderWriter.Write(item, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(data))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
                 }
                 writer.WriteEndArray();
             }
@@ -178,7 +210,15 @@ namespace Azure.ResourceManager.CustomerInsights
                 writer.WriteStartArray();
                 foreach (var item in Extracts)
                 {
-                    writer.WriteObjectValue(item);
+                    BinaryData data = ModelReaderWriter.Write(item, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(data))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
                 }
                 writer.WriteEndArray();
             }

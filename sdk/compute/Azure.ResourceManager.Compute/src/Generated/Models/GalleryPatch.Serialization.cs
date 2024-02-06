@@ -68,7 +68,15 @@ namespace Azure.ResourceManager.Compute.Models
             if (Optional.IsDefined(Identifier))
             {
                 writer.WritePropertyName("identifier"u8);
-                writer.WriteObjectValue(Identifier);
+                BinaryData data = ModelReaderWriter.Write(Identifier, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
@@ -78,17 +86,41 @@ namespace Azure.ResourceManager.Compute.Models
             if (Optional.IsDefined(SharingProfile))
             {
                 writer.WritePropertyName("sharingProfile"u8);
-                writer.WriteObjectValue(SharingProfile);
+                BinaryData data = ModelReaderWriter.Write(SharingProfile, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsDefined(SoftDeletePolicy))
             {
                 writer.WritePropertyName("softDeletePolicy"u8);
-                writer.WriteObjectValue(SoftDeletePolicy);
+                BinaryData data = ModelReaderWriter.Write(SoftDeletePolicy, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (options.Format != "W" && Optional.IsDefined(SharingStatus))
             {
                 writer.WritePropertyName("sharingStatus"u8);
-                writer.WriteObjectValue(SharingStatus);
+                BinaryData data = ModelReaderWriter.Write(SharingStatus, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)

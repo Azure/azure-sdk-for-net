@@ -68,7 +68,15 @@ namespace Azure.ResourceManager.AppContainers
             if (Optional.IsDefined(Template))
             {
                 writer.WritePropertyName("template"u8);
-                writer.WriteObjectValue(Template);
+                BinaryData data = ModelReaderWriter.Write(Template, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)

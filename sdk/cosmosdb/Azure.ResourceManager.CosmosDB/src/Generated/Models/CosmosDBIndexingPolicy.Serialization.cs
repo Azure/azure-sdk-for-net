@@ -42,7 +42,15 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 writer.WriteStartArray();
                 foreach (var item in IncludedPaths)
                 {
-                    writer.WriteObjectValue(item);
+                    BinaryData data = ModelReaderWriter.Write(item, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(data))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
                 }
                 writer.WriteEndArray();
             }
@@ -52,7 +60,15 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 writer.WriteStartArray();
                 foreach (var item in ExcludedPaths)
                 {
-                    writer.WriteObjectValue(item);
+                    BinaryData data = ModelReaderWriter.Write(item, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(data))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
                 }
                 writer.WriteEndArray();
             }
@@ -70,7 +86,15 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     writer.WriteStartArray();
                     foreach (var item0 in item)
                     {
-                        writer.WriteObjectValue(item0);
+                        BinaryData data = ModelReaderWriter.Write(item0, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                        using (JsonDocument document = JsonDocument.Parse(data))
+                        {
+                            JsonSerializer.Serialize(writer, document.RootElement);
+                        }
+#endif
                     }
                     writer.WriteEndArray();
                 }
@@ -82,7 +106,15 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 writer.WriteStartArray();
                 foreach (var item in SpatialIndexes)
                 {
-                    writer.WriteObjectValue(item);
+                    BinaryData data = ModelReaderWriter.Write(item, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(data))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
                 }
                 writer.WriteEndArray();
             }

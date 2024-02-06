@@ -47,19 +47,43 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WriteStartArray();
                 foreach (var item in AdditionalUnattendContent)
                 {
-                    writer.WriteObjectValue(item);
+                    BinaryData data = ModelReaderWriter.Write(item, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(data))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(PatchSettings))
             {
                 writer.WritePropertyName("patchSettings"u8);
-                writer.WriteObjectValue(PatchSettings);
+                BinaryData data = ModelReaderWriter.Write(PatchSettings, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsDefined(WinRM))
             {
                 writer.WritePropertyName("winRM"u8);
-                writer.WriteObjectValue(WinRM);
+                BinaryData data = ModelReaderWriter.Write(WinRM, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsDefined(IsVmAgentPlatformUpdatesEnabled))
             {

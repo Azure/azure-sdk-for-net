@@ -29,7 +29,15 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             if (Optional.IsDefined(Content))
             {
                 writer.WritePropertyName("content"u8);
-                writer.WriteObjectValue(Content);
+                BinaryData data = ModelReaderWriter.Write(Content, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsCollectionDefined(Headers))
             {

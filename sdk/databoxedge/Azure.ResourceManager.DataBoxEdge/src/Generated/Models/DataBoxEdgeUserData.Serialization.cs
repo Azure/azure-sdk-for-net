@@ -53,7 +53,15 @@ namespace Azure.ResourceManager.DataBoxEdge
             if (Optional.IsDefined(EncryptedPassword))
             {
                 writer.WritePropertyName("encryptedPassword"u8);
-                writer.WriteObjectValue(EncryptedPassword);
+                BinaryData data = ModelReaderWriter.Write(EncryptedPassword, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(ShareAccessRights))
             {
@@ -61,7 +69,15 @@ namespace Azure.ResourceManager.DataBoxEdge
                 writer.WriteStartArray();
                 foreach (var item in ShareAccessRights)
                 {
-                    writer.WriteObjectValue(item);
+                    BinaryData data = ModelReaderWriter.Write(item, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(data))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
                 }
                 writer.WriteEndArray();
             }

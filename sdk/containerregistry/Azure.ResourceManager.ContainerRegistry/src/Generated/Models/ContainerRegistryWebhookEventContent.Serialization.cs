@@ -44,22 +44,54 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             if (Optional.IsDefined(Target))
             {
                 writer.WritePropertyName("target"u8);
-                writer.WriteObjectValue(Target);
+                BinaryData data = ModelReaderWriter.Write(Target, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsDefined(Request))
             {
                 writer.WritePropertyName("request"u8);
-                writer.WriteObjectValue(Request);
+                BinaryData data = ModelReaderWriter.Write(Request, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsDefined(Actor))
             {
                 writer.WritePropertyName("actor"u8);
-                writer.WriteObjectValue(Actor);
+                BinaryData data = ModelReaderWriter.Write(Actor, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsDefined(Source))
             {
                 writer.WritePropertyName("source"u8);
-                writer.WriteObjectValue(Source);
+                BinaryData data = ModelReaderWriter.Write(Source, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

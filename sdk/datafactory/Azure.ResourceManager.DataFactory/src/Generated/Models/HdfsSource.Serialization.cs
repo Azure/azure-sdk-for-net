@@ -35,7 +35,15 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(DistcpSettings))
             {
                 writer.WritePropertyName("distcpSettings"u8);
-                writer.WriteObjectValue(DistcpSettings);
+                BinaryData data = ModelReaderWriter.Write(DistcpSettings, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(CopySourceType);

@@ -39,7 +39,15 @@ namespace Azure.ResourceManager.CostManagement.Models
             if (Optional.IsDefined(RecurrencePeriod))
             {
                 writer.WritePropertyName("recurrencePeriod"u8);
-                writer.WriteObjectValue(RecurrencePeriod);
+                BinaryData data = ModelReaderWriter.Write(RecurrencePeriod, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

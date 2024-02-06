@@ -47,7 +47,15 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
             writer.WriteStartArray();
             foreach (var item in DataLakeStoreAccounts)
             {
-                writer.WriteObjectValue(item);
+                BinaryData data = ModelReaderWriter.Write(item, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             writer.WriteEndArray();
             if (Optional.IsCollectionDefined(StorageAccounts))
@@ -56,7 +64,15 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
                 writer.WriteStartArray();
                 foreach (var item in StorageAccounts)
                 {
-                    writer.WriteObjectValue(item);
+                    BinaryData data = ModelReaderWriter.Write(item, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(data))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
                 }
                 writer.WriteEndArray();
             }
@@ -66,7 +82,15 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
                 writer.WriteStartArray();
                 foreach (var item in ComputePolicies)
                 {
-                    writer.WriteObjectValue(item);
+                    BinaryData data = ModelReaderWriter.Write(item, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(data))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
                 }
                 writer.WriteEndArray();
             }
@@ -76,7 +100,15 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
                 writer.WriteStartArray();
                 foreach (var item in FirewallRules)
                 {
-                    writer.WriteObjectValue(item);
+                    BinaryData data = ModelReaderWriter.Write(item, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(data))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
                 }
                 writer.WriteEndArray();
             }

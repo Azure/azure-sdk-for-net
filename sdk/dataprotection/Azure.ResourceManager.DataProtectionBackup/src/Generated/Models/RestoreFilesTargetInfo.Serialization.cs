@@ -27,7 +27,15 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
 
             writer.WriteStartObject();
             writer.WritePropertyName("targetDetails"u8);
-            writer.WriteObjectValue(TargetDetails);
+            BinaryData data = ModelReaderWriter.Write(TargetDetails, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+            using (JsonDocument document = JsonDocument.Parse(data))
+            {
+                JsonSerializer.Serialize(writer, document.RootElement);
+            }
+#endif
             writer.WritePropertyName("objectType"u8);
             writer.WriteStringValue(ObjectType);
             writer.WritePropertyName("recoveryOption"u8);

@@ -72,7 +72,15 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             if (options.Format != "W" && Optional.IsDefined(ExtendedInfo))
             {
                 writer.WritePropertyName("extendedInfo"u8);
-                writer.WriteObjectValue(ExtendedInfo);
+                BinaryData data = ModelReaderWriter.Write(ExtendedInfo, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             writer.WritePropertyName("isUserTriggered"u8);
             writer.WriteBooleanValue(IsUserTriggered);

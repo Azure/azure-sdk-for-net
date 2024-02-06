@@ -29,17 +29,41 @@ namespace Azure.ResourceManager.Compute.Models
             if (options.Format != "W" && Optional.IsDefined(RunningStatus))
             {
                 writer.WritePropertyName("runningStatus"u8);
-                writer.WriteObjectValue(RunningStatus);
+                BinaryData data = ModelReaderWriter.Write(RunningStatus, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (options.Format != "W" && Optional.IsDefined(Progress))
             {
                 writer.WritePropertyName("progress"u8);
-                writer.WriteObjectValue(Progress);
+                BinaryData data = ModelReaderWriter.Write(Progress, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (options.Format != "W" && Optional.IsDefined(Error))
             {
                 writer.WritePropertyName("error"u8);
-                writer.WriteObjectValue(Error);
+                BinaryData data = ModelReaderWriter.Write(Error, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (options.Format != "W" && Optional.IsDefined(StartedBy))
             {
@@ -49,12 +73,28 @@ namespace Azure.ResourceManager.Compute.Models
             if (options.Format != "W" && Optional.IsDefined(TargetImageReference))
             {
                 writer.WritePropertyName("targetImageReference"u8);
-                writer.WriteObjectValue(TargetImageReference);
+                BinaryData data = ModelReaderWriter.Write(TargetImageReference, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (options.Format != "W" && Optional.IsDefined(RollbackInfo))
             {
                 writer.WritePropertyName("rollbackInfo"u8);
-                writer.WriteObjectValue(RollbackInfo);
+                BinaryData data = ModelReaderWriter.Write(RollbackInfo, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

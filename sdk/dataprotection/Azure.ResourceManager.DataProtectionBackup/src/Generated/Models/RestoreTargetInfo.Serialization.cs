@@ -27,16 +27,40 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
 
             writer.WriteStartObject();
             writer.WritePropertyName("datasourceInfo"u8);
-            writer.WriteObjectValue(DataSourceInfo);
+            BinaryData data = ModelReaderWriter.Write(DataSourceInfo, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+            using (JsonDocument document = JsonDocument.Parse(data))
+            {
+                JsonSerializer.Serialize(writer, document.RootElement);
+            }
+#endif
             if (Optional.IsDefined(DataSourceSetInfo))
             {
                 writer.WritePropertyName("datasourceSetInfo"u8);
-                writer.WriteObjectValue(DataSourceSetInfo);
+                BinaryData data0 = ModelReaderWriter.Write(DataSourceSetInfo, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data0);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data0))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsDefined(DataSourceAuthCredentials))
             {
                 writer.WritePropertyName("datasourceAuthCredentials"u8);
-                writer.WriteObjectValue(DataSourceAuthCredentials);
+                BinaryData data0 = ModelReaderWriter.Write(DataSourceAuthCredentials, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data0);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data0))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             writer.WritePropertyName("objectType"u8);
             writer.WriteStringValue(ObjectType);

@@ -34,12 +34,28 @@ namespace Azure.ResourceManager.AppContainers.Models
             if (Optional.IsDefined(Routes))
             {
                 writer.WritePropertyName("routes"u8);
-                writer.WriteObjectValue(Routes);
+                BinaryData data = ModelReaderWriter.Write(Routes, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsDefined(ForwardProxy))
             {
                 writer.WritePropertyName("forwardProxy"u8);
-                writer.WriteObjectValue(ForwardProxy);
+                BinaryData data = ModelReaderWriter.Write(ForwardProxy, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

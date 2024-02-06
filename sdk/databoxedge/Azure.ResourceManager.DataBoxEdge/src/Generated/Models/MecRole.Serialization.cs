@@ -54,7 +54,15 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             if (Optional.IsDefined(ConnectionString))
             {
                 writer.WritePropertyName("connectionString"u8);
-                writer.WriteObjectValue(ConnectionString);
+                BinaryData data = ModelReaderWriter.Write(ConnectionString, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsDefined(ControllerEndpoint))
             {

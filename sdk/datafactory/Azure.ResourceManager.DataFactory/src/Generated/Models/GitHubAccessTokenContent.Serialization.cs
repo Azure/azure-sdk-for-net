@@ -36,7 +36,15 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(GitHubClientSecret))
             {
                 writer.WritePropertyName("gitHubClientSecret"u8);
-                writer.WriteObjectValue(GitHubClientSecret);
+                BinaryData data = ModelReaderWriter.Write(GitHubClientSecret, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             writer.WritePropertyName("gitHubAccessTokenBaseUrl"u8);
             writer.WriteStringValue(GitHubAccessTokenBaseUri.AbsoluteUri);

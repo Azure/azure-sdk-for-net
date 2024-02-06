@@ -27,16 +27,40 @@ namespace Azure.ResourceManager.Compute.Models
 
             writer.WriteStartObject();
             writer.WritePropertyName("source"u8);
-            writer.WriteObjectValue(Source);
+            BinaryData data = ModelReaderWriter.Write(Source, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+            using (JsonDocument document = JsonDocument.Parse(data))
+            {
+                JsonSerializer.Serialize(writer, document.RootElement);
+            }
+#endif
             if (Optional.IsDefined(ManageActions))
             {
                 writer.WritePropertyName("manageActions"u8);
-                writer.WriteObjectValue(ManageActions);
+                BinaryData data0 = ModelReaderWriter.Write(ManageActions, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data0);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data0))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsDefined(Settings))
             {
                 writer.WritePropertyName("settings"u8);
-                writer.WriteObjectValue(Settings);
+                BinaryData data0 = ModelReaderWriter.Write(Settings, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data0);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data0))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsCollectionDefined(AdvancedSettings))
             {
@@ -60,7 +84,15 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WriteStartArray();
                 foreach (var item in CustomActions)
                 {
-                    writer.WriteObjectValue(item);
+                    BinaryData data0 = ModelReaderWriter.Write(item, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data0);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(data0))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
                 }
                 writer.WriteEndArray();
             }
@@ -70,7 +102,15 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WriteStartArray();
                 foreach (var item in TargetRegions)
                 {
-                    writer.WriteObjectValue(item);
+                    BinaryData data0 = ModelReaderWriter.Write(item, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data0);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(data0))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
                 }
                 writer.WriteEndArray();
             }
@@ -110,7 +150,15 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WriteStartArray();
                 foreach (var item in TargetExtendedLocations)
                 {
-                    writer.WriteObjectValue(item);
+                    BinaryData data0 = ModelReaderWriter.Write(item, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data0);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(data0))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
                 }
                 writer.WriteEndArray();
             }

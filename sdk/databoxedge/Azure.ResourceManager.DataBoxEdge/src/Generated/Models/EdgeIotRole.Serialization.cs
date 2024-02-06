@@ -59,12 +59,28 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             if (Optional.IsDefined(IotDeviceDetails))
             {
                 writer.WritePropertyName("ioTDeviceDetails"u8);
-                writer.WriteObjectValue(IotDeviceDetails);
+                BinaryData data = ModelReaderWriter.Write(IotDeviceDetails, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsDefined(IotEdgeDeviceDetails))
             {
                 writer.WritePropertyName("ioTEdgeDeviceDetails"u8);
-                writer.WriteObjectValue(IotEdgeDeviceDetails);
+                BinaryData data = ModelReaderWriter.Write(IotEdgeDeviceDetails, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsCollectionDefined(ShareMappings))
             {
@@ -72,14 +88,30 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 writer.WriteStartArray();
                 foreach (var item in ShareMappings)
                 {
-                    writer.WriteObjectValue(item);
+                    BinaryData data = ModelReaderWriter.Write(item, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(data))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(IotEdgeAgentInfo))
             {
                 writer.WritePropertyName("ioTEdgeAgentInfo"u8);
-                writer.WriteObjectValue(IotEdgeAgentInfo);
+                BinaryData data = ModelReaderWriter.Write(IotEdgeAgentInfo, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (options.Format != "W" && Optional.IsDefined(HostPlatformType))
             {
@@ -89,7 +121,15 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             if (Optional.IsDefined(ComputeResource))
             {
                 writer.WritePropertyName("computeResource"u8);
-                writer.WriteObjectValue(ComputeResource);
+                BinaryData data = ModelReaderWriter.Write(ComputeResource, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsDefined(RoleStatus))
             {

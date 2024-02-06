@@ -29,12 +29,28 @@ namespace Azure.ResourceManager.Compute.Models
             if (Optional.IsDefined(VCpus))
             {
                 writer.WritePropertyName("vCPUs"u8);
-                writer.WriteObjectValue(VCpus);
+                BinaryData data = ModelReaderWriter.Write(VCpus, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsDefined(Memory))
             {
                 writer.WritePropertyName("memory"u8);
-                writer.WriteObjectValue(Memory);
+                BinaryData data = ModelReaderWriter.Write(Memory, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

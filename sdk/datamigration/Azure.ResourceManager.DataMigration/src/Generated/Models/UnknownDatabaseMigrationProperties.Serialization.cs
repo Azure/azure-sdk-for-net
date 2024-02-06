@@ -56,7 +56,15 @@ namespace Azure.ResourceManager.DataMigration.Models
             if (Optional.IsDefined(SourceSqlConnection))
             {
                 writer.WritePropertyName("sourceSqlConnection"u8);
-                writer.WriteObjectValue(SourceSqlConnection);
+                BinaryData data = ModelReaderWriter.Write(SourceSqlConnection, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsDefined(SourceDatabaseName))
             {
@@ -81,7 +89,15 @@ namespace Azure.ResourceManager.DataMigration.Models
             if (options.Format != "W" && Optional.IsDefined(MigrationFailureError))
             {
                 writer.WritePropertyName("migrationFailureError"u8);
-                writer.WriteObjectValue(MigrationFailureError);
+                BinaryData data = ModelReaderWriter.Write(MigrationFailureError, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsDefined(TargetDatabaseCollation))
             {

@@ -32,7 +32,15 @@ namespace Azure.ResourceManager.AppContainers
             if (Optional.IsDefined(ExtendedLocation))
             {
                 writer.WritePropertyName("extendedLocation"u8);
-                writer.WriteObjectValue(ExtendedLocation);
+                BinaryData data = ModelReaderWriter.Write(ExtendedLocation, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -97,7 +105,15 @@ namespace Azure.ResourceManager.AppContainers
             if (Optional.IsDefined(CustomDomainConfiguration))
             {
                 writer.WritePropertyName("customDomainConfiguration"u8);
-                writer.WriteObjectValue(CustomDomainConfiguration);
+                BinaryData data = ModelReaderWriter.Write(CustomDomainConfiguration, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)

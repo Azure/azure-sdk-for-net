@@ -58,12 +58,28 @@ namespace Azure.ResourceManager.Consumption.Models
             if (options.Format != "W" && Optional.IsDefined(OriginalAmount))
             {
                 writer.WritePropertyName("originalAmount"u8);
-                writer.WriteObjectValue(OriginalAmount);
+                BinaryData data = ModelReaderWriter.Write(OriginalAmount, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (options.Format != "W" && Optional.IsDefined(ClosedBalance))
             {
                 writer.WritePropertyName("closedBalance"u8);
-                writer.WriteObjectValue(ClosedBalance);
+                BinaryData data = ModelReaderWriter.Write(ClosedBalance, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (options.Format != "W" && Optional.IsDefined(Source))
             {
@@ -108,17 +124,41 @@ namespace Azure.ResourceManager.Consumption.Models
             if (options.Format != "W" && Optional.IsDefined(OriginalAmountInBillingCurrency))
             {
                 writer.WritePropertyName("originalAmountInBillingCurrency"u8);
-                writer.WriteObjectValue(OriginalAmountInBillingCurrency);
+                BinaryData data = ModelReaderWriter.Write(OriginalAmountInBillingCurrency, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (options.Format != "W" && Optional.IsDefined(ClosedBalanceInBillingCurrency))
             {
                 writer.WritePropertyName("closedBalanceInBillingCurrency"u8);
-                writer.WriteObjectValue(ClosedBalanceInBillingCurrency);
+                BinaryData data = ModelReaderWriter.Write(ClosedBalanceInBillingCurrency, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (options.Format != "W" && Optional.IsDefined(Reseller))
             {
                 writer.WritePropertyName("reseller"u8);
-                writer.WriteObjectValue(Reseller);
+                BinaryData data = ModelReaderWriter.Write(Reseller, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)

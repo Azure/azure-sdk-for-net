@@ -84,7 +84,15 @@ namespace Azure.ResourceManager.Consumption.Models
             if (options.Format != "W" && Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("resource"u8);
-                writer.WriteObjectValue(Properties);
+                BinaryData data = ModelReaderWriter.Write(Properties, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (options.Format != "W" && Optional.IsDefined(ResourceGroup))
             {
@@ -94,7 +102,15 @@ namespace Azure.ResourceManager.Consumption.Models
             if (options.Format != "W" && Optional.IsDefined(Savings))
             {
                 writer.WritePropertyName("savings"u8);
-                writer.WriteObjectValue(Savings);
+                BinaryData data = ModelReaderWriter.Write(Savings, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (options.Format != "W" && Optional.IsDefined(Scope))
             {
@@ -104,7 +120,15 @@ namespace Azure.ResourceManager.Consumption.Models
             if (options.Format != "W" && Optional.IsDefined(Usage))
             {
                 writer.WritePropertyName("usage"u8);
-                writer.WriteObjectValue(Usage);
+                BinaryData data = ModelReaderWriter.Write(Usage, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)

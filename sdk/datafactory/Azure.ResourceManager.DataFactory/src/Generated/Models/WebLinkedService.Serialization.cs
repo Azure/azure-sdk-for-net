@@ -27,13 +27,29 @@ namespace Azure.ResourceManager.DataFactory.Models
 
             writer.WriteStartObject();
             writer.WritePropertyName("typeProperties"u8);
-            writer.WriteObjectValue(TypeProperties);
+            BinaryData data = ModelReaderWriter.Write(TypeProperties, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+            using (JsonDocument document = JsonDocument.Parse(data))
+            {
+                JsonSerializer.Serialize(writer, document.RootElement);
+            }
+#endif
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(LinkedServiceType);
             if (Optional.IsDefined(ConnectVia))
             {
                 writer.WritePropertyName("connectVia"u8);
-                writer.WriteObjectValue(ConnectVia);
+                BinaryData data0 = ModelReaderWriter.Write(ConnectVia, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data0);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data0))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsDefined(Description))
             {
@@ -47,7 +63,15 @@ namespace Azure.ResourceManager.DataFactory.Models
                 foreach (var item in Parameters)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
+                    BinaryData data0 = ModelReaderWriter.Write(item.Value, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data0);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(data0))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
                 }
                 writer.WriteEndObject();
             }

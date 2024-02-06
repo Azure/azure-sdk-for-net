@@ -34,7 +34,15 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(ManagedVirtualNetwork))
             {
                 writer.WritePropertyName("managedVirtualNetwork"u8);
-                writer.WriteObjectValue(ManagedVirtualNetwork);
+                BinaryData data = ModelReaderWriter.Write(ManagedVirtualNetwork, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(IntegrationRuntimeType.ToString());
@@ -48,17 +56,41 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(ComputeProperties))
             {
                 writer.WritePropertyName("computeProperties"u8);
-                writer.WriteObjectValue(ComputeProperties);
+                BinaryData data = ModelReaderWriter.Write(ComputeProperties, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsDefined(SsisProperties))
             {
                 writer.WritePropertyName("ssisProperties"u8);
-                writer.WriteObjectValue(SsisProperties);
+                BinaryData data = ModelReaderWriter.Write(SsisProperties, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsDefined(CustomerVirtualNetwork))
             {
                 writer.WritePropertyName("customerVirtualNetwork"u8);
-                writer.WriteObjectValue(CustomerVirtualNetwork);
+                BinaryData data = ModelReaderWriter.Write(CustomerVirtualNetwork, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             writer.WriteEndObject();
             foreach (var item in AdditionalProperties)

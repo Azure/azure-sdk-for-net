@@ -36,7 +36,15 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(AccessCredential))
             {
                 writer.WritePropertyName("accessCredential"u8);
-                writer.WriteObjectValue(AccessCredential);
+                BinaryData data = ModelReaderWriter.Write(AccessCredential, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsDefined(LogRefreshInterval))
             {

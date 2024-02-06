@@ -103,7 +103,15 @@ namespace Azure.ResourceManager.CustomerInsights
             if (Optional.IsDefined(MappingProperties))
             {
                 writer.WritePropertyName("mappingProperties"u8);
-                writer.WriteObjectValue(MappingProperties);
+                BinaryData data = ModelReaderWriter.Write(MappingProperties, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (options.Format != "W" && Optional.IsDefined(NextRunOn))
             {

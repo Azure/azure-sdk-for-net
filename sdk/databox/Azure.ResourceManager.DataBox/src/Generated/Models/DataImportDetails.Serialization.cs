@@ -27,7 +27,15 @@ namespace Azure.ResourceManager.DataBox.Models
 
             writer.WriteStartObject();
             writer.WritePropertyName("accountDetails"u8);
-            writer.WriteObjectValue(AccountDetails);
+            BinaryData data = ModelReaderWriter.Write(AccountDetails, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+            using (JsonDocument document = JsonDocument.Parse(data))
+            {
+                JsonSerializer.Serialize(writer, document.RootElement);
+            }
+#endif
             if (Optional.IsDefined(LogCollectionLevel))
             {
                 writer.WritePropertyName("logCollectionLevel"u8);

@@ -31,7 +31,15 @@ namespace Azure.ResourceManager.CosmosDB.Models
             if (Optional.IsDefined(AutoUpgradePolicy))
             {
                 writer.WritePropertyName("autoUpgradePolicy"u8);
-                writer.WriteObjectValue(AutoUpgradePolicy);
+                BinaryData data = ModelReaderWriter.Write(AutoUpgradePolicy, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (options.Format != "W" && Optional.IsDefined(TargetMaxThroughput))
             {

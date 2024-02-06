@@ -53,27 +53,67 @@ namespace Azure.ResourceManager.AppContainers
             if (Optional.IsDefined(Platform))
             {
                 writer.WritePropertyName("platform"u8);
-                writer.WriteObjectValue(Platform);
+                BinaryData data = ModelReaderWriter.Write(Platform, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsDefined(GlobalValidation))
             {
                 writer.WritePropertyName("globalValidation"u8);
-                writer.WriteObjectValue(GlobalValidation);
+                BinaryData data = ModelReaderWriter.Write(GlobalValidation, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsDefined(IdentityProviders))
             {
                 writer.WritePropertyName("identityProviders"u8);
-                writer.WriteObjectValue(IdentityProviders);
+                BinaryData data = ModelReaderWriter.Write(IdentityProviders, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsDefined(Login))
             {
                 writer.WritePropertyName("login"u8);
-                writer.WriteObjectValue(Login);
+                BinaryData data = ModelReaderWriter.Write(Login, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsDefined(HttpSettings))
             {
                 writer.WritePropertyName("httpSettings"u8);
-                writer.WriteObjectValue(HttpSettings);
+                BinaryData data = ModelReaderWriter.Write(HttpSettings, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)

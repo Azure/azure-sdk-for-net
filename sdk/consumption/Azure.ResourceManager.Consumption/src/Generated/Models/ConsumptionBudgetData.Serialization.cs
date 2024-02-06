@@ -74,17 +74,41 @@ namespace Azure.ResourceManager.Consumption
             if (Optional.IsDefined(TimePeriod))
             {
                 writer.WritePropertyName("timePeriod"u8);
-                writer.WriteObjectValue(TimePeriod);
+                BinaryData data = ModelReaderWriter.Write(TimePeriod, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsDefined(Filter))
             {
                 writer.WritePropertyName("filter"u8);
-                writer.WriteObjectValue(Filter);
+                BinaryData data = ModelReaderWriter.Write(Filter, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (options.Format != "W" && Optional.IsDefined(CurrentSpend))
             {
                 writer.WritePropertyName("currentSpend"u8);
-                writer.WriteObjectValue(CurrentSpend);
+                BinaryData data = ModelReaderWriter.Write(CurrentSpend, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsCollectionDefined(Notifications))
             {
@@ -93,14 +117,30 @@ namespace Azure.ResourceManager.Consumption
                 foreach (var item in Notifications)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
+                    BinaryData data = ModelReaderWriter.Write(item.Value, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(data))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
                 }
                 writer.WriteEndObject();
             }
             if (options.Format != "W" && Optional.IsDefined(ForecastSpend))
             {
                 writer.WritePropertyName("forecastSpend"u8);
-                writer.WriteObjectValue(ForecastSpend);
+                BinaryData data = ModelReaderWriter.Write(ForecastSpend, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)

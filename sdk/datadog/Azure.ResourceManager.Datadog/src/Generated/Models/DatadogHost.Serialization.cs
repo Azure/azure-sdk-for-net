@@ -54,7 +54,15 @@ namespace Azure.ResourceManager.Datadog.Models
             if (Optional.IsDefined(Meta))
             {
                 writer.WritePropertyName("meta"u8);
-                writer.WriteObjectValue(Meta);
+                BinaryData data = ModelReaderWriter.Write(Meta, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

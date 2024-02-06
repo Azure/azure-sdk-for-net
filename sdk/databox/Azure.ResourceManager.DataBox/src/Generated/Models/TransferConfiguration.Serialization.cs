@@ -31,12 +31,28 @@ namespace Azure.ResourceManager.DataBox.Models
             if (Optional.IsDefined(TransferFilterDetails))
             {
                 writer.WritePropertyName("transferFilterDetails"u8);
-                writer.WriteObjectValue(TransferFilterDetails);
+                BinaryData data = ModelReaderWriter.Write(TransferFilterDetails, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsDefined(TransferAllDetails))
             {
                 writer.WritePropertyName("transferAllDetails"u8);
-                writer.WriteObjectValue(TransferAllDetails);
+                BinaryData data = ModelReaderWriter.Write(TransferAllDetails, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

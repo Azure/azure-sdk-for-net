@@ -86,12 +86,28 @@ namespace Azure.ResourceManager.ContainerRegistry
             if (Optional.IsDefined(Platform))
             {
                 writer.WritePropertyName("platform"u8);
-                writer.WriteObjectValue(Platform);
+                BinaryData data = ModelReaderWriter.Write(Platform, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsDefined(AgentConfiguration))
             {
                 writer.WritePropertyName("agentConfiguration"u8);
-                writer.WriteObjectValue(AgentConfiguration);
+                BinaryData data = ModelReaderWriter.Write(AgentConfiguration, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsDefined(AgentPoolName))
             {
@@ -106,17 +122,41 @@ namespace Azure.ResourceManager.ContainerRegistry
             if (Optional.IsDefined(Step))
             {
                 writer.WritePropertyName("step"u8);
-                writer.WriteObjectValue(Step);
+                BinaryData data = ModelReaderWriter.Write(Step, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsDefined(Trigger))
             {
                 writer.WritePropertyName("trigger"u8);
-                writer.WriteObjectValue(Trigger);
+                BinaryData data = ModelReaderWriter.Write(Trigger, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsDefined(Credentials))
             {
                 writer.WritePropertyName("credentials"u8);
-                writer.WriteObjectValue(Credentials);
+                BinaryData data = ModelReaderWriter.Write(Credentials, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsDefined(LogTemplate))
             {

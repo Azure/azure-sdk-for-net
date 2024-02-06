@@ -59,7 +59,15 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 writer.WriteStartArray();
                 foreach (var item in Arguments)
                 {
-                    writer.WriteObjectValue(item);
+                    BinaryData data = ModelReaderWriter.Write(item, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(data))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
                 }
                 writer.WriteEndArray();
             }
@@ -69,11 +77,27 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 writer.WriteNumberValue(TimeoutInSeconds.Value);
             }
             writer.WritePropertyName("platform"u8);
-            writer.WriteObjectValue(Platform);
+            BinaryData data0 = ModelReaderWriter.Write(Platform, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data0);
+#else
+            using (JsonDocument document = JsonDocument.Parse(data0))
+            {
+                JsonSerializer.Serialize(writer, document.RootElement);
+            }
+#endif
             if (Optional.IsDefined(AgentConfiguration))
             {
                 writer.WritePropertyName("agentConfiguration"u8);
-                writer.WriteObjectValue(AgentConfiguration);
+                BinaryData data = ModelReaderWriter.Write(AgentConfiguration, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsDefined(SourceLocation))
             {
@@ -83,7 +107,15 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             if (Optional.IsDefined(Credentials))
             {
                 writer.WritePropertyName("credentials"u8);
-                writer.WriteObjectValue(Credentials);
+                BinaryData data = ModelReaderWriter.Write(Credentials, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(RunRequestType);

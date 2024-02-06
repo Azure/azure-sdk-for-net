@@ -87,7 +87,15 @@ namespace Azure.ResourceManager.AppContainers
             if (Optional.IsDefined(VnetConfiguration))
             {
                 writer.WritePropertyName("vnetConfiguration"u8);
-                writer.WriteObjectValue(VnetConfiguration);
+                BinaryData data = ModelReaderWriter.Write(VnetConfiguration, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (options.Format != "W" && Optional.IsDefined(DeploymentErrors))
             {
@@ -107,7 +115,15 @@ namespace Azure.ResourceManager.AppContainers
             if (Optional.IsDefined(AppLogsConfiguration))
             {
                 writer.WritePropertyName("appLogsConfiguration"u8);
-                writer.WriteObjectValue(AppLogsConfiguration);
+                BinaryData data = ModelReaderWriter.Write(AppLogsConfiguration, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsDefined(IsZoneRedundant))
             {
@@ -117,7 +133,15 @@ namespace Azure.ResourceManager.AppContainers
             if (Optional.IsDefined(CustomDomainConfiguration))
             {
                 writer.WritePropertyName("customDomainConfiguration"u8);
-                writer.WriteObjectValue(CustomDomainConfiguration);
+                BinaryData data = ModelReaderWriter.Write(CustomDomainConfiguration, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (options.Format != "W" && Optional.IsDefined(EventStreamEndpoint))
             {
@@ -130,19 +154,43 @@ namespace Azure.ResourceManager.AppContainers
                 writer.WriteStartArray();
                 foreach (var item in WorkloadProfiles)
                 {
-                    writer.WriteObjectValue(item);
+                    BinaryData data = ModelReaderWriter.Write(item, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(data))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(KedaConfiguration))
             {
                 writer.WritePropertyName("kedaConfiguration"u8);
-                writer.WriteObjectValue(KedaConfiguration);
+                BinaryData data = ModelReaderWriter.Write(KedaConfiguration, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsDefined(DaprConfiguration))
             {
                 writer.WritePropertyName("daprConfiguration"u8);
-                writer.WriteObjectValue(DaprConfiguration);
+                BinaryData data = ModelReaderWriter.Write(DaprConfiguration, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsDefined(InfrastructureResourceGroup))
             {
@@ -152,7 +200,15 @@ namespace Azure.ResourceManager.AppContainers
             if (Optional.IsDefined(PeerAuthentication))
             {
                 writer.WritePropertyName("peerAuthentication"u8);
-                writer.WriteObjectValue(PeerAuthentication);
+                BinaryData data = ModelReaderWriter.Write(PeerAuthentication, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)

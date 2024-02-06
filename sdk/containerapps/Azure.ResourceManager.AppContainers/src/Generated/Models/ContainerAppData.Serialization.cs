@@ -32,7 +32,15 @@ namespace Azure.ResourceManager.AppContainers
             if (Optional.IsDefined(ExtendedLocation))
             {
                 writer.WritePropertyName("extendedLocation"u8);
-                writer.WriteObjectValue(ExtendedLocation);
+                BinaryData data = ModelReaderWriter.Write(ExtendedLocation, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsDefined(Identity))
             {
@@ -123,12 +131,28 @@ namespace Azure.ResourceManager.AppContainers
             if (Optional.IsDefined(Configuration))
             {
                 writer.WritePropertyName("configuration"u8);
-                writer.WriteObjectValue(Configuration);
+                BinaryData data = ModelReaderWriter.Write(Configuration, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsDefined(Template))
             {
                 writer.WritePropertyName("template"u8);
-                writer.WriteObjectValue(Template);
+                BinaryData data = ModelReaderWriter.Write(Template, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(OutboundIPAddressList))
             {

@@ -30,7 +30,15 @@ namespace Azure.ResourceManager.DataBox
 
             writer.WriteStartObject();
             writer.WritePropertyName("sku"u8);
-            writer.WriteObjectValue(Sku);
+            BinaryData data = ModelReaderWriter.Write(Sku, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+            using (JsonDocument document = JsonDocument.Parse(data))
+            {
+                JsonSerializer.Serialize(writer, document.RootElement);
+            }
+#endif
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
@@ -121,7 +129,15 @@ namespace Azure.ResourceManager.DataBox
             if (Optional.IsDefined(Details))
             {
                 writer.WritePropertyName("details"u8);
-                writer.WriteObjectValue(Details);
+                BinaryData data0 = ModelReaderWriter.Write(Details, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data0);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data0))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (options.Format != "W" && Optional.IsDefined(CancellationReason))
             {
@@ -136,7 +152,15 @@ namespace Azure.ResourceManager.DataBox
             if (Optional.IsDefined(DeliveryInfo))
             {
                 writer.WritePropertyName("deliveryInfo"u8);
-                writer.WriteObjectValue(DeliveryInfo);
+                BinaryData data0 = ModelReaderWriter.Write(DeliveryInfo, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data0);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data0))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (options.Format != "W" && Optional.IsDefined(IsCancellableWithoutFee))
             {

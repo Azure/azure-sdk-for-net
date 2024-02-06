@@ -29,12 +29,28 @@ namespace Azure.ResourceManager.CosmosDB.Models
             if (Optional.IsDefined(Key))
             {
                 writer.WritePropertyName("key"u8);
-                writer.WriteObjectValue(Key);
+                BinaryData data = ModelReaderWriter.Write(Key, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsDefined(Options))
             {
                 writer.WritePropertyName("options"u8);
-                writer.WriteObjectValue(Options);
+                BinaryData data = ModelReaderWriter.Write(Options, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

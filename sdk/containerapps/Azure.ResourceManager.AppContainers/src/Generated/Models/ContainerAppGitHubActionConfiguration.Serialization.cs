@@ -29,12 +29,28 @@ namespace Azure.ResourceManager.AppContainers.Models
             if (Optional.IsDefined(RegistryInfo))
             {
                 writer.WritePropertyName("registryInfo"u8);
-                writer.WriteObjectValue(RegistryInfo);
+                BinaryData data = ModelReaderWriter.Write(RegistryInfo, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsDefined(AzureCredentials))
             {
                 writer.WritePropertyName("azureCredentials"u8);
-                writer.WriteObjectValue(AzureCredentials);
+                BinaryData data = ModelReaderWriter.Write(AzureCredentials, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsDefined(ContextPath))
             {

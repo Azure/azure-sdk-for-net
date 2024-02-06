@@ -44,7 +44,15 @@ namespace Azure.ResourceManager.Compute.Models
             if (Optional.IsDefined(ScriptUriManagedIdentity))
             {
                 writer.WritePropertyName("scriptUriManagedIdentity"u8);
-                writer.WriteObjectValue(ScriptUriManagedIdentity);
+                BinaryData data = ModelReaderWriter.Write(ScriptUriManagedIdentity, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

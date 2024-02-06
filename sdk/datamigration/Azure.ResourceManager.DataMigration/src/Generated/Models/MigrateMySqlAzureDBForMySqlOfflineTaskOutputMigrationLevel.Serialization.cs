@@ -69,7 +69,15 @@ namespace Azure.ResourceManager.DataMigration.Models
             if (Optional.IsDefined(MigrationReportResult))
             {
                 writer.WritePropertyName("migrationReportResult"u8);
-                writer.WriteObjectValue(MigrationReportResult);
+                BinaryData data = ModelReaderWriter.Write(MigrationReportResult, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (options.Format != "W" && Optional.IsDefined(SourceServerVersion))
             {
@@ -97,7 +105,15 @@ namespace Azure.ResourceManager.DataMigration.Models
                 writer.WriteStartArray();
                 foreach (var item in ExceptionsAndWarnings)
                 {
-                    writer.WriteObjectValue(item);
+                    BinaryData data = ModelReaderWriter.Write(item, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(data))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
                 }
                 writer.WriteEndArray();
             }

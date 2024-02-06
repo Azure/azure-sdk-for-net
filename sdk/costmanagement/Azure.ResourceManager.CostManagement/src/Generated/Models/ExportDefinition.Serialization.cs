@@ -33,12 +33,28 @@ namespace Azure.ResourceManager.CostManagement.Models
             if (Optional.IsDefined(TimePeriod))
             {
                 writer.WritePropertyName("timePeriod"u8);
-                writer.WriteObjectValue(TimePeriod);
+                BinaryData data = ModelReaderWriter.Write(TimePeriod, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsDefined(DataSet))
             {
                 writer.WritePropertyName("dataSet"u8);
-                writer.WriteObjectValue(DataSet);
+                BinaryData data = ModelReaderWriter.Write(DataSet, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

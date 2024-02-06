@@ -48,7 +48,15 @@ namespace Azure.ResourceManager.DataBox.Models
             if (Optional.IsDefined(Details))
             {
                 writer.WritePropertyName("details"u8);
-                writer.WriteObjectValue(Details);
+                BinaryData data = ModelReaderWriter.Write(Details, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)

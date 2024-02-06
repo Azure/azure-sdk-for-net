@@ -61,7 +61,15 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 writer.WriteStartArray();
                 foreach (var item in Indexes)
                 {
-                    writer.WriteObjectValue(item);
+                    BinaryData data = ModelReaderWriter.Write(item, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(data))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
                 }
                 writer.WriteEndArray();
             }
@@ -73,7 +81,15 @@ namespace Azure.ResourceManager.CosmosDB.Models
             if (Optional.IsDefined(RestoreParameters))
             {
                 writer.WritePropertyName("restoreParameters"u8);
-                writer.WriteObjectValue(RestoreParameters);
+                BinaryData data = ModelReaderWriter.Write(RestoreParameters, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsDefined(CreateMode))
             {

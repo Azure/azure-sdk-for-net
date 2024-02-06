@@ -52,9 +52,25 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             writer.WritePropertyName("ioTDeviceDetails"u8);
-            writer.WriteObjectValue(IotDeviceDetails);
+            BinaryData data = ModelReaderWriter.Write(IotDeviceDetails, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+            using (JsonDocument document = JsonDocument.Parse(data))
+            {
+                JsonSerializer.Serialize(writer, document.RootElement);
+            }
+#endif
             writer.WritePropertyName("ioTEdgeDeviceDetails"u8);
-            writer.WriteObjectValue(IotEdgeDeviceDetails);
+            BinaryData data0 = ModelReaderWriter.Write(IotEdgeDeviceDetails, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data0);
+#else
+            using (JsonDocument document = JsonDocument.Parse(data0))
+            {
+                JsonSerializer.Serialize(writer, document.RootElement);
+            }
+#endif
             if (options.Format != "W" && Optional.IsDefined(Version))
             {
                 writer.WritePropertyName("version"u8);

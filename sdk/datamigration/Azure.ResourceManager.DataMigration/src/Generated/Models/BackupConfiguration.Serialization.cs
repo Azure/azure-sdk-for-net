@@ -29,12 +29,28 @@ namespace Azure.ResourceManager.DataMigration.Models
             if (Optional.IsDefined(SourceLocation))
             {
                 writer.WritePropertyName("sourceLocation"u8);
-                writer.WriteObjectValue(SourceLocation);
+                BinaryData data = ModelReaderWriter.Write(SourceLocation, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsDefined(TargetLocation))
             {
                 writer.WritePropertyName("targetLocation"u8);
-                writer.WriteObjectValue(TargetLocation);
+                BinaryData data = ModelReaderWriter.Write(TargetLocation, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

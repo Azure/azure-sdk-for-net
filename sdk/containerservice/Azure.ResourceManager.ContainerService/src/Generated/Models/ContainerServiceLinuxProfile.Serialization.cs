@@ -29,7 +29,15 @@ namespace Azure.ResourceManager.ContainerService.Models
             writer.WritePropertyName("adminUsername"u8);
             writer.WriteStringValue(AdminUsername);
             writer.WritePropertyName("ssh"u8);
-            writer.WriteObjectValue(Ssh);
+            BinaryData data = ModelReaderWriter.Write(Ssh, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+            using (JsonDocument document = JsonDocument.Parse(data))
+            {
+                JsonSerializer.Serialize(writer, document.RootElement);
+            }
+#endif
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)

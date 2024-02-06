@@ -53,7 +53,15 @@ namespace Azure.ResourceManager.DataFactory.Models
                 foreach (var item in Parameters)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
+                    BinaryData data = ModelReaderWriter.Write(item.Value, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(data))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
                 }
                 writer.WriteEndObject();
             }
@@ -82,14 +90,30 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(Folder))
             {
                 writer.WritePropertyName("folder"u8);
-                writer.WriteObjectValue(Folder);
+                BinaryData data = ModelReaderWriter.Write(Folder, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             writer.WritePropertyName("typeProperties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(DataLocation))
             {
                 writer.WritePropertyName("location"u8);
-                writer.WriteObjectValue(DataLocation);
+                BinaryData data = ModelReaderWriter.Write(DataLocation, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsDefined(SheetName))
             {
@@ -114,7 +138,15 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(Compression))
             {
                 writer.WritePropertyName("compression"u8);
-                writer.WriteObjectValue(Compression);
+                BinaryData data = ModelReaderWriter.Write(Compression, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsDefined(NullValue))
             {

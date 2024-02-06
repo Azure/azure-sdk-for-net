@@ -44,7 +44,15 @@ namespace Azure.ResourceManager.AppContainers.Models
             if (options.Format != "W" && Optional.IsDefined(CustomDomainVerificationFailureInfo))
             {
                 writer.WritePropertyName("customDomainVerificationFailureInfo"u8);
-                writer.WriteObjectValue(CustomDomainVerificationFailureInfo);
+                BinaryData data = ModelReaderWriter.Write(CustomDomainVerificationFailureInfo, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (options.Format != "W" && Optional.IsDefined(HasConflictOnManagedEnvironment))
             {

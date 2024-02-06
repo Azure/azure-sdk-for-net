@@ -27,11 +27,35 @@ namespace Azure.ResourceManager.DataMigration.Models
 
             writer.WriteStartObject();
             writer.WritePropertyName("ssisMigrationInfo"u8);
-            writer.WriteObjectValue(SsisMigrationInfo);
+            BinaryData data = ModelReaderWriter.Write(SsisMigrationInfo, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+            using (JsonDocument document = JsonDocument.Parse(data))
+            {
+                JsonSerializer.Serialize(writer, document.RootElement);
+            }
+#endif
             writer.WritePropertyName("sourceConnectionInfo"u8);
-            writer.WriteObjectValue(SourceConnectionInfo);
+            BinaryData data0 = ModelReaderWriter.Write(SourceConnectionInfo, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data0);
+#else
+            using (JsonDocument document = JsonDocument.Parse(data0))
+            {
+                JsonSerializer.Serialize(writer, document.RootElement);
+            }
+#endif
             writer.WritePropertyName("targetConnectionInfo"u8);
-            writer.WriteObjectValue(TargetConnectionInfo);
+            BinaryData data1 = ModelReaderWriter.Write(TargetConnectionInfo, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data1);
+#else
+            using (JsonDocument document = JsonDocument.Parse(data1))
+            {
+                JsonSerializer.Serialize(writer, document.RootElement);
+            }
+#endif
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)

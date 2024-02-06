@@ -31,7 +31,15 @@ namespace Azure.ResourceManager.DataBox.Models
             if (options.Format != "W" && Optional.IsDefined(DataCenterAccessSecurityCode))
             {
                 writer.WritePropertyName("dcAccessSecurityCode"u8);
-                writer.WriteObjectValue(DataCenterAccessSecurityCode);
+                BinaryData data = ModelReaderWriter.Write(DataCenterAccessSecurityCode, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (options.Format != "W" && Optional.IsDefined(Error))
             {

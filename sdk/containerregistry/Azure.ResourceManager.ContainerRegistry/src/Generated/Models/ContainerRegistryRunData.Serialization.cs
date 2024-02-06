@@ -96,7 +96,15 @@ namespace Azure.ResourceManager.ContainerRegistry
                 writer.WriteStartArray();
                 foreach (var item in OutputImages)
                 {
-                    writer.WriteObjectValue(item);
+                    BinaryData data = ModelReaderWriter.Write(item, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(data))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
                 }
                 writer.WriteEndArray();
             }
@@ -108,27 +116,67 @@ namespace Azure.ResourceManager.ContainerRegistry
             if (Optional.IsDefined(ImageUpdateTrigger))
             {
                 writer.WritePropertyName("imageUpdateTrigger"u8);
-                writer.WriteObjectValue(ImageUpdateTrigger);
+                BinaryData data = ModelReaderWriter.Write(ImageUpdateTrigger, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsDefined(SourceTrigger))
             {
                 writer.WritePropertyName("sourceTrigger"u8);
-                writer.WriteObjectValue(SourceTrigger);
+                BinaryData data = ModelReaderWriter.Write(SourceTrigger, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsDefined(TimerTrigger))
             {
                 writer.WritePropertyName("timerTrigger"u8);
-                writer.WriteObjectValue(TimerTrigger);
+                BinaryData data = ModelReaderWriter.Write(TimerTrigger, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsDefined(Platform))
             {
                 writer.WritePropertyName("platform"u8);
-                writer.WriteObjectValue(Platform);
+                BinaryData data = ModelReaderWriter.Write(Platform, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsDefined(AgentConfiguration))
             {
                 writer.WritePropertyName("agentConfiguration"u8);
-                writer.WriteObjectValue(AgentConfiguration);
+                BinaryData data = ModelReaderWriter.Write(AgentConfiguration, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsDefined(SourceRegistryAuth))
             {
@@ -158,7 +206,15 @@ namespace Azure.ResourceManager.ContainerRegistry
             if (options.Format != "W" && Optional.IsDefined(LogArtifact))
             {
                 writer.WritePropertyName("logArtifact"u8);
-                writer.WriteObjectValue(LogArtifact);
+                BinaryData data = ModelReaderWriter.Write(LogArtifact, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsDefined(ProvisioningState))
             {

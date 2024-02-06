@@ -29,7 +29,15 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             if (Optional.IsDefined(SecretStoreResource))
             {
                 writer.WritePropertyName("secretStoreResource"u8);
-                writer.WriteObjectValue(SecretStoreResource);
+                BinaryData data = ModelReaderWriter.Write(SecretStoreResource, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             writer.WritePropertyName("objectType"u8);
             writer.WriteStringValue(ObjectType);

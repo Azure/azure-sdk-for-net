@@ -41,7 +41,15 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             if (options.Format != "W" && Optional.IsDefined(TrackingInformation))
             {
                 writer.WritePropertyName("trackingInformation"u8);
-                writer.WriteObjectValue(TrackingInformation);
+                BinaryData data = ModelReaderWriter.Write(TrackingInformation, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(AdditionalOrderDetails))
             {

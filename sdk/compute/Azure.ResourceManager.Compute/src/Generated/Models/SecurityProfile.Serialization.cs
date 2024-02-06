@@ -29,7 +29,15 @@ namespace Azure.ResourceManager.Compute.Models
             if (Optional.IsDefined(UefiSettings))
             {
                 writer.WritePropertyName("uefiSettings"u8);
-                writer.WriteObjectValue(UefiSettings);
+                BinaryData data = ModelReaderWriter.Write(UefiSettings, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsDefined(EncryptionAtHost))
             {
@@ -44,12 +52,28 @@ namespace Azure.ResourceManager.Compute.Models
             if (Optional.IsDefined(EncryptionIdentity))
             {
                 writer.WritePropertyName("encryptionIdentity"u8);
-                writer.WriteObjectValue(EncryptionIdentity);
+                BinaryData data = ModelReaderWriter.Write(EncryptionIdentity, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsDefined(ProxyAgentSettings))
             {
                 writer.WritePropertyName("proxyAgentSettings"u8);
-                writer.WriteObjectValue(ProxyAgentSettings);
+                BinaryData data = ModelReaderWriter.Write(ProxyAgentSettings, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

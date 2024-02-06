@@ -29,7 +29,15 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             if (Optional.IsDefined(TagInfo))
             {
                 writer.WritePropertyName("tagInfo"u8);
-                writer.WriteObjectValue(TagInfo);
+                BinaryData data = ModelReaderWriter.Write(TagInfo, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

@@ -106,22 +106,54 @@ namespace Azure.ResourceManager.Compute
             if (Optional.IsDefined(RoleProfile))
             {
                 writer.WritePropertyName("roleProfile"u8);
-                writer.WriteObjectValue(RoleProfile);
+                BinaryData data = ModelReaderWriter.Write(RoleProfile, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsDefined(OSProfile))
             {
                 writer.WritePropertyName("osProfile"u8);
-                writer.WriteObjectValue(OSProfile);
+                BinaryData data = ModelReaderWriter.Write(OSProfile, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsDefined(NetworkProfile))
             {
                 writer.WritePropertyName("networkProfile"u8);
-                writer.WriteObjectValue(NetworkProfile);
+                BinaryData data = ModelReaderWriter.Write(NetworkProfile, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsDefined(ExtensionProfile))
             {
                 writer.WritePropertyName("extensionProfile"u8);
-                writer.WriteObjectValue(ExtensionProfile);
+                BinaryData data = ModelReaderWriter.Write(ExtensionProfile, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {

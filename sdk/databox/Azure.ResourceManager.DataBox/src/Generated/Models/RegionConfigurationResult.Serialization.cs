@@ -29,17 +29,41 @@ namespace Azure.ResourceManager.DataBox.Models
             if (options.Format != "W" && Optional.IsDefined(ScheduleAvailabilityResponse))
             {
                 writer.WritePropertyName("scheduleAvailabilityResponse"u8);
-                writer.WriteObjectValue(ScheduleAvailabilityResponse);
+                BinaryData data = ModelReaderWriter.Write(ScheduleAvailabilityResponse, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (options.Format != "W" && Optional.IsDefined(TransportAvailabilityResponse))
             {
                 writer.WritePropertyName("transportAvailabilityResponse"u8);
-                writer.WriteObjectValue(TransportAvailabilityResponse);
+                BinaryData data = ModelReaderWriter.Write(TransportAvailabilityResponse, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (options.Format != "W" && Optional.IsDefined(DataCenterAddressResponse))
             {
                 writer.WritePropertyName("datacenterAddressResponse"u8);
-                writer.WriteObjectValue(DataCenterAddressResponse);
+                BinaryData data = ModelReaderWriter.Write(DataCenterAddressResponse, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

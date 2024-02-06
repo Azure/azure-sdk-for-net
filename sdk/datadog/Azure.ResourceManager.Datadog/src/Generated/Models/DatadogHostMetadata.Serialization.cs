@@ -34,12 +34,28 @@ namespace Azure.ResourceManager.Datadog.Models
             if (Optional.IsDefined(InstallMethod))
             {
                 writer.WritePropertyName("installMethod"u8);
-                writer.WriteObjectValue(InstallMethod);
+                BinaryData data = ModelReaderWriter.Write(InstallMethod, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsDefined(LogsAgent))
             {
                 writer.WritePropertyName("logsAgent"u8);
-                writer.WriteObjectValue(LogsAgent);
+                BinaryData data = ModelReaderWriter.Write(LogsAgent, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

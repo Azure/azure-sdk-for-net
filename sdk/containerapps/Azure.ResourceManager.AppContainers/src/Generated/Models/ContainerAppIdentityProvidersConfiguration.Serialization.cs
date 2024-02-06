@@ -29,37 +29,93 @@ namespace Azure.ResourceManager.AppContainers.Models
             if (Optional.IsDefined(AzureActiveDirectory))
             {
                 writer.WritePropertyName("azureActiveDirectory"u8);
-                writer.WriteObjectValue(AzureActiveDirectory);
+                BinaryData data = ModelReaderWriter.Write(AzureActiveDirectory, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsDefined(Facebook))
             {
                 writer.WritePropertyName("facebook"u8);
-                writer.WriteObjectValue(Facebook);
+                BinaryData data = ModelReaderWriter.Write(Facebook, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsDefined(GitHub))
             {
                 writer.WritePropertyName("gitHub"u8);
-                writer.WriteObjectValue(GitHub);
+                BinaryData data = ModelReaderWriter.Write(GitHub, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsDefined(Google))
             {
                 writer.WritePropertyName("google"u8);
-                writer.WriteObjectValue(Google);
+                BinaryData data = ModelReaderWriter.Write(Google, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsDefined(Twitter))
             {
                 writer.WritePropertyName("twitter"u8);
-                writer.WriteObjectValue(Twitter);
+                BinaryData data = ModelReaderWriter.Write(Twitter, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsDefined(Apple))
             {
                 writer.WritePropertyName("apple"u8);
-                writer.WriteObjectValue(Apple);
+                BinaryData data = ModelReaderWriter.Write(Apple, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsDefined(AzureStaticWebApps))
             {
                 writer.WritePropertyName("azureStaticWebApps"u8);
-                writer.WriteObjectValue(AzureStaticWebApps);
+                BinaryData data = ModelReaderWriter.Write(AzureStaticWebApps, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsCollectionDefined(CustomOpenIdConnectProviders))
             {
@@ -68,7 +124,15 @@ namespace Azure.ResourceManager.AppContainers.Models
                 foreach (var item in CustomOpenIdConnectProviders)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
+                    BinaryData data = ModelReaderWriter.Write(item.Value, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(data))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
                 }
                 writer.WriteEndObject();
             }

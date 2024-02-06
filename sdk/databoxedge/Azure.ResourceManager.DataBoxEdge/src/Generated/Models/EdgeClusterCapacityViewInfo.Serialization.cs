@@ -34,12 +34,28 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             if (Optional.IsDefined(GpuCapacity))
             {
                 writer.WritePropertyName("gpuCapacity"u8);
-                writer.WriteObjectValue(GpuCapacity);
+                BinaryData data = ModelReaderWriter.Write(GpuCapacity, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsDefined(MemoryCapacity))
             {
                 writer.WritePropertyName("memoryCapacity"u8);
-                writer.WriteObjectValue(MemoryCapacity);
+                BinaryData data = ModelReaderWriter.Write(MemoryCapacity, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsDefined(LastRefreshedOn))
             {

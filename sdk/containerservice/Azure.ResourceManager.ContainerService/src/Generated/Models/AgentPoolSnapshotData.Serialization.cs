@@ -66,7 +66,15 @@ namespace Azure.ResourceManager.ContainerService
             if (Optional.IsDefined(CreationData))
             {
                 writer.WritePropertyName("creationData"u8);
-                writer.WriteObjectValue(CreationData);
+                BinaryData data = ModelReaderWriter.Write(CreationData, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsDefined(SnapshotType))
             {

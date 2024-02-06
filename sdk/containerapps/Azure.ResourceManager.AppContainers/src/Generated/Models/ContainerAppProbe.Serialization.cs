@@ -34,7 +34,15 @@ namespace Azure.ResourceManager.AppContainers.Models
             if (Optional.IsDefined(HttpGet))
             {
                 writer.WritePropertyName("httpGet"u8);
-                writer.WriteObjectValue(HttpGet);
+                BinaryData data = ModelReaderWriter.Write(HttpGet, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsDefined(InitialDelaySeconds))
             {
@@ -54,7 +62,15 @@ namespace Azure.ResourceManager.AppContainers.Models
             if (Optional.IsDefined(TcpSocket))
             {
                 writer.WritePropertyName("tcpSocket"u8);
-                writer.WriteObjectValue(TcpSocket);
+                BinaryData data = ModelReaderWriter.Write(TcpSocket, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsDefined(TerminationGracePeriodSeconds))
             {

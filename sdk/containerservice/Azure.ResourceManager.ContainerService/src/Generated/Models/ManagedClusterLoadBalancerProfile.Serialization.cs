@@ -30,17 +30,41 @@ namespace Azure.ResourceManager.ContainerService.Models
             if (Optional.IsDefined(ManagedOutboundIPs))
             {
                 writer.WritePropertyName("managedOutboundIPs"u8);
-                writer.WriteObjectValue(ManagedOutboundIPs);
+                BinaryData data = ModelReaderWriter.Write(ManagedOutboundIPs, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsDefined(OutboundIPPrefixes))
             {
                 writer.WritePropertyName("outboundIPPrefixes"u8);
-                writer.WriteObjectValue(OutboundIPPrefixes);
+                BinaryData data = ModelReaderWriter.Write(OutboundIPPrefixes, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsDefined(OutboundIPs))
             {
                 writer.WritePropertyName("outboundIPs"u8);
-                writer.WriteObjectValue(OutboundIPs);
+                BinaryData data = ModelReaderWriter.Write(OutboundIPs, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsCollectionDefined(EffectiveOutboundIPs))
             {

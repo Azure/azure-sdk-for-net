@@ -27,14 +27,38 @@ namespace Azure.ResourceManager.DataMigration.Models
 
             writer.WriteStartObject();
             writer.WritePropertyName("sourceConnectionInfo"u8);
-            writer.WriteObjectValue(SourceConnectionInfo);
+            BinaryData data = ModelReaderWriter.Write(SourceConnectionInfo, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+            using (JsonDocument document = JsonDocument.Parse(data))
+            {
+                JsonSerializer.Serialize(writer, document.RootElement);
+            }
+#endif
             writer.WritePropertyName("targetConnectionInfo"u8);
-            writer.WriteObjectValue(TargetConnectionInfo);
+            BinaryData data0 = ModelReaderWriter.Write(TargetConnectionInfo, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data0);
+#else
+            using (JsonDocument document = JsonDocument.Parse(data0))
+            {
+                JsonSerializer.Serialize(writer, document.RootElement);
+            }
+#endif
             writer.WritePropertyName("selectedDatabases"u8);
             writer.WriteStartArray();
             foreach (var item in SelectedDatabases)
             {
-                writer.WriteObjectValue(item);
+                BinaryData data1 = ModelReaderWriter.Write(item, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data1);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data1))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             writer.WriteEndArray();
             if (options.Format != "W" && _serializedAdditionalRawData != null)

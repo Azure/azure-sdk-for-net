@@ -29,7 +29,15 @@ namespace Azure.ResourceManager.Compute.Models
             if (Optional.IsDefined(RoleInstance))
             {
                 writer.WritePropertyName("roleInstance"u8);
-                writer.WriteObjectValue(RoleInstance);
+                BinaryData data = ModelReaderWriter.Write(RoleInstance, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (options.Format != "W" && Optional.IsDefined(SdkVersion))
             {
@@ -52,7 +60,15 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WriteStartArray();
                 foreach (var item in Statuses)
                 {
-                    writer.WriteObjectValue(item);
+                    BinaryData data = ModelReaderWriter.Write(item, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(data))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
                 }
                 writer.WriteEndArray();
             }

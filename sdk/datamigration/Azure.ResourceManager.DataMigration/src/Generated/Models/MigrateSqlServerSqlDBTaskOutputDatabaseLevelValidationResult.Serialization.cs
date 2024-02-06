@@ -54,17 +54,41 @@ namespace Azure.ResourceManager.DataMigration.Models
             if (options.Format != "W" && Optional.IsDefined(DataIntegrityValidationResult))
             {
                 writer.WritePropertyName("dataIntegrityValidationResult"u8);
-                writer.WriteObjectValue(DataIntegrityValidationResult);
+                BinaryData data = ModelReaderWriter.Write(DataIntegrityValidationResult, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (options.Format != "W" && Optional.IsDefined(SchemaValidationResult))
             {
                 writer.WritePropertyName("schemaValidationResult"u8);
-                writer.WriteObjectValue(SchemaValidationResult);
+                BinaryData data = ModelReaderWriter.Write(SchemaValidationResult, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (options.Format != "W" && Optional.IsDefined(QueryAnalysisValidationResult))
             {
                 writer.WritePropertyName("queryAnalysisValidationResult"u8);
-                writer.WriteObjectValue(QueryAnalysisValidationResult);
+                BinaryData data = ModelReaderWriter.Write(QueryAnalysisValidationResult, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (options.Format != "W" && Optional.IsDefined(Status))
             {

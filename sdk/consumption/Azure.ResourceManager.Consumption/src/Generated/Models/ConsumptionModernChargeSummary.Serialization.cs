@@ -75,17 +75,41 @@ namespace Azure.ResourceManager.Consumption.Models
             if (options.Format != "W" && Optional.IsDefined(AzureCharges))
             {
                 writer.WritePropertyName("azureCharges"u8);
-                writer.WriteObjectValue(AzureCharges);
+                BinaryData data = ModelReaderWriter.Write(AzureCharges, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (options.Format != "W" && Optional.IsDefined(ChargesBilledSeparately))
             {
                 writer.WritePropertyName("chargesBilledSeparately"u8);
-                writer.WriteObjectValue(ChargesBilledSeparately);
+                BinaryData data = ModelReaderWriter.Write(ChargesBilledSeparately, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (options.Format != "W" && Optional.IsDefined(MarketplaceCharges))
             {
                 writer.WritePropertyName("marketplaceCharges"u8);
-                writer.WriteObjectValue(MarketplaceCharges);
+                BinaryData data = ModelReaderWriter.Write(MarketplaceCharges, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (options.Format != "W" && Optional.IsDefined(BillingAccountId))
             {

@@ -42,20 +42,60 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                 writer.WriteBooleanValue(HasHeader.Value);
             }
             writer.WritePropertyName("errorManagement"u8);
-            writer.WriteObjectValue(ErrorManagement);
+            BinaryData data = ModelReaderWriter.Write(ErrorManagement, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+            using (JsonDocument document = JsonDocument.Parse(data))
+            {
+                JsonSerializer.Serialize(writer, document.RootElement);
+            }
+#endif
             writer.WritePropertyName("format"u8);
-            writer.WriteObjectValue(Format);
+            BinaryData data0 = ModelReaderWriter.Write(Format, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data0);
+#else
+            using (JsonDocument document = JsonDocument.Parse(data0))
+            {
+                JsonSerializer.Serialize(writer, document.RootElement);
+            }
+#endif
             writer.WritePropertyName("availability"u8);
-            writer.WriteObjectValue(Availability);
+            BinaryData data1 = ModelReaderWriter.Write(Availability, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data1);
+#else
+            using (JsonDocument document = JsonDocument.Parse(data1))
+            {
+                JsonSerializer.Serialize(writer, document.RootElement);
+            }
+#endif
             writer.WritePropertyName("structure"u8);
             writer.WriteStartArray();
             foreach (var item in Structure)
             {
-                writer.WriteObjectValue(item);
+                BinaryData data2 = ModelReaderWriter.Write(item, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data2);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data2))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             writer.WriteEndArray();
             writer.WritePropertyName("completeOperation"u8);
-            writer.WriteObjectValue(CompleteOperation);
+            BinaryData data3 = ModelReaderWriter.Write(CompleteOperation, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data3);
+#else
+            using (JsonDocument document = JsonDocument.Parse(data3))
+            {
+                JsonSerializer.Serialize(writer, document.RootElement);
+            }
+#endif
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)

@@ -34,7 +34,15 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(RepoConfiguration))
             {
                 writer.WritePropertyName("repoConfiguration"u8);
-                writer.WriteObjectValue(RepoConfiguration);
+                BinaryData data = ModelReaderWriter.Write(RepoConfiguration, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

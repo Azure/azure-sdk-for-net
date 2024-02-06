@@ -62,7 +62,15 @@ namespace Azure.ResourceManager.DataBoxEdge
             if (Optional.IsDefined(AzureContainerInfo))
             {
                 writer.WritePropertyName("azureContainerInfo"u8);
-                writer.WriteObjectValue(AzureContainerInfo);
+                BinaryData data = ModelReaderWriter.Write(AzureContainerInfo, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             writer.WritePropertyName("accessProtocol"u8);
             writer.WriteStringValue(AccessProtocol.ToString());
@@ -72,7 +80,15 @@ namespace Azure.ResourceManager.DataBoxEdge
                 writer.WriteStartArray();
                 foreach (var item in UserAccessRights)
                 {
-                    writer.WriteObjectValue(item);
+                    BinaryData data = ModelReaderWriter.Write(item, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(data))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
                 }
                 writer.WriteEndArray();
             }
@@ -82,14 +98,30 @@ namespace Azure.ResourceManager.DataBoxEdge
                 writer.WriteStartArray();
                 foreach (var item in ClientAccessRights)
                 {
-                    writer.WriteObjectValue(item);
+                    BinaryData data = ModelReaderWriter.Write(item, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(data))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(RefreshDetails))
             {
                 writer.WritePropertyName("refreshDetails"u8);
-                writer.WriteObjectValue(RefreshDetails);
+                BinaryData data = ModelReaderWriter.Write(RefreshDetails, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(ShareMappings))
             {
@@ -97,7 +129,15 @@ namespace Azure.ResourceManager.DataBoxEdge
                 writer.WriteStartArray();
                 foreach (var item in ShareMappings)
                 {
-                    writer.WriteObjectValue(item);
+                    BinaryData data = ModelReaderWriter.Write(item, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(data))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
                 }
                 writer.WriteEndArray();
             }

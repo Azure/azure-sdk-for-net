@@ -29,12 +29,28 @@ namespace Azure.ResourceManager.ContainerService.Models
             if (Optional.IsDefined(Components))
             {
                 writer.WritePropertyName("components"u8);
-                writer.WriteObjectValue(Components);
+                BinaryData data = ModelReaderWriter.Write(Components, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsDefined(CertificateAuthority))
             {
                 writer.WritePropertyName("certificateAuthority"u8);
-                writer.WriteObjectValue(CertificateAuthority);
+                BinaryData data = ModelReaderWriter.Write(CertificateAuthority, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsCollectionDefined(Revisions))
             {

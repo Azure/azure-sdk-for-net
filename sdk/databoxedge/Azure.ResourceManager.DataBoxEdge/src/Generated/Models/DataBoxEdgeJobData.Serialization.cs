@@ -51,7 +51,15 @@ namespace Azure.ResourceManager.DataBoxEdge
             if (options.Format != "W" && Optional.IsDefined(Error))
             {
                 writer.WritePropertyName("error"u8);
-                writer.WriteObjectValue(Error);
+                BinaryData data = ModelReaderWriter.Write(Error, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (options.Format != "W")
             {
@@ -88,12 +96,28 @@ namespace Azure.ResourceManager.DataBoxEdge
             if (options.Format != "W" && Optional.IsDefined(DownloadProgress))
             {
                 writer.WritePropertyName("downloadProgress"u8);
-                writer.WriteObjectValue(DownloadProgress);
+                BinaryData data = ModelReaderWriter.Write(DownloadProgress, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (options.Format != "W" && Optional.IsDefined(InstallProgress))
             {
                 writer.WritePropertyName("installProgress"u8);
-                writer.WriteObjectValue(InstallProgress);
+                BinaryData data = ModelReaderWriter.Write(InstallProgress, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (options.Format != "W" && Optional.IsDefined(TotalRefreshErrors))
             {

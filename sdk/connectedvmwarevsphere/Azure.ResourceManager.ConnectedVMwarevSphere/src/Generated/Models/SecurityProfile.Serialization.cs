@@ -29,7 +29,15 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
             if (Optional.IsDefined(UefiSettings))
             {
                 writer.WritePropertyName("uefiSettings"u8);
-                writer.WriteObjectValue(UefiSettings);
+                BinaryData data = ModelReaderWriter.Write(UefiSettings, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

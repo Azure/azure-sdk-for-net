@@ -58,22 +58,54 @@ namespace Azure.ResourceManager.Consumption.Models
             if (options.Format != "W" && Optional.IsDefined(BalanceSummary))
             {
                 writer.WritePropertyName("balanceSummary"u8);
-                writer.WriteObjectValue(BalanceSummary);
+                BinaryData data = ModelReaderWriter.Write(BalanceSummary, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (options.Format != "W" && Optional.IsDefined(PendingCreditAdjustments))
             {
                 writer.WritePropertyName("pendingCreditAdjustments"u8);
-                writer.WriteObjectValue(PendingCreditAdjustments);
+                BinaryData data = ModelReaderWriter.Write(PendingCreditAdjustments, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (options.Format != "W" && Optional.IsDefined(ExpiredCredit))
             {
                 writer.WritePropertyName("expiredCredit"u8);
-                writer.WriteObjectValue(ExpiredCredit);
+                BinaryData data = ModelReaderWriter.Write(ExpiredCredit, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (options.Format != "W" && Optional.IsDefined(PendingEligibleCharges))
             {
                 writer.WritePropertyName("pendingEligibleCharges"u8);
-                writer.WriteObjectValue(PendingEligibleCharges);
+                BinaryData data = ModelReaderWriter.Write(PendingEligibleCharges, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (options.Format != "W" && Optional.IsDefined(CreditCurrency))
             {
@@ -88,7 +120,15 @@ namespace Azure.ResourceManager.Consumption.Models
             if (options.Format != "W" && Optional.IsDefined(Reseller))
             {
                 writer.WritePropertyName("reseller"u8);
-                writer.WriteObjectValue(Reseller);
+                BinaryData data = ModelReaderWriter.Write(Reseller, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)

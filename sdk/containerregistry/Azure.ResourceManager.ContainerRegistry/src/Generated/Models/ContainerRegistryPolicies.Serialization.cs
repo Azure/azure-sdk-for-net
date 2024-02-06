@@ -29,22 +29,54 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             if (Optional.IsDefined(QuarantinePolicy))
             {
                 writer.WritePropertyName("quarantinePolicy"u8);
-                writer.WriteObjectValue(QuarantinePolicy);
+                BinaryData data = ModelReaderWriter.Write(QuarantinePolicy, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsDefined(TrustPolicy))
             {
                 writer.WritePropertyName("trustPolicy"u8);
-                writer.WriteObjectValue(TrustPolicy);
+                BinaryData data = ModelReaderWriter.Write(TrustPolicy, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsDefined(RetentionPolicy))
             {
                 writer.WritePropertyName("retentionPolicy"u8);
-                writer.WriteObjectValue(RetentionPolicy);
+                BinaryData data = ModelReaderWriter.Write(RetentionPolicy, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsDefined(ExportPolicy))
             {
                 writer.WritePropertyName("exportPolicy"u8);
-                writer.WriteObjectValue(ExportPolicy);
+                BinaryData data = ModelReaderWriter.Write(ExportPolicy, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

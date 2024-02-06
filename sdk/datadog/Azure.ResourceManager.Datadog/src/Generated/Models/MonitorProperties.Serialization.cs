@@ -44,12 +44,28 @@ namespace Azure.ResourceManager.Datadog.Models
             if (Optional.IsDefined(DatadogOrganizationProperties))
             {
                 writer.WritePropertyName("datadogOrganizationProperties"u8);
-                writer.WriteObjectValue(DatadogOrganizationProperties);
+                BinaryData data = ModelReaderWriter.Write(DatadogOrganizationProperties, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsDefined(UserInfo))
             {
                 writer.WritePropertyName("userInfo"u8);
-                writer.WriteObjectValue(UserInfo);
+                BinaryData data = ModelReaderWriter.Write(UserInfo, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (options.Format != "W" && Optional.IsDefined(LiftrResourceCategory))
             {

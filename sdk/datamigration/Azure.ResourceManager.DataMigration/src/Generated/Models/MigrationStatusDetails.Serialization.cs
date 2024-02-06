@@ -34,12 +34,28 @@ namespace Azure.ResourceManager.DataMigration.Models
             if (options.Format != "W" && Optional.IsDefined(FullBackupSetInfo))
             {
                 writer.WritePropertyName("fullBackupSetInfo"u8);
-                writer.WriteObjectValue(FullBackupSetInfo);
+                BinaryData data = ModelReaderWriter.Write(FullBackupSetInfo, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (options.Format != "W" && Optional.IsDefined(LastRestoredBackupSetInfo))
             {
                 writer.WritePropertyName("lastRestoredBackupSetInfo"u8);
-                writer.WriteObjectValue(LastRestoredBackupSetInfo);
+                BinaryData data = ModelReaderWriter.Write(LastRestoredBackupSetInfo, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(ActiveBackupSets))
             {
@@ -47,7 +63,15 @@ namespace Azure.ResourceManager.DataMigration.Models
                 writer.WriteStartArray();
                 foreach (var item in ActiveBackupSets)
                 {
-                    writer.WriteObjectValue(item);
+                    BinaryData data = ModelReaderWriter.Write(item, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(data))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
                 }
                 writer.WriteEndArray();
             }

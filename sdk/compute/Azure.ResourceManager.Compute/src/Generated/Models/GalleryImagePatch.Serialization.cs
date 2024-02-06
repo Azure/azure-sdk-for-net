@@ -103,22 +103,54 @@ namespace Azure.ResourceManager.Compute.Models
             if (Optional.IsDefined(Identifier))
             {
                 writer.WritePropertyName("identifier"u8);
-                writer.WriteObjectValue(Identifier);
+                BinaryData data = ModelReaderWriter.Write(Identifier, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsDefined(Recommended))
             {
                 writer.WritePropertyName("recommended"u8);
-                writer.WriteObjectValue(Recommended);
+                BinaryData data = ModelReaderWriter.Write(Recommended, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsDefined(Disallowed))
             {
                 writer.WritePropertyName("disallowed"u8);
-                writer.WriteObjectValue(Disallowed);
+                BinaryData data = ModelReaderWriter.Write(Disallowed, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsDefined(PurchasePlan))
             {
                 writer.WritePropertyName("purchasePlan"u8);
-                writer.WriteObjectValue(PurchasePlan);
+                BinaryData data = ModelReaderWriter.Write(PurchasePlan, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
@@ -131,7 +163,15 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WriteStartArray();
                 foreach (var item in Features)
                 {
-                    writer.WriteObjectValue(item);
+                    BinaryData data = ModelReaderWriter.Write(item, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(data))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
                 }
                 writer.WriteEndArray();
             }

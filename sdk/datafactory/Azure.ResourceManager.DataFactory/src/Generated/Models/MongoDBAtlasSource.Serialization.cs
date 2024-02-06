@@ -35,7 +35,15 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(CursorMethods))
             {
                 writer.WritePropertyName("cursorMethods"u8);
-                writer.WriteObjectValue(CursorMethods);
+                BinaryData data = ModelReaderWriter.Write(CursorMethods, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsDefined(BatchSize))
             {

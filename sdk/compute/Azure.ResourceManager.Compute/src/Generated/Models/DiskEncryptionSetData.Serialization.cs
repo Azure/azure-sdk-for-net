@@ -76,7 +76,15 @@ namespace Azure.ResourceManager.Compute
             if (Optional.IsDefined(ActiveKey))
             {
                 writer.WritePropertyName("activeKey"u8);
-                writer.WriteObjectValue(ActiveKey);
+                BinaryData data = ModelReaderWriter.Write(ActiveKey, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(PreviousKeys))
             {
@@ -84,7 +92,15 @@ namespace Azure.ResourceManager.Compute
                 writer.WriteStartArray();
                 foreach (var item in PreviousKeys)
                 {
-                    writer.WriteObjectValue(item);
+                    BinaryData data = ModelReaderWriter.Write(item, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(data))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
                 }
                 writer.WriteEndArray();
             }
@@ -106,7 +122,15 @@ namespace Azure.ResourceManager.Compute
             if (options.Format != "W" && Optional.IsDefined(AutoKeyRotationError))
             {
                 writer.WritePropertyName("autoKeyRotationError"u8);
-                writer.WriteObjectValue(AutoKeyRotationError);
+                BinaryData data = ModelReaderWriter.Write(AutoKeyRotationError, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsDefined(FederatedClientId))
             {

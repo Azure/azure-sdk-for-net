@@ -29,22 +29,54 @@ namespace Azure.ResourceManager.ContainerService.Models
             if (Optional.IsDefined(DiskCsiDriver))
             {
                 writer.WritePropertyName("diskCSIDriver"u8);
-                writer.WriteObjectValue(DiskCsiDriver);
+                BinaryData data = ModelReaderWriter.Write(DiskCsiDriver, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsDefined(FileCsiDriver))
             {
                 writer.WritePropertyName("fileCSIDriver"u8);
-                writer.WriteObjectValue(FileCsiDriver);
+                BinaryData data = ModelReaderWriter.Write(FileCsiDriver, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsDefined(SnapshotController))
             {
                 writer.WritePropertyName("snapshotController"u8);
-                writer.WriteObjectValue(SnapshotController);
+                BinaryData data = ModelReaderWriter.Write(SnapshotController, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsDefined(BlobCsiDriver))
             {
                 writer.WritePropertyName("blobCSIDriver"u8);
-                writer.WriteObjectValue(BlobCsiDriver);
+                BinaryData data = ModelReaderWriter.Write(BlobCsiDriver, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

@@ -32,7 +32,15 @@ namespace Azure.ResourceManager.AppContainers.Models
                 writer.WriteStartArray();
                 foreach (var item in Secrets)
                 {
-                    writer.WriteObjectValue(item);
+                    BinaryData data = ModelReaderWriter.Write(item, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(data))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
                 }
                 writer.WriteEndArray();
             }
@@ -48,17 +56,41 @@ namespace Azure.ResourceManager.AppContainers.Models
             if (Optional.IsDefined(ManualTriggerConfig))
             {
                 writer.WritePropertyName("manualTriggerConfig"u8);
-                writer.WriteObjectValue(ManualTriggerConfig);
+                BinaryData data = ModelReaderWriter.Write(ManualTriggerConfig, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsDefined(ScheduleTriggerConfig))
             {
                 writer.WritePropertyName("scheduleTriggerConfig"u8);
-                writer.WriteObjectValue(ScheduleTriggerConfig);
+                BinaryData data = ModelReaderWriter.Write(ScheduleTriggerConfig, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsDefined(EventTriggerConfig))
             {
                 writer.WritePropertyName("eventTriggerConfig"u8);
-                writer.WriteObjectValue(EventTriggerConfig);
+                BinaryData data = ModelReaderWriter.Write(EventTriggerConfig, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsCollectionDefined(Registries))
             {
@@ -66,7 +98,15 @@ namespace Azure.ResourceManager.AppContainers.Models
                 writer.WriteStartArray();
                 foreach (var item in Registries)
                 {
-                    writer.WriteObjectValue(item);
+                    BinaryData data = ModelReaderWriter.Write(item, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(data))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
                 }
                 writer.WriteEndArray();
             }

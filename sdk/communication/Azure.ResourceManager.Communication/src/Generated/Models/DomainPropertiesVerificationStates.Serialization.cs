@@ -29,27 +29,67 @@ namespace Azure.ResourceManager.Communication.Models
             if (Optional.IsDefined(Domain))
             {
                 writer.WritePropertyName("Domain"u8);
-                writer.WriteObjectValue(Domain);
+                BinaryData data = ModelReaderWriter.Write(Domain, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsDefined(Spf))
             {
                 writer.WritePropertyName("SPF"u8);
-                writer.WriteObjectValue(Spf);
+                BinaryData data = ModelReaderWriter.Write(Spf, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsDefined(Dkim))
             {
                 writer.WritePropertyName("DKIM"u8);
-                writer.WriteObjectValue(Dkim);
+                BinaryData data = ModelReaderWriter.Write(Dkim, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsDefined(Dkim2))
             {
                 writer.WritePropertyName("DKIM2"u8);
-                writer.WriteObjectValue(Dkim2);
+                BinaryData data = ModelReaderWriter.Write(Dkim2, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsDefined(Dmarc))
             {
                 writer.WritePropertyName("DMARC"u8);
-                writer.WriteObjectValue(Dmarc);
+                BinaryData data = ModelReaderWriter.Write(Dmarc, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

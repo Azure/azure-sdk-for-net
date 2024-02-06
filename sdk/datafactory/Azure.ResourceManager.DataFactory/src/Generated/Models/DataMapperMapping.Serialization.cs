@@ -39,12 +39,28 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(SourceConnectionReference))
             {
                 writer.WritePropertyName("sourceConnectionReference"u8);
-                writer.WriteObjectValue(SourceConnectionReference);
+                BinaryData data = ModelReaderWriter.Write(SourceConnectionReference, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsDefined(AttributeMappingInfo))
             {
                 writer.WritePropertyName("attributeMappingInfo"u8);
-                writer.WriteObjectValue(AttributeMappingInfo);
+                BinaryData data = ModelReaderWriter.Write(AttributeMappingInfo, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsDefined(SourceDenormalizeInfo))
             {

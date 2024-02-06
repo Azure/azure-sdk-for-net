@@ -34,7 +34,15 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             if (options.Format != "W" && Optional.IsDefined(AdapterPosition))
             {
                 writer.WritePropertyName("adapterPosition"u8);
-                writer.WriteObjectValue(AdapterPosition);
+                BinaryData data = ModelReaderWriter.Write(AdapterPosition, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (options.Format != "W" && Optional.IsDefined(Index))
             {
@@ -84,12 +92,28 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             if (options.Format != "W" && Optional.IsDefined(IPv4Configuration))
             {
                 writer.WritePropertyName("ipv4Configuration"u8);
-                writer.WriteObjectValue(IPv4Configuration);
+                BinaryData data = ModelReaderWriter.Write(IPv4Configuration, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (options.Format != "W" && Optional.IsDefined(IPv6Configuration))
             {
                 writer.WritePropertyName("ipv6Configuration"u8);
-                writer.WriteObjectValue(IPv6Configuration);
+                BinaryData data = ModelReaderWriter.Write(IPv6Configuration, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (options.Format != "W" && Optional.IsDefined(IPv6LinkLocalAddress))
             {

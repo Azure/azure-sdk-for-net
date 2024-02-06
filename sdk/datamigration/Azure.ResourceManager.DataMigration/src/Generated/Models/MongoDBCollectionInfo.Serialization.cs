@@ -37,7 +37,15 @@ namespace Azure.ResourceManager.DataMigration.Models
             if (Optional.IsDefined(ShardKey))
             {
                 writer.WritePropertyName("shardKey"u8);
-                writer.WriteObjectValue(ShardKey);
+                BinaryData data = ModelReaderWriter.Write(ShardKey, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             writer.WritePropertyName("supportsSharding"u8);
             writer.WriteBooleanValue(SupportsSharding);

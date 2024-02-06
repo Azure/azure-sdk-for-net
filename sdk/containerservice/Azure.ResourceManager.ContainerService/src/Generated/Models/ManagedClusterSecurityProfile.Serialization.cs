@@ -29,22 +29,54 @@ namespace Azure.ResourceManager.ContainerService.Models
             if (Optional.IsDefined(Defender))
             {
                 writer.WritePropertyName("defender"u8);
-                writer.WriteObjectValue(Defender);
+                BinaryData data = ModelReaderWriter.Write(Defender, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsDefined(AzureKeyVaultKms))
             {
                 writer.WritePropertyName("azureKeyVaultKms"u8);
-                writer.WriteObjectValue(AzureKeyVaultKms);
+                BinaryData data = ModelReaderWriter.Write(AzureKeyVaultKms, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsDefined(WorkloadIdentity))
             {
                 writer.WritePropertyName("workloadIdentity"u8);
-                writer.WriteObjectValue(WorkloadIdentity);
+                BinaryData data = ModelReaderWriter.Write(WorkloadIdentity, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsDefined(ImageCleaner))
             {
                 writer.WritePropertyName("imageCleaner"u8);
-                writer.WriteObjectValue(ImageCleaner);
+                BinaryData data = ModelReaderWriter.Write(ImageCleaner, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

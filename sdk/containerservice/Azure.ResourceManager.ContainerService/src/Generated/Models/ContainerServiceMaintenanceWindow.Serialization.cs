@@ -27,7 +27,15 @@ namespace Azure.ResourceManager.ContainerService.Models
 
             writer.WriteStartObject();
             writer.WritePropertyName("schedule"u8);
-            writer.WriteObjectValue(Schedule);
+            BinaryData data = ModelReaderWriter.Write(Schedule, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+            using (JsonDocument document = JsonDocument.Parse(data))
+            {
+                JsonSerializer.Serialize(writer, document.RootElement);
+            }
+#endif
             writer.WritePropertyName("durationHours"u8);
             writer.WriteNumberValue(DurationHours);
             if (Optional.IsDefined(UtcOffset))
@@ -48,7 +56,15 @@ namespace Azure.ResourceManager.ContainerService.Models
                 writer.WriteStartArray();
                 foreach (var item in NotAllowedDates)
                 {
-                    writer.WriteObjectValue(item);
+                    BinaryData data0 = ModelReaderWriter.Write(item, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data0);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(data0))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
                 }
                 writer.WriteEndArray();
             }

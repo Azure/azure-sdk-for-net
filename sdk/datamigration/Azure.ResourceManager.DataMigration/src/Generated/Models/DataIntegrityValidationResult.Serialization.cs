@@ -40,7 +40,15 @@ namespace Azure.ResourceManager.DataMigration.Models
             if (Optional.IsDefined(ValidationErrors))
             {
                 writer.WritePropertyName("validationErrors"u8);
-                writer.WriteObjectValue(ValidationErrors);
+                BinaryData data = ModelReaderWriter.Write(ValidationErrors, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

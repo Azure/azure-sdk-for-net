@@ -33,7 +33,15 @@ namespace Azure.ResourceManager.DataMigration.Models
             if (Optional.IsDefined(BackupFileShare))
             {
                 writer.WritePropertyName("backupFileShare"u8);
-                writer.WriteObjectValue(BackupFileShare);
+                BinaryData data = ModelReaderWriter.Write(BackupFileShare, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsCollectionDefined(BackupFilePaths))
             {

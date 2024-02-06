@@ -34,7 +34,15 @@ namespace Azure.ResourceManager.CosmosDB.Models
             if (Optional.IsDefined(AutoscaleSettings))
             {
                 writer.WritePropertyName("autoscaleSettings"u8);
-                writer.WriteObjectValue(AutoscaleSettings);
+                BinaryData data = ModelReaderWriter.Write(AutoscaleSettings, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (options.Format != "W" && Optional.IsDefined(MinimumThroughput))
             {

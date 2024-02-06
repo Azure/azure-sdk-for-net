@@ -39,17 +39,41 @@ namespace Azure.ResourceManager.DataBox.Models
             if (Optional.IsDefined(TransportPreferences))
             {
                 writer.WritePropertyName("transportPreferences"u8);
-                writer.WriteObjectValue(TransportPreferences);
+                BinaryData data = ModelReaderWriter.Write(TransportPreferences, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsDefined(ReverseTransportPreferences))
             {
                 writer.WritePropertyName("reverseTransportPreferences"u8);
-                writer.WriteObjectValue(ReverseTransportPreferences);
+                BinaryData data = ModelReaderWriter.Write(ReverseTransportPreferences, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsDefined(EncryptionPreferences))
             {
                 writer.WritePropertyName("encryptionPreferences"u8);
-                writer.WriteObjectValue(EncryptionPreferences);
+                BinaryData data = ModelReaderWriter.Write(EncryptionPreferences, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsCollectionDefined(StorageAccountAccessTierPreferences))
             {

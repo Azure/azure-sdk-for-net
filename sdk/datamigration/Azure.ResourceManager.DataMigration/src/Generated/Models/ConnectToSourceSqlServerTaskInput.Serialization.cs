@@ -27,7 +27,15 @@ namespace Azure.ResourceManager.DataMigration.Models
 
             writer.WriteStartObject();
             writer.WritePropertyName("sourceConnectionInfo"u8);
-            writer.WriteObjectValue(SourceConnectionInfo);
+            BinaryData data = ModelReaderWriter.Write(SourceConnectionInfo, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+            using (JsonDocument document = JsonDocument.Parse(data))
+            {
+                JsonSerializer.Serialize(writer, document.RootElement);
+            }
+#endif
             if (Optional.IsDefined(CheckPermissionsGroup))
             {
                 writer.WritePropertyName("checkPermissionsGroup"u8);

@@ -34,7 +34,15 @@ namespace Azure.ResourceManager.Compute.Models
             if (options.Format != "W" && Optional.IsDefined(EncryptionSettings))
             {
                 writer.WritePropertyName("encryptionSettings"u8);
-                writer.WriteObjectValue(EncryptionSettings);
+                BinaryData data = ModelReaderWriter.Write(EncryptionSettings, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (options.Format != "W" && Optional.IsDefined(Name))
             {
@@ -54,12 +62,28 @@ namespace Azure.ResourceManager.Compute.Models
             if (Optional.IsDefined(ManagedDisk))
             {
                 writer.WritePropertyName("managedDisk"u8);
-                writer.WriteObjectValue(ManagedDisk);
+                BinaryData data = ModelReaderWriter.Write(ManagedDisk, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsDefined(DiskRestorePoint))
             {
                 writer.WritePropertyName("diskRestorePoint"u8);
-                writer.WriteObjectValue(DiskRestorePoint);
+                BinaryData data = ModelReaderWriter.Write(DiskRestorePoint, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (options.Format != "W" && Optional.IsDefined(WriteAcceleratorEnabled))
             {

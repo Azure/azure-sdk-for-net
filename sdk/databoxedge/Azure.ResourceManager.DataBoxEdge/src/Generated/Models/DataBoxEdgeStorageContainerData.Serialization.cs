@@ -60,7 +60,15 @@ namespace Azure.ResourceManager.DataBoxEdge
             if (options.Format != "W" && Optional.IsDefined(RefreshDetails))
             {
                 writer.WritePropertyName("refreshDetails"u8);
-                writer.WriteObjectValue(RefreshDetails);
+                BinaryData data = ModelReaderWriter.Write(RefreshDetails, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (options.Format != "W" && Optional.IsDefined(CreatedOn))
             {

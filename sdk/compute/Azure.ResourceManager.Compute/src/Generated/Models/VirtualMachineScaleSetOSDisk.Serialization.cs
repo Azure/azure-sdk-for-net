@@ -46,7 +46,15 @@ namespace Azure.ResourceManager.Compute.Models
             if (Optional.IsDefined(DiffDiskSettings))
             {
                 writer.WritePropertyName("diffDiskSettings"u8);
-                writer.WriteObjectValue(DiffDiskSettings);
+                BinaryData data = ModelReaderWriter.Write(DiffDiskSettings, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsDefined(DiskSizeGB))
             {
@@ -61,7 +69,15 @@ namespace Azure.ResourceManager.Compute.Models
             if (Optional.IsDefined(Image))
             {
                 writer.WritePropertyName("image"u8);
-                writer.WriteObjectValue(Image);
+                BinaryData data = ModelReaderWriter.Write(Image, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsCollectionDefined(VhdContainers))
             {
@@ -76,7 +92,15 @@ namespace Azure.ResourceManager.Compute.Models
             if (Optional.IsDefined(ManagedDisk))
             {
                 writer.WritePropertyName("managedDisk"u8);
-                writer.WriteObjectValue(ManagedDisk);
+                BinaryData data = ModelReaderWriter.Write(ManagedDisk, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsDefined(DeleteOption))
             {

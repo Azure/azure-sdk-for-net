@@ -29,7 +29,15 @@ namespace Azure.ResourceManager.AppContainers.Models
             if (Optional.IsDefined(JwtClaimChecks))
             {
                 writer.WritePropertyName("jwtClaimChecks"u8);
-                writer.WriteObjectValue(JwtClaimChecks);
+                BinaryData data = ModelReaderWriter.Write(JwtClaimChecks, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsCollectionDefined(AllowedAudiences))
             {
@@ -44,7 +52,15 @@ namespace Azure.ResourceManager.AppContainers.Models
             if (Optional.IsDefined(DefaultAuthorizationPolicy))
             {
                 writer.WritePropertyName("defaultAuthorizationPolicy"u8);
-                writer.WriteObjectValue(DefaultAuthorizationPolicy);
+                BinaryData data = ModelReaderWriter.Write(DefaultAuthorizationPolicy, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

@@ -40,7 +40,15 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(PolyBaseSettings))
             {
                 writer.WritePropertyName("polyBaseSettings"u8);
-                writer.WriteObjectValue(PolyBaseSettings);
+                BinaryData data = ModelReaderWriter.Write(PolyBaseSettings, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsDefined(AllowCopyCommand))
             {
@@ -50,7 +58,15 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(CopyCommandSettings))
             {
                 writer.WritePropertyName("copyCommandSettings"u8);
-                writer.WriteObjectValue(CopyCommandSettings);
+                BinaryData data = ModelReaderWriter.Write(CopyCommandSettings, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsDefined(TableOption))
             {
@@ -70,7 +86,15 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(UpsertSettings))
             {
                 writer.WritePropertyName("upsertSettings"u8);
-                writer.WriteObjectValue(UpsertSettings);
+                BinaryData data = ModelReaderWriter.Write(UpsertSettings, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(CopySinkType);

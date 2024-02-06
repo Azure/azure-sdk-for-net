@@ -52,7 +52,15 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 writer.WriteStartArray();
                 foreach (var item in SeedNodes)
                 {
-                    writer.WriteObjectValue(item);
+                    BinaryData data = ModelReaderWriter.Write(item, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(data))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
                 }
                 writer.WriteEndArray();
             }
@@ -94,7 +102,15 @@ namespace Azure.ResourceManager.CosmosDB.Models
             if (Optional.IsDefined(AuthenticationMethodLdapProperties))
             {
                 writer.WritePropertyName("authenticationMethodLdapProperties"u8);
-                writer.WriteObjectValue(AuthenticationMethodLdapProperties);
+                BinaryData data = ModelReaderWriter.Write(AuthenticationMethodLdapProperties, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsDefined(Deallocated))
             {
@@ -104,7 +120,15 @@ namespace Azure.ResourceManager.CosmosDB.Models
             if (Optional.IsDefined(ProvisionError))
             {
                 writer.WritePropertyName("provisionError"u8);
-                writer.WriteObjectValue(ProvisionError);
+                BinaryData data = ModelReaderWriter.Write(ProvisionError, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

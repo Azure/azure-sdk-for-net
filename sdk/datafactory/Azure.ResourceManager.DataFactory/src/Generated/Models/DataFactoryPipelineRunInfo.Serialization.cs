@@ -71,7 +71,15 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (options.Format != "W" && Optional.IsDefined(InvokedBy))
             {
                 writer.WritePropertyName("invokedBy"u8);
-                writer.WriteObjectValue(InvokedBy);
+                BinaryData data = ModelReaderWriter.Write(InvokedBy, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (options.Format != "W" && Optional.IsDefined(LastUpdatedOn))
             {

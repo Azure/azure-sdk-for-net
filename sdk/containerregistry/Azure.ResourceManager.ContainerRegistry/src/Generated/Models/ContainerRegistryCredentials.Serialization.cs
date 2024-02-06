@@ -29,7 +29,15 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             if (Optional.IsDefined(SourceRegistry))
             {
                 writer.WritePropertyName("sourceRegistry"u8);
-                writer.WriteObjectValue(SourceRegistry);
+                BinaryData data = ModelReaderWriter.Write(SourceRegistry, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsCollectionDefined(CustomRegistries))
             {
@@ -38,7 +46,15 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 foreach (var item in CustomRegistries)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
+                    BinaryData data = ModelReaderWriter.Write(item.Value, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(data))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
                 }
                 writer.WriteEndObject();
             }

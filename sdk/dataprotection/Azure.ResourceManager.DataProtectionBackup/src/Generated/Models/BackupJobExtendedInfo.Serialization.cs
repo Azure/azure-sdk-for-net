@@ -55,7 +55,15 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             if (options.Format != "W" && Optional.IsDefined(SourceRecoverPoint))
             {
                 writer.WritePropertyName("sourceRecoverPoint"u8);
-                writer.WriteObjectValue(SourceRecoverPoint);
+                BinaryData data = ModelReaderWriter.Write(SourceRecoverPoint, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(SubTasks))
             {
@@ -63,14 +71,30 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 writer.WriteStartArray();
                 foreach (var item in SubTasks)
                 {
-                    writer.WriteObjectValue(item);
+                    BinaryData data = ModelReaderWriter.Write(item, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(data))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
                 }
                 writer.WriteEndArray();
             }
             if (options.Format != "W" && Optional.IsDefined(TargetRecoverPoint))
             {
                 writer.WritePropertyName("targetRecoverPoint"u8);
-                writer.WriteObjectValue(TargetRecoverPoint);
+                BinaryData data = ModelReaderWriter.Write(TargetRecoverPoint, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(WarningDetails))
             {
@@ -78,7 +102,15 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 writer.WriteStartArray();
                 foreach (var item in WarningDetails)
                 {
-                    writer.WriteObjectValue(item);
+                    BinaryData data = ModelReaderWriter.Write(item, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(data))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
                 }
                 writer.WriteEndArray();
             }

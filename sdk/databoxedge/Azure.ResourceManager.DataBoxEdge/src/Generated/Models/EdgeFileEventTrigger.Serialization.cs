@@ -52,9 +52,25 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             writer.WritePropertyName("sourceInfo"u8);
-            writer.WriteObjectValue(SourceInfo);
+            BinaryData data = ModelReaderWriter.Write(SourceInfo, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+            using (JsonDocument document = JsonDocument.Parse(data))
+            {
+                JsonSerializer.Serialize(writer, document.RootElement);
+            }
+#endif
             writer.WritePropertyName("sinkInfo"u8);
-            writer.WriteObjectValue(SinkInfo);
+            BinaryData data0 = ModelReaderWriter.Write(SinkInfo, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data0);
+#else
+            using (JsonDocument document = JsonDocument.Parse(data0))
+            {
+                JsonSerializer.Serialize(writer, document.RootElement);
+            }
+#endif
             if (Optional.IsDefined(CustomContextTag))
             {
                 writer.WritePropertyName("customContextTag"u8);

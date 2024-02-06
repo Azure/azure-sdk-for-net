@@ -69,12 +69,28 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             if (Optional.IsDefined(KubernetesClusterInfo))
             {
                 writer.WritePropertyName("kubernetesClusterInfo"u8);
-                writer.WriteObjectValue(KubernetesClusterInfo);
+                BinaryData data = ModelReaderWriter.Write(KubernetesClusterInfo, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsDefined(KubernetesRoleResources))
             {
                 writer.WritePropertyName("kubernetesRoleResources"u8);
-                writer.WriteObjectValue(KubernetesRoleResources);
+                BinaryData data = ModelReaderWriter.Write(KubernetesRoleResources, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsDefined(RoleStatus))
             {

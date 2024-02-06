@@ -39,7 +39,15 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(CommandPayload))
             {
                 writer.WritePropertyName("commandPayload"u8);
-                writer.WriteObjectValue(CommandPayload);
+                BinaryData data = ModelReaderWriter.Write(CommandPayload, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

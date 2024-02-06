@@ -59,7 +59,15 @@ namespace Azure.ResourceManager.DataFactory
             if (Optional.IsDefined(Folder))
             {
                 writer.WritePropertyName("folder"u8);
-                writer.WriteObjectValue(Folder);
+                BinaryData data = ModelReaderWriter.Write(Folder, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsDefined(Description))
             {
@@ -70,18 +78,42 @@ namespace Azure.ResourceManager.DataFactory
             writer.WriteStartArray();
             foreach (var item in SourceConnectionsInfo)
             {
-                writer.WriteObjectValue(item);
+                BinaryData data = ModelReaderWriter.Write(item, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             writer.WriteEndArray();
             writer.WritePropertyName("targetConnectionsInfo"u8);
             writer.WriteStartArray();
             foreach (var item in TargetConnectionsInfo)
             {
-                writer.WriteObjectValue(item);
+                BinaryData data = ModelReaderWriter.Write(item, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             writer.WriteEndArray();
             writer.WritePropertyName("policy"u8);
-            writer.WriteObjectValue(Policy);
+            BinaryData data0 = ModelReaderWriter.Write(Policy, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data0);
+#else
+            using (JsonDocument document = JsonDocument.Parse(data0))
+            {
+                JsonSerializer.Serialize(writer, document.RootElement);
+            }
+#endif
             if (Optional.IsDefined(AllowVnetOverride))
             {
                 writer.WritePropertyName("allowVNetOverride"u8);

@@ -36,7 +36,15 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             if (Optional.IsDefined(PolicyParameters))
             {
                 writer.WritePropertyName("policyParameters"u8);
-                writer.WriteObjectValue(PolicyParameters);
+                BinaryData data = ModelReaderWriter.Write(PolicyParameters, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

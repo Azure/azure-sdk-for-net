@@ -35,7 +35,15 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(Policy))
             {
                 writer.WritePropertyName("policy"u8);
-                writer.WriteObjectValue(Policy);
+                BinaryData data = ModelReaderWriter.Write(Policy, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
@@ -62,7 +70,15 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WriteStartArray();
                 foreach (var item in DependsOn)
                 {
-                    writer.WriteObjectValue(item);
+                    BinaryData data = ModelReaderWriter.Write(item, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(data))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
                 }
                 writer.WriteEndArray();
             }
@@ -72,14 +88,30 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WriteStartArray();
                 foreach (var item in UserProperties)
                 {
-                    writer.WriteObjectValue(item);
+                    BinaryData data = ModelReaderWriter.Write(item, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(data))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
                 }
                 writer.WriteEndArray();
             }
             writer.WritePropertyName("typeProperties"u8);
             writer.WriteStartObject();
             writer.WritePropertyName("packageLocation"u8);
-            writer.WriteObjectValue(PackageLocation);
+            BinaryData data0 = ModelReaderWriter.Write(PackageLocation, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data0);
+#else
+            using (JsonDocument document = JsonDocument.Parse(data0))
+            {
+                JsonSerializer.Serialize(writer, document.RootElement);
+            }
+#endif
             if (Optional.IsDefined(Runtime))
             {
                 writer.WritePropertyName("runtime"u8);
@@ -98,10 +130,26 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(ExecutionCredential))
             {
                 writer.WritePropertyName("executionCredential"u8);
-                writer.WriteObjectValue(ExecutionCredential);
+                BinaryData data = ModelReaderWriter.Write(ExecutionCredential, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             writer.WritePropertyName("connectVia"u8);
-            writer.WriteObjectValue(ConnectVia);
+            BinaryData data1 = ModelReaderWriter.Write(ConnectVia, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data1);
+#else
+            using (JsonDocument document = JsonDocument.Parse(data1))
+            {
+                JsonSerializer.Serialize(writer, document.RootElement);
+            }
+#endif
             if (Optional.IsCollectionDefined(ProjectParameters))
             {
                 writer.WritePropertyName("projectParameters"u8);
@@ -109,7 +157,15 @@ namespace Azure.ResourceManager.DataFactory.Models
                 foreach (var item in ProjectParameters)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
+                    BinaryData data = ModelReaderWriter.Write(item.Value, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(data))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
                 }
                 writer.WriteEndObject();
             }
@@ -120,7 +176,15 @@ namespace Azure.ResourceManager.DataFactory.Models
                 foreach (var item in PackageParameters)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
+                    BinaryData data = ModelReaderWriter.Write(item.Value, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(data))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
                 }
                 writer.WriteEndObject();
             }
@@ -140,7 +204,15 @@ namespace Azure.ResourceManager.DataFactory.Models
                     foreach (var item0 in item.Value)
                     {
                         writer.WritePropertyName(item0.Key);
-                        writer.WriteObjectValue(item0.Value);
+                        BinaryData data = ModelReaderWriter.Write(item0.Value, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                        using (JsonDocument document = JsonDocument.Parse(data))
+                        {
+                            JsonSerializer.Serialize(writer, document.RootElement);
+                        }
+#endif
                     }
                     writer.WriteEndObject();
                 }
@@ -162,7 +234,15 @@ namespace Azure.ResourceManager.DataFactory.Models
                     foreach (var item0 in item.Value)
                     {
                         writer.WritePropertyName(item0.Key);
-                        writer.WriteObjectValue(item0.Value);
+                        BinaryData data = ModelReaderWriter.Write(item0.Value, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                        using (JsonDocument document = JsonDocument.Parse(data))
+                        {
+                            JsonSerializer.Serialize(writer, document.RootElement);
+                        }
+#endif
                     }
                     writer.WriteEndObject();
                 }
@@ -175,14 +255,30 @@ namespace Azure.ResourceManager.DataFactory.Models
                 foreach (var item in PropertyOverrides)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
+                    BinaryData data = ModelReaderWriter.Write(item.Value, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(data))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
                 }
                 writer.WriteEndObject();
             }
             if (Optional.IsDefined(LogLocation))
             {
                 writer.WritePropertyName("logLocation"u8);
-                writer.WriteObjectValue(LogLocation);
+                BinaryData data = ModelReaderWriter.Write(LogLocation, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             writer.WriteEndObject();
             foreach (var item in AdditionalProperties)

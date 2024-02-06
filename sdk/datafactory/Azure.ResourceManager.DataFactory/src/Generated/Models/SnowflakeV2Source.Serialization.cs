@@ -33,7 +33,15 @@ namespace Azure.ResourceManager.DataFactory.Models
                 JsonSerializer.Serialize(writer, Query);
             }
             writer.WritePropertyName("exportSettings"u8);
-            writer.WriteObjectValue(ExportSettings);
+            BinaryData data = ModelReaderWriter.Write(ExportSettings, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+            using (JsonDocument document = JsonDocument.Parse(data))
+            {
+                JsonSerializer.Serialize(writer, document.RootElement);
+            }
+#endif
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(CopySourceType);
             if (Optional.IsDefined(SourceRetryCount))

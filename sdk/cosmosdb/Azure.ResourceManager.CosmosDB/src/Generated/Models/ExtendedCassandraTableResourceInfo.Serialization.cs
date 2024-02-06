@@ -52,7 +52,15 @@ namespace Azure.ResourceManager.CosmosDB.Models
             if (Optional.IsDefined(Schema))
             {
                 writer.WritePropertyName("schema"u8);
-                writer.WriteObjectValue(Schema);
+                BinaryData data = ModelReaderWriter.Write(Schema, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsDefined(AnalyticalStorageTtl))
             {

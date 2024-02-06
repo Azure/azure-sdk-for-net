@@ -84,9 +84,25 @@ namespace Azure.ResourceManager.Confluent
                 writer.WriteStringValue(SsoUri.AbsoluteUri);
             }
             writer.WritePropertyName("offerDetail"u8);
-            writer.WriteObjectValue(OfferDetail);
+            BinaryData data = ModelReaderWriter.Write(OfferDetail, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+            using (JsonDocument document = JsonDocument.Parse(data))
+            {
+                JsonSerializer.Serialize(writer, document.RootElement);
+            }
+#endif
             writer.WritePropertyName("userDetail"u8);
-            writer.WriteObjectValue(UserDetail);
+            BinaryData data0 = ModelReaderWriter.Write(UserDetail, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data0);
+#else
+            using (JsonDocument document = JsonDocument.Parse(data0))
+            {
+                JsonSerializer.Serialize(writer, document.RootElement);
+            }
+#endif
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

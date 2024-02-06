@@ -29,32 +29,80 @@ namespace Azure.ResourceManager.DataBox.Models
             if (Optional.IsDefined(ContactDetails))
             {
                 writer.WritePropertyName("contactDetails"u8);
-                writer.WriteObjectValue(ContactDetails);
+                BinaryData data = ModelReaderWriter.Write(ContactDetails, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsDefined(ShippingAddress))
             {
                 writer.WritePropertyName("shippingAddress"u8);
-                writer.WriteObjectValue(ShippingAddress);
+                BinaryData data = ModelReaderWriter.Write(ShippingAddress, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsDefined(ReverseShippingDetails))
             {
                 writer.WritePropertyName("reverseShippingDetails"u8);
-                writer.WriteObjectValue(ReverseShippingDetails);
+                BinaryData data = ModelReaderWriter.Write(ReverseShippingDetails, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsDefined(Preferences))
             {
                 writer.WritePropertyName("preferences"u8);
-                writer.WriteObjectValue(Preferences);
+                BinaryData data = ModelReaderWriter.Write(Preferences, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsDefined(KeyEncryptionKey))
             {
                 writer.WritePropertyName("keyEncryptionKey"u8);
-                writer.WriteObjectValue(KeyEncryptionKey);
+                BinaryData data = ModelReaderWriter.Write(KeyEncryptionKey, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsDefined(ReturnToCustomerPackageDetails))
             {
                 writer.WritePropertyName("returnToCustomerPackageDetails"u8);
-                writer.WriteObjectValue(ReturnToCustomerPackageDetails);
+                BinaryData data = ModelReaderWriter.Write(ReturnToCustomerPackageDetails, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

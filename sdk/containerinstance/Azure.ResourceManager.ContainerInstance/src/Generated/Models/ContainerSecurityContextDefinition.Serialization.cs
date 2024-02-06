@@ -39,7 +39,15 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             if (Optional.IsDefined(Capabilities))
             {
                 writer.WritePropertyName("capabilities"u8);
-                writer.WriteObjectValue(Capabilities);
+                BinaryData data = ModelReaderWriter.Write(Capabilities, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsDefined(RunAsGroup))
             {

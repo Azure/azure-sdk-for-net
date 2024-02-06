@@ -27,7 +27,15 @@ namespace Azure.ResourceManager.DataFactory.Models
 
             writer.WriteStartObject();
             writer.WritePropertyName("referenceTrigger"u8);
-            writer.WriteObjectValue(ReferenceTrigger);
+            BinaryData data = ModelReaderWriter.Write(ReferenceTrigger, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+            using (JsonDocument document = JsonDocument.Parse(data))
+            {
+                JsonSerializer.Serialize(writer, document.RootElement);
+            }
+#endif
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(DependencyReferenceType);
             if (options.Format != "W" && _serializedAdditionalRawData != null)

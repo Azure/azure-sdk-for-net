@@ -32,7 +32,15 @@ namespace Azure.ResourceManager.DataBoxEdge
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku);
+                BinaryData data = ModelReaderWriter.Write(Sku, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsDefined(ETag))
             {
@@ -162,17 +170,41 @@ namespace Azure.ResourceManager.DataBoxEdge
             if (options.Format != "W" && Optional.IsDefined(ResourceMoveDetails))
             {
                 writer.WritePropertyName("resourceMoveDetails"u8);
-                writer.WriteObjectValue(ResourceMoveDetails);
+                BinaryData data = ModelReaderWriter.Write(ResourceMoveDetails, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (options.Format != "W" && Optional.IsDefined(EdgeProfile))
             {
                 writer.WritePropertyName("edgeProfile"u8);
-                writer.WriteObjectValue(EdgeProfile);
+                BinaryData data = ModelReaderWriter.Write(EdgeProfile, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsDefined(DataResidency))
             {
                 writer.WritePropertyName("dataResidency"u8);
-                writer.WriteObjectValue(DataResidency);
+                BinaryData data = ModelReaderWriter.Write(DataResidency, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)

@@ -34,7 +34,15 @@ namespace Azure.ResourceManager.Compute.Models
             if (Optional.IsDefined(UtilizationInfo))
             {
                 writer.WritePropertyName("utilizationInfo"u8);
-                writer.WriteObjectValue(UtilizationInfo);
+                BinaryData data = ModelReaderWriter.Write(UtilizationInfo, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsCollectionDefined(Statuses))
             {
@@ -42,7 +50,15 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WriteStartArray();
                 foreach (var item in Statuses)
                 {
-                    writer.WriteObjectValue(item);
+                    BinaryData data = ModelReaderWriter.Write(item, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(data))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
                 }
                 writer.WriteEndArray();
             }

@@ -31,7 +31,15 @@ namespace Azure.ResourceManager.CostManagement.Models
             if (Optional.IsDefined(Definition))
             {
                 writer.WritePropertyName("definition"u8);
-                writer.WriteObjectValue(Definition);
+                BinaryData data = ModelReaderWriter.Write(Definition, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsDefined(Description))
             {
@@ -46,7 +54,15 @@ namespace Azure.ResourceManager.CostManagement.Models
             if (Optional.IsDefined(Details))
             {
                 writer.WritePropertyName("details"u8);
-                writer.WriteObjectValue(Details);
+                BinaryData data = ModelReaderWriter.Write(Details, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsDefined(CostEntityId))
             {

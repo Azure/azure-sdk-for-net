@@ -29,22 +29,54 @@ namespace Azure.ResourceManager.CosmosDB.Models
             if (options.Format != "W" && Optional.IsDefined(PrimaryMasterKey))
             {
                 writer.WritePropertyName("primaryMasterKey"u8);
-                writer.WriteObjectValue(PrimaryMasterKey);
+                BinaryData data = ModelReaderWriter.Write(PrimaryMasterKey, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (options.Format != "W" && Optional.IsDefined(SecondaryMasterKey))
             {
                 writer.WritePropertyName("secondaryMasterKey"u8);
-                writer.WriteObjectValue(SecondaryMasterKey);
+                BinaryData data = ModelReaderWriter.Write(SecondaryMasterKey, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (options.Format != "W" && Optional.IsDefined(PrimaryReadonlyMasterKey))
             {
                 writer.WritePropertyName("primaryReadonlyMasterKey"u8);
-                writer.WriteObjectValue(PrimaryReadonlyMasterKey);
+                BinaryData data = ModelReaderWriter.Write(PrimaryReadonlyMasterKey, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (options.Format != "W" && Optional.IsDefined(SecondaryReadonlyMasterKey))
             {
                 writer.WritePropertyName("secondaryReadonlyMasterKey"u8);
-                writer.WriteObjectValue(SecondaryReadonlyMasterKey);
+                BinaryData data = ModelReaderWriter.Write(SecondaryReadonlyMasterKey, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

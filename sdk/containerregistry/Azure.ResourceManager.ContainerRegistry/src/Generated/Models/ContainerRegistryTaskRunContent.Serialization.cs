@@ -31,7 +31,15 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             if (Optional.IsDefined(OverrideTaskStepProperties))
             {
                 writer.WritePropertyName("overrideTaskStepProperties"u8);
-                writer.WriteObjectValue(OverrideTaskStepProperties);
+                BinaryData data = ModelReaderWriter.Write(OverrideTaskStepProperties, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(RunRequestType);

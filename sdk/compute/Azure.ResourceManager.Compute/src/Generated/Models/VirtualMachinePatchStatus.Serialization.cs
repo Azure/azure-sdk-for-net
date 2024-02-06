@@ -29,12 +29,28 @@ namespace Azure.ResourceManager.Compute.Models
             if (Optional.IsDefined(AvailablePatchSummary))
             {
                 writer.WritePropertyName("availablePatchSummary"u8);
-                writer.WriteObjectValue(AvailablePatchSummary);
+                BinaryData data = ModelReaderWriter.Write(AvailablePatchSummary, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsDefined(LastPatchInstallationSummary))
             {
                 writer.WritePropertyName("lastPatchInstallationSummary"u8);
-                writer.WriteObjectValue(LastPatchInstallationSummary);
+                BinaryData data = ModelReaderWriter.Write(LastPatchInstallationSummary, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(ConfigurationStatuses))
             {
@@ -42,7 +58,15 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WriteStartArray();
                 foreach (var item in ConfigurationStatuses)
                 {
-                    writer.WriteObjectValue(item);
+                    BinaryData data = ModelReaderWriter.Write(item, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(data))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
                 }
                 writer.WriteEndArray();
             }

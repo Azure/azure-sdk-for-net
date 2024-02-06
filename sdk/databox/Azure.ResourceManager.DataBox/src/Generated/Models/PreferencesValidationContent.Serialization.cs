@@ -29,7 +29,15 @@ namespace Azure.ResourceManager.DataBox.Models
             if (Optional.IsDefined(Preference))
             {
                 writer.WritePropertyName("preference"u8);
-                writer.WriteObjectValue(Preference);
+                BinaryData data = ModelReaderWriter.Write(Preference, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             writer.WritePropertyName("deviceType"u8);
             writer.WriteStringValue(DeviceType.ToSerialString());

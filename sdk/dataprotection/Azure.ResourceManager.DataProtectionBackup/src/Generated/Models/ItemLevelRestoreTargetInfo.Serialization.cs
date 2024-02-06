@@ -30,20 +30,52 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             writer.WriteStartArray();
             foreach (var item in RestoreCriteria)
             {
-                writer.WriteObjectValue(item);
+                BinaryData data = ModelReaderWriter.Write(item, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             writer.WriteEndArray();
             writer.WritePropertyName("datasourceInfo"u8);
-            writer.WriteObjectValue(DatasourceInfo);
+            BinaryData data0 = ModelReaderWriter.Write(DatasourceInfo, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data0);
+#else
+            using (JsonDocument document = JsonDocument.Parse(data0))
+            {
+                JsonSerializer.Serialize(writer, document.RootElement);
+            }
+#endif
             if (Optional.IsDefined(DatasourceSetInfo))
             {
                 writer.WritePropertyName("datasourceSetInfo"u8);
-                writer.WriteObjectValue(DatasourceSetInfo);
+                BinaryData data = ModelReaderWriter.Write(DatasourceSetInfo, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsDefined(DatasourceAuthCredentials))
             {
                 writer.WritePropertyName("datasourceAuthCredentials"u8);
-                writer.WriteObjectValue(DatasourceAuthCredentials);
+                BinaryData data = ModelReaderWriter.Write(DatasourceAuthCredentials, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             writer.WritePropertyName("objectType"u8);
             writer.WriteStringValue(ObjectType);

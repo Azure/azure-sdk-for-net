@@ -36,7 +36,15 @@ namespace Azure.ResourceManager.ContainerService.Models
                 writer.WriteStringValue(BindingSelector);
             }
             writer.WritePropertyName("identity"u8);
-            writer.WriteObjectValue(Identity);
+            BinaryData data = ModelReaderWriter.Write(Identity, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+            using (JsonDocument document = JsonDocument.Parse(data))
+            {
+                JsonSerializer.Serialize(writer, document.RootElement);
+            }
+#endif
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
@@ -45,7 +53,15 @@ namespace Azure.ResourceManager.ContainerService.Models
             if (options.Format != "W" && Optional.IsDefined(ProvisioningInfo))
             {
                 writer.WritePropertyName("provisioningInfo"u8);
-                writer.WriteObjectValue(ProvisioningInfo);
+                BinaryData data0 = ModelReaderWriter.Write(ProvisioningInfo, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data0);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data0))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

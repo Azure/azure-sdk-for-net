@@ -60,7 +60,15 @@ namespace Azure.ResourceManager.CosmosDB.Models
             if (Optional.IsDefined(KeyWrapMetadata))
             {
                 writer.WritePropertyName("keyWrapMetadata"u8);
-                writer.WriteObjectValue(KeyWrapMetadata);
+                BinaryData data = ModelReaderWriter.Write(KeyWrapMetadata, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

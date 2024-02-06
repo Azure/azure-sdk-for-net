@@ -29,7 +29,15 @@ namespace Azure.ResourceManager.Compute.Models
             if (Optional.IsDefined(OSDisk))
             {
                 writer.WritePropertyName("osDisk"u8);
-                writer.WriteObjectValue(OSDisk);
+                BinaryData data = ModelReaderWriter.Write(OSDisk, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsCollectionDefined(DataDiskList))
             {
@@ -37,7 +45,15 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WriteStartArray();
                 foreach (var item in DataDiskList)
                 {
-                    writer.WriteObjectValue(item);
+                    BinaryData data = ModelReaderWriter.Write(item, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(data))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
                 }
                 writer.WriteEndArray();
             }

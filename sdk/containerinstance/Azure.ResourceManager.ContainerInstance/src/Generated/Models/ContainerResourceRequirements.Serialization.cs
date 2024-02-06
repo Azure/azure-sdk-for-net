@@ -27,11 +27,27 @@ namespace Azure.ResourceManager.ContainerInstance.Models
 
             writer.WriteStartObject();
             writer.WritePropertyName("requests"u8);
-            writer.WriteObjectValue(Requests);
+            BinaryData data = ModelReaderWriter.Write(Requests, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+            using (JsonDocument document = JsonDocument.Parse(data))
+            {
+                JsonSerializer.Serialize(writer, document.RootElement);
+            }
+#endif
             if (Optional.IsDefined(Limits))
             {
                 writer.WritePropertyName("limits"u8);
-                writer.WriteObjectValue(Limits);
+                BinaryData data0 = ModelReaderWriter.Write(Limits, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data0);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data0))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

@@ -37,7 +37,15 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(Dataset))
             {
                 writer.WritePropertyName("dataset"u8);
-                writer.WriteObjectValue(Dataset);
+                BinaryData data = ModelReaderWriter.Write(Dataset, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsDefined(LinkedService))
             {
@@ -47,7 +55,15 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(Flowlet))
             {
                 writer.WritePropertyName("flowlet"u8);
-                writer.WriteObjectValue(Flowlet);
+                BinaryData data = ModelReaderWriter.Write(Flowlet, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

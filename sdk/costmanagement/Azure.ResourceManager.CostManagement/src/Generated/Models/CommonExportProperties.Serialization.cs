@@ -32,13 +32,37 @@ namespace Azure.ResourceManager.CostManagement.Models
                 writer.WriteStringValue(Format.Value.ToString());
             }
             writer.WritePropertyName("deliveryInfo"u8);
-            writer.WriteObjectValue(DeliveryInfo);
+            BinaryData data = ModelReaderWriter.Write(DeliveryInfo, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+            using (JsonDocument document = JsonDocument.Parse(data))
+            {
+                JsonSerializer.Serialize(writer, document.RootElement);
+            }
+#endif
             writer.WritePropertyName("definition"u8);
-            writer.WriteObjectValue(Definition);
+            BinaryData data0 = ModelReaderWriter.Write(Definition, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data0);
+#else
+            using (JsonDocument document = JsonDocument.Parse(data0))
+            {
+                JsonSerializer.Serialize(writer, document.RootElement);
+            }
+#endif
             if (Optional.IsDefined(RunHistory))
             {
                 writer.WritePropertyName("runHistory"u8);
-                writer.WriteObjectValue(RunHistory);
+                BinaryData data1 = ModelReaderWriter.Write(RunHistory, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data1);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data1))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsDefined(PartitionData))
             {

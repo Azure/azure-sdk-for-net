@@ -76,13 +76,29 @@ namespace Azure.ResourceManager.CosmosDB.Models
             if (Optional.IsDefined(ConsistencyPolicy))
             {
                 writer.WritePropertyName("consistencyPolicy"u8);
-                writer.WriteObjectValue(ConsistencyPolicy);
+                BinaryData data = ModelReaderWriter.Write(ConsistencyPolicy, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             writer.WritePropertyName("locations"u8);
             writer.WriteStartArray();
             foreach (var item in Locations)
             {
-                writer.WriteObjectValue(item);
+                BinaryData data = ModelReaderWriter.Write(item, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             writer.WriteEndArray();
             writer.WritePropertyName("databaseAccountOfferType"u8);
@@ -93,7 +109,15 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 writer.WriteStartArray();
                 foreach (var item in IPRules)
                 {
-                    writer.WriteObjectValue(item);
+                    BinaryData data = ModelReaderWriter.Write(item, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(data))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
                 }
                 writer.WriteEndArray();
             }
@@ -113,7 +137,15 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 writer.WriteStartArray();
                 foreach (var item in Capabilities)
                 {
-                    writer.WriteObjectValue(item);
+                    BinaryData data = ModelReaderWriter.Write(item, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(data))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
                 }
                 writer.WriteEndArray();
             }
@@ -123,7 +155,15 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 writer.WriteStartArray();
                 foreach (var item in VirtualNetworkRules)
                 {
-                    writer.WriteObjectValue(item);
+                    BinaryData data = ModelReaderWriter.Write(item, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(data))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
                 }
                 writer.WriteEndArray();
             }
@@ -170,7 +210,15 @@ namespace Azure.ResourceManager.CosmosDB.Models
             if (Optional.IsDefined(ApiProperties))
             {
                 writer.WritePropertyName("apiProperties"u8);
-                writer.WriteObjectValue(ApiProperties);
+                BinaryData data = ModelReaderWriter.Write(ApiProperties, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsDefined(IsAnalyticalStorageEnabled))
             {
@@ -180,7 +228,15 @@ namespace Azure.ResourceManager.CosmosDB.Models
             if (Optional.IsDefined(AnalyticalStorageConfiguration))
             {
                 writer.WritePropertyName("analyticalStorageConfiguration"u8);
-                writer.WriteObjectValue(AnalyticalStorageConfiguration);
+                BinaryData data = ModelReaderWriter.Write(AnalyticalStorageConfiguration, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsDefined(CreateMode))
             {
@@ -190,7 +246,15 @@ namespace Azure.ResourceManager.CosmosDB.Models
             if (Optional.IsDefined(BackupPolicy))
             {
                 writer.WritePropertyName("backupPolicy"u8);
-                writer.WriteObjectValue(BackupPolicy);
+                BinaryData data = ModelReaderWriter.Write(BackupPolicy, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsCollectionDefined(Cors))
             {
@@ -198,7 +262,15 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 writer.WriteStartArray();
                 foreach (var item in Cors)
                 {
-                    writer.WriteObjectValue(item);
+                    BinaryData data = ModelReaderWriter.Write(item, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(data))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
                 }
                 writer.WriteEndArray();
             }
@@ -225,7 +297,15 @@ namespace Azure.ResourceManager.CosmosDB.Models
             if (Optional.IsDefined(DiagnosticLogSettings))
             {
                 writer.WritePropertyName("diagnosticLogSettings"u8);
-                writer.WriteObjectValue(DiagnosticLogSettings);
+                BinaryData data = ModelReaderWriter.Write(DiagnosticLogSettings, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsDefined(DisableLocalAuth))
             {
@@ -235,12 +315,28 @@ namespace Azure.ResourceManager.CosmosDB.Models
             if (Optional.IsDefined(RestoreParameters))
             {
                 writer.WritePropertyName("restoreParameters"u8);
-                writer.WriteObjectValue(RestoreParameters);
+                BinaryData data = ModelReaderWriter.Write(RestoreParameters, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsDefined(Capacity))
             {
                 writer.WritePropertyName("capacity"u8);
-                writer.WriteObjectValue(Capacity);
+                BinaryData data = ModelReaderWriter.Write(Capacity, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsDefined(EnableMaterializedViews))
             {
@@ -250,7 +346,15 @@ namespace Azure.ResourceManager.CosmosDB.Models
             if (options.Format != "W" && Optional.IsDefined(KeysMetadata))
             {
                 writer.WritePropertyName("keysMetadata"u8);
-                writer.WriteObjectValue(KeysMetadata);
+                BinaryData data = ModelReaderWriter.Write(KeysMetadata, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsDefined(EnablePartitionMerge))
             {

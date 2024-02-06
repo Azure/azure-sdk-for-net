@@ -34,7 +34,15 @@ namespace Azure.ResourceManager.ContainerService.Models
             if (Optional.IsDefined(SecurityMonitoring))
             {
                 writer.WritePropertyName("securityMonitoring"u8);
-                writer.WriteObjectValue(SecurityMonitoring);
+                BinaryData data = ModelReaderWriter.Write(SecurityMonitoring, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

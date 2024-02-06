@@ -29,12 +29,28 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             if (Optional.IsDefined(Exec))
             {
                 writer.WritePropertyName("exec"u8);
-                writer.WriteObjectValue(Exec);
+                BinaryData data = ModelReaderWriter.Write(Exec, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsDefined(HttpGet))
             {
                 writer.WritePropertyName("httpGet"u8);
-                writer.WriteObjectValue(HttpGet);
+                BinaryData data = ModelReaderWriter.Write(HttpGet, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsDefined(InitialDelayInSeconds))
             {

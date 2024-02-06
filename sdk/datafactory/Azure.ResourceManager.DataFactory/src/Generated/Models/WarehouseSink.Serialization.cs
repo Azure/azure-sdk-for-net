@@ -40,7 +40,15 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(CopyCommandSettings))
             {
                 writer.WritePropertyName("copyCommandSettings"u8);
-                writer.WriteObjectValue(CopyCommandSettings);
+                BinaryData data = ModelReaderWriter.Write(CopyCommandSettings, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsDefined(TableOption))
             {

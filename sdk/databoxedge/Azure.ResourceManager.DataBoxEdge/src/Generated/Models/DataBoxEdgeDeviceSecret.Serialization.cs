@@ -29,7 +29,15 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             if (Optional.IsDefined(EncryptedSecret))
             {
                 writer.WritePropertyName("encryptedSecret"u8);
-                writer.WriteObjectValue(EncryptedSecret);
+                BinaryData data = ModelReaderWriter.Write(EncryptedSecret, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsDefined(KeyVaultId))
             {

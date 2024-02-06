@@ -29,12 +29,28 @@ namespace Azure.ResourceManager.Compute.Models
             if (Optional.IsDefined(DiskEncryptionKey))
             {
                 writer.WritePropertyName("diskEncryptionKey"u8);
-                writer.WriteObjectValue(DiskEncryptionKey);
+                BinaryData data = ModelReaderWriter.Write(DiskEncryptionKey, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsDefined(KeyEncryptionKey))
             {
                 writer.WritePropertyName("keyEncryptionKey"u8);
-                writer.WriteObjectValue(KeyEncryptionKey);
+                BinaryData data = ModelReaderWriter.Write(KeyEncryptionKey, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsDefined(Enabled))
             {

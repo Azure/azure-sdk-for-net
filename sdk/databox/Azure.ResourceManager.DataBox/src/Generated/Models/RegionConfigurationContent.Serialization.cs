@@ -29,17 +29,41 @@ namespace Azure.ResourceManager.DataBox.Models
             if (Optional.IsDefined(ScheduleAvailabilityRequest))
             {
                 writer.WritePropertyName("scheduleAvailabilityRequest"u8);
-                writer.WriteObjectValue(ScheduleAvailabilityRequest);
+                BinaryData data = ModelReaderWriter.Write(ScheduleAvailabilityRequest, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsDefined(TransportAvailabilityRequest))
             {
                 writer.WritePropertyName("transportAvailabilityRequest"u8);
-                writer.WriteObjectValue(TransportAvailabilityRequest);
+                BinaryData data = ModelReaderWriter.Write(TransportAvailabilityRequest, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsDefined(DataCenterAddressRequest))
             {
                 writer.WritePropertyName("datacenterAddressRequest"u8);
-                writer.WriteObjectValue(DataCenterAddressRequest);
+                BinaryData data = ModelReaderWriter.Write(DataCenterAddressRequest, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

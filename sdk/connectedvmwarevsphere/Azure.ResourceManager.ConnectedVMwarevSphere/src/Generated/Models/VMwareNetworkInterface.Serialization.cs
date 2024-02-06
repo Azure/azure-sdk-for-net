@@ -84,7 +84,15 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
             if (Optional.IsDefined(IPSettings))
             {
                 writer.WritePropertyName("ipSettings"u8);
-                writer.WriteObjectValue(IPSettings);
+                BinaryData data = ModelReaderWriter.Write(IPSettings, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

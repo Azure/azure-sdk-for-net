@@ -31,7 +31,15 @@ namespace Azure.ResourceManager.ContainerService.Models
             if (Optional.IsDefined(KubeStateMetrics))
             {
                 writer.WritePropertyName("kubeStateMetrics"u8);
-                writer.WriteObjectValue(KubeStateMetrics);
+                BinaryData data = ModelReaderWriter.Write(KubeStateMetrics, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
