@@ -78,7 +78,7 @@ namespace Azure.AI.DocumentIntelligence
         /// <param name="spans"> Location of the field in the reading order concatenated content. </param>
         /// <param name="confidence"> Confidence of correctly extracting the field. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DocumentField(DocumentFieldType type, string valueString, DateTimeOffset? valueDate, TimeSpan? valueTime, string valuePhoneNumber, double? valueNumber, long? valueInteger, DocumentSelectionMarkState? valueSelectionMark, DocumentSignatureType? valueSignature, string valueCountryRegion, IReadOnlyList<DocumentField> valueArray, IReadOnlyDictionary<string, DocumentField> valueObject, CurrencyValue valueCurrency, AddressValue valueAddress, bool? valueBoolean, string content, IReadOnlyList<BoundingRegion> boundingRegions, IReadOnlyList<DocumentSpan> spans, float? confidence, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal DocumentField(DocumentFieldType type, string valueString, object valueDate, object valueTime, string valuePhoneNumber, double? valueNumber, long? valueInteger, DocumentSelectionMarkState? valueSelectionMark, DocumentSignatureType? valueSignature, string valueCountryRegion, IReadOnlyList<DocumentField> valueArray, IReadOnlyDictionary<string, DocumentField> valueObject, CurrencyValue valueCurrency, AddressValue valueAddress, bool? valueBoolean, string content, IReadOnlyList<BoundingRegion> boundingRegions, IReadOnlyList<DocumentSpan> spans, float? confidence, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Type = type;
             ValueString = valueString;
@@ -112,9 +112,9 @@ namespace Azure.AI.DocumentIntelligence
         /// <summary> String value. </summary>
         public string ValueString { get; }
         /// <summary> Date value in YYYY-MM-DD format (ISO 8601). </summary>
-        public DateTimeOffset? ValueDate { get; }
+        public object ValueDate { get; }
         /// <summary> Time value in hh:mm:ss format (ISO 8601). </summary>
-        public TimeSpan? ValueTime { get; }
+        public object ValueTime { get; }
         /// <summary> Phone number value in E.164 format (ex. +19876543210). </summary>
         public string ValuePhoneNumber { get; }
         /// <summary> Floating point value. </summary>
