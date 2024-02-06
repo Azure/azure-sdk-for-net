@@ -341,6 +341,15 @@ namespace Azure.Communication.JobRouter
                     availableForOffers = property.Value.GetBoolean();
                     continue;
                 }
+                if (property.NameEquals("maxConcurrentOffers"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    maxConcurrentOffers = property.Value.GetInt32();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));

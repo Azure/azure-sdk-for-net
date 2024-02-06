@@ -113,6 +113,35 @@ namespace Azure.Communication.JobRouter
             }
         }
 
+        BinaryData IPersistableModel<ExceptionAction>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ExceptionAction>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(ExceptionAction)} does not support '{options.Format}' format.");
+            }
+        }
+
+        ExceptionAction IPersistableModel<ExceptionAction>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ExceptionAction>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeExceptionAction(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ExceptionAction)} does not support '{options.Format}' format.");
+            }
+        }
+
         string IPersistableModel<ExceptionAction>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <summary> Deserializes the model from a raw response. </summary>
