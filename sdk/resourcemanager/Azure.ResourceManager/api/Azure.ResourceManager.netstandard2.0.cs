@@ -87,6 +87,7 @@ namespace Azure.ResourceManager
     }
     public partial class ArmOperation : Azure.Operation
     {
+        protected readonly Azure.Core.RehydrationToken? _rehydrationToken;
         protected ArmOperation() { }
         public ArmOperation(Azure.ResourceManager.ArmClient client, Azure.Core.RehydrationToken? rehydrationToken) { }
         public override bool HasCompleted { get { throw null; } }
@@ -102,6 +103,7 @@ namespace Azure.ResourceManager
     }
     public partial class ArmOperation<T> : Azure.Operation<T> where T : notnull
     {
+        protected readonly Azure.Core.RehydrationToken? _rehydrationToken;
         protected ArmOperation() { }
         public ArmOperation(Azure.ResourceManager.ArmClient client, Azure.Core.RehydrationToken? rehydrationToken) { }
         public override bool HasCompleted { get { throw null; } }
