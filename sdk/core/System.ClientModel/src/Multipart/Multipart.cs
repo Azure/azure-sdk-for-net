@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -10,24 +11,24 @@ using System.Threading;
 using System.Threading.Tasks;
 
 #nullable disable
-namespace System.ClientModel
+namespace System.ClientModel.Primitives
 {
     /// <summary>
     /// A Content in multipart format.
     /// </summary>
-    public class Multipart : IDisposable
+    public abstract class Multipart : IDisposable
     {
         private const string CrLf = "\r\n";
         private const string ColonSP = ": ";
 
-        private static readonly int s_crlfLength = GetEncodedLength(CrLf);
-        private static readonly int s_dashDashLength = GetEncodedLength("--");
-        private static readonly int s_colonSpaceLength = GetEncodedLength(ColonSP);
-        private readonly List<MultipartContentPart> _nestedContent;
-        protected readonly string _subtype;
-        protected readonly string _boundary;
+        private protected static readonly int s_crlfLength = GetEncodedLength(CrLf);
+        private protected static readonly int s_dashDashLength = GetEncodedLength("--");
+        private protected static readonly int s_colonSpaceLength = GetEncodedLength(ColonSP);
+        private protected readonly List<MultipartContentPart> _nestedContent;
+        private protected readonly string _subtype;
+        private protected readonly string _boundary;
         internal readonly Dictionary<string, string> _headers;
-        protected const string MultipartContentTypePrefix = "multipart/mixed; boundary=";
+        //private protected readonly string MultipartContentTypePrefix = "multipart/mixed; boundary=";
 
         /// <summary> The list of request content parts. </summary>
         public List<MultipartContentPart> ContentParts => _nestedContent;
@@ -86,7 +87,49 @@ namespace System.ClientModel
 
         private static void ValidateBoundary(string boundary)
         {
-            throw new NotImplementedException();
+            if (string.IsNullOrWhiteSpace(boundary))
+            {
+                throw new ArgumentException("Value cannot be null or empty.", boundary);
+            }
+
+            // cspell:disable
+            // RFC 2046 Section 5.1.1
+            // boundary := 0*69<bchars> bcharsnospace
+            // bchars := bcharsnospace / " "
+            // bcharsnospace := DIGIT / ALPHA / "'" / "(" / ")" / "+" / "_" / "," / "-" / "." / "/" / ":" / "=" / "?"
+            // cspell:enable
+            if (boundary.Length > 70)
+            {
+                throw new ArgumentOutOfRangeException(nameof(boundary), boundary, $"The field cannot be longer than {70} characters.");
+            }
+            // Cannot end with space.
+            if (boundary.EndsWith(" ", StringComparison.InvariantCultureIgnoreCase))
+            {
+                throw new ArgumentException($"The format of value '{boundary}' is invalid.", nameof(boundary));
+            }
+
+            foreach (char ch in boundary)
+            {
+                if (!IsValidBoundaryCharacter(ch))
+                {
+                    throw new ArgumentException($"The format of value '{boundary}' is invalid.", nameof(boundary));
+                }
+            }
+        }
+        private static bool IsValidBoundaryCharacter(char ch)
+        {
+            const string AllowedMarks = @"'()+_,-./:=? ";
+            if (('0' <= ch && ch <= '9') || // Digit.
+                    ('a' <= ch && ch <= 'z') || // alpha.
+                    ('A' <= ch && ch <= 'Z') || // ALPHA.
+                    AllowedMarks.Contains(char.ToString(ch))) // Marks.
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
         /// <summary>
         ///  Add HTTP content to a collection of Content objects that
@@ -163,7 +206,7 @@ namespace System.ClientModel
         ///  Read the content from BinaryData and parse it.
         ///  each part of BinaryData separted by boundary will be parsed as one MultipartContentPart.
         /// </summary>
-        public static async Task<Multipart> ReadAsync(BinaryData data, string subType = "mixed", string boundary = null)
+        private static async Task<IReadOnlyList<MultipartContentPart>> ReadAsync(BinaryData data, string subType = "mixed", string boundary = null)
         {
             if (data == null)
             {
@@ -191,7 +234,8 @@ namespace System.ClientModel
                 }
             }
             // Read the content into a stream.
-            Multipart multipartContent = new Multipart(subType, boundary);
+            //Multipart multipartContent = new Multipart(subType, boundary);
+            List<MultipartContentPart> parts = new List<MultipartContentPart>();
             Stream content = data.ToStream();
             CancellationToken cancellationToken = new CancellationToken();
             bool expectBoundariesWithCRLF = false;
@@ -216,12 +260,14 @@ namespace System.ClientModel
                         headers.Add(header.Key, string.Join(";", header.Value));
                     }
                 }
-                multipartContent.ContentParts.Add(new MultipartContentPart(BinaryData.FromStream(section.Body), headers));
+                parts.Add(new MultipartContentPart(BinaryData.FromStream(section.Body), headers));
+                //multipartContent.ContentParts.Add(new MultipartContentPart(BinaryData.FromStream(section.Body), headers));
             }
-            return multipartContent;
+            return parts;
+            //return multipartContent;
         }
 
-        public static Multipart Read(BinaryData data, string subType = "mixed", string boundary = null)
+        private protected static IReadOnlyList<MultipartContentPart> Read(BinaryData data, string subType = "mixed", string boundary = null)
         {
 #pragma warning disable AZC0102 // Do not use GetAwaiter().GetResult().
             return ReadAsync(data, subType, boundary).GetAwaiter().GetResult();
@@ -267,11 +313,11 @@ namespace System.ClientModel
             byte[] buffer = Encoding.Default.GetBytes(input);
             stream.Write(buffer, 0, buffer.Length);
         }
-        private static int GetEncodedLength(string input)
+        private protected static int GetEncodedLength(string input)
         {
             return Encoding.Default.GetByteCount(input);
         }
-        private static bool GetBoundary(string contentType, string prefix, out string boundary)
+        private protected static bool GetBoundary(string contentType, string prefix, out string boundary)
         {
             if (contentType == null || !contentType.StartsWith(prefix, StringComparison.Ordinal))
             {
@@ -279,6 +325,49 @@ namespace System.ClientModel
                 return false;
             }
             boundary = contentType.Substring(prefix.Length);
+            return true;
+        }
+        public virtual bool TryComputeLength(out long length)
+        {
+            int boundaryLength = GetEncodedLength(_boundary);
+
+            long currentLength = 0;
+            long internalBoundaryLength = s_crlfLength + s_dashDashLength + boundaryLength + s_crlfLength;
+
+            // Start Boundary.
+            currentLength += s_dashDashLength + boundaryLength + s_crlfLength;
+
+            bool first = true;
+            foreach (MultipartContentPart content in _nestedContent)
+            {
+                if (first)
+                {
+                    first = false; // First boundary already written.
+                }
+                else
+                {
+                    // Internal Boundary.
+                    currentLength += internalBoundaryLength;
+                }
+
+                // Headers.
+                foreach (KeyValuePair<string, string> headerPair in content.Headers)
+                {
+                    currentLength += GetEncodedLength(headerPair.Key) + s_colonSpaceLength;
+                    currentLength += GetEncodedLength(headerPair.Value);
+                    currentLength += s_crlfLength;
+                }
+
+                currentLength += s_crlfLength;
+
+                // Content.
+                currentLength += content.Content.Length;
+            }
+
+            // Terminating boundary.
+            currentLength += s_crlfLength + s_dashDashLength + boundaryLength + s_dashDashLength + s_crlfLength;
+
+            length = currentLength;
             return true;
         }
         /// <summary>

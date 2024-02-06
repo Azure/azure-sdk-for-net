@@ -22,10 +22,6 @@ namespace Azure.Core
     {
         internal const string SerializationRequiresUnreferencedCode = "This method uses reflection-based serialization which is incompatible with trimming. Try using one of the 'Create' overloads that doesn't wrap a serialized version of an object.";
         private static readonly Encoding s_UTF8NoBomEncoding = new UTF8Encoding(false);
-        /// <summary>
-        /// The content type of the content.
-        /// </summary>
-        public string ContentType { get; set; } = "application/octet-stream";
 
         /// <summary>
         /// Creates an instance of <see cref="RequestContent"/> that wraps a <see cref="Stream"/>.

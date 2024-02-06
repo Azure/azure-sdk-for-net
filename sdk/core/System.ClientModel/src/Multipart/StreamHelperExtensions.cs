@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 #pragma warning disable IDE1006 // Prefix _ unexpected
 
-namespace System.ClientModel
+namespace System.ClientModel.Primitives
 {
     internal static class StreamHelperExtensions
     {

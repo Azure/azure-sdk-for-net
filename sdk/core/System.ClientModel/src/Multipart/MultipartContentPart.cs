@@ -4,7 +4,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace System.ClientModel
+namespace System.ClientModel.Primitives
 {
     /// <summary>
     /// A content part of multipart content.

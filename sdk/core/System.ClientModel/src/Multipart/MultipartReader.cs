@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 #pragma warning disable IDE0008 // Use explicit type
 #nullable disable
 
-namespace System.ClientModel
+namespace System.ClientModel.Primitives
 {
     // https://www.ietf.org/rfc/rfc2046.txt
     internal class MultipartReader

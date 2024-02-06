@@ -7,7 +7,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 
-namespace System.ClientModel
+namespace System.ClientModel.Primitives
 {
     internal class MultipartSection
     {

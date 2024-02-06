@@ -3,16 +3,18 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.IO;
+using System.Text;
 using System.Threading.Tasks;
 using Azure.Core;
 
 #nullable disable
-namespace System.ClientModel
+namespace System.ClientModel.Primitives
 {
     /// <summary>
     /// A request content in multipart/form-data format.
     /// </summary>
-    public class MultipartFormData : Multipart
+    public class MultipartFormData : Multipart, IPersistableModel<MultipartFormData>
     {
         #region Fields
 
@@ -39,14 +41,6 @@ namespace System.ClientModel
         /// <param name="nestedContent">The list of content parts.</param>
         public MultipartFormData(string boundary, IReadOnlyList<MultipartContentPart> nestedContent) : base(FormData, boundary, nestedContent)
         { }
-        /// <summary>
-        ///  Initializes a new instance of the <see cref="MultipartFormData"/> class.
-        /// </summary>
-        /// <param name="data">The content in multipart/form-data format.</param>
-        public MultipartFormData(BinaryData data)
-        {
-            Read(data);
-        }
         #endregion Construction
         /// <summary>
         ///  Add a content part.
@@ -78,10 +72,55 @@ namespace System.ClientModel
         {
             AddInternal(content, headers, name, fileName);
         }
+        /// <summary>
+        ///  Combine all the parts to BinaryData Content.
+        /// </summary>
+        // for-each content
+        // write "--" + boundary
+        // for-each content header
+        // write header: header-value
+        // write content.WriteTo[Async]
+        // write "--" + boundary + "--"
+        BinaryData IPersistableModel<MultipartFormData>.Write(ModelReaderWriterOptions options)
+        {
+            if (options == null || options.Format != "MPFD")
+            {
+                throw new InvalidOperationException("The specified format is not supported.");
+            }
+            return ToContent();
+        }
+        MultipartFormData IPersistableModel<MultipartFormData>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
+            if (data.Length == 0)
+            {
+                throw new ArgumentException("Empty data", nameof(data));
+            }
+            string MultipartContentTypePrefix = $"multipart/{_subtype}; boundary=";
+            string boundary = null;
+            string contentType = data.MediaType;
+            if (string.IsNullOrEmpty(contentType))
+            {
+                throw new ArgumentException("Missing content type", nameof(data));
+            }
+            if (contentType == null || !contentType.StartsWith(MultipartContentTypePrefix, StringComparison.OrdinalIgnoreCase))
+            {
+                throw new ArgumentException("Invalid content type", nameof(data));
+            }
+            if (!GetBoundary(contentType, MultipartContentTypePrefix, out boundary))
+            {
+                throw new ArgumentException("Missing boundary", nameof(data));
+            }
+            return new MultipartFormData(boundary, Read(data, FormData, boundary));
+        }
         public RequestBody ToRequestBody()
         {
             return RequestBody.CreateFromStream(ToContent().ToStream());//TODO: need to combine all the parts to a stream
         }
+        /*
         public IReadOnlyList<FormDataItem> ParseToFormData()
         {
             List<FormDataItem> results = new List<FormDataItem>();
@@ -108,6 +147,7 @@ namespace System.ClientModel
             }
             return results;
         }
+        */
         private void AddInternal(BinaryData content, Dictionary<string, string> headers, string name, string fileName)
         {
             if (headers == null)
@@ -140,18 +180,61 @@ namespace System.ClientModel
             }
             base.Add(content, headers);
         }
+        public override bool TryComputeLength(out long length)
+        {
+            int boundaryLength = GetEncodedLength(_boundary);
+
+            long currentLength = 0;
+            long internalBoundaryLength = s_crlfLength + s_dashDashLength + boundaryLength + s_crlfLength;
+
+            // Start Boundary.
+            currentLength += s_dashDashLength + boundaryLength + s_crlfLength;
+
+            bool first = true;
+            foreach (MultipartContentPart content in _nestedContent)
+            {
+                if (first)
+                {
+                    first = false; // First boundary already written.
+                }
+                else
+                {
+                    // Internal Boundary.
+                    currentLength += internalBoundaryLength;
+                }
+
+                // Headers.
+                foreach (KeyValuePair<string, string> headerPair in content.Headers)
+                {
+                    currentLength += GetEncodedLength(headerPair.Key) + s_colonSpaceLength;
+                    currentLength += GetEncodedLength(headerPair.Value);
+                    currentLength += s_crlfLength;
+                }
+
+                currentLength += s_crlfLength;
+
+                // Content.
+                currentLength += content.Content.Length;
+            }
+
+            // Terminating boundary.
+            currentLength += s_crlfLength + s_dashDashLength + boundaryLength + s_dashDashLength + s_crlfLength;
+
+            length = currentLength;
+            return true;
+        }
         /// <summary>
         /// Creates an instance of <see cref="MultipartFormData"/> that wraps a <see cref="BinaryData"/>.
         /// </summary>
         /// <param name="data">The <see cref="BinaryData"/> to use.</param>
-        /// <param name="boundary">The boundary of the multipart content.</param>
         /// <returns>An instance of <see cref="MultipartFormData"/> that wraps a <see cref="BinaryData"/>.</returns>
-        public static MultipartFormData Create(BinaryData data, string boundary = null)
+        public static MultipartFormData Create(BinaryData data)
         {
-            Multipart multipartContent = Read(data, FormData, boundary);
-            return new MultipartFormData(multipartContent.Boundary, multipartContent.ContentParts);
+            return ModelReaderWriter.Read<MultipartFormData>(data, new ModelReaderWriterOptions("MPTD"));
         }
+        string IPersistableModel<MultipartFormData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "MPFD";
     }
+    /*
     /// <summary>
     /// A form data item in multipart/form-data format.
     /// </summary>
@@ -164,4 +247,5 @@ namespace System.ClientModel
         public string ContentType { get; set; }
         public BinaryData Content { get; set; }
     }
+    */
 }

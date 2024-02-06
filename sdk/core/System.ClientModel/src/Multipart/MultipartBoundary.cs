@@ -6,7 +6,7 @@
 using System;
 using System.Text;
 
-namespace System.ClientModel
+namespace System.ClientModel.Primitives
 {
     internal class MultipartBoundary
     {

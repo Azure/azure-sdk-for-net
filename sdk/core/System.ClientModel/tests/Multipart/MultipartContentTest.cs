@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -28,7 +29,7 @@ namespace System.ClientModel.Tests.Multipart
         [Test]
         public void TestToContent()
         {
-            MultipartContent content = new MultipartContent();
+            MultipartFormData content = new MultipartFormData();
             content.Add(new BinaryData("part1"));
             content.Add(new BinaryData("part2"));
             BinaryData binaryData = content.ToContent();
@@ -38,18 +39,19 @@ namespace System.ClientModel.Tests.Multipart
         [Test]
         public void TestToContentForFormData()
         {
-            MultipartFormDataContent content = new MultipartFormDataContent();
+            MultipartFormData content = new MultipartFormData();
             content.Add(new BinaryData("part1", "text/plainText"), "part1");
             content.Add(new BinaryData("part2"), "part2");
             content.Add(BinaryData.FromObjectAsJson(new TestModel("model1", 10)), "model");
             content.Add(BinaryData.FromStream(File.Open("D:\\materials\\test.png", FileMode.Open)), "file", "file.wav", null);
-            BinaryData binaryData = content.ToContent();
+            //BinaryData binaryData = content.ToContent();
+            BinaryData binaryData = ModelReaderWriter.Write(content, new ModelReaderWriterOptions("MPFD"));
             byte[] data = binaryData.ToArray();
             int len1 = data.Length;
             string raw = binaryData.ToString();
             int len = raw.Length;
             Console.WriteLine(binaryData.ToString());
-            MultipartFormDataContent content2 = MultipartFormDataContent.Create(binaryData);
+            MultipartFormData content2 = MultipartFormData.Create(binaryData);
             BinaryData binaryData2 = content2.ToContent();
             byte[] data2 = binaryData2.ToArray();
             int length2 = data2.Length;

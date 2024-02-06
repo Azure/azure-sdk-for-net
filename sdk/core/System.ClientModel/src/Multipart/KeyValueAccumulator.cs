@@ -10,7 +10,7 @@ using System.Collections.Generic;
 #pragma warning disable IDE0018 // Inline declaration
 #pragma warning disable IDE0034 // default can be simplified
 
-namespace System.ClientModel
+namespace System.ClientModel.Primitives
 {
     internal struct KeyValueAccumulator
     {

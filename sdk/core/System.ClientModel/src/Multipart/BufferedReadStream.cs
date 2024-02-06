@@ -18,7 +18,7 @@ using System.Threading.Tasks;
 #pragma warning disable IDE0054 // Use compound assignment
 #pragma warning disable IDE0059 // Unnecessary assignment
 
-namespace System.ClientModel
+namespace System.ClientModel.Primitives
 {
     /// <summary>
     /// A Stream that wraps another stream and allows reading lines.

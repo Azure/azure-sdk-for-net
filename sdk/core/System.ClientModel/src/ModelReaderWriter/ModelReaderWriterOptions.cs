@@ -33,21 +33,10 @@ namespace System.ClientModel.Primitives
         {
             Format = format;
         }
-        /// <summary>
-        /// Initializes a new instance of <see cref="ModelReaderWriterOptions"/>.
-        /// </summary>
-        /// <param name="format">The format to read and write models.</param>
-        /// <param name="isWire">Indiate if the model is used in http request or response.</param>
-        public ModelReaderWriterOptions(string format, bool isWire)
-        {
-            Format = format;
-            IsWire = isWire;
-        }
 
         /// <summary>
         /// Gets the format to read and write the model.
         /// </summary>
         public string Format { get; }
-        public bool IsWire { get; } = false;
     }
 }
