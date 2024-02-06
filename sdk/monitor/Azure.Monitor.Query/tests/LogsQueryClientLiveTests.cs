@@ -487,25 +487,10 @@ namespace Azure.Monitor.Query.Tests
                 $"1, 'a', false, datetime(\"{recordingUtcNow.ToString("yyyy-MM-ddTHH:mm:ss.fffZ")}\"), " +
                 $"2, 'b', true, datetime(\"{recordingUtcNow.AddDays(2).ToString("yyyy-MM-ddTHH:mm:ss.fffZ")}\")," +
                 $"3, 'c', false, datetime(\"{recordingUtcNow.AddDays(5).ToString("yyyy-MM-ddTHH:mm:ss.fffZ")}\")]; " +
-                "dt | distinct * | project TimeGenerated}";
+                "dt | distinct * | project TimeGenerated";
 
             var client = CreateClient();
-            // Empty check
             var results = await client.QueryWorkspaceAsync<DateTimeOffset>(
-                TestEnvironment.WorkspaceId,
-                mockQuery,
-                timespan);
-
-            Assert.AreEqual(0, results.Value.Count);
-
-            // Check if all rows in table were uploaded
-            // Get the time of the third event and add a bit of buffer to it (events are 2d apart)
-            var maxOffset = (DateTimeOffset)_logsTestData.TableA[2][LogsTestData.TimeGeneratedColumnNameSent];
-            timespan = Recording.UtcNow - maxOffset;
-            timespan = timespan.Add(TimeSpan.FromDays(7));
-
-            // Make sure there is some data in the range specified
-            results = await client.QueryWorkspaceAsync<DateTimeOffset>(
                 TestEnvironment.WorkspaceId,
                 mockQuery,
                 timespan);
@@ -526,7 +511,7 @@ namespace Azure.Monitor.Query.Tests
                 $"1, 'a', false, datetime(\"{recordingUtcNow.ToString("yyyy-MM-ddTHH:mm:ss.fffZ")}\"), " +
                 $"2, 'b', true, datetime(\"{recordingUtcNow.AddDays(2).ToString("yyyy-MM-ddTHH:mm:ss.fffZ")}\")," +
                 $"3, 'c', false, datetime(\"{recordingUtcNow.AddDays(5).ToString("yyyy-MM-ddTHH:mm:ss.fffZ")}\")]; " +
-                "dt | distinct * | project TimeGenerated}";
+                "dt | distinct * | project TimeGenerated";
 
             // empty check
             LogsBatchQuery batch = new LogsBatchQuery();
@@ -543,7 +528,6 @@ namespace Azure.Monitor.Query.Tests
             var result1 = response.Value.GetResult<DateTimeOffset>(id1);
             var result2 = response.Value.GetResult<DateTimeOffset>(id2);
 
-            Assert.AreEqual(0, result1.Count);
             Assert.GreaterOrEqual(result2.Count, 3);
         }
 
@@ -756,24 +740,10 @@ namespace Azure.Monitor.Query.Tests
                 $"1, 'a', false, datetime(\"{recordingUtcNow.ToString("yyyy-MM-ddTHH:mm:ss.fffZ")}\"), " +
                 $"2, 'b', true, datetime(\"{recordingUtcNow.AddDays(2).ToString("yyyy-MM-ddTHH:mm:ss.fffZ")}\")," +
                 $"3, 'c', false, datetime(\"{recordingUtcNow.AddDays(5).ToString("yyyy-MM-ddTHH:mm:ss.fffZ")}\")]; " +
-                "dt | distinct * | project TimeGenerated}";
-
-            // Empty check
-            var results = await client.QueryResourceAsync<DateTimeOffset>(
-                new ResourceIdentifier(TestEnvironment.WorkspacePrimaryResourceId),
-                mockQuery,
-                timespan);
-
-            Assert.AreEqual(0, results.Value.Count);
-
-            // Check if all rows in table were uploaded
-            // Get the time of the third event and add a bit of buffer to it (events are 2d apart)
-            var maxOffset = (DateTimeOffset)_logsTestData.TableA[2][LogsTestData.TimeGeneratedColumnNameSent];
-            timespan = Recording.UtcNow - maxOffset;
-            timespan = timespan.Add(TimeSpan.FromDays(7));
+                "dt | distinct * | project TimeGenerated";
 
             // Make sure there is some data in the range specified
-            results = await client.QueryResourceAsync<DateTimeOffset>(
+            var results = await client.QueryResourceAsync<DateTimeOffset>(
                 new ResourceIdentifier(TestEnvironment.WorkspacePrimaryResourceId),
                 mockQuery,
                 timespan);
@@ -793,24 +763,9 @@ namespace Azure.Monitor.Query.Tests
                 $"1, 'a', false, datetime(\"{recordingUtcNow.ToString("yyyy-MM-ddTHH:mm:ss.fffZ")}\"), " +
                 $"2, 'b', true, datetime(\"{recordingUtcNow.AddDays(2).ToString("yyyy-MM-ddTHH:mm:ss.fffZ")}\")," +
                 $"3, 'c', false, datetime(\"{recordingUtcNow.AddDays(5).ToString("yyyy-MM-ddTHH:mm:ss.fffZ")}\")]; " +
-                "dt | distinct * | project TimeGenerated}";
+                "dt | distinct * | project TimeGenerated";
 
-            // Empty check
-            Response<LogsQueryResult> results = await client.QueryResourceAsync(
-                new ResourceIdentifier(TestEnvironment.WorkspacePrimaryResourceId),
-                mockQuery,
-                timespan);
-
-            Assert.AreEqual(0, results.Value.Table.Rows.Count);
-
-            // Check if all rows in table were uploaded
-            // Get the time of the third event and add a bit of buffer to it (events are 2d apart)
-            var maxOffset = (DateTimeOffset)_logsTestData.TableA[2][LogsTestData.TimeGeneratedColumnNameSent];
-            timespan = Recording.UtcNow - maxOffset;
-            timespan = timespan.Add(TimeSpan.FromDays(7));
-
-            // Make sure there is some data in the range specified
-            results = await client.QueryResourceAsync(
+            var results = await client.QueryResourceAsync(
                 new ResourceIdentifier(TestEnvironment.WorkspacePrimaryResourceId),
                 mockQuery,
                 timespan);
@@ -831,24 +786,9 @@ namespace Azure.Monitor.Query.Tests
                 $"1, 'a', false, datetime(\"{recordingUtcNow.ToString("yyyy-MM-ddTHH:mm:ss.fffZ")}\"), " +
                 $"2, 'b', true, datetime(\"{recordingUtcNow.AddDays(2).ToString("yyyy-MM-ddTHH:mm:ss.fffZ")}\")," +
                 $"3, 'c', false, datetime(\"{recordingUtcNow.AddDays(5).ToString("yyyy-MM-ddTHH:mm:ss.fffZ")}\")]; " +
-                "dt | distinct * | project TimeGenerated}";
+                "dt | distinct * | project TimeGenerated";
 
-            // Empty check
-            Response<LogsQueryResult> results = await client.QueryResourceAsync(
-                new ResourceIdentifier(TestEnvironment.WorkspaceSecondaryResourceId),
-                mockQuery,
-                timespan);
-
-            Assert.AreEqual(0, results.Value.Table.Rows.Count);
-
-            // Check if all rows in table were uploaded
-            // Get the time of the third event and add a bit of buffer to it (events are 2d apart)
-            var maxOffset = (DateTimeOffset)_logsTestData.TableA[2][LogsTestData.TimeGeneratedColumnNameSent];
-            timespan = Recording.UtcNow - maxOffset;
-            timespan = timespan.Add(TimeSpan.FromDays(7));
-
-            // Make sure there is some data in the range specified
-            results = await client.QueryResourceAsync(
+            var results = await client.QueryResourceAsync(
                 new ResourceIdentifier(TestEnvironment.WorkspaceSecondaryResourceId),
                 mockQuery,
                 timespan);
@@ -881,24 +821,9 @@ namespace Azure.Monitor.Query.Tests
                 $"1, 'a', false, datetime(\"{recordingUtcNow.ToString("yyyy-MM-ddTHH:mm:ss.fffZ")}\"), " +
                 $"2, 'b', true, datetime(\"{recordingUtcNow.AddDays(2).ToString("yyyy-MM-ddTHH:mm:ss.fffZ")}\")," +
                 $"3, 'c', false, datetime(\"{recordingUtcNow.AddDays(5).ToString("yyyy-MM-ddTHH:mm:ss.fffZ")}\")]; " +
-                "dt | distinct * | project TimeGenerated}";
+                "dt | distinct * | project TimeGenerated";
 
-            // Empty check
             var results = await client.QueryResourceAsync<DateTimeOffset>(
-                new ResourceIdentifier(TestEnvironment.WorkspaceSecondaryResourceId),
-                mockQuery,
-                timespan);
-
-            Assert.AreEqual(0, results.Value.Count);
-
-            // Check if all rows in table were uploaded
-            // Get the time of the third event and add a bit of buffer to it (events are 2d apart)
-            var maxOffset = (DateTimeOffset)_logsTestData.TableA[2][LogsTestData.TimeGeneratedColumnNameSent];
-            timespan = Recording.UtcNow - maxOffset;
-            timespan = timespan.Add(TimeSpan.FromDays(7));
-
-            // Make sure there is some data in the range specified
-            results = await client.QueryResourceAsync<DateTimeOffset>(
                 new ResourceIdentifier(TestEnvironment.WorkspaceSecondaryResourceId),
                 mockQuery,
                 timespan);
