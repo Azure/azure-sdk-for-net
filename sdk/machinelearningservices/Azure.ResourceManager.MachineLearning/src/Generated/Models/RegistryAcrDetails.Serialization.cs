@@ -31,7 +31,15 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (SystemCreatedAcrAccount != null)
                 {
                     writer.WritePropertyName("systemCreatedAcrAccount"u8);
-                    writer.WriteObjectValue(SystemCreatedAcrAccount);
+                    BinaryData data = ModelReaderWriter.Write(SystemCreatedAcrAccount, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(data))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
                 }
                 else
                 {
@@ -43,7 +51,15 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (UserCreatedAcrAccount != null)
                 {
                     writer.WritePropertyName("userCreatedAcrAccount"u8);
-                    writer.WriteObjectValue(UserCreatedAcrAccount);
+                    BinaryData data = ModelReaderWriter.Write(UserCreatedAcrAccount, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(data))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
                 }
                 else
                 {

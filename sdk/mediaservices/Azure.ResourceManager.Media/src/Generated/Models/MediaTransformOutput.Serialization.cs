@@ -37,7 +37,15 @@ namespace Azure.ResourceManager.Media.Models
                 writer.WriteStringValue(RelativePriority.Value.ToString());
             }
             writer.WritePropertyName("preset"u8);
-            writer.WriteObjectValue(Preset);
+            BinaryData data = ModelReaderWriter.Write(Preset, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+            using (JsonDocument document = JsonDocument.Parse(data))
+            {
+                JsonSerializer.Serialize(writer, document.RootElement);
+            }
+#endif
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)

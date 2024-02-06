@@ -60,7 +60,15 @@ namespace Azure.ResourceManager.Logic.Models
             if (Optional.IsDefined(WsdlService))
             {
                 writer.WritePropertyName("wsdlService"u8);
-                writer.WriteObjectValue(WsdlService);
+                BinaryData data = ModelReaderWriter.Write(WsdlService, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsDefined(WsdlImportMethod))
             {
@@ -80,7 +88,15 @@ namespace Azure.ResourceManager.Logic.Models
             if (Optional.IsDefined(DeploymentParameters))
             {
                 writer.WritePropertyName("deploymentParameters"u8);
-                writer.WriteObjectValue(DeploymentParameters);
+                BinaryData data = ModelReaderWriter.Write(DeploymentParameters, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

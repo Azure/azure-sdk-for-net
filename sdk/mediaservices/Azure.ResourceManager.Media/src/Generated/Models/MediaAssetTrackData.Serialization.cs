@@ -53,7 +53,15 @@ namespace Azure.ResourceManager.Media
             if (Optional.IsDefined(Track))
             {
                 writer.WritePropertyName("track"u8);
-                writer.WriteObjectValue(Track);
+                BinaryData data = ModelReaderWriter.Write(Track, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {

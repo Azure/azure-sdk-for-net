@@ -29,7 +29,15 @@ namespace Azure.ResourceManager.MachineLearning.Models
             if (Optional.IsDefined(CosmosDb))
             {
                 writer.WritePropertyName("cosmosDb"u8);
-                writer.WriteObjectValue(CosmosDb);
+                BinaryData data = ModelReaderWriter.Write(CosmosDb, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

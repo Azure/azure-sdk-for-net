@@ -75,7 +75,15 @@ namespace Azure.ResourceManager.MachineLearning.Models
             if (Optional.IsDefined(ForecastHorizon))
             {
                 writer.WritePropertyName("forecastHorizon"u8);
-                writer.WriteObjectValue(ForecastHorizon);
+                BinaryData data = ModelReaderWriter.Write(ForecastHorizon, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsDefined(Frequency))
             {
@@ -92,7 +100,15 @@ namespace Azure.ResourceManager.MachineLearning.Models
             if (Optional.IsDefined(Seasonality))
             {
                 writer.WritePropertyName("seasonality"u8);
-                writer.WriteObjectValue(Seasonality);
+                BinaryData data = ModelReaderWriter.Write(Seasonality, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsDefined(ShortSeriesHandlingConfig))
             {
@@ -109,7 +125,15 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (TargetLags != null)
                 {
                     writer.WritePropertyName("targetLags"u8);
-                    writer.WriteObjectValue(TargetLags);
+                    BinaryData data = ModelReaderWriter.Write(TargetLags, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(data))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
                 }
                 else
                 {
@@ -121,7 +145,15 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (TargetRollingWindowSize != null)
                 {
                     writer.WritePropertyName("targetRollingWindowSize"u8);
-                    writer.WriteObjectValue(TargetRollingWindowSize);
+                    BinaryData data = ModelReaderWriter.Write(TargetRollingWindowSize, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(data))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
                 }
                 else
                 {

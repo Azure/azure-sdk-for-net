@@ -29,7 +29,15 @@ namespace Azure.ResourceManager.MachineLearning.Models
             if (Optional.IsDefined(ComputeRuntime))
             {
                 writer.WritePropertyName("computeRuntime"u8);
-                writer.WriteObjectValue(ComputeRuntime);
+                BinaryData data = ModelReaderWriter.Write(ComputeRuntime, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsDefined(OfflineStoreConnectionName))
             {

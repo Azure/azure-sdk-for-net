@@ -31,7 +31,15 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (EmailNotificationSetting != null)
                 {
                     writer.WritePropertyName("emailNotificationSetting"u8);
-                    writer.WriteObjectValue(EmailNotificationSetting);
+                    BinaryData data = ModelReaderWriter.Write(EmailNotificationSetting, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(data))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
                 }
                 else
                 {

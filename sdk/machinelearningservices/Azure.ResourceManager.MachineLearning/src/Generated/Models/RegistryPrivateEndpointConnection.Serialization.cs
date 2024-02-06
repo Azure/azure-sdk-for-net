@@ -74,7 +74,15 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (PrivateEndpoint != null)
                 {
                     writer.WritePropertyName("privateEndpoint"u8);
-                    writer.WriteObjectValue(PrivateEndpoint);
+                    BinaryData data = ModelReaderWriter.Write(PrivateEndpoint, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(data))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
                 }
                 else
                 {
@@ -86,7 +94,15 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (PrivateLinkServiceConnectionState != null)
                 {
                     writer.WritePropertyName("privateLinkServiceConnectionState"u8);
-                    writer.WriteObjectValue(PrivateLinkServiceConnectionState);
+                    BinaryData data = ModelReaderWriter.Write(PrivateLinkServiceConnectionState, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(data))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
                 }
                 else
                 {

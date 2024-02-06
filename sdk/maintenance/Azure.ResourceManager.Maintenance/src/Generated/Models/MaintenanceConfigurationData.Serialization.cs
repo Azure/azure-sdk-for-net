@@ -92,7 +92,15 @@ namespace Azure.ResourceManager.Maintenance
             if (Optional.IsDefined(InstallPatches))
             {
                 writer.WritePropertyName("installPatches"u8);
-                writer.WriteObjectValue(InstallPatches);
+                BinaryData data = ModelReaderWriter.Write(InstallPatches, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             writer.WritePropertyName("maintenanceWindow"u8);
             writer.WriteStartObject();

@@ -63,22 +63,54 @@ namespace Azure.ResourceManager.Media
             if (Optional.IsDefined(EnvelopeEncryption))
             {
                 writer.WritePropertyName("envelopeEncryption"u8);
-                writer.WriteObjectValue(EnvelopeEncryption);
+                BinaryData data = ModelReaderWriter.Write(EnvelopeEncryption, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsDefined(CommonEncryptionCenc))
             {
                 writer.WritePropertyName("commonEncryptionCenc"u8);
-                writer.WriteObjectValue(CommonEncryptionCenc);
+                BinaryData data = ModelReaderWriter.Write(CommonEncryptionCenc, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsDefined(CommonEncryptionCbcs))
             {
                 writer.WritePropertyName("commonEncryptionCbcs"u8);
-                writer.WriteObjectValue(CommonEncryptionCbcs);
+                BinaryData data = ModelReaderWriter.Write(CommonEncryptionCbcs, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsDefined(NoEncryption))
             {
                 writer.WritePropertyName("noEncryption"u8);
-                writer.WriteObjectValue(NoEncryption);
+                BinaryData data = ModelReaderWriter.Write(NoEncryption, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)

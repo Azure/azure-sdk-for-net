@@ -45,7 +45,15 @@ namespace Azure.ResourceManager.HybridCompute.Models
             if (Optional.IsDefined(AvailablePatchCountByClassification))
             {
                 writer.WritePropertyName("availablePatchCountByClassification"u8);
-                writer.WriteObjectValue(AvailablePatchCountByClassification);
+                BinaryData data = ModelReaderWriter.Write(AvailablePatchCountByClassification, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (options.Format != "W" && Optional.IsDefined(StartOn))
             {

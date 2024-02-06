@@ -37,9 +37,25 @@ namespace Azure.ResourceManager.Media.Models
                 writer.WriteStringValue(Name);
             }
             writer.WritePropertyName("configuration"u8);
-            writer.WriteObjectValue(Configuration);
+            BinaryData data = ModelReaderWriter.Write(Configuration, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+            using (JsonDocument document = JsonDocument.Parse(data))
+            {
+                JsonSerializer.Serialize(writer, document.RootElement);
+            }
+#endif
             writer.WritePropertyName("restriction"u8);
-            writer.WriteObjectValue(Restriction);
+            BinaryData data0 = ModelReaderWriter.Write(Restriction, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data0);
+#else
+            using (JsonDocument document = JsonDocument.Parse(data0))
+            {
+                JsonSerializer.Serialize(writer, document.RootElement);
+            }
+#endif
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)

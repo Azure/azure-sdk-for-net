@@ -29,7 +29,15 @@ namespace Azure.ResourceManager.Media.Models
             if (Optional.IsDefined(Configurations))
             {
                 writer.WritePropertyName("configurations"u8);
-                writer.WriteObjectValue(Configurations);
+                BinaryData data = ModelReaderWriter.Write(Configurations, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             writer.WritePropertyName("presetName"u8);
             writer.WriteStringValue(PresetName.ToString());
