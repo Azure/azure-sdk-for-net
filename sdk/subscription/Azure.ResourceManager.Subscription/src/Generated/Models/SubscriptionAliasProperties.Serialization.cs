@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -244,6 +246,121 @@ namespace Azure.ResourceManager.Subscription.Models
             return new SubscriptionAliasProperties(subscriptionId.Value, displayName.Value, Optional.ToNullable(provisioningState), acceptOwnershipUrl.Value, Optional.ToNullable(acceptOwnershipState), billingScope.Value, Optional.ToNullable(workload), resellerId.Value, subscriptionOwnerId.Value, managementGroupId.Value, Optional.ToNullable(createdTime), Optional.ToDictionary(tags), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(SubscriptionId))
+            {
+                builder.Append("  subscriptionId:");
+                builder.AppendLine($" '{SubscriptionId}'");
+            }
+
+            if (Optional.IsDefined(DisplayName))
+            {
+                builder.Append("  displayName:");
+                builder.AppendLine($" '{DisplayName}'");
+            }
+
+            if (Optional.IsDefined(ProvisioningState))
+            {
+                builder.Append("  provisioningState:");
+                builder.AppendLine($" '{ProvisioningState.ToString()}'");
+            }
+
+            if (Optional.IsDefined(AcceptOwnershipUri))
+            {
+                builder.Append("  acceptOwnershipUrl:");
+                builder.AppendLine($" '{AcceptOwnershipUri.AbsoluteUri}'");
+            }
+
+            if (Optional.IsDefined(AcceptOwnershipState))
+            {
+                builder.Append("  acceptOwnershipState:");
+                builder.AppendLine($" '{AcceptOwnershipState.ToString()}'");
+            }
+
+            if (Optional.IsDefined(BillingScope))
+            {
+                builder.Append("  billingScope:");
+                builder.AppendLine($" '{BillingScope}'");
+            }
+
+            if (Optional.IsDefined(Workload))
+            {
+                builder.Append("  workload:");
+                builder.AppendLine($" '{Workload.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ResellerId))
+            {
+                builder.Append("  resellerId:");
+                builder.AppendLine($" '{ResellerId}'");
+            }
+
+            if (Optional.IsDefined(SubscriptionOwnerId))
+            {
+                builder.Append("  subscriptionOwnerId:");
+                builder.AppendLine($" '{SubscriptionOwnerId}'");
+            }
+
+            if (Optional.IsDefined(ManagementGroupId))
+            {
+                builder.Append("  managementGroupId:");
+                builder.AppendLine($" '{ManagementGroupId}'");
+            }
+
+            if (Optional.IsDefined(CreatedOn))
+            {
+                builder.Append("  createdTime:");
+                var formattedDateTimeString = TypeFormatters.ToString(CreatedOn.Value, "o");
+                builder.AppendLine($" '{formattedDateTimeString}'");
+            }
+
+            if (Optional.IsCollectionDefined(Tags))
+            {
+                if (Tags.Any())
+                {
+                    builder.Append("  tags:");
+                    builder.AppendLine(" {");
+                    foreach (var item in Tags)
+                    {
+                        builder.Append($"    {item.Key}: ");
+                        if (item.Value == null)
+                        {
+                            builder.Append("null");
+                            continue;
+                        }
+                        builder.AppendLine($" '{item.Value}'");
+                    }
+                    builder.AppendLine("  }");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<SubscriptionAliasProperties>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<SubscriptionAliasProperties>)this).GetFormatFromOptions(options) : options.Format;
@@ -252,6 +369,8 @@ namespace Azure.ResourceManager.Subscription.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(SubscriptionAliasProperties)} does not support '{options.Format}' format.");
             }
@@ -268,6 +387,8 @@ namespace Azure.ResourceManager.Subscription.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeSubscriptionAliasProperties(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(SubscriptionAliasProperties)} does not support '{options.Format}' format.");
             }

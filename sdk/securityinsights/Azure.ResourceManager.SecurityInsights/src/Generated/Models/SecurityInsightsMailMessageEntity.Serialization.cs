@@ -8,7 +8,9 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -593,6 +595,296 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             return new SecurityInsightsMailMessageEntity(id, name, type, systemData.Value, kind, serializedAdditionalRawData, Optional.ToDictionary(additionalData), friendlyName.Value, Optional.ToList(fileEntityIds), recipient.Value, Optional.ToList(urls), Optional.ToList(threats), p1Sender.Value, p1SenderDisplayName.Value, p1SenderDomain.Value, senderIP.Value, p2Sender.Value, p2SenderDisplayName.Value, p2SenderDomain.Value, Optional.ToNullable(receiveDate), Optional.ToNullable(networkMessageId), internetMessageId.Value, subject.Value, language.Value, Optional.ToList(threatDetectionMethods), Optional.ToNullable(bodyFingerprintBin1), Optional.ToNullable(bodyFingerprintBin2), Optional.ToNullable(bodyFingerprintBin3), Optional.ToNullable(bodyFingerprintBin4), Optional.ToNullable(bodyFingerprintBin5), Optional.ToNullable(antispamDirection), Optional.ToNullable(deliveryAction), Optional.ToNullable(deliveryLocation));
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(Kind))
+            {
+                builder.Append("  kind:");
+                builder.AppendLine($" '{Kind.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Id))
+            {
+                builder.Append("  id:");
+                builder.AppendLine($" '{Id.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                builder.AppendLine($" '{Name}'");
+            }
+
+            if (Optional.IsDefined(ResourceType))
+            {
+                builder.Append("  type:");
+                builder.AppendLine($" '{ResourceType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SystemData))
+            {
+                builder.Append("  systemData:");
+                builder.AppendLine($" '{SystemData.ToString()}'");
+            }
+
+            builder.Append("  properties:");
+            builder.AppendLine(" {");
+            if (Optional.IsCollectionDefined(AdditionalData))
+            {
+                if (AdditionalData.Any())
+                {
+                    builder.Append("    additionalData:");
+                    builder.AppendLine(" {");
+                    foreach (var item in AdditionalData)
+                    {
+                        builder.Append($"        {item.Key}: ");
+                        if (item.Value == null)
+                        {
+                            builder.Append("null");
+                            continue;
+                        }
+                        builder.AppendLine($" '{item.Value.ToString()}'");
+                    }
+                    builder.AppendLine("    }");
+                }
+            }
+
+            if (Optional.IsDefined(FriendlyName))
+            {
+                builder.Append("    friendlyName:");
+                builder.AppendLine($" '{FriendlyName}'");
+            }
+
+            if (Optional.IsCollectionDefined(FileEntityIds))
+            {
+                if (FileEntityIds.Any())
+                {
+                    builder.Append("    fileEntityIds:");
+                    builder.AppendLine(" [");
+                    foreach (var item in FileEntityIds)
+                    {
+                        if (item == null)
+                        {
+                            builder.Append("null");
+                            continue;
+                        }
+                        builder.AppendLine($"      '{item}'");
+                    }
+                    builder.AppendLine("    ]");
+                }
+            }
+
+            if (Optional.IsDefined(Recipient))
+            {
+                builder.Append("    recipient:");
+                builder.AppendLine($" '{Recipient}'");
+            }
+
+            if (Optional.IsCollectionDefined(Uris))
+            {
+                if (Uris.Any())
+                {
+                    builder.Append("    urls:");
+                    builder.AppendLine(" [");
+                    foreach (var item in Uris)
+                    {
+                        if (item == null)
+                        {
+                            builder.Append("null");
+                            continue;
+                        }
+                        builder.AppendLine($"      '{item.AbsoluteUri}'");
+                    }
+                    builder.AppendLine("    ]");
+                }
+            }
+
+            if (Optional.IsCollectionDefined(Threats))
+            {
+                if (Threats.Any())
+                {
+                    builder.Append("    threats:");
+                    builder.AppendLine(" [");
+                    foreach (var item in Threats)
+                    {
+                        if (item == null)
+                        {
+                            builder.Append("null");
+                            continue;
+                        }
+                        builder.AppendLine($"      '{item}'");
+                    }
+                    builder.AppendLine("    ]");
+                }
+            }
+
+            if (Optional.IsDefined(P1Sender))
+            {
+                builder.Append("    p1Sender:");
+                builder.AppendLine($" '{P1Sender}'");
+            }
+
+            if (Optional.IsDefined(P1SenderDisplayName))
+            {
+                builder.Append("    p1SenderDisplayName:");
+                builder.AppendLine($" '{P1SenderDisplayName}'");
+            }
+
+            if (Optional.IsDefined(P1SenderDomain))
+            {
+                builder.Append("    p1SenderDomain:");
+                builder.AppendLine($" '{P1SenderDomain}'");
+            }
+
+            if (Optional.IsDefined(SenderIP))
+            {
+                builder.Append("    senderIP:");
+                builder.AppendLine($" '{SenderIP.ToString()}'");
+            }
+
+            if (Optional.IsDefined(P2Sender))
+            {
+                builder.Append("    p2Sender:");
+                builder.AppendLine($" '{P2Sender}'");
+            }
+
+            if (Optional.IsDefined(P2SenderDisplayName))
+            {
+                builder.Append("    p2SenderDisplayName:");
+                builder.AppendLine($" '{P2SenderDisplayName}'");
+            }
+
+            if (Optional.IsDefined(P2SenderDomain))
+            {
+                builder.Append("    p2SenderDomain:");
+                builder.AppendLine($" '{P2SenderDomain}'");
+            }
+
+            if (Optional.IsDefined(ReceiveOn))
+            {
+                builder.Append("    receiveDate:");
+                var formattedDateTimeString = TypeFormatters.ToString(ReceiveOn.Value, "o");
+                builder.AppendLine($" '{formattedDateTimeString}'");
+            }
+
+            if (Optional.IsDefined(NetworkMessageId))
+            {
+                builder.Append("    networkMessageId:");
+                builder.AppendLine($" '{NetworkMessageId.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(InternetMessageId))
+            {
+                builder.Append("    internetMessageId:");
+                builder.AppendLine($" '{InternetMessageId}'");
+            }
+
+            if (Optional.IsDefined(Subject))
+            {
+                builder.Append("    subject:");
+                builder.AppendLine($" '{Subject}'");
+            }
+
+            if (Optional.IsDefined(Language))
+            {
+                builder.Append("    language:");
+                builder.AppendLine($" '{Language}'");
+            }
+
+            if (Optional.IsCollectionDefined(ThreatDetectionMethods))
+            {
+                if (ThreatDetectionMethods.Any())
+                {
+                    builder.Append("    threatDetectionMethods:");
+                    builder.AppendLine(" [");
+                    foreach (var item in ThreatDetectionMethods)
+                    {
+                        if (item == null)
+                        {
+                            builder.Append("null");
+                            continue;
+                        }
+                        builder.AppendLine($"      '{item}'");
+                    }
+                    builder.AppendLine("    ]");
+                }
+            }
+
+            if (Optional.IsDefined(BodyFingerprintBin1))
+            {
+                builder.Append("    bodyFingerprintBin1:");
+                builder.AppendLine($" {BodyFingerprintBin1.Value}");
+            }
+
+            if (Optional.IsDefined(BodyFingerprintBin2))
+            {
+                builder.Append("    bodyFingerprintBin2:");
+                builder.AppendLine($" {BodyFingerprintBin2.Value}");
+            }
+
+            if (Optional.IsDefined(BodyFingerprintBin3))
+            {
+                builder.Append("    bodyFingerprintBin3:");
+                builder.AppendLine($" {BodyFingerprintBin3.Value}");
+            }
+
+            if (Optional.IsDefined(BodyFingerprintBin4))
+            {
+                builder.Append("    bodyFingerprintBin4:");
+                builder.AppendLine($" {BodyFingerprintBin4.Value}");
+            }
+
+            if (Optional.IsDefined(BodyFingerprintBin5))
+            {
+                builder.Append("    bodyFingerprintBin5:");
+                builder.AppendLine($" {BodyFingerprintBin5.Value}");
+            }
+
+            if (Optional.IsDefined(AntispamDirection))
+            {
+                builder.Append("    antispamDirection:");
+                builder.AppendLine($" '{AntispamDirection.ToString()}'");
+            }
+
+            if (Optional.IsDefined(DeliveryAction))
+            {
+                builder.Append("    deliveryAction:");
+                builder.AppendLine($" '{DeliveryAction.ToString()}'");
+            }
+
+            if (Optional.IsDefined(DeliveryLocation))
+            {
+                builder.Append("    deliveryLocation:");
+                builder.AppendLine($" '{DeliveryLocation.ToString()}'");
+            }
+
+            builder.AppendLine("  }");
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<SecurityInsightsMailMessageEntity>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<SecurityInsightsMailMessageEntity>)this).GetFormatFromOptions(options) : options.Format;
@@ -601,6 +893,8 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(SecurityInsightsMailMessageEntity)} does not support '{options.Format}' format.");
             }
@@ -617,6 +911,8 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeSecurityInsightsMailMessageEntity(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(SecurityInsightsMailMessageEntity)} does not support '{options.Format}' format.");
             }

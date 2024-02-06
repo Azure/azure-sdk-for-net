@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -285,6 +287,129 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
             return new SqlVmAutoBackupSettings(Optional.ToNullable(enable), Optional.ToNullable(enableEncryption), Optional.ToNullable(retentionPeriod), storageAccountUrl.Value, storageContainerName.Value, storageAccessKey.Value, password.Value, Optional.ToNullable(backupSystemDbs), Optional.ToNullable(backupScheduleType), Optional.ToNullable(fullBackupFrequency), Optional.ToList(daysOfWeek), Optional.ToNullable(fullBackupStartTime), Optional.ToNullable(fullBackupWindowHours), Optional.ToNullable(logBackupFrequency), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(IsEnabled))
+            {
+                builder.Append("  enable:");
+                var boolValue = IsEnabled.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(IsEncryptionEnabled))
+            {
+                builder.Append("  enableEncryption:");
+                var boolValue = IsEncryptionEnabled.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(RetentionPeriodInDays))
+            {
+                builder.Append("  retentionPeriod:");
+                builder.AppendLine($" {RetentionPeriodInDays.Value}");
+            }
+
+            if (Optional.IsDefined(StorageAccountUri))
+            {
+                builder.Append("  storageAccountUrl:");
+                builder.AppendLine($" '{StorageAccountUri.AbsoluteUri}'");
+            }
+
+            if (Optional.IsDefined(StorageContainerName))
+            {
+                builder.Append("  storageContainerName:");
+                builder.AppendLine($" '{StorageContainerName}'");
+            }
+
+            if (Optional.IsDefined(StorageAccessKey))
+            {
+                builder.Append("  storageAccessKey:");
+                builder.AppendLine($" '{StorageAccessKey}'");
+            }
+
+            if (Optional.IsDefined(Password))
+            {
+                builder.Append("  password:");
+                builder.AppendLine($" '{Password}'");
+            }
+
+            if (Optional.IsDefined(AreSystemDbsIncludedInBackup))
+            {
+                builder.Append("  backupSystemDbs:");
+                var boolValue = AreSystemDbsIncludedInBackup.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(BackupScheduleType))
+            {
+                builder.Append("  backupScheduleType:");
+                builder.AppendLine($" '{BackupScheduleType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(FullBackupFrequency))
+            {
+                builder.Append("  fullBackupFrequency:");
+                builder.AppendLine($" '{FullBackupFrequency.ToString()}'");
+            }
+
+            if (Optional.IsCollectionDefined(DaysOfWeek))
+            {
+                if (DaysOfWeek.Any())
+                {
+                    builder.Append("  daysOfWeek:");
+                    builder.AppendLine(" [");
+                    foreach (var item in DaysOfWeek)
+                    {
+                        builder.AppendLine($"    '{item.ToString()}'");
+                    }
+                    builder.AppendLine("  ]");
+                }
+            }
+
+            if (Optional.IsDefined(FullBackupStartHour))
+            {
+                builder.Append("  fullBackupStartTime:");
+                builder.AppendLine($" {FullBackupStartHour.Value}");
+            }
+
+            if (Optional.IsDefined(FullBackupWindowHours))
+            {
+                builder.Append("  fullBackupWindowHours:");
+                builder.AppendLine($" {FullBackupWindowHours.Value}");
+            }
+
+            if (Optional.IsDefined(LogBackupFrequency))
+            {
+                builder.Append("  logBackupFrequency:");
+                builder.AppendLine($" {LogBackupFrequency.Value}");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<SqlVmAutoBackupSettings>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<SqlVmAutoBackupSettings>)this).GetFormatFromOptions(options) : options.Format;
@@ -293,6 +418,8 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(SqlVmAutoBackupSettings)} does not support '{options.Format}' format.");
             }
@@ -309,6 +436,8 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeSqlVmAutoBackupSettings(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(SqlVmAutoBackupSettings)} does not support '{options.Format}' format.");
             }

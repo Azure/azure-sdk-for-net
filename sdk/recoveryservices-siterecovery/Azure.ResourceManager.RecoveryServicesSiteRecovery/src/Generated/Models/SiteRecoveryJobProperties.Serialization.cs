@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -285,6 +287,149 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             return new SiteRecoveryJobProperties(activityId.Value, scenarioName.Value, friendlyName.Value, state.Value, stateDescription.Value, Optional.ToList(tasks), Optional.ToList(errors), Optional.ToNullable(startTime), Optional.ToNullable(endTime), Optional.ToList(allowedActions), targetObjectId.Value, targetObjectName.Value, targetInstanceType.Value, customDetails.Value, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(ActivityId))
+            {
+                builder.Append("  activityId:");
+                builder.AppendLine($" '{ActivityId}'");
+            }
+
+            if (Optional.IsDefined(ScenarioName))
+            {
+                builder.Append("  scenarioName:");
+                builder.AppendLine($" '{ScenarioName}'");
+            }
+
+            if (Optional.IsDefined(FriendlyName))
+            {
+                builder.Append("  friendlyName:");
+                builder.AppendLine($" '{FriendlyName}'");
+            }
+
+            if (Optional.IsDefined(State))
+            {
+                builder.Append("  state:");
+                builder.AppendLine($" '{State}'");
+            }
+
+            if (Optional.IsDefined(StateDescription))
+            {
+                builder.Append("  stateDescription:");
+                builder.AppendLine($" '{StateDescription}'");
+            }
+
+            if (Optional.IsCollectionDefined(Tasks))
+            {
+                if (Tasks.Any())
+                {
+                    builder.Append("  tasks:");
+                    builder.AppendLine(" [");
+                    foreach (var item in Tasks)
+                    {
+                        AppendChildObject(builder, item, options, 4, true);
+                    }
+                    builder.AppendLine("  ]");
+                }
+            }
+
+            if (Optional.IsCollectionDefined(Errors))
+            {
+                if (Errors.Any())
+                {
+                    builder.Append("  errors:");
+                    builder.AppendLine(" [");
+                    foreach (var item in Errors)
+                    {
+                        AppendChildObject(builder, item, options, 4, true);
+                    }
+                    builder.AppendLine("  ]");
+                }
+            }
+
+            if (Optional.IsDefined(StartOn))
+            {
+                builder.Append("  startTime:");
+                var formattedDateTimeString = TypeFormatters.ToString(StartOn.Value, "o");
+                builder.AppendLine($" '{formattedDateTimeString}'");
+            }
+
+            if (Optional.IsDefined(EndOn))
+            {
+                builder.Append("  endTime:");
+                var formattedDateTimeString = TypeFormatters.ToString(EndOn.Value, "o");
+                builder.AppendLine($" '{formattedDateTimeString}'");
+            }
+
+            if (Optional.IsCollectionDefined(AllowedActions))
+            {
+                if (AllowedActions.Any())
+                {
+                    builder.Append("  allowedActions:");
+                    builder.AppendLine(" [");
+                    foreach (var item in AllowedActions)
+                    {
+                        if (item == null)
+                        {
+                            builder.Append("null");
+                            continue;
+                        }
+                        builder.AppendLine($"    '{item}'");
+                    }
+                    builder.AppendLine("  ]");
+                }
+            }
+
+            if (Optional.IsDefined(TargetObjectId))
+            {
+                builder.Append("  targetObjectId:");
+                builder.AppendLine($" '{TargetObjectId}'");
+            }
+
+            if (Optional.IsDefined(TargetObjectName))
+            {
+                builder.Append("  targetObjectName:");
+                builder.AppendLine($" '{TargetObjectName}'");
+            }
+
+            if (Optional.IsDefined(TargetInstanceType))
+            {
+                builder.Append("  targetInstanceType:");
+                builder.AppendLine($" '{TargetInstanceType}'");
+            }
+
+            if (Optional.IsDefined(CustomDetails))
+            {
+                builder.Append("  customDetails:");
+                AppendChildObject(builder, CustomDetails, options, 2, false);
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<SiteRecoveryJobProperties>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<SiteRecoveryJobProperties>)this).GetFormatFromOptions(options) : options.Format;
@@ -293,6 +438,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(SiteRecoveryJobProperties)} does not support '{options.Format}' format.");
             }
@@ -309,6 +456,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeSiteRecoveryJobProperties(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(SiteRecoveryJobProperties)} does not support '{options.Format}' format.");
             }

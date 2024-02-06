@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
@@ -1098,6 +1100,489 @@ namespace Azure.ResourceManager.NetApp
             return new NetAppVolumeData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(etag), Optional.ToList(zones), Optional.ToNullable(fileSystemId), creationToken, Optional.ToNullable(serviceLevel), usageThreshold, exportPolicy.Value, Optional.ToList(protocolTypes), provisioningState.Value, snapshotId.Value, Optional.ToNullable(deleteBaseSnapshot), backupId.Value, baremetalTenantId.Value, subnetId, Optional.ToNullable(networkFeatures), Optional.ToNullable(networkSiblingSetId), Optional.ToNullable(storageToNetworkProximity), Optional.ToList(mountTargets), volumeType.Value, dataProtection.Value, Optional.ToNullable(isRestoring), Optional.ToNullable(snapshotDirectoryVisible), Optional.ToNullable(kerberosEnabled), Optional.ToNullable(securityStyle), Optional.ToNullable(smbEncryption), Optional.ToNullable(smbAccessBasedEnumeration), Optional.ToNullable(smbNonBrowsable), Optional.ToNullable(smbContinuouslyAvailable), Optional.ToNullable(throughputMibps), Optional.ToNullable(actualThroughputMibps), Optional.ToNullable(encryptionKeySource), keyVaultPrivateEndpointResourceId.Value, Optional.ToNullable(ldapEnabled), Optional.ToNullable(coolAccess), Optional.ToNullable(coolnessPeriod), Optional.ToNullable(coolAccessRetrievalPolicy), unixPermissions.Value, Optional.ToNullable(cloneProgress), Optional.ToNullable(fileAccessLogs), Optional.ToNullable(avsDataStore), Optional.ToList(dataStoreResourceId), Optional.ToNullable(isDefaultQuotaEnabled), Optional.ToNullable(defaultUserQuotaInKiBs), Optional.ToNullable(defaultGroupQuotaInKiBs), Optional.ToNullable(maximumNumberOfFiles), volumeGroupName.Value, capacityPoolResourceId.Value, proximityPlacementGroup.Value, t2Network.Value, volumeSpecName.Value, Optional.ToNullable(encrypted), Optional.ToList(placementRules), Optional.ToNullable(enableSubvolumes), provisionedAvailabilityZone.Value, Optional.ToNullable(isLargeVolume), originatingResourceId.Value, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(ETag))
+            {
+                builder.Append("  etag:");
+                builder.AppendLine($" '{ETag.Value.ToString()}'");
+            }
+
+            if (Optional.IsCollectionDefined(Zones))
+            {
+                if (Zones.Any())
+                {
+                    builder.Append("  zones:");
+                    builder.AppendLine(" [");
+                    foreach (var item in Zones)
+                    {
+                        if (item == null)
+                        {
+                            builder.Append("null");
+                            continue;
+                        }
+                        builder.AppendLine($"    '{item}'");
+                    }
+                    builder.AppendLine("  ]");
+                }
+            }
+
+            if (Optional.IsCollectionDefined(Tags))
+            {
+                if (Tags.Any())
+                {
+                    builder.Append("  tags:");
+                    builder.AppendLine(" {");
+                    foreach (var item in Tags)
+                    {
+                        builder.Append($"    {item.Key}: ");
+                        if (item.Value == null)
+                        {
+                            builder.Append("null");
+                            continue;
+                        }
+                        builder.AppendLine($" '{item.Value}'");
+                    }
+                    builder.AppendLine("  }");
+                }
+            }
+
+            if (Optional.IsDefined(Location))
+            {
+                builder.Append("  location:");
+                builder.AppendLine($" '{Location.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Id))
+            {
+                builder.Append("  id:");
+                builder.AppendLine($" '{Id.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                builder.AppendLine($" '{Name}'");
+            }
+
+            if (Optional.IsDefined(ResourceType))
+            {
+                builder.Append("  type:");
+                builder.AppendLine($" '{ResourceType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SystemData))
+            {
+                builder.Append("  systemData:");
+                builder.AppendLine($" '{SystemData.ToString()}'");
+            }
+
+            builder.Append("  properties:");
+            builder.AppendLine(" {");
+            if (Optional.IsDefined(FileSystemId))
+            {
+                builder.Append("    fileSystemId:");
+                builder.AppendLine($" '{FileSystemId.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(CreationToken))
+            {
+                builder.Append("    creationToken:");
+                builder.AppendLine($" '{CreationToken}'");
+            }
+
+            if (Optional.IsDefined(ServiceLevel))
+            {
+                builder.Append("    serviceLevel:");
+                builder.AppendLine($" '{ServiceLevel.ToString()}'");
+            }
+
+            if (Optional.IsDefined(UsageThreshold))
+            {
+                builder.Append("    usageThreshold:");
+                builder.AppendLine($" '{UsageThreshold.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ExportPolicy))
+            {
+                builder.Append("    exportPolicy:");
+                AppendChildObject(builder, ExportPolicy, options, 4, false);
+            }
+
+            if (Optional.IsCollectionDefined(ProtocolTypes))
+            {
+                if (ProtocolTypes.Any())
+                {
+                    builder.Append("    protocolTypes:");
+                    builder.AppendLine(" [");
+                    foreach (var item in ProtocolTypes)
+                    {
+                        if (item == null)
+                        {
+                            builder.Append("null");
+                            continue;
+                        }
+                        builder.AppendLine($"      '{item}'");
+                    }
+                    builder.AppendLine("    ]");
+                }
+            }
+
+            if (Optional.IsDefined(ProvisioningState))
+            {
+                builder.Append("    provisioningState:");
+                builder.AppendLine($" '{ProvisioningState}'");
+            }
+
+            if (Optional.IsDefined(SnapshotId))
+            {
+                builder.Append("    snapshotId:");
+                builder.AppendLine($" '{SnapshotId}'");
+            }
+
+            if (Optional.IsDefined(DeleteBaseSnapshot))
+            {
+                builder.Append("    deleteBaseSnapshot:");
+                var boolValue = DeleteBaseSnapshot.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(BackupId))
+            {
+                builder.Append("    backupId:");
+                builder.AppendLine($" '{BackupId}'");
+            }
+
+            if (Optional.IsDefined(BaremetalTenantId))
+            {
+                builder.Append("    baremetalTenantId:");
+                builder.AppendLine($" '{BaremetalTenantId}'");
+            }
+
+            if (Optional.IsDefined(SubnetId))
+            {
+                builder.Append("    subnetId:");
+                builder.AppendLine($" '{SubnetId.ToString()}'");
+            }
+
+            if (Optional.IsDefined(NetworkFeatures))
+            {
+                builder.Append("    networkFeatures:");
+                builder.AppendLine($" '{NetworkFeatures.ToString()}'");
+            }
+
+            if (Optional.IsDefined(NetworkSiblingSetId))
+            {
+                builder.Append("    networkSiblingSetId:");
+                builder.AppendLine($" '{NetworkSiblingSetId.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(StorageToNetworkProximity))
+            {
+                builder.Append("    storageToNetworkProximity:");
+                builder.AppendLine($" '{StorageToNetworkProximity.ToString()}'");
+            }
+
+            if (Optional.IsCollectionDefined(MountTargets))
+            {
+                if (MountTargets.Any())
+                {
+                    builder.Append("    mountTargets:");
+                    builder.AppendLine(" [");
+                    foreach (var item in MountTargets)
+                    {
+                        AppendChildObject(builder, item, options, 6, true);
+                    }
+                    builder.AppendLine("    ]");
+                }
+            }
+
+            if (Optional.IsDefined(VolumeType))
+            {
+                builder.Append("    volumeType:");
+                builder.AppendLine($" '{VolumeType}'");
+            }
+
+            if (Optional.IsDefined(DataProtection))
+            {
+                builder.Append("    dataProtection:");
+                AppendChildObject(builder, DataProtection, options, 4, false);
+            }
+
+            if (Optional.IsDefined(IsRestoring))
+            {
+                builder.Append("    isRestoring:");
+                var boolValue = IsRestoring.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(IsSnapshotDirectoryVisible))
+            {
+                builder.Append("    snapshotDirectoryVisible:");
+                var boolValue = IsSnapshotDirectoryVisible.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(IsKerberosEnabled))
+            {
+                builder.Append("    kerberosEnabled:");
+                var boolValue = IsKerberosEnabled.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(SecurityStyle))
+            {
+                builder.Append("    securityStyle:");
+                builder.AppendLine($" '{SecurityStyle.ToString()}'");
+            }
+
+            if (Optional.IsDefined(IsSmbEncryptionEnabled))
+            {
+                builder.Append("    smbEncryption:");
+                var boolValue = IsSmbEncryptionEnabled.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(SmbAccessBasedEnumeration))
+            {
+                builder.Append("    smbAccessBasedEnumeration:");
+                builder.AppendLine($" '{SmbAccessBasedEnumeration.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SmbNonBrowsable))
+            {
+                builder.Append("    smbNonBrowsable:");
+                builder.AppendLine($" '{SmbNonBrowsable.ToString()}'");
+            }
+
+            if (Optional.IsDefined(IsSmbContinuouslyAvailable))
+            {
+                builder.Append("    smbContinuouslyAvailable:");
+                var boolValue = IsSmbContinuouslyAvailable.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(ThroughputMibps))
+            {
+                builder.Append("    throughputMibps:");
+                builder.AppendLine($" '{ThroughputMibps.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ActualThroughputMibps))
+            {
+                builder.Append("    actualThroughputMibps:");
+                builder.AppendLine($" '{ActualThroughputMibps.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(EncryptionKeySource))
+            {
+                builder.Append("    encryptionKeySource:");
+                builder.AppendLine($" '{EncryptionKeySource.ToString()}'");
+            }
+
+            if (Optional.IsDefined(KeyVaultPrivateEndpointResourceId))
+            {
+                builder.Append("    keyVaultPrivateEndpointResourceId:");
+                builder.AppendLine($" '{KeyVaultPrivateEndpointResourceId.ToString()}'");
+            }
+
+            if (Optional.IsDefined(IsLdapEnabled))
+            {
+                builder.Append("    ldapEnabled:");
+                var boolValue = IsLdapEnabled.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(IsCoolAccessEnabled))
+            {
+                builder.Append("    coolAccess:");
+                var boolValue = IsCoolAccessEnabled.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(CoolnessPeriod))
+            {
+                builder.Append("    coolnessPeriod:");
+                builder.AppendLine($" {CoolnessPeriod.Value}");
+            }
+
+            if (Optional.IsDefined(CoolAccessRetrievalPolicy))
+            {
+                builder.Append("    coolAccessRetrievalPolicy:");
+                builder.AppendLine($" '{CoolAccessRetrievalPolicy.ToString()}'");
+            }
+
+            if (Optional.IsDefined(UnixPermissions))
+            {
+                builder.Append("    unixPermissions:");
+                builder.AppendLine($" '{UnixPermissions}'");
+            }
+
+            if (Optional.IsDefined(CloneProgress))
+            {
+                builder.Append("    cloneProgress:");
+                builder.AppendLine($" {CloneProgress.Value}");
+            }
+
+            if (Optional.IsDefined(FileAccessLogs))
+            {
+                builder.Append("    fileAccessLogs:");
+                builder.AppendLine($" '{FileAccessLogs.ToString()}'");
+            }
+
+            if (Optional.IsDefined(AvsDataStore))
+            {
+                builder.Append("    avsDataStore:");
+                builder.AppendLine($" '{AvsDataStore.ToString()}'");
+            }
+
+            if (Optional.IsCollectionDefined(DataStoreResourceId))
+            {
+                if (DataStoreResourceId.Any())
+                {
+                    builder.Append("    dataStoreResourceId:");
+                    builder.AppendLine(" [");
+                    foreach (var item in DataStoreResourceId)
+                    {
+                        if (item == null)
+                        {
+                            builder.Append("null");
+                            continue;
+                        }
+                        builder.AppendLine($"      '{item.ToString()}'");
+                    }
+                    builder.AppendLine("    ]");
+                }
+            }
+
+            if (Optional.IsDefined(IsDefaultQuotaEnabled))
+            {
+                builder.Append("    isDefaultQuotaEnabled:");
+                var boolValue = IsDefaultQuotaEnabled.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(DefaultUserQuotaInKiBs))
+            {
+                builder.Append("    defaultUserQuotaInKiBs:");
+                builder.AppendLine($" '{DefaultUserQuotaInKiBs.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(DefaultGroupQuotaInKiBs))
+            {
+                builder.Append("    defaultGroupQuotaInKiBs:");
+                builder.AppendLine($" '{DefaultGroupQuotaInKiBs.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(MaximumNumberOfFiles))
+            {
+                builder.Append("    maximumNumberOfFiles:");
+                builder.AppendLine($" '{MaximumNumberOfFiles.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(VolumeGroupName))
+            {
+                builder.Append("    volumeGroupName:");
+                builder.AppendLine($" '{VolumeGroupName}'");
+            }
+
+            if (Optional.IsDefined(CapacityPoolResourceId))
+            {
+                builder.Append("    capacityPoolResourceId:");
+                builder.AppendLine($" '{CapacityPoolResourceId.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ProximityPlacementGroupId))
+            {
+                builder.Append("    proximityPlacementGroup:");
+                builder.AppendLine($" '{ProximityPlacementGroupId.ToString()}'");
+            }
+
+            if (Optional.IsDefined(T2Network))
+            {
+                builder.Append("    t2Network:");
+                builder.AppendLine($" '{T2Network}'");
+            }
+
+            if (Optional.IsDefined(VolumeSpecName))
+            {
+                builder.Append("    volumeSpecName:");
+                builder.AppendLine($" '{VolumeSpecName}'");
+            }
+
+            if (Optional.IsDefined(IsEncrypted))
+            {
+                builder.Append("    encrypted:");
+                var boolValue = IsEncrypted.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsCollectionDefined(PlacementRules))
+            {
+                if (PlacementRules.Any())
+                {
+                    builder.Append("    placementRules:");
+                    builder.AppendLine(" [");
+                    foreach (var item in PlacementRules)
+                    {
+                        AppendChildObject(builder, item, options, 6, true);
+                    }
+                    builder.AppendLine("    ]");
+                }
+            }
+
+            if (Optional.IsDefined(EnableSubvolumes))
+            {
+                builder.Append("    enableSubvolumes:");
+                builder.AppendLine($" '{EnableSubvolumes.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ProvisionedAvailabilityZone))
+            {
+                builder.Append("    provisionedAvailabilityZone:");
+                builder.AppendLine($" '{ProvisionedAvailabilityZone}'");
+            }
+
+            if (Optional.IsDefined(IsLargeVolume))
+            {
+                builder.Append("    isLargeVolume:");
+                var boolValue = IsLargeVolume.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(OriginatingResourceId))
+            {
+                builder.Append("    originatingResourceId:");
+                builder.AppendLine($" '{OriginatingResourceId.ToString()}'");
+            }
+
+            builder.AppendLine("  }");
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<NetAppVolumeData>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<NetAppVolumeData>)this).GetFormatFromOptions(options) : options.Format;
@@ -1106,6 +1591,8 @@ namespace Azure.ResourceManager.NetApp
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(NetAppVolumeData)} does not support '{options.Format}' format.");
             }
@@ -1122,6 +1609,8 @@ namespace Azure.ResourceManager.NetApp
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeNetAppVolumeData(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(NetAppVolumeData)} does not support '{options.Format}' format.");
             }

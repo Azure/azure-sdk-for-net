@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
@@ -443,6 +445,197 @@ namespace Azure.ResourceManager.Network
             return new ExpressRouteCircuitPeeringData(id.Value, name.Value, Optional.ToNullable(type), serializedAdditionalRawData, Optional.ToNullable(etag), Optional.ToNullable(peeringType), Optional.ToNullable(state), Optional.ToNullable(azureASN), Optional.ToNullable(peerASN), primaryPeerAddressPrefix.Value, secondaryPeerAddressPrefix.Value, primaryAzurePort.Value, secondaryAzurePort.Value, sharedKey.Value, Optional.ToNullable(vlanId), microsoftPeeringConfig.Value, stats.Value, Optional.ToNullable(provisioningState), gatewayManagerETag.Value, lastModifiedBy.Value, routeFilter, ipv6PeeringConfig.Value, expressRouteConnection, Optional.ToList(connections), Optional.ToList(peeredConnections));
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(ETag))
+            {
+                builder.Append("  etag:");
+                builder.AppendLine($" '{ETag.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Id))
+            {
+                builder.Append("  id:");
+                builder.AppendLine($" '{Id.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                builder.AppendLine($" '{Name}'");
+            }
+
+            if (Optional.IsDefined(ResourceType))
+            {
+                builder.Append("  type:");
+                builder.AppendLine($" '{ResourceType.Value.ToString()}'");
+            }
+
+            builder.Append("  properties:");
+            builder.AppendLine(" {");
+            if (Optional.IsDefined(PeeringType))
+            {
+                builder.Append("    peeringType:");
+                builder.AppendLine($" '{PeeringType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(State))
+            {
+                builder.Append("    state:");
+                builder.AppendLine($" '{State.ToString()}'");
+            }
+
+            if (Optional.IsDefined(AzureASN))
+            {
+                builder.Append("    azureASN:");
+                builder.AppendLine($" {AzureASN.Value}");
+            }
+
+            if (Optional.IsDefined(PeerASN))
+            {
+                builder.Append("    peerASN:");
+                builder.AppendLine($" '{PeerASN.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(PrimaryPeerAddressPrefix))
+            {
+                builder.Append("    primaryPeerAddressPrefix:");
+                builder.AppendLine($" '{PrimaryPeerAddressPrefix}'");
+            }
+
+            if (Optional.IsDefined(SecondaryPeerAddressPrefix))
+            {
+                builder.Append("    secondaryPeerAddressPrefix:");
+                builder.AppendLine($" '{SecondaryPeerAddressPrefix}'");
+            }
+
+            if (Optional.IsDefined(PrimaryAzurePort))
+            {
+                builder.Append("    primaryAzurePort:");
+                builder.AppendLine($" '{PrimaryAzurePort}'");
+            }
+
+            if (Optional.IsDefined(SecondaryAzurePort))
+            {
+                builder.Append("    secondaryAzurePort:");
+                builder.AppendLine($" '{SecondaryAzurePort}'");
+            }
+
+            if (Optional.IsDefined(SharedKey))
+            {
+                builder.Append("    sharedKey:");
+                builder.AppendLine($" '{SharedKey}'");
+            }
+
+            if (Optional.IsDefined(VlanId))
+            {
+                builder.Append("    vlanId:");
+                builder.AppendLine($" {VlanId.Value}");
+            }
+
+            if (Optional.IsDefined(MicrosoftPeeringConfig))
+            {
+                builder.Append("    microsoftPeeringConfig:");
+                AppendChildObject(builder, MicrosoftPeeringConfig, options, 4, false);
+            }
+
+            if (Optional.IsDefined(Stats))
+            {
+                builder.Append("    stats:");
+                AppendChildObject(builder, Stats, options, 4, false);
+            }
+
+            if (Optional.IsDefined(ProvisioningState))
+            {
+                builder.Append("    provisioningState:");
+                builder.AppendLine($" '{ProvisioningState.ToString()}'");
+            }
+
+            if (Optional.IsDefined(GatewayManagerETag))
+            {
+                builder.Append("    gatewayManagerEtag:");
+                builder.AppendLine($" '{GatewayManagerETag}'");
+            }
+
+            if (Optional.IsDefined(LastModifiedBy))
+            {
+                builder.Append("    lastModifiedBy:");
+                builder.AppendLine($" '{LastModifiedBy}'");
+            }
+
+            if (Optional.IsDefined(RouteFilter))
+            {
+                builder.Append("    routeFilter:");
+                AppendChildObject(builder, RouteFilter, options, 4, false);
+            }
+
+            if (Optional.IsDefined(IPv6PeeringConfig))
+            {
+                builder.Append("    ipv6PeeringConfig:");
+                AppendChildObject(builder, IPv6PeeringConfig, options, 4, false);
+            }
+
+            if (Optional.IsDefined(ExpressRouteConnection))
+            {
+                builder.Append("    expressRouteConnection:");
+                AppendChildObject(builder, ExpressRouteConnection, options, 4, false);
+            }
+
+            if (Optional.IsCollectionDefined(Connections))
+            {
+                if (Connections.Any())
+                {
+                    builder.Append("    connections:");
+                    builder.AppendLine(" [");
+                    foreach (var item in Connections)
+                    {
+                        AppendChildObject(builder, item, options, 6, true);
+                    }
+                    builder.AppendLine("    ]");
+                }
+            }
+
+            if (Optional.IsCollectionDefined(PeeredConnections))
+            {
+                if (PeeredConnections.Any())
+                {
+                    builder.Append("    peeredConnections:");
+                    builder.AppendLine(" [");
+                    foreach (var item in PeeredConnections)
+                    {
+                        AppendChildObject(builder, item, options, 6, true);
+                    }
+                    builder.AppendLine("    ]");
+                }
+            }
+
+            builder.AppendLine("  }");
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<ExpressRouteCircuitPeeringData>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ExpressRouteCircuitPeeringData>)this).GetFormatFromOptions(options) : options.Format;
@@ -451,6 +644,8 @@ namespace Azure.ResourceManager.Network
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(ExpressRouteCircuitPeeringData)} does not support '{options.Format}' format.");
             }
@@ -467,6 +662,8 @@ namespace Azure.ResourceManager.Network
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeExpressRouteCircuitPeeringData(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(ExpressRouteCircuitPeeringData)} does not support '{options.Format}' format.");
             }

@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -316,6 +318,148 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             return new SecurityInsightsHostEntity(id, name, type, systemData.Value, kind, serializedAdditionalRawData, Optional.ToDictionary(additionalData), friendlyName.Value, azureId.Value, dnsDomain.Value, hostName.Value, Optional.ToNullable(isDomainJoined), netBiosName.Value, ntDomain.Value, omsAgentId.Value, Optional.ToNullable(osFamily), osVersion.Value);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(Kind))
+            {
+                builder.Append("  kind:");
+                builder.AppendLine($" '{Kind.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Id))
+            {
+                builder.Append("  id:");
+                builder.AppendLine($" '{Id.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                builder.AppendLine($" '{Name}'");
+            }
+
+            if (Optional.IsDefined(ResourceType))
+            {
+                builder.Append("  type:");
+                builder.AppendLine($" '{ResourceType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SystemData))
+            {
+                builder.Append("  systemData:");
+                builder.AppendLine($" '{SystemData.ToString()}'");
+            }
+
+            builder.Append("  properties:");
+            builder.AppendLine(" {");
+            if (Optional.IsCollectionDefined(AdditionalData))
+            {
+                if (AdditionalData.Any())
+                {
+                    builder.Append("    additionalData:");
+                    builder.AppendLine(" {");
+                    foreach (var item in AdditionalData)
+                    {
+                        builder.Append($"        {item.Key}: ");
+                        if (item.Value == null)
+                        {
+                            builder.Append("null");
+                            continue;
+                        }
+                        builder.AppendLine($" '{item.Value.ToString()}'");
+                    }
+                    builder.AppendLine("    }");
+                }
+            }
+
+            if (Optional.IsDefined(FriendlyName))
+            {
+                builder.Append("    friendlyName:");
+                builder.AppendLine($" '{FriendlyName}'");
+            }
+
+            if (Optional.IsDefined(AzureId))
+            {
+                builder.Append("    azureID:");
+                builder.AppendLine($" '{AzureId.ToString()}'");
+            }
+
+            if (Optional.IsDefined(DnsDomain))
+            {
+                builder.Append("    dnsDomain:");
+                builder.AppendLine($" '{DnsDomain}'");
+            }
+
+            if (Optional.IsDefined(HostName))
+            {
+                builder.Append("    hostName:");
+                builder.AppendLine($" '{HostName}'");
+            }
+
+            if (Optional.IsDefined(IsDomainJoined))
+            {
+                builder.Append("    isDomainJoined:");
+                var boolValue = IsDomainJoined.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(NetBiosName))
+            {
+                builder.Append("    netBiosName:");
+                builder.AppendLine($" '{NetBiosName}'");
+            }
+
+            if (Optional.IsDefined(NtDomain))
+            {
+                builder.Append("    ntDomain:");
+                builder.AppendLine($" '{NtDomain}'");
+            }
+
+            if (Optional.IsDefined(OmsAgentId))
+            {
+                builder.Append("    omsAgentID:");
+                builder.AppendLine($" '{OmsAgentId}'");
+            }
+
+            if (Optional.IsDefined(OSFamily))
+            {
+                builder.Append("    osFamily:");
+                builder.AppendLine($" '{OSFamily.ToString()}'");
+            }
+
+            if (Optional.IsDefined(OSVersion))
+            {
+                builder.Append("    osVersion:");
+                builder.AppendLine($" '{OSVersion}'");
+            }
+
+            builder.AppendLine("  }");
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<SecurityInsightsHostEntity>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<SecurityInsightsHostEntity>)this).GetFormatFromOptions(options) : options.Format;
@@ -324,6 +468,8 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(SecurityInsightsHostEntity)} does not support '{options.Format}' format.");
             }
@@ -340,6 +486,8 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeSecurityInsightsHostEntity(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(SecurityInsightsHostEntity)} does not support '{options.Format}' format.");
             }

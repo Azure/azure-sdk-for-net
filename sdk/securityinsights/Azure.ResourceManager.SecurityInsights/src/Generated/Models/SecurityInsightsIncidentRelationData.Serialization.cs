@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
@@ -209,6 +210,91 @@ namespace Azure.ResourceManager.SecurityInsights
             return new SecurityInsightsIncidentRelationData(id, name, type, systemData.Value, relatedResourceId.Value, relatedResourceName.Value, Optional.ToNullable(relatedResourceType), relatedResourceKind.Value, Optional.ToNullable(etag), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(ETag))
+            {
+                builder.Append("  etag:");
+                builder.AppendLine($" '{ETag.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Id))
+            {
+                builder.Append("  id:");
+                builder.AppendLine($" '{Id.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                builder.AppendLine($" '{Name}'");
+            }
+
+            if (Optional.IsDefined(ResourceType))
+            {
+                builder.Append("  type:");
+                builder.AppendLine($" '{ResourceType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SystemData))
+            {
+                builder.Append("  systemData:");
+                builder.AppendLine($" '{SystemData.ToString()}'");
+            }
+
+            builder.Append("  properties:");
+            builder.AppendLine(" {");
+            if (Optional.IsDefined(RelatedResourceId))
+            {
+                builder.Append("    relatedResourceId:");
+                builder.AppendLine($" '{RelatedResourceId.ToString()}'");
+            }
+
+            if (Optional.IsDefined(RelatedResourceName))
+            {
+                builder.Append("    relatedResourceName:");
+                builder.AppendLine($" '{RelatedResourceName}'");
+            }
+
+            if (Optional.IsDefined(RelatedResourceType))
+            {
+                builder.Append("    relatedResourceType:");
+                builder.AppendLine($" '{RelatedResourceType.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(RelatedResourceKind))
+            {
+                builder.Append("    relatedResourceKind:");
+                builder.AppendLine($" '{RelatedResourceKind}'");
+            }
+
+            builder.AppendLine("  }");
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<SecurityInsightsIncidentRelationData>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<SecurityInsightsIncidentRelationData>)this).GetFormatFromOptions(options) : options.Format;
@@ -217,6 +303,8 @@ namespace Azure.ResourceManager.SecurityInsights
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(SecurityInsightsIncidentRelationData)} does not support '{options.Format}' format.");
             }
@@ -233,6 +321,8 @@ namespace Azure.ResourceManager.SecurityInsights
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeSecurityInsightsIncidentRelationData(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(SecurityInsightsIncidentRelationData)} does not support '{options.Format}' format.");
             }

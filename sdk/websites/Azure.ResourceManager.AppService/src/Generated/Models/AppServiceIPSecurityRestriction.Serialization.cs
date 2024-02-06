@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -255,6 +257,124 @@ namespace Azure.ResourceManager.AppService.Models
             return new AppServiceIPSecurityRestriction(ipAddress.Value, subnetMask.Value, vnetSubnetResourceId.Value, Optional.ToNullable(vnetTrafficTag), Optional.ToNullable(subnetTrafficTag), action.Value, Optional.ToNullable(tag), Optional.ToNullable(priority), name.Value, description.Value, Optional.ToDictionary(headers), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(IPAddressOrCidr))
+            {
+                builder.Append("  ipAddress:");
+                builder.AppendLine($" '{IPAddressOrCidr}'");
+            }
+
+            if (Optional.IsDefined(SubnetMask))
+            {
+                builder.Append("  subnetMask:");
+                builder.AppendLine($" '{SubnetMask}'");
+            }
+
+            if (Optional.IsDefined(VnetSubnetResourceId))
+            {
+                builder.Append("  vnetSubnetResourceId:");
+                builder.AppendLine($" '{VnetSubnetResourceId.ToString()}'");
+            }
+
+            if (Optional.IsDefined(VnetTrafficTag))
+            {
+                builder.Append("  vnetTrafficTag:");
+                builder.AppendLine($" {VnetTrafficTag.Value}");
+            }
+
+            if (Optional.IsDefined(SubnetTrafficTag))
+            {
+                builder.Append("  subnetTrafficTag:");
+                builder.AppendLine($" {SubnetTrafficTag.Value}");
+            }
+
+            if (Optional.IsDefined(Action))
+            {
+                builder.Append("  action:");
+                builder.AppendLine($" '{Action}'");
+            }
+
+            if (Optional.IsDefined(Tag))
+            {
+                builder.Append("  tag:");
+                builder.AppendLine($" '{Tag.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Priority))
+            {
+                builder.Append("  priority:");
+                builder.AppendLine($" {Priority.Value}");
+            }
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                builder.AppendLine($" '{Name}'");
+            }
+
+            if (Optional.IsDefined(Description))
+            {
+                builder.Append("  description:");
+                builder.AppendLine($" '{Description}'");
+            }
+
+            if (Optional.IsCollectionDefined(Headers))
+            {
+                if (Headers.Any())
+                {
+                    builder.Append("  headers:");
+                    builder.AppendLine(" {");
+                    foreach (var item in Headers)
+                    {
+                        builder.Append($"    {item.Key}: ");
+                        if (item.Value == null)
+                        {
+                            builder.Append("null");
+                            continue;
+                        }
+                        builder.AppendLine(" [");
+                        foreach (var item0 in item.Value)
+                        {
+                            if (item0 == null)
+                            {
+                                builder.Append("null");
+                                continue;
+                            }
+                            builder.AppendLine($"      '{item0}'");
+                        }
+                        builder.AppendLine("    ]");
+                    }
+                    builder.AppendLine("  }");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<AppServiceIPSecurityRestriction>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<AppServiceIPSecurityRestriction>)this).GetFormatFromOptions(options) : options.Format;
@@ -263,6 +383,8 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(AppServiceIPSecurityRestriction)} does not support '{options.Format}' format.");
             }
@@ -279,6 +401,8 @@ namespace Azure.ResourceManager.AppService.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeAppServiceIPSecurityRestriction(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(AppServiceIPSecurityRestriction)} does not support '{options.Format}' format.");
             }

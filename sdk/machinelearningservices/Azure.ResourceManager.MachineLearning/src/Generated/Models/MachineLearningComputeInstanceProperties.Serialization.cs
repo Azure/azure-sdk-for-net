@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -578,6 +580,221 @@ namespace Azure.ResourceManager.MachineLearning.Models
             return new MachineLearningComputeInstanceProperties(vmSize.Value, subnet.Value, Optional.ToNullable(applicationSharingPolicy), autologgerSettings.Value, sshSettings.Value, Optional.ToList(customServices), osImageMetadata.Value, connectivityEndpoints.Value, Optional.ToList(applications), createdBy.Value, Optional.ToList(errors), Optional.ToNullable(state), Optional.ToNullable(computeInstanceAuthorizationType), personalComputeInstanceSettings.Value, setupScripts.Value, lastOperation.Value, schedules.Value, idleTimeBeforeShutdown.Value, Optional.ToNullable(enableNodePublicIP), Optional.ToList(containers), Optional.ToList(dataDisks), Optional.ToList(dataMounts), versions.Value, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(VmSize))
+            {
+                builder.Append("  vmSize:");
+                builder.AppendLine($" '{VmSize}'");
+            }
+
+            if (Optional.IsDefined(Subnet))
+            {
+                builder.Append("  subnet:");
+                AppendChildObject(builder, Subnet, options, 2, false);
+            }
+
+            if (Optional.IsDefined(ApplicationSharingPolicy))
+            {
+                builder.Append("  applicationSharingPolicy:");
+                builder.AppendLine($" '{ApplicationSharingPolicy.ToString()}'");
+            }
+
+            if (Optional.IsDefined(AutologgerSettings))
+            {
+                builder.Append("  autologgerSettings:");
+                AppendChildObject(builder, AutologgerSettings, options, 2, false);
+            }
+
+            if (Optional.IsDefined(SshSettings))
+            {
+                builder.Append("  sshSettings:");
+                AppendChildObject(builder, SshSettings, options, 2, false);
+            }
+
+            if (Optional.IsCollectionDefined(CustomServices))
+            {
+                if (CustomServices.Any())
+                {
+                    builder.Append("  customServices:");
+                    builder.AppendLine(" [");
+                    foreach (var item in CustomServices)
+                    {
+                        AppendChildObject(builder, item, options, 4, true);
+                    }
+                    builder.AppendLine("  ]");
+                }
+            }
+
+            if (Optional.IsDefined(OSImageMetadata))
+            {
+                builder.Append("  osImageMetadata:");
+                AppendChildObject(builder, OSImageMetadata, options, 2, false);
+            }
+
+            if (Optional.IsDefined(ConnectivityEndpoints))
+            {
+                builder.Append("  connectivityEndpoints:");
+                AppendChildObject(builder, ConnectivityEndpoints, options, 2, false);
+            }
+
+            if (Optional.IsCollectionDefined(Applications))
+            {
+                if (Applications.Any())
+                {
+                    builder.Append("  applications:");
+                    builder.AppendLine(" [");
+                    foreach (var item in Applications)
+                    {
+                        AppendChildObject(builder, item, options, 4, true);
+                    }
+                    builder.AppendLine("  ]");
+                }
+            }
+
+            if (Optional.IsDefined(CreatedBy))
+            {
+                builder.Append("  createdBy:");
+                AppendChildObject(builder, CreatedBy, options, 2, false);
+            }
+
+            if (Optional.IsCollectionDefined(Errors))
+            {
+                if (Errors.Any())
+                {
+                    builder.Append("  errors:");
+                    builder.AppendLine(" [");
+                    foreach (var item in Errors)
+                    {
+                        AppendChildObject(builder, item, options, 4, true);
+                    }
+                    builder.AppendLine("  ]");
+                }
+            }
+
+            if (Optional.IsDefined(State))
+            {
+                builder.Append("  state:");
+                builder.AppendLine($" '{State.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ComputeInstanceAuthorizationType))
+            {
+                builder.Append("  computeInstanceAuthorizationType:");
+                builder.AppendLine($" '{ComputeInstanceAuthorizationType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(PersonalComputeInstanceSettings))
+            {
+                builder.Append("  personalComputeInstanceSettings:");
+                AppendChildObject(builder, PersonalComputeInstanceSettings, options, 2, false);
+            }
+
+            if (Optional.IsDefined(SetupScriptsSettings))
+            {
+                builder.Append("  setupScripts:");
+                AppendChildObject(builder, SetupScriptsSettings, options, 2, false);
+            }
+
+            if (Optional.IsDefined(LastOperation))
+            {
+                builder.Append("  lastOperation:");
+                AppendChildObject(builder, LastOperation, options, 2, false);
+            }
+
+            if (Optional.IsDefined(Schedules))
+            {
+                builder.Append("  schedules:");
+                AppendChildObject(builder, Schedules, options, 2, false);
+            }
+
+            if (Optional.IsDefined(IdleTimeBeforeShutdown))
+            {
+                builder.Append("  idleTimeBeforeShutdown:");
+                builder.AppendLine($" '{IdleTimeBeforeShutdown}'");
+            }
+
+            if (Optional.IsDefined(EnableNodePublicIP))
+            {
+                builder.Append("  enableNodePublicIp:");
+                var boolValue = EnableNodePublicIP.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsCollectionDefined(Containers))
+            {
+                if (Containers.Any())
+                {
+                    builder.Append("  containers:");
+                    builder.AppendLine(" [");
+                    foreach (var item in Containers)
+                    {
+                        AppendChildObject(builder, item, options, 4, true);
+                    }
+                    builder.AppendLine("  ]");
+                }
+            }
+
+            if (Optional.IsCollectionDefined(DataDisks))
+            {
+                if (DataDisks.Any())
+                {
+                    builder.Append("  dataDisks:");
+                    builder.AppendLine(" [");
+                    foreach (var item in DataDisks)
+                    {
+                        AppendChildObject(builder, item, options, 4, true);
+                    }
+                    builder.AppendLine("  ]");
+                }
+            }
+
+            if (Optional.IsCollectionDefined(DataMounts))
+            {
+                if (DataMounts.Any())
+                {
+                    builder.Append("  dataMounts:");
+                    builder.AppendLine(" [");
+                    foreach (var item in DataMounts)
+                    {
+                        AppendChildObject(builder, item, options, 4, true);
+                    }
+                    builder.AppendLine("  ]");
+                }
+            }
+
+            if (Optional.IsDefined(Versions))
+            {
+                builder.Append("  versions:");
+                AppendChildObject(builder, Versions, options, 2, false);
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<MachineLearningComputeInstanceProperties>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<MachineLearningComputeInstanceProperties>)this).GetFormatFromOptions(options) : options.Format;
@@ -586,6 +803,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(MachineLearningComputeInstanceProperties)} does not support '{options.Format}' format.");
             }
@@ -602,6 +821,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeMachineLearningComputeInstanceProperties(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(MachineLearningComputeInstanceProperties)} does not support '{options.Format}' format.");
             }

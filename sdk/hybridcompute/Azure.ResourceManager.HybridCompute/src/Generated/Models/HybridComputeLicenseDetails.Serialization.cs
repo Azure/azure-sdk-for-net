@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -178,6 +179,76 @@ namespace Azure.ResourceManager.HybridCompute.Models
             return new HybridComputeLicenseDetails(Optional.ToNullable(state), Optional.ToNullable(target), Optional.ToNullable(edition), Optional.ToNullable(type), Optional.ToNullable(processors), Optional.ToNullable(assignedLicenses), immutableId.Value, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(State))
+            {
+                builder.Append("  state:");
+                builder.AppendLine($" '{State.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Target))
+            {
+                builder.Append("  target:");
+                builder.AppendLine($" '{Target.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Edition))
+            {
+                builder.Append("  edition:");
+                builder.AppendLine($" '{Edition.ToString()}'");
+            }
+
+            if (Optional.IsDefined(LicenseCoreType))
+            {
+                builder.Append("  type:");
+                builder.AppendLine($" '{LicenseCoreType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Processors))
+            {
+                builder.Append("  processors:");
+                builder.AppendLine($" {Processors.Value}");
+            }
+
+            if (Optional.IsDefined(AssignedLicenses))
+            {
+                builder.Append("  assignedLicenses:");
+                builder.AppendLine($" {AssignedLicenses.Value}");
+            }
+
+            if (Optional.IsDefined(ImmutableId))
+            {
+                builder.Append("  immutableId:");
+                builder.AppendLine($" '{ImmutableId}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<HybridComputeLicenseDetails>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<HybridComputeLicenseDetails>)this).GetFormatFromOptions(options) : options.Format;
@@ -186,6 +257,8 @@ namespace Azure.ResourceManager.HybridCompute.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(HybridComputeLicenseDetails)} does not support '{options.Format}' format.");
             }
@@ -202,6 +275,8 @@ namespace Azure.ResourceManager.HybridCompute.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeHybridComputeLicenseDetails(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(HybridComputeLicenseDetails)} does not support '{options.Format}' format.");
             }

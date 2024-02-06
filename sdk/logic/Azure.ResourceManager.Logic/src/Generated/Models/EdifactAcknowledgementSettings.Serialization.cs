@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -171,6 +172,107 @@ namespace Azure.ResourceManager.Logic.Models
             return new EdifactAcknowledgementSettings(needTechnicalAcknowledgement, batchTechnicalAcknowledgements, needFunctionalAcknowledgement, batchFunctionalAcknowledgements, needLoopForValidMessages, sendSynchronousAcknowledgement, acknowledgementControlNumberPrefix.Value, acknowledgementControlNumberSuffix.Value, acknowledgementControlNumberLowerBound, acknowledgementControlNumberUpperBound, rolloverAcknowledgementControlNumber, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(NeedTechnicalAcknowledgement))
+            {
+                builder.Append("  needTechnicalAcknowledgement:");
+                var boolValue = NeedTechnicalAcknowledgement == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(BatchTechnicalAcknowledgement))
+            {
+                builder.Append("  batchTechnicalAcknowledgements:");
+                var boolValue = BatchTechnicalAcknowledgement == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(NeedFunctionalAcknowledgement))
+            {
+                builder.Append("  needFunctionalAcknowledgement:");
+                var boolValue = NeedFunctionalAcknowledgement == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(BatchFunctionalAcknowledgement))
+            {
+                builder.Append("  batchFunctionalAcknowledgements:");
+                var boolValue = BatchFunctionalAcknowledgement == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(NeedLoopForValidMessages))
+            {
+                builder.Append("  needLoopForValidMessages:");
+                var boolValue = NeedLoopForValidMessages == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(SendSynchronousAcknowledgement))
+            {
+                builder.Append("  sendSynchronousAcknowledgement:");
+                var boolValue = SendSynchronousAcknowledgement == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(AcknowledgementControlNumberPrefix))
+            {
+                builder.Append("  acknowledgementControlNumberPrefix:");
+                builder.AppendLine($" '{AcknowledgementControlNumberPrefix}'");
+            }
+
+            if (Optional.IsDefined(AcknowledgementControlNumberSuffix))
+            {
+                builder.Append("  acknowledgementControlNumberSuffix:");
+                builder.AppendLine($" '{AcknowledgementControlNumberSuffix}'");
+            }
+
+            if (Optional.IsDefined(AcknowledgementControlNumberLowerBound))
+            {
+                builder.Append("  acknowledgementControlNumberLowerBound:");
+                builder.AppendLine($" {AcknowledgementControlNumberLowerBound}");
+            }
+
+            if (Optional.IsDefined(AcknowledgementControlNumberUpperBound))
+            {
+                builder.Append("  acknowledgementControlNumberUpperBound:");
+                builder.AppendLine($" {AcknowledgementControlNumberUpperBound}");
+            }
+
+            if (Optional.IsDefined(RolloverAcknowledgementControlNumber))
+            {
+                builder.Append("  rolloverAcknowledgementControlNumber:");
+                var boolValue = RolloverAcknowledgementControlNumber == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<EdifactAcknowledgementSettings>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<EdifactAcknowledgementSettings>)this).GetFormatFromOptions(options) : options.Format;
@@ -179,6 +281,8 @@ namespace Azure.ResourceManager.Logic.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(EdifactAcknowledgementSettings)} does not support '{options.Format}' format.");
             }
@@ -195,6 +299,8 @@ namespace Azure.ResourceManager.Logic.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeEdifactAcknowledgementSettings(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(EdifactAcknowledgementSettings)} does not support '{options.Format}' format.");
             }

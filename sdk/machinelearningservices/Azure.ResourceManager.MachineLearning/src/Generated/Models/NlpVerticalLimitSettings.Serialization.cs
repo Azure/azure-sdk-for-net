@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -152,6 +153,66 @@ namespace Azure.ResourceManager.MachineLearning.Models
             return new NlpVerticalLimitSettings(Optional.ToNullable(maxConcurrentTrials), Optional.ToNullable(maxNodes), Optional.ToNullable(maxTrials), Optional.ToNullable(timeout), Optional.ToNullable(trialTimeout), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(MaxConcurrentTrials))
+            {
+                builder.Append("  maxConcurrentTrials:");
+                builder.AppendLine($" {MaxConcurrentTrials.Value}");
+            }
+
+            if (Optional.IsDefined(MaxNodes))
+            {
+                builder.Append("  maxNodes:");
+                builder.AppendLine($" {MaxNodes.Value}");
+            }
+
+            if (Optional.IsDefined(MaxTrials))
+            {
+                builder.Append("  maxTrials:");
+                builder.AppendLine($" {MaxTrials.Value}");
+            }
+
+            if (Optional.IsDefined(Timeout))
+            {
+                builder.Append("  timeout:");
+                var formattedTimeSpan = TypeFormatters.ToString(Timeout.Value, "P");
+                builder.AppendLine($" '{formattedTimeSpan}'");
+            }
+
+            if (Optional.IsDefined(TrialTimeout))
+            {
+                builder.Append("  trialTimeout:");
+                var formattedTimeSpan = TypeFormatters.ToString(TrialTimeout.Value, "P");
+                builder.AppendLine($" '{formattedTimeSpan}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<NlpVerticalLimitSettings>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<NlpVerticalLimitSettings>)this).GetFormatFromOptions(options) : options.Format;
@@ -160,6 +221,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(NlpVerticalLimitSettings)} does not support '{options.Format}' format.");
             }
@@ -176,6 +239,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeNlpVerticalLimitSettings(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(NlpVerticalLimitSettings)} does not support '{options.Format}' format.");
             }

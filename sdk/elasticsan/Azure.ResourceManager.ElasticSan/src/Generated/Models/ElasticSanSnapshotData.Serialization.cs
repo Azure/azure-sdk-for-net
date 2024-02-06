@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.ElasticSan.Models;
@@ -191,6 +192,85 @@ namespace Azure.ResourceManager.ElasticSan
             return new ElasticSanSnapshotData(id, name, type, systemData.Value, creationData, Optional.ToNullable(provisioningState), Optional.ToNullable(sourceVolumeSizeGiB), volumeName.Value, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(Id))
+            {
+                builder.Append("  id:");
+                builder.AppendLine($" '{Id.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                builder.AppendLine($" '{Name}'");
+            }
+
+            if (Optional.IsDefined(ResourceType))
+            {
+                builder.Append("  type:");
+                builder.AppendLine($" '{ResourceType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SystemData))
+            {
+                builder.Append("  systemData:");
+                builder.AppendLine($" '{SystemData.ToString()}'");
+            }
+
+            builder.Append("  properties:");
+            builder.AppendLine(" {");
+            if (Optional.IsDefined(CreationData))
+            {
+                builder.Append("    creationData:");
+                AppendChildObject(builder, CreationData, options, 4, false);
+            }
+
+            if (Optional.IsDefined(ProvisioningState))
+            {
+                builder.Append("    provisioningState:");
+                builder.AppendLine($" '{ProvisioningState.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SourceVolumeSizeGiB))
+            {
+                builder.Append("    sourceVolumeSizeGiB:");
+                builder.AppendLine($" '{SourceVolumeSizeGiB.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(VolumeName))
+            {
+                builder.Append("    volumeName:");
+                builder.AppendLine($" '{VolumeName}'");
+            }
+
+            builder.AppendLine("  }");
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<ElasticSanSnapshotData>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ElasticSanSnapshotData>)this).GetFormatFromOptions(options) : options.Format;
@@ -199,6 +279,8 @@ namespace Azure.ResourceManager.ElasticSan
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(ElasticSanSnapshotData)} does not support '{options.Format}' format.");
             }
@@ -215,6 +297,8 @@ namespace Azure.ResourceManager.ElasticSan
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeElasticSanSnapshotData(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(ElasticSanSnapshotData)} does not support '{options.Format}' format.");
             }

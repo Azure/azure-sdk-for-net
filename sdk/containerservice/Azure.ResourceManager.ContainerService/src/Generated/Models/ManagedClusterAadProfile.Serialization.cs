@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -188,6 +190,86 @@ namespace Azure.ResourceManager.ContainerService.Models
             return new ManagedClusterAadProfile(Optional.ToNullable(managed), Optional.ToNullable(enableAzureRBAC), Optional.ToList(adminGroupObjectIds), Optional.ToNullable(clientAppId), Optional.ToNullable(serverAppId), serverAppSecret.Value, Optional.ToNullable(tenantId), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(IsManagedAadEnabled))
+            {
+                builder.Append("  managed:");
+                var boolValue = IsManagedAadEnabled.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(IsAzureRbacEnabled))
+            {
+                builder.Append("  enableAzureRBAC:");
+                var boolValue = IsAzureRbacEnabled.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsCollectionDefined(AdminGroupObjectIds))
+            {
+                if (AdminGroupObjectIds.Any())
+                {
+                    builder.Append("  adminGroupObjectIDs:");
+                    builder.AppendLine(" [");
+                    foreach (var item in AdminGroupObjectIds)
+                    {
+                        builder.AppendLine($"    '{item.ToString()}'");
+                    }
+                    builder.AppendLine("  ]");
+                }
+            }
+
+            if (Optional.IsDefined(ClientAppId))
+            {
+                builder.Append("  clientAppID:");
+                builder.AppendLine($" '{ClientAppId.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ServerAppId))
+            {
+                builder.Append("  serverAppID:");
+                builder.AppendLine($" '{ServerAppId.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ServerAppSecret))
+            {
+                builder.Append("  serverAppSecret:");
+                builder.AppendLine($" '{ServerAppSecret}'");
+            }
+
+            if (Optional.IsDefined(TenantId))
+            {
+                builder.Append("  tenantID:");
+                builder.AppendLine($" '{TenantId.Value.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<ManagedClusterAadProfile>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ManagedClusterAadProfile>)this).GetFormatFromOptions(options) : options.Format;
@@ -196,6 +278,8 @@ namespace Azure.ResourceManager.ContainerService.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(ManagedClusterAadProfile)} does not support '{options.Format}' format.");
             }
@@ -212,6 +296,8 @@ namespace Azure.ResourceManager.ContainerService.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeManagedClusterAadProfile(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(ManagedClusterAadProfile)} does not support '{options.Format}' format.");
             }

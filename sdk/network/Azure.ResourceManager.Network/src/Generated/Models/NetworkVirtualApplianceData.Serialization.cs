@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
@@ -542,6 +544,275 @@ namespace Azure.ResourceManager.Network
             return new NetworkVirtualApplianceData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(location), Optional.ToDictionary(tags), serializedAdditionalRawData, identity, Optional.ToNullable(etag), nvaSku.Value, addressPrefix.Value, Optional.ToList(bootStrapConfigurationBlobs), virtualHub, Optional.ToList(cloudInitConfigurationBlobs), cloudInitConfiguration.Value, Optional.ToNullable(virtualApplianceAsn), sshPublicKey.Value, Optional.ToList(virtualApplianceNics), Optional.ToList(additionalNics), Optional.ToList(internetIngressPublicIPs), Optional.ToList(virtualApplianceSites), Optional.ToList(virtualApplianceConnections), Optional.ToList(inboundSecurityRules), Optional.ToNullable(provisioningState), deploymentType.Value, delegation.Value, partnerManagedResource.Value);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(Identity))
+            {
+                builder.Append("  identity:");
+                AppendChildObject(builder, Identity, options, 2, false);
+            }
+
+            if (Optional.IsDefined(ETag))
+            {
+                builder.Append("  etag:");
+                builder.AppendLine($" '{ETag.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Id))
+            {
+                builder.Append("  id:");
+                builder.AppendLine($" '{Id.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                builder.AppendLine($" '{Name}'");
+            }
+
+            if (Optional.IsDefined(ResourceType))
+            {
+                builder.Append("  type:");
+                builder.AppendLine($" '{ResourceType.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Location))
+            {
+                builder.Append("  location:");
+                builder.AppendLine($" '{Location.Value.ToString()}'");
+            }
+
+            if (Optional.IsCollectionDefined(Tags))
+            {
+                if (Tags.Any())
+                {
+                    builder.Append("  tags:");
+                    builder.AppendLine(" {");
+                    foreach (var item in Tags)
+                    {
+                        builder.Append($"    {item.Key}: ");
+                        if (item.Value == null)
+                        {
+                            builder.Append("null");
+                            continue;
+                        }
+                        builder.AppendLine($" '{item.Value}'");
+                    }
+                    builder.AppendLine("  }");
+                }
+            }
+
+            builder.Append("  properties:");
+            builder.AppendLine(" {");
+            if (Optional.IsDefined(NvaSku))
+            {
+                builder.Append("    nvaSku:");
+                AppendChildObject(builder, NvaSku, options, 4, false);
+            }
+
+            if (Optional.IsDefined(AddressPrefix))
+            {
+                builder.Append("    addressPrefix:");
+                builder.AppendLine($" '{AddressPrefix}'");
+            }
+
+            if (Optional.IsCollectionDefined(BootStrapConfigurationBlobs))
+            {
+                if (BootStrapConfigurationBlobs.Any())
+                {
+                    builder.Append("    bootStrapConfigurationBlobs:");
+                    builder.AppendLine(" [");
+                    foreach (var item in BootStrapConfigurationBlobs)
+                    {
+                        if (item == null)
+                        {
+                            builder.Append("null");
+                            continue;
+                        }
+                        builder.AppendLine($"      '{item}'");
+                    }
+                    builder.AppendLine("    ]");
+                }
+            }
+
+            if (Optional.IsDefined(VirtualHub))
+            {
+                builder.Append("    virtualHub:");
+                AppendChildObject(builder, VirtualHub, options, 4, false);
+            }
+
+            if (Optional.IsCollectionDefined(CloudInitConfigurationBlobs))
+            {
+                if (CloudInitConfigurationBlobs.Any())
+                {
+                    builder.Append("    cloudInitConfigurationBlobs:");
+                    builder.AppendLine(" [");
+                    foreach (var item in CloudInitConfigurationBlobs)
+                    {
+                        if (item == null)
+                        {
+                            builder.Append("null");
+                            continue;
+                        }
+                        builder.AppendLine($"      '{item}'");
+                    }
+                    builder.AppendLine("    ]");
+                }
+            }
+
+            if (Optional.IsDefined(CloudInitConfiguration))
+            {
+                builder.Append("    cloudInitConfiguration:");
+                builder.AppendLine($" '{CloudInitConfiguration}'");
+            }
+
+            if (Optional.IsDefined(VirtualApplianceAsn))
+            {
+                builder.Append("    virtualApplianceAsn:");
+                builder.AppendLine($" '{VirtualApplianceAsn.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SshPublicKey))
+            {
+                builder.Append("    sshPublicKey:");
+                builder.AppendLine($" '{SshPublicKey}'");
+            }
+
+            if (Optional.IsCollectionDefined(VirtualApplianceNics))
+            {
+                if (VirtualApplianceNics.Any())
+                {
+                    builder.Append("    virtualApplianceNics:");
+                    builder.AppendLine(" [");
+                    foreach (var item in VirtualApplianceNics)
+                    {
+                        AppendChildObject(builder, item, options, 6, true);
+                    }
+                    builder.AppendLine("    ]");
+                }
+            }
+
+            if (Optional.IsCollectionDefined(AdditionalNics))
+            {
+                if (AdditionalNics.Any())
+                {
+                    builder.Append("    additionalNics:");
+                    builder.AppendLine(" [");
+                    foreach (var item in AdditionalNics)
+                    {
+                        AppendChildObject(builder, item, options, 6, true);
+                    }
+                    builder.AppendLine("    ]");
+                }
+            }
+
+            if (Optional.IsCollectionDefined(InternetIngressPublicIPs))
+            {
+                if (InternetIngressPublicIPs.Any())
+                {
+                    builder.Append("    internetIngressPublicIps:");
+                    builder.AppendLine(" [");
+                    foreach (var item in InternetIngressPublicIPs)
+                    {
+                        AppendChildObject(builder, item, options, 6, true);
+                    }
+                    builder.AppendLine("    ]");
+                }
+            }
+
+            if (Optional.IsCollectionDefined(VirtualApplianceSites))
+            {
+                if (VirtualApplianceSites.Any())
+                {
+                    builder.Append("    virtualApplianceSites:");
+                    builder.AppendLine(" [");
+                    foreach (var item in VirtualApplianceSites)
+                    {
+                        AppendChildObject(builder, item, options, 6, true);
+                    }
+                    builder.AppendLine("    ]");
+                }
+            }
+
+            if (Optional.IsCollectionDefined(VirtualApplianceConnections))
+            {
+                if (VirtualApplianceConnections.Any())
+                {
+                    builder.Append("    virtualApplianceConnections:");
+                    builder.AppendLine(" [");
+                    foreach (var item in VirtualApplianceConnections)
+                    {
+                        AppendChildObject(builder, item, options, 6, true);
+                    }
+                    builder.AppendLine("    ]");
+                }
+            }
+
+            if (Optional.IsCollectionDefined(InboundSecurityRules))
+            {
+                if (InboundSecurityRules.Any())
+                {
+                    builder.Append("    inboundSecurityRules:");
+                    builder.AppendLine(" [");
+                    foreach (var item in InboundSecurityRules)
+                    {
+                        AppendChildObject(builder, item, options, 6, true);
+                    }
+                    builder.AppendLine("    ]");
+                }
+            }
+
+            if (Optional.IsDefined(ProvisioningState))
+            {
+                builder.Append("    provisioningState:");
+                builder.AppendLine($" '{ProvisioningState.ToString()}'");
+            }
+
+            if (Optional.IsDefined(DeploymentType))
+            {
+                builder.Append("    deploymentType:");
+                builder.AppendLine($" '{DeploymentType}'");
+            }
+
+            if (Optional.IsDefined(Delegation))
+            {
+                builder.Append("    delegation:");
+                AppendChildObject(builder, Delegation, options, 4, false);
+            }
+
+            if (Optional.IsDefined(PartnerManagedResource))
+            {
+                builder.Append("    partnerManagedResource:");
+                AppendChildObject(builder, PartnerManagedResource, options, 4, false);
+            }
+
+            builder.AppendLine("  }");
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<NetworkVirtualApplianceData>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<NetworkVirtualApplianceData>)this).GetFormatFromOptions(options) : options.Format;
@@ -550,6 +821,8 @@ namespace Azure.ResourceManager.Network
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(NetworkVirtualApplianceData)} does not support '{options.Format}' format.");
             }
@@ -566,6 +839,8 @@ namespace Azure.ResourceManager.Network
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeNetworkVirtualApplianceData(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(NetworkVirtualApplianceData)} does not support '{options.Format}' format.");
             }

@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.DeviceUpdate.Models;
@@ -206,6 +208,98 @@ namespace Azure.ResourceManager.DeviceUpdate
             return new DeviceUpdatePrivateEndpointConnectionData(id, name, type, systemData.Value, privateEndpoint, privateLinkServiceConnectionState, Optional.ToList(groupIds), Optional.ToNullable(provisioningState), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(Id))
+            {
+                builder.Append("  id:");
+                builder.AppendLine($" '{Id.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                builder.AppendLine($" '{Name}'");
+            }
+
+            if (Optional.IsDefined(ResourceType))
+            {
+                builder.Append("  type:");
+                builder.AppendLine($" '{ResourceType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SystemData))
+            {
+                builder.Append("  systemData:");
+                builder.AppendLine($" '{SystemData.ToString()}'");
+            }
+
+            builder.Append("  properties:");
+            builder.AppendLine(" {");
+            if (Optional.IsDefined(PrivateEndpoint))
+            {
+                builder.Append("    privateEndpoint:");
+                AppendChildObject(builder, PrivateEndpoint, options, 4, false);
+            }
+
+            if (Optional.IsDefined(ConnectionState))
+            {
+                builder.Append("    privateLinkServiceConnectionState:");
+                AppendChildObject(builder, ConnectionState, options, 4, false);
+            }
+
+            if (Optional.IsCollectionDefined(GroupIds))
+            {
+                if (GroupIds.Any())
+                {
+                    builder.Append("    groupIds:");
+                    builder.AppendLine(" [");
+                    foreach (var item in GroupIds)
+                    {
+                        if (item == null)
+                        {
+                            builder.Append("null");
+                            continue;
+                        }
+                        builder.AppendLine($"      '{item}'");
+                    }
+                    builder.AppendLine("    ]");
+                }
+            }
+
+            if (Optional.IsDefined(ProvisioningState))
+            {
+                builder.Append("    provisioningState:");
+                builder.AppendLine($" '{ProvisioningState.ToString()}'");
+            }
+
+            builder.AppendLine("  }");
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<DeviceUpdatePrivateEndpointConnectionData>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<DeviceUpdatePrivateEndpointConnectionData>)this).GetFormatFromOptions(options) : options.Format;
@@ -214,6 +308,8 @@ namespace Azure.ResourceManager.DeviceUpdate
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(DeviceUpdatePrivateEndpointConnectionData)} does not support '{options.Format}' format.");
             }
@@ -230,6 +326,8 @@ namespace Azure.ResourceManager.DeviceUpdate
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeDeviceUpdatePrivateEndpointConnectionData(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(DeviceUpdatePrivateEndpointConnectionData)} does not support '{options.Format}' format.");
             }

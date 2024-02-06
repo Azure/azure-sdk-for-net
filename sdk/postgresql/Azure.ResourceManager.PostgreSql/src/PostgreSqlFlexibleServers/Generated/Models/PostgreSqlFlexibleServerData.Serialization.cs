@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -471,6 +473,214 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
             return new PostgreSqlFlexibleServerData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, sku.Value, identity.Value, administratorLogin.Value, administratorLoginPassword.Value, Optional.ToNullable(version), minorVersion.Value, Optional.ToNullable(state), fullyQualifiedDomainName.Value, storage.Value, authConfig.Value, dataEncryption.Value, backup.Value, network.Value, highAvailability.Value, maintenanceWindow.Value, sourceServerResourceId.Value, Optional.ToNullable(pointInTimeUTC), availabilityZone.Value, Optional.ToNullable(replicationRole), Optional.ToNullable(replicaCapacity), Optional.ToNullable(createMode), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(Sku))
+            {
+                builder.Append("  sku:");
+                AppendChildObject(builder, Sku, options, 2, false);
+            }
+
+            if (Optional.IsDefined(Identity))
+            {
+                builder.Append("  identity:");
+                AppendChildObject(builder, Identity, options, 2, false);
+            }
+
+            if (Optional.IsCollectionDefined(Tags))
+            {
+                if (Tags.Any())
+                {
+                    builder.Append("  tags:");
+                    builder.AppendLine(" {");
+                    foreach (var item in Tags)
+                    {
+                        builder.Append($"    {item.Key}: ");
+                        if (item.Value == null)
+                        {
+                            builder.Append("null");
+                            continue;
+                        }
+                        builder.AppendLine($" '{item.Value}'");
+                    }
+                    builder.AppendLine("  }");
+                }
+            }
+
+            if (Optional.IsDefined(Location))
+            {
+                builder.Append("  location:");
+                builder.AppendLine($" '{Location.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Id))
+            {
+                builder.Append("  id:");
+                builder.AppendLine($" '{Id.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                builder.AppendLine($" '{Name}'");
+            }
+
+            if (Optional.IsDefined(ResourceType))
+            {
+                builder.Append("  type:");
+                builder.AppendLine($" '{ResourceType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SystemData))
+            {
+                builder.Append("  systemData:");
+                builder.AppendLine($" '{SystemData.ToString()}'");
+            }
+
+            builder.Append("  properties:");
+            builder.AppendLine(" {");
+            if (Optional.IsDefined(AdministratorLogin))
+            {
+                builder.Append("    administratorLogin:");
+                builder.AppendLine($" '{AdministratorLogin}'");
+            }
+
+            if (Optional.IsDefined(AdministratorLoginPassword))
+            {
+                builder.Append("    administratorLoginPassword:");
+                builder.AppendLine($" '{AdministratorLoginPassword}'");
+            }
+
+            if (Optional.IsDefined(Version))
+            {
+                builder.Append("    version:");
+                builder.AppendLine($" '{Version.ToString()}'");
+            }
+
+            if (Optional.IsDefined(MinorVersion))
+            {
+                builder.Append("    minorVersion:");
+                builder.AppendLine($" '{MinorVersion}'");
+            }
+
+            if (Optional.IsDefined(State))
+            {
+                builder.Append("    state:");
+                builder.AppendLine($" '{State.ToString()}'");
+            }
+
+            if (Optional.IsDefined(FullyQualifiedDomainName))
+            {
+                builder.Append("    fullyQualifiedDomainName:");
+                builder.AppendLine($" '{FullyQualifiedDomainName}'");
+            }
+
+            if (Optional.IsDefined(Storage))
+            {
+                builder.Append("    storage:");
+                AppendChildObject(builder, Storage, options, 4, false);
+            }
+
+            if (Optional.IsDefined(AuthConfig))
+            {
+                builder.Append("    authConfig:");
+                AppendChildObject(builder, AuthConfig, options, 4, false);
+            }
+
+            if (Optional.IsDefined(DataEncryption))
+            {
+                builder.Append("    dataEncryption:");
+                AppendChildObject(builder, DataEncryption, options, 4, false);
+            }
+
+            if (Optional.IsDefined(Backup))
+            {
+                builder.Append("    backup:");
+                AppendChildObject(builder, Backup, options, 4, false);
+            }
+
+            if (Optional.IsDefined(Network))
+            {
+                builder.Append("    network:");
+                AppendChildObject(builder, Network, options, 4, false);
+            }
+
+            if (Optional.IsDefined(HighAvailability))
+            {
+                builder.Append("    highAvailability:");
+                AppendChildObject(builder, HighAvailability, options, 4, false);
+            }
+
+            if (Optional.IsDefined(MaintenanceWindow))
+            {
+                builder.Append("    maintenanceWindow:");
+                AppendChildObject(builder, MaintenanceWindow, options, 4, false);
+            }
+
+            if (Optional.IsDefined(SourceServerResourceId))
+            {
+                builder.Append("    sourceServerResourceId:");
+                builder.AppendLine($" '{SourceServerResourceId.ToString()}'");
+            }
+
+            if (Optional.IsDefined(PointInTimeUtc))
+            {
+                builder.Append("    pointInTimeUTC:");
+                var formattedDateTimeString = TypeFormatters.ToString(PointInTimeUtc.Value, "o");
+                builder.AppendLine($" '{formattedDateTimeString}'");
+            }
+
+            if (Optional.IsDefined(AvailabilityZone))
+            {
+                builder.Append("    availabilityZone:");
+                builder.AppendLine($" '{AvailabilityZone}'");
+            }
+
+            if (Optional.IsDefined(ReplicationRole))
+            {
+                builder.Append("    replicationRole:");
+                builder.AppendLine($" '{ReplicationRole.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ReplicaCapacity))
+            {
+                builder.Append("    replicaCapacity:");
+                builder.AppendLine($" {ReplicaCapacity.Value}");
+            }
+
+            if (Optional.IsDefined(CreateMode))
+            {
+                builder.Append("    createMode:");
+                builder.AppendLine($" '{CreateMode.ToString()}'");
+            }
+
+            builder.AppendLine("  }");
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<PostgreSqlFlexibleServerData>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<PostgreSqlFlexibleServerData>)this).GetFormatFromOptions(options) : options.Format;
@@ -479,6 +689,8 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(PostgreSqlFlexibleServerData)} does not support '{options.Format}' format.");
             }
@@ -495,6 +707,8 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializePostgreSqlFlexibleServerData(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(PostgreSqlFlexibleServerData)} does not support '{options.Format}' format.");
             }

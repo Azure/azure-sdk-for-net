@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -225,6 +227,109 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             return new VmWorkloadSqlInstanceWorkloadItem(backupManagementType.Value, workloadType.Value, workloadItemType, friendlyName.Value, Optional.ToNullable(protectionState), serializedAdditionalRawData, parentName.Value, serverName.Value, Optional.ToNullable(isAutoProtectable), Optional.ToNullable(subinquireditemcount), Optional.ToNullable(subWorkloadItemCount), Optional.ToList(dataDirectoryPaths));
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsCollectionDefined(DataDirectoryPaths))
+            {
+                if (DataDirectoryPaths.Any())
+                {
+                    builder.Append("  dataDirectoryPaths:");
+                    builder.AppendLine(" [");
+                    foreach (var item in DataDirectoryPaths)
+                    {
+                        AppendChildObject(builder, item, options, 4, true);
+                    }
+                    builder.AppendLine("  ]");
+                }
+            }
+
+            if (Optional.IsDefined(ParentName))
+            {
+                builder.Append("  parentName:");
+                builder.AppendLine($" '{ParentName}'");
+            }
+
+            if (Optional.IsDefined(ServerName))
+            {
+                builder.Append("  serverName:");
+                builder.AppendLine($" '{ServerName}'");
+            }
+
+            if (Optional.IsDefined(IsAutoProtectable))
+            {
+                builder.Append("  isAutoProtectable:");
+                var boolValue = IsAutoProtectable.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(SubInquiredItemCount))
+            {
+                builder.Append("  subinquireditemcount:");
+                builder.AppendLine($" {SubInquiredItemCount.Value}");
+            }
+
+            if (Optional.IsDefined(SubWorkloadItemCount))
+            {
+                builder.Append("  subWorkloadItemCount:");
+                builder.AppendLine($" {SubWorkloadItemCount.Value}");
+            }
+
+            if (Optional.IsDefined(BackupManagementType))
+            {
+                builder.Append("  backupManagementType:");
+                builder.AppendLine($" '{BackupManagementType}'");
+            }
+
+            if (Optional.IsDefined(WorkloadType))
+            {
+                builder.Append("  workloadType:");
+                builder.AppendLine($" '{WorkloadType}'");
+            }
+
+            if (Optional.IsDefined(WorkloadItemType))
+            {
+                builder.Append("  workloadItemType:");
+                builder.AppendLine($" '{WorkloadItemType}'");
+            }
+
+            if (Optional.IsDefined(FriendlyName))
+            {
+                builder.Append("  friendlyName:");
+                builder.AppendLine($" '{FriendlyName}'");
+            }
+
+            if (Optional.IsDefined(ProtectionState))
+            {
+                builder.Append("  protectionState:");
+                builder.AppendLine($" '{ProtectionState.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<VmWorkloadSqlInstanceWorkloadItem>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<VmWorkloadSqlInstanceWorkloadItem>)this).GetFormatFromOptions(options) : options.Format;
@@ -233,6 +338,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(VmWorkloadSqlInstanceWorkloadItem)} does not support '{options.Format}' format.");
             }
@@ -249,6 +356,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeVmWorkloadSqlInstanceWorkloadItem(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(VmWorkloadSqlInstanceWorkloadItem)} does not support '{options.Format}' format.");
             }

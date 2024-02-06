@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -311,6 +313,154 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             return new PropertyDefinition(arrayValueSeparator.Value, Optional.ToList(enumValidValues), fieldName, fieldType, Optional.ToNullable(isArray), Optional.ToNullable(isEnum), Optional.ToNullable(isFlagEnum), Optional.ToNullable(isImage), Optional.ToNullable(isLocalizedString), Optional.ToNullable(isName), Optional.ToNullable(isRequired), propertyId.Value, schemaItemPropLink.Value, Optional.ToNullable(maxLength), Optional.ToNullable(isAvailableInGraph), Optional.ToList(dataSourcePrecedenceRules), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(ArrayValueSeparator))
+            {
+                builder.Append("  arrayValueSeparator:");
+                builder.AppendLine($" '{ArrayValueSeparator}'");
+            }
+
+            if (Optional.IsCollectionDefined(EnumValidValues))
+            {
+                if (EnumValidValues.Any())
+                {
+                    builder.Append("  enumValidValues:");
+                    builder.AppendLine(" [");
+                    foreach (var item in EnumValidValues)
+                    {
+                        AppendChildObject(builder, item, options, 4, true);
+                    }
+                    builder.AppendLine("  ]");
+                }
+            }
+
+            if (Optional.IsDefined(FieldName))
+            {
+                builder.Append("  fieldName:");
+                builder.AppendLine($" '{FieldName}'");
+            }
+
+            if (Optional.IsDefined(FieldType))
+            {
+                builder.Append("  fieldType:");
+                builder.AppendLine($" '{FieldType}'");
+            }
+
+            if (Optional.IsDefined(IsArray))
+            {
+                builder.Append("  isArray:");
+                var boolValue = IsArray.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(IsEnum))
+            {
+                builder.Append("  isEnum:");
+                var boolValue = IsEnum.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(IsFlagEnum))
+            {
+                builder.Append("  isFlagEnum:");
+                var boolValue = IsFlagEnum.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(IsImage))
+            {
+                builder.Append("  isImage:");
+                var boolValue = IsImage.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(IsLocalizedString))
+            {
+                builder.Append("  isLocalizedString:");
+                var boolValue = IsLocalizedString.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(IsName))
+            {
+                builder.Append("  isName:");
+                var boolValue = IsName.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(IsRequired))
+            {
+                builder.Append("  isRequired:");
+                var boolValue = IsRequired.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(PropertyId))
+            {
+                builder.Append("  propertyId:");
+                builder.AppendLine($" '{PropertyId}'");
+            }
+
+            if (Optional.IsDefined(SchemaItemPropLink))
+            {
+                builder.Append("  schemaItemPropLink:");
+                builder.AppendLine($" '{SchemaItemPropLink}'");
+            }
+
+            if (Optional.IsDefined(MaxLength))
+            {
+                builder.Append("  maxLength:");
+                builder.AppendLine($" {MaxLength.Value}");
+            }
+
+            if (Optional.IsDefined(IsAvailableInGraph))
+            {
+                builder.Append("  isAvailableInGraph:");
+                var boolValue = IsAvailableInGraph.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsCollectionDefined(DataSourcePrecedenceRules))
+            {
+                if (DataSourcePrecedenceRules.Any())
+                {
+                    builder.Append("  dataSourcePrecedenceRules:");
+                    builder.AppendLine(" [");
+                    foreach (var item in DataSourcePrecedenceRules)
+                    {
+                        AppendChildObject(builder, item, options, 4, true);
+                    }
+                    builder.AppendLine("  ]");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<PropertyDefinition>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<PropertyDefinition>)this).GetFormatFromOptions(options) : options.Format;
@@ -319,6 +469,8 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(PropertyDefinition)} does not support '{options.Format}' format.");
             }
@@ -335,6 +487,8 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializePropertyDefinition(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(PropertyDefinition)} does not support '{options.Format}' format.");
             }

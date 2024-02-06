@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.AppContainers.Models;
@@ -276,6 +278,139 @@ namespace Azure.ResourceManager.AppContainers
             return new ContainerAppDaprComponentData(id, name, type, systemData.Value, componentType.Value, version.Value, Optional.ToNullable(ignoreErrors), initTimeout.Value, Optional.ToList(secrets), secretStoreComponent.Value, Optional.ToList(metadata), Optional.ToList(scopes), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(Id))
+            {
+                builder.Append("  id:");
+                builder.AppendLine($" '{Id.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                builder.AppendLine($" '{Name}'");
+            }
+
+            if (Optional.IsDefined(ResourceType))
+            {
+                builder.Append("  type:");
+                builder.AppendLine($" '{ResourceType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SystemData))
+            {
+                builder.Append("  systemData:");
+                builder.AppendLine($" '{SystemData.ToString()}'");
+            }
+
+            builder.Append("  properties:");
+            builder.AppendLine(" {");
+            if (Optional.IsDefined(ComponentType))
+            {
+                builder.Append("    componentType:");
+                builder.AppendLine($" '{ComponentType}'");
+            }
+
+            if (Optional.IsDefined(Version))
+            {
+                builder.Append("    version:");
+                builder.AppendLine($" '{Version}'");
+            }
+
+            if (Optional.IsDefined(IgnoreErrors))
+            {
+                builder.Append("    ignoreErrors:");
+                var boolValue = IgnoreErrors.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(InitTimeout))
+            {
+                builder.Append("    initTimeout:");
+                builder.AppendLine($" '{InitTimeout}'");
+            }
+
+            if (Optional.IsCollectionDefined(Secrets))
+            {
+                if (Secrets.Any())
+                {
+                    builder.Append("    secrets:");
+                    builder.AppendLine(" [");
+                    foreach (var item in Secrets)
+                    {
+                        AppendChildObject(builder, item, options, 6, true);
+                    }
+                    builder.AppendLine("    ]");
+                }
+            }
+
+            if (Optional.IsDefined(SecretStoreComponent))
+            {
+                builder.Append("    secretStoreComponent:");
+                builder.AppendLine($" '{SecretStoreComponent}'");
+            }
+
+            if (Optional.IsCollectionDefined(Metadata))
+            {
+                if (Metadata.Any())
+                {
+                    builder.Append("    metadata:");
+                    builder.AppendLine(" [");
+                    foreach (var item in Metadata)
+                    {
+                        AppendChildObject(builder, item, options, 6, true);
+                    }
+                    builder.AppendLine("    ]");
+                }
+            }
+
+            if (Optional.IsCollectionDefined(Scopes))
+            {
+                if (Scopes.Any())
+                {
+                    builder.Append("    scopes:");
+                    builder.AppendLine(" [");
+                    foreach (var item in Scopes)
+                    {
+                        if (item == null)
+                        {
+                            builder.Append("null");
+                            continue;
+                        }
+                        builder.AppendLine($"      '{item}'");
+                    }
+                    builder.AppendLine("    ]");
+                }
+            }
+
+            builder.AppendLine("  }");
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<ContainerAppDaprComponentData>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ContainerAppDaprComponentData>)this).GetFormatFromOptions(options) : options.Format;
@@ -284,6 +419,8 @@ namespace Azure.ResourceManager.AppContainers
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(ContainerAppDaprComponentData)} does not support '{options.Format}' format.");
             }
@@ -300,6 +437,8 @@ namespace Azure.ResourceManager.AppContainers
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeContainerAppDaprComponentData(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(ContainerAppDaprComponentData)} does not support '{options.Format}' format.");
             }

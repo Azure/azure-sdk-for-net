@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -207,6 +209,92 @@ namespace Azure.ResourceManager.StorageSync.Models
             return new ServerEndpointSyncSessionStatus(Optional.ToNullable(lastSyncResult), Optional.ToNullable(lastSyncTimestamp), Optional.ToNullable(lastSyncSuccessTimestamp), Optional.ToNullable(lastSyncPerItemErrorCount), Optional.ToNullable(persistentFilesNotSyncingCount), Optional.ToNullable(transientFilesNotSyncingCount), Optional.ToList(filesNotSyncingErrors), Optional.ToNullable(lastSyncMode), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(LastSyncResult))
+            {
+                builder.Append("  lastSyncResult:");
+                builder.AppendLine($" {LastSyncResult.Value}");
+            }
+
+            if (Optional.IsDefined(LastSyncTimestamp))
+            {
+                builder.Append("  lastSyncTimestamp:");
+                var formattedDateTimeString = TypeFormatters.ToString(LastSyncTimestamp.Value, "o");
+                builder.AppendLine($" '{formattedDateTimeString}'");
+            }
+
+            if (Optional.IsDefined(LastSyncSuccessTimestamp))
+            {
+                builder.Append("  lastSyncSuccessTimestamp:");
+                var formattedDateTimeString = TypeFormatters.ToString(LastSyncSuccessTimestamp.Value, "o");
+                builder.AppendLine($" '{formattedDateTimeString}'");
+            }
+
+            if (Optional.IsDefined(LastSyncPerItemErrorCount))
+            {
+                builder.Append("  lastSyncPerItemErrorCount:");
+                builder.AppendLine($" '{LastSyncPerItemErrorCount.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(PersistentFilesNotSyncingCount))
+            {
+                builder.Append("  persistentFilesNotSyncingCount:");
+                builder.AppendLine($" '{PersistentFilesNotSyncingCount.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(TransientFilesNotSyncingCount))
+            {
+                builder.Append("  transientFilesNotSyncingCount:");
+                builder.AppendLine($" '{TransientFilesNotSyncingCount.Value.ToString()}'");
+            }
+
+            if (Optional.IsCollectionDefined(FilesNotSyncingErrors))
+            {
+                if (FilesNotSyncingErrors.Any())
+                {
+                    builder.Append("  filesNotSyncingErrors:");
+                    builder.AppendLine(" [");
+                    foreach (var item in FilesNotSyncingErrors)
+                    {
+                        AppendChildObject(builder, item, options, 4, true);
+                    }
+                    builder.AppendLine("  ]");
+                }
+            }
+
+            if (Optional.IsDefined(LastSyncMode))
+            {
+                builder.Append("  lastSyncMode:");
+                builder.AppendLine($" '{LastSyncMode.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<ServerEndpointSyncSessionStatus>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ServerEndpointSyncSessionStatus>)this).GetFormatFromOptions(options) : options.Format;
@@ -215,6 +303,8 @@ namespace Azure.ResourceManager.StorageSync.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(ServerEndpointSyncSessionStatus)} does not support '{options.Format}' format.");
             }
@@ -231,6 +321,8 @@ namespace Azure.ResourceManager.StorageSync.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeServerEndpointSyncSessionStatus(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(ServerEndpointSyncSessionStatus)} does not support '{options.Format}' format.");
             }

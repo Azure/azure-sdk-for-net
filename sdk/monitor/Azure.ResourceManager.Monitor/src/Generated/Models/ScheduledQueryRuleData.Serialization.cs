@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
@@ -485,6 +487,243 @@ namespace Azure.ResourceManager.Monitor
             return new ScheduledQueryRuleData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(kind), Optional.ToNullable(etag), createdWithApiVersion.Value, Optional.ToNullable(isLegacyLogAnalyticsRule), description.Value, displayName.Value, Optional.ToNullable(severity), Optional.ToNullable(enabled), Optional.ToList(scopes), Optional.ToNullable(evaluationFrequency), Optional.ToNullable(windowSize), Optional.ToNullable(overrideQueryTimeRange), Optional.ToList(targetResourceTypes), criteria.Value, Optional.ToNullable(muteActionsDuration), actions.Value, Optional.ToNullable(isWorkspaceAlertsStorageConfigured), Optional.ToNullable(checkWorkspaceAlertsStorageConfigured), Optional.ToNullable(skipQueryValidation), Optional.ToNullable(autoMitigate), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(Kind))
+            {
+                builder.Append("  kind:");
+                builder.AppendLine($" '{Kind.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ETag))
+            {
+                builder.Append("  etag:");
+                builder.AppendLine($" '{ETag.Value.ToString()}'");
+            }
+
+            if (Optional.IsCollectionDefined(Tags))
+            {
+                if (Tags.Any())
+                {
+                    builder.Append("  tags:");
+                    builder.AppendLine(" {");
+                    foreach (var item in Tags)
+                    {
+                        builder.Append($"    {item.Key}: ");
+                        if (item.Value == null)
+                        {
+                            builder.Append("null");
+                            continue;
+                        }
+                        builder.AppendLine($" '{item.Value}'");
+                    }
+                    builder.AppendLine("  }");
+                }
+            }
+
+            if (Optional.IsDefined(Location))
+            {
+                builder.Append("  location:");
+                builder.AppendLine($" '{Location.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Id))
+            {
+                builder.Append("  id:");
+                builder.AppendLine($" '{Id.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                builder.AppendLine($" '{Name}'");
+            }
+
+            if (Optional.IsDefined(ResourceType))
+            {
+                builder.Append("  type:");
+                builder.AppendLine($" '{ResourceType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SystemData))
+            {
+                builder.Append("  systemData:");
+                builder.AppendLine($" '{SystemData.ToString()}'");
+            }
+
+            builder.Append("  properties:");
+            builder.AppendLine(" {");
+            if (Optional.IsDefined(CreatedWithApiVersion))
+            {
+                builder.Append("    createdWithApiVersion:");
+                builder.AppendLine($" '{CreatedWithApiVersion}'");
+            }
+
+            if (Optional.IsDefined(IsLegacyLogAnalyticsRule))
+            {
+                builder.Append("    isLegacyLogAnalyticsRule:");
+                var boolValue = IsLegacyLogAnalyticsRule.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(Description))
+            {
+                builder.Append("    description:");
+                builder.AppendLine($" '{Description}'");
+            }
+
+            if (Optional.IsDefined(DisplayName))
+            {
+                builder.Append("    displayName:");
+                builder.AppendLine($" '{DisplayName}'");
+            }
+
+            if (Optional.IsDefined(Severity))
+            {
+                builder.Append("    severity:");
+                builder.AppendLine($" '{Severity.ToString()}'");
+            }
+
+            if (Optional.IsDefined(IsEnabled))
+            {
+                builder.Append("    enabled:");
+                var boolValue = IsEnabled.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsCollectionDefined(Scopes))
+            {
+                if (Scopes.Any())
+                {
+                    builder.Append("    scopes:");
+                    builder.AppendLine(" [");
+                    foreach (var item in Scopes)
+                    {
+                        if (item == null)
+                        {
+                            builder.Append("null");
+                            continue;
+                        }
+                        builder.AppendLine($"      '{item}'");
+                    }
+                    builder.AppendLine("    ]");
+                }
+            }
+
+            if (Optional.IsDefined(EvaluationFrequency))
+            {
+                builder.Append("    evaluationFrequency:");
+                var formattedTimeSpan = TypeFormatters.ToString(EvaluationFrequency.Value, "P");
+                builder.AppendLine($" '{formattedTimeSpan}'");
+            }
+
+            if (Optional.IsDefined(WindowSize))
+            {
+                builder.Append("    windowSize:");
+                var formattedTimeSpan = TypeFormatters.ToString(WindowSize.Value, "P");
+                builder.AppendLine($" '{formattedTimeSpan}'");
+            }
+
+            if (Optional.IsDefined(OverrideQueryTimeRange))
+            {
+                builder.Append("    overrideQueryTimeRange:");
+                var formattedTimeSpan = TypeFormatters.ToString(OverrideQueryTimeRange.Value, "P");
+                builder.AppendLine($" '{formattedTimeSpan}'");
+            }
+
+            if (Optional.IsCollectionDefined(TargetResourceTypes))
+            {
+                if (TargetResourceTypes.Any())
+                {
+                    builder.Append("    targetResourceTypes:");
+                    builder.AppendLine(" [");
+                    foreach (var item in TargetResourceTypes)
+                    {
+                        if (item == null)
+                        {
+                            builder.Append("null");
+                            continue;
+                        }
+                        builder.AppendLine($"      '{item}'");
+                    }
+                    builder.AppendLine("    ]");
+                }
+            }
+
+            if (Optional.IsDefined(Criteria))
+            {
+                builder.Append("    criteria:");
+                AppendChildObject(builder, Criteria, options, 4, false);
+            }
+
+            if (Optional.IsDefined(MuteActionsDuration))
+            {
+                builder.Append("    muteActionsDuration:");
+                var formattedTimeSpan = TypeFormatters.ToString(MuteActionsDuration.Value, "P");
+                builder.AppendLine($" '{formattedTimeSpan}'");
+            }
+
+            if (Optional.IsDefined(Actions))
+            {
+                builder.Append("    actions:");
+                AppendChildObject(builder, Actions, options, 4, false);
+            }
+
+            if (Optional.IsDefined(IsWorkspaceAlertsStorageConfigured))
+            {
+                builder.Append("    isWorkspaceAlertsStorageConfigured:");
+                var boolValue = IsWorkspaceAlertsStorageConfigured.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(CheckWorkspaceAlertsStorageConfigured))
+            {
+                builder.Append("    checkWorkspaceAlertsStorageConfigured:");
+                var boolValue = CheckWorkspaceAlertsStorageConfigured.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(SkipQueryValidation))
+            {
+                builder.Append("    skipQueryValidation:");
+                var boolValue = SkipQueryValidation.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(AutoMitigate))
+            {
+                builder.Append("    autoMitigate:");
+                var boolValue = AutoMitigate.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            builder.AppendLine("  }");
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<ScheduledQueryRuleData>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ScheduledQueryRuleData>)this).GetFormatFromOptions(options) : options.Format;
@@ -493,6 +732,8 @@ namespace Azure.ResourceManager.Monitor
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(ScheduledQueryRuleData)} does not support '{options.Format}' format.");
             }
@@ -509,6 +750,8 @@ namespace Azure.ResourceManager.Monitor
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeScheduledQueryRuleData(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(ScheduledQueryRuleData)} does not support '{options.Format}' format.");
             }

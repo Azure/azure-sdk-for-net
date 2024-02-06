@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -446,6 +448,224 @@ namespace Azure.ResourceManager.CosmosDB.Models
             return new CassandraClusterProperties(Optional.ToNullable(provisioningState), restoreFromBackupId.Value, delegatedManagementSubnetId.Value, cassandraVersion.Value, clusterNameOverride.Value, Optional.ToNullable(authenticationMethod), initialCassandraAdminPassword.Value, prometheusEndpoint.Value, Optional.ToNullable(repairEnabled), Optional.ToList(clientCertificates), Optional.ToList(externalGossipCertificates), Optional.ToList(gossipCertificates), Optional.ToList(externalSeedNodes), Optional.ToList(seedNodes), Optional.ToNullable(hoursBetweenBackups), Optional.ToNullable(deallocated), Optional.ToNullable(cassandraAuditLoggingEnabled), Optional.ToNullable(clusterType), provisionError.Value, Optional.ToList(extensions), Optional.ToList(backupSchedules), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(ProvisioningState))
+            {
+                builder.Append("  provisioningState:");
+                builder.AppendLine($" '{ProvisioningState.ToString()}'");
+            }
+
+            if (Optional.IsDefined(RestoreFromBackupId))
+            {
+                builder.Append("  restoreFromBackupId:");
+                builder.AppendLine($" '{RestoreFromBackupId}'");
+            }
+
+            if (Optional.IsDefined(DelegatedManagementSubnetId))
+            {
+                builder.Append("  delegatedManagementSubnetId:");
+                builder.AppendLine($" '{DelegatedManagementSubnetId.ToString()}'");
+            }
+
+            if (Optional.IsDefined(CassandraVersion))
+            {
+                builder.Append("  cassandraVersion:");
+                builder.AppendLine($" '{CassandraVersion}'");
+            }
+
+            if (Optional.IsDefined(ClusterNameOverride))
+            {
+                builder.Append("  clusterNameOverride:");
+                builder.AppendLine($" '{ClusterNameOverride}'");
+            }
+
+            if (Optional.IsDefined(AuthenticationMethod))
+            {
+                builder.Append("  authenticationMethod:");
+                builder.AppendLine($" '{AuthenticationMethod.ToString()}'");
+            }
+
+            if (Optional.IsDefined(InitialCassandraAdminPassword))
+            {
+                builder.Append("  initialCassandraAdminPassword:");
+                builder.AppendLine($" '{InitialCassandraAdminPassword}'");
+            }
+
+            if (Optional.IsDefined(PrometheusEndpoint))
+            {
+                builder.Append("  prometheusEndpoint:");
+                AppendChildObject(builder, PrometheusEndpoint, options, 2, false);
+            }
+
+            if (Optional.IsDefined(IsRepairEnabled))
+            {
+                builder.Append("  repairEnabled:");
+                var boolValue = IsRepairEnabled.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsCollectionDefined(ClientCertificates))
+            {
+                if (ClientCertificates.Any())
+                {
+                    builder.Append("  clientCertificates:");
+                    builder.AppendLine(" [");
+                    foreach (var item in ClientCertificates)
+                    {
+                        AppendChildObject(builder, item, options, 4, true);
+                    }
+                    builder.AppendLine("  ]");
+                }
+            }
+
+            if (Optional.IsCollectionDefined(ExternalGossipCertificates))
+            {
+                if (ExternalGossipCertificates.Any())
+                {
+                    builder.Append("  externalGossipCertificates:");
+                    builder.AppendLine(" [");
+                    foreach (var item in ExternalGossipCertificates)
+                    {
+                        AppendChildObject(builder, item, options, 4, true);
+                    }
+                    builder.AppendLine("  ]");
+                }
+            }
+
+            if (Optional.IsCollectionDefined(GossipCertificates))
+            {
+                if (GossipCertificates.Any())
+                {
+                    builder.Append("  gossipCertificates:");
+                    builder.AppendLine(" [");
+                    foreach (var item in GossipCertificates)
+                    {
+                        AppendChildObject(builder, item, options, 4, true);
+                    }
+                    builder.AppendLine("  ]");
+                }
+            }
+
+            if (Optional.IsCollectionDefined(ExternalSeedNodes))
+            {
+                if (ExternalSeedNodes.Any())
+                {
+                    builder.Append("  externalSeedNodes:");
+                    builder.AppendLine(" [");
+                    foreach (var item in ExternalSeedNodes)
+                    {
+                        AppendChildObject(builder, item, options, 4, true);
+                    }
+                    builder.AppendLine("  ]");
+                }
+            }
+
+            if (Optional.IsCollectionDefined(SeedNodes))
+            {
+                if (SeedNodes.Any())
+                {
+                    builder.Append("  seedNodes:");
+                    builder.AppendLine(" [");
+                    foreach (var item in SeedNodes)
+                    {
+                        AppendChildObject(builder, item, options, 4, true);
+                    }
+                    builder.AppendLine("  ]");
+                }
+            }
+
+            if (Optional.IsDefined(HoursBetweenBackups))
+            {
+                builder.Append("  hoursBetweenBackups:");
+                builder.AppendLine($" {HoursBetweenBackups.Value}");
+            }
+
+            if (Optional.IsDefined(IsDeallocated))
+            {
+                builder.Append("  deallocated:");
+                var boolValue = IsDeallocated.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(IsCassandraAuditLoggingEnabled))
+            {
+                builder.Append("  cassandraAuditLoggingEnabled:");
+                var boolValue = IsCassandraAuditLoggingEnabled.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(ClusterType))
+            {
+                builder.Append("  clusterType:");
+                builder.AppendLine($" '{ClusterType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ProvisionError))
+            {
+                builder.Append("  provisionError:");
+                AppendChildObject(builder, ProvisionError, options, 2, false);
+            }
+
+            if (Optional.IsCollectionDefined(Extensions))
+            {
+                if (Extensions.Any())
+                {
+                    builder.Append("  extensions:");
+                    builder.AppendLine(" [");
+                    foreach (var item in Extensions)
+                    {
+                        if (item == null)
+                        {
+                            builder.Append("null");
+                            continue;
+                        }
+                        builder.AppendLine($"    '{item}'");
+                    }
+                    builder.AppendLine("  ]");
+                }
+            }
+
+            if (Optional.IsCollectionDefined(BackupSchedules))
+            {
+                if (BackupSchedules.Any())
+                {
+                    builder.Append("  backupSchedules:");
+                    builder.AppendLine(" [");
+                    foreach (var item in BackupSchedules)
+                    {
+                        AppendChildObject(builder, item, options, 4, true);
+                    }
+                    builder.AppendLine("  ]");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<CassandraClusterProperties>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<CassandraClusterProperties>)this).GetFormatFromOptions(options) : options.Format;
@@ -454,6 +674,8 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(CassandraClusterProperties)} does not support '{options.Format}' format.");
             }
@@ -470,6 +692,8 @@ namespace Azure.ResourceManager.CosmosDB.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeCassandraClusterProperties(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(CassandraClusterProperties)} does not support '{options.Format}' format.");
             }

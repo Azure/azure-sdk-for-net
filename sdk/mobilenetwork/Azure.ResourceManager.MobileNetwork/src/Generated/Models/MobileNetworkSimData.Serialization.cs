@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.MobileNetwork.Models;
@@ -313,6 +315,150 @@ namespace Azure.ResourceManager.MobileNetwork
             return new MobileNetworkSimData(id, name, type, systemData.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(simState), Optional.ToDictionary(siteProvisioningState), internationalMobileSubscriberIdentity, integratedCircuitCardIdentifier.Value, deviceType.Value, simPolicy, Optional.ToList(staticIPConfiguration), vendorName.Value, vendorKeyFingerprint.Value, authenticationKey.Value, operatorKeyCode.Value, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(Id))
+            {
+                builder.Append("  id:");
+                builder.AppendLine($" '{Id.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                builder.AppendLine($" '{Name}'");
+            }
+
+            if (Optional.IsDefined(ResourceType))
+            {
+                builder.Append("  type:");
+                builder.AppendLine($" '{ResourceType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SystemData))
+            {
+                builder.Append("  systemData:");
+                builder.AppendLine($" '{SystemData.ToString()}'");
+            }
+
+            builder.Append("  properties:");
+            builder.AppendLine(" {");
+            if (Optional.IsDefined(ProvisioningState))
+            {
+                builder.Append("    provisioningState:");
+                builder.AppendLine($" '{ProvisioningState.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SimState))
+            {
+                builder.Append("    simState:");
+                builder.AppendLine($" '{SimState.ToString()}'");
+            }
+
+            if (Optional.IsCollectionDefined(SiteProvisioningState))
+            {
+                if (SiteProvisioningState.Any())
+                {
+                    builder.Append("    siteProvisioningState:");
+                    builder.AppendLine(" {");
+                    foreach (var item in SiteProvisioningState)
+                    {
+                        builder.Append($"        {item.Key}: ");
+                        builder.AppendLine($" '{item.Value.ToString()}'");
+                    }
+                    builder.AppendLine("    }");
+                }
+            }
+
+            if (Optional.IsDefined(InternationalMobileSubscriberIdentity))
+            {
+                builder.Append("    internationalMobileSubscriberIdentity:");
+                builder.AppendLine($" '{InternationalMobileSubscriberIdentity}'");
+            }
+
+            if (Optional.IsDefined(IntegratedCircuitCardIdentifier))
+            {
+                builder.Append("    integratedCircuitCardIdentifier:");
+                builder.AppendLine($" '{IntegratedCircuitCardIdentifier}'");
+            }
+
+            if (Optional.IsDefined(DeviceType))
+            {
+                builder.Append("    deviceType:");
+                builder.AppendLine($" '{DeviceType}'");
+            }
+
+            if (Optional.IsDefined(SimPolicy))
+            {
+                builder.Append("    simPolicy:");
+                AppendChildObject(builder, SimPolicy, options, 4, false);
+            }
+
+            if (Optional.IsCollectionDefined(StaticIPConfiguration))
+            {
+                if (StaticIPConfiguration.Any())
+                {
+                    builder.Append("    staticIpConfiguration:");
+                    builder.AppendLine(" [");
+                    foreach (var item in StaticIPConfiguration)
+                    {
+                        AppendChildObject(builder, item, options, 6, true);
+                    }
+                    builder.AppendLine("    ]");
+                }
+            }
+
+            if (Optional.IsDefined(VendorName))
+            {
+                builder.Append("    vendorName:");
+                builder.AppendLine($" '{VendorName}'");
+            }
+
+            if (Optional.IsDefined(VendorKeyFingerprint))
+            {
+                builder.Append("    vendorKeyFingerprint:");
+                builder.AppendLine($" '{VendorKeyFingerprint}'");
+            }
+
+            if (Optional.IsDefined(AuthenticationKey))
+            {
+                builder.Append("    authenticationKey:");
+                builder.AppendLine($" '{AuthenticationKey}'");
+            }
+
+            if (Optional.IsDefined(OperatorKeyCode))
+            {
+                builder.Append("    operatorKeyCode:");
+                builder.AppendLine($" '{OperatorKeyCode}'");
+            }
+
+            builder.AppendLine("  }");
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<MobileNetworkSimData>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<MobileNetworkSimData>)this).GetFormatFromOptions(options) : options.Format;
@@ -321,6 +467,8 @@ namespace Azure.ResourceManager.MobileNetwork
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(MobileNetworkSimData)} does not support '{options.Format}' format.");
             }
@@ -337,6 +485,8 @@ namespace Azure.ResourceManager.MobileNetwork
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeMobileNetworkSimData(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(MobileNetworkSimData)} does not support '{options.Format}' format.");
             }

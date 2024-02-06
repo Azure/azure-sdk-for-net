@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -269,6 +271,133 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             return new DpmContainer(friendlyName.Value, Optional.ToNullable(backupManagementType), registrationStatus.Value, healthStatus.Value, containerType, protectableObjectType.Value, serializedAdditionalRawData, Optional.ToNullable(canReRegister), containerId.Value, Optional.ToNullable(protectedItemCount), dpmAgentVersion.Value, Optional.ToList(dpmServers), Optional.ToNullable(upgradeAvailable), protectionStatus.Value, extendedInfo.Value);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(CanReRegister))
+            {
+                builder.Append("  canReRegister:");
+                var boolValue = CanReRegister.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(ContainerId))
+            {
+                builder.Append("  containerId:");
+                builder.AppendLine($" '{ContainerId}'");
+            }
+
+            if (Optional.IsDefined(ProtectedItemCount))
+            {
+                builder.Append("  protectedItemCount:");
+                builder.AppendLine($" '{ProtectedItemCount.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(DpmAgentVersion))
+            {
+                builder.Append("  dpmAgentVersion:");
+                builder.AppendLine($" '{DpmAgentVersion}'");
+            }
+
+            if (Optional.IsCollectionDefined(DpmServers))
+            {
+                if (DpmServers.Any())
+                {
+                    builder.Append("  dpmServers:");
+                    builder.AppendLine(" [");
+                    foreach (var item in DpmServers)
+                    {
+                        if (item == null)
+                        {
+                            builder.Append("null");
+                            continue;
+                        }
+                        builder.AppendLine($"    '{item}'");
+                    }
+                    builder.AppendLine("  ]");
+                }
+            }
+
+            if (Optional.IsDefined(IsUpgradeAvailable))
+            {
+                builder.Append("  upgradeAvailable:");
+                var boolValue = IsUpgradeAvailable.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(ProtectionStatus))
+            {
+                builder.Append("  protectionStatus:");
+                builder.AppendLine($" '{ProtectionStatus}'");
+            }
+
+            if (Optional.IsDefined(ExtendedInfo))
+            {
+                builder.Append("  extendedInfo:");
+                AppendChildObject(builder, ExtendedInfo, options, 2, false);
+            }
+
+            if (Optional.IsDefined(FriendlyName))
+            {
+                builder.Append("  friendlyName:");
+                builder.AppendLine($" '{FriendlyName}'");
+            }
+
+            if (Optional.IsDefined(BackupManagementType))
+            {
+                builder.Append("  backupManagementType:");
+                builder.AppendLine($" '{BackupManagementType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(RegistrationStatus))
+            {
+                builder.Append("  registrationStatus:");
+                builder.AppendLine($" '{RegistrationStatus}'");
+            }
+
+            if (Optional.IsDefined(HealthStatus))
+            {
+                builder.Append("  healthStatus:");
+                builder.AppendLine($" '{HealthStatus}'");
+            }
+
+            if (Optional.IsDefined(ContainerType))
+            {
+                builder.Append("  containerType:");
+                builder.AppendLine($" '{ContainerType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ProtectableObjectType))
+            {
+                builder.Append("  protectableObjectType:");
+                builder.AppendLine($" '{ProtectableObjectType}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<DpmContainer>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<DpmContainer>)this).GetFormatFromOptions(options) : options.Format;
@@ -277,6 +406,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(DpmContainer)} does not support '{options.Format}' format.");
             }
@@ -293,6 +424,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeDpmContainer(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(DpmContainer)} does not support '{options.Format}' format.");
             }

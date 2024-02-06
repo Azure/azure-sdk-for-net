@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -455,6 +457,214 @@ namespace Azure.ResourceManager.Synapse
             return new SynapseBigDataPoolInfoData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, provisioningState.Value, autoScale.Value, Optional.ToNullable(creationDate), autoPause.Value, Optional.ToNullable(isComputeIsolationEnabled), Optional.ToNullable(isAutotuneEnabled), Optional.ToNullable(sessionLevelPackagesEnabled), Optional.ToNullable(cacheSize), dynamicExecutorAllocation.Value, sparkEventsFolder.Value, Optional.ToNullable(nodeCount), libraryRequirements.Value, Optional.ToList(customLibraries), sparkConfigProperties.Value, sparkVersion.Value, defaultSparkLogFolder.Value, Optional.ToNullable(nodeSize), Optional.ToNullable(nodeSizeFamily), Optional.ToNullable(lastSucceededTimestamp), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsCollectionDefined(Tags))
+            {
+                if (Tags.Any())
+                {
+                    builder.Append("  tags:");
+                    builder.AppendLine(" {");
+                    foreach (var item in Tags)
+                    {
+                        builder.Append($"    {item.Key}: ");
+                        if (item.Value == null)
+                        {
+                            builder.Append("null");
+                            continue;
+                        }
+                        builder.AppendLine($" '{item.Value}'");
+                    }
+                    builder.AppendLine("  }");
+                }
+            }
+
+            if (Optional.IsDefined(Location))
+            {
+                builder.Append("  location:");
+                builder.AppendLine($" '{Location.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Id))
+            {
+                builder.Append("  id:");
+                builder.AppendLine($" '{Id.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                builder.AppendLine($" '{Name}'");
+            }
+
+            if (Optional.IsDefined(ResourceType))
+            {
+                builder.Append("  type:");
+                builder.AppendLine($" '{ResourceType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SystemData))
+            {
+                builder.Append("  systemData:");
+                builder.AppendLine($" '{SystemData.ToString()}'");
+            }
+
+            builder.Append("  properties:");
+            builder.AppendLine(" {");
+            if (Optional.IsDefined(ProvisioningState))
+            {
+                builder.Append("    provisioningState:");
+                builder.AppendLine($" '{ProvisioningState}'");
+            }
+
+            if (Optional.IsDefined(AutoScale))
+            {
+                builder.Append("    autoScale:");
+                AppendChildObject(builder, AutoScale, options, 4, false);
+            }
+
+            if (Optional.IsDefined(CreatedOn))
+            {
+                builder.Append("    creationDate:");
+                var formattedDateTimeString = TypeFormatters.ToString(CreatedOn.Value, "o");
+                builder.AppendLine($" '{formattedDateTimeString}'");
+            }
+
+            if (Optional.IsDefined(AutoPause))
+            {
+                builder.Append("    autoPause:");
+                AppendChildObject(builder, AutoPause, options, 4, false);
+            }
+
+            if (Optional.IsDefined(IsComputeIsolationEnabled))
+            {
+                builder.Append("    isComputeIsolationEnabled:");
+                var boolValue = IsComputeIsolationEnabled.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(IsAutotuneEnabled))
+            {
+                builder.Append("    isAutotuneEnabled:");
+                var boolValue = IsAutotuneEnabled.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(IsSessionLevelPackagesEnabled))
+            {
+                builder.Append("    sessionLevelPackagesEnabled:");
+                var boolValue = IsSessionLevelPackagesEnabled.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(CacheSize))
+            {
+                builder.Append("    cacheSize:");
+                builder.AppendLine($" {CacheSize.Value}");
+            }
+
+            if (Optional.IsDefined(DynamicExecutorAllocation))
+            {
+                builder.Append("    dynamicExecutorAllocation:");
+                AppendChildObject(builder, DynamicExecutorAllocation, options, 4, false);
+            }
+
+            if (Optional.IsDefined(SparkEventsFolder))
+            {
+                builder.Append("    sparkEventsFolder:");
+                builder.AppendLine($" '{SparkEventsFolder}'");
+            }
+
+            if (Optional.IsDefined(NodeCount))
+            {
+                builder.Append("    nodeCount:");
+                builder.AppendLine($" {NodeCount.Value}");
+            }
+
+            if (Optional.IsDefined(LibraryRequirements))
+            {
+                builder.Append("    libraryRequirements:");
+                AppendChildObject(builder, LibraryRequirements, options, 4, false);
+            }
+
+            if (Optional.IsCollectionDefined(CustomLibraries))
+            {
+                if (CustomLibraries.Any())
+                {
+                    builder.Append("    customLibraries:");
+                    builder.AppendLine(" [");
+                    foreach (var item in CustomLibraries)
+                    {
+                        AppendChildObject(builder, item, options, 6, true);
+                    }
+                    builder.AppendLine("    ]");
+                }
+            }
+
+            if (Optional.IsDefined(SparkConfigProperties))
+            {
+                builder.Append("    sparkConfigProperties:");
+                AppendChildObject(builder, SparkConfigProperties, options, 4, false);
+            }
+
+            if (Optional.IsDefined(SparkVersion))
+            {
+                builder.Append("    sparkVersion:");
+                builder.AppendLine($" '{SparkVersion}'");
+            }
+
+            if (Optional.IsDefined(DefaultSparkLogFolder))
+            {
+                builder.Append("    defaultSparkLogFolder:");
+                builder.AppendLine($" '{DefaultSparkLogFolder}'");
+            }
+
+            if (Optional.IsDefined(NodeSize))
+            {
+                builder.Append("    nodeSize:");
+                builder.AppendLine($" '{NodeSize.ToString()}'");
+            }
+
+            if (Optional.IsDefined(NodeSizeFamily))
+            {
+                builder.Append("    nodeSizeFamily:");
+                builder.AppendLine($" '{NodeSizeFamily.ToString()}'");
+            }
+
+            if (Optional.IsDefined(LastSucceededOn))
+            {
+                builder.Append("    lastSucceededTimestamp:");
+                var formattedDateTimeString = TypeFormatters.ToString(LastSucceededOn.Value, "o");
+                builder.AppendLine($" '{formattedDateTimeString}'");
+            }
+
+            builder.AppendLine("  }");
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<SynapseBigDataPoolInfoData>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<SynapseBigDataPoolInfoData>)this).GetFormatFromOptions(options) : options.Format;
@@ -463,6 +673,8 @@ namespace Azure.ResourceManager.Synapse
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(SynapseBigDataPoolInfoData)} does not support '{options.Format}' format.");
             }
@@ -479,6 +691,8 @@ namespace Azure.ResourceManager.Synapse
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeSynapseBigDataPoolInfoData(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(SynapseBigDataPoolInfoData)} does not support '{options.Format}' format.");
             }

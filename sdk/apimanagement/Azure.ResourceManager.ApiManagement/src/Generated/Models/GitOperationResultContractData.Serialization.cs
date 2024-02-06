@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -248,6 +250,113 @@ namespace Azure.ResourceManager.ApiManagement.Models
             return new GitOperationResultContractData(id, name, type, systemData.Value, id0.Value, Optional.ToNullable(status), Optional.ToNullable(started), Optional.ToNullable(updated), resultInfo.Value, error.Value, Optional.ToList(actionLog), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(Id))
+            {
+                builder.Append("  id:");
+                builder.AppendLine($" '{Id.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                builder.AppendLine($" '{Name}'");
+            }
+
+            if (Optional.IsDefined(ResourceType))
+            {
+                builder.Append("  type:");
+                builder.AppendLine($" '{ResourceType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SystemData))
+            {
+                builder.Append("  systemData:");
+                builder.AppendLine($" '{SystemData.ToString()}'");
+            }
+
+            builder.Append("  properties:");
+            builder.AppendLine(" {");
+            if (Optional.IsDefined(OperationResultIdentifier))
+            {
+                builder.Append("    id:");
+                builder.AppendLine($" '{OperationResultIdentifier}'");
+            }
+
+            if (Optional.IsDefined(Status))
+            {
+                builder.Append("    status:");
+                builder.AppendLine($" '{Status.ToString()}'");
+            }
+
+            if (Optional.IsDefined(StartedOn))
+            {
+                builder.Append("    started:");
+                var formattedDateTimeString = TypeFormatters.ToString(StartedOn.Value, "o");
+                builder.AppendLine($" '{formattedDateTimeString}'");
+            }
+
+            if (Optional.IsDefined(UpdatedOn))
+            {
+                builder.Append("    updated:");
+                var formattedDateTimeString = TypeFormatters.ToString(UpdatedOn.Value, "o");
+                builder.AppendLine($" '{formattedDateTimeString}'");
+            }
+
+            if (Optional.IsDefined(ResultInfo))
+            {
+                builder.Append("    resultInfo:");
+                builder.AppendLine($" '{ResultInfo}'");
+            }
+
+            if (Optional.IsDefined(Error))
+            {
+                builder.Append("    error:");
+                AppendChildObject(builder, Error, options, 4, false);
+            }
+
+            if (Optional.IsCollectionDefined(ActionLog))
+            {
+                if (ActionLog.Any())
+                {
+                    builder.Append("    actionLog:");
+                    builder.AppendLine(" [");
+                    foreach (var item in ActionLog)
+                    {
+                        AppendChildObject(builder, item, options, 6, true);
+                    }
+                    builder.AppendLine("    ]");
+                }
+            }
+
+            builder.AppendLine("  }");
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<GitOperationResultContractData>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<GitOperationResultContractData>)this).GetFormatFromOptions(options) : options.Format;
@@ -256,6 +365,8 @@ namespace Azure.ResourceManager.ApiManagement.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(GitOperationResultContractData)} does not support '{options.Format}' format.");
             }
@@ -272,6 +383,8 @@ namespace Azure.ResourceManager.ApiManagement.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeGitOperationResultContractData(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(GitOperationResultContractData)} does not support '{options.Format}' format.");
             }

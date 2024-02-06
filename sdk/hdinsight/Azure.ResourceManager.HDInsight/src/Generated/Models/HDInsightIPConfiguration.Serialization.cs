@@ -9,6 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Net;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
@@ -207,6 +208,86 @@ namespace Azure.ResourceManager.HDInsight.Models
             return new HDInsightIPConfiguration(id.Value, name, Optional.ToNullable(type), Optional.ToNullable(provisioningState), Optional.ToNullable(primary), privateIPAddress.Value, Optional.ToNullable(privateIPAllocationMethod), subnet, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(Id))
+            {
+                builder.Append("  id:");
+                builder.AppendLine($" '{Id.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                builder.AppendLine($" '{Name}'");
+            }
+
+            if (Optional.IsDefined(ResourceType))
+            {
+                builder.Append("  type:");
+                builder.AppendLine($" '{ResourceType.Value.ToString()}'");
+            }
+
+            builder.Append("  properties:");
+            builder.AppendLine(" {");
+            if (Optional.IsDefined(ProvisioningState))
+            {
+                builder.Append("    provisioningState:");
+                builder.AppendLine($" '{ProvisioningState.ToString()}'");
+            }
+
+            if (Optional.IsDefined(IsPrimary))
+            {
+                builder.Append("    primary:");
+                var boolValue = IsPrimary.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(PrivateIPAddress))
+            {
+                builder.Append("    privateIPAddress:");
+                builder.AppendLine($" '{PrivateIPAddress.ToString()}'");
+            }
+
+            if (Optional.IsDefined(PrivateIPAllocationMethod))
+            {
+                builder.Append("    privateIPAllocationMethod:");
+                builder.AppendLine($" '{PrivateIPAllocationMethod.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Subnet))
+            {
+                builder.Append("    subnet:");
+                AppendChildObject(builder, Subnet, options, 4, false);
+            }
+
+            builder.AppendLine("  }");
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<HDInsightIPConfiguration>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<HDInsightIPConfiguration>)this).GetFormatFromOptions(options) : options.Format;
@@ -215,6 +296,8 @@ namespace Azure.ResourceManager.HDInsight.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(HDInsightIPConfiguration)} does not support '{options.Format}' format.");
             }
@@ -231,6 +314,8 @@ namespace Azure.ResourceManager.HDInsight.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeHDInsightIPConfiguration(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(HDInsightIPConfiguration)} does not support '{options.Format}' format.");
             }

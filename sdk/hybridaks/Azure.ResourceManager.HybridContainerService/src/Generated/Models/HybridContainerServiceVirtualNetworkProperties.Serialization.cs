@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -234,6 +236,117 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             return new HybridContainerServiceVirtualNetworkProperties(infraVnetProfile.Value, Optional.ToList(vipPool), Optional.ToList(vmipPool), Optional.ToList(dnsServers), gateway.Value, ipAddressPrefix.Value, Optional.ToNullable(vlanId), Optional.ToNullable(provisioningState), status.Value, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(InfraVnetProfile))
+            {
+                builder.Append("  infraVnetProfile:");
+                AppendChildObject(builder, InfraVnetProfile, options, 2, false);
+            }
+
+            if (Optional.IsCollectionDefined(VipPool))
+            {
+                if (VipPool.Any())
+                {
+                    builder.Append("  vipPool:");
+                    builder.AppendLine(" [");
+                    foreach (var item in VipPool)
+                    {
+                        AppendChildObject(builder, item, options, 4, true);
+                    }
+                    builder.AppendLine("  ]");
+                }
+            }
+
+            if (Optional.IsCollectionDefined(VmipPool))
+            {
+                if (VmipPool.Any())
+                {
+                    builder.Append("  vmipPool:");
+                    builder.AppendLine(" [");
+                    foreach (var item in VmipPool)
+                    {
+                        AppendChildObject(builder, item, options, 4, true);
+                    }
+                    builder.AppendLine("  ]");
+                }
+            }
+
+            if (Optional.IsCollectionDefined(DnsServers))
+            {
+                if (DnsServers.Any())
+                {
+                    builder.Append("  dnsServers:");
+                    builder.AppendLine(" [");
+                    foreach (var item in DnsServers)
+                    {
+                        if (item == null)
+                        {
+                            builder.Append("null");
+                            continue;
+                        }
+                        builder.AppendLine($"    '{item}'");
+                    }
+                    builder.AppendLine("  ]");
+                }
+            }
+
+            if (Optional.IsDefined(Gateway))
+            {
+                builder.Append("  gateway:");
+                builder.AppendLine($" '{Gateway}'");
+            }
+
+            if (Optional.IsDefined(IPAddressPrefix))
+            {
+                builder.Append("  ipAddressPrefix:");
+                builder.AppendLine($" '{IPAddressPrefix}'");
+            }
+
+            if (Optional.IsDefined(VlanId))
+            {
+                builder.Append("  vlanID:");
+                builder.AppendLine($" {VlanId.Value}");
+            }
+
+            if (Optional.IsDefined(ProvisioningState))
+            {
+                builder.Append("  provisioningState:");
+                builder.AppendLine($" '{ProvisioningState.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Status))
+            {
+                builder.Append("  status:");
+                AppendChildObject(builder, Status, options, 2, false);
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<HybridContainerServiceVirtualNetworkProperties>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<HybridContainerServiceVirtualNetworkProperties>)this).GetFormatFromOptions(options) : options.Format;
@@ -242,6 +355,8 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(HybridContainerServiceVirtualNetworkProperties)} does not support '{options.Format}' format.");
             }
@@ -258,6 +373,8 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeHybridContainerServiceVirtualNetworkProperties(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(HybridContainerServiceVirtualNetworkProperties)} does not support '{options.Format}' format.");
             }

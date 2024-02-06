@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -278,6 +280,96 @@ namespace Azure.ResourceManager.MachineLearning.Models
             return new MachineLearningAksComputeProperties(clusterFqdn.Value, Optional.ToList(systemServices), Optional.ToNullable(agentCount), agentVmSize.Value, Optional.ToNullable(clusterPurpose), sslConfiguration.Value, aksNetworkingConfiguration.Value, Optional.ToNullable(loadBalancerType), loadBalancerSubnet.Value, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(ClusterFqdn))
+            {
+                builder.Append("  clusterFqdn:");
+                builder.AppendLine($" '{ClusterFqdn}'");
+            }
+
+            if (Optional.IsCollectionDefined(SystemServices))
+            {
+                if (SystemServices.Any())
+                {
+                    builder.Append("  systemServices:");
+                    builder.AppendLine(" [");
+                    foreach (var item in SystemServices)
+                    {
+                        AppendChildObject(builder, item, options, 4, true);
+                    }
+                    builder.AppendLine("  ]");
+                }
+            }
+
+            if (Optional.IsDefined(AgentCount))
+            {
+                builder.Append("  agentCount:");
+                builder.AppendLine($" {AgentCount.Value}");
+            }
+
+            if (Optional.IsDefined(AgentVmSize))
+            {
+                builder.Append("  agentVmSize:");
+                builder.AppendLine($" '{AgentVmSize}'");
+            }
+
+            if (Optional.IsDefined(ClusterPurpose))
+            {
+                builder.Append("  clusterPurpose:");
+                builder.AppendLine($" '{ClusterPurpose.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SslConfiguration))
+            {
+                builder.Append("  sslConfiguration:");
+                AppendChildObject(builder, SslConfiguration, options, 2, false);
+            }
+
+            if (Optional.IsDefined(AksNetworkingConfiguration))
+            {
+                builder.Append("  aksNetworkingConfiguration:");
+                AppendChildObject(builder, AksNetworkingConfiguration, options, 2, false);
+            }
+
+            if (Optional.IsDefined(LoadBalancerType))
+            {
+                builder.Append("  loadBalancerType:");
+                builder.AppendLine($" '{LoadBalancerType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(LoadBalancerSubnet))
+            {
+                builder.Append("  loadBalancerSubnet:");
+                builder.AppendLine($" '{LoadBalancerSubnet}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<MachineLearningAksComputeProperties>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<MachineLearningAksComputeProperties>)this).GetFormatFromOptions(options) : options.Format;
@@ -286,6 +378,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(MachineLearningAksComputeProperties)} does not support '{options.Format}' format.");
             }
@@ -302,6 +396,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeMachineLearningAksComputeProperties(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(MachineLearningAksComputeProperties)} does not support '{options.Format}' format.");
             }

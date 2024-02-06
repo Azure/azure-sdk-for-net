@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -181,6 +183,94 @@ namespace Azure.ResourceManager.CostManagement.Models
             return new ScheduleProperties(frequency, Optional.ToNullable(hourOfDay), Optional.ToList(daysOfWeek), Optional.ToList(weeksOfMonth), Optional.ToNullable(dayOfMonth), startDate, endDate, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(Frequency))
+            {
+                builder.Append("  frequency:");
+                builder.AppendLine($" '{Frequency.ToString()}'");
+            }
+
+            if (Optional.IsDefined(HourOfDay))
+            {
+                builder.Append("  hourOfDay:");
+                builder.AppendLine($" {HourOfDay.Value}");
+            }
+
+            if (Optional.IsCollectionDefined(DaysOfWeek))
+            {
+                if (DaysOfWeek.Any())
+                {
+                    builder.Append("  daysOfWeek:");
+                    builder.AppendLine(" [");
+                    foreach (var item in DaysOfWeek)
+                    {
+                        builder.AppendLine($"    '{item.ToString()}'");
+                    }
+                    builder.AppendLine("  ]");
+                }
+            }
+
+            if (Optional.IsCollectionDefined(WeeksOfMonth))
+            {
+                if (WeeksOfMonth.Any())
+                {
+                    builder.Append("  weeksOfMonth:");
+                    builder.AppendLine(" [");
+                    foreach (var item in WeeksOfMonth)
+                    {
+                        builder.AppendLine($"    '{item.ToString()}'");
+                    }
+                    builder.AppendLine("  ]");
+                }
+            }
+
+            if (Optional.IsDefined(DayOfMonth))
+            {
+                builder.Append("  dayOfMonth:");
+                builder.AppendLine($" {DayOfMonth.Value}");
+            }
+
+            if (Optional.IsDefined(StartOn))
+            {
+                builder.Append("  startDate:");
+                var formattedDateTimeString = TypeFormatters.ToString(StartOn, "o");
+                builder.AppendLine($" '{formattedDateTimeString}'");
+            }
+
+            if (Optional.IsDefined(EndOn))
+            {
+                builder.Append("  endDate:");
+                var formattedDateTimeString = TypeFormatters.ToString(EndOn, "o");
+                builder.AppendLine($" '{formattedDateTimeString}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<ScheduleProperties>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ScheduleProperties>)this).GetFormatFromOptions(options) : options.Format;
@@ -189,6 +279,8 @@ namespace Azure.ResourceManager.CostManagement.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(ScheduleProperties)} does not support '{options.Format}' format.");
             }
@@ -205,6 +297,8 @@ namespace Azure.ResourceManager.CostManagement.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeScheduleProperties(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(ScheduleProperties)} does not support '{options.Format}' format.");
             }

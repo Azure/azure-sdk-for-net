@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -537,6 +538,154 @@ namespace Azure.ResourceManager.MachineLearning.Models
             return new TableParameterSubspace(booster.Value, boostingType.Value, growPolicy.Value, learningRate.Value, maxBin.Value, maxDepth.Value, maxLeaves.Value, minDataInLeaf.Value, minSplitGain.Value, modelName.Value, nEstimators.Value, numLeaves.Value, preprocessorName.Value, regAlpha.Value, regLambda.Value, subsample.Value, subsampleFreq.Value, treeMethod.Value, withMean.Value, withStd.Value, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(Booster))
+            {
+                builder.Append("  booster:");
+                builder.AppendLine($" '{Booster}'");
+            }
+
+            if (Optional.IsDefined(BoostingType))
+            {
+                builder.Append("  boostingType:");
+                builder.AppendLine($" '{BoostingType}'");
+            }
+
+            if (Optional.IsDefined(GrowPolicy))
+            {
+                builder.Append("  growPolicy:");
+                builder.AppendLine($" '{GrowPolicy}'");
+            }
+
+            if (Optional.IsDefined(LearningRate))
+            {
+                builder.Append("  learningRate:");
+                builder.AppendLine($" '{LearningRate}'");
+            }
+
+            if (Optional.IsDefined(MaxBin))
+            {
+                builder.Append("  maxBin:");
+                builder.AppendLine($" '{MaxBin}'");
+            }
+
+            if (Optional.IsDefined(MaxDepth))
+            {
+                builder.Append("  maxDepth:");
+                builder.AppendLine($" '{MaxDepth}'");
+            }
+
+            if (Optional.IsDefined(MaxLeaves))
+            {
+                builder.Append("  maxLeaves:");
+                builder.AppendLine($" '{MaxLeaves}'");
+            }
+
+            if (Optional.IsDefined(MinDataInLeaf))
+            {
+                builder.Append("  minDataInLeaf:");
+                builder.AppendLine($" '{MinDataInLeaf}'");
+            }
+
+            if (Optional.IsDefined(MinSplitGain))
+            {
+                builder.Append("  minSplitGain:");
+                builder.AppendLine($" '{MinSplitGain}'");
+            }
+
+            if (Optional.IsDefined(ModelName))
+            {
+                builder.Append("  modelName:");
+                builder.AppendLine($" '{ModelName}'");
+            }
+
+            if (Optional.IsDefined(NEstimators))
+            {
+                builder.Append("  nEstimators:");
+                builder.AppendLine($" '{NEstimators}'");
+            }
+
+            if (Optional.IsDefined(NumLeaves))
+            {
+                builder.Append("  numLeaves:");
+                builder.AppendLine($" '{NumLeaves}'");
+            }
+
+            if (Optional.IsDefined(PreprocessorName))
+            {
+                builder.Append("  preprocessorName:");
+                builder.AppendLine($" '{PreprocessorName}'");
+            }
+
+            if (Optional.IsDefined(RegAlpha))
+            {
+                builder.Append("  regAlpha:");
+                builder.AppendLine($" '{RegAlpha}'");
+            }
+
+            if (Optional.IsDefined(RegLambda))
+            {
+                builder.Append("  regLambda:");
+                builder.AppendLine($" '{RegLambda}'");
+            }
+
+            if (Optional.IsDefined(Subsample))
+            {
+                builder.Append("  subsample:");
+                builder.AppendLine($" '{Subsample}'");
+            }
+
+            if (Optional.IsDefined(SubsampleFreq))
+            {
+                builder.Append("  subsampleFreq:");
+                builder.AppendLine($" '{SubsampleFreq}'");
+            }
+
+            if (Optional.IsDefined(TreeMethod))
+            {
+                builder.Append("  treeMethod:");
+                builder.AppendLine($" '{TreeMethod}'");
+            }
+
+            if (Optional.IsDefined(WithMean))
+            {
+                builder.Append("  withMean:");
+                builder.AppendLine($" '{WithMean}'");
+            }
+
+            if (Optional.IsDefined(WithStd))
+            {
+                builder.Append("  withStd:");
+                builder.AppendLine($" '{WithStd}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<TableParameterSubspace>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<TableParameterSubspace>)this).GetFormatFromOptions(options) : options.Format;
@@ -545,6 +694,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(TableParameterSubspace)} does not support '{options.Format}' format.");
             }
@@ -561,6 +712,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeTableParameterSubspace(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(TableParameterSubspace)} does not support '{options.Format}' format.");
             }

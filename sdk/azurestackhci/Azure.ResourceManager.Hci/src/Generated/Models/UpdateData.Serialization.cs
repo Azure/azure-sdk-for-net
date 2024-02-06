@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Hci.Models;
@@ -481,6 +483,222 @@ namespace Azure.ResourceManager.Hci
             return new UpdateData(id, name, type, systemData.Value, Optional.ToNullable(location), Optional.ToNullable(provisioningState), Optional.ToNullable(installedDate), description.Value, Optional.ToNullable(state), Optional.ToList(prerequisites), Optional.ToList(componentVersions), Optional.ToNullable(rebootRequired), Optional.ToNullable(healthState), Optional.ToList(healthCheckResult), Optional.ToNullable(healthCheckDate), packagePath.Value, Optional.ToNullable(packageSizeInMb), displayName.Value, version.Value, publisher.Value, releaseLink.Value, Optional.ToNullable(availabilityType), packageType.Value, additionalProperties.Value, Optional.ToNullable(progressPercentage), notifyMessage.Value, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(Location))
+            {
+                builder.Append("  location:");
+                builder.AppendLine($" '{Location.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Id))
+            {
+                builder.Append("  id:");
+                builder.AppendLine($" '{Id.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                builder.AppendLine($" '{Name}'");
+            }
+
+            if (Optional.IsDefined(ResourceType))
+            {
+                builder.Append("  type:");
+                builder.AppendLine($" '{ResourceType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SystemData))
+            {
+                builder.Append("  systemData:");
+                builder.AppendLine($" '{SystemData.ToString()}'");
+            }
+
+            builder.Append("  properties:");
+            builder.AppendLine(" {");
+            if (Optional.IsDefined(ProvisioningState))
+            {
+                builder.Append("    provisioningState:");
+                builder.AppendLine($" '{ProvisioningState.ToString()}'");
+            }
+
+            if (Optional.IsDefined(InstalledOn))
+            {
+                builder.Append("    installedDate:");
+                var formattedDateTimeString = TypeFormatters.ToString(InstalledOn.Value, "o");
+                builder.AppendLine($" '{formattedDateTimeString}'");
+            }
+
+            if (Optional.IsDefined(Description))
+            {
+                builder.Append("    description:");
+                builder.AppendLine($" '{Description}'");
+            }
+
+            if (Optional.IsDefined(State))
+            {
+                builder.Append("    state:");
+                builder.AppendLine($" '{State.ToString()}'");
+            }
+
+            if (Optional.IsCollectionDefined(Prerequisites))
+            {
+                if (Prerequisites.Any())
+                {
+                    builder.Append("    prerequisites:");
+                    builder.AppendLine(" [");
+                    foreach (var item in Prerequisites)
+                    {
+                        AppendChildObject(builder, item, options, 6, true);
+                    }
+                    builder.AppendLine("    ]");
+                }
+            }
+
+            if (Optional.IsCollectionDefined(ComponentVersions))
+            {
+                if (ComponentVersions.Any())
+                {
+                    builder.Append("    componentVersions:");
+                    builder.AppendLine(" [");
+                    foreach (var item in ComponentVersions)
+                    {
+                        AppendChildObject(builder, item, options, 6, true);
+                    }
+                    builder.AppendLine("    ]");
+                }
+            }
+
+            if (Optional.IsDefined(RebootRequired))
+            {
+                builder.Append("    rebootRequired:");
+                builder.AppendLine($" '{RebootRequired.ToString()}'");
+            }
+
+            if (Optional.IsDefined(HealthState))
+            {
+                builder.Append("    healthState:");
+                builder.AppendLine($" '{HealthState.ToString()}'");
+            }
+
+            if (Optional.IsCollectionDefined(HealthCheckResult))
+            {
+                if (HealthCheckResult.Any())
+                {
+                    builder.Append("    healthCheckResult:");
+                    builder.AppendLine(" [");
+                    foreach (var item in HealthCheckResult)
+                    {
+                        AppendChildObject(builder, item, options, 6, true);
+                    }
+                    builder.AppendLine("    ]");
+                }
+            }
+
+            if (Optional.IsDefined(HealthCheckOn))
+            {
+                builder.Append("    healthCheckDate:");
+                var formattedDateTimeString = TypeFormatters.ToString(HealthCheckOn.Value, "o");
+                builder.AppendLine($" '{formattedDateTimeString}'");
+            }
+
+            if (Optional.IsDefined(PackagePath))
+            {
+                builder.Append("    packagePath:");
+                builder.AppendLine($" '{PackagePath}'");
+            }
+
+            if (Optional.IsDefined(PackageSizeInMb))
+            {
+                builder.Append("    packageSizeInMb:");
+                builder.AppendLine($" '{PackageSizeInMb.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(DisplayName))
+            {
+                builder.Append("    displayName:");
+                builder.AppendLine($" '{DisplayName}'");
+            }
+
+            if (Optional.IsDefined(Version))
+            {
+                builder.Append("    version:");
+                builder.AppendLine($" '{Version}'");
+            }
+
+            if (Optional.IsDefined(Publisher))
+            {
+                builder.Append("    publisher:");
+                builder.AppendLine($" '{Publisher}'");
+            }
+
+            if (Optional.IsDefined(ReleaseLink))
+            {
+                builder.Append("    releaseLink:");
+                builder.AppendLine($" '{ReleaseLink}'");
+            }
+
+            if (Optional.IsDefined(AvailabilityType))
+            {
+                builder.Append("    availabilityType:");
+                builder.AppendLine($" '{AvailabilityType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(PackageType))
+            {
+                builder.Append("    packageType:");
+                builder.AppendLine($" '{PackageType}'");
+            }
+
+            if (Optional.IsDefined(AdditionalProperties))
+            {
+                builder.Append("    additionalProperties:");
+                builder.AppendLine($" '{AdditionalProperties}'");
+            }
+
+            builder.Append("    updateStateProperties:");
+            builder.AppendLine(" {");
+            if (Optional.IsDefined(ProgressPercentage))
+            {
+                builder.Append("      progressPercentage:");
+                builder.AppendLine($" '{ProgressPercentage.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(NotifyMessage))
+            {
+                builder.Append("      notifyMessage:");
+                builder.AppendLine($" '{NotifyMessage}'");
+            }
+
+            builder.AppendLine("    }");
+            builder.AppendLine("  }");
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<UpdateData>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<UpdateData>)this).GetFormatFromOptions(options) : options.Format;
@@ -489,6 +707,8 @@ namespace Azure.ResourceManager.Hci
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(UpdateData)} does not support '{options.Format}' format.");
             }
@@ -505,6 +725,8 @@ namespace Azure.ResourceManager.Hci
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeUpdateData(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(UpdateData)} does not support '{options.Format}' format.");
             }

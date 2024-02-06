@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -177,6 +178,79 @@ namespace Azure.ResourceManager.EventHubs.Models
             return new EventHubDestination(name.Value, storageAccountResourceId.Value, blobContainer.Value, archiveNameFormat.Value, Optional.ToNullable(dataLakeSubscriptionId), dataLakeAccountName.Value, dataLakeFolderPath.Value, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                builder.AppendLine($" '{Name}'");
+            }
+
+            builder.Append("  properties:");
+            builder.AppendLine(" {");
+            if (Optional.IsDefined(StorageAccountResourceId))
+            {
+                builder.Append("    storageAccountResourceId:");
+                builder.AppendLine($" '{StorageAccountResourceId.ToString()}'");
+            }
+
+            if (Optional.IsDefined(BlobContainer))
+            {
+                builder.Append("    blobContainer:");
+                builder.AppendLine($" '{BlobContainer}'");
+            }
+
+            if (Optional.IsDefined(ArchiveNameFormat))
+            {
+                builder.Append("    archiveNameFormat:");
+                builder.AppendLine($" '{ArchiveNameFormat}'");
+            }
+
+            if (Optional.IsDefined(DataLakeSubscriptionId))
+            {
+                builder.Append("    dataLakeSubscriptionId:");
+                builder.AppendLine($" '{DataLakeSubscriptionId.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(DataLakeAccountName))
+            {
+                builder.Append("    dataLakeAccountName:");
+                builder.AppendLine($" '{DataLakeAccountName}'");
+            }
+
+            if (Optional.IsDefined(DataLakeFolderPath))
+            {
+                builder.Append("    dataLakeFolderPath:");
+                builder.AppendLine($" '{DataLakeFolderPath}'");
+            }
+
+            builder.AppendLine("  }");
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<EventHubDestination>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<EventHubDestination>)this).GetFormatFromOptions(options) : options.Format;
@@ -185,6 +259,8 @@ namespace Azure.ResourceManager.EventHubs.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(EventHubDestination)} does not support '{options.Format}' format.");
             }
@@ -201,6 +277,8 @@ namespace Azure.ResourceManager.EventHubs.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeEventHubDestination(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(EventHubDestination)} does not support '{options.Format}' format.");
             }

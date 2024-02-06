@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -279,6 +281,108 @@ namespace Azure.ResourceManager.MachineLearning.Models
             return new ImageClassificationMultilabel(Optional.ToNullable(logVerbosity), targetColumnName.Value, taskType, trainingData, serializedAdditionalRawData, Optional.ToNullable(primaryMetric), modelSettings.Value, Optional.ToList(searchSpace), limitSettings, sweepSettings.Value, validationData.Value, Optional.ToNullable(validationDataSize));
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(PrimaryMetric))
+            {
+                builder.Append("  primaryMetric:");
+                builder.AppendLine($" '{PrimaryMetric.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ModelSettings))
+            {
+                builder.Append("  modelSettings:");
+                AppendChildObject(builder, ModelSettings, options, 2, false);
+            }
+
+            if (Optional.IsCollectionDefined(SearchSpace))
+            {
+                if (SearchSpace.Any())
+                {
+                    builder.Append("  searchSpace:");
+                    builder.AppendLine(" [");
+                    foreach (var item in SearchSpace)
+                    {
+                        AppendChildObject(builder, item, options, 4, true);
+                    }
+                    builder.AppendLine("  ]");
+                }
+            }
+
+            if (Optional.IsDefined(LimitSettings))
+            {
+                builder.Append("  limitSettings:");
+                AppendChildObject(builder, LimitSettings, options, 2, false);
+            }
+
+            if (Optional.IsDefined(SweepSettings))
+            {
+                builder.Append("  sweepSettings:");
+                AppendChildObject(builder, SweepSettings, options, 2, false);
+            }
+
+            if (Optional.IsDefined(ValidationData))
+            {
+                builder.Append("  validationData:");
+                AppendChildObject(builder, ValidationData, options, 2, false);
+            }
+
+            if (Optional.IsDefined(ValidationDataSize))
+            {
+                builder.Append("  validationDataSize:");
+                builder.AppendLine($" '{ValidationDataSize.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(LogVerbosity))
+            {
+                builder.Append("  logVerbosity:");
+                builder.AppendLine($" '{LogVerbosity.ToString()}'");
+            }
+
+            if (Optional.IsDefined(TargetColumnName))
+            {
+                builder.Append("  targetColumnName:");
+                builder.AppendLine($" '{TargetColumnName}'");
+            }
+
+            if (Optional.IsDefined(TaskType))
+            {
+                builder.Append("  taskType:");
+                builder.AppendLine($" '{TaskType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(TrainingData))
+            {
+                builder.Append("  trainingData:");
+                AppendChildObject(builder, TrainingData, options, 2, false);
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<ImageClassificationMultilabel>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ImageClassificationMultilabel>)this).GetFormatFromOptions(options) : options.Format;
@@ -287,6 +391,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(ImageClassificationMultilabel)} does not support '{options.Format}' format.");
             }
@@ -303,6 +409,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeImageClassificationMultilabel(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(ImageClassificationMultilabel)} does not support '{options.Format}' format.");
             }

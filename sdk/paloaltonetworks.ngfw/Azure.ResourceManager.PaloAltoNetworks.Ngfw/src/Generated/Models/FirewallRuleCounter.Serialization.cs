@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -201,6 +202,97 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             return new FirewallRuleCounter(priority, ruleStackName.Value, ruleListName.Value, firewallName.Value, ruleName, Optional.ToNullable(hitCount), appSeen.Value, Optional.ToNullable(timestamp), Optional.ToNullable(requestTimestamp), Optional.ToNullable(lastUpdatedTimestamp), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(Priority))
+            {
+                builder.Append("  priority:");
+                builder.AppendLine($" '{Priority}'");
+            }
+
+            if (Optional.IsDefined(RuleStackName))
+            {
+                builder.Append("  ruleStackName:");
+                builder.AppendLine($" '{RuleStackName}'");
+            }
+
+            if (Optional.IsDefined(RuleListName))
+            {
+                builder.Append("  ruleListName:");
+                builder.AppendLine($" '{RuleListName}'");
+            }
+
+            if (Optional.IsDefined(FirewallName))
+            {
+                builder.Append("  firewallName:");
+                builder.AppendLine($" '{FirewallName}'");
+            }
+
+            if (Optional.IsDefined(RuleName))
+            {
+                builder.Append("  ruleName:");
+                builder.AppendLine($" '{RuleName}'");
+            }
+
+            if (Optional.IsDefined(HitCount))
+            {
+                builder.Append("  hitCount:");
+                builder.AppendLine($" {HitCount.Value}");
+            }
+
+            if (Optional.IsDefined(AppSeen))
+            {
+                builder.Append("  appSeen:");
+                AppendChildObject(builder, AppSeen, options, 2, false);
+            }
+
+            if (Optional.IsDefined(ResponseOn))
+            {
+                builder.Append("  timestamp:");
+                var formattedDateTimeString = TypeFormatters.ToString(ResponseOn.Value, "o");
+                builder.AppendLine($" '{formattedDateTimeString}'");
+            }
+
+            if (Optional.IsDefined(RequestOn))
+            {
+                builder.Append("  requestTimestamp:");
+                var formattedDateTimeString = TypeFormatters.ToString(RequestOn.Value, "o");
+                builder.AppendLine($" '{formattedDateTimeString}'");
+            }
+
+            if (Optional.IsDefined(LastUpdatedOn))
+            {
+                builder.Append("  lastUpdatedTimestamp:");
+                var formattedDateTimeString = TypeFormatters.ToString(LastUpdatedOn.Value, "o");
+                builder.AppendLine($" '{formattedDateTimeString}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<FirewallRuleCounter>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<FirewallRuleCounter>)this).GetFormatFromOptions(options) : options.Format;
@@ -209,6 +301,8 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(FirewallRuleCounter)} does not support '{options.Format}' format.");
             }
@@ -225,6 +319,8 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeFirewallRuleCounter(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(FirewallRuleCounter)} does not support '{options.Format}' format.");
             }

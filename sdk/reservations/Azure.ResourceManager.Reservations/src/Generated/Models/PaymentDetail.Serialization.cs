@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -178,6 +179,78 @@ namespace Azure.ResourceManager.Reservations.Models
             return new PaymentDetail(Optional.ToNullable(dueDate), Optional.ToNullable(paymentDate), pricingCurrencyTotal.Value, billingCurrencyTotal.Value, billingAccount.Value, Optional.ToNullable(status), extendedStatusInfo.Value, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(DueOn))
+            {
+                builder.Append("  dueDate:");
+                var formattedDateTimeString = TypeFormatters.ToString(DueOn.Value, "o");
+                builder.AppendLine($" '{formattedDateTimeString}'");
+            }
+
+            if (Optional.IsDefined(PayOn))
+            {
+                builder.Append("  paymentDate:");
+                var formattedDateTimeString = TypeFormatters.ToString(PayOn.Value, "o");
+                builder.AppendLine($" '{formattedDateTimeString}'");
+            }
+
+            if (Optional.IsDefined(PricingCurrencyTotal))
+            {
+                builder.Append("  pricingCurrencyTotal:");
+                AppendChildObject(builder, PricingCurrencyTotal, options, 2, false);
+            }
+
+            if (Optional.IsDefined(BillingCurrencyTotal))
+            {
+                builder.Append("  billingCurrencyTotal:");
+                AppendChildObject(builder, BillingCurrencyTotal, options, 2, false);
+            }
+
+            if (Optional.IsDefined(BillingAccount))
+            {
+                builder.Append("  billingAccount:");
+                builder.AppendLine($" '{BillingAccount}'");
+            }
+
+            if (Optional.IsDefined(Status))
+            {
+                builder.Append("  status:");
+                builder.AppendLine($" '{Status.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ExtendedStatusInfo))
+            {
+                builder.Append("  extendedStatusInfo:");
+                AppendChildObject(builder, ExtendedStatusInfo, options, 2, false);
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<PaymentDetail>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<PaymentDetail>)this).GetFormatFromOptions(options) : options.Format;
@@ -186,6 +259,8 @@ namespace Azure.ResourceManager.Reservations.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(PaymentDetail)} does not support '{options.Format}' format.");
             }
@@ -202,6 +277,8 @@ namespace Azure.ResourceManager.Reservations.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializePaymentDetail(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(PaymentDetail)} does not support '{options.Format}' format.");
             }

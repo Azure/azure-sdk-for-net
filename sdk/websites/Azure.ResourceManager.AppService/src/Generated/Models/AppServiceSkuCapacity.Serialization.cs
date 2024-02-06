@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -148,6 +149,64 @@ namespace Azure.ResourceManager.AppService.Models
             return new AppServiceSkuCapacity(Optional.ToNullable(minimum), Optional.ToNullable(maximum), Optional.ToNullable(elasticMaximum), Optional.ToNullable(@default), scaleType.Value, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(Minimum))
+            {
+                builder.Append("  minimum:");
+                builder.AppendLine($" {Minimum.Value}");
+            }
+
+            if (Optional.IsDefined(Maximum))
+            {
+                builder.Append("  maximum:");
+                builder.AppendLine($" {Maximum.Value}");
+            }
+
+            if (Optional.IsDefined(ElasticMaximum))
+            {
+                builder.Append("  elasticMaximum:");
+                builder.AppendLine($" {ElasticMaximum.Value}");
+            }
+
+            if (Optional.IsDefined(Default))
+            {
+                builder.Append("  default:");
+                builder.AppendLine($" {Default.Value}");
+            }
+
+            if (Optional.IsDefined(ScaleType))
+            {
+                builder.Append("  scaleType:");
+                builder.AppendLine($" '{ScaleType}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<AppServiceSkuCapacity>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<AppServiceSkuCapacity>)this).GetFormatFromOptions(options) : options.Format;
@@ -156,6 +215,8 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(AppServiceSkuCapacity)} does not support '{options.Format}' format.");
             }
@@ -172,6 +233,8 @@ namespace Azure.ResourceManager.AppService.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeAppServiceSkuCapacity(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(AppServiceSkuCapacity)} does not support '{options.Format}' format.");
             }

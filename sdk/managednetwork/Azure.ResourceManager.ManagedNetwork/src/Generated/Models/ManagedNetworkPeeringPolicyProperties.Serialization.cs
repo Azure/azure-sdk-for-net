@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
@@ -182,6 +184,86 @@ namespace Azure.ResourceManager.ManagedNetwork.Models
             return new ManagedNetworkPeeringPolicyProperties(Optional.ToNullable(provisioningState), Optional.ToNullable(etag), serializedAdditionalRawData, type, hub, Optional.ToList(spokes), Optional.ToList(mesh));
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(ConnectivityType))
+            {
+                builder.Append("  type:");
+                builder.AppendLine($" '{ConnectivityType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Hub))
+            {
+                builder.Append("  hub:");
+                AppendChildObject(builder, Hub, options, 2, false);
+            }
+
+            if (Optional.IsCollectionDefined(Spokes))
+            {
+                if (Spokes.Any())
+                {
+                    builder.Append("  spokes:");
+                    builder.AppendLine(" [");
+                    foreach (var item in Spokes)
+                    {
+                        AppendChildObject(builder, item, options, 4, true);
+                    }
+                    builder.AppendLine("  ]");
+                }
+            }
+
+            if (Optional.IsCollectionDefined(Mesh))
+            {
+                if (Mesh.Any())
+                {
+                    builder.Append("  mesh:");
+                    builder.AppendLine(" [");
+                    foreach (var item in Mesh)
+                    {
+                        AppendChildObject(builder, item, options, 4, true);
+                    }
+                    builder.AppendLine("  ]");
+                }
+            }
+
+            if (Optional.IsDefined(ProvisioningState))
+            {
+                builder.Append("  provisioningState:");
+                builder.AppendLine($" '{ProvisioningState.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ETag))
+            {
+                builder.Append("  etag:");
+                builder.AppendLine($" '{ETag.Value.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<ManagedNetworkPeeringPolicyProperties>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ManagedNetworkPeeringPolicyProperties>)this).GetFormatFromOptions(options) : options.Format;
@@ -190,6 +272,8 @@ namespace Azure.ResourceManager.ManagedNetwork.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(ManagedNetworkPeeringPolicyProperties)} does not support '{options.Format}' format.");
             }
@@ -206,6 +290,8 @@ namespace Azure.ResourceManager.ManagedNetwork.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeManagedNetworkPeeringPolicyProperties(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(ManagedNetworkPeeringPolicyProperties)} does not support '{options.Format}' format.");
             }

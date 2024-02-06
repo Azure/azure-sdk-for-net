@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -199,6 +200,94 @@ namespace Azure.ResourceManager.MachineLearning.Models
             return new MachineLearningSynapseSparkProperties(autoScaleProperties.Value, autoPauseProperties.Value, sparkVersion.Value, Optional.ToNullable(nodeCount), nodeSize.Value, nodeSizeFamily.Value, subscriptionId.Value, resourceGroup.Value, workspaceName.Value, poolName.Value, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(AutoScaleProperties))
+            {
+                builder.Append("  autoScaleProperties:");
+                AppendChildObject(builder, AutoScaleProperties, options, 2, false);
+            }
+
+            if (Optional.IsDefined(AutoPauseProperties))
+            {
+                builder.Append("  autoPauseProperties:");
+                AppendChildObject(builder, AutoPauseProperties, options, 2, false);
+            }
+
+            if (Optional.IsDefined(SparkVersion))
+            {
+                builder.Append("  sparkVersion:");
+                builder.AppendLine($" '{SparkVersion}'");
+            }
+
+            if (Optional.IsDefined(NodeCount))
+            {
+                builder.Append("  nodeCount:");
+                builder.AppendLine($" {NodeCount.Value}");
+            }
+
+            if (Optional.IsDefined(NodeSize))
+            {
+                builder.Append("  nodeSize:");
+                builder.AppendLine($" '{NodeSize}'");
+            }
+
+            if (Optional.IsDefined(NodeSizeFamily))
+            {
+                builder.Append("  nodeSizeFamily:");
+                builder.AppendLine($" '{NodeSizeFamily}'");
+            }
+
+            if (Optional.IsDefined(SubscriptionId))
+            {
+                builder.Append("  subscriptionId:");
+                builder.AppendLine($" '{SubscriptionId}'");
+            }
+
+            if (Optional.IsDefined(ResourceGroup))
+            {
+                builder.Append("  resourceGroup:");
+                builder.AppendLine($" '{ResourceGroup}'");
+            }
+
+            if (Optional.IsDefined(WorkspaceName))
+            {
+                builder.Append("  workspaceName:");
+                builder.AppendLine($" '{WorkspaceName}'");
+            }
+
+            if (Optional.IsDefined(PoolName))
+            {
+                builder.Append("  poolName:");
+                builder.AppendLine($" '{PoolName}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<MachineLearningSynapseSparkProperties>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<MachineLearningSynapseSparkProperties>)this).GetFormatFromOptions(options) : options.Format;
@@ -207,6 +296,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(MachineLearningSynapseSparkProperties)} does not support '{options.Format}' format.");
             }
@@ -223,6 +314,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeMachineLearningSynapseSparkProperties(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(MachineLearningSynapseSparkProperties)} does not support '{options.Format}' format.");
             }

@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -177,6 +179,81 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             return new EMachineLearningStudioFunctionBinding(type, serializedAdditionalRawData, endpoint.Value, apiKey.Value, inputs.Value, Optional.ToList(outputs), Optional.ToNullable(batchSize));
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(FunctionBindingType))
+            {
+                builder.Append("  type:");
+                builder.AppendLine($" '{FunctionBindingType}'");
+            }
+
+            builder.Append("  properties:");
+            builder.AppendLine(" {");
+            if (Optional.IsDefined(Endpoint))
+            {
+                builder.Append("    endpoint:");
+                builder.AppendLine($" '{Endpoint}'");
+            }
+
+            if (Optional.IsDefined(ApiKey))
+            {
+                builder.Append("    apiKey:");
+                builder.AppendLine($" '{ApiKey}'");
+            }
+
+            if (Optional.IsDefined(Inputs))
+            {
+                builder.Append("    inputs:");
+                AppendChildObject(builder, Inputs, options, 4, false);
+            }
+
+            if (Optional.IsCollectionDefined(Outputs))
+            {
+                if (Outputs.Any())
+                {
+                    builder.Append("    outputs:");
+                    builder.AppendLine(" [");
+                    foreach (var item in Outputs)
+                    {
+                        AppendChildObject(builder, item, options, 6, true);
+                    }
+                    builder.AppendLine("    ]");
+                }
+            }
+
+            if (Optional.IsDefined(BatchSize))
+            {
+                builder.Append("    batchSize:");
+                builder.AppendLine($" {BatchSize.Value}");
+            }
+
+            builder.AppendLine("  }");
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<EMachineLearningStudioFunctionBinding>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<EMachineLearningStudioFunctionBinding>)this).GetFormatFromOptions(options) : options.Format;
@@ -185,6 +262,8 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(EMachineLearningStudioFunctionBinding)} does not support '{options.Format}' format.");
             }
@@ -201,6 +280,8 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeEMachineLearningStudioFunctionBinding(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(EMachineLearningStudioFunctionBinding)} does not support '{options.Format}' format.");
             }

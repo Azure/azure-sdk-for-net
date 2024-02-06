@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -138,6 +140,68 @@ namespace Azure.ResourceManager.DataMigration.Models
             return new GetUserTablesPostgreSqlTaskOutput(databaseName.Value, Optional.ToList(tables), Optional.ToList(validationErrors), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(DatabaseName))
+            {
+                builder.Append("  databaseName:");
+                builder.AppendLine($" '{DatabaseName}'");
+            }
+
+            if (Optional.IsCollectionDefined(Tables))
+            {
+                if (Tables.Any())
+                {
+                    builder.Append("  tables:");
+                    builder.AppendLine(" [");
+                    foreach (var item in Tables)
+                    {
+                        AppendChildObject(builder, item, options, 4, true);
+                    }
+                    builder.AppendLine("  ]");
+                }
+            }
+
+            if (Optional.IsCollectionDefined(ValidationErrors))
+            {
+                if (ValidationErrors.Any())
+                {
+                    builder.Append("  validationErrors:");
+                    builder.AppendLine(" [");
+                    foreach (var item in ValidationErrors)
+                    {
+                        AppendChildObject(builder, item, options, 4, true);
+                    }
+                    builder.AppendLine("  ]");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<GetUserTablesPostgreSqlTaskOutput>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<GetUserTablesPostgreSqlTaskOutput>)this).GetFormatFromOptions(options) : options.Format;
@@ -146,6 +210,8 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(GetUserTablesPostgreSqlTaskOutput)} does not support '{options.Format}' format.");
             }
@@ -162,6 +228,8 @@ namespace Azure.ResourceManager.DataMigration.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeGetUserTablesPostgreSqlTaskOutput(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(GetUserTablesPostgreSqlTaskOutput)} does not support '{options.Format}' format.");
             }

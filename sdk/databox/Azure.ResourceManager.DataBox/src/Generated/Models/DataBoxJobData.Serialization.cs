@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
@@ -414,6 +416,195 @@ namespace Azure.ResourceManager.DataBox
             return new DataBoxJobData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, transferType, Optional.ToNullable(isCancellable), Optional.ToNullable(isDeletable), Optional.ToNullable(isShippingAddressEditable), Optional.ToNullable(reverseShippingDetailsUpdate), Optional.ToNullable(reverseTransportPreferenceUpdate), Optional.ToNullable(isPrepareToShipEnabled), Optional.ToNullable(status), Optional.ToNullable(startTime), error.Value, details.Value, cancellationReason.Value, Optional.ToNullable(deliveryType), deliveryInfo.Value, Optional.ToNullable(isCancellableWithoutFee), sku, identity, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(Sku))
+            {
+                builder.Append("  sku:");
+                AppendChildObject(builder, Sku, options, 2, false);
+            }
+
+            if (Optional.IsDefined(Identity))
+            {
+                builder.Append("  identity:");
+                AppendChildObject(builder, Identity, options, 2, false);
+            }
+
+            if (Optional.IsCollectionDefined(Tags))
+            {
+                if (Tags.Any())
+                {
+                    builder.Append("  tags:");
+                    builder.AppendLine(" {");
+                    foreach (var item in Tags)
+                    {
+                        builder.Append($"    {item.Key}: ");
+                        if (item.Value == null)
+                        {
+                            builder.Append("null");
+                            continue;
+                        }
+                        builder.AppendLine($" '{item.Value}'");
+                    }
+                    builder.AppendLine("  }");
+                }
+            }
+
+            if (Optional.IsDefined(Location))
+            {
+                builder.Append("  location:");
+                builder.AppendLine($" '{Location.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Id))
+            {
+                builder.Append("  id:");
+                builder.AppendLine($" '{Id.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                builder.AppendLine($" '{Name}'");
+            }
+
+            if (Optional.IsDefined(ResourceType))
+            {
+                builder.Append("  type:");
+                builder.AppendLine($" '{ResourceType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SystemData))
+            {
+                builder.Append("  systemData:");
+                builder.AppendLine($" '{SystemData.ToString()}'");
+            }
+
+            builder.Append("  properties:");
+            builder.AppendLine(" {");
+            if (Optional.IsDefined(TransferType))
+            {
+                builder.Append("    transferType:");
+                builder.AppendLine($" '{TransferType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(IsCancellable))
+            {
+                builder.Append("    isCancellable:");
+                var boolValue = IsCancellable.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(IsDeletable))
+            {
+                builder.Append("    isDeletable:");
+                var boolValue = IsDeletable.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(IsShippingAddressEditable))
+            {
+                builder.Append("    isShippingAddressEditable:");
+                var boolValue = IsShippingAddressEditable.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(ReverseShippingDetailsUpdate))
+            {
+                builder.Append("    reverseShippingDetailsUpdate:");
+                builder.AppendLine($" '{ReverseShippingDetailsUpdate.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ReverseTransportPreferenceUpdate))
+            {
+                builder.Append("    reverseTransportPreferenceUpdate:");
+                builder.AppendLine($" '{ReverseTransportPreferenceUpdate.ToString()}'");
+            }
+
+            if (Optional.IsDefined(IsPrepareToShipEnabled))
+            {
+                builder.Append("    isPrepareToShipEnabled:");
+                var boolValue = IsPrepareToShipEnabled.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(Status))
+            {
+                builder.Append("    status:");
+                builder.AppendLine($" '{Status.ToString()}'");
+            }
+
+            if (Optional.IsDefined(StartOn))
+            {
+                builder.Append("    startTime:");
+                var formattedDateTimeString = TypeFormatters.ToString(StartOn.Value, "o");
+                builder.AppendLine($" '{formattedDateTimeString}'");
+            }
+
+            if (Optional.IsDefined(Error))
+            {
+                builder.Append("    error:");
+                AppendChildObject(builder, Error, options, 4, false);
+            }
+
+            if (Optional.IsDefined(Details))
+            {
+                builder.Append("    details:");
+                AppendChildObject(builder, Details, options, 4, false);
+            }
+
+            if (Optional.IsDefined(CancellationReason))
+            {
+                builder.Append("    cancellationReason:");
+                builder.AppendLine($" '{CancellationReason}'");
+            }
+
+            if (Optional.IsDefined(DeliveryType))
+            {
+                builder.Append("    deliveryType:");
+                builder.AppendLine($" '{DeliveryType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(DeliveryInfo))
+            {
+                builder.Append("    deliveryInfo:");
+                AppendChildObject(builder, DeliveryInfo, options, 4, false);
+            }
+
+            if (Optional.IsDefined(IsCancellableWithoutFee))
+            {
+                builder.Append("    isCancellableWithoutFee:");
+                var boolValue = IsCancellableWithoutFee.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            builder.AppendLine("  }");
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<DataBoxJobData>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<DataBoxJobData>)this).GetFormatFromOptions(options) : options.Format;
@@ -422,6 +613,8 @@ namespace Azure.ResourceManager.DataBox
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(DataBoxJobData)} does not support '{options.Format}' format.");
             }
@@ -438,6 +631,8 @@ namespace Azure.ResourceManager.DataBox
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeDataBoxJobData(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(DataBoxJobData)} does not support '{options.Format}' format.");
             }

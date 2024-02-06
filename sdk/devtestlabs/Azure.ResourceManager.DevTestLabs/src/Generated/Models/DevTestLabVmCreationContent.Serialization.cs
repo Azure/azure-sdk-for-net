@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -486,6 +488,242 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             return new DevTestLabVmCreationContent(name.Value, Optional.ToNullable(location), Optional.ToDictionary(tags), bulkCreationParameters.Value, notes.Value, ownerObjectId.Value, ownerUserPrincipalName.Value, Optional.ToNullable(createdDate), customImageId.Value, size.Value, userName.Value, password.Value, sshKey.Value, Optional.ToNullable(isAuthenticationWithSshKey), labSubnetName.Value, labVirtualNetworkId.Value, Optional.ToNullable(disallowPublicIPAddress), Optional.ToList(artifacts), galleryImageReference.Value, planId.Value, networkInterface.Value, Optional.ToNullable(expirationDate), Optional.ToNullable(allowClaim), storageType.Value, environmentId.Value, Optional.ToList(dataDiskParameters), Optional.ToList(scheduleParameters), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                builder.AppendLine($" '{Name}'");
+            }
+
+            if (Optional.IsDefined(Location))
+            {
+                builder.Append("  location:");
+                builder.AppendLine($" '{Location.Value.ToString()}'");
+            }
+
+            if (Optional.IsCollectionDefined(Tags))
+            {
+                if (Tags.Any())
+                {
+                    builder.Append("  tags:");
+                    builder.AppendLine(" {");
+                    foreach (var item in Tags)
+                    {
+                        builder.Append($"    {item.Key}: ");
+                        if (item.Value == null)
+                        {
+                            builder.Append("null");
+                            continue;
+                        }
+                        builder.AppendLine($" '{item.Value}'");
+                    }
+                    builder.AppendLine("  }");
+                }
+            }
+
+            builder.Append("  properties:");
+            builder.AppendLine(" {");
+            if (Optional.IsDefined(BulkCreationParameters))
+            {
+                builder.Append("    bulkCreationParameters:");
+                AppendChildObject(builder, BulkCreationParameters, options, 4, false);
+            }
+
+            if (Optional.IsDefined(Notes))
+            {
+                builder.Append("    notes:");
+                builder.AppendLine($" '{Notes}'");
+            }
+
+            if (Optional.IsDefined(OwnerObjectId))
+            {
+                builder.Append("    ownerObjectId:");
+                builder.AppendLine($" '{OwnerObjectId}'");
+            }
+
+            if (Optional.IsDefined(OwnerUserPrincipalName))
+            {
+                builder.Append("    ownerUserPrincipalName:");
+                builder.AppendLine($" '{OwnerUserPrincipalName}'");
+            }
+
+            if (Optional.IsDefined(CreatedOn))
+            {
+                builder.Append("    createdDate:");
+                var formattedDateTimeString = TypeFormatters.ToString(CreatedOn.Value, "o");
+                builder.AppendLine($" '{formattedDateTimeString}'");
+            }
+
+            if (Optional.IsDefined(CustomImageId))
+            {
+                builder.Append("    customImageId:");
+                builder.AppendLine($" '{CustomImageId}'");
+            }
+
+            if (Optional.IsDefined(Size))
+            {
+                builder.Append("    size:");
+                builder.AppendLine($" '{Size}'");
+            }
+
+            if (Optional.IsDefined(UserName))
+            {
+                builder.Append("    userName:");
+                builder.AppendLine($" '{UserName}'");
+            }
+
+            if (Optional.IsDefined(Password))
+            {
+                builder.Append("    password:");
+                builder.AppendLine($" '{Password}'");
+            }
+
+            if (Optional.IsDefined(SshKey))
+            {
+                builder.Append("    sshKey:");
+                builder.AppendLine($" '{SshKey}'");
+            }
+
+            if (Optional.IsDefined(IsAuthenticationWithSshKey))
+            {
+                builder.Append("    isAuthenticationWithSshKey:");
+                var boolValue = IsAuthenticationWithSshKey.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(LabSubnetName))
+            {
+                builder.Append("    labSubnetName:");
+                builder.AppendLine($" '{LabSubnetName}'");
+            }
+
+            if (Optional.IsDefined(LabVirtualNetworkId))
+            {
+                builder.Append("    labVirtualNetworkId:");
+                builder.AppendLine($" '{LabVirtualNetworkId.ToString()}'");
+            }
+
+            if (Optional.IsDefined(DisallowPublicIPAddress))
+            {
+                builder.Append("    disallowPublicIpAddress:");
+                var boolValue = DisallowPublicIPAddress.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsCollectionDefined(Artifacts))
+            {
+                if (Artifacts.Any())
+                {
+                    builder.Append("    artifacts:");
+                    builder.AppendLine(" [");
+                    foreach (var item in Artifacts)
+                    {
+                        AppendChildObject(builder, item, options, 6, true);
+                    }
+                    builder.AppendLine("    ]");
+                }
+            }
+
+            if (Optional.IsDefined(GalleryImageReference))
+            {
+                builder.Append("    galleryImageReference:");
+                AppendChildObject(builder, GalleryImageReference, options, 4, false);
+            }
+
+            if (Optional.IsDefined(PlanId))
+            {
+                builder.Append("    planId:");
+                builder.AppendLine($" '{PlanId}'");
+            }
+
+            if (Optional.IsDefined(NetworkInterface))
+            {
+                builder.Append("    networkInterface:");
+                AppendChildObject(builder, NetworkInterface, options, 4, false);
+            }
+
+            if (Optional.IsDefined(ExpireOn))
+            {
+                builder.Append("    expirationDate:");
+                var formattedDateTimeString = TypeFormatters.ToString(ExpireOn.Value, "o");
+                builder.AppendLine($" '{formattedDateTimeString}'");
+            }
+
+            if (Optional.IsDefined(AllowClaim))
+            {
+                builder.Append("    allowClaim:");
+                var boolValue = AllowClaim.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(StorageType))
+            {
+                builder.Append("    storageType:");
+                builder.AppendLine($" '{StorageType}'");
+            }
+
+            if (Optional.IsDefined(EnvironmentId))
+            {
+                builder.Append("    environmentId:");
+                builder.AppendLine($" '{EnvironmentId}'");
+            }
+
+            if (Optional.IsCollectionDefined(DataDiskParameters))
+            {
+                if (DataDiskParameters.Any())
+                {
+                    builder.Append("    dataDiskParameters:");
+                    builder.AppendLine(" [");
+                    foreach (var item in DataDiskParameters)
+                    {
+                        AppendChildObject(builder, item, options, 6, true);
+                    }
+                    builder.AppendLine("    ]");
+                }
+            }
+
+            if (Optional.IsCollectionDefined(ScheduleParameters))
+            {
+                if (ScheduleParameters.Any())
+                {
+                    builder.Append("    scheduleParameters:");
+                    builder.AppendLine(" [");
+                    foreach (var item in ScheduleParameters)
+                    {
+                        AppendChildObject(builder, item, options, 6, true);
+                    }
+                    builder.AppendLine("    ]");
+                }
+            }
+
+            builder.AppendLine("  }");
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<DevTestLabVmCreationContent>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<DevTestLabVmCreationContent>)this).GetFormatFromOptions(options) : options.Format;
@@ -494,6 +732,8 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(DevTestLabVmCreationContent)} does not support '{options.Format}' format.");
             }
@@ -510,6 +750,8 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeDevTestLabVmCreationContent(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(DevTestLabVmCreationContent)} does not support '{options.Format}' format.");
             }

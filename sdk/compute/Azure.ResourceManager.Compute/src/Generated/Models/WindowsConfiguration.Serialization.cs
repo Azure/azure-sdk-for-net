@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -188,6 +190,87 @@ namespace Azure.ResourceManager.Compute.Models
             return new WindowsConfiguration(Optional.ToNullable(provisionVmAgent), Optional.ToNullable(enableAutomaticUpdates), timeZone.Value, Optional.ToList(additionalUnattendContent), patchSettings.Value, winRM.Value, Optional.ToNullable(enableVmAgentPlatformUpdates), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(ProvisionVmAgent))
+            {
+                builder.Append("  provisionVMAgent:");
+                var boolValue = ProvisionVmAgent.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(IsAutomaticUpdatesEnabled))
+            {
+                builder.Append("  enableAutomaticUpdates:");
+                var boolValue = IsAutomaticUpdatesEnabled.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(TimeZone))
+            {
+                builder.Append("  timeZone:");
+                builder.AppendLine($" '{TimeZone}'");
+            }
+
+            if (Optional.IsCollectionDefined(AdditionalUnattendContent))
+            {
+                if (AdditionalUnattendContent.Any())
+                {
+                    builder.Append("  additionalUnattendContent:");
+                    builder.AppendLine(" [");
+                    foreach (var item in AdditionalUnattendContent)
+                    {
+                        AppendChildObject(builder, item, options, 4, true);
+                    }
+                    builder.AppendLine("  ]");
+                }
+            }
+
+            if (Optional.IsDefined(PatchSettings))
+            {
+                builder.Append("  patchSettings:");
+                AppendChildObject(builder, PatchSettings, options, 2, false);
+            }
+
+            if (Optional.IsDefined(WinRM))
+            {
+                builder.Append("  winRM:");
+                AppendChildObject(builder, WinRM, options, 2, false);
+            }
+
+            if (Optional.IsDefined(IsVmAgentPlatformUpdatesEnabled))
+            {
+                builder.Append("  enableVMAgentPlatformUpdates:");
+                var boolValue = IsVmAgentPlatformUpdatesEnabled.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<WindowsConfiguration>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<WindowsConfiguration>)this).GetFormatFromOptions(options) : options.Format;
@@ -196,6 +279,8 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(WindowsConfiguration)} does not support '{options.Format}' format.");
             }
@@ -212,6 +297,8 @@ namespace Azure.ResourceManager.Compute.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeWindowsConfiguration(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(WindowsConfiguration)} does not support '{options.Format}' format.");
             }

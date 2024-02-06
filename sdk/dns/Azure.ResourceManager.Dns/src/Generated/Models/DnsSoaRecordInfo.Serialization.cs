@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -174,6 +175,76 @@ namespace Azure.ResourceManager.Dns.Models
             return new DnsSoaRecordInfo(host.Value, email.Value, Optional.ToNullable(serialNumber), Optional.ToNullable(refreshTime), Optional.ToNullable(retryTime), Optional.ToNullable(expireTime), Optional.ToNullable(minimumTTL), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(Host))
+            {
+                builder.Append("  host:");
+                builder.AppendLine($" '{Host}'");
+            }
+
+            if (Optional.IsDefined(Email))
+            {
+                builder.Append("  email:");
+                builder.AppendLine($" '{Email}'");
+            }
+
+            if (Optional.IsDefined(SerialNumber))
+            {
+                builder.Append("  serialNumber:");
+                builder.AppendLine($" '{SerialNumber.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(RefreshTimeInSeconds))
+            {
+                builder.Append("  refreshTime:");
+                builder.AppendLine($" '{RefreshTimeInSeconds.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(RetryTimeInSeconds))
+            {
+                builder.Append("  retryTime:");
+                builder.AppendLine($" '{RetryTimeInSeconds.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ExpireTimeInSeconds))
+            {
+                builder.Append("  expireTime:");
+                builder.AppendLine($" '{ExpireTimeInSeconds.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(MinimumTtlInSeconds))
+            {
+                builder.Append("  minimumTTL:");
+                builder.AppendLine($" '{MinimumTtlInSeconds.Value.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<DnsSoaRecordInfo>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<DnsSoaRecordInfo>)this).GetFormatFromOptions(options) : options.Format;
@@ -182,6 +253,8 @@ namespace Azure.ResourceManager.Dns.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(DnsSoaRecordInfo)} does not support '{options.Format}' format.");
             }
@@ -198,6 +271,8 @@ namespace Azure.ResourceManager.Dns.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeDnsSoaRecordInfo(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(DnsSoaRecordInfo)} does not support '{options.Format}' format.");
             }

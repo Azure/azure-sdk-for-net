@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -217,6 +219,105 @@ namespace Azure.ResourceManager.BotService.Models
             return new BotChannelSettings(extensionKey1.Value, extensionKey2.Value, Optional.ToList(sites), channelId.Value, channelDisplayName.Value, botId.Value, botIconUrl.Value, Optional.ToNullable(isEnabled), Optional.ToNullable(disableLocalAuth), Optional.ToNullable(requireTermsAgreement), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(ExtensionKey1))
+            {
+                builder.Append("  extensionKey1:");
+                builder.AppendLine($" '{ExtensionKey1}'");
+            }
+
+            if (Optional.IsDefined(ExtensionKey2))
+            {
+                builder.Append("  extensionKey2:");
+                builder.AppendLine($" '{ExtensionKey2}'");
+            }
+
+            if (Optional.IsCollectionDefined(Sites))
+            {
+                if (Sites.Any())
+                {
+                    builder.Append("  sites:");
+                    builder.AppendLine(" [");
+                    foreach (var item in Sites)
+                    {
+                        AppendChildObject(builder, item, options, 4, true);
+                    }
+                    builder.AppendLine("  ]");
+                }
+            }
+
+            if (Optional.IsDefined(ChannelId))
+            {
+                builder.Append("  channelId:");
+                builder.AppendLine($" '{ChannelId}'");
+            }
+
+            if (Optional.IsDefined(ChannelDisplayName))
+            {
+                builder.Append("  channelDisplayName:");
+                builder.AppendLine($" '{ChannelDisplayName}'");
+            }
+
+            if (Optional.IsDefined(BotId))
+            {
+                builder.Append("  botId:");
+                builder.AppendLine($" '{BotId}'");
+            }
+
+            if (Optional.IsDefined(BotIconUri))
+            {
+                builder.Append("  botIconUrl:");
+                builder.AppendLine($" '{BotIconUri.AbsoluteUri}'");
+            }
+
+            if (Optional.IsDefined(IsEnabled))
+            {
+                builder.Append("  isEnabled:");
+                var boolValue = IsEnabled.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(DisableLocalAuth))
+            {
+                builder.Append("  disableLocalAuth:");
+                var boolValue = DisableLocalAuth.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(RequireTermsAgreement))
+            {
+                builder.Append("  requireTermsAgreement:");
+                var boolValue = RequireTermsAgreement.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<BotChannelSettings>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<BotChannelSettings>)this).GetFormatFromOptions(options) : options.Format;
@@ -225,6 +326,8 @@ namespace Azure.ResourceManager.BotService.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(BotChannelSettings)} does not support '{options.Format}' format.");
             }
@@ -241,6 +344,8 @@ namespace Azure.ResourceManager.BotService.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeBotChannelSettings(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(BotChannelSettings)} does not support '{options.Format}' format.");
             }

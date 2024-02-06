@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.ApiManagement.Models;
@@ -392,6 +394,198 @@ namespace Azure.ResourceManager.ApiManagement
             return new ApiManagementAuthorizationServerData(id, name, type, systemData.Value, description.Value, Optional.ToList(authorizationMethods), Optional.ToList(clientAuthenticationMethod), Optional.ToList(tokenBodyParameters), tokenEndpoint.Value, Optional.ToNullable(supportState), defaultScope.Value, Optional.ToList(bearerTokenSendingMethods), resourceOwnerUsername.Value, resourceOwnerPassword.Value, displayName.Value, clientRegistrationEndpoint.Value, authorizationEndpoint.Value, Optional.ToList(grantTypes), clientId.Value, clientSecret.Value, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(Id))
+            {
+                builder.Append("  id:");
+                builder.AppendLine($" '{Id.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                builder.AppendLine($" '{Name}'");
+            }
+
+            if (Optional.IsDefined(ResourceType))
+            {
+                builder.Append("  type:");
+                builder.AppendLine($" '{ResourceType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SystemData))
+            {
+                builder.Append("  systemData:");
+                builder.AppendLine($" '{SystemData.ToString()}'");
+            }
+
+            builder.Append("  properties:");
+            builder.AppendLine(" {");
+            if (Optional.IsDefined(Description))
+            {
+                builder.Append("    description:");
+                builder.AppendLine($" '{Description}'");
+            }
+
+            if (Optional.IsCollectionDefined(AuthorizationMethods))
+            {
+                if (AuthorizationMethods.Any())
+                {
+                    builder.Append("    authorizationMethods:");
+                    builder.AppendLine(" [");
+                    foreach (var item in AuthorizationMethods)
+                    {
+                        builder.AppendLine($"      '{item.ToString()}'");
+                    }
+                    builder.AppendLine("    ]");
+                }
+            }
+
+            if (Optional.IsCollectionDefined(ClientAuthenticationMethods))
+            {
+                if (ClientAuthenticationMethods.Any())
+                {
+                    builder.Append("    clientAuthenticationMethod:");
+                    builder.AppendLine(" [");
+                    foreach (var item in ClientAuthenticationMethods)
+                    {
+                        builder.AppendLine($"      '{item.ToString()}'");
+                    }
+                    builder.AppendLine("    ]");
+                }
+            }
+
+            if (Optional.IsCollectionDefined(TokenBodyParameters))
+            {
+                if (TokenBodyParameters.Any())
+                {
+                    builder.Append("    tokenBodyParameters:");
+                    builder.AppendLine(" [");
+                    foreach (var item in TokenBodyParameters)
+                    {
+                        AppendChildObject(builder, item, options, 6, true);
+                    }
+                    builder.AppendLine("    ]");
+                }
+            }
+
+            if (Optional.IsDefined(TokenEndpoint))
+            {
+                builder.Append("    tokenEndpoint:");
+                builder.AppendLine($" '{TokenEndpoint}'");
+            }
+
+            if (Optional.IsDefined(DoesSupportState))
+            {
+                builder.Append("    supportState:");
+                var boolValue = DoesSupportState.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(DefaultScope))
+            {
+                builder.Append("    defaultScope:");
+                builder.AppendLine($" '{DefaultScope}'");
+            }
+
+            if (Optional.IsCollectionDefined(BearerTokenSendingMethods))
+            {
+                if (BearerTokenSendingMethods.Any())
+                {
+                    builder.Append("    bearerTokenSendingMethods:");
+                    builder.AppendLine(" [");
+                    foreach (var item in BearerTokenSendingMethods)
+                    {
+                        builder.AppendLine($"      '{item.ToString()}'");
+                    }
+                    builder.AppendLine("    ]");
+                }
+            }
+
+            if (Optional.IsDefined(ResourceOwnerUsername))
+            {
+                builder.Append("    resourceOwnerUsername:");
+                builder.AppendLine($" '{ResourceOwnerUsername}'");
+            }
+
+            if (Optional.IsDefined(ResourceOwnerPassword))
+            {
+                builder.Append("    resourceOwnerPassword:");
+                builder.AppendLine($" '{ResourceOwnerPassword}'");
+            }
+
+            if (Optional.IsDefined(DisplayName))
+            {
+                builder.Append("    displayName:");
+                builder.AppendLine($" '{DisplayName}'");
+            }
+
+            if (Optional.IsDefined(ClientRegistrationEndpoint))
+            {
+                builder.Append("    clientRegistrationEndpoint:");
+                builder.AppendLine($" '{ClientRegistrationEndpoint}'");
+            }
+
+            if (Optional.IsDefined(AuthorizationEndpoint))
+            {
+                builder.Append("    authorizationEndpoint:");
+                builder.AppendLine($" '{AuthorizationEndpoint}'");
+            }
+
+            if (Optional.IsCollectionDefined(GrantTypes))
+            {
+                if (GrantTypes.Any())
+                {
+                    builder.Append("    grantTypes:");
+                    builder.AppendLine(" [");
+                    foreach (var item in GrantTypes)
+                    {
+                        builder.AppendLine($"      '{item.ToString()}'");
+                    }
+                    builder.AppendLine("    ]");
+                }
+            }
+
+            if (Optional.IsDefined(ClientId))
+            {
+                builder.Append("    clientId:");
+                builder.AppendLine($" '{ClientId}'");
+            }
+
+            if (Optional.IsDefined(ClientSecret))
+            {
+                builder.Append("    clientSecret:");
+                builder.AppendLine($" '{ClientSecret}'");
+            }
+
+            builder.AppendLine("  }");
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<ApiManagementAuthorizationServerData>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ApiManagementAuthorizationServerData>)this).GetFormatFromOptions(options) : options.Format;
@@ -400,6 +594,8 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(ApiManagementAuthorizationServerData)} does not support '{options.Format}' format.");
             }
@@ -416,6 +612,8 @@ namespace Azure.ResourceManager.ApiManagement
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeApiManagementAuthorizationServerData(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(ApiManagementAuthorizationServerData)} does not support '{options.Format}' format.");
             }

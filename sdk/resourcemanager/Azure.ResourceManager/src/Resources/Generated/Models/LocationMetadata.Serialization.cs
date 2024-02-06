@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -198,6 +200,96 @@ namespace Azure.ResourceManager.Resources.Models
             return new LocationMetadata(Optional.ToNullable(regionType), Optional.ToNullable(regionCategory), geography.Value, geographyGroup.Value, Optional.ToNullable(longitude), Optional.ToNullable(latitude), physicalLocation.Value, Optional.ToList(pairedRegion), homeLocation.Value, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(RegionType))
+            {
+                builder.Append("  regionType:");
+                builder.AppendLine($" '{RegionType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(RegionCategory))
+            {
+                builder.Append("  regionCategory:");
+                builder.AppendLine($" '{RegionCategory.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Geography))
+            {
+                builder.Append("  geography:");
+                builder.AppendLine($" '{Geography}'");
+            }
+
+            if (Optional.IsDefined(GeographyGroup))
+            {
+                builder.Append("  geographyGroup:");
+                builder.AppendLine($" '{GeographyGroup}'");
+            }
+
+            if (Optional.IsDefined(Longitude))
+            {
+                builder.Append("  longitude:");
+                builder.AppendLine($" '{Longitude.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Latitude))
+            {
+                builder.Append("  latitude:");
+                builder.AppendLine($" '{Latitude.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(PhysicalLocation))
+            {
+                builder.Append("  physicalLocation:");
+                builder.AppendLine($" '{PhysicalLocation}'");
+            }
+
+            if (Optional.IsCollectionDefined(PairedRegions))
+            {
+                if (PairedRegions.Any())
+                {
+                    builder.Append("  pairedRegion:");
+                    builder.AppendLine(" [");
+                    foreach (var item in PairedRegions)
+                    {
+                        AppendChildObject(builder, item, options, 4, true);
+                    }
+                    builder.AppendLine("  ]");
+                }
+            }
+
+            if (Optional.IsDefined(HomeLocation))
+            {
+                builder.Append("  homeLocation:");
+                builder.AppendLine($" '{HomeLocation}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<LocationMetadata>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<LocationMetadata>)this).GetFormatFromOptions(options) : options.Format;
@@ -206,6 +298,8 @@ namespace Azure.ResourceManager.Resources.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(LocationMetadata)} does not support '{options.Format}' format.");
             }
@@ -222,6 +316,8 @@ namespace Azure.ResourceManager.Resources.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeLocationMetadata(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(LocationMetadata)} does not support '{options.Format}' format.");
             }

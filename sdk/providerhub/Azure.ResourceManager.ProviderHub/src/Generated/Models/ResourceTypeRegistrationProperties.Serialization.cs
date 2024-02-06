@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -628,6 +630,322 @@ namespace Azure.ResourceManager.ProviderHub.Models
             return new ResourceTypeRegistrationProperties(Optional.ToNullable(routingType), Optional.ToNullable(regionality), Optional.ToList(endpoints), extensionOptions.Value, Optional.ToNullable(marketplaceType), Optional.ToList(swaggerSpecifications), Optional.ToList(allowedUnauthorizedActions), Optional.ToList(authorizationActionMappings), Optional.ToList(linkedAccessChecks), defaultApiVersion.Value, Optional.ToList(loggingRules), Optional.ToList(throttlingRules), Optional.ToList(requiredFeatures), featuresRule.Value, Optional.ToNullable(enableAsyncOperation), Optional.ToNullable(provisioningState), Optional.ToNullable(enableThirdPartyS2S), subscriptionLifecycleNotificationSpecifications.Value, Optional.ToNullable(isPureProxy), identityManagement.Value, checkNameAvailabilitySpecifications.Value, Optional.ToList(disallowedActionVerbs), Optional.ToList(serviceTreeInfos), requestHeaderOptions.Value, Optional.ToList(subscriptionStateRules), templateDeploymentOptions.Value, Optional.ToList(extendedLocations), resourceMovePolicy.Value, Optional.ToNullable(resourceDeletionPolicy), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(RoutingType))
+            {
+                builder.Append("  routingType:");
+                builder.AppendLine($" '{RoutingType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Regionality))
+            {
+                builder.Append("  regionality:");
+                builder.AppendLine($" '{Regionality.ToString()}'");
+            }
+
+            if (Optional.IsCollectionDefined(Endpoints))
+            {
+                if (Endpoints.Any())
+                {
+                    builder.Append("  endpoints:");
+                    builder.AppendLine(" [");
+                    foreach (var item in Endpoints)
+                    {
+                        AppendChildObject(builder, item, options, 4, true);
+                    }
+                    builder.AppendLine("  ]");
+                }
+            }
+
+            if (Optional.IsDefined(ExtensionOptions))
+            {
+                builder.Append("  extensionOptions:");
+                AppendChildObject(builder, ExtensionOptions, options, 2, false);
+            }
+
+            if (Optional.IsDefined(MarketplaceType))
+            {
+                builder.Append("  marketplaceType:");
+                builder.AppendLine($" '{MarketplaceType.ToString()}'");
+            }
+
+            if (Optional.IsCollectionDefined(SwaggerSpecifications))
+            {
+                if (SwaggerSpecifications.Any())
+                {
+                    builder.Append("  swaggerSpecifications:");
+                    builder.AppendLine(" [");
+                    foreach (var item in SwaggerSpecifications)
+                    {
+                        AppendChildObject(builder, item, options, 4, true);
+                    }
+                    builder.AppendLine("  ]");
+                }
+            }
+
+            if (Optional.IsCollectionDefined(AllowedUnauthorizedActions))
+            {
+                if (AllowedUnauthorizedActions.Any())
+                {
+                    builder.Append("  allowedUnauthorizedActions:");
+                    builder.AppendLine(" [");
+                    foreach (var item in AllowedUnauthorizedActions)
+                    {
+                        if (item == null)
+                        {
+                            builder.Append("null");
+                            continue;
+                        }
+                        builder.AppendLine($"    '{item}'");
+                    }
+                    builder.AppendLine("  ]");
+                }
+            }
+
+            if (Optional.IsCollectionDefined(AuthorizationActionMappings))
+            {
+                if (AuthorizationActionMappings.Any())
+                {
+                    builder.Append("  authorizationActionMappings:");
+                    builder.AppendLine(" [");
+                    foreach (var item in AuthorizationActionMappings)
+                    {
+                        AppendChildObject(builder, item, options, 4, true);
+                    }
+                    builder.AppendLine("  ]");
+                }
+            }
+
+            if (Optional.IsCollectionDefined(LinkedAccessChecks))
+            {
+                if (LinkedAccessChecks.Any())
+                {
+                    builder.Append("  linkedAccessChecks:");
+                    builder.AppendLine(" [");
+                    foreach (var item in LinkedAccessChecks)
+                    {
+                        AppendChildObject(builder, item, options, 4, true);
+                    }
+                    builder.AppendLine("  ]");
+                }
+            }
+
+            if (Optional.IsDefined(DefaultApiVersion))
+            {
+                builder.Append("  defaultApiVersion:");
+                builder.AppendLine($" '{DefaultApiVersion}'");
+            }
+
+            if (Optional.IsCollectionDefined(LoggingRules))
+            {
+                if (LoggingRules.Any())
+                {
+                    builder.Append("  loggingRules:");
+                    builder.AppendLine(" [");
+                    foreach (var item in LoggingRules)
+                    {
+                        AppendChildObject(builder, item, options, 4, true);
+                    }
+                    builder.AppendLine("  ]");
+                }
+            }
+
+            if (Optional.IsCollectionDefined(ThrottlingRules))
+            {
+                if (ThrottlingRules.Any())
+                {
+                    builder.Append("  throttlingRules:");
+                    builder.AppendLine(" [");
+                    foreach (var item in ThrottlingRules)
+                    {
+                        AppendChildObject(builder, item, options, 4, true);
+                    }
+                    builder.AppendLine("  ]");
+                }
+            }
+
+            if (Optional.IsCollectionDefined(RequiredFeatures))
+            {
+                if (RequiredFeatures.Any())
+                {
+                    builder.Append("  requiredFeatures:");
+                    builder.AppendLine(" [");
+                    foreach (var item in RequiredFeatures)
+                    {
+                        if (item == null)
+                        {
+                            builder.Append("null");
+                            continue;
+                        }
+                        builder.AppendLine($"    '{item}'");
+                    }
+                    builder.AppendLine("  ]");
+                }
+            }
+
+            if (Optional.IsDefined(FeaturesRule))
+            {
+                builder.Append("  featuresRule:");
+                AppendChildObject(builder, FeaturesRule, options, 2, false);
+            }
+
+            if (Optional.IsDefined(IsAsyncOperationEnabled))
+            {
+                builder.Append("  enableAsyncOperation:");
+                var boolValue = IsAsyncOperationEnabled.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(ProvisioningState))
+            {
+                builder.Append("  provisioningState:");
+                builder.AppendLine($" '{ProvisioningState.ToString()}'");
+            }
+
+            if (Optional.IsDefined(IsThirdPartyS2SEnabled))
+            {
+                builder.Append("  enableThirdPartyS2S:");
+                var boolValue = IsThirdPartyS2SEnabled.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(SubscriptionLifecycleNotificationSpecifications))
+            {
+                builder.Append("  subscriptionLifecycleNotificationSpecifications:");
+                AppendChildObject(builder, SubscriptionLifecycleNotificationSpecifications, options, 2, false);
+            }
+
+            if (Optional.IsDefined(IsPureProxy))
+            {
+                builder.Append("  isPureProxy:");
+                var boolValue = IsPureProxy.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(IdentityManagement))
+            {
+                builder.Append("  identityManagement:");
+                AppendChildObject(builder, IdentityManagement, options, 2, false);
+            }
+
+            if (Optional.IsDefined(CheckNameAvailabilitySpecifications))
+            {
+                builder.Append("  checkNameAvailabilitySpecifications:");
+                AppendChildObject(builder, CheckNameAvailabilitySpecifications, options, 2, false);
+            }
+
+            if (Optional.IsCollectionDefined(DisallowedActionVerbs))
+            {
+                if (DisallowedActionVerbs.Any())
+                {
+                    builder.Append("  disallowedActionVerbs:");
+                    builder.AppendLine(" [");
+                    foreach (var item in DisallowedActionVerbs)
+                    {
+                        if (item == null)
+                        {
+                            builder.Append("null");
+                            continue;
+                        }
+                        builder.AppendLine($"    '{item}'");
+                    }
+                    builder.AppendLine("  ]");
+                }
+            }
+
+            if (Optional.IsCollectionDefined(ServiceTreeInfos))
+            {
+                if (ServiceTreeInfos.Any())
+                {
+                    builder.Append("  serviceTreeInfos:");
+                    builder.AppendLine(" [");
+                    foreach (var item in ServiceTreeInfos)
+                    {
+                        AppendChildObject(builder, item, options, 4, true);
+                    }
+                    builder.AppendLine("  ]");
+                }
+            }
+
+            if (Optional.IsDefined(RequestHeaderOptions))
+            {
+                builder.Append("  requestHeaderOptions:");
+                AppendChildObject(builder, RequestHeaderOptions, options, 2, false);
+            }
+
+            if (Optional.IsCollectionDefined(SubscriptionStateRules))
+            {
+                if (SubscriptionStateRules.Any())
+                {
+                    builder.Append("  subscriptionStateRules:");
+                    builder.AppendLine(" [");
+                    foreach (var item in SubscriptionStateRules)
+                    {
+                        AppendChildObject(builder, item, options, 4, true);
+                    }
+                    builder.AppendLine("  ]");
+                }
+            }
+
+            if (Optional.IsDefined(TemplateDeploymentOptions))
+            {
+                builder.Append("  templateDeploymentOptions:");
+                AppendChildObject(builder, TemplateDeploymentOptions, options, 2, false);
+            }
+
+            if (Optional.IsCollectionDefined(ExtendedLocations))
+            {
+                if (ExtendedLocations.Any())
+                {
+                    builder.Append("  extendedLocations:");
+                    builder.AppendLine(" [");
+                    foreach (var item in ExtendedLocations)
+                    {
+                        AppendChildObject(builder, item, options, 4, true);
+                    }
+                    builder.AppendLine("  ]");
+                }
+            }
+
+            if (Optional.IsDefined(ResourceMovePolicy))
+            {
+                builder.Append("  resourceMovePolicy:");
+                AppendChildObject(builder, ResourceMovePolicy, options, 2, false);
+            }
+
+            if (Optional.IsDefined(ResourceDeletionPolicy))
+            {
+                builder.Append("  resourceDeletionPolicy:");
+                builder.AppendLine($" '{ResourceDeletionPolicy.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<ResourceTypeRegistrationProperties>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ResourceTypeRegistrationProperties>)this).GetFormatFromOptions(options) : options.Format;
@@ -636,6 +954,8 @@ namespace Azure.ResourceManager.ProviderHub.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(ResourceTypeRegistrationProperties)} does not support '{options.Format}' format.");
             }
@@ -652,6 +972,8 @@ namespace Azure.ResourceManager.ProviderHub.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeResourceTypeRegistrationProperties(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(ResourceTypeRegistrationProperties)} does not support '{options.Format}' format.");
             }

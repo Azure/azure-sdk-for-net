@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.DevTestLabs.Models;
@@ -346,6 +348,169 @@ namespace Azure.ResourceManager.DevTestLabs
             return new DevTestLabCustomImageData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, vm.Value, vhd.Value, description.Value, author.Value, Optional.ToNullable(creationDate), managedImageId.Value, managedSnapshotId.Value, Optional.ToList(dataDiskStorageInfo), customImagePlan.Value, Optional.ToNullable(isPlanAuthorized), provisioningState.Value, Optional.ToNullable(uniqueIdentifier), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsCollectionDefined(Tags))
+            {
+                if (Tags.Any())
+                {
+                    builder.Append("  tags:");
+                    builder.AppendLine(" {");
+                    foreach (var item in Tags)
+                    {
+                        builder.Append($"    {item.Key}: ");
+                        if (item.Value == null)
+                        {
+                            builder.Append("null");
+                            continue;
+                        }
+                        builder.AppendLine($" '{item.Value}'");
+                    }
+                    builder.AppendLine("  }");
+                }
+            }
+
+            if (Optional.IsDefined(Location))
+            {
+                builder.Append("  location:");
+                builder.AppendLine($" '{Location.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Id))
+            {
+                builder.Append("  id:");
+                builder.AppendLine($" '{Id.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                builder.AppendLine($" '{Name}'");
+            }
+
+            if (Optional.IsDefined(ResourceType))
+            {
+                builder.Append("  type:");
+                builder.AppendLine($" '{ResourceType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SystemData))
+            {
+                builder.Append("  systemData:");
+                builder.AppendLine($" '{SystemData.ToString()}'");
+            }
+
+            builder.Append("  properties:");
+            builder.AppendLine(" {");
+            if (Optional.IsDefined(Vm))
+            {
+                builder.Append("    vm:");
+                AppendChildObject(builder, Vm, options, 4, false);
+            }
+
+            if (Optional.IsDefined(Vhd))
+            {
+                builder.Append("    vhd:");
+                AppendChildObject(builder, Vhd, options, 4, false);
+            }
+
+            if (Optional.IsDefined(Description))
+            {
+                builder.Append("    description:");
+                builder.AppendLine($" '{Description}'");
+            }
+
+            if (Optional.IsDefined(Author))
+            {
+                builder.Append("    author:");
+                builder.AppendLine($" '{Author}'");
+            }
+
+            if (Optional.IsDefined(CreatedOn))
+            {
+                builder.Append("    creationDate:");
+                var formattedDateTimeString = TypeFormatters.ToString(CreatedOn.Value, "o");
+                builder.AppendLine($" '{formattedDateTimeString}'");
+            }
+
+            if (Optional.IsDefined(ManagedImageId))
+            {
+                builder.Append("    managedImageId:");
+                builder.AppendLine($" '{ManagedImageId}'");
+            }
+
+            if (Optional.IsDefined(ManagedSnapshotId))
+            {
+                builder.Append("    managedSnapshotId:");
+                builder.AppendLine($" '{ManagedSnapshotId}'");
+            }
+
+            if (Optional.IsCollectionDefined(DataDiskStorageInfo))
+            {
+                if (DataDiskStorageInfo.Any())
+                {
+                    builder.Append("    dataDiskStorageInfo:");
+                    builder.AppendLine(" [");
+                    foreach (var item in DataDiskStorageInfo)
+                    {
+                        AppendChildObject(builder, item, options, 6, true);
+                    }
+                    builder.AppendLine("    ]");
+                }
+            }
+
+            if (Optional.IsDefined(CustomImagePlan))
+            {
+                builder.Append("    customImagePlan:");
+                AppendChildObject(builder, CustomImagePlan, options, 4, false);
+            }
+
+            if (Optional.IsDefined(IsPlanAuthorized))
+            {
+                builder.Append("    isPlanAuthorized:");
+                var boolValue = IsPlanAuthorized.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(ProvisioningState))
+            {
+                builder.Append("    provisioningState:");
+                builder.AppendLine($" '{ProvisioningState}'");
+            }
+
+            if (Optional.IsDefined(UniqueIdentifier))
+            {
+                builder.Append("    uniqueIdentifier:");
+                builder.AppendLine($" '{UniqueIdentifier.Value.ToString()}'");
+            }
+
+            builder.AppendLine("  }");
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<DevTestLabCustomImageData>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<DevTestLabCustomImageData>)this).GetFormatFromOptions(options) : options.Format;
@@ -354,6 +519,8 @@ namespace Azure.ResourceManager.DevTestLabs
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(DevTestLabCustomImageData)} does not support '{options.Format}' format.");
             }
@@ -370,6 +537,8 @@ namespace Azure.ResourceManager.DevTestLabs
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeDevTestLabCustomImageData(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(DevTestLabCustomImageData)} does not support '{options.Format}' format.");
             }

@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -305,6 +306,132 @@ namespace Azure.ResourceManager.Automation.Models
             return new SoftwareUpdateConfigurationRun(name.Value, id.Value, softwareUpdateConfiguration.Value, status.Value, Optional.ToNullable(configuredDuration), osType.Value, Optional.ToNullable(startTime), Optional.ToNullable(endTime), Optional.ToNullable(computerCount), Optional.ToNullable(failedCount), Optional.ToNullable(creationTime), createdBy.Value, Optional.ToNullable(lastModifiedTime), lastModifiedBy.Value, tasks.Value, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                builder.AppendLine($" '{Name}'");
+            }
+
+            if (Optional.IsDefined(Id))
+            {
+                builder.Append("  id:");
+                builder.AppendLine($" '{Id.ToString()}'");
+            }
+
+            builder.Append("  properties:");
+            builder.AppendLine(" {");
+            if (Optional.IsDefined(SoftwareUpdateConfiguration))
+            {
+                builder.Append("    softwareUpdateConfiguration:");
+                AppendChildObject(builder, SoftwareUpdateConfiguration, options, 4, false);
+            }
+
+            if (Optional.IsDefined(Status))
+            {
+                builder.Append("    status:");
+                builder.AppendLine($" '{Status}'");
+            }
+
+            if (Optional.IsDefined(ConfiguredDuration))
+            {
+                builder.Append("    configuredDuration:");
+                var formattedTimeSpan = TypeFormatters.ToString(ConfiguredDuration.Value, "P");
+                builder.AppendLine($" '{formattedTimeSpan}'");
+            }
+
+            if (Optional.IsDefined(OSType))
+            {
+                builder.Append("    osType:");
+                builder.AppendLine($" '{OSType}'");
+            }
+
+            if (Optional.IsDefined(StartOn))
+            {
+                builder.Append("    startTime:");
+                var formattedDateTimeString = TypeFormatters.ToString(StartOn.Value, "o");
+                builder.AppendLine($" '{formattedDateTimeString}'");
+            }
+
+            if (Optional.IsDefined(EndOn))
+            {
+                builder.Append("    endTime:");
+                var formattedDateTimeString = TypeFormatters.ToString(EndOn.Value, "o");
+                builder.AppendLine($" '{formattedDateTimeString}'");
+            }
+
+            if (Optional.IsDefined(ComputerCount))
+            {
+                builder.Append("    computerCount:");
+                builder.AppendLine($" {ComputerCount.Value}");
+            }
+
+            if (Optional.IsDefined(FailedCount))
+            {
+                builder.Append("    failedCount:");
+                builder.AppendLine($" {FailedCount.Value}");
+            }
+
+            if (Optional.IsDefined(CreatedOn))
+            {
+                builder.Append("    creationTime:");
+                var formattedDateTimeString = TypeFormatters.ToString(CreatedOn.Value, "o");
+                builder.AppendLine($" '{formattedDateTimeString}'");
+            }
+
+            if (Optional.IsDefined(CreatedBy))
+            {
+                builder.Append("    createdBy:");
+                builder.AppendLine($" '{CreatedBy}'");
+            }
+
+            if (Optional.IsDefined(LastModifiedOn))
+            {
+                builder.Append("    lastModifiedTime:");
+                var formattedDateTimeString = TypeFormatters.ToString(LastModifiedOn.Value, "o");
+                builder.AppendLine($" '{formattedDateTimeString}'");
+            }
+
+            if (Optional.IsDefined(LastModifiedBy))
+            {
+                builder.Append("    lastModifiedBy:");
+                builder.AppendLine($" '{LastModifiedBy}'");
+            }
+
+            if (Optional.IsDefined(Tasks))
+            {
+                builder.Append("    tasks:");
+                AppendChildObject(builder, Tasks, options, 4, false);
+            }
+
+            builder.AppendLine("  }");
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<SoftwareUpdateConfigurationRun>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<SoftwareUpdateConfigurationRun>)this).GetFormatFromOptions(options) : options.Format;
@@ -313,6 +440,8 @@ namespace Azure.ResourceManager.Automation.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(SoftwareUpdateConfigurationRun)} does not support '{options.Format}' format.");
             }
@@ -329,6 +458,8 @@ namespace Azure.ResourceManager.Automation.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeSoftwareUpdateConfigurationRun(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(SoftwareUpdateConfigurationRun)} does not support '{options.Format}' format.");
             }

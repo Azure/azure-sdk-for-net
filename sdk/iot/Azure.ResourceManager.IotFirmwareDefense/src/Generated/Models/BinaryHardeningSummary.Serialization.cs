@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -207,6 +208,70 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             return new BinaryHardeningSummary(Optional.ToNullable(totalFiles), Optional.ToNullable(nx), Optional.ToNullable(pie), Optional.ToNullable(relro), Optional.ToNullable(canary), Optional.ToNullable(stripped), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(TotalFiles))
+            {
+                builder.Append("  totalFiles:");
+                builder.AppendLine($" '{TotalFiles.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Nx))
+            {
+                builder.Append("  nx:");
+                builder.AppendLine($" {Nx.Value}");
+            }
+
+            if (Optional.IsDefined(Pie))
+            {
+                builder.Append("  pie:");
+                builder.AppendLine($" {Pie.Value}");
+            }
+
+            if (Optional.IsDefined(Relro))
+            {
+                builder.Append("  relro:");
+                builder.AppendLine($" {Relro.Value}");
+            }
+
+            if (Optional.IsDefined(Canary))
+            {
+                builder.Append("  canary:");
+                builder.AppendLine($" {Canary.Value}");
+            }
+
+            if (Optional.IsDefined(Stripped))
+            {
+                builder.Append("  stripped:");
+                builder.AppendLine($" {Stripped.Value}");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<BinaryHardeningSummary>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<BinaryHardeningSummary>)this).GetFormatFromOptions(options) : options.Format;
@@ -215,6 +280,8 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(BinaryHardeningSummary)} does not support '{options.Format}' format.");
             }
@@ -231,6 +298,8 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeBinaryHardeningSummary(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(BinaryHardeningSummary)} does not support '{options.Format}' format.");
             }

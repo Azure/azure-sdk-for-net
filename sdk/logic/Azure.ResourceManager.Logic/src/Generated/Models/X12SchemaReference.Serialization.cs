@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -112,6 +113,58 @@ namespace Azure.ResourceManager.Logic.Models
             return new X12SchemaReference(messageId, senderApplicationId.Value, schemaVersion, schemaName, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(MessageId))
+            {
+                builder.Append("  messageId:");
+                builder.AppendLine($" '{MessageId}'");
+            }
+
+            if (Optional.IsDefined(SenderApplicationId))
+            {
+                builder.Append("  senderApplicationId:");
+                builder.AppendLine($" '{SenderApplicationId}'");
+            }
+
+            if (Optional.IsDefined(SchemaVersion))
+            {
+                builder.Append("  schemaVersion:");
+                builder.AppendLine($" '{SchemaVersion}'");
+            }
+
+            if (Optional.IsDefined(SchemaName))
+            {
+                builder.Append("  schemaName:");
+                builder.AppendLine($" '{SchemaName}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<X12SchemaReference>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<X12SchemaReference>)this).GetFormatFromOptions(options) : options.Format;
@@ -120,6 +173,8 @@ namespace Azure.ResourceManager.Logic.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(X12SchemaReference)} does not support '{options.Format}' format.");
             }
@@ -136,6 +191,8 @@ namespace Azure.ResourceManager.Logic.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeX12SchemaReference(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(X12SchemaReference)} does not support '{options.Format}' format.");
             }

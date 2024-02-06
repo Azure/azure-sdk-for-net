@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -207,6 +208,71 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
             return new KubernetesServicePrincipal(Optional.ToNullable(clientId), Optional.ToNullable(tenantId), clientSecret.Value, clientCertificate.Value, clientCertificatePassword.Value, Optional.ToNullable(clientCertificateSendChain), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(ClientId))
+            {
+                builder.Append("  clientId:");
+                builder.AppendLine($" '{ClientId.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(TenantId))
+            {
+                builder.Append("  tenantId:");
+                builder.AppendLine($" '{TenantId.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ClientSecret))
+            {
+                builder.Append("  clientSecret:");
+                builder.AppendLine($" '{ClientSecret}'");
+            }
+
+            if (Optional.IsDefined(ClientCertificate))
+            {
+                builder.Append("  clientCertificate:");
+                builder.AppendLine($" '{ClientCertificate}'");
+            }
+
+            if (Optional.IsDefined(ClientCertificatePassword))
+            {
+                builder.Append("  clientCertificatePassword:");
+                builder.AppendLine($" '{ClientCertificatePassword}'");
+            }
+
+            if (Optional.IsDefined(ClientCertificateSendChain))
+            {
+                builder.Append("  clientCertificateSendChain:");
+                var boolValue = ClientCertificateSendChain.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<KubernetesServicePrincipal>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<KubernetesServicePrincipal>)this).GetFormatFromOptions(options) : options.Format;
@@ -215,6 +281,8 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(KubernetesServicePrincipal)} does not support '{options.Format}' format.");
             }
@@ -231,6 +299,8 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeKubernetesServicePrincipal(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(KubernetesServicePrincipal)} does not support '{options.Format}' format.");
             }

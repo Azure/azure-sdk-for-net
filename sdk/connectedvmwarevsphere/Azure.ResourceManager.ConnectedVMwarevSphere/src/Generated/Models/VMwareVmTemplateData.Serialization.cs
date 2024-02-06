@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.ConnectedVMwarevSphere.Models;
@@ -478,6 +480,237 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             return new VMwareVmTemplateData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, extendedLocation, kind.Value, uuid.Value, vCenterId.Value, moRefId.Value, inventoryItemId.Value, moName.Value, Optional.ToNullable(memorySizeMB), Optional.ToNullable(numCpus), Optional.ToNullable(numCoresPerSocket), Optional.ToNullable(osType), osName.Value, folderPath.Value, Optional.ToList(networkInterfaces), Optional.ToList(disks), customResourceName.Value, toolsVersionStatus.Value, toolsVersion.Value, Optional.ToNullable(firmwareType), Optional.ToList(statuses), Optional.ToNullable(provisioningState), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(ExtendedLocation))
+            {
+                builder.Append("  extendedLocation:");
+                AppendChildObject(builder, ExtendedLocation, options, 2, false);
+            }
+
+            if (Optional.IsDefined(Kind))
+            {
+                builder.Append("  kind:");
+                builder.AppendLine($" '{Kind}'");
+            }
+
+            if (Optional.IsCollectionDefined(Tags))
+            {
+                if (Tags.Any())
+                {
+                    builder.Append("  tags:");
+                    builder.AppendLine(" {");
+                    foreach (var item in Tags)
+                    {
+                        builder.Append($"    {item.Key}: ");
+                        if (item.Value == null)
+                        {
+                            builder.Append("null");
+                            continue;
+                        }
+                        builder.AppendLine($" '{item.Value}'");
+                    }
+                    builder.AppendLine("  }");
+                }
+            }
+
+            if (Optional.IsDefined(Location))
+            {
+                builder.Append("  location:");
+                builder.AppendLine($" '{Location.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Id))
+            {
+                builder.Append("  id:");
+                builder.AppendLine($" '{Id.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                builder.AppendLine($" '{Name}'");
+            }
+
+            if (Optional.IsDefined(ResourceType))
+            {
+                builder.Append("  type:");
+                builder.AppendLine($" '{ResourceType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SystemData))
+            {
+                builder.Append("  systemData:");
+                builder.AppendLine($" '{SystemData.ToString()}'");
+            }
+
+            builder.Append("  properties:");
+            builder.AppendLine(" {");
+            if (Optional.IsDefined(Uuid))
+            {
+                builder.Append("    uuid:");
+                builder.AppendLine($" '{Uuid}'");
+            }
+
+            if (Optional.IsDefined(VCenterId))
+            {
+                builder.Append("    vCenterId:");
+                builder.AppendLine($" '{VCenterId}'");
+            }
+
+            if (Optional.IsDefined(MoRefId))
+            {
+                builder.Append("    moRefId:");
+                builder.AppendLine($" '{MoRefId}'");
+            }
+
+            if (Optional.IsDefined(InventoryItemId))
+            {
+                builder.Append("    inventoryItemId:");
+                builder.AppendLine($" '{InventoryItemId}'");
+            }
+
+            if (Optional.IsDefined(MoName))
+            {
+                builder.Append("    moName:");
+                builder.AppendLine($" '{MoName}'");
+            }
+
+            if (Optional.IsDefined(MemorySizeMB))
+            {
+                builder.Append("    memorySizeMB:");
+                builder.AppendLine($" {MemorySizeMB.Value}");
+            }
+
+            if (Optional.IsDefined(NumCpus))
+            {
+                builder.Append("    numCPUs:");
+                builder.AppendLine($" {NumCpus.Value}");
+            }
+
+            if (Optional.IsDefined(NumCoresPerSocket))
+            {
+                builder.Append("    numCoresPerSocket:");
+                builder.AppendLine($" {NumCoresPerSocket.Value}");
+            }
+
+            if (Optional.IsDefined(OSType))
+            {
+                builder.Append("    osType:");
+                builder.AppendLine($" '{OSType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(OSName))
+            {
+                builder.Append("    osName:");
+                builder.AppendLine($" '{OSName}'");
+            }
+
+            if (Optional.IsDefined(FolderPath))
+            {
+                builder.Append("    folderPath:");
+                builder.AppendLine($" '{FolderPath}'");
+            }
+
+            if (Optional.IsCollectionDefined(NetworkInterfaces))
+            {
+                if (NetworkInterfaces.Any())
+                {
+                    builder.Append("    networkInterfaces:");
+                    builder.AppendLine(" [");
+                    foreach (var item in NetworkInterfaces)
+                    {
+                        AppendChildObject(builder, item, options, 6, true);
+                    }
+                    builder.AppendLine("    ]");
+                }
+            }
+
+            if (Optional.IsCollectionDefined(Disks))
+            {
+                if (Disks.Any())
+                {
+                    builder.Append("    disks:");
+                    builder.AppendLine(" [");
+                    foreach (var item in Disks)
+                    {
+                        AppendChildObject(builder, item, options, 6, true);
+                    }
+                    builder.AppendLine("    ]");
+                }
+            }
+
+            if (Optional.IsDefined(CustomResourceName))
+            {
+                builder.Append("    customResourceName:");
+                builder.AppendLine($" '{CustomResourceName}'");
+            }
+
+            if (Optional.IsDefined(ToolsVersionStatus))
+            {
+                builder.Append("    toolsVersionStatus:");
+                builder.AppendLine($" '{ToolsVersionStatus}'");
+            }
+
+            if (Optional.IsDefined(ToolsVersion))
+            {
+                builder.Append("    toolsVersion:");
+                builder.AppendLine($" '{ToolsVersion}'");
+            }
+
+            if (Optional.IsDefined(FirmwareType))
+            {
+                builder.Append("    firmwareType:");
+                builder.AppendLine($" '{FirmwareType.ToString()}'");
+            }
+
+            if (Optional.IsCollectionDefined(Statuses))
+            {
+                if (Statuses.Any())
+                {
+                    builder.Append("    statuses:");
+                    builder.AppendLine(" [");
+                    foreach (var item in Statuses)
+                    {
+                        AppendChildObject(builder, item, options, 6, true);
+                    }
+                    builder.AppendLine("    ]");
+                }
+            }
+
+            if (Optional.IsDefined(ProvisioningState))
+            {
+                builder.Append("    provisioningState:");
+                builder.AppendLine($" '{ProvisioningState.ToString()}'");
+            }
+
+            builder.AppendLine("  }");
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<VMwareVmTemplateData>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<VMwareVmTemplateData>)this).GetFormatFromOptions(options) : options.Format;
@@ -486,6 +719,8 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(VMwareVmTemplateData)} does not support '{options.Format}' format.");
             }
@@ -502,6 +737,8 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeVMwareVmTemplateData(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(VMwareVmTemplateData)} does not support '{options.Format}' format.");
             }

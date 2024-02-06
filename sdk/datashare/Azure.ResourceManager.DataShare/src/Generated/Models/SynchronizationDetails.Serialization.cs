@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -290,6 +291,126 @@ namespace Azure.ResourceManager.DataShare.Models
             return new SynchronizationDetails(Optional.ToNullable(dataSetId), Optional.ToNullable(dataSetType), Optional.ToNullable(durationMs), Optional.ToNullable(endTime), Optional.ToNullable(filesRead), Optional.ToNullable(filesWritten), message.Value, name.Value, Optional.ToNullable(rowsCopied), Optional.ToNullable(rowsRead), Optional.ToNullable(sizeRead), Optional.ToNullable(sizeWritten), Optional.ToNullable(startTime), status.Value, Optional.ToNullable(vCore), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(DataSetId))
+            {
+                builder.Append("  dataSetId:");
+                builder.AppendLine($" '{DataSetId.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(DataSetType))
+            {
+                builder.Append("  dataSetType:");
+                builder.AppendLine($" '{DataSetType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(DurationInMilliSeconds))
+            {
+                builder.Append("  durationMs:");
+                builder.AppendLine($" {DurationInMilliSeconds.Value}");
+            }
+
+            if (Optional.IsDefined(EndOn))
+            {
+                builder.Append("  endTime:");
+                var formattedDateTimeString = TypeFormatters.ToString(EndOn.Value, "o");
+                builder.AppendLine($" '{formattedDateTimeString}'");
+            }
+
+            if (Optional.IsDefined(FilesRead))
+            {
+                builder.Append("  filesRead:");
+                builder.AppendLine($" '{FilesRead.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(FilesWritten))
+            {
+                builder.Append("  filesWritten:");
+                builder.AppendLine($" '{FilesWritten.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Message))
+            {
+                builder.Append("  message:");
+                builder.AppendLine($" '{Message}'");
+            }
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                builder.AppendLine($" '{Name}'");
+            }
+
+            if (Optional.IsDefined(RowsCopied))
+            {
+                builder.Append("  rowsCopied:");
+                builder.AppendLine($" '{RowsCopied.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(RowsRead))
+            {
+                builder.Append("  rowsRead:");
+                builder.AppendLine($" '{RowsRead.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SizeRead))
+            {
+                builder.Append("  sizeRead:");
+                builder.AppendLine($" '{SizeRead.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SizeWritten))
+            {
+                builder.Append("  sizeWritten:");
+                builder.AppendLine($" '{SizeWritten.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(StartOn))
+            {
+                builder.Append("  startTime:");
+                var formattedDateTimeString = TypeFormatters.ToString(StartOn.Value, "o");
+                builder.AppendLine($" '{formattedDateTimeString}'");
+            }
+
+            if (Optional.IsDefined(Status))
+            {
+                builder.Append("  status:");
+                builder.AppendLine($" '{Status}'");
+            }
+
+            if (Optional.IsDefined(VCore))
+            {
+                builder.Append("  vCore:");
+                builder.AppendLine($" '{VCore.Value.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<SynchronizationDetails>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<SynchronizationDetails>)this).GetFormatFromOptions(options) : options.Format;
@@ -298,6 +419,8 @@ namespace Azure.ResourceManager.DataShare.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(SynchronizationDetails)} does not support '{options.Format}' format.");
             }
@@ -314,6 +437,8 @@ namespace Azure.ResourceManager.DataShare.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeSynchronizationDetails(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(SynchronizationDetails)} does not support '{options.Format}' format.");
             }

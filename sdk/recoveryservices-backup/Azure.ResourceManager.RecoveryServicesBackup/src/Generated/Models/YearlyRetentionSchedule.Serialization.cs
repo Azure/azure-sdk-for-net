@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -187,6 +189,87 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             return new YearlyRetentionSchedule(Optional.ToNullable(retentionScheduleFormatType), Optional.ToList(monthsOfYear), retentionScheduleDaily.Value, retentionScheduleWeekly.Value, Optional.ToList(retentionTimes), retentionDuration.Value, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(RetentionScheduleFormatType))
+            {
+                builder.Append("  retentionScheduleFormatType:");
+                builder.AppendLine($" '{RetentionScheduleFormatType.ToString()}'");
+            }
+
+            if (Optional.IsCollectionDefined(MonthsOfYear))
+            {
+                if (MonthsOfYear.Any())
+                {
+                    builder.Append("  monthsOfYear:");
+                    builder.AppendLine(" [");
+                    foreach (var item in MonthsOfYear)
+                    {
+                        builder.AppendLine($"    '{item.ToString()}'");
+                    }
+                    builder.AppendLine("  ]");
+                }
+            }
+
+            if (Optional.IsDefined(RetentionScheduleDaily))
+            {
+                builder.Append("  retentionScheduleDaily:");
+                AppendChildObject(builder, RetentionScheduleDaily, options, 2, false);
+            }
+
+            if (Optional.IsDefined(RetentionScheduleWeekly))
+            {
+                builder.Append("  retentionScheduleWeekly:");
+                AppendChildObject(builder, RetentionScheduleWeekly, options, 2, false);
+            }
+
+            if (Optional.IsCollectionDefined(RetentionTimes))
+            {
+                if (RetentionTimes.Any())
+                {
+                    builder.Append("  retentionTimes:");
+                    builder.AppendLine(" [");
+                    foreach (var item in RetentionTimes)
+                    {
+                        var formattedDateTimeString = TypeFormatters.ToString(item, "o");
+                        builder.AppendLine($"    '{formattedDateTimeString}'");
+                    }
+                    builder.AppendLine("  ]");
+                }
+            }
+
+            if (Optional.IsDefined(RetentionDuration))
+            {
+                builder.Append("  retentionDuration:");
+                AppendChildObject(builder, RetentionDuration, options, 2, false);
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<YearlyRetentionSchedule>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<YearlyRetentionSchedule>)this).GetFormatFromOptions(options) : options.Format;
@@ -195,6 +278,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(YearlyRetentionSchedule)} does not support '{options.Format}' format.");
             }
@@ -211,6 +296,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeYearlyRetentionSchedule(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(YearlyRetentionSchedule)} does not support '{options.Format}' format.");
             }

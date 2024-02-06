@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
@@ -329,6 +331,154 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             return new SearchMetadata(requestId.Value, resultType.Value, Optional.ToNullable(total), Optional.ToNullable(top), id.Value, Optional.ToList(coreSummaries), status.Value, Optional.ToNullable(startTime), Optional.ToNullable(lastUpdated), Optional.ToNullable(eTag), Optional.ToList(sort), Optional.ToNullable(requestTime), aggregatedValueField.Value, aggregatedGroupingFields.Value, Optional.ToNullable(sum), Optional.ToNullable(max), schema.Value, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(SearchId))
+            {
+                builder.Append("  requestId:");
+                builder.AppendLine($" '{SearchId}'");
+            }
+
+            if (Optional.IsDefined(ResultType))
+            {
+                builder.Append("  resultType:");
+                builder.AppendLine($" '{ResultType}'");
+            }
+
+            if (Optional.IsDefined(Total))
+            {
+                builder.Append("  total:");
+                builder.AppendLine($" '{Total.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Top))
+            {
+                builder.Append("  top:");
+                builder.AppendLine($" '{Top.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Id))
+            {
+                builder.Append("  id:");
+                builder.AppendLine($" '{Id}'");
+            }
+
+            if (Optional.IsCollectionDefined(CoreSummaries))
+            {
+                if (CoreSummaries.Any())
+                {
+                    builder.Append("  coreSummaries:");
+                    builder.AppendLine(" [");
+                    foreach (var item in CoreSummaries)
+                    {
+                        AppendChildObject(builder, item, options, 4, true);
+                    }
+                    builder.AppendLine("  ]");
+                }
+            }
+
+            if (Optional.IsDefined(Status))
+            {
+                builder.Append("  status:");
+                builder.AppendLine($" '{Status}'");
+            }
+
+            if (Optional.IsDefined(StartOn))
+            {
+                builder.Append("  startTime:");
+                var formattedDateTimeString = TypeFormatters.ToString(StartOn.Value, "o");
+                builder.AppendLine($" '{formattedDateTimeString}'");
+            }
+
+            if (Optional.IsDefined(LastUpdated))
+            {
+                builder.Append("  lastUpdated:");
+                var formattedDateTimeString = TypeFormatters.ToString(LastUpdated.Value, "o");
+                builder.AppendLine($" '{formattedDateTimeString}'");
+            }
+
+            if (Optional.IsDefined(ETag))
+            {
+                builder.Append("  eTag:");
+                builder.AppendLine($" '{ETag.Value.ToString()}'");
+            }
+
+            if (Optional.IsCollectionDefined(Sort))
+            {
+                if (Sort.Any())
+                {
+                    builder.Append("  sort:");
+                    builder.AppendLine(" [");
+                    foreach (var item in Sort)
+                    {
+                        AppendChildObject(builder, item, options, 4, true);
+                    }
+                    builder.AppendLine("  ]");
+                }
+            }
+
+            if (Optional.IsDefined(RequestTime))
+            {
+                builder.Append("  requestTime:");
+                builder.AppendLine($" '{RequestTime.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(AggregatedValueField))
+            {
+                builder.Append("  aggregatedValueField:");
+                builder.AppendLine($" '{AggregatedValueField}'");
+            }
+
+            if (Optional.IsDefined(AggregatedGroupingFields))
+            {
+                builder.Append("  aggregatedGroupingFields:");
+                builder.AppendLine($" '{AggregatedGroupingFields}'");
+            }
+
+            if (Optional.IsDefined(Sum))
+            {
+                builder.Append("  sum:");
+                builder.AppendLine($" '{Sum.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Max))
+            {
+                builder.Append("  max:");
+                builder.AppendLine($" '{Max.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Schema))
+            {
+                builder.Append("  schema:");
+                AppendChildObject(builder, Schema, options, 2, false);
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<SearchMetadata>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<SearchMetadata>)this).GetFormatFromOptions(options) : options.Format;
@@ -337,6 +487,8 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(SearchMetadata)} does not support '{options.Format}' format.");
             }
@@ -353,6 +505,8 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeSearchMetadata(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(SearchMetadata)} does not support '{options.Format}' format.");
             }

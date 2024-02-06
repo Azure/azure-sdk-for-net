@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -180,6 +182,77 @@ namespace Azure.ResourceManager.Compute.Models
             return new VirtualMachineCaptureResult(id.Value, serializedAdditionalRawData, schema.Value, contentVersion.Value, parameters.Value, Optional.ToList(resources));
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(Schema))
+            {
+                builder.Append("  $schema:");
+                builder.AppendLine($" '{Schema}'");
+            }
+
+            if (Optional.IsDefined(ContentVersion))
+            {
+                builder.Append("  contentVersion:");
+                builder.AppendLine($" '{ContentVersion}'");
+            }
+
+            if (Optional.IsDefined(Parameters))
+            {
+                builder.Append("  parameters:");
+                builder.AppendLine($" '{Parameters.ToString()}'");
+            }
+
+            if (Optional.IsCollectionDefined(Resources))
+            {
+                if (Resources.Any())
+                {
+                    builder.Append("  resources:");
+                    builder.AppendLine(" [");
+                    foreach (var item in Resources)
+                    {
+                        if (item == null)
+                        {
+                            builder.Append("null");
+                            continue;
+                        }
+                        builder.AppendLine($"    '{item.ToString()}'");
+                    }
+                    builder.AppendLine("  ]");
+                }
+            }
+
+            if (Optional.IsDefined(Id))
+            {
+                builder.Append("  id:");
+                builder.AppendLine($" '{Id.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<VirtualMachineCaptureResult>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<VirtualMachineCaptureResult>)this).GetFormatFromOptions(options) : options.Format;
@@ -188,6 +261,8 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(VirtualMachineCaptureResult)} does not support '{options.Format}' format.");
             }
@@ -204,6 +279,8 @@ namespace Azure.ResourceManager.Compute.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeVirtualMachineCaptureResult(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(VirtualMachineCaptureResult)} does not support '{options.Format}' format.");
             }

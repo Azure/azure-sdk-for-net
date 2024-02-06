@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -286,6 +287,148 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             return new ApplicationInsightsComponentExportConfiguration(exportId.Value, instrumentationKey.Value, recordTypes.Value, applicationName.Value, subscriptionId.Value, resourceGroup.Value, destinationStorageSubscriptionId.Value, destinationStorageLocationId.Value, destinationAccountId.Value, destinationType.Value, isUserEnabled.Value, lastUserUpdate.Value, notificationQueueEnabled.Value, exportStatus.Value, lastSuccessTime.Value, lastGapTime.Value, permanentErrorReason.Value, storageName.Value, containerName.Value, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(ExportId))
+            {
+                builder.Append("  ExportId:");
+                builder.AppendLine($" '{ExportId}'");
+            }
+
+            if (Optional.IsDefined(InstrumentationKey))
+            {
+                builder.Append("  InstrumentationKey:");
+                builder.AppendLine($" '{InstrumentationKey}'");
+            }
+
+            if (Optional.IsDefined(RecordTypes))
+            {
+                builder.Append("  RecordTypes:");
+                builder.AppendLine($" '{RecordTypes}'");
+            }
+
+            if (Optional.IsDefined(ApplicationName))
+            {
+                builder.Append("  ApplicationName:");
+                builder.AppendLine($" '{ApplicationName}'");
+            }
+
+            if (Optional.IsDefined(SubscriptionId))
+            {
+                builder.Append("  SubscriptionId:");
+                builder.AppendLine($" '{SubscriptionId}'");
+            }
+
+            if (Optional.IsDefined(ResourceGroup))
+            {
+                builder.Append("  ResourceGroup:");
+                builder.AppendLine($" '{ResourceGroup}'");
+            }
+
+            if (Optional.IsDefined(DestinationStorageSubscriptionId))
+            {
+                builder.Append("  DestinationStorageSubscriptionId:");
+                builder.AppendLine($" '{DestinationStorageSubscriptionId}'");
+            }
+
+            if (Optional.IsDefined(DestinationStorageLocationId))
+            {
+                builder.Append("  DestinationStorageLocationId:");
+                builder.AppendLine($" '{DestinationStorageLocationId}'");
+            }
+
+            if (Optional.IsDefined(DestinationAccountId))
+            {
+                builder.Append("  DestinationAccountId:");
+                builder.AppendLine($" '{DestinationAccountId}'");
+            }
+
+            if (Optional.IsDefined(DestinationType))
+            {
+                builder.Append("  DestinationType:");
+                builder.AppendLine($" '{DestinationType}'");
+            }
+
+            if (Optional.IsDefined(IsUserEnabled))
+            {
+                builder.Append("  IsUserEnabled:");
+                builder.AppendLine($" '{IsUserEnabled}'");
+            }
+
+            if (Optional.IsDefined(LastUserUpdate))
+            {
+                builder.Append("  LastUserUpdate:");
+                builder.AppendLine($" '{LastUserUpdate}'");
+            }
+
+            if (Optional.IsDefined(NotificationQueueEnabled))
+            {
+                builder.Append("  NotificationQueueEnabled:");
+                builder.AppendLine($" '{NotificationQueueEnabled}'");
+            }
+
+            if (Optional.IsDefined(ExportStatus))
+            {
+                builder.Append("  ExportStatus:");
+                builder.AppendLine($" '{ExportStatus}'");
+            }
+
+            if (Optional.IsDefined(LastSuccessTime))
+            {
+                builder.Append("  LastSuccessTime:");
+                builder.AppendLine($" '{LastSuccessTime}'");
+            }
+
+            if (Optional.IsDefined(LastGapTime))
+            {
+                builder.Append("  LastGapTime:");
+                builder.AppendLine($" '{LastGapTime}'");
+            }
+
+            if (Optional.IsDefined(PermanentErrorReason))
+            {
+                builder.Append("  PermanentErrorReason:");
+                builder.AppendLine($" '{PermanentErrorReason}'");
+            }
+
+            if (Optional.IsDefined(StorageName))
+            {
+                builder.Append("  StorageName:");
+                builder.AppendLine($" '{StorageName}'");
+            }
+
+            if (Optional.IsDefined(ContainerName))
+            {
+                builder.Append("  ContainerName:");
+                builder.AppendLine($" '{ContainerName}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<ApplicationInsightsComponentExportConfiguration>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ApplicationInsightsComponentExportConfiguration>)this).GetFormatFromOptions(options) : options.Format;
@@ -294,6 +437,8 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(ApplicationInsightsComponentExportConfiguration)} does not support '{options.Format}' format.");
             }
@@ -310,6 +455,8 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeApplicationInsightsComponentExportConfiguration(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(ApplicationInsightsComponentExportConfiguration)} does not support '{options.Format}' format.");
             }

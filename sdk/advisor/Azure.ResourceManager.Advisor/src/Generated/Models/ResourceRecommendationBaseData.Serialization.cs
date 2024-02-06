@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Advisor.Models;
@@ -562,6 +564,264 @@ namespace Azure.ResourceManager.Advisor
             return new ResourceRecommendationBaseData(id, name, type, systemData.Value, Optional.ToNullable(category), Optional.ToNullable(impact), impactedField.Value, impactedValue.Value, Optional.ToNullable(lastUpdated), Optional.ToDictionary(metadata), recommendationTypeId.Value, Optional.ToNullable(risk), shortDescription.Value, Optional.ToList(suppressionIds), Optional.ToDictionary(extendedProperties), resourceMetadata.Value, description.Value, label.Value, learnMoreLink.Value, potentialBenefits.Value, Optional.ToList(actions), Optional.ToDictionary(remediation), Optional.ToDictionary(exposedMetadataProperties), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(Id))
+            {
+                builder.Append("  id:");
+                builder.AppendLine($" '{Id.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                builder.AppendLine($" '{Name}'");
+            }
+
+            if (Optional.IsDefined(ResourceType))
+            {
+                builder.Append("  type:");
+                builder.AppendLine($" '{ResourceType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SystemData))
+            {
+                builder.Append("  systemData:");
+                builder.AppendLine($" '{SystemData.ToString()}'");
+            }
+
+            builder.Append("  properties:");
+            builder.AppendLine(" {");
+            if (Optional.IsDefined(Category))
+            {
+                builder.Append("    category:");
+                builder.AppendLine($" '{Category.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Impact))
+            {
+                builder.Append("    impact:");
+                builder.AppendLine($" '{Impact.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ImpactedField))
+            {
+                builder.Append("    impactedField:");
+                builder.AppendLine($" '{ImpactedField}'");
+            }
+
+            if (Optional.IsDefined(ImpactedValue))
+            {
+                builder.Append("    impactedValue:");
+                builder.AppendLine($" '{ImpactedValue}'");
+            }
+
+            if (Optional.IsDefined(LastUpdated))
+            {
+                builder.Append("    lastUpdated:");
+                var formattedDateTimeString = TypeFormatters.ToString(LastUpdated.Value, "o");
+                builder.AppendLine($" '{formattedDateTimeString}'");
+            }
+
+            if (Optional.IsCollectionDefined(Metadata))
+            {
+                if (Metadata.Any())
+                {
+                    builder.Append("    metadata:");
+                    builder.AppendLine(" {");
+                    foreach (var item in Metadata)
+                    {
+                        builder.Append($"        {item.Key}: ");
+                        if (item.Value == null)
+                        {
+                            builder.Append("null");
+                            continue;
+                        }
+                        builder.AppendLine($" '{item.Value.ToString()}'");
+                    }
+                    builder.AppendLine("    }");
+                }
+            }
+
+            if (Optional.IsDefined(RecommendationTypeId))
+            {
+                builder.Append("    recommendationTypeId:");
+                builder.AppendLine($" '{RecommendationTypeId}'");
+            }
+
+            if (Optional.IsDefined(Risk))
+            {
+                builder.Append("    risk:");
+                builder.AppendLine($" '{Risk.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ShortDescription))
+            {
+                builder.Append("    shortDescription:");
+                AppendChildObject(builder, ShortDescription, options, 4, false);
+            }
+
+            if (Optional.IsCollectionDefined(SuppressionIds))
+            {
+                if (SuppressionIds.Any())
+                {
+                    builder.Append("    suppressionIds:");
+                    builder.AppendLine(" [");
+                    foreach (var item in SuppressionIds)
+                    {
+                        builder.AppendLine($"      '{item.ToString()}'");
+                    }
+                    builder.AppendLine("    ]");
+                }
+            }
+
+            if (Optional.IsCollectionDefined(ExtendedProperties))
+            {
+                if (ExtendedProperties.Any())
+                {
+                    builder.Append("    extendedProperties:");
+                    builder.AppendLine(" {");
+                    foreach (var item in ExtendedProperties)
+                    {
+                        builder.Append($"        {item.Key}: ");
+                        if (item.Value == null)
+                        {
+                            builder.Append("null");
+                            continue;
+                        }
+                        builder.AppendLine($" '{item.Value}'");
+                    }
+                    builder.AppendLine("    }");
+                }
+            }
+
+            if (Optional.IsDefined(ResourceMetadata))
+            {
+                builder.Append("    resourceMetadata:");
+                AppendChildObject(builder, ResourceMetadata, options, 4, false);
+            }
+
+            if (Optional.IsDefined(Description))
+            {
+                builder.Append("    description:");
+                builder.AppendLine($" '{Description}'");
+            }
+
+            if (Optional.IsDefined(Label))
+            {
+                builder.Append("    label:");
+                builder.AppendLine($" '{Label}'");
+            }
+
+            if (Optional.IsDefined(LearnMoreLink))
+            {
+                builder.Append("    learnMoreLink:");
+                builder.AppendLine($" '{LearnMoreLink}'");
+            }
+
+            if (Optional.IsDefined(PotentialBenefits))
+            {
+                builder.Append("    potentialBenefits:");
+                builder.AppendLine($" '{PotentialBenefits}'");
+            }
+
+            if (Optional.IsCollectionDefined(Actions))
+            {
+                if (Actions.Any())
+                {
+                    builder.Append("    actions:");
+                    builder.AppendLine(" [");
+                    foreach (var item in Actions)
+                    {
+                        if (item == null)
+                        {
+                            builder.Append("null");
+                            continue;
+                        }
+                        builder.AppendLine(" {");
+                        foreach (var item0 in item)
+                        {
+                            builder.Append($"        {item0.Key}: ");
+                            if (item0.Value == null)
+                            {
+                                builder.Append("null");
+                                continue;
+                            }
+                            builder.AppendLine($" '{item0.Value.ToString()}'");
+                        }
+                        builder.AppendLine("    }");
+                    }
+                    builder.AppendLine("    ]");
+                }
+            }
+
+            if (Optional.IsCollectionDefined(Remediation))
+            {
+                if (Remediation.Any())
+                {
+                    builder.Append("    remediation:");
+                    builder.AppendLine(" {");
+                    foreach (var item in Remediation)
+                    {
+                        builder.Append($"        {item.Key}: ");
+                        if (item.Value == null)
+                        {
+                            builder.Append("null");
+                            continue;
+                        }
+                        builder.AppendLine($" '{item.Value.ToString()}'");
+                    }
+                    builder.AppendLine("    }");
+                }
+            }
+
+            if (Optional.IsCollectionDefined(ExposedMetadataProperties))
+            {
+                if (ExposedMetadataProperties.Any())
+                {
+                    builder.Append("    exposedMetadataProperties:");
+                    builder.AppendLine(" {");
+                    foreach (var item in ExposedMetadataProperties)
+                    {
+                        builder.Append($"        {item.Key}: ");
+                        if (item.Value == null)
+                        {
+                            builder.Append("null");
+                            continue;
+                        }
+                        builder.AppendLine($" '{item.Value.ToString()}'");
+                    }
+                    builder.AppendLine("    }");
+                }
+            }
+
+            builder.AppendLine("  }");
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<ResourceRecommendationBaseData>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ResourceRecommendationBaseData>)this).GetFormatFromOptions(options) : options.Format;
@@ -570,6 +830,8 @@ namespace Azure.ResourceManager.Advisor
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(ResourceRecommendationBaseData)} does not support '{options.Format}' format.");
             }
@@ -586,6 +848,8 @@ namespace Azure.ResourceManager.Advisor
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeResourceRecommendationBaseData(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(ResourceRecommendationBaseData)} does not support '{options.Format}' format.");
             }

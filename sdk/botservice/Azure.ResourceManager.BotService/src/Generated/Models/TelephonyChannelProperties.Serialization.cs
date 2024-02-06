@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -234,6 +236,93 @@ namespace Azure.ResourceManager.BotService.Models
             return new TelephonyChannelProperties(Optional.ToList(phoneNumbers), Optional.ToList(apiConfigurations), cognitiveServiceSubscriptionKey.Value, cognitiveServiceRegion.Value, defaultLocale.Value, premiumSku.Value, Optional.ToNullable(isEnabled), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsCollectionDefined(PhoneNumbers))
+            {
+                if (PhoneNumbers.Any())
+                {
+                    builder.Append("  phoneNumbers:");
+                    builder.AppendLine(" [");
+                    foreach (var item in PhoneNumbers)
+                    {
+                        AppendChildObject(builder, item, options, 4, true);
+                    }
+                    builder.AppendLine("  ]");
+                }
+            }
+
+            if (Optional.IsCollectionDefined(ApiConfigurations))
+            {
+                if (ApiConfigurations.Any())
+                {
+                    builder.Append("  apiConfigurations:");
+                    builder.AppendLine(" [");
+                    foreach (var item in ApiConfigurations)
+                    {
+                        AppendChildObject(builder, item, options, 4, true);
+                    }
+                    builder.AppendLine("  ]");
+                }
+            }
+
+            if (Optional.IsDefined(CognitiveServiceSubscriptionKey))
+            {
+                builder.Append("  cognitiveServiceSubscriptionKey:");
+                builder.AppendLine($" '{CognitiveServiceSubscriptionKey}'");
+            }
+
+            if (Optional.IsDefined(CognitiveServiceRegion))
+            {
+                builder.Append("  cognitiveServiceRegion:");
+                builder.AppendLine($" '{CognitiveServiceRegion}'");
+            }
+
+            if (Optional.IsDefined(DefaultLocale))
+            {
+                builder.Append("  defaultLocale:");
+                builder.AppendLine($" '{DefaultLocale}'");
+            }
+
+            if (Optional.IsDefined(PremiumSku))
+            {
+                builder.Append("  premiumSKU:");
+                builder.AppendLine($" '{PremiumSku}'");
+            }
+
+            if (Optional.IsDefined(IsEnabled))
+            {
+                builder.Append("  isEnabled:");
+                var boolValue = IsEnabled.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<TelephonyChannelProperties>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<TelephonyChannelProperties>)this).GetFormatFromOptions(options) : options.Format;
@@ -242,6 +331,8 @@ namespace Azure.ResourceManager.BotService.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(TelephonyChannelProperties)} does not support '{options.Format}' format.");
             }
@@ -258,6 +349,8 @@ namespace Azure.ResourceManager.BotService.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeTelephonyChannelProperties(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(TelephonyChannelProperties)} does not support '{options.Format}' format.");
             }

@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Hci.Models;
@@ -516,6 +518,234 @@ namespace Azure.ResourceManager.Hci
             return new HciClusterData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(provisioningState), Optional.ToNullable(status), Optional.ToNullable(cloudId), cloudManagementEndpoint.Value, Optional.ToNullable(aadClientId), Optional.ToNullable(aadTenantId), Optional.ToNullable(aadApplicationObjectId), Optional.ToNullable(aadServicePrincipalObjectId), softwareAssuranceProperties.Value, desiredProperties.Value, reportedProperties.Value, Optional.ToNullable(trialDaysRemaining), billingModel.Value, Optional.ToNullable(registrationTimestamp), Optional.ToNullable(lastSyncTimestamp), Optional.ToNullable(lastBillingTimestamp), serviceEndpoint.Value, resourceProviderObjectId.Value, Optional.ToNullable(principalId), Optional.ToNullable(tenantId), Optional.ToNullable(type0), Optional.ToDictionary(userAssignedIdentities), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsCollectionDefined(Tags))
+            {
+                if (Tags.Any())
+                {
+                    builder.Append("  tags:");
+                    builder.AppendLine(" {");
+                    foreach (var item in Tags)
+                    {
+                        builder.Append($"    {item.Key}: ");
+                        if (item.Value == null)
+                        {
+                            builder.Append("null");
+                            continue;
+                        }
+                        builder.AppendLine($" '{item.Value}'");
+                    }
+                    builder.AppendLine("  }");
+                }
+            }
+
+            if (Optional.IsDefined(Location))
+            {
+                builder.Append("  location:");
+                builder.AppendLine($" '{Location.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Id))
+            {
+                builder.Append("  id:");
+                builder.AppendLine($" '{Id.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                builder.AppendLine($" '{Name}'");
+            }
+
+            if (Optional.IsDefined(ResourceType))
+            {
+                builder.Append("  type:");
+                builder.AppendLine($" '{ResourceType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SystemData))
+            {
+                builder.Append("  systemData:");
+                builder.AppendLine($" '{SystemData.ToString()}'");
+            }
+
+            builder.Append("  properties:");
+            builder.AppendLine(" {");
+            if (Optional.IsDefined(ProvisioningState))
+            {
+                builder.Append("    provisioningState:");
+                builder.AppendLine($" '{ProvisioningState.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Status))
+            {
+                builder.Append("    status:");
+                builder.AppendLine($" '{Status.ToString()}'");
+            }
+
+            if (Optional.IsDefined(CloudId))
+            {
+                builder.Append("    cloudId:");
+                builder.AppendLine($" '{CloudId.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(CloudManagementEndpoint))
+            {
+                builder.Append("    cloudManagementEndpoint:");
+                builder.AppendLine($" '{CloudManagementEndpoint}'");
+            }
+
+            if (Optional.IsDefined(AadClientId))
+            {
+                builder.Append("    aadClientId:");
+                builder.AppendLine($" '{AadClientId.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(AadTenantId))
+            {
+                builder.Append("    aadTenantId:");
+                builder.AppendLine($" '{AadTenantId.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(AadApplicationObjectId))
+            {
+                builder.Append("    aadApplicationObjectId:");
+                builder.AppendLine($" '{AadApplicationObjectId.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(AadServicePrincipalObjectId))
+            {
+                builder.Append("    aadServicePrincipalObjectId:");
+                builder.AppendLine($" '{AadServicePrincipalObjectId.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SoftwareAssuranceProperties))
+            {
+                builder.Append("    softwareAssuranceProperties:");
+                AppendChildObject(builder, SoftwareAssuranceProperties, options, 4, false);
+            }
+
+            if (Optional.IsDefined(DesiredProperties))
+            {
+                builder.Append("    desiredProperties:");
+                AppendChildObject(builder, DesiredProperties, options, 4, false);
+            }
+
+            if (Optional.IsDefined(ReportedProperties))
+            {
+                builder.Append("    reportedProperties:");
+                AppendChildObject(builder, ReportedProperties, options, 4, false);
+            }
+
+            if (Optional.IsDefined(TrialDaysRemaining))
+            {
+                builder.Append("    trialDaysRemaining:");
+                builder.AppendLine($" '{TrialDaysRemaining.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(BillingModel))
+            {
+                builder.Append("    billingModel:");
+                builder.AppendLine($" '{BillingModel}'");
+            }
+
+            if (Optional.IsDefined(RegistrationTimestamp))
+            {
+                builder.Append("    registrationTimestamp:");
+                var formattedDateTimeString = TypeFormatters.ToString(RegistrationTimestamp.Value, "o");
+                builder.AppendLine($" '{formattedDateTimeString}'");
+            }
+
+            if (Optional.IsDefined(LastSyncTimestamp))
+            {
+                builder.Append("    lastSyncTimestamp:");
+                var formattedDateTimeString = TypeFormatters.ToString(LastSyncTimestamp.Value, "o");
+                builder.AppendLine($" '{formattedDateTimeString}'");
+            }
+
+            if (Optional.IsDefined(LastBillingTimestamp))
+            {
+                builder.Append("    lastBillingTimestamp:");
+                var formattedDateTimeString = TypeFormatters.ToString(LastBillingTimestamp.Value, "o");
+                builder.AppendLine($" '{formattedDateTimeString}'");
+            }
+
+            if (Optional.IsDefined(ServiceEndpoint))
+            {
+                builder.Append("    serviceEndpoint:");
+                builder.AppendLine($" '{ServiceEndpoint}'");
+            }
+
+            if (Optional.IsDefined(ResourceProviderObjectId))
+            {
+                builder.Append("    resourceProviderObjectId:");
+                builder.AppendLine($" '{ResourceProviderObjectId}'");
+            }
+
+            builder.AppendLine("  }");
+            builder.Append("  identity:");
+            builder.AppendLine(" {");
+            if (Optional.IsDefined(PrincipalId))
+            {
+                builder.Append("    principalId:");
+                builder.AppendLine($" '{PrincipalId.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(TenantId))
+            {
+                builder.Append("    tenantId:");
+                builder.AppendLine($" '{TenantId.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(TypeIdentityType))
+            {
+                builder.Append("    type:");
+                builder.AppendLine($" '{TypeIdentityType.ToString()}'");
+            }
+
+            if (Optional.IsCollectionDefined(UserAssignedIdentities))
+            {
+                if (UserAssignedIdentities.Any())
+                {
+                    builder.Append("    userAssignedIdentities:");
+                    builder.AppendLine(" {");
+                    foreach (var item in UserAssignedIdentities)
+                    {
+                        builder.Append($"        {item.Key}: ");
+                        AppendChildObject(builder, item.Value, options, 6, false);
+                    }
+                    builder.AppendLine("    }");
+                }
+            }
+
+            builder.AppendLine("  }");
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<HciClusterData>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<HciClusterData>)this).GetFormatFromOptions(options) : options.Format;
@@ -524,6 +754,8 @@ namespace Azure.ResourceManager.Hci
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(HciClusterData)} does not support '{options.Format}' format.");
             }
@@ -540,6 +772,8 @@ namespace Azure.ResourceManager.Hci
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeHciClusterData(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(HciClusterData)} does not support '{options.Format}' format.");
             }

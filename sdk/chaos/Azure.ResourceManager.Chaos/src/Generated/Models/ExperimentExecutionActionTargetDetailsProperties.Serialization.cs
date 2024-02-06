@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -168,6 +169,66 @@ namespace Azure.ResourceManager.Chaos.Models
             return new ExperimentExecutionActionTargetDetailsProperties(status.Value, target.Value, Optional.ToNullable(targetFailedTime), Optional.ToNullable(targetCompletedTime), error.Value, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(Status))
+            {
+                builder.Append("  status:");
+                builder.AppendLine($" '{Status}'");
+            }
+
+            if (Optional.IsDefined(Target))
+            {
+                builder.Append("  target:");
+                builder.AppendLine($" '{Target}'");
+            }
+
+            if (Optional.IsDefined(TargetFailedOn))
+            {
+                builder.Append("  targetFailedTime:");
+                var formattedDateTimeString = TypeFormatters.ToString(TargetFailedOn.Value, "o");
+                builder.AppendLine($" '{formattedDateTimeString}'");
+            }
+
+            if (Optional.IsDefined(TargetCompletedOn))
+            {
+                builder.Append("  targetCompletedTime:");
+                var formattedDateTimeString = TypeFormatters.ToString(TargetCompletedOn.Value, "o");
+                builder.AppendLine($" '{formattedDateTimeString}'");
+            }
+
+            if (Optional.IsDefined(Error))
+            {
+                builder.Append("  error:");
+                AppendChildObject(builder, Error, options, 2, false);
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<ExperimentExecutionActionTargetDetailsProperties>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ExperimentExecutionActionTargetDetailsProperties>)this).GetFormatFromOptions(options) : options.Format;
@@ -176,6 +237,8 @@ namespace Azure.ResourceManager.Chaos.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(ExperimentExecutionActionTargetDetailsProperties)} does not support '{options.Format}' format.");
             }
@@ -192,6 +255,8 @@ namespace Azure.ResourceManager.Chaos.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeExperimentExecutionActionTargetDetailsProperties(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(ExperimentExecutionActionTargetDetailsProperties)} does not support '{options.Format}' format.");
             }

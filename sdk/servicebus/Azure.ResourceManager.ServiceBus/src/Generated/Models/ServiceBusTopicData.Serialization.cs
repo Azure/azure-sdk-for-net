@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -412,6 +413,180 @@ namespace Azure.ResourceManager.ServiceBus
             return new ServiceBusTopicData(id, name, type, systemData.Value, Optional.ToNullable(sizeInBytes), Optional.ToNullable(createdAt), Optional.ToNullable(updatedAt), Optional.ToNullable(accessedAt), Optional.ToNullable(subscriptionCount), countDetails.Value, Optional.ToNullable(defaultMessageTimeToLive), Optional.ToNullable(maxSizeInMegabytes), Optional.ToNullable(maxMessageSizeInKilobytes), Optional.ToNullable(requiresDuplicateDetection), Optional.ToNullable(duplicateDetectionHistoryTimeWindow), Optional.ToNullable(enableBatchedOperations), Optional.ToNullable(status), Optional.ToNullable(supportOrdering), Optional.ToNullable(autoDeleteOnIdle), Optional.ToNullable(enablePartitioning), Optional.ToNullable(enableExpress), Optional.ToNullable(location), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(Location))
+            {
+                builder.Append("  location:");
+                builder.AppendLine($" '{Location.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Id))
+            {
+                builder.Append("  id:");
+                builder.AppendLine($" '{Id.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                builder.AppendLine($" '{Name}'");
+            }
+
+            if (Optional.IsDefined(ResourceType))
+            {
+                builder.Append("  type:");
+                builder.AppendLine($" '{ResourceType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SystemData))
+            {
+                builder.Append("  systemData:");
+                builder.AppendLine($" '{SystemData.ToString()}'");
+            }
+
+            builder.Append("  properties:");
+            builder.AppendLine(" {");
+            if (Optional.IsDefined(SizeInBytes))
+            {
+                builder.Append("    sizeInBytes:");
+                builder.AppendLine($" '{SizeInBytes.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(CreatedOn))
+            {
+                builder.Append("    createdAt:");
+                var formattedDateTimeString = TypeFormatters.ToString(CreatedOn.Value, "o");
+                builder.AppendLine($" '{formattedDateTimeString}'");
+            }
+
+            if (Optional.IsDefined(UpdatedOn))
+            {
+                builder.Append("    updatedAt:");
+                var formattedDateTimeString = TypeFormatters.ToString(UpdatedOn.Value, "o");
+                builder.AppendLine($" '{formattedDateTimeString}'");
+            }
+
+            if (Optional.IsDefined(AccessedOn))
+            {
+                builder.Append("    accessedAt:");
+                var formattedDateTimeString = TypeFormatters.ToString(AccessedOn.Value, "o");
+                builder.AppendLine($" '{formattedDateTimeString}'");
+            }
+
+            if (Optional.IsDefined(SubscriptionCount))
+            {
+                builder.Append("    subscriptionCount:");
+                builder.AppendLine($" {SubscriptionCount.Value}");
+            }
+
+            if (Optional.IsDefined(CountDetails))
+            {
+                builder.Append("    countDetails:");
+                AppendChildObject(builder, CountDetails, options, 4, false);
+            }
+
+            if (Optional.IsDefined(DefaultMessageTimeToLive))
+            {
+                builder.Append("    defaultMessageTimeToLive:");
+                var formattedTimeSpan = TypeFormatters.ToString(DefaultMessageTimeToLive.Value, "P");
+                builder.AppendLine($" '{formattedTimeSpan}'");
+            }
+
+            if (Optional.IsDefined(MaxSizeInMegabytes))
+            {
+                builder.Append("    maxSizeInMegabytes:");
+                builder.AppendLine($" {MaxSizeInMegabytes.Value}");
+            }
+
+            if (Optional.IsDefined(MaxMessageSizeInKilobytes))
+            {
+                builder.Append("    maxMessageSizeInKilobytes:");
+                builder.AppendLine($" '{MaxMessageSizeInKilobytes.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(RequiresDuplicateDetection))
+            {
+                builder.Append("    requiresDuplicateDetection:");
+                var boolValue = RequiresDuplicateDetection.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(DuplicateDetectionHistoryTimeWindow))
+            {
+                builder.Append("    duplicateDetectionHistoryTimeWindow:");
+                var formattedTimeSpan = TypeFormatters.ToString(DuplicateDetectionHistoryTimeWindow.Value, "P");
+                builder.AppendLine($" '{formattedTimeSpan}'");
+            }
+
+            if (Optional.IsDefined(EnableBatchedOperations))
+            {
+                builder.Append("    enableBatchedOperations:");
+                var boolValue = EnableBatchedOperations.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(Status))
+            {
+                builder.Append("    status:");
+                builder.AppendLine($" '{Status.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SupportOrdering))
+            {
+                builder.Append("    supportOrdering:");
+                var boolValue = SupportOrdering.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(AutoDeleteOnIdle))
+            {
+                builder.Append("    autoDeleteOnIdle:");
+                var formattedTimeSpan = TypeFormatters.ToString(AutoDeleteOnIdle.Value, "P");
+                builder.AppendLine($" '{formattedTimeSpan}'");
+            }
+
+            if (Optional.IsDefined(EnablePartitioning))
+            {
+                builder.Append("    enablePartitioning:");
+                var boolValue = EnablePartitioning.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(EnableExpress))
+            {
+                builder.Append("    enableExpress:");
+                var boolValue = EnableExpress.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            builder.AppendLine("  }");
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<ServiceBusTopicData>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ServiceBusTopicData>)this).GetFormatFromOptions(options) : options.Format;
@@ -420,6 +595,8 @@ namespace Azure.ResourceManager.ServiceBus
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(ServiceBusTopicData)} does not support '{options.Format}' format.");
             }
@@ -436,6 +613,8 @@ namespace Azure.ResourceManager.ServiceBus
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeServiceBusTopicData(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(ServiceBusTopicData)} does not support '{options.Format}' format.");
             }

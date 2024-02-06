@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -148,6 +149,66 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             return new VaultPropertiesMoveDetails(operationId.Value, Optional.ToNullable(startTimeUtc), Optional.ToNullable(completionTimeUtc), sourceResourceId.Value, targetResourceId.Value, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(OperationId))
+            {
+                builder.Append("  operationId:");
+                builder.AppendLine($" '{OperationId}'");
+            }
+
+            if (Optional.IsDefined(StartOn))
+            {
+                builder.Append("  startTimeUtc:");
+                var formattedDateTimeString = TypeFormatters.ToString(StartOn.Value, "o");
+                builder.AppendLine($" '{formattedDateTimeString}'");
+            }
+
+            if (Optional.IsDefined(CompletedOn))
+            {
+                builder.Append("  completionTimeUtc:");
+                var formattedDateTimeString = TypeFormatters.ToString(CompletedOn.Value, "o");
+                builder.AppendLine($" '{formattedDateTimeString}'");
+            }
+
+            if (Optional.IsDefined(SourceResourceId))
+            {
+                builder.Append("  sourceResourceId:");
+                builder.AppendLine($" '{SourceResourceId.ToString()}'");
+            }
+
+            if (Optional.IsDefined(TargetResourceId))
+            {
+                builder.Append("  targetResourceId:");
+                builder.AppendLine($" '{TargetResourceId.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<VaultPropertiesMoveDetails>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<VaultPropertiesMoveDetails>)this).GetFormatFromOptions(options) : options.Format;
@@ -156,6 +217,8 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(VaultPropertiesMoveDetails)} does not support '{options.Format}' format.");
             }
@@ -172,6 +235,8 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeVaultPropertiesMoveDetails(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(VaultPropertiesMoveDetails)} does not support '{options.Format}' format.");
             }

@@ -8,7 +8,9 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -266,6 +268,136 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             return new InMageRcmDiscoveredProtectedVmDetails(vCenterId.Value, vCenterFqdn.Value, Optional.ToList(datastores), Optional.ToList(ipAddresses), vmwareToolsStatus.Value, powerStatus.Value, vmFqdn.Value, osName.Value, Optional.ToNullable(createdTimestamp), Optional.ToNullable(updatedTimestamp), Optional.ToNullable(isDeleted), Optional.ToNullable(lastDiscoveryTimeInUtc), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(VCenterId))
+            {
+                builder.Append("  vCenterId:");
+                builder.AppendLine($" '{VCenterId}'");
+            }
+
+            if (Optional.IsDefined(VCenterFqdn))
+            {
+                builder.Append("  vCenterFqdn:");
+                builder.AppendLine($" '{VCenterFqdn}'");
+            }
+
+            if (Optional.IsCollectionDefined(Datastores))
+            {
+                if (Datastores.Any())
+                {
+                    builder.Append("  datastores:");
+                    builder.AppendLine(" [");
+                    foreach (var item in Datastores)
+                    {
+                        if (item == null)
+                        {
+                            builder.Append("null");
+                            continue;
+                        }
+                        builder.AppendLine($"    '{item}'");
+                    }
+                    builder.AppendLine("  ]");
+                }
+            }
+
+            if (Optional.IsCollectionDefined(IPAddresses))
+            {
+                if (IPAddresses.Any())
+                {
+                    builder.Append("  ipAddresses:");
+                    builder.AppendLine(" [");
+                    foreach (var item in IPAddresses)
+                    {
+                        if (item == null)
+                        {
+                            builder.Append("null");
+                            continue;
+                        }
+                        builder.AppendLine($"    '{item.ToString()}'");
+                    }
+                    builder.AppendLine("  ]");
+                }
+            }
+
+            if (Optional.IsDefined(VMwareToolsStatus))
+            {
+                builder.Append("  vmwareToolsStatus:");
+                builder.AppendLine($" '{VMwareToolsStatus}'");
+            }
+
+            if (Optional.IsDefined(PowerStatus))
+            {
+                builder.Append("  powerStatus:");
+                builder.AppendLine($" '{PowerStatus}'");
+            }
+
+            if (Optional.IsDefined(VmFqdn))
+            {
+                builder.Append("  vmFqdn:");
+                builder.AppendLine($" '{VmFqdn}'");
+            }
+
+            if (Optional.IsDefined(OSName))
+            {
+                builder.Append("  osName:");
+                builder.AppendLine($" '{OSName}'");
+            }
+
+            if (Optional.IsDefined(CreatedOn))
+            {
+                builder.Append("  createdTimestamp:");
+                var formattedDateTimeString = TypeFormatters.ToString(CreatedOn.Value, "o");
+                builder.AppendLine($" '{formattedDateTimeString}'");
+            }
+
+            if (Optional.IsDefined(UpdatedOn))
+            {
+                builder.Append("  updatedTimestamp:");
+                var formattedDateTimeString = TypeFormatters.ToString(UpdatedOn.Value, "o");
+                builder.AppendLine($" '{formattedDateTimeString}'");
+            }
+
+            if (Optional.IsDefined(IsDeleted))
+            {
+                builder.Append("  isDeleted:");
+                var boolValue = IsDeleted.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(LastDiscoveryTimeInUtc))
+            {
+                builder.Append("  lastDiscoveryTimeInUtc:");
+                var formattedDateTimeString = TypeFormatters.ToString(LastDiscoveryTimeInUtc.Value, "o");
+                builder.AppendLine($" '{formattedDateTimeString}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<InMageRcmDiscoveredProtectedVmDetails>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<InMageRcmDiscoveredProtectedVmDetails>)this).GetFormatFromOptions(options) : options.Format;
@@ -274,6 +406,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(InMageRcmDiscoveredProtectedVmDetails)} does not support '{options.Format}' format.");
             }
@@ -290,6 +424,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeInMageRcmDiscoveredProtectedVmDetails(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(InMageRcmDiscoveredProtectedVmDetails)} does not support '{options.Format}' format.");
             }

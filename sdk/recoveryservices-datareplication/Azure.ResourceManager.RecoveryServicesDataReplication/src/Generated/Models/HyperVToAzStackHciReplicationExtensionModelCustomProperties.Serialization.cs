@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -275,6 +276,136 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             return new HyperVToAzStackHciReplicationExtensionModelCustomProperties(instanceType, serializedAdditionalRawData, hyperVFabricArmId, hyperVSiteId.Value, azStackHciFabricArmId, azStackHciSiteId.Value, storageAccountId.Value, storageAccountSasSecretName.Value, asrServiceUri.Value, rcmServiceUri.Value, gatewayServiceUri.Value, sourceGatewayServiceId.Value, targetGatewayServiceId.Value, sourceStorageContainerName.Value, targetStorageContainerName.Value, resourceLocation.Value, subscriptionId.Value, resourceGroup.Value);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(HyperVFabricArmId))
+            {
+                builder.Append("  hyperVFabricArmId:");
+                builder.AppendLine($" '{HyperVFabricArmId.ToString()}'");
+            }
+
+            if (Optional.IsDefined(HyperVSiteId))
+            {
+                builder.Append("  hyperVSiteId:");
+                builder.AppendLine($" '{HyperVSiteId.ToString()}'");
+            }
+
+            if (Optional.IsDefined(AzStackHciFabricArmId))
+            {
+                builder.Append("  azStackHciFabricArmId:");
+                builder.AppendLine($" '{AzStackHciFabricArmId.ToString()}'");
+            }
+
+            if (Optional.IsDefined(AzStackHciSiteId))
+            {
+                builder.Append("  azStackHciSiteId:");
+                builder.AppendLine($" '{AzStackHciSiteId.ToString()}'");
+            }
+
+            if (Optional.IsDefined(StorageAccountId))
+            {
+                builder.Append("  storageAccountId:");
+                builder.AppendLine($" '{StorageAccountId}'");
+            }
+
+            if (Optional.IsDefined(StorageAccountSasSecretName))
+            {
+                builder.Append("  storageAccountSasSecretName:");
+                builder.AppendLine($" '{StorageAccountSasSecretName}'");
+            }
+
+            if (Optional.IsDefined(AsrServiceUri))
+            {
+                builder.Append("  asrServiceUri:");
+                builder.AppendLine($" '{AsrServiceUri.AbsoluteUri}'");
+            }
+
+            if (Optional.IsDefined(RcmServiceUri))
+            {
+                builder.Append("  rcmServiceUri:");
+                builder.AppendLine($" '{RcmServiceUri.AbsoluteUri}'");
+            }
+
+            if (Optional.IsDefined(GatewayServiceUri))
+            {
+                builder.Append("  gatewayServiceUri:");
+                builder.AppendLine($" '{GatewayServiceUri.AbsoluteUri}'");
+            }
+
+            if (Optional.IsDefined(SourceGatewayServiceId))
+            {
+                builder.Append("  sourceGatewayServiceId:");
+                builder.AppendLine($" '{SourceGatewayServiceId}'");
+            }
+
+            if (Optional.IsDefined(TargetGatewayServiceId))
+            {
+                builder.Append("  targetGatewayServiceId:");
+                builder.AppendLine($" '{TargetGatewayServiceId}'");
+            }
+
+            if (Optional.IsDefined(SourceStorageContainerName))
+            {
+                builder.Append("  sourceStorageContainerName:");
+                builder.AppendLine($" '{SourceStorageContainerName}'");
+            }
+
+            if (Optional.IsDefined(TargetStorageContainerName))
+            {
+                builder.Append("  targetStorageContainerName:");
+                builder.AppendLine($" '{TargetStorageContainerName}'");
+            }
+
+            if (Optional.IsDefined(ResourceLocation))
+            {
+                builder.Append("  resourceLocation:");
+                builder.AppendLine($" '{ResourceLocation}'");
+            }
+
+            if (Optional.IsDefined(SubscriptionId))
+            {
+                builder.Append("  subscriptionId:");
+                builder.AppendLine($" '{SubscriptionId}'");
+            }
+
+            if (Optional.IsDefined(ResourceGroup))
+            {
+                builder.Append("  resourceGroup:");
+                builder.AppendLine($" '{ResourceGroup}'");
+            }
+
+            if (Optional.IsDefined(InstanceType))
+            {
+                builder.Append("  instanceType:");
+                builder.AppendLine($" '{InstanceType}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<HyperVToAzStackHciReplicationExtensionModelCustomProperties>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<HyperVToAzStackHciReplicationExtensionModelCustomProperties>)this).GetFormatFromOptions(options) : options.Format;
@@ -283,6 +414,8 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(HyperVToAzStackHciReplicationExtensionModelCustomProperties)} does not support '{options.Format}' format.");
             }
@@ -299,6 +432,8 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeHyperVToAzStackHciReplicationExtensionModelCustomProperties(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(HyperVToAzStackHciReplicationExtensionModelCustomProperties)} does not support '{options.Format}' format.");
             }

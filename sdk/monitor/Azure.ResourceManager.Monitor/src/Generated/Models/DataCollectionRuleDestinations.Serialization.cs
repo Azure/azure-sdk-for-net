@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -267,6 +269,138 @@ namespace Azure.ResourceManager.Monitor.Models
             return new DataCollectionRuleDestinations(Optional.ToList(logAnalytics), Optional.ToList(monitoringAccounts), azureMonitorMetrics.Value, Optional.ToList(eventHubs), Optional.ToList(eventHubsDirect), Optional.ToList(storageBlobsDirect), Optional.ToList(storageTablesDirect), Optional.ToList(storageAccounts), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsCollectionDefined(LogAnalytics))
+            {
+                if (LogAnalytics.Any())
+                {
+                    builder.Append("  logAnalytics:");
+                    builder.AppendLine(" [");
+                    foreach (var item in LogAnalytics)
+                    {
+                        AppendChildObject(builder, item, options, 4, true);
+                    }
+                    builder.AppendLine("  ]");
+                }
+            }
+
+            if (Optional.IsCollectionDefined(MonitoringAccounts))
+            {
+                if (MonitoringAccounts.Any())
+                {
+                    builder.Append("  monitoringAccounts:");
+                    builder.AppendLine(" [");
+                    foreach (var item in MonitoringAccounts)
+                    {
+                        AppendChildObject(builder, item, options, 4, true);
+                    }
+                    builder.AppendLine("  ]");
+                }
+            }
+
+            if (Optional.IsDefined(AzureMonitorMetrics))
+            {
+                builder.Append("  azureMonitorMetrics:");
+                AppendChildObject(builder, AzureMonitorMetrics, options, 2, false);
+            }
+
+            if (Optional.IsCollectionDefined(EventHubs))
+            {
+                if (EventHubs.Any())
+                {
+                    builder.Append("  eventHubs:");
+                    builder.AppendLine(" [");
+                    foreach (var item in EventHubs)
+                    {
+                        AppendChildObject(builder, item, options, 4, true);
+                    }
+                    builder.AppendLine("  ]");
+                }
+            }
+
+            if (Optional.IsCollectionDefined(EventHubsDirect))
+            {
+                if (EventHubsDirect.Any())
+                {
+                    builder.Append("  eventHubsDirect:");
+                    builder.AppendLine(" [");
+                    foreach (var item in EventHubsDirect)
+                    {
+                        AppendChildObject(builder, item, options, 4, true);
+                    }
+                    builder.AppendLine("  ]");
+                }
+            }
+
+            if (Optional.IsCollectionDefined(StorageBlobsDirect))
+            {
+                if (StorageBlobsDirect.Any())
+                {
+                    builder.Append("  storageBlobsDirect:");
+                    builder.AppendLine(" [");
+                    foreach (var item in StorageBlobsDirect)
+                    {
+                        AppendChildObject(builder, item, options, 4, true);
+                    }
+                    builder.AppendLine("  ]");
+                }
+            }
+
+            if (Optional.IsCollectionDefined(StorageTablesDirect))
+            {
+                if (StorageTablesDirect.Any())
+                {
+                    builder.Append("  storageTablesDirect:");
+                    builder.AppendLine(" [");
+                    foreach (var item in StorageTablesDirect)
+                    {
+                        AppendChildObject(builder, item, options, 4, true);
+                    }
+                    builder.AppendLine("  ]");
+                }
+            }
+
+            if (Optional.IsCollectionDefined(StorageAccounts))
+            {
+                if (StorageAccounts.Any())
+                {
+                    builder.Append("  storageAccounts:");
+                    builder.AppendLine(" [");
+                    foreach (var item in StorageAccounts)
+                    {
+                        AppendChildObject(builder, item, options, 4, true);
+                    }
+                    builder.AppendLine("  ]");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<DataCollectionRuleDestinations>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<DataCollectionRuleDestinations>)this).GetFormatFromOptions(options) : options.Format;
@@ -275,6 +409,8 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(DataCollectionRuleDestinations)} does not support '{options.Format}' format.");
             }
@@ -291,6 +427,8 @@ namespace Azure.ResourceManager.Monitor.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeDataCollectionRuleDestinations(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(DataCollectionRuleDestinations)} does not support '{options.Format}' format.");
             }

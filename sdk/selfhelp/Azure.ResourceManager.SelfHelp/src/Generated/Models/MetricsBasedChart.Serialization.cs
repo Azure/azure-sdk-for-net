@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -155,6 +156,71 @@ namespace Azure.ResourceManager.SelfHelp.Models
             return new MetricsBasedChart(name.Value, Optional.ToNullable(aggregationType), Optional.ToNullable(timeSpanDuration), title.Value, filterGroup.Value, replacementKey.Value, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                builder.AppendLine($" '{Name}'");
+            }
+
+            if (Optional.IsDefined(AggregationType))
+            {
+                builder.Append("  aggregationType:");
+                builder.AppendLine($" '{AggregationType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(TimeSpanDuration))
+            {
+                builder.Append("  timeSpanDuration:");
+                var formattedTimeSpan = TypeFormatters.ToString(TimeSpanDuration.Value, "P");
+                builder.AppendLine($" '{formattedTimeSpan}'");
+            }
+
+            if (Optional.IsDefined(Title))
+            {
+                builder.Append("  title:");
+                builder.AppendLine($" '{Title}'");
+            }
+
+            if (Optional.IsDefined(FilterGroup))
+            {
+                builder.Append("  filterGroup:");
+                AppendChildObject(builder, FilterGroup, options, 2, false);
+            }
+
+            if (Optional.IsDefined(ReplacementKey))
+            {
+                builder.Append("  replacementKey:");
+                builder.AppendLine($" '{ReplacementKey}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<MetricsBasedChart>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<MetricsBasedChart>)this).GetFormatFromOptions(options) : options.Format;
@@ -163,6 +229,8 @@ namespace Azure.ResourceManager.SelfHelp.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(MetricsBasedChart)} does not support '{options.Format}' format.");
             }
@@ -179,6 +247,8 @@ namespace Azure.ResourceManager.SelfHelp.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeMetricsBasedChart(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(MetricsBasedChart)} does not support '{options.Format}' format.");
             }

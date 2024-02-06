@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -170,6 +171,78 @@ namespace Azure.ResourceManager.HybridCompute.Models
             return new AgentUpgrade(desiredVersion.Value, Optional.ToNullable(correlationId), Optional.ToNullable(enableAutomaticUpgrade), lastAttemptDesiredVersion.Value, Optional.ToNullable(lastAttemptTimestamp), Optional.ToNullable(lastAttemptStatus), lastAttemptMessage.Value, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(DesiredVersion))
+            {
+                builder.Append("  desiredVersion:");
+                builder.AppendLine($" '{DesiredVersion}'");
+            }
+
+            if (Optional.IsDefined(CorrelationId))
+            {
+                builder.Append("  correlationId:");
+                builder.AppendLine($" '{CorrelationId.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(IsAutomaticUpgradeEnabled))
+            {
+                builder.Append("  enableAutomaticUpgrade:");
+                var boolValue = IsAutomaticUpgradeEnabled.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(LastAttemptDesiredVersion))
+            {
+                builder.Append("  lastAttemptDesiredVersion:");
+                builder.AppendLine($" '{LastAttemptDesiredVersion}'");
+            }
+
+            if (Optional.IsDefined(LastAttemptedOn))
+            {
+                builder.Append("  lastAttemptTimestamp:");
+                var formattedDateTimeString = TypeFormatters.ToString(LastAttemptedOn.Value, "o");
+                builder.AppendLine($" '{formattedDateTimeString}'");
+            }
+
+            if (Optional.IsDefined(LastAttemptStatus))
+            {
+                builder.Append("  lastAttemptStatus:");
+                builder.AppendLine($" '{LastAttemptStatus.ToString()}'");
+            }
+
+            if (Optional.IsDefined(LastAttemptMessage))
+            {
+                builder.Append("  lastAttemptMessage:");
+                builder.AppendLine($" '{LastAttemptMessage}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<AgentUpgrade>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<AgentUpgrade>)this).GetFormatFromOptions(options) : options.Format;
@@ -178,6 +251,8 @@ namespace Azure.ResourceManager.HybridCompute.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(AgentUpgrade)} does not support '{options.Format}' format.");
             }
@@ -194,6 +269,8 @@ namespace Azure.ResourceManager.HybridCompute.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeAgentUpgrade(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(AgentUpgrade)} does not support '{options.Format}' format.");
             }

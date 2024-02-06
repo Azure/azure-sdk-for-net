@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -144,6 +145,64 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             return new NetworkTapRuleAction(Optional.ToNullable(type), truncate.Value, Optional.ToNullable(isTimestampEnabled), destinationId.Value, matchConfigurationName.Value, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(TapRuleActionType))
+            {
+                builder.Append("  type:");
+                builder.AppendLine($" '{TapRuleActionType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Truncate))
+            {
+                builder.Append("  truncate:");
+                builder.AppendLine($" '{Truncate}'");
+            }
+
+            if (Optional.IsDefined(IsTimestampEnabled))
+            {
+                builder.Append("  isTimestampEnabled:");
+                builder.AppendLine($" '{IsTimestampEnabled.ToString()}'");
+            }
+
+            if (Optional.IsDefined(DestinationId))
+            {
+                builder.Append("  destinationId:");
+                builder.AppendLine($" '{DestinationId.ToString()}'");
+            }
+
+            if (Optional.IsDefined(MatchConfigurationName))
+            {
+                builder.Append("  matchConfigurationName:");
+                builder.AppendLine($" '{MatchConfigurationName}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<NetworkTapRuleAction>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<NetworkTapRuleAction>)this).GetFormatFromOptions(options) : options.Format;
@@ -152,6 +211,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(NetworkTapRuleAction)} does not support '{options.Format}' format.");
             }
@@ -168,6 +229,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeNetworkTapRuleAction(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(NetworkTapRuleAction)} does not support '{options.Format}' format.");
             }

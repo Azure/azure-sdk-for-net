@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -240,6 +241,118 @@ namespace Azure.ResourceManager.Monitor.Models
             return new RuleManagementEventDataSource(odataType, resourceUri.Value, legacyResourceId.Value, resourceLocation.Value, metricNamespace.Value, serializedAdditionalRawData, eventName.Value, eventSource.Value, level.Value, operationName.Value, resourceGroupName.Value, resourceProviderName.Value, status.Value, subStatus.Value, claims.Value);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(EventName))
+            {
+                builder.Append("  eventName:");
+                builder.AppendLine($" '{EventName}'");
+            }
+
+            if (Optional.IsDefined(EventSource))
+            {
+                builder.Append("  eventSource:");
+                builder.AppendLine($" '{EventSource}'");
+            }
+
+            if (Optional.IsDefined(Level))
+            {
+                builder.Append("  level:");
+                builder.AppendLine($" '{Level}'");
+            }
+
+            if (Optional.IsDefined(OperationName))
+            {
+                builder.Append("  operationName:");
+                builder.AppendLine($" '{OperationName}'");
+            }
+
+            if (Optional.IsDefined(ResourceGroupName))
+            {
+                builder.Append("  resourceGroupName:");
+                builder.AppendLine($" '{ResourceGroupName}'");
+            }
+
+            if (Optional.IsDefined(ResourceProviderName))
+            {
+                builder.Append("  resourceProviderName:");
+                builder.AppendLine($" '{ResourceProviderName}'");
+            }
+
+            if (Optional.IsDefined(Status))
+            {
+                builder.Append("  status:");
+                builder.AppendLine($" '{Status}'");
+            }
+
+            if (Optional.IsDefined(SubStatus))
+            {
+                builder.Append("  subStatus:");
+                builder.AppendLine($" '{SubStatus}'");
+            }
+
+            if (Optional.IsDefined(Claims))
+            {
+                builder.Append("  claims:");
+                AppendChildObject(builder, Claims, options, 2, false);
+            }
+
+            if (Optional.IsDefined(OdataType))
+            {
+                builder.Append("  odata.type:");
+                builder.AppendLine($" '{OdataType}'");
+            }
+
+            if (Optional.IsDefined(ResourceId))
+            {
+                builder.Append("  resourceUri:");
+                builder.AppendLine($" '{ResourceId.ToString()}'");
+            }
+
+            if (Optional.IsDefined(LegacyResourceId))
+            {
+                builder.Append("  legacyResourceId:");
+                builder.AppendLine($" '{LegacyResourceId.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ResourceLocation))
+            {
+                builder.Append("  resourceLocation:");
+                builder.AppendLine($" '{ResourceLocation}'");
+            }
+
+            if (Optional.IsDefined(MetricNamespace))
+            {
+                builder.Append("  metricNamespace:");
+                builder.AppendLine($" '{MetricNamespace}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<RuleManagementEventDataSource>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<RuleManagementEventDataSource>)this).GetFormatFromOptions(options) : options.Format;
@@ -248,6 +361,8 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(RuleManagementEventDataSource)} does not support '{options.Format}' format.");
             }
@@ -264,6 +379,8 @@ namespace Azure.ResourceManager.Monitor.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeRuleManagementEventDataSource(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(RuleManagementEventDataSource)} does not support '{options.Format}' format.");
             }

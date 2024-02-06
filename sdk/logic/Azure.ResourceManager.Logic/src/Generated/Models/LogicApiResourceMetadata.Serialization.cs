@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -222,6 +224,108 @@ namespace Azure.ResourceManager.Logic.Models
             return new LogicApiResourceMetadata(source.Value, brandColor.Value, hideKey.Value, Optional.ToDictionary(tags), Optional.ToNullable(apiType), wsdlService.Value, Optional.ToNullable(wsdlImportMethod), connectionType.Value, Optional.ToNullable(provisioningState), deploymentParameters.Value, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(Source))
+            {
+                builder.Append("  source:");
+                builder.AppendLine($" '{Source}'");
+            }
+
+            if (Optional.IsDefined(BrandColor))
+            {
+                builder.Append("  brandColor:");
+                builder.AppendLine($" '{BrandColor}'");
+            }
+
+            if (Optional.IsDefined(HideKey))
+            {
+                builder.Append("  hideKey:");
+                builder.AppendLine($" '{HideKey}'");
+            }
+
+            if (Optional.IsCollectionDefined(Tags))
+            {
+                if (Tags.Any())
+                {
+                    builder.Append("  tags:");
+                    builder.AppendLine(" {");
+                    foreach (var item in Tags)
+                    {
+                        builder.Append($"    {item.Key}: ");
+                        if (item.Value == null)
+                        {
+                            builder.Append("null");
+                            continue;
+                        }
+                        builder.AppendLine($" '{item.Value}'");
+                    }
+                    builder.AppendLine("  }");
+                }
+            }
+
+            if (Optional.IsDefined(ApiType))
+            {
+                builder.Append("  ApiType:");
+                builder.AppendLine($" '{ApiType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(WsdlService))
+            {
+                builder.Append("  wsdlService:");
+                AppendChildObject(builder, WsdlService, options, 2, false);
+            }
+
+            if (Optional.IsDefined(WsdlImportMethod))
+            {
+                builder.Append("  wsdlImportMethod:");
+                builder.AppendLine($" '{WsdlImportMethod.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ConnectionType))
+            {
+                builder.Append("  connectionType:");
+                builder.AppendLine($" '{ConnectionType}'");
+            }
+
+            if (Optional.IsDefined(ProvisioningState))
+            {
+                builder.Append("  provisioningState:");
+                builder.AppendLine($" '{ProvisioningState.ToString()}'");
+            }
+
+            if (Optional.IsDefined(DeploymentParameters))
+            {
+                builder.Append("  deploymentParameters:");
+                AppendChildObject(builder, DeploymentParameters, options, 2, false);
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<LogicApiResourceMetadata>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<LogicApiResourceMetadata>)this).GetFormatFromOptions(options) : options.Format;
@@ -230,6 +334,8 @@ namespace Azure.ResourceManager.Logic.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(LogicApiResourceMetadata)} does not support '{options.Format}' format.");
             }
@@ -246,6 +352,8 @@ namespace Azure.ResourceManager.Logic.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeLogicApiResourceMetadata(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(LogicApiResourceMetadata)} does not support '{options.Format}' format.");
             }

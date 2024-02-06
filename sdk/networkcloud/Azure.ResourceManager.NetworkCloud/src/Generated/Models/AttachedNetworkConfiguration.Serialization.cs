@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -152,6 +154,76 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             return new AttachedNetworkConfiguration(Optional.ToList(l2Networks), Optional.ToList(l3Networks), Optional.ToList(trunkedNetworks), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsCollectionDefined(L2Networks))
+            {
+                if (L2Networks.Any())
+                {
+                    builder.Append("  l2Networks:");
+                    builder.AppendLine(" [");
+                    foreach (var item in L2Networks)
+                    {
+                        AppendChildObject(builder, item, options, 4, true);
+                    }
+                    builder.AppendLine("  ]");
+                }
+            }
+
+            if (Optional.IsCollectionDefined(L3Networks))
+            {
+                if (L3Networks.Any())
+                {
+                    builder.Append("  l3Networks:");
+                    builder.AppendLine(" [");
+                    foreach (var item in L3Networks)
+                    {
+                        AppendChildObject(builder, item, options, 4, true);
+                    }
+                    builder.AppendLine("  ]");
+                }
+            }
+
+            if (Optional.IsCollectionDefined(TrunkedNetworks))
+            {
+                if (TrunkedNetworks.Any())
+                {
+                    builder.Append("  trunkedNetworks:");
+                    builder.AppendLine(" [");
+                    foreach (var item in TrunkedNetworks)
+                    {
+                        AppendChildObject(builder, item, options, 4, true);
+                    }
+                    builder.AppendLine("  ]");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<AttachedNetworkConfiguration>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<AttachedNetworkConfiguration>)this).GetFormatFromOptions(options) : options.Format;
@@ -160,6 +232,8 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(AttachedNetworkConfiguration)} does not support '{options.Format}' format.");
             }
@@ -176,6 +250,8 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeAttachedNetworkConfiguration(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(AttachedNetworkConfiguration)} does not support '{options.Format}' format.");
             }

@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -220,6 +222,107 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             return new StreamAnalyticsSampleInputResult(code.Value, message.Value, target.Value, Optional.ToList(details), serializedAdditionalRawData, Optional.ToNullable(status), Optional.ToList(diagnostics), eventsDownloadUrl.Value, Optional.ToNullable(lastArrivalTime));
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(Status))
+            {
+                builder.Append("  status:");
+                builder.AppendLine($" '{Status.ToString()}'");
+            }
+
+            if (Optional.IsCollectionDefined(Diagnostics))
+            {
+                if (Diagnostics.Any())
+                {
+                    builder.Append("  diagnostics:");
+                    builder.AppendLine(" [");
+                    foreach (var item in Diagnostics)
+                    {
+                        if (item == null)
+                        {
+                            builder.Append("null");
+                            continue;
+                        }
+                        builder.AppendLine($"    '{item}'");
+                    }
+                    builder.AppendLine("  ]");
+                }
+            }
+
+            if (Optional.IsDefined(EventsDownloadUri))
+            {
+                builder.Append("  eventsDownloadUrl:");
+                builder.AppendLine($" '{EventsDownloadUri.AbsoluteUri}'");
+            }
+
+            if (Optional.IsDefined(LastArrivedOn))
+            {
+                builder.Append("  lastArrivalTime:");
+                var formattedDateTimeString = TypeFormatters.ToString(LastArrivedOn.Value, "o");
+                builder.AppendLine($" '{formattedDateTimeString}'");
+            }
+
+            builder.Append("  error:");
+            builder.AppendLine(" {");
+            if (Optional.IsDefined(Code))
+            {
+                builder.Append("    code:");
+                builder.AppendLine($" '{Code}'");
+            }
+
+            if (Optional.IsDefined(Message))
+            {
+                builder.Append("    message:");
+                builder.AppendLine($" '{Message}'");
+            }
+
+            if (Optional.IsDefined(Target))
+            {
+                builder.Append("    target:");
+                builder.AppendLine($" '{Target}'");
+            }
+
+            if (Optional.IsCollectionDefined(Details))
+            {
+                if (Details.Any())
+                {
+                    builder.Append("    details:");
+                    builder.AppendLine(" [");
+                    foreach (var item in Details)
+                    {
+                        AppendChildObject(builder, item, options, 6, true);
+                    }
+                    builder.AppendLine("    ]");
+                }
+            }
+
+            builder.AppendLine("  }");
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<StreamAnalyticsSampleInputResult>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<StreamAnalyticsSampleInputResult>)this).GetFormatFromOptions(options) : options.Format;
@@ -228,6 +331,8 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(StreamAnalyticsSampleInputResult)} does not support '{options.Format}' format.");
             }
@@ -244,6 +349,8 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeStreamAnalyticsSampleInputResult(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(StreamAnalyticsSampleInputResult)} does not support '{options.Format}' format.");
             }

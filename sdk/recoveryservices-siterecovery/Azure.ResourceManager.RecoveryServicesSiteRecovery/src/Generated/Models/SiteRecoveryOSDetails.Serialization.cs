@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -143,6 +144,70 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             return new SiteRecoveryOSDetails(osType.Value, productType.Value, osEdition.Value, osVersion.Value, osMajorVersion.Value, osMinorVersion.Value, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(OSType))
+            {
+                builder.Append("  osType:");
+                builder.AppendLine($" '{OSType}'");
+            }
+
+            if (Optional.IsDefined(ProductType))
+            {
+                builder.Append("  productType:");
+                builder.AppendLine($" '{ProductType}'");
+            }
+
+            if (Optional.IsDefined(OSEdition))
+            {
+                builder.Append("  osEdition:");
+                builder.AppendLine($" '{OSEdition}'");
+            }
+
+            if (Optional.IsDefined(OSVersion))
+            {
+                builder.Append("  oSVersion:");
+                builder.AppendLine($" '{OSVersion}'");
+            }
+
+            if (Optional.IsDefined(OSMajorVersion))
+            {
+                builder.Append("  oSMajorVersion:");
+                builder.AppendLine($" '{OSMajorVersion}'");
+            }
+
+            if (Optional.IsDefined(OSMinorVersion))
+            {
+                builder.Append("  oSMinorVersion:");
+                builder.AppendLine($" '{OSMinorVersion}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<SiteRecoveryOSDetails>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<SiteRecoveryOSDetails>)this).GetFormatFromOptions(options) : options.Format;
@@ -151,6 +216,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(SiteRecoveryOSDetails)} does not support '{options.Format}' format.");
             }
@@ -167,6 +234,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeSiteRecoveryOSDetails(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(SiteRecoveryOSDetails)} does not support '{options.Format}' format.");
             }

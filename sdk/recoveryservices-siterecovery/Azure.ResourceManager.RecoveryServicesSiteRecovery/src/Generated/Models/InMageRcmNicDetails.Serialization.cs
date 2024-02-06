@@ -9,6 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Net;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -249,6 +250,112 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             return new InMageRcmNicDetails(nicId.Value, isPrimaryNic.Value, isSelectedForFailover.Value, sourceIPAddress.Value, Optional.ToNullable(sourceIPAddressType), sourceNetworkId.Value, sourceSubnetName.Value, targetIPAddress.Value, Optional.ToNullable(targetIPAddressType), targetSubnetName.Value, testSubnetName.Value, testIPAddress.Value, Optional.ToNullable(testIPAddressType), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(NicId))
+            {
+                builder.Append("  nicId:");
+                builder.AppendLine($" '{NicId}'");
+            }
+
+            if (Optional.IsDefined(IsPrimaryNic))
+            {
+                builder.Append("  isPrimaryNic:");
+                builder.AppendLine($" '{IsPrimaryNic}'");
+            }
+
+            if (Optional.IsDefined(IsSelectedForFailover))
+            {
+                builder.Append("  isSelectedForFailover:");
+                builder.AppendLine($" '{IsSelectedForFailover}'");
+            }
+
+            if (Optional.IsDefined(SourceIPAddress))
+            {
+                builder.Append("  sourceIPAddress:");
+                builder.AppendLine($" '{SourceIPAddress.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SourceIPAddressType))
+            {
+                builder.Append("  sourceIPAddressType:");
+                builder.AppendLine($" '{SourceIPAddressType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SourceNetworkId))
+            {
+                builder.Append("  sourceNetworkId:");
+                builder.AppendLine($" '{SourceNetworkId.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SourceSubnetName))
+            {
+                builder.Append("  sourceSubnetName:");
+                builder.AppendLine($" '{SourceSubnetName}'");
+            }
+
+            if (Optional.IsDefined(TargetIPAddress))
+            {
+                builder.Append("  targetIPAddress:");
+                builder.AppendLine($" '{TargetIPAddress.ToString()}'");
+            }
+
+            if (Optional.IsDefined(TargetIPAddressType))
+            {
+                builder.Append("  targetIPAddressType:");
+                builder.AppendLine($" '{TargetIPAddressType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(TargetSubnetName))
+            {
+                builder.Append("  targetSubnetName:");
+                builder.AppendLine($" '{TargetSubnetName}'");
+            }
+
+            if (Optional.IsDefined(TestSubnetName))
+            {
+                builder.Append("  testSubnetName:");
+                builder.AppendLine($" '{TestSubnetName}'");
+            }
+
+            if (Optional.IsDefined(TestIPAddress))
+            {
+                builder.Append("  testIPAddress:");
+                builder.AppendLine($" '{TestIPAddress.ToString()}'");
+            }
+
+            if (Optional.IsDefined(TestIPAddressType))
+            {
+                builder.Append("  testIPAddressType:");
+                builder.AppendLine($" '{TestIPAddressType.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<InMageRcmNicDetails>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<InMageRcmNicDetails>)this).GetFormatFromOptions(options) : options.Format;
@@ -257,6 +364,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(InMageRcmNicDetails)} does not support '{options.Format}' format.");
             }
@@ -273,6 +382,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeInMageRcmNicDetails(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(InMageRcmNicDetails)} does not support '{options.Format}' format.");
             }

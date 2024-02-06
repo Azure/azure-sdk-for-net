@@ -9,6 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Net;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -231,6 +232,100 @@ namespace Azure.ResourceManager.Peering.Models
             return new PeeringBgpSession(sessionPrefixV4.Value, sessionPrefixV6.Value, microsoftSessionIPv4Address.Value, microsoftSessionIPv6Address.Value, peerSessionIPv4Address.Value, peerSessionIPv6Address.Value, Optional.ToNullable(sessionStateV4), Optional.ToNullable(sessionStateV6), Optional.ToNullable(maxPrefixesAdvertisedV4), Optional.ToNullable(maxPrefixesAdvertisedV6), md5AuthenticationKey.Value, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(SessionPrefixV4))
+            {
+                builder.Append("  sessionPrefixV4:");
+                builder.AppendLine($" '{SessionPrefixV4}'");
+            }
+
+            if (Optional.IsDefined(SessionPrefixV6))
+            {
+                builder.Append("  sessionPrefixV6:");
+                builder.AppendLine($" '{SessionPrefixV6}'");
+            }
+
+            if (Optional.IsDefined(MicrosoftSessionIPv4Address))
+            {
+                builder.Append("  microsoftSessionIPv4Address:");
+                builder.AppendLine($" '{MicrosoftSessionIPv4Address.ToString()}'");
+            }
+
+            if (Optional.IsDefined(MicrosoftSessionIPv6Address))
+            {
+                builder.Append("  microsoftSessionIPv6Address:");
+                builder.AppendLine($" '{MicrosoftSessionIPv6Address.ToString()}'");
+            }
+
+            if (Optional.IsDefined(PeerSessionIPv4Address))
+            {
+                builder.Append("  peerSessionIPv4Address:");
+                builder.AppendLine($" '{PeerSessionIPv4Address.ToString()}'");
+            }
+
+            if (Optional.IsDefined(PeerSessionIPv6Address))
+            {
+                builder.Append("  peerSessionIPv6Address:");
+                builder.AppendLine($" '{PeerSessionIPv6Address.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SessionStateV4))
+            {
+                builder.Append("  sessionStateV4:");
+                builder.AppendLine($" '{SessionStateV4.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SessionStateV6))
+            {
+                builder.Append("  sessionStateV6:");
+                builder.AppendLine($" '{SessionStateV6.ToString()}'");
+            }
+
+            if (Optional.IsDefined(MaxPrefixesAdvertisedV4))
+            {
+                builder.Append("  maxPrefixesAdvertisedV4:");
+                builder.AppendLine($" {MaxPrefixesAdvertisedV4.Value}");
+            }
+
+            if (Optional.IsDefined(MaxPrefixesAdvertisedV6))
+            {
+                builder.Append("  maxPrefixesAdvertisedV6:");
+                builder.AppendLine($" {MaxPrefixesAdvertisedV6.Value}");
+            }
+
+            if (Optional.IsDefined(Md5AuthenticationKey))
+            {
+                builder.Append("  md5AuthenticationKey:");
+                builder.AppendLine($" '{Md5AuthenticationKey}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<PeeringBgpSession>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<PeeringBgpSession>)this).GetFormatFromOptions(options) : options.Format;
@@ -239,6 +334,8 @@ namespace Azure.ResourceManager.Peering.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(PeeringBgpSession)} does not support '{options.Format}' format.");
             }
@@ -255,6 +352,8 @@ namespace Azure.ResourceManager.Peering.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializePeeringBgpSession(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(PeeringBgpSession)} does not support '{options.Format}' format.");
             }

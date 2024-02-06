@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -162,6 +163,93 @@ namespace Azure.ResourceManager.Logic.Models
             return new AS2MdnSettings(needMdn, signMdn, sendMdnAsynchronously, receiptDeliveryUrl.Value, dispositionNotificationTo.Value, signOutboundMdnIfOptional, mdnText.Value, sendInboundMdnToMessageBox, micHashingAlgorithm, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(NeedMdn))
+            {
+                builder.Append("  needMDN:");
+                var boolValue = NeedMdn == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(SignMdn))
+            {
+                builder.Append("  signMDN:");
+                var boolValue = SignMdn == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(SendMdnAsynchronously))
+            {
+                builder.Append("  sendMDNAsynchronously:");
+                var boolValue = SendMdnAsynchronously == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(ReceiptDeliveryUri))
+            {
+                builder.Append("  receiptDeliveryUrl:");
+                builder.AppendLine($" '{ReceiptDeliveryUri.AbsoluteUri}'");
+            }
+
+            if (Optional.IsDefined(DispositionNotificationTo))
+            {
+                builder.Append("  dispositionNotificationTo:");
+                builder.AppendLine($" '{DispositionNotificationTo}'");
+            }
+
+            if (Optional.IsDefined(SignOutboundMdnIfOptional))
+            {
+                builder.Append("  signOutboundMDNIfOptional:");
+                var boolValue = SignOutboundMdnIfOptional == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(MdnText))
+            {
+                builder.Append("  mdnText:");
+                builder.AppendLine($" '{MdnText}'");
+            }
+
+            if (Optional.IsDefined(SendInboundMdnToMessageBox))
+            {
+                builder.Append("  sendInboundMDNToMessageBox:");
+                var boolValue = SendInboundMdnToMessageBox == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(MicHashingAlgorithm))
+            {
+                builder.Append("  micHashingAlgorithm:");
+                builder.AppendLine($" '{MicHashingAlgorithm.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<AS2MdnSettings>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<AS2MdnSettings>)this).GetFormatFromOptions(options) : options.Format;
@@ -170,6 +258,8 @@ namespace Azure.ResourceManager.Logic.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(AS2MdnSettings)} does not support '{options.Format}' format.");
             }
@@ -186,6 +276,8 @@ namespace Azure.ResourceManager.Logic.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeAS2MdnSettings(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(AS2MdnSettings)} does not support '{options.Format}' format.");
             }

@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -279,6 +280,126 @@ namespace Azure.ResourceManager.CostManagement.Models
             return new SingleScopeBenefitRecommendationProperties(Optional.ToNullable(firstConsumptionDate), Optional.ToNullable(lastConsumptionDate), Optional.ToNullable(lookBackPeriod), Optional.ToNullable(totalHours), usage.Value, armSkuName.Value, Optional.ToNullable(term), Optional.ToNullable(commitmentGranularity), currencyCode.Value, Optional.ToNullable(costWithoutBenefit), recommendationDetails.Value, allRecommendationDetails.Value, scope, serializedAdditionalRawData, subscriptionId.Value, resourceGroup.Value);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(SubscriptionId))
+            {
+                builder.Append("  subscriptionId:");
+                builder.AppendLine($" '{SubscriptionId}'");
+            }
+
+            if (Optional.IsDefined(ResourceGroup))
+            {
+                builder.Append("  resourceGroup:");
+                builder.AppendLine($" '{ResourceGroup}'");
+            }
+
+            if (Optional.IsDefined(FirstConsumptionOn))
+            {
+                builder.Append("  firstConsumptionDate:");
+                var formattedDateTimeString = TypeFormatters.ToString(FirstConsumptionOn.Value, "o");
+                builder.AppendLine($" '{formattedDateTimeString}'");
+            }
+
+            if (Optional.IsDefined(LastConsumptionOn))
+            {
+                builder.Append("  lastConsumptionDate:");
+                var formattedDateTimeString = TypeFormatters.ToString(LastConsumptionOn.Value, "o");
+                builder.AppendLine($" '{formattedDateTimeString}'");
+            }
+
+            if (Optional.IsDefined(LookBackPeriod))
+            {
+                builder.Append("  lookBackPeriod:");
+                builder.AppendLine($" '{LookBackPeriod.ToString()}'");
+            }
+
+            if (Optional.IsDefined(TotalHours))
+            {
+                builder.Append("  totalHours:");
+                builder.AppendLine($" {TotalHours.Value}");
+            }
+
+            if (Optional.IsDefined(Usage))
+            {
+                builder.Append("  usage:");
+                AppendChildObject(builder, Usage, options, 2, false);
+            }
+
+            if (Optional.IsDefined(ArmSkuName))
+            {
+                builder.Append("  armSkuName:");
+                builder.AppendLine($" '{ArmSkuName}'");
+            }
+
+            if (Optional.IsDefined(Term))
+            {
+                builder.Append("  term:");
+                builder.AppendLine($" '{Term.ToString()}'");
+            }
+
+            if (Optional.IsDefined(CommitmentGranularity))
+            {
+                builder.Append("  commitmentGranularity:");
+                builder.AppendLine($" '{CommitmentGranularity.ToString()}'");
+            }
+
+            if (Optional.IsDefined(CurrencyCode))
+            {
+                builder.Append("  currencyCode:");
+                builder.AppendLine($" '{CurrencyCode}'");
+            }
+
+            if (Optional.IsDefined(CostWithoutBenefit))
+            {
+                builder.Append("  costWithoutBenefit:");
+                builder.AppendLine($" '{CostWithoutBenefit.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(RecommendationDetails))
+            {
+                builder.Append("  recommendationDetails:");
+                AppendChildObject(builder, RecommendationDetails, options, 2, false);
+            }
+
+            if (Optional.IsDefined(AllRecommendationDetails))
+            {
+                builder.Append("  allRecommendationDetails:");
+                AppendChildObject(builder, AllRecommendationDetails, options, 2, false);
+            }
+
+            if (Optional.IsDefined(Scope))
+            {
+                builder.Append("  scope:");
+                builder.AppendLine($" '{Scope.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<SingleScopeBenefitRecommendationProperties>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<SingleScopeBenefitRecommendationProperties>)this).GetFormatFromOptions(options) : options.Format;
@@ -287,6 +408,8 @@ namespace Azure.ResourceManager.CostManagement.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(SingleScopeBenefitRecommendationProperties)} does not support '{options.Format}' format.");
             }
@@ -303,6 +426,8 @@ namespace Azure.ResourceManager.CostManagement.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeSingleScopeBenefitRecommendationProperties(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(SingleScopeBenefitRecommendationProperties)} does not support '{options.Format}' format.");
             }

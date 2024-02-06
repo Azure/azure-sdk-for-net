@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -220,6 +221,98 @@ namespace Azure.ResourceManager.Support
             return new SupportTicketCommunicationData(id, name, type, systemData.Value, Optional.ToNullable(communicationType), Optional.ToNullable(communicationDirection), sender.Value, subject.Value, body.Value, Optional.ToNullable(createdDate), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(Id))
+            {
+                builder.Append("  id:");
+                builder.AppendLine($" '{Id.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                builder.AppendLine($" '{Name}'");
+            }
+
+            if (Optional.IsDefined(ResourceType))
+            {
+                builder.Append("  type:");
+                builder.AppendLine($" '{ResourceType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SystemData))
+            {
+                builder.Append("  systemData:");
+                builder.AppendLine($" '{SystemData.ToString()}'");
+            }
+
+            builder.Append("  properties:");
+            builder.AppendLine(" {");
+            if (Optional.IsDefined(CommunicationType))
+            {
+                builder.Append("    communicationType:");
+                builder.AppendLine($" '{CommunicationType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(CommunicationDirection))
+            {
+                builder.Append("    communicationDirection:");
+                builder.AppendLine($" '{CommunicationDirection.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Sender))
+            {
+                builder.Append("    sender:");
+                builder.AppendLine($" '{Sender}'");
+            }
+
+            if (Optional.IsDefined(Subject))
+            {
+                builder.Append("    subject:");
+                builder.AppendLine($" '{Subject}'");
+            }
+
+            if (Optional.IsDefined(Body))
+            {
+                builder.Append("    body:");
+                builder.AppendLine($" '{Body}'");
+            }
+
+            if (Optional.IsDefined(CreatedOn))
+            {
+                builder.Append("    createdDate:");
+                var formattedDateTimeString = TypeFormatters.ToString(CreatedOn.Value, "o");
+                builder.AppendLine($" '{formattedDateTimeString}'");
+            }
+
+            builder.AppendLine("  }");
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<SupportTicketCommunicationData>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<SupportTicketCommunicationData>)this).GetFormatFromOptions(options) : options.Format;
@@ -228,6 +321,8 @@ namespace Azure.ResourceManager.Support
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(SupportTicketCommunicationData)} does not support '{options.Format}' format.");
             }
@@ -244,6 +339,8 @@ namespace Azure.ResourceManager.Support
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeSupportTicketCommunicationData(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(SupportTicketCommunicationData)} does not support '{options.Format}' format.");
             }

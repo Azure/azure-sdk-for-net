@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -320,6 +322,158 @@ namespace Azure.ResourceManager.ContainerService.Models
             return new ContainerServiceNetworkProfile(Optional.ToNullable(networkPlugin), Optional.ToNullable(networkPluginMode), Optional.ToNullable(networkPolicy), Optional.ToNullable(networkMode), Optional.ToNullable(networkDataplane), podCidr.Value, serviceCidr.Value, dnsServiceIP.Value, Optional.ToNullable(outboundType), Optional.ToNullable(loadBalancerSku), loadBalancerProfile.Value, natGatewayProfile.Value, Optional.ToList(podCidrs), Optional.ToList(serviceCidrs), Optional.ToList(ipFamilies), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(NetworkPlugin))
+            {
+                builder.Append("  networkPlugin:");
+                builder.AppendLine($" '{NetworkPlugin.ToString()}'");
+            }
+
+            if (Optional.IsDefined(NetworkPluginMode))
+            {
+                builder.Append("  networkPluginMode:");
+                builder.AppendLine($" '{NetworkPluginMode.ToString()}'");
+            }
+
+            if (Optional.IsDefined(NetworkPolicy))
+            {
+                builder.Append("  networkPolicy:");
+                builder.AppendLine($" '{NetworkPolicy.ToString()}'");
+            }
+
+            if (Optional.IsDefined(NetworkMode))
+            {
+                builder.Append("  networkMode:");
+                builder.AppendLine($" '{NetworkMode.ToString()}'");
+            }
+
+            if (Optional.IsDefined(NetworkDataplane))
+            {
+                builder.Append("  networkDataplane:");
+                builder.AppendLine($" '{NetworkDataplane.ToString()}'");
+            }
+
+            if (Optional.IsDefined(PodCidr))
+            {
+                builder.Append("  podCidr:");
+                builder.AppendLine($" '{PodCidr}'");
+            }
+
+            if (Optional.IsDefined(ServiceCidr))
+            {
+                builder.Append("  serviceCidr:");
+                builder.AppendLine($" '{ServiceCidr}'");
+            }
+
+            if (Optional.IsDefined(DnsServiceIP))
+            {
+                builder.Append("  dnsServiceIP:");
+                builder.AppendLine($" '{DnsServiceIP}'");
+            }
+
+            if (Optional.IsDefined(OutboundType))
+            {
+                builder.Append("  outboundType:");
+                builder.AppendLine($" '{OutboundType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(LoadBalancerSku))
+            {
+                builder.Append("  loadBalancerSku:");
+                builder.AppendLine($" '{LoadBalancerSku.ToString()}'");
+            }
+
+            if (Optional.IsDefined(LoadBalancerProfile))
+            {
+                builder.Append("  loadBalancerProfile:");
+                AppendChildObject(builder, LoadBalancerProfile, options, 2, false);
+            }
+
+            if (Optional.IsDefined(NatGatewayProfile))
+            {
+                builder.Append("  natGatewayProfile:");
+                AppendChildObject(builder, NatGatewayProfile, options, 2, false);
+            }
+
+            if (Optional.IsCollectionDefined(PodCidrs))
+            {
+                if (PodCidrs.Any())
+                {
+                    builder.Append("  podCidrs:");
+                    builder.AppendLine(" [");
+                    foreach (var item in PodCidrs)
+                    {
+                        if (item == null)
+                        {
+                            builder.Append("null");
+                            continue;
+                        }
+                        builder.AppendLine($"    '{item}'");
+                    }
+                    builder.AppendLine("  ]");
+                }
+            }
+
+            if (Optional.IsCollectionDefined(ServiceCidrs))
+            {
+                if (ServiceCidrs.Any())
+                {
+                    builder.Append("  serviceCidrs:");
+                    builder.AppendLine(" [");
+                    foreach (var item in ServiceCidrs)
+                    {
+                        if (item == null)
+                        {
+                            builder.Append("null");
+                            continue;
+                        }
+                        builder.AppendLine($"    '{item}'");
+                    }
+                    builder.AppendLine("  ]");
+                }
+            }
+
+            if (Optional.IsCollectionDefined(IPFamilies))
+            {
+                if (IPFamilies.Any())
+                {
+                    builder.Append("  ipFamilies:");
+                    builder.AppendLine(" [");
+                    foreach (var item in IPFamilies)
+                    {
+                        builder.AppendLine($"    '{item.ToString()}'");
+                    }
+                    builder.AppendLine("  ]");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<ContainerServiceNetworkProfile>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ContainerServiceNetworkProfile>)this).GetFormatFromOptions(options) : options.Format;
@@ -328,6 +482,8 @@ namespace Azure.ResourceManager.ContainerService.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(ContainerServiceNetworkProfile)} does not support '{options.Format}' format.");
             }
@@ -344,6 +500,8 @@ namespace Azure.ResourceManager.ContainerService.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeContainerServiceNetworkProfile(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(ContainerServiceNetworkProfile)} does not support '{options.Format}' format.");
             }

@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.DevCenter.Models;
@@ -291,6 +293,141 @@ namespace Azure.ResourceManager.DevCenter
             return new DevCenterNetworkConnectionData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, subnetId.Value, domainName.Value, organizationUnit.Value, domainUsername.Value, domainPassword.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(healthCheckStatus), networkingResourceGroupName.Value, Optional.ToNullable(domainJoinType), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsCollectionDefined(Tags))
+            {
+                if (Tags.Any())
+                {
+                    builder.Append("  tags:");
+                    builder.AppendLine(" {");
+                    foreach (var item in Tags)
+                    {
+                        builder.Append($"    {item.Key}: ");
+                        if (item.Value == null)
+                        {
+                            builder.Append("null");
+                            continue;
+                        }
+                        builder.AppendLine($" '{item.Value}'");
+                    }
+                    builder.AppendLine("  }");
+                }
+            }
+
+            if (Optional.IsDefined(Location))
+            {
+                builder.Append("  location:");
+                builder.AppendLine($" '{Location.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Id))
+            {
+                builder.Append("  id:");
+                builder.AppendLine($" '{Id.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                builder.AppendLine($" '{Name}'");
+            }
+
+            if (Optional.IsDefined(ResourceType))
+            {
+                builder.Append("  type:");
+                builder.AppendLine($" '{ResourceType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SystemData))
+            {
+                builder.Append("  systemData:");
+                builder.AppendLine($" '{SystemData.ToString()}'");
+            }
+
+            builder.Append("  properties:");
+            builder.AppendLine(" {");
+            if (Optional.IsDefined(SubnetId))
+            {
+                builder.Append("    subnetId:");
+                builder.AppendLine($" '{SubnetId.ToString()}'");
+            }
+
+            if (Optional.IsDefined(DomainName))
+            {
+                builder.Append("    domainName:");
+                builder.AppendLine($" '{DomainName}'");
+            }
+
+            if (Optional.IsDefined(OrganizationUnit))
+            {
+                builder.Append("    organizationUnit:");
+                builder.AppendLine($" '{OrganizationUnit}'");
+            }
+
+            if (Optional.IsDefined(DomainUsername))
+            {
+                builder.Append("    domainUsername:");
+                builder.AppendLine($" '{DomainUsername}'");
+            }
+
+            if (Optional.IsDefined(DomainPassword))
+            {
+                builder.Append("    domainPassword:");
+                builder.AppendLine($" '{DomainPassword}'");
+            }
+
+            if (Optional.IsDefined(ProvisioningState))
+            {
+                builder.Append("    provisioningState:");
+                builder.AppendLine($" '{ProvisioningState.ToString()}'");
+            }
+
+            if (Optional.IsDefined(HealthCheckStatus))
+            {
+                builder.Append("    healthCheckStatus:");
+                builder.AppendLine($" '{HealthCheckStatus.ToString()}'");
+            }
+
+            if (Optional.IsDefined(NetworkingResourceGroupName))
+            {
+                builder.Append("    networkingResourceGroupName:");
+                builder.AppendLine($" '{NetworkingResourceGroupName}'");
+            }
+
+            if (Optional.IsDefined(DomainJoinType))
+            {
+                builder.Append("    domainJoinType:");
+                builder.AppendLine($" '{DomainJoinType.ToString()}'");
+            }
+
+            builder.AppendLine("  }");
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<DevCenterNetworkConnectionData>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<DevCenterNetworkConnectionData>)this).GetFormatFromOptions(options) : options.Format;
@@ -299,6 +436,8 @@ namespace Azure.ResourceManager.DevCenter
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(DevCenterNetworkConnectionData)} does not support '{options.Format}' format.");
             }
@@ -315,6 +454,8 @@ namespace Azure.ResourceManager.DevCenter
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeDevCenterNetworkConnectionData(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(DevCenterNetworkConnectionData)} does not support '{options.Format}' format.");
             }

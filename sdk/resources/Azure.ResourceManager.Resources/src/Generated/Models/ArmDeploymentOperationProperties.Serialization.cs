@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -223,6 +224,96 @@ namespace Azure.ResourceManager.Resources.Models
             return new ArmDeploymentOperationProperties(Optional.ToNullable(provisioningOperation), provisioningState.Value, Optional.ToNullable(timestamp), Optional.ToNullable(duration), serviceRequestId.Value, statusCode.Value, statusMessage.Value, targetResource.Value, request.Value, response.Value, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(ProvisioningOperation))
+            {
+                builder.Append("  provisioningOperation:");
+                builder.AppendLine($" '{ProvisioningOperation.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ProvisioningState))
+            {
+                builder.Append("  provisioningState:");
+                builder.AppendLine($" '{ProvisioningState}'");
+            }
+
+            if (Optional.IsDefined(Timestamp))
+            {
+                builder.Append("  timestamp:");
+                var formattedDateTimeString = TypeFormatters.ToString(Timestamp.Value, "o");
+                builder.AppendLine($" '{formattedDateTimeString}'");
+            }
+
+            if (Optional.IsDefined(Duration))
+            {
+                builder.Append("  duration:");
+                var formattedTimeSpan = TypeFormatters.ToString(Duration.Value, "P");
+                builder.AppendLine($" '{formattedTimeSpan}'");
+            }
+
+            if (Optional.IsDefined(ServiceRequestId))
+            {
+                builder.Append("  serviceRequestId:");
+                builder.AppendLine($" '{ServiceRequestId}'");
+            }
+
+            if (Optional.IsDefined(StatusCode))
+            {
+                builder.Append("  statusCode:");
+                builder.AppendLine($" '{StatusCode}'");
+            }
+
+            if (Optional.IsDefined(StatusMessage))
+            {
+                builder.Append("  statusMessage:");
+                AppendChildObject(builder, StatusMessage, options, 2, false);
+            }
+
+            if (Optional.IsDefined(TargetResource))
+            {
+                builder.Append("  targetResource:");
+                AppendChildObject(builder, TargetResource, options, 2, false);
+            }
+
+            if (Optional.IsDefined(Request))
+            {
+                builder.Append("  request:");
+                AppendChildObject(builder, Request, options, 2, false);
+            }
+
+            if (Optional.IsDefined(Response))
+            {
+                builder.Append("  response:");
+                AppendChildObject(builder, Response, options, 2, false);
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<ArmDeploymentOperationProperties>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ArmDeploymentOperationProperties>)this).GetFormatFromOptions(options) : options.Format;
@@ -231,6 +322,8 @@ namespace Azure.ResourceManager.Resources.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(ArmDeploymentOperationProperties)} does not support '{options.Format}' format.");
             }
@@ -247,6 +340,8 @@ namespace Azure.ResourceManager.Resources.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeArmDeploymentOperationProperties(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(ArmDeploymentOperationProperties)} does not support '{options.Format}' format.");
             }

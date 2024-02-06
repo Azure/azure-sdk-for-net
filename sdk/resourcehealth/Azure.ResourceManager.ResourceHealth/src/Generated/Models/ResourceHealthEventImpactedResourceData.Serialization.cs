@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -263,6 +265,123 @@ namespace Azure.ResourceManager.ResourceHealth
             return new ResourceHealthEventImpactedResourceData(id, name, type, systemData.Value, Optional.ToNullable(targetResourceType), targetResourceId.Value, targetRegion.Value, resourceName.Value, resourceGroup.Value, status.Value, maintenanceStartTime.Value, maintenanceEndTime.Value, Optional.ToList(info), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(Id))
+            {
+                builder.Append("  id:");
+                builder.AppendLine($" '{Id.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                builder.AppendLine($" '{Name}'");
+            }
+
+            if (Optional.IsDefined(ResourceType))
+            {
+                builder.Append("  type:");
+                builder.AppendLine($" '{ResourceType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SystemData))
+            {
+                builder.Append("  systemData:");
+                builder.AppendLine($" '{SystemData.ToString()}'");
+            }
+
+            builder.Append("  properties:");
+            builder.AppendLine(" {");
+            if (Optional.IsDefined(TargetResourceType))
+            {
+                builder.Append("    targetResourceType:");
+                builder.AppendLine($" '{TargetResourceType.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(TargetResourceId))
+            {
+                builder.Append("    targetResourceId:");
+                builder.AppendLine($" '{TargetResourceId.ToString()}'");
+            }
+
+            if (Optional.IsDefined(TargetRegion))
+            {
+                builder.Append("    targetRegion:");
+                builder.AppendLine($" '{TargetRegion}'");
+            }
+
+            if (Optional.IsDefined(ResourceName))
+            {
+                builder.Append("    resourceName:");
+                builder.AppendLine($" '{ResourceName}'");
+            }
+
+            if (Optional.IsDefined(ResourceGroup))
+            {
+                builder.Append("    resourceGroup:");
+                builder.AppendLine($" '{ResourceGroup}'");
+            }
+
+            if (Optional.IsDefined(Status))
+            {
+                builder.Append("    status:");
+                builder.AppendLine($" '{Status}'");
+            }
+
+            if (Optional.IsDefined(MaintenanceStartTime))
+            {
+                builder.Append("    maintenanceStartTime:");
+                builder.AppendLine($" '{MaintenanceStartTime}'");
+            }
+
+            if (Optional.IsDefined(MaintenanceEndTime))
+            {
+                builder.Append("    maintenanceEndTime:");
+                builder.AppendLine($" '{MaintenanceEndTime}'");
+            }
+
+            if (Optional.IsCollectionDefined(Info))
+            {
+                if (Info.Any())
+                {
+                    builder.Append("    info:");
+                    builder.AppendLine(" [");
+                    foreach (var item in Info)
+                    {
+                        AppendChildObject(builder, item, options, 6, true);
+                    }
+                    builder.AppendLine("    ]");
+                }
+            }
+
+            builder.AppendLine("  }");
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<ResourceHealthEventImpactedResourceData>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ResourceHealthEventImpactedResourceData>)this).GetFormatFromOptions(options) : options.Format;
@@ -271,6 +390,8 @@ namespace Azure.ResourceManager.ResourceHealth
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(ResourceHealthEventImpactedResourceData)} does not support '{options.Format}' format.");
             }
@@ -287,6 +408,8 @@ namespace Azure.ResourceManager.ResourceHealth
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeResourceHealthEventImpactedResourceData(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(ResourceHealthEventImpactedResourceData)} does not support '{options.Format}' format.");
             }

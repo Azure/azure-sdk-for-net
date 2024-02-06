@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -155,6 +156,76 @@ namespace Azure.ResourceManager.Sql.Models
             return new JobTarget(Optional.ToNullable(membershipType), type, serverName.Value, databaseName.Value, elasticPoolName.Value, shardMapName.Value, refreshCredential.Value, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(MembershipType))
+            {
+                builder.Append("  membershipType:");
+                builder.AppendLine($" '{MembershipType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(TargetType))
+            {
+                builder.Append("  type:");
+                builder.AppendLine($" '{TargetType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ServerName))
+            {
+                builder.Append("  serverName:");
+                builder.AppendLine($" '{ServerName}'");
+            }
+
+            if (Optional.IsDefined(DatabaseName))
+            {
+                builder.Append("  databaseName:");
+                builder.AppendLine($" '{DatabaseName}'");
+            }
+
+            if (Optional.IsDefined(ElasticPoolName))
+            {
+                builder.Append("  elasticPoolName:");
+                builder.AppendLine($" '{ElasticPoolName}'");
+            }
+
+            if (Optional.IsDefined(ShardMapName))
+            {
+                builder.Append("  shardMapName:");
+                builder.AppendLine($" '{ShardMapName}'");
+            }
+
+            if (Optional.IsDefined(RefreshCredential))
+            {
+                builder.Append("  refreshCredential:");
+                builder.AppendLine($" '{RefreshCredential}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<JobTarget>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<JobTarget>)this).GetFormatFromOptions(options) : options.Format;
@@ -163,6 +234,8 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(JobTarget)} does not support '{options.Format}' format.");
             }
@@ -179,6 +252,8 @@ namespace Azure.ResourceManager.Sql.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeJobTarget(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(JobTarget)} does not support '{options.Format}' format.");
             }

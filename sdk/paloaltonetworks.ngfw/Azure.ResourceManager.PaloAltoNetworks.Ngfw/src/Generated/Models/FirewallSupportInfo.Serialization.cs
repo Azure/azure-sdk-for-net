@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -233,6 +234,106 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             return new FirewallSupportInfo(productSku.Value, productSerial.Value, Optional.ToNullable(accountRegistered), accountId.Value, Optional.ToNullable(userDomainSupported), Optional.ToNullable(userRegistered), Optional.ToNullable(freeTrial), Optional.ToNullable(freeTrialDaysLeft), Optional.ToNullable(freeTrialCreditLeft), helpURL.Value, supportURL.Value, registerURL.Value, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(ProductSku))
+            {
+                builder.Append("  productSku:");
+                builder.AppendLine($" '{ProductSku}'");
+            }
+
+            if (Optional.IsDefined(ProductSerial))
+            {
+                builder.Append("  productSerial:");
+                builder.AppendLine($" '{ProductSerial}'");
+            }
+
+            if (Optional.IsDefined(AccountRegistered))
+            {
+                builder.Append("  accountRegistered:");
+                builder.AppendLine($" '{AccountRegistered.ToString()}'");
+            }
+
+            if (Optional.IsDefined(AccountId))
+            {
+                builder.Append("  accountId:");
+                builder.AppendLine($" '{AccountId}'");
+            }
+
+            if (Optional.IsDefined(UserDomainSupported))
+            {
+                builder.Append("  userDomainSupported:");
+                builder.AppendLine($" '{UserDomainSupported.ToString()}'");
+            }
+
+            if (Optional.IsDefined(UserRegistered))
+            {
+                builder.Append("  userRegistered:");
+                builder.AppendLine($" '{UserRegistered.ToString()}'");
+            }
+
+            if (Optional.IsDefined(FreeTrial))
+            {
+                builder.Append("  freeTrial:");
+                builder.AppendLine($" '{FreeTrial.ToString()}'");
+            }
+
+            if (Optional.IsDefined(FreeTrialDaysLeft))
+            {
+                builder.Append("  freeTrialDaysLeft:");
+                builder.AppendLine($" {FreeTrialDaysLeft.Value}");
+            }
+
+            if (Optional.IsDefined(FreeTrialCreditLeft))
+            {
+                builder.Append("  freeTrialCreditLeft:");
+                builder.AppendLine($" {FreeTrialCreditLeft.Value}");
+            }
+
+            if (Optional.IsDefined(HelpURL))
+            {
+                builder.Append("  helpURL:");
+                builder.AppendLine($" '{HelpURL}'");
+            }
+
+            if (Optional.IsDefined(SupportURL))
+            {
+                builder.Append("  supportURL:");
+                builder.AppendLine($" '{SupportURL}'");
+            }
+
+            if (Optional.IsDefined(RegisterURL))
+            {
+                builder.Append("  registerURL:");
+                builder.AppendLine($" '{RegisterURL}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<FirewallSupportInfo>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<FirewallSupportInfo>)this).GetFormatFromOptions(options) : options.Format;
@@ -241,6 +342,8 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(FirewallSupportInfo)} does not support '{options.Format}' format.");
             }
@@ -257,6 +360,8 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeFirewallSupportInfo(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(FirewallSupportInfo)} does not support '{options.Format}' format.");
             }

@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -569,6 +571,271 @@ namespace Azure.ResourceManager.Synapse
             return new SynapseWorkspaceData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, identity, defaultDataLakeStorage.Value, sqlAdministratorLoginPassword.Value, managedResourceGroupName.Value, provisioningState.Value, sqlAdministratorLogin.Value, virtualNetworkProfile.Value, Optional.ToDictionary(connectivityEndpoints), managedVirtualNetwork.Value, Optional.ToList(privateEndpointConnections), encryption.Value, Optional.ToNullable(workspaceUID), Optional.ToDictionary(extraProperties), managedVirtualNetworkSettings.Value, workspaceRepositoryConfiguration.Value, purviewConfiguration.Value, adlaResourceId.Value, Optional.ToNullable(publicNetworkAccess), cspWorkspaceAdminProperties.Value, Optional.ToDictionary(settings), Optional.ToNullable(azureADOnlyAuthentication), Optional.ToNullable(trustedServiceBypassEnabled), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(Identity))
+            {
+                builder.Append("  identity:");
+                AppendChildObject(builder, Identity, options, 2, false);
+            }
+
+            if (Optional.IsCollectionDefined(Tags))
+            {
+                if (Tags.Any())
+                {
+                    builder.Append("  tags:");
+                    builder.AppendLine(" {");
+                    foreach (var item in Tags)
+                    {
+                        builder.Append($"    {item.Key}: ");
+                        if (item.Value == null)
+                        {
+                            builder.Append("null");
+                            continue;
+                        }
+                        builder.AppendLine($" '{item.Value}'");
+                    }
+                    builder.AppendLine("  }");
+                }
+            }
+
+            if (Optional.IsDefined(Location))
+            {
+                builder.Append("  location:");
+                builder.AppendLine($" '{Location.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Id))
+            {
+                builder.Append("  id:");
+                builder.AppendLine($" '{Id.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                builder.AppendLine($" '{Name}'");
+            }
+
+            if (Optional.IsDefined(ResourceType))
+            {
+                builder.Append("  type:");
+                builder.AppendLine($" '{ResourceType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SystemData))
+            {
+                builder.Append("  systemData:");
+                builder.AppendLine($" '{SystemData.ToString()}'");
+            }
+
+            builder.Append("  properties:");
+            builder.AppendLine(" {");
+            if (Optional.IsDefined(DefaultDataLakeStorage))
+            {
+                builder.Append("    defaultDataLakeStorage:");
+                AppendChildObject(builder, DefaultDataLakeStorage, options, 4, false);
+            }
+
+            if (Optional.IsDefined(SqlAdministratorLoginPassword))
+            {
+                builder.Append("    sqlAdministratorLoginPassword:");
+                builder.AppendLine($" '{SqlAdministratorLoginPassword}'");
+            }
+
+            if (Optional.IsDefined(ManagedResourceGroupName))
+            {
+                builder.Append("    managedResourceGroupName:");
+                builder.AppendLine($" '{ManagedResourceGroupName}'");
+            }
+
+            if (Optional.IsDefined(ProvisioningState))
+            {
+                builder.Append("    provisioningState:");
+                builder.AppendLine($" '{ProvisioningState}'");
+            }
+
+            if (Optional.IsDefined(SqlAdministratorLogin))
+            {
+                builder.Append("    sqlAdministratorLogin:");
+                builder.AppendLine($" '{SqlAdministratorLogin}'");
+            }
+
+            if (Optional.IsDefined(VirtualNetworkProfile))
+            {
+                builder.Append("    virtualNetworkProfile:");
+                AppendChildObject(builder, VirtualNetworkProfile, options, 4, false);
+            }
+
+            if (Optional.IsCollectionDefined(ConnectivityEndpoints))
+            {
+                if (ConnectivityEndpoints.Any())
+                {
+                    builder.Append("    connectivityEndpoints:");
+                    builder.AppendLine(" {");
+                    foreach (var item in ConnectivityEndpoints)
+                    {
+                        builder.Append($"        {item.Key}: ");
+                        if (item.Value == null)
+                        {
+                            builder.Append("null");
+                            continue;
+                        }
+                        builder.AppendLine($" '{item.Value}'");
+                    }
+                    builder.AppendLine("    }");
+                }
+            }
+
+            if (Optional.IsDefined(ManagedVirtualNetwork))
+            {
+                builder.Append("    managedVirtualNetwork:");
+                builder.AppendLine($" '{ManagedVirtualNetwork}'");
+            }
+
+            if (Optional.IsCollectionDefined(PrivateEndpointConnections))
+            {
+                if (PrivateEndpointConnections.Any())
+                {
+                    builder.Append("    privateEndpointConnections:");
+                    builder.AppendLine(" [");
+                    foreach (var item in PrivateEndpointConnections)
+                    {
+                        AppendChildObject(builder, item, options, 6, true);
+                    }
+                    builder.AppendLine("    ]");
+                }
+            }
+
+            if (Optional.IsDefined(Encryption))
+            {
+                builder.Append("    encryption:");
+                AppendChildObject(builder, Encryption, options, 4, false);
+            }
+
+            if (Optional.IsDefined(WorkspaceUid))
+            {
+                builder.Append("    workspaceUID:");
+                builder.AppendLine($" '{WorkspaceUid.Value.ToString()}'");
+            }
+
+            if (Optional.IsCollectionDefined(ExtraProperties))
+            {
+                if (ExtraProperties.Any())
+                {
+                    builder.Append("    extraProperties:");
+                    builder.AppendLine(" {");
+                    foreach (var item in ExtraProperties)
+                    {
+                        builder.Append($"        {item.Key}: ");
+                        if (item.Value == null)
+                        {
+                            builder.Append("null");
+                            continue;
+                        }
+                        builder.AppendLine($" '{item.Value.ToString()}'");
+                    }
+                    builder.AppendLine("    }");
+                }
+            }
+
+            if (Optional.IsDefined(ManagedVirtualNetworkSettings))
+            {
+                builder.Append("    managedVirtualNetworkSettings:");
+                AppendChildObject(builder, ManagedVirtualNetworkSettings, options, 4, false);
+            }
+
+            if (Optional.IsDefined(WorkspaceRepositoryConfiguration))
+            {
+                builder.Append("    workspaceRepositoryConfiguration:");
+                AppendChildObject(builder, WorkspaceRepositoryConfiguration, options, 4, false);
+            }
+
+            if (Optional.IsDefined(PurviewConfiguration))
+            {
+                builder.Append("    purviewConfiguration:");
+                AppendChildObject(builder, PurviewConfiguration, options, 4, false);
+            }
+
+            if (Optional.IsDefined(AdlaResourceId))
+            {
+                builder.Append("    adlaResourceId:");
+                builder.AppendLine($" '{AdlaResourceId.ToString()}'");
+            }
+
+            if (Optional.IsDefined(PublicNetworkAccess))
+            {
+                builder.Append("    publicNetworkAccess:");
+                builder.AppendLine($" '{PublicNetworkAccess.ToString()}'");
+            }
+
+            if (Optional.IsDefined(CspWorkspaceAdminProperties))
+            {
+                builder.Append("    cspWorkspaceAdminProperties:");
+                AppendChildObject(builder, CspWorkspaceAdminProperties, options, 4, false);
+            }
+
+            if (Optional.IsCollectionDefined(Settings))
+            {
+                if (Settings.Any())
+                {
+                    builder.Append("    settings:");
+                    builder.AppendLine(" {");
+                    foreach (var item in Settings)
+                    {
+                        builder.Append($"        {item.Key}: ");
+                        if (item.Value == null)
+                        {
+                            builder.Append("null");
+                            continue;
+                        }
+                        builder.AppendLine($" '{item.Value.ToString()}'");
+                    }
+                    builder.AppendLine("    }");
+                }
+            }
+
+            if (Optional.IsDefined(IsAadOnlyAuthenticationEnabled))
+            {
+                builder.Append("    azureADOnlyAuthentication:");
+                var boolValue = IsAadOnlyAuthenticationEnabled.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(IsTrustedServiceBypassEnabled))
+            {
+                builder.Append("    trustedServiceBypassEnabled:");
+                var boolValue = IsTrustedServiceBypassEnabled.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            builder.AppendLine("  }");
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<SynapseWorkspaceData>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<SynapseWorkspaceData>)this).GetFormatFromOptions(options) : options.Format;
@@ -577,6 +844,8 @@ namespace Azure.ResourceManager.Synapse
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(SynapseWorkspaceData)} does not support '{options.Format}' format.");
             }
@@ -593,6 +862,8 @@ namespace Azure.ResourceManager.Synapse
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeSynapseWorkspaceData(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(SynapseWorkspaceData)} does not support '{options.Format}' format.");
             }

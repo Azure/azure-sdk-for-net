@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -172,6 +174,80 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             return new PolicyAssignmentSummary(policyAssignmentId.Value, policySetDefinitionId.Value, results.Value, Optional.ToList(policyDefinitions), Optional.ToList(policyGroups), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(PolicyAssignmentId))
+            {
+                builder.Append("  policyAssignmentId:");
+                builder.AppendLine($" '{PolicyAssignmentId.ToString()}'");
+            }
+
+            if (Optional.IsDefined(PolicySetDefinitionId))
+            {
+                builder.Append("  policySetDefinitionId:");
+                builder.AppendLine($" '{PolicySetDefinitionId.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Results))
+            {
+                builder.Append("  results:");
+                AppendChildObject(builder, Results, options, 2, false);
+            }
+
+            if (Optional.IsCollectionDefined(PolicyDefinitions))
+            {
+                if (PolicyDefinitions.Any())
+                {
+                    builder.Append("  policyDefinitions:");
+                    builder.AppendLine(" [");
+                    foreach (var item in PolicyDefinitions)
+                    {
+                        AppendChildObject(builder, item, options, 4, true);
+                    }
+                    builder.AppendLine("  ]");
+                }
+            }
+
+            if (Optional.IsCollectionDefined(PolicyGroups))
+            {
+                if (PolicyGroups.Any())
+                {
+                    builder.Append("  policyGroups:");
+                    builder.AppendLine(" [");
+                    foreach (var item in PolicyGroups)
+                    {
+                        AppendChildObject(builder, item, options, 4, true);
+                    }
+                    builder.AppendLine("  ]");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<PolicyAssignmentSummary>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<PolicyAssignmentSummary>)this).GetFormatFromOptions(options) : options.Format;
@@ -180,6 +256,8 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(PolicyAssignmentSummary)} does not support '{options.Format}' format.");
             }
@@ -196,6 +274,8 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializePolicyAssignmentSummary(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(PolicyAssignmentSummary)} does not support '{options.Format}' format.");
             }

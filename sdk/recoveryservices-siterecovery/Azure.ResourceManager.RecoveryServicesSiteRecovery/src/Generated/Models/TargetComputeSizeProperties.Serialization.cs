@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -235,6 +237,115 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             return new TargetComputeSizeProperties(name.Value, friendlyName.Value, Optional.ToNullable(cpuCoresCount), Optional.ToNullable(vCpusAvailable), Optional.ToNullable(memoryInGB), Optional.ToNullable(maxDataDiskCount), Optional.ToNullable(maxNicsCount), Optional.ToList(errors), highIopsSupported.Value, Optional.ToList(hyperVGenerations), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                builder.AppendLine($" '{Name}'");
+            }
+
+            if (Optional.IsDefined(FriendlyName))
+            {
+                builder.Append("  friendlyName:");
+                builder.AppendLine($" '{FriendlyName}'");
+            }
+
+            if (Optional.IsDefined(CpuCoresCount))
+            {
+                builder.Append("  cpuCoresCount:");
+                builder.AppendLine($" {CpuCoresCount.Value}");
+            }
+
+            if (Optional.IsDefined(VCpusAvailable))
+            {
+                builder.Append("  vCPUsAvailable:");
+                builder.AppendLine($" {VCpusAvailable.Value}");
+            }
+
+            if (Optional.IsDefined(MemoryInGB))
+            {
+                builder.Append("  memoryInGB:");
+                builder.AppendLine($" '{MemoryInGB.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(MaxDataDiskCount))
+            {
+                builder.Append("  maxDataDiskCount:");
+                builder.AppendLine($" {MaxDataDiskCount.Value}");
+            }
+
+            if (Optional.IsDefined(MaxNicsCount))
+            {
+                builder.Append("  maxNicsCount:");
+                builder.AppendLine($" {MaxNicsCount.Value}");
+            }
+
+            if (Optional.IsCollectionDefined(Errors))
+            {
+                if (Errors.Any())
+                {
+                    builder.Append("  errors:");
+                    builder.AppendLine(" [");
+                    foreach (var item in Errors)
+                    {
+                        AppendChildObject(builder, item, options, 4, true);
+                    }
+                    builder.AppendLine("  ]");
+                }
+            }
+
+            if (Optional.IsDefined(HighIopsSupported))
+            {
+                builder.Append("  highIopsSupported:");
+                builder.AppendLine($" '{HighIopsSupported}'");
+            }
+
+            if (Optional.IsCollectionDefined(HyperVGenerations))
+            {
+                if (HyperVGenerations.Any())
+                {
+                    builder.Append("  hyperVGenerations:");
+                    builder.AppendLine(" [");
+                    foreach (var item in HyperVGenerations)
+                    {
+                        if (item == null)
+                        {
+                            builder.Append("null");
+                            continue;
+                        }
+                        builder.AppendLine($"    '{item}'");
+                    }
+                    builder.AppendLine("  ]");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<TargetComputeSizeProperties>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<TargetComputeSizeProperties>)this).GetFormatFromOptions(options) : options.Format;
@@ -243,6 +354,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(TargetComputeSizeProperties)} does not support '{options.Format}' format.");
             }
@@ -259,6 +372,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeTargetComputeSizeProperties(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(TargetComputeSizeProperties)} does not support '{options.Format}' format.");
             }

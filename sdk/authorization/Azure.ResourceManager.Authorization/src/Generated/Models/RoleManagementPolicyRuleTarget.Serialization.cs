@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -203,6 +205,122 @@ namespace Azure.ResourceManager.Authorization.Models
             return new RoleManagementPolicyRuleTarget(caller.Value, Optional.ToList(operations), Optional.ToNullable(level), Optional.ToList(targetObjects), Optional.ToList(inheritableSettings), Optional.ToList(enforcedSettings), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(Caller))
+            {
+                builder.Append("  caller:");
+                builder.AppendLine($" '{Caller}'");
+            }
+
+            if (Optional.IsCollectionDefined(Operations))
+            {
+                if (Operations.Any())
+                {
+                    builder.Append("  operations:");
+                    builder.AppendLine(" [");
+                    foreach (var item in Operations)
+                    {
+                        if (item == null)
+                        {
+                            builder.Append("null");
+                            continue;
+                        }
+                        builder.AppendLine($"    '{item}'");
+                    }
+                    builder.AppendLine("  ]");
+                }
+            }
+
+            if (Optional.IsDefined(Level))
+            {
+                builder.Append("  level:");
+                builder.AppendLine($" '{Level.ToString()}'");
+            }
+
+            if (Optional.IsCollectionDefined(TargetObjects))
+            {
+                if (TargetObjects.Any())
+                {
+                    builder.Append("  targetObjects:");
+                    builder.AppendLine(" [");
+                    foreach (var item in TargetObjects)
+                    {
+                        if (item == null)
+                        {
+                            builder.Append("null");
+                            continue;
+                        }
+                        builder.AppendLine($"    '{item}'");
+                    }
+                    builder.AppendLine("  ]");
+                }
+            }
+
+            if (Optional.IsCollectionDefined(InheritableSettings))
+            {
+                if (InheritableSettings.Any())
+                {
+                    builder.Append("  inheritableSettings:");
+                    builder.AppendLine(" [");
+                    foreach (var item in InheritableSettings)
+                    {
+                        if (item == null)
+                        {
+                            builder.Append("null");
+                            continue;
+                        }
+                        builder.AppendLine($"    '{item}'");
+                    }
+                    builder.AppendLine("  ]");
+                }
+            }
+
+            if (Optional.IsCollectionDefined(EnforcedSettings))
+            {
+                if (EnforcedSettings.Any())
+                {
+                    builder.Append("  enforcedSettings:");
+                    builder.AppendLine(" [");
+                    foreach (var item in EnforcedSettings)
+                    {
+                        if (item == null)
+                        {
+                            builder.Append("null");
+                            continue;
+                        }
+                        builder.AppendLine($"    '{item}'");
+                    }
+                    builder.AppendLine("  ]");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<RoleManagementPolicyRuleTarget>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<RoleManagementPolicyRuleTarget>)this).GetFormatFromOptions(options) : options.Format;
@@ -211,6 +329,8 @@ namespace Azure.ResourceManager.Authorization.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(RoleManagementPolicyRuleTarget)} does not support '{options.Format}' format.");
             }
@@ -227,6 +347,8 @@ namespace Azure.ResourceManager.Authorization.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeRoleManagementPolicyRuleTarget(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(RoleManagementPolicyRuleTarget)} does not support '{options.Format}' format.");
             }

@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -211,6 +212,94 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
             return new VMwareVirtualDisk(name.Value, label.Value, diskObjectId.Value, Optional.ToNullable(diskSizeGB), Optional.ToNullable(deviceKey), Optional.ToNullable(diskMode), Optional.ToNullable(controllerKey), Optional.ToNullable(unitNumber), deviceName.Value, Optional.ToNullable(diskType), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                builder.AppendLine($" '{Name}'");
+            }
+
+            if (Optional.IsDefined(Label))
+            {
+                builder.Append("  label:");
+                builder.AppendLine($" '{Label}'");
+            }
+
+            if (Optional.IsDefined(DiskObjectId))
+            {
+                builder.Append("  diskObjectId:");
+                builder.AppendLine($" '{DiskObjectId}'");
+            }
+
+            if (Optional.IsDefined(DiskSizeGB))
+            {
+                builder.Append("  diskSizeGB:");
+                builder.AppendLine($" {DiskSizeGB.Value}");
+            }
+
+            if (Optional.IsDefined(DeviceKey))
+            {
+                builder.Append("  deviceKey:");
+                builder.AppendLine($" {DeviceKey.Value}");
+            }
+
+            if (Optional.IsDefined(DiskMode))
+            {
+                builder.Append("  diskMode:");
+                builder.AppendLine($" '{DiskMode.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ControllerKey))
+            {
+                builder.Append("  controllerKey:");
+                builder.AppendLine($" {ControllerKey.Value}");
+            }
+
+            if (Optional.IsDefined(UnitNumber))
+            {
+                builder.Append("  unitNumber:");
+                builder.AppendLine($" {UnitNumber.Value}");
+            }
+
+            if (Optional.IsDefined(DeviceName))
+            {
+                builder.Append("  deviceName:");
+                builder.AppendLine($" '{DeviceName}'");
+            }
+
+            if (Optional.IsDefined(DiskType))
+            {
+                builder.Append("  diskType:");
+                builder.AppendLine($" '{DiskType.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<VMwareVirtualDisk>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<VMwareVirtualDisk>)this).GetFormatFromOptions(options) : options.Format;
@@ -219,6 +308,8 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(VMwareVirtualDisk)} does not support '{options.Format}' format.");
             }
@@ -235,6 +326,8 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeVMwareVirtualDisk(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(VMwareVirtualDisk)} does not support '{options.Format}' format.");
             }
