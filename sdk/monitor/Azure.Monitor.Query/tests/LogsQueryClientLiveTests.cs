@@ -481,12 +481,19 @@ namespace Azure.Monitor.Query.Tests
         public async Task CanQueryWithTimespan()
         {
             var timespan = TimeSpan.FromSeconds(5);
+            DateTime recordingUtcNow = DateTime.SpecifyKind(DateTime.UtcNow.Date, DateTimeKind.Utc).AddDays(-14);
+            string mockQuery = "let dt = datatable (Int: int, String: string, Bool: bool, TimeGenerated: datetime)\n" +
+                "[" +
+                $"1, 'a', false, datetime(\"{recordingUtcNow.ToString("yyyy-MM-ddTHH:mm:ss.fffZ")}\"), " +
+                $"2, 'b', true, datetime(\"{recordingUtcNow.AddDays(2).ToString("yyyy-MM-ddTHH:mm:ss.fffZ")}\")," +
+                $"3, 'c', false, datetime(\"{recordingUtcNow.AddDays(5).ToString("yyyy-MM-ddTHH:mm:ss.fffZ")}\")]; " +
+                "dt | distinct * | project TimeGenerated}";
 
             var client = CreateClient();
             // Empty check
             var results = await client.QueryWorkspaceAsync<DateTimeOffset>(
                 TestEnvironment.WorkspaceId,
-                $"{_logsTestData.TableAName} | distinct * | project {LogsTestData.TimeGeneratedColumnName}",
+                mockQuery,
                 timespan);
 
             Assert.AreEqual(0, results.Value.Count);
@@ -500,7 +507,7 @@ namespace Azure.Monitor.Query.Tests
             // Make sure there is some data in the range specified
             results = await client.QueryWorkspaceAsync<DateTimeOffset>(
                 TestEnvironment.WorkspaceId,
-                $"{_logsTestData.TableAName} | distinct * | project {LogsTestData.TimeGeneratedColumnName}",
+                mockQuery,
                 timespan);
 
             Assert.GreaterOrEqual(results.Value.Count, 3);
@@ -512,15 +519,24 @@ namespace Azure.Monitor.Query.Tests
             var timespan = TimeSpan.FromSeconds(5);
 
             var client = CreateClient();
+
+            DateTime recordingUtcNow = DateTime.SpecifyKind(DateTime.UtcNow.Date, DateTimeKind.Utc).AddDays(-14);
+            string mockQuery = "let dt = datatable (Int: int, String: string, Bool: bool, TimeGenerated: datetime)\n" +
+                "[" +
+                $"1, 'a', false, datetime(\"{recordingUtcNow.ToString("yyyy-MM-ddTHH:mm:ss.fffZ")}\"), " +
+                $"2, 'b', true, datetime(\"{recordingUtcNow.AddDays(2).ToString("yyyy-MM-ddTHH:mm:ss.fffZ")}\")," +
+                $"3, 'c', false, datetime(\"{recordingUtcNow.AddDays(5).ToString("yyyy-MM-ddTHH:mm:ss.fffZ")}\")]; " +
+                "dt | distinct * | project TimeGenerated}";
+
             // empty check
             LogsBatchQuery batch = new LogsBatchQuery();
-            string id1 = batch.AddWorkspaceQuery(TestEnvironment.WorkspaceId, $"{_logsTestData.TableAName} | distinct * | project {LogsTestData.TimeGeneratedColumnName}", timespan);
+            string id1 = batch.AddWorkspaceQuery(TestEnvironment.WorkspaceId, mockQuery, timespan);
 
             // check if all rows in table were uploaded
             var maxOffset = (DateTimeOffset)_logsTestData.TableA[2][LogsTestData.TimeGeneratedColumnNameSent];
             timespan = Recording.UtcNow - maxOffset;
             timespan = timespan.Add(TimeSpan.FromDays(7));
-            string id2 = batch.AddWorkspaceQuery(TestEnvironment.WorkspaceId, $"{_logsTestData.TableAName} | distinct * | project {LogsTestData.TimeGeneratedColumnName}", timespan);
+            string id2 = batch.AddWorkspaceQuery(TestEnvironment.WorkspaceId, mockQuery, timespan);
 
             Response<LogsBatchQueryResultCollection> response = await client.QueryBatchAsync(batch);
 
@@ -733,10 +749,19 @@ namespace Azure.Monitor.Query.Tests
             var timespan = TimeSpan.FromSeconds(5);
 
             var client = CreateClient();
+
+            DateTime recordingUtcNow = DateTime.SpecifyKind(DateTime.UtcNow.Date, DateTimeKind.Utc).AddDays(-14);
+            string mockQuery = "let dt = datatable (Int: int, String: string, Bool: bool, TimeGenerated: datetime)\n" +
+                "[" +
+                $"1, 'a', false, datetime(\"{recordingUtcNow.ToString("yyyy-MM-ddTHH:mm:ss.fffZ")}\"), " +
+                $"2, 'b', true, datetime(\"{recordingUtcNow.AddDays(2).ToString("yyyy-MM-ddTHH:mm:ss.fffZ")}\")," +
+                $"3, 'c', false, datetime(\"{recordingUtcNow.AddDays(5).ToString("yyyy-MM-ddTHH:mm:ss.fffZ")}\")]; " +
+                "dt | distinct * | project TimeGenerated}";
+
             // Empty check
             var results = await client.QueryResourceAsync<DateTimeOffset>(
                 new ResourceIdentifier(TestEnvironment.WorkspacePrimaryResourceId),
-                $"{_logsTestData.TableAName} | distinct * | project {LogsTestData.TimeGeneratedColumnName}",
+                mockQuery,
                 timespan);
 
             Assert.AreEqual(0, results.Value.Count);
@@ -750,7 +775,7 @@ namespace Azure.Monitor.Query.Tests
             // Make sure there is some data in the range specified
             results = await client.QueryResourceAsync<DateTimeOffset>(
                 new ResourceIdentifier(TestEnvironment.WorkspacePrimaryResourceId),
-                $"{_logsTestData.TableAName} | distinct * | project {LogsTestData.TimeGeneratedColumnName}",
+                mockQuery,
                 timespan);
 
             Assert.GreaterOrEqual(results.Value.Count, 3);
