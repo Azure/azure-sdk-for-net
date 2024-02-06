@@ -83,7 +83,7 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         [TestCase(null)]
         [TestCase("")]
-        [TestCase("http://namspace.servciebus.windows.com")]
+        [TestCase("[1.2.3.4]")]
         public void ConstructorValidatesTheNamespace(string constructorArgument)
         {
             Assert.That(() => new EventProcessorClient(Mock.Of<BlobContainerClient>(), EventHubConsumerClient.DefaultConsumerGroupName, constructorArgument, "dummy", Mock.Of<TokenCredential>()), Throws.InstanceOf<ArgumentException>(), "The token credential should validate.");
