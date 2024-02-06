@@ -15,7 +15,7 @@ namespace Azure.Core.Pipeline
     {
         private readonly int _maxRetries;
         private readonly DelayStrategy _delayStrategy;
-        private readonly AzureCoreRetryPolicy _policy;
+        private readonly ClientModelRetryPolicy _policy;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="RetryPolicy"/> class.
@@ -27,7 +27,7 @@ namespace Azure.Core.Pipeline
             _maxRetries = maxRetries;
             _delayStrategy = delayStrategy ?? DelayStrategy.CreateExponentialDelayStrategy();
 
-            _policy = new AzureCoreRetryPolicy(maxRetries, _delayStrategy, this);
+            _policy = new ClientModelRetryPolicy(maxRetries, _delayStrategy, this);
         }
 
         /// <summary>
