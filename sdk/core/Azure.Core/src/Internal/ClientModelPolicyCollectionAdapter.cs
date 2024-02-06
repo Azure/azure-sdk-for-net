@@ -8,12 +8,22 @@ using System.Collections.Generic;
 
 namespace Azure.Core.Pipeline
 {
-    internal struct AzureCorePipelineProcessor : IReadOnlyList<PipelinePolicy>
+    /// <summary>
+    /// Adapter from an Azure.Core pipeline to a System.ClientModel pipeline.
+    /// Azure.Core policies take <see cref="ReadOnlyMemory{HttpPipelinePolicy}"/>
+    /// as the pipeline parameter of their <see cref="HttpPipelinePolicy.Process(HttpMessage, ReadOnlyMemory{HttpPipelinePolicy})"/>
+    /// methods.  System.ClientModel policies take  <see cref="IReadOnlyList{PipelinePolicy}"/>.
+    ///
+    /// This type allows Azure.Core policies such as <see cref="RetryPolicy"/> to
+    /// hold System.ClientModel policies internally and call their process methods
+    /// in a way that will continue passing control down the chain of policies.
+    /// </summary>
+    internal struct ClientModelPolicyCollectionAdapter : IReadOnlyList<PipelinePolicy>
     {
         private readonly ReadOnlyMemory<HttpPipelinePolicy> _policies;
         private PolicyEnumerator? _enumerator;
 
-        public AzureCorePipelineProcessor(ReadOnlyMemory<HttpPipelinePolicy> policies)
+        public ClientModelPolicyCollectionAdapter(ReadOnlyMemory<HttpPipelinePolicy> policies)
             => _policies = policies;
 
         public ReadOnlyMemory<HttpPipelinePolicy> Policies

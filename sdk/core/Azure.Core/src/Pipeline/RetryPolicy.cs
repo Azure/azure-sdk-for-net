@@ -53,7 +53,7 @@ namespace Azure.Core.Pipeline
 
         private async ValueTask ProcessSyncOrAsync(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline, bool async)
         {
-            AzureCorePipelineProcessor processor = new(pipeline);
+            ClientModelPolicyCollectionAdapter processor = new(pipeline);
 
             try
             {

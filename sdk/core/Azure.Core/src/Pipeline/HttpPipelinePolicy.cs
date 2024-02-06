@@ -64,7 +64,7 @@ namespace Azure.Core.Pipeline
                 throw new InvalidOperationException($"Invalid type for message: '{message?.GetType()}'");
             }
 
-            if (pipeline is not AzureCorePipelineProcessor processor)
+            if (pipeline is not ClientModelPolicyCollectionAdapter processor)
             {
                 throw new InvalidOperationException($"Invalid type for pipeline: '{pipeline?.GetType()}'");
             }
@@ -89,7 +89,7 @@ namespace Azure.Core.Pipeline
                 throw new InvalidOperationException($"Invalid type for message: '{message?.GetType()}'");
             }
 
-            if (pipeline is not AzureCorePipelineProcessor processor)
+            if (pipeline is not ClientModelPolicyCollectionAdapter processor)
             {
                 throw new InvalidOperationException($"Invalid type for pipeline: '{pipeline?.GetType()}'");
             }

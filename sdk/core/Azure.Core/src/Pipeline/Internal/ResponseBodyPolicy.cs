@@ -31,7 +31,7 @@ namespace Azure.Core.Pipeline
 
         private async ValueTask ProcessSyncOrAsync(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline, bool async)
         {
-            AzureCorePipelineProcessor processor = new(pipeline);
+            ClientModelPolicyCollectionAdapter processor = new(pipeline);
 
             // Get the network timeout for this particular invocation of the pipeline.
             // We either use the default that the policy was constructed with at
