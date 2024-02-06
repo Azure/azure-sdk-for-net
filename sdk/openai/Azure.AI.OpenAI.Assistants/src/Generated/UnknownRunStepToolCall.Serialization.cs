@@ -14,21 +14,23 @@ using Azure.Core;
 
 namespace Azure.AI.OpenAI.Assistants
 {
-    internal partial class UnknownCodeInterpreterToolCallOutput : IUtf8JsonSerializable, IJsonModel<CodeInterpreterToolCallOutput>
+    internal partial class UnknownRunStepToolCall : IUtf8JsonSerializable, IJsonModel<RunStepToolCall>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CodeInterpreterToolCallOutput>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RunStepToolCall>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
-        void IJsonModel<CodeInterpreterToolCallOutput>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<RunStepToolCall>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<CodeInterpreterToolCallOutput>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<RunStepToolCall>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CodeInterpreterToolCallOutput)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RunStepToolCall)} does not support '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type);
+            writer.WritePropertyName("id"u8);
+            writer.WriteStringValue(Id);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -47,19 +49,19 @@ namespace Azure.AI.OpenAI.Assistants
             writer.WriteEndObject();
         }
 
-        CodeInterpreterToolCallOutput IJsonModel<CodeInterpreterToolCallOutput>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        RunStepToolCall IJsonModel<RunStepToolCall>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<CodeInterpreterToolCallOutput>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<RunStepToolCall>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CodeInterpreterToolCallOutput)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RunStepToolCall)} does not support '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownCodeInterpreterToolCallOutput(document.RootElement, options);
+            return DeserializeUnknownRunStepToolCall(document.RootElement, options);
         }
 
-        internal static UnknownCodeInterpreterToolCallOutput DeserializeUnknownCodeInterpreterToolCallOutput(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static UnknownRunStepToolCall DeserializeUnknownRunStepToolCall(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= new ModelReaderWriterOptions("W");
 
@@ -68,6 +70,7 @@ namespace Azure.AI.OpenAI.Assistants
                 return null;
             }
             string type = "Unknown";
+            string id = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -77,52 +80,57 @@ namespace Azure.AI.OpenAI.Assistants
                     type = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("id"u8))
+                {
+                    id = property.Value.GetString();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new UnknownCodeInterpreterToolCallOutput(type, serializedAdditionalRawData);
+            return new UnknownRunStepToolCall(type, id, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<CodeInterpreterToolCallOutput>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<RunStepToolCall>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<CodeInterpreterToolCallOutput>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<RunStepToolCall>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(CodeInterpreterToolCallOutput)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RunStepToolCall)} does not support '{options.Format}' format.");
             }
         }
 
-        CodeInterpreterToolCallOutput IPersistableModel<CodeInterpreterToolCallOutput>.Create(BinaryData data, ModelReaderWriterOptions options)
+        RunStepToolCall IPersistableModel<RunStepToolCall>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<CodeInterpreterToolCallOutput>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<RunStepToolCall>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeUnknownCodeInterpreterToolCallOutput(document.RootElement, options);
+                        return DeserializeUnknownRunStepToolCall(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CodeInterpreterToolCallOutput)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RunStepToolCall)} does not support '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<CodeInterpreterToolCallOutput>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<RunStepToolCall>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static new UnknownCodeInterpreterToolCallOutput FromResponse(Response response)
+        internal static new UnknownRunStepToolCall FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content);
-            return DeserializeUnknownCodeInterpreterToolCallOutput(document.RootElement);
+            return DeserializeUnknownRunStepToolCall(document.RootElement);
         }
 
         /// <summary> Convert into a Utf8JsonRequestContent. </summary>

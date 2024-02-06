@@ -15,13 +15,13 @@ namespace Azure.AI.OpenAI.Assistants
     /// A record of a call to a retrieval tool, issued by the model in evaluation of a defined tool, that represents
     /// executed retrieval actions.
     /// </summary>
-    public partial class RetrievalToolCall : ToolCall
+    public partial class RunStepRetrievalToolCall : RunStepToolCall
     {
-        /// <summary> Initializes a new instance of <see cref="RetrievalToolCall"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="RunStepRetrievalToolCall"/>. </summary>
         /// <param name="id"> The ID of the tool call. This ID must be referenced when you submit tool outputs. </param>
         /// <param name="retrieval"> The key/value pairs produced by the retrieval tool. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="retrieval"/> is null. </exception>
-        internal RetrievalToolCall(string id, IReadOnlyDictionary<string, string> retrieval) : base(id)
+        internal RunStepRetrievalToolCall(string id, IReadOnlyDictionary<string, string> retrieval) : base(id)
         {
             Argument.AssertNotNull(id, nameof(id));
             Argument.AssertNotNull(retrieval, nameof(retrieval));
@@ -30,18 +30,18 @@ namespace Azure.AI.OpenAI.Assistants
             Retrieval = retrieval;
         }
 
-        /// <summary> Initializes a new instance of <see cref="RetrievalToolCall"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="RunStepRetrievalToolCall"/>. </summary>
         /// <param name="type"> The object type. </param>
         /// <param name="id"> The ID of the tool call. This ID must be referenced when you submit tool outputs. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="retrieval"> The key/value pairs produced by the retrieval tool. </param>
-        internal RetrievalToolCall(string type, string id, IDictionary<string, BinaryData> serializedAdditionalRawData, IReadOnlyDictionary<string, string> retrieval) : base(type, id, serializedAdditionalRawData)
+        internal RunStepRetrievalToolCall(string type, string id, IDictionary<string, BinaryData> serializedAdditionalRawData, IReadOnlyDictionary<string, string> retrieval) : base(type, id, serializedAdditionalRawData)
         {
             Retrieval = retrieval;
         }
 
-        /// <summary> Initializes a new instance of <see cref="RetrievalToolCall"/> for deserialization. </summary>
-        internal RetrievalToolCall()
+        /// <summary> Initializes a new instance of <see cref="RunStepRetrievalToolCall"/> for deserialization. </summary>
+        internal RunStepRetrievalToolCall()
         {
         }
 
