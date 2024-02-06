@@ -30,41 +30,105 @@ namespace Azure.AI.Vision.ImageAnalysis
             if (Optional.IsDefined(Caption))
             {
                 writer.WritePropertyName("captionResult"u8);
-                writer.WriteObjectValue(Caption);
+                BinaryData data = ModelReaderWriter.Write(Caption, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsDefined(DenseCaptions))
             {
                 writer.WritePropertyName("denseCaptionsResult"u8);
-                writer.WriteObjectValue(DenseCaptions);
+                BinaryData data = ModelReaderWriter.Write(DenseCaptions, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             writer.WritePropertyName("metadata"u8);
-            writer.WriteObjectValue(Metadata);
+            BinaryData data0 = ModelReaderWriter.Write(Metadata, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data0);
+#else
+            using (JsonDocument document = JsonDocument.Parse(data0))
+            {
+                JsonSerializer.Serialize(writer, document.RootElement);
+            }
+#endif
             writer.WritePropertyName("modelVersion"u8);
             writer.WriteStringValue(ModelVersion);
             if (Optional.IsDefined(Objects))
             {
                 writer.WritePropertyName("objectsResult"u8);
-                writer.WriteObjectValue(Objects);
+                BinaryData data = ModelReaderWriter.Write(Objects, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsDefined(People))
             {
                 writer.WritePropertyName("peopleResult"u8);
-                writer.WriteObjectValue(People);
+                BinaryData data = ModelReaderWriter.Write(People, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsDefined(Read))
             {
                 writer.WritePropertyName("readResult"u8);
-                writer.WriteObjectValue(Read);
+                BinaryData data = ModelReaderWriter.Write(Read, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsDefined(SmartCrops))
             {
                 writer.WritePropertyName("smartCropsResult"u8);
-                writer.WriteObjectValue(SmartCrops);
+                BinaryData data = ModelReaderWriter.Write(SmartCrops, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsDefined(Tags))
             {
                 writer.WritePropertyName("tagsResult"u8);
-                writer.WriteObjectValue(Tags);
+                BinaryData data = ModelReaderWriter.Write(Tags, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

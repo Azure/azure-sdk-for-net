@@ -39,7 +39,15 @@ namespace Azure.ResourceManager.Workloads.Models
             if (Optional.IsDefined(OSConfiguration))
             {
                 writer.WritePropertyName("osConfiguration"u8);
-                writer.WriteObjectValue(OSConfiguration);
+                BinaryData data = ModelReaderWriter.Write(OSConfiguration, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

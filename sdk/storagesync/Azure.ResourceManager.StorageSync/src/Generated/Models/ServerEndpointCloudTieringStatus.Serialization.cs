@@ -54,32 +54,80 @@ namespace Azure.ResourceManager.StorageSync.Models
             if (options.Format != "W" && Optional.IsDefined(SpaceSavings))
             {
                 writer.WritePropertyName("spaceSavings"u8);
-                writer.WriteObjectValue(SpaceSavings);
+                BinaryData data = ModelReaderWriter.Write(SpaceSavings, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (options.Format != "W" && Optional.IsDefined(CachePerformance))
             {
                 writer.WritePropertyName("cachePerformance"u8);
-                writer.WriteObjectValue(CachePerformance);
+                BinaryData data = ModelReaderWriter.Write(CachePerformance, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (options.Format != "W" && Optional.IsDefined(FilesNotTiering))
             {
                 writer.WritePropertyName("filesNotTiering"u8);
-                writer.WriteObjectValue(FilesNotTiering);
+                BinaryData data = ModelReaderWriter.Write(FilesNotTiering, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (options.Format != "W" && Optional.IsDefined(VolumeFreeSpacePolicyStatus))
             {
                 writer.WritePropertyName("volumeFreeSpacePolicyStatus"u8);
-                writer.WriteObjectValue(VolumeFreeSpacePolicyStatus);
+                BinaryData data = ModelReaderWriter.Write(VolumeFreeSpacePolicyStatus, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (options.Format != "W" && Optional.IsDefined(DatePolicyStatus))
             {
                 writer.WritePropertyName("datePolicyStatus"u8);
-                writer.WriteObjectValue(DatePolicyStatus);
+                BinaryData data = ModelReaderWriter.Write(DatePolicyStatus, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (options.Format != "W" && Optional.IsDefined(LowDiskMode))
             {
                 writer.WritePropertyName("lowDiskMode"u8);
-                writer.WriteObjectValue(LowDiskMode);
+                BinaryData data = ModelReaderWriter.Write(LowDiskMode, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

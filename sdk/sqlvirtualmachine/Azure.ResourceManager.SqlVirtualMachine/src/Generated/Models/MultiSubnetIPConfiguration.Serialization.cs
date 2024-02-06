@@ -27,7 +27,15 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
 
             writer.WriteStartObject();
             writer.WritePropertyName("privateIpAddress"u8);
-            writer.WriteObjectValue(PrivateIPAddress);
+            BinaryData data = ModelReaderWriter.Write(PrivateIPAddress, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+            using (JsonDocument document = JsonDocument.Parse(data))
+            {
+                JsonSerializer.Serialize(writer, document.RootElement);
+            }
+#endif
             writer.WritePropertyName("sqlVirtualMachineInstance"u8);
             writer.WriteStringValue(SqlVmInstance);
             if (options.Format != "W" && _serializedAdditionalRawData != null)

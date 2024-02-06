@@ -62,7 +62,15 @@ namespace Azure.ResourceManager.AppService.Models
             if (Optional.IsDefined(RecoverySource))
             {
                 writer.WritePropertyName("recoverySource"u8);
-                writer.WriteObjectValue(RecoverySource);
+                BinaryData data = ModelReaderWriter.Write(RecoverySource, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsDefined(CanOverwrite))
             {

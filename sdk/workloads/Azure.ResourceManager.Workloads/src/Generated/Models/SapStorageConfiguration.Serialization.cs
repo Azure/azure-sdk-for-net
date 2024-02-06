@@ -29,7 +29,15 @@ namespace Azure.ResourceManager.Workloads.Models
             if (Optional.IsDefined(TransportFileShareConfiguration))
             {
                 writer.WritePropertyName("transportFileShareConfiguration"u8);
-                writer.WriteObjectValue(TransportFileShareConfiguration);
+                BinaryData data = ModelReaderWriter.Write(TransportFileShareConfiguration, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

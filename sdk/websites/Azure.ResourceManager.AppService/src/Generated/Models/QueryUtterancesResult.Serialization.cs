@@ -29,7 +29,15 @@ namespace Azure.ResourceManager.AppService.Models
             if (Optional.IsDefined(SampleUtterance))
             {
                 writer.WritePropertyName("sampleUtterance"u8);
-                writer.WriteObjectValue(SampleUtterance);
+                BinaryData data = ModelReaderWriter.Write(SampleUtterance, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsDefined(Score))
             {

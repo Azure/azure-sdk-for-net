@@ -29,7 +29,15 @@ namespace Azure.ResourceManager.AppService.Models
             if (Optional.IsDefined(AddressMailing))
             {
                 writer.WritePropertyName("addressMailing"u8);
-                writer.WriteObjectValue(AddressMailing);
+                BinaryData data = ModelReaderWriter.Write(AddressMailing, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             writer.WritePropertyName("email"u8);
             writer.WriteStringValue(Email);

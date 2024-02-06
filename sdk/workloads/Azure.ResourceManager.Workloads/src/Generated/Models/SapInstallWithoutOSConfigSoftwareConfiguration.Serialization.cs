@@ -35,7 +35,15 @@ namespace Azure.ResourceManager.Workloads.Models
             if (Optional.IsDefined(HighAvailabilitySoftwareConfiguration))
             {
                 writer.WritePropertyName("highAvailabilitySoftwareConfiguration"u8);
-                writer.WriteObjectValue(HighAvailabilitySoftwareConfiguration);
+                BinaryData data = ModelReaderWriter.Write(HighAvailabilitySoftwareConfiguration, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             writer.WritePropertyName("softwareInstallationType"u8);
             writer.WriteStringValue(SoftwareInstallationType.ToString());

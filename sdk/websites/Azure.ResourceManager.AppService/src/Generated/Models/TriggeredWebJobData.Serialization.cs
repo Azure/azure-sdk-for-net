@@ -58,7 +58,15 @@ namespace Azure.ResourceManager.AppService
             if (Optional.IsDefined(LatestRun))
             {
                 writer.WritePropertyName("latest_run"u8);
-                writer.WriteObjectValue(LatestRun);
+                BinaryData data = ModelReaderWriter.Write(LatestRun, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsDefined(HistoryUri))
             {
