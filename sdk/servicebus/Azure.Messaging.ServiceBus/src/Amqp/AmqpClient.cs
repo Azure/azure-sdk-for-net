@@ -94,7 +94,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
             string host,
             ServiceBusTokenCredential credential,
             ServiceBusClientOptions options,
-            bool useTls = true)
+            bool useTls)
         {
             Argument.AssertNotNullOrEmpty(host, nameof(host));
             Argument.AssertNotNull(credential, nameof(credential));
