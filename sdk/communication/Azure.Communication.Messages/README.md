@@ -39,14 +39,14 @@ MessageTemplateClient messageTemplateClient = new MessageTemplateClient(connecti
 
 ## Examples
 ### Send an Notification Message
-To send a notification message, call the `SendMessage` or `SendAsync` function from the `NotificationMessagesClient`.
+To send a notification message, call the `Send` or `SendAsync` function from the `NotificationMessagesClient`.
 
 #### Send a text message
 ```C#
 // Create the recipient list, currently only one recipient is supported 
 var recipient = new List<string> { "<to-phone-number>" };
-var options = new SendMessageOptions("<channel-registration-id>", recipient, "Come on everyone, let's go for lunch together.");
-SendMessageResult result = await notificationMessagesClient.SendAsync(options);
+var textContent = new = new TextNotificationContent(new Guid("<channel-registration-id>"), recipient, "Come on everyone, let's go for lunch together.");
+SendMessageResult result = await notificationMessagesClient.SendAsync(textContent);
 Console.WriteLine($"Message id: {result.Receipts[0].MessageId}");
 ```
 
@@ -57,8 +57,8 @@ var recipient = new List<string> { "<to-phone-number>" };
 string templateName = "sample_template";
 string templateLanguage = "en_us";
 var messageTemplate = new MessageTemplate(templateName, templateLanguage);
-var sendTemplateMessageOptions = new SendMessageOptions(channelRegistrationId, recipientList, messageTemplate);
-SendMessageResult result = await notificationMessagesClient.SendAsync(sendTemplateMessageOptions);
+var templateContent = new TemplateNotificationContent(channelRegistrationId, recipientList, messageTemplate);
+SendMessageResult result = await notificationMessagesClient.SendAsync(templateContent);
 Console.WriteLine($"Message id: {result.Receipts[0].MessageId}");
 ```
 
@@ -67,8 +67,8 @@ Console.WriteLine($"Message id: {result.Receipts[0].MessageId}");
 // Create the recipient list, currently only one recipient is supported 
 var recipient = new List<string> { "<to-phone-number>" };
 var uri = new Uri("https://aka.ms/acsicon1");
-var sendMediaMessageOptions = new SendMessageOptions(channelRegistrationId, recipientList, uri);
-SendMessageResult result = await notificationMessagesClient.SendAsync(sendMediaMessageOptions);
+var mediaContent = new MediaNotificationContent(channelRegistrationId, recipientList, uri);
+SendMessageResult result = await notificationMessagesClient.SendAsync(mediaContent);
 Console.WriteLine($"Message id: {result.Receipts[0].MessageId}");
 ```
 
