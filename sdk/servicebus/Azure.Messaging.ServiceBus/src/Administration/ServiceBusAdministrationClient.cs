@@ -183,8 +183,15 @@ namespace Azure.Messaging.ServiceBus.Administration
             ServiceBusTokenCredential credential,
             ServiceBusAdministrationClientOptions options)
         {
-            Argument.AssertWellFormedServiceBusNamespace(fullyQualifiedNamespace, nameof(fullyQualifiedNamespace));
             Argument.AssertNotNull(credential, nameof(credential));
+            Argument.AssertNotNullOrEmpty(fullyQualifiedNamespace, nameof(fullyQualifiedNamespace));
+
+            if (Uri.TryCreate(fullyQualifiedNamespace, UriKind.Absolute, out var uri))
+            {
+                fullyQualifiedNamespace = uri.Host;
+            }
+
+            Argument.AssertWellFormedServiceBusNamespace(fullyQualifiedNamespace, nameof(fullyQualifiedNamespace));
 
             options ??= new ServiceBusAdministrationClientOptions();
             _fullyQualifiedNamespace = fullyQualifiedNamespace;
