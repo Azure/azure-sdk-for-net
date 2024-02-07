@@ -39,7 +39,7 @@
 /sdk/entra/                                                        @pallavit @jsquire
 /sdk/graphrbac/                                                    @pallavit @jsquire
 /sdk/machinelearningservices/                                      @pallavit @jsquire
-/sdk/maps/                                                         @pallavit @jsquire @dubiety @khmic5 @andykao1213
+/sdk/maps/                                                         @dubiety @khmic5 @andykao1213
 # Note there are some sub-rules for this directory, defined below
 /sdk/operationalinsights/                                          @pallavit @jsquire
 /sdk/purview/                                                      @pallavit @jsquire
@@ -50,7 +50,7 @@
 # ######## Core Libraries ########
 
 # PRLabel: %Azure.Core
-/sdk/core/                                                         @JoshLove-msft @christothes @annelo-msft @KrzysztofCwalina
+/sdk/core/                                                         @JoshLove-msft @christothes @annelo-msft @KrzysztofCwalina @jsquire
 
 # PRLabel: %Azure.Identity
 /sdk/identity/                                                     @schaabs @christothes @Azure/azure-sdk-write-identity
