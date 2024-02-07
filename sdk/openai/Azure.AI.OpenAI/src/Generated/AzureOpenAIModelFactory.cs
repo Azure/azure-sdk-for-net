@@ -437,32 +437,6 @@ namespace Azure.AI.OpenAI
             return new ImageGenerationData(url, base64Data, revisedPrompt, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="OpenAI.EmbeddingsOptions"/>. </summary>
-        /// <param name="user">
-        /// An identifier for the caller or end user of the operation. This may be used for tracking
-        /// or rate-limiting purposes.
-        /// </param>
-        /// <param name="deploymentName">
-        /// The model name to provide as part of this embeddings request.
-        /// Not applicable to Azure OpenAI, where deployment information should be included in the Azure
-        /// resource URI that's connected to.
-        /// </param>
-        /// <param name="input">
-        /// Input texts to get embeddings for, encoded as a an array of strings.
-        /// Each input must not exceed 2048 tokens in length.
-        ///
-        /// Unless you are embedding code, we suggest replacing newlines (\n) in your input with a single space,
-        /// as we have observed inferior results when newlines are present.
-        /// </param>
-        /// <param name="inputType"> type of embedding search to use. </param>
-        /// <returns> A new <see cref="OpenAI.EmbeddingsOptions"/> instance for mocking. </returns>
-        public static EmbeddingsOptions EmbeddingsOptions(string user = null, string deploymentName = null, IEnumerable<string> input = null, string inputType = null)
-        {
-            input ??= new List<string>();
-
-            return new EmbeddingsOptions(user, deploymentName, input?.ToList(), inputType, serializedAdditionalRawData: null);
-        }
-
         /// <summary> Initializes a new instance of <see cref="OpenAI.Embeddings"/>. </summary>
         /// <param name="data"> Embedding values for the prompts submitted in the request. </param>
         /// <param name="usage"> Usage counts for tokens input using the embeddings API. </param>

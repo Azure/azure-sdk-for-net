@@ -336,9 +336,9 @@ namespace Azure.AI.OpenAI.Tests
                 {
                     AzureResourceName = "openai-sdk-test-automation-account-eastus",
                     AzureResourceLocation = AzureLocation.EastUS,
-                    AzureDeploymentName = "text-davinci-002",
-                    AzureModelName = "text-davinci-002",
-                    NonAzureModelName = "text-davinci-002",
+                    AzureDeploymentName = "gpt-35-turbo-instruct",
+                    AzureModelName = "gpt-35-turbo-instruct",
+                    NonAzureModelName = "gpt-3.5-turbo-instruct",
                     EnvironmentVariableName = "COMPLETIONS_DEPLOYMENT_NAME",
                     IsLegacyAzureModel = true,
                 },
@@ -353,7 +353,7 @@ namespace Azure.AI.OpenAI.Tests
                     AzureResourceLocation = AzureLocation.EastUS,
                     AzureDeploymentName = "gpt-35-turbo",
                     AzureModelName = "gpt-35-turbo",
-                    NonAzureModelName = "text-davinci-002",
+                    NonAzureModelName = "gpt-3.5-turbo-instruct",
                 },
 
                 [Scenario.ChatCompletions] = new()
