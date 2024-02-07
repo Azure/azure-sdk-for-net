@@ -144,17 +144,14 @@ public class PipelineMessage : IDisposable
     {
         if (disposing && !_disposed)
         {
+            PipelineResponse? response = Response;
+            response?.Dispose();
+            Response = null;
+
             PipelineRequest request = Request;
             request?.Dispose();
 
             _propertyBag.Dispose();
-
-            PipelineResponse? response = Response;
-            if (response != null)
-            {
-                response.Dispose();
-                Response = null;
-            }
 
             _disposed = true;
         }

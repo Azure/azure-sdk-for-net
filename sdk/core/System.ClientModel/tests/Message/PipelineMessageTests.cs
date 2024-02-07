@@ -120,7 +120,9 @@ public class PipelineMessageTests : SyncAsyncTestBase
     }
 
     [Test]
-    public async Task UnbufferedStreamAccessibleAfterMessageDisposed()
+    [TestCase(true)]
+    [TestCase(false)]
+    public async Task ResponseStreamAccessibleAfterMessageDisposed(bool buffer)
     {
         byte[] serverBytes = new byte[1000];
         new Random().NextBytes(serverBytes);
@@ -137,7 +139,7 @@ public class PipelineMessageTests : SyncAsyncTestBase
         using (PipelineMessage message = pipeline.CreateMessage())
         {
             message.Request.Uri = testServer.Address;
-            message.BufferResponse = false;
+            message.BufferResponse = buffer;
 
             await pipeline.SendSyncOrAsync(message, IsAsync);
 
@@ -147,6 +149,7 @@ public class PipelineMessageTests : SyncAsyncTestBase
         }
 
         Assert.NotNull(response!.ContentStream);
+
         byte[] clientBytes = new byte[serverBytes.Length];
         int readLength = 0;
         while (readLength < serverBytes.Length)
