@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -197,6 +198,159 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             return new ServiceAccountApiProperties(qnaRuntimeEndpoint.Value, qnaAzureSearchEndpointKey.Value, qnaAzureSearchEndpointId.Value, Optional.ToNullable(statisticsEnabled), eventHubConnectionString.Value, storageAccountConnectionString.Value, Optional.ToNullable(aadClientId), Optional.ToNullable(aadTenantId), superUser.Value, websiteName.Value, additionalProperties);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(QnaRuntimeEndpoint))
+            {
+                builder.Append("  qnaRuntimeEndpoint:");
+                if (QnaRuntimeEndpoint.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{QnaRuntimeEndpoint}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{QnaRuntimeEndpoint}'");
+                }
+            }
+
+            if (Optional.IsDefined(QnaAzureSearchEndpointKey))
+            {
+                builder.Append("  qnaAzureSearchEndpointKey:");
+                if (QnaAzureSearchEndpointKey.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{QnaAzureSearchEndpointKey}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{QnaAzureSearchEndpointKey}'");
+                }
+            }
+
+            if (Optional.IsDefined(QnaAzureSearchEndpointId))
+            {
+                builder.Append("  qnaAzureSearchEndpointId:");
+                builder.AppendLine($" '{QnaAzureSearchEndpointId.ToString()}'");
+            }
+
+            if (Optional.IsDefined(EnableStatistics))
+            {
+                builder.Append("  statisticsEnabled:");
+                var boolValue = EnableStatistics.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(EventHubConnectionString))
+            {
+                builder.Append("  eventHubConnectionString:");
+                if (EventHubConnectionString.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{EventHubConnectionString}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{EventHubConnectionString}'");
+                }
+            }
+
+            if (Optional.IsDefined(StorageAccountConnectionString))
+            {
+                builder.Append("  storageAccountConnectionString:");
+                if (StorageAccountConnectionString.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{StorageAccountConnectionString}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{StorageAccountConnectionString}'");
+                }
+            }
+
+            if (Optional.IsDefined(AadClientId))
+            {
+                builder.Append("  aadClientId:");
+                builder.AppendLine($" '{AadClientId.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(AadTenantId))
+            {
+                builder.Append("  aadTenantId:");
+                builder.AppendLine($" '{AadTenantId.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SuperUser))
+            {
+                builder.Append("  superUser:");
+                if (SuperUser.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{SuperUser}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{SuperUser}'");
+                }
+            }
+
+            if (Optional.IsDefined(WebsiteName))
+            {
+                builder.Append("  websiteName:");
+                if (WebsiteName.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{WebsiteName}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{WebsiteName}'");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            bool inMultilineString = false;
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (inMultilineString)
+                {
+                    if (line.Contains("'''"))
+                    {
+                        inMultilineString = false;
+                    }
+                    stringBuilder.AppendLine(line);
+                    continue;
+                }
+                if (line.Contains("'''"))
+                {
+                    inMultilineString = true;
+                    stringBuilder.AppendLine($"{indent}{line}");
+                    continue;
+                }
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<ServiceAccountApiProperties>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ServiceAccountApiProperties>)this).GetFormatFromOptions(options) : options.Format;
@@ -205,6 +359,8 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(ServiceAccountApiProperties)} does not support '{options.Format}' format.");
             }
@@ -221,6 +377,8 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeServiceAccountApiProperties(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(ServiceAccountApiProperties)} does not support '{options.Format}' format.");
             }

@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.ApplicationInsights.Models;
@@ -380,6 +382,239 @@ namespace Azure.ResourceManager.ApplicationInsights
             return new WebTestData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(kind), syntheticMonitorId.Value, name0.Value, description.Value, Optional.ToNullable(enabled), Optional.ToNullable(frequency), Optional.ToNullable(timeout), Optional.ToNullable(kind0), Optional.ToNullable(retryEnabled), Optional.ToList(locations), configuration.Value, provisioningState.Value, request.Value, validationRules.Value, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                if (Name.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{Name}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{Name}'");
+                }
+            }
+
+            if (Optional.IsDefined(Location))
+            {
+                builder.Append("  location:");
+                builder.AppendLine($" '{Location.ToString()}'");
+            }
+
+            if (Optional.IsCollectionDefined(Tags))
+            {
+                if (Tags.Any())
+                {
+                    builder.Append("  tags:");
+                    builder.AppendLine(" {");
+                    foreach (var item in Tags)
+                    {
+                        builder.Append($"    {item.Key}:");
+                        if (item.Value == null)
+                        {
+                            builder.Append("null");
+                            continue;
+                        }
+                        if (item.Value.Contains(Environment.NewLine))
+                        {
+                            builder.AppendLine(" '''");
+                            builder.AppendLine($"{item.Value}'''");
+                        }
+                        else
+                        {
+                            builder.AppendLine($" '{item.Value}'");
+                        }
+                    }
+                    builder.AppendLine("  }");
+                }
+            }
+
+            if (Optional.IsDefined(Kind))
+            {
+                builder.Append("  kind:");
+                builder.AppendLine($" '{Kind.Value.ToSerialString()}'");
+            }
+
+            if (Optional.IsDefined(Id))
+            {
+                builder.Append("  id:");
+                builder.AppendLine($" '{Id.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SystemData))
+            {
+                builder.Append("  systemData:");
+                builder.AppendLine($" '{SystemData.ToString()}'");
+            }
+
+            builder.Append("  properties:");
+            builder.AppendLine(" {");
+            if (Optional.IsDefined(SyntheticMonitorId))
+            {
+                builder.Append("    SyntheticMonitorId:");
+                if (SyntheticMonitorId.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{SyntheticMonitorId}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{SyntheticMonitorId}'");
+                }
+            }
+
+            if (Optional.IsDefined(WebTestName))
+            {
+                builder.Append("    Name:");
+                if (WebTestName.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{WebTestName}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{WebTestName}'");
+                }
+            }
+
+            if (Optional.IsDefined(Description))
+            {
+                builder.Append("    Description:");
+                if (Description.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{Description}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{Description}'");
+                }
+            }
+
+            if (Optional.IsDefined(IsEnabled))
+            {
+                builder.Append("    Enabled:");
+                var boolValue = IsEnabled.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(FrequencyInSeconds))
+            {
+                builder.Append("    Frequency:");
+                builder.AppendLine($" {FrequencyInSeconds.Value}");
+            }
+
+            if (Optional.IsDefined(TimeoutInSeconds))
+            {
+                builder.Append("    Timeout:");
+                builder.AppendLine($" {TimeoutInSeconds.Value}");
+            }
+
+            if (Optional.IsDefined(WebTestKind))
+            {
+                builder.Append("    Kind:");
+                builder.AppendLine($" '{WebTestKind.Value.ToSerialString()}'");
+            }
+
+            if (Optional.IsDefined(IsRetryEnabled))
+            {
+                builder.Append("    RetryEnabled:");
+                var boolValue = IsRetryEnabled.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsCollectionDefined(Locations))
+            {
+                if (Locations.Any())
+                {
+                    builder.Append("    Locations:");
+                    builder.AppendLine(" [");
+                    foreach (var item in Locations)
+                    {
+                        AppendChildObject(builder, item, options, 6, true);
+                    }
+                    builder.AppendLine("    ]");
+                }
+            }
+
+            if (Optional.IsDefined(Configuration))
+            {
+                builder.Append("    Configuration:");
+                AppendChildObject(builder, Configuration, options, 4, false);
+            }
+
+            if (Optional.IsDefined(ProvisioningState))
+            {
+                builder.Append("    provisioningState:");
+                if (ProvisioningState.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{ProvisioningState}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{ProvisioningState}'");
+                }
+            }
+
+            if (Optional.IsDefined(Request))
+            {
+                builder.Append("    Request:");
+                AppendChildObject(builder, Request, options, 4, false);
+            }
+
+            if (Optional.IsDefined(ValidationRules))
+            {
+                builder.Append("    ValidationRules:");
+                AppendChildObject(builder, ValidationRules, options, 4, false);
+            }
+
+            builder.AppendLine("  }");
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            bool inMultilineString = false;
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (inMultilineString)
+                {
+                    if (line.Contains("'''"))
+                    {
+                        inMultilineString = false;
+                    }
+                    stringBuilder.AppendLine(line);
+                    continue;
+                }
+                if (line.Contains("'''"))
+                {
+                    inMultilineString = true;
+                    stringBuilder.AppendLine($"{indent}{line}");
+                    continue;
+                }
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<WebTestData>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<WebTestData>)this).GetFormatFromOptions(options) : options.Format;
@@ -388,6 +623,8 @@ namespace Azure.ResourceManager.ApplicationInsights
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(WebTestData)} does not support '{options.Format}' format.");
             }
@@ -404,6 +641,8 @@ namespace Azure.ResourceManager.ApplicationInsights
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeWebTestData(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(WebTestData)} does not support '{options.Format}' format.");
             }

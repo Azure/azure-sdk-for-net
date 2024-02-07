@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Hci.Models;
@@ -330,6 +332,190 @@ namespace Azure.ResourceManager.Hci
             return new ArcExtensionData(id, name, type, systemData.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(aggregateState), Optional.ToList(perNodeExtensionDetails), forceUpdateTag.Value, publisher.Value, type0.Value, typeHandlerVersion.Value, Optional.ToNullable(autoUpgradeMinorVersion), settings.Value, protectedSettings.Value, Optional.ToNullable(enableAutomaticUpgrade), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                if (Name.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{Name}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{Name}'");
+                }
+            }
+
+            if (Optional.IsDefined(Id))
+            {
+                builder.Append("  id:");
+                builder.AppendLine($" '{Id.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SystemData))
+            {
+                builder.Append("  systemData:");
+                builder.AppendLine($" '{SystemData.ToString()}'");
+            }
+
+            builder.Append("  properties:");
+            builder.AppendLine(" {");
+            if (Optional.IsDefined(ProvisioningState))
+            {
+                builder.Append("    provisioningState:");
+                builder.AppendLine($" '{ProvisioningState.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(AggregateState))
+            {
+                builder.Append("    aggregateState:");
+                builder.AppendLine($" '{AggregateState.Value.ToString()}'");
+            }
+
+            if (Optional.IsCollectionDefined(PerNodeExtensionDetails))
+            {
+                if (PerNodeExtensionDetails.Any())
+                {
+                    builder.Append("    perNodeExtensionDetails:");
+                    builder.AppendLine(" [");
+                    foreach (var item in PerNodeExtensionDetails)
+                    {
+                        AppendChildObject(builder, item, options, 6, true);
+                    }
+                    builder.AppendLine("    ]");
+                }
+            }
+
+            builder.Append("    extensionParameters:");
+            builder.AppendLine(" {");
+            if (Optional.IsDefined(ForceUpdateTag))
+            {
+                builder.Append("      forceUpdateTag:");
+                if (ForceUpdateTag.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{ForceUpdateTag}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{ForceUpdateTag}'");
+                }
+            }
+
+            if (Optional.IsDefined(Publisher))
+            {
+                builder.Append("      publisher:");
+                if (Publisher.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{Publisher}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{Publisher}'");
+                }
+            }
+
+            if (Optional.IsDefined(ArcExtensionType))
+            {
+                builder.Append("      type:");
+                if (ArcExtensionType.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{ArcExtensionType}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{ArcExtensionType}'");
+                }
+            }
+
+            if (Optional.IsDefined(TypeHandlerVersion))
+            {
+                builder.Append("      typeHandlerVersion:");
+                if (TypeHandlerVersion.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{TypeHandlerVersion}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{TypeHandlerVersion}'");
+                }
+            }
+
+            if (Optional.IsDefined(ShouldAutoUpgradeMinorVersion))
+            {
+                builder.Append("      autoUpgradeMinorVersion:");
+                var boolValue = ShouldAutoUpgradeMinorVersion.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(Settings))
+            {
+                builder.Append("      settings:");
+                builder.AppendLine($" '{Settings.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ProtectedSettings))
+            {
+                builder.Append("      protectedSettings:");
+                builder.AppendLine($" '{ProtectedSettings.ToString()}'");
+            }
+
+            if (Optional.IsDefined(EnableAutomaticUpgrade))
+            {
+                builder.Append("      enableAutomaticUpgrade:");
+                var boolValue = EnableAutomaticUpgrade.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            builder.AppendLine("    }");
+            builder.AppendLine("  }");
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            bool inMultilineString = false;
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (inMultilineString)
+                {
+                    if (line.Contains("'''"))
+                    {
+                        inMultilineString = false;
+                    }
+                    stringBuilder.AppendLine(line);
+                    continue;
+                }
+                if (line.Contains("'''"))
+                {
+                    inMultilineString = true;
+                    stringBuilder.AppendLine($"{indent}{line}");
+                    continue;
+                }
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<ArcExtensionData>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ArcExtensionData>)this).GetFormatFromOptions(options) : options.Format;
@@ -338,6 +524,8 @@ namespace Azure.ResourceManager.Hci
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(ArcExtensionData)} does not support '{options.Format}' format.");
             }
@@ -354,6 +542,8 @@ namespace Azure.ResourceManager.Hci
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeArcExtensionData(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(ArcExtensionData)} does not support '{options.Format}' format.");
             }

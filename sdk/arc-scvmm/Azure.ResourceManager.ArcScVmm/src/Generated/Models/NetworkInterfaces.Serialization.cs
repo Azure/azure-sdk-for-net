@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -238,6 +240,206 @@ namespace Azure.ResourceManager.ArcScVmm.Models
             return new NetworkInterfaces(name.Value, displayName.Value, Optional.ToList(ipv4Addresses), Optional.ToList(ipv6Addresses), macAddress.Value, virtualNetworkId.Value, networkName.Value, Optional.ToNullable(ipv4AddressType), Optional.ToNullable(ipv6AddressType), Optional.ToNullable(macAddressType), nicId.Value, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                if (Name.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{Name}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{Name}'");
+                }
+            }
+
+            if (Optional.IsDefined(DisplayName))
+            {
+                builder.Append("  displayName:");
+                if (DisplayName.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{DisplayName}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{DisplayName}'");
+                }
+            }
+
+            if (Optional.IsCollectionDefined(IPv4Addresses))
+            {
+                if (IPv4Addresses.Any())
+                {
+                    builder.Append("  ipv4Addresses:");
+                    builder.AppendLine(" [");
+                    foreach (var item in IPv4Addresses)
+                    {
+                        if (item == null)
+                        {
+                            builder.Append("null");
+                            continue;
+                        }
+                        if (item.Contains(Environment.NewLine))
+                        {
+                            builder.AppendLine("    '''");
+                            builder.AppendLine($"{item}'''");
+                        }
+                        else
+                        {
+                            builder.AppendLine($"    '{item}'");
+                        }
+                    }
+                    builder.AppendLine("  ]");
+                }
+            }
+
+            if (Optional.IsCollectionDefined(IPv6Addresses))
+            {
+                if (IPv6Addresses.Any())
+                {
+                    builder.Append("  ipv6Addresses:");
+                    builder.AppendLine(" [");
+                    foreach (var item in IPv6Addresses)
+                    {
+                        if (item == null)
+                        {
+                            builder.Append("null");
+                            continue;
+                        }
+                        if (item.Contains(Environment.NewLine))
+                        {
+                            builder.AppendLine("    '''");
+                            builder.AppendLine($"{item}'''");
+                        }
+                        else
+                        {
+                            builder.AppendLine($"    '{item}'");
+                        }
+                    }
+                    builder.AppendLine("  ]");
+                }
+            }
+
+            if (Optional.IsDefined(MacAddress))
+            {
+                builder.Append("  macAddress:");
+                if (MacAddress.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{MacAddress}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{MacAddress}'");
+                }
+            }
+
+            if (Optional.IsDefined(VirtualNetworkId))
+            {
+                builder.Append("  virtualNetworkId:");
+                if (VirtualNetworkId.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{VirtualNetworkId}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{VirtualNetworkId}'");
+                }
+            }
+
+            if (Optional.IsDefined(NetworkName))
+            {
+                builder.Append("  networkName:");
+                if (NetworkName.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{NetworkName}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{NetworkName}'");
+                }
+            }
+
+            if (Optional.IsDefined(IPv4AddressType))
+            {
+                builder.Append("  ipv4AddressType:");
+                builder.AppendLine($" '{IPv4AddressType.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(IPv6AddressType))
+            {
+                builder.Append("  ipv6AddressType:");
+                builder.AppendLine($" '{IPv6AddressType.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(MacAddressType))
+            {
+                builder.Append("  macAddressType:");
+                builder.AppendLine($" '{MacAddressType.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(NicId))
+            {
+                builder.Append("  nicId:");
+                if (NicId.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{NicId}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{NicId}'");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            bool inMultilineString = false;
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (inMultilineString)
+                {
+                    if (line.Contains("'''"))
+                    {
+                        inMultilineString = false;
+                    }
+                    stringBuilder.AppendLine(line);
+                    continue;
+                }
+                if (line.Contains("'''"))
+                {
+                    inMultilineString = true;
+                    stringBuilder.AppendLine($"{indent}{line}");
+                    continue;
+                }
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<NetworkInterfaces>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<NetworkInterfaces>)this).GetFormatFromOptions(options) : options.Format;
@@ -246,6 +448,8 @@ namespace Azure.ResourceManager.ArcScVmm.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(NetworkInterfaces)} does not support '{options.Format}' format.");
             }
@@ -262,6 +466,8 @@ namespace Azure.ResourceManager.ArcScVmm.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeNetworkInterfaces(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(NetworkInterfaces)} does not support '{options.Format}' format.");
             }

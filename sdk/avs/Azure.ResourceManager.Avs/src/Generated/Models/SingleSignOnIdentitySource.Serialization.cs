@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -199,6 +200,166 @@ namespace Azure.ResourceManager.Avs.Models
             return new SingleSignOnIdentitySource(name.Value, @alias.Value, domain.Value, baseUserDN.Value, baseGroupDN.Value, primaryServer.Value, secondaryServer.Value, Optional.ToNullable(ssl), username.Value, password.Value, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                if (Name.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{Name}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{Name}'");
+                }
+            }
+
+            if (Optional.IsDefined(Alias))
+            {
+                builder.Append("  alias:");
+                if (Alias.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{Alias}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{Alias}'");
+                }
+            }
+
+            if (Optional.IsDefined(Domain))
+            {
+                builder.Append("  domain:");
+                if (Domain.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{Domain}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{Domain}'");
+                }
+            }
+
+            if (Optional.IsDefined(BaseUserDN))
+            {
+                builder.Append("  baseUserDN:");
+                if (BaseUserDN.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{BaseUserDN}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{BaseUserDN}'");
+                }
+            }
+
+            if (Optional.IsDefined(BaseGroupDN))
+            {
+                builder.Append("  baseGroupDN:");
+                if (BaseGroupDN.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{BaseGroupDN}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{BaseGroupDN}'");
+                }
+            }
+
+            if (Optional.IsDefined(PrimaryServer))
+            {
+                builder.Append("  primaryServer:");
+                builder.AppendLine($" '{PrimaryServer.AbsoluteUri}'");
+            }
+
+            if (Optional.IsDefined(SecondaryServer))
+            {
+                builder.Append("  secondaryServer:");
+                builder.AppendLine($" '{SecondaryServer.AbsoluteUri}'");
+            }
+
+            if (Optional.IsDefined(Ssl))
+            {
+                builder.Append("  ssl:");
+                builder.AppendLine($" '{Ssl.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Username))
+            {
+                builder.Append("  username:");
+                if (Username.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{Username}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{Username}'");
+                }
+            }
+
+            if (Optional.IsDefined(Password))
+            {
+                builder.Append("  password:");
+                if (Password.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{Password}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{Password}'");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            bool inMultilineString = false;
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (inMultilineString)
+                {
+                    if (line.Contains("'''"))
+                    {
+                        inMultilineString = false;
+                    }
+                    stringBuilder.AppendLine(line);
+                    continue;
+                }
+                if (line.Contains("'''"))
+                {
+                    inMultilineString = true;
+                    stringBuilder.AppendLine($"{indent}{line}");
+                    continue;
+                }
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<SingleSignOnIdentitySource>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<SingleSignOnIdentitySource>)this).GetFormatFromOptions(options) : options.Format;
@@ -207,6 +368,8 @@ namespace Azure.ResourceManager.Avs.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(SingleSignOnIdentitySource)} does not support '{options.Format}' format.");
             }
@@ -223,6 +386,8 @@ namespace Azure.ResourceManager.Avs.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeSingleSignOnIdentitySource(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(SingleSignOnIdentitySource)} does not support '{options.Format}' format.");
             }

@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -207,6 +208,175 @@ namespace Azure.ResourceManager.BotService.Models
             return new SlackChannelProperties(clientId.Value, clientSecret.Value, verificationToken.Value, scopes.Value, landingPageUrl.Value, redirectAction.Value, lastSubmissionId.Value, Optional.ToNullable(registerBeforeOAuthFlow), Optional.ToNullable(isValidated), signingSecret.Value, isEnabled, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(ClientId))
+            {
+                builder.Append("  clientId:");
+                if (ClientId.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{ClientId}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{ClientId}'");
+                }
+            }
+
+            if (Optional.IsDefined(ClientSecret))
+            {
+                builder.Append("  clientSecret:");
+                if (ClientSecret.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{ClientSecret}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{ClientSecret}'");
+                }
+            }
+
+            if (Optional.IsDefined(VerificationToken))
+            {
+                builder.Append("  verificationToken:");
+                if (VerificationToken.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{VerificationToken}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{VerificationToken}'");
+                }
+            }
+
+            if (Optional.IsDefined(Scopes))
+            {
+                builder.Append("  scopes:");
+                if (Scopes.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{Scopes}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{Scopes}'");
+                }
+            }
+
+            if (Optional.IsDefined(LandingPageUri))
+            {
+                builder.Append("  landingPageUrl:");
+                builder.AppendLine($" '{LandingPageUri.AbsoluteUri}'");
+            }
+
+            if (Optional.IsDefined(RedirectAction))
+            {
+                builder.Append("  redirectAction:");
+                if (RedirectAction.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{RedirectAction}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{RedirectAction}'");
+                }
+            }
+
+            if (Optional.IsDefined(LastSubmissionId))
+            {
+                builder.Append("  lastSubmissionId:");
+                if (LastSubmissionId.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{LastSubmissionId}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{LastSubmissionId}'");
+                }
+            }
+
+            if (Optional.IsDefined(RegisterBeforeOAuthFlow))
+            {
+                builder.Append("  registerBeforeOAuthFlow:");
+                var boolValue = RegisterBeforeOAuthFlow.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(IsValidated))
+            {
+                builder.Append("  IsValidated:");
+                var boolValue = IsValidated.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(SigningSecret))
+            {
+                builder.Append("  signingSecret:");
+                if (SigningSecret.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{SigningSecret}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{SigningSecret}'");
+                }
+            }
+
+            if (Optional.IsDefined(IsEnabled))
+            {
+                builder.Append("  isEnabled:");
+                var boolValue = IsEnabled == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            bool inMultilineString = false;
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (inMultilineString)
+                {
+                    if (line.Contains("'''"))
+                    {
+                        inMultilineString = false;
+                    }
+                    stringBuilder.AppendLine(line);
+                    continue;
+                }
+                if (line.Contains("'''"))
+                {
+                    inMultilineString = true;
+                    stringBuilder.AppendLine($"{indent}{line}");
+                    continue;
+                }
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<SlackChannelProperties>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<SlackChannelProperties>)this).GetFormatFromOptions(options) : options.Format;
@@ -215,6 +385,8 @@ namespace Azure.ResourceManager.BotService.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(SlackChannelProperties)} does not support '{options.Format}' format.");
             }
@@ -231,6 +403,8 @@ namespace Azure.ResourceManager.BotService.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeSlackChannelProperties(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(SlackChannelProperties)} does not support '{options.Format}' format.");
             }

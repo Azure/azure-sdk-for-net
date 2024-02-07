@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Cdn.Models;
@@ -560,6 +562,329 @@ namespace Azure.ResourceManager.Cdn
             return new CdnEndpointData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, originPath.Value, Optional.ToList(contentTypesToCompress), originHostHeader.Value, Optional.ToNullable(isCompressionEnabled), Optional.ToNullable(isHttpAllowed), Optional.ToNullable(isHttpsAllowed), Optional.ToNullable(queryStringCachingBehavior), Optional.ToNullable(optimizationType), probePath.Value, Optional.ToList(geoFilters), defaultOriginGroup.Value, Optional.ToList(uriSigningKeys), deliveryPolicy.Value, webApplicationFirewallPolicyLink.Value, hostName.Value, Optional.ToList(origins), Optional.ToList(originGroups), Optional.ToList(customDomains), Optional.ToNullable(resourceState), Optional.ToNullable(provisioningState), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                if (Name.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{Name}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{Name}'");
+                }
+            }
+
+            if (Optional.IsDefined(Location))
+            {
+                builder.Append("  location:");
+                builder.AppendLine($" '{Location.ToString()}'");
+            }
+
+            if (Optional.IsCollectionDefined(Tags))
+            {
+                if (Tags.Any())
+                {
+                    builder.Append("  tags:");
+                    builder.AppendLine(" {");
+                    foreach (var item in Tags)
+                    {
+                        builder.Append($"    {item.Key}:");
+                        if (item.Value == null)
+                        {
+                            builder.Append("null");
+                            continue;
+                        }
+                        if (item.Value.Contains(Environment.NewLine))
+                        {
+                            builder.AppendLine(" '''");
+                            builder.AppendLine($"{item.Value}'''");
+                        }
+                        else
+                        {
+                            builder.AppendLine($" '{item.Value}'");
+                        }
+                    }
+                    builder.AppendLine("  }");
+                }
+            }
+
+            if (Optional.IsDefined(Id))
+            {
+                builder.Append("  id:");
+                builder.AppendLine($" '{Id.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SystemData))
+            {
+                builder.Append("  systemData:");
+                builder.AppendLine($" '{SystemData.ToString()}'");
+            }
+
+            builder.Append("  properties:");
+            builder.AppendLine(" {");
+            if (Optional.IsDefined(OriginPath))
+            {
+                builder.Append("    originPath:");
+                if (OriginPath.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{OriginPath}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{OriginPath}'");
+                }
+            }
+
+            if (Optional.IsCollectionDefined(ContentTypesToCompress))
+            {
+                if (ContentTypesToCompress.Any())
+                {
+                    builder.Append("    contentTypesToCompress:");
+                    builder.AppendLine(" [");
+                    foreach (var item in ContentTypesToCompress)
+                    {
+                        if (item == null)
+                        {
+                            builder.Append("null");
+                            continue;
+                        }
+                        if (item.Contains(Environment.NewLine))
+                        {
+                            builder.AppendLine("      '''");
+                            builder.AppendLine($"{item}'''");
+                        }
+                        else
+                        {
+                            builder.AppendLine($"      '{item}'");
+                        }
+                    }
+                    builder.AppendLine("    ]");
+                }
+            }
+
+            if (Optional.IsDefined(OriginHostHeader))
+            {
+                builder.Append("    originHostHeader:");
+                if (OriginHostHeader.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{OriginHostHeader}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{OriginHostHeader}'");
+                }
+            }
+
+            if (Optional.IsDefined(IsCompressionEnabled))
+            {
+                builder.Append("    isCompressionEnabled:");
+                var boolValue = IsCompressionEnabled.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(IsHttpAllowed))
+            {
+                builder.Append("    isHttpAllowed:");
+                var boolValue = IsHttpAllowed.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(IsHttpsAllowed))
+            {
+                builder.Append("    isHttpsAllowed:");
+                var boolValue = IsHttpsAllowed.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(QueryStringCachingBehavior))
+            {
+                builder.Append("    queryStringCachingBehavior:");
+                builder.AppendLine($" '{QueryStringCachingBehavior.Value.ToSerialString()}'");
+            }
+
+            if (Optional.IsDefined(OptimizationType))
+            {
+                builder.Append("    optimizationType:");
+                builder.AppendLine($" '{OptimizationType.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ProbePath))
+            {
+                builder.Append("    probePath:");
+                if (ProbePath.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{ProbePath}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{ProbePath}'");
+                }
+            }
+
+            if (Optional.IsCollectionDefined(GeoFilters))
+            {
+                if (GeoFilters.Any())
+                {
+                    builder.Append("    geoFilters:");
+                    builder.AppendLine(" [");
+                    foreach (var item in GeoFilters)
+                    {
+                        AppendChildObject(builder, item, options, 6, true);
+                    }
+                    builder.AppendLine("    ]");
+                }
+            }
+
+            if (Optional.IsDefined(DefaultOriginGroup))
+            {
+                builder.Append("    defaultOriginGroup:");
+                AppendChildObject(builder, DefaultOriginGroup, options, 4, false);
+            }
+
+            if (Optional.IsCollectionDefined(UriSigningKeys))
+            {
+                if (UriSigningKeys.Any())
+                {
+                    builder.Append("    urlSigningKeys:");
+                    builder.AppendLine(" [");
+                    foreach (var item in UriSigningKeys)
+                    {
+                        AppendChildObject(builder, item, options, 6, true);
+                    }
+                    builder.AppendLine("    ]");
+                }
+            }
+
+            if (Optional.IsDefined(DeliveryPolicy))
+            {
+                builder.Append("    deliveryPolicy:");
+                AppendChildObject(builder, DeliveryPolicy, options, 4, false);
+            }
+
+            if (Optional.IsDefined(WebApplicationFirewallPolicyLink))
+            {
+                builder.Append("    webApplicationFirewallPolicyLink:");
+                AppendChildObject(builder, WebApplicationFirewallPolicyLink, options, 4, false);
+            }
+
+            if (Optional.IsDefined(HostName))
+            {
+                builder.Append("    hostName:");
+                if (HostName.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{HostName}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{HostName}'");
+                }
+            }
+
+            if (Optional.IsCollectionDefined(Origins))
+            {
+                if (Origins.Any())
+                {
+                    builder.Append("    origins:");
+                    builder.AppendLine(" [");
+                    foreach (var item in Origins)
+                    {
+                        AppendChildObject(builder, item, options, 6, true);
+                    }
+                    builder.AppendLine("    ]");
+                }
+            }
+
+            if (Optional.IsCollectionDefined(OriginGroups))
+            {
+                if (OriginGroups.Any())
+                {
+                    builder.Append("    originGroups:");
+                    builder.AppendLine(" [");
+                    foreach (var item in OriginGroups)
+                    {
+                        AppendChildObject(builder, item, options, 6, true);
+                    }
+                    builder.AppendLine("    ]");
+                }
+            }
+
+            if (Optional.IsCollectionDefined(CustomDomains))
+            {
+                if (CustomDomains.Any())
+                {
+                    builder.Append("    customDomains:");
+                    builder.AppendLine(" [");
+                    foreach (var item in CustomDomains)
+                    {
+                        AppendChildObject(builder, item, options, 6, true);
+                    }
+                    builder.AppendLine("    ]");
+                }
+            }
+
+            if (Optional.IsDefined(ResourceState))
+            {
+                builder.Append("    resourceState:");
+                builder.AppendLine($" '{ResourceState.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ProvisioningState))
+            {
+                builder.Append("    provisioningState:");
+                builder.AppendLine($" '{ProvisioningState.Value.ToString()}'");
+            }
+
+            builder.AppendLine("  }");
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            bool inMultilineString = false;
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (inMultilineString)
+                {
+                    if (line.Contains("'''"))
+                    {
+                        inMultilineString = false;
+                    }
+                    stringBuilder.AppendLine(line);
+                    continue;
+                }
+                if (line.Contains("'''"))
+                {
+                    inMultilineString = true;
+                    stringBuilder.AppendLine($"{indent}{line}");
+                    continue;
+                }
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<CdnEndpointData>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<CdnEndpointData>)this).GetFormatFromOptions(options) : options.Format;
@@ -568,6 +893,8 @@ namespace Azure.ResourceManager.Cdn
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(CdnEndpointData)} does not support '{options.Format}' format.");
             }
@@ -584,6 +911,8 @@ namespace Azure.ResourceManager.Cdn
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeCdnEndpointData(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(CdnEndpointData)} does not support '{options.Format}' format.");
             }

@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -259,6 +261,192 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
             return new ReportProperties(id.Value, Optional.ToNullable(status), Optional.ToNullable(tenantId), reportName.Value, offerGuid.Value, timeZone, triggerTime, Optional.ToNullable(nextTriggerTime), Optional.ToNullable(lastTriggerTime), Optional.ToList(subscriptions), resources, complianceStatus.Value, Optional.ToNullable(provisioningState), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(Id))
+            {
+                builder.Append("  id:");
+                if (Id.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{Id}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{Id}'");
+                }
+            }
+
+            if (Optional.IsDefined(Status))
+            {
+                builder.Append("  status:");
+                builder.AppendLine($" '{Status.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(TenantId))
+            {
+                builder.Append("  tenantId:");
+                builder.AppendLine($" '{TenantId.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ReportName))
+            {
+                builder.Append("  reportName:");
+                if (ReportName.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{ReportName}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{ReportName}'");
+                }
+            }
+
+            if (Optional.IsDefined(OfferGuid))
+            {
+                builder.Append("  offerGuid:");
+                if (OfferGuid.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{OfferGuid}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{OfferGuid}'");
+                }
+            }
+
+            if (Optional.IsDefined(TimeZone))
+            {
+                builder.Append("  timeZone:");
+                if (TimeZone.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{TimeZone}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{TimeZone}'");
+                }
+            }
+
+            if (Optional.IsDefined(TriggerOn))
+            {
+                builder.Append("  triggerTime:");
+                var formattedDateTimeString = TypeFormatters.ToString(TriggerOn, "o");
+                builder.AppendLine($" '{formattedDateTimeString}'");
+            }
+
+            if (Optional.IsDefined(NextTriggerOn))
+            {
+                builder.Append("  nextTriggerTime:");
+                var formattedDateTimeString = TypeFormatters.ToString(NextTriggerOn.Value, "o");
+                builder.AppendLine($" '{formattedDateTimeString}'");
+            }
+
+            if (Optional.IsDefined(LastTriggerOn))
+            {
+                builder.Append("  lastTriggerTime:");
+                var formattedDateTimeString = TypeFormatters.ToString(LastTriggerOn.Value, "o");
+                builder.AppendLine($" '{formattedDateTimeString}'");
+            }
+
+            if (Optional.IsCollectionDefined(Subscriptions))
+            {
+                if (Subscriptions.Any())
+                {
+                    builder.Append("  subscriptions:");
+                    builder.AppendLine(" [");
+                    foreach (var item in Subscriptions)
+                    {
+                        if (item == null)
+                        {
+                            builder.Append("null");
+                            continue;
+                        }
+                        if (item.Contains(Environment.NewLine))
+                        {
+                            builder.AppendLine("    '''");
+                            builder.AppendLine($"{item}'''");
+                        }
+                        else
+                        {
+                            builder.AppendLine($"    '{item}'");
+                        }
+                    }
+                    builder.AppendLine("  ]");
+                }
+            }
+
+            if (Optional.IsCollectionDefined(Resources))
+            {
+                if (Resources.Any())
+                {
+                    builder.Append("  resources:");
+                    builder.AppendLine(" [");
+                    foreach (var item in Resources)
+                    {
+                        AppendChildObject(builder, item, options, 4, true);
+                    }
+                    builder.AppendLine("  ]");
+                }
+            }
+
+            if (Optional.IsDefined(ComplianceStatus))
+            {
+                builder.Append("  complianceStatus:");
+                AppendChildObject(builder, ComplianceStatus, options, 2, false);
+            }
+
+            if (Optional.IsDefined(ProvisioningState))
+            {
+                builder.Append("  provisioningState:");
+                builder.AppendLine($" '{ProvisioningState.Value.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            bool inMultilineString = false;
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (inMultilineString)
+                {
+                    if (line.Contains("'''"))
+                    {
+                        inMultilineString = false;
+                    }
+                    stringBuilder.AppendLine(line);
+                    continue;
+                }
+                if (line.Contains("'''"))
+                {
+                    inMultilineString = true;
+                    stringBuilder.AppendLine($"{indent}{line}");
+                    continue;
+                }
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<ReportProperties>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ReportProperties>)this).GetFormatFromOptions(options) : options.Format;
@@ -267,6 +455,8 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(ReportProperties)} does not support '{options.Format}' format.");
             }
@@ -283,6 +473,8 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeReportProperties(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(ReportProperties)} does not support '{options.Format}' format.");
             }

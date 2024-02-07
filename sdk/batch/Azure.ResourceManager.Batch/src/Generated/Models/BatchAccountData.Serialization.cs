@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Batch.Models;
@@ -531,6 +533,262 @@ namespace Azure.ResourceManager.Batch
             return new BatchAccountData(id, name, type, systemData.Value, identity, accountEndpoint.Value, nodeManagementEndpoint.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(poolAllocationMode), keyVaultReference.Value, Optional.ToNullable(publicNetworkAccess), networkProfile.Value, Optional.ToList(privateEndpointConnections), autoStorage.Value, encryption.Value, Optional.ToNullable(dedicatedCoreQuota), Optional.ToNullable(lowPriorityCoreQuota), Optional.ToList(dedicatedCoreQuotaPerVmFamily), Optional.ToNullable(dedicatedCoreQuotaPerVmFamilyEnforced), Optional.ToNullable(poolQuota), Optional.ToNullable(activeJobAndJobScheduleQuota), Optional.ToList(allowedAuthenticationModes), Optional.ToNullable(location), Optional.ToDictionary(tags), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                if (Name.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{Name}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{Name}'");
+                }
+            }
+
+            if (Optional.IsDefined(Location))
+            {
+                builder.Append("  location:");
+                builder.AppendLine($" '{Location.Value.ToString()}'");
+            }
+
+            if (Optional.IsCollectionDefined(Tags))
+            {
+                if (Tags.Any())
+                {
+                    builder.Append("  tags:");
+                    builder.AppendLine(" {");
+                    foreach (var item in Tags)
+                    {
+                        builder.Append($"    {item.Key}:");
+                        if (item.Value == null)
+                        {
+                            builder.Append("null");
+                            continue;
+                        }
+                        if (item.Value.Contains(Environment.NewLine))
+                        {
+                            builder.AppendLine(" '''");
+                            builder.AppendLine($"{item.Value}'''");
+                        }
+                        else
+                        {
+                            builder.AppendLine($" '{item.Value}'");
+                        }
+                    }
+                    builder.AppendLine("  }");
+                }
+            }
+
+            if (Optional.IsDefined(Identity))
+            {
+                builder.Append("  identity:");
+                AppendChildObject(builder, Identity, options, 2, false);
+            }
+
+            if (Optional.IsDefined(Id))
+            {
+                builder.Append("  id:");
+                builder.AppendLine($" '{Id.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SystemData))
+            {
+                builder.Append("  systemData:");
+                builder.AppendLine($" '{SystemData.ToString()}'");
+            }
+
+            builder.Append("  properties:");
+            builder.AppendLine(" {");
+            if (Optional.IsDefined(AccountEndpoint))
+            {
+                builder.Append("    accountEndpoint:");
+                if (AccountEndpoint.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{AccountEndpoint}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{AccountEndpoint}'");
+                }
+            }
+
+            if (Optional.IsDefined(NodeManagementEndpoint))
+            {
+                builder.Append("    nodeManagementEndpoint:");
+                if (NodeManagementEndpoint.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{NodeManagementEndpoint}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{NodeManagementEndpoint}'");
+                }
+            }
+
+            if (Optional.IsDefined(ProvisioningState))
+            {
+                builder.Append("    provisioningState:");
+                builder.AppendLine($" '{ProvisioningState.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(PoolAllocationMode))
+            {
+                builder.Append("    poolAllocationMode:");
+                builder.AppendLine($" '{PoolAllocationMode.Value.ToSerialString()}'");
+            }
+
+            if (Optional.IsDefined(KeyVaultReference))
+            {
+                builder.Append("    keyVaultReference:");
+                AppendChildObject(builder, KeyVaultReference, options, 4, false);
+            }
+
+            if (Optional.IsDefined(PublicNetworkAccess))
+            {
+                builder.Append("    publicNetworkAccess:");
+                builder.AppendLine($" '{PublicNetworkAccess.Value.ToSerialString()}'");
+            }
+
+            if (Optional.IsDefined(NetworkProfile))
+            {
+                builder.Append("    networkProfile:");
+                AppendChildObject(builder, NetworkProfile, options, 4, false);
+            }
+
+            if (Optional.IsCollectionDefined(PrivateEndpointConnections))
+            {
+                if (PrivateEndpointConnections.Any())
+                {
+                    builder.Append("    privateEndpointConnections:");
+                    builder.AppendLine(" [");
+                    foreach (var item in PrivateEndpointConnections)
+                    {
+                        AppendChildObject(builder, item, options, 6, true);
+                    }
+                    builder.AppendLine("    ]");
+                }
+            }
+
+            if (Optional.IsDefined(AutoStorage))
+            {
+                builder.Append("    autoStorage:");
+                AppendChildObject(builder, AutoStorage, options, 4, false);
+            }
+
+            if (Optional.IsDefined(Encryption))
+            {
+                builder.Append("    encryption:");
+                AppendChildObject(builder, Encryption, options, 4, false);
+            }
+
+            if (Optional.IsDefined(DedicatedCoreQuota))
+            {
+                builder.Append("    dedicatedCoreQuota:");
+                builder.AppendLine($" {DedicatedCoreQuota.Value}");
+            }
+
+            if (Optional.IsDefined(LowPriorityCoreQuota))
+            {
+                builder.Append("    lowPriorityCoreQuota:");
+                builder.AppendLine($" {LowPriorityCoreQuota.Value}");
+            }
+
+            if (Optional.IsCollectionDefined(DedicatedCoreQuotaPerVmFamily))
+            {
+                if (DedicatedCoreQuotaPerVmFamily.Any())
+                {
+                    builder.Append("    dedicatedCoreQuotaPerVMFamily:");
+                    builder.AppendLine(" [");
+                    foreach (var item in DedicatedCoreQuotaPerVmFamily)
+                    {
+                        AppendChildObject(builder, item, options, 6, true);
+                    }
+                    builder.AppendLine("    ]");
+                }
+            }
+
+            if (Optional.IsDefined(IsDedicatedCoreQuotaPerVmFamilyEnforced))
+            {
+                builder.Append("    dedicatedCoreQuotaPerVMFamilyEnforced:");
+                var boolValue = IsDedicatedCoreQuotaPerVmFamilyEnforced.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(PoolQuota))
+            {
+                builder.Append("    poolQuota:");
+                builder.AppendLine($" {PoolQuota.Value}");
+            }
+
+            if (Optional.IsDefined(ActiveJobAndJobScheduleQuota))
+            {
+                builder.Append("    activeJobAndJobScheduleQuota:");
+                builder.AppendLine($" {ActiveJobAndJobScheduleQuota.Value}");
+            }
+
+            if (Optional.IsCollectionDefined(AllowedAuthenticationModes))
+            {
+                if (AllowedAuthenticationModes.Any())
+                {
+                    builder.Append("    allowedAuthenticationModes:");
+                    builder.AppendLine(" [");
+                    foreach (var item in AllowedAuthenticationModes)
+                    {
+                        builder.AppendLine($"      '{item.ToSerialString()}'");
+                    }
+                    builder.AppendLine("    ]");
+                }
+            }
+
+            builder.AppendLine("  }");
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            bool inMultilineString = false;
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (inMultilineString)
+                {
+                    if (line.Contains("'''"))
+                    {
+                        inMultilineString = false;
+                    }
+                    stringBuilder.AppendLine(line);
+                    continue;
+                }
+                if (line.Contains("'''"))
+                {
+                    inMultilineString = true;
+                    stringBuilder.AppendLine($"{indent}{line}");
+                    continue;
+                }
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<BatchAccountData>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<BatchAccountData>)this).GetFormatFromOptions(options) : options.Format;
@@ -539,6 +797,8 @@ namespace Azure.ResourceManager.Batch
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(BatchAccountData)} does not support '{options.Format}' format.");
             }
@@ -555,6 +815,8 @@ namespace Azure.ResourceManager.Batch
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeBatchAccountData(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(BatchAccountData)} does not support '{options.Format}' format.");
             }

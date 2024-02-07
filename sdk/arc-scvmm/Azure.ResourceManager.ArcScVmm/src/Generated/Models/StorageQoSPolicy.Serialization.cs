@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -155,6 +156,110 @@ namespace Azure.ResourceManager.ArcScVmm.Models
             return new StorageQoSPolicy(name.Value, id.Value, Optional.ToNullable(iopsMaximum), Optional.ToNullable(iopsMinimum), Optional.ToNullable(bandwidthLimit), policyId.Value, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                if (Name.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{Name}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{Name}'");
+                }
+            }
+
+            if (Optional.IsDefined(Id))
+            {
+                builder.Append("  id:");
+                if (Id.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{Id}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{Id}'");
+                }
+            }
+
+            if (Optional.IsDefined(IopsMaximum))
+            {
+                builder.Append("  iopsMaximum:");
+                builder.AppendLine($" '{IopsMaximum.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(IopsMinimum))
+            {
+                builder.Append("  iopsMinimum:");
+                builder.AppendLine($" '{IopsMinimum.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(BandwidthLimit))
+            {
+                builder.Append("  bandwidthLimit:");
+                builder.AppendLine($" '{BandwidthLimit.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(PolicyId))
+            {
+                builder.Append("  policyId:");
+                if (PolicyId.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{PolicyId}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{PolicyId}'");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            bool inMultilineString = false;
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (inMultilineString)
+                {
+                    if (line.Contains("'''"))
+                    {
+                        inMultilineString = false;
+                    }
+                    stringBuilder.AppendLine(line);
+                    continue;
+                }
+                if (line.Contains("'''"))
+                {
+                    inMultilineString = true;
+                    stringBuilder.AppendLine($"{indent}{line}");
+                    continue;
+                }
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<StorageQoSPolicy>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<StorageQoSPolicy>)this).GetFormatFromOptions(options) : options.Format;
@@ -163,6 +268,8 @@ namespace Azure.ResourceManager.ArcScVmm.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(StorageQoSPolicy)} does not support '{options.Format}' format.");
             }
@@ -179,6 +286,8 @@ namespace Azure.ResourceManager.ArcScVmm.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeStorageQoSPolicy(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(StorageQoSPolicy)} does not support '{options.Format}' format.");
             }
