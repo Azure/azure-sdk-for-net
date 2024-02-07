@@ -1477,7 +1477,7 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
-        public async Task PreviousUpdateCheckpointCallsTheNewUpdateCheckpoint()
+        public async Task PreviousUpdateCheckpointCallsTheOldUpdateCheckpoint()
         {
             using var cancellationSource = new CancellationTokenSource();
             cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
@@ -1497,8 +1497,8 @@ namespace Azure.Messaging.EventHubs.Tests
                     processorClient.EventHubName,
                     processorClient.ConsumerGroup,
                     partitionId,
-                    processorClient.Identifier,
-                    checkpointPosition,
+                    offset,
+                    sequenceNumber,
                     It.IsAny<CancellationToken>()),
                 Times.Once);
 
