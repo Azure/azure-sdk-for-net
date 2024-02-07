@@ -896,11 +896,43 @@ namespace Azure.Messaging.EventHubs
         /// <param name="sequenceNumber">The sequence number to associate with the checkpoint, indicating that a processor should begin reading from the next event in the stream.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken" /> instance to signal a request to cancel the operation.</param>
         ///
-        [EditorBrowsable(EditorBrowsableState.Never)]
         protected override Task UpdateCheckpointAsync(string partitionId,
                                                       long offset,
                                                       long? sequenceNumber,
-                                                      CancellationToken cancellationToken) => UpdateCheckpointAsync(partitionId, new CheckpointPosition(sequenceNumber ?? long.MinValue, offset), cancellationToken);
+                                                      CancellationToken cancellationToken)
+        {
+            if (sequenceNumber.HasValue)
+            {
+                return UpdateCheckpointAsync(partitionId, new CheckpointPosition(sequenceNumber.Value), cancellationToken);
+            }
+
+            cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
+            Argument.AssertNotNull(partitionId, nameof(partitionId));
+
+            Logger.UpdateCheckpointStart(partitionId, Identifier, EventHubName, ConsumerGroup);
+
+            using var scope = ClientDiagnostics.CreateScope(DiagnosticProperty.EventProcessorCheckpointActivityName, ActivityKind.Internal);
+            scope.Start();
+
+            try
+            {
+                return CheckpointStore.UpdateCheckpointAsync(FullyQualifiedNamespace, EventHubName, ConsumerGroup, partitionId, offset, sequenceNumber, cancellationToken);
+            }
+            catch (Exception ex)
+            {
+                // In case of failure, there is no need to call the error handler because the exception can
+                // be thrown directly to the caller here.
+
+                scope.Failed(ex);
+                Logger.UpdateCheckpointError(partitionId, Identifier, EventHubName, ConsumerGroup, ex.Message);
+
+                throw;
+            }
+            finally
+            {
+                Logger.UpdateCheckpointComplete(partitionId, Identifier, EventHubName, ConsumerGroup);
+            }
+        }
 
         /// <summary>
         ///   Creates or updates a checkpoint for a specific partition, identifying a position in the partition's event stream
@@ -918,13 +950,7 @@ namespace Azure.Messaging.EventHubs
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
 
             Argument.AssertNotNull(partitionId, nameof(partitionId));
-
-            // The default value for sequence number is long.MinValue to provide backwards compatibility. Ensure that if one was not provided, an offset was provided.
-            if (checkpointStartingPosition.SequenceNumber == long.MinValue)
-            {
-                Argument.AssertNotNull(checkpointStartingPosition.Offset, nameof(checkpointStartingPosition.Offset));
-                Argument.AssertInRange(checkpointStartingPosition.Offset.Value, long.MinValue + 1, long.MaxValue, nameof(checkpointStartingPosition.Offset));
-            }
+            Argument.AssertAtLeast(checkpointStartingPosition.SequenceNumber, 0, nameof(checkpointStartingPosition.SequenceNumber));
 
             Logger.UpdateCheckpointStart(partitionId, Identifier, EventHubName, ConsumerGroup);
 

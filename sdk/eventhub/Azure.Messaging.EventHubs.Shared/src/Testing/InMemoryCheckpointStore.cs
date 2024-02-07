@@ -193,7 +193,7 @@ namespace Azure.Messaging.EventHubs.Tests
                     EventHubName = data.EventHubName,
                     ConsumerGroup = data.ConsumerGroup,
                     PartitionId = data.PartitionId,
-                    StartingPosition = EventPosition.FromOffset(data.StartingPosition.Offset.Value, false),
+                    StartingPosition = EventPosition.FromSequenceNumber(data.StartingPosition.SequenceNumber, false),
                     ClientIdentifier = data.ClientIdentifier,
                     LastModified = (DateTimeOffset.TryParse(data.LastModified, out var lastModified) ? lastModified : default)
                 };

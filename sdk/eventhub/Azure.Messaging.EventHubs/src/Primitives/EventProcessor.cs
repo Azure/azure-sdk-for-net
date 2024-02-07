@@ -1112,11 +1112,18 @@ namespace Azure.Messaging.EventHubs.Primitives
         ///   be called instead.
         /// </remarks>
         ///
-        [EditorBrowsable(EditorBrowsableState.Never)]
         protected virtual Task UpdateCheckpointAsync(string partitionId,
                                                      long offset,
                                                      long? sequenceNumber,
-                                                     CancellationToken cancellationToken) => UpdateCheckpointAsync(partitionId, new CheckpointPosition(sequenceNumber ?? long.MinValue, offset), cancellationToken);
+                                                     CancellationToken cancellationToken)
+        {
+            if (sequenceNumber.HasValue)
+            {
+                return UpdateCheckpointAsync(partitionId, new CheckpointPosition(sequenceNumber.Value), cancellationToken);
+            }
+
+            throw new NotImplementedException();
+        }
 
         /// <summary>
         ///   Creates or updates a checkpoint for a specific partition, identifying a position in the partition's event stream
