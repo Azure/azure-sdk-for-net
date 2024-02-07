@@ -69,19 +69,12 @@ namespace Azure.Monitor.Query
 
             Endpoint = endpoint;
             options ??= new LogsQueryClientOptions();
-            string scope;
-            if (string.IsNullOrEmpty(options.Audience?.ToString()))
-            {
-                scope = $"{endpoint.AbsoluteUri}/.default";
-            }
-            else
-            {
-                scope = $"{options.Audience}/.default";
-            }
+            var authorizationScope = $"{(string.IsNullOrEmpty(options.Audience?.ToString()) ? LogsQueryAudience.AzurePublicCloud : options.Audience)}";
+            var scopes = new List<string> { authorizationScope };
 
             endpoint = new Uri(endpoint, options.GetVersionString());
             _clientDiagnostics = new ClientDiagnostics(options);
-            _pipeline = HttpPipelineBuilder.Build(options, new BearerTokenAuthenticationPolicy(credential, scope));
+            _pipeline = HttpPipelineBuilder.Build(options, new BearerTokenAuthenticationPolicy(credential, scopes));
             _queryClient = new QueryRestClient(_clientDiagnostics, _pipeline, endpoint);
         }
 

@@ -54,22 +54,15 @@ namespace Azure.Monitor.Query
             Argument.AssertNotNull(credential, nameof(credential));
 
             options ??= new MetricsQueryClientOptions();
-            string scope;
-            if (string.IsNullOrEmpty(options.Audience?.ToString()))
-            {
-                scope = $"{endpoint.AbsoluteUri}/.default";
-            }
-            else
-            {
-                scope = $"{options.Audience}/.default";
-            }
+            var authorizationScope = $"{(string.IsNullOrEmpty(options.Audience?.ToString()) ? MetricsQueryAudience.AzurePublicCloud : options.Audience)}";
+            var scopes = new List<string> { authorizationScope };
 
             _clientDiagnostics = new ClientDiagnostics(options);
 
             Endpoint = endpoint;
 
             var pipeline = HttpPipelineBuilder.Build(options,
-                new BearerTokenAuthenticationPolicy(credential, scope));
+                new BearerTokenAuthenticationPolicy(credential, scopes));
 
             _metricDefinitionsClient = new MetricDefinitionsRestClient(_clientDiagnostics, pipeline, endpoint);
             _metricsRestClient = new MetricsRestClient(_clientDiagnostics, pipeline, endpoint);

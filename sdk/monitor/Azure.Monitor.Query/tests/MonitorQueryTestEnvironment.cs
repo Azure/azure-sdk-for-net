@@ -18,7 +18,7 @@ namespace Azure.Monitor.Query.Tests
         public string MetricsResource => GetRecordedVariable("METRICS_RESOURCE_ID");
         public string MetricsNamespace => GetRecordedVariable("METRICS_RESOURCE_NAMESPACE");
         public string MonitorIngestionEndpoint => GetOptionalVariable("METRICS_INGEST_SUFFIX") ?? "ods.opinsights.azure.com";
-        public string MetricsIngestionEndpoint => GetOptionalVariable("METRICS_INGEST_SUFFIX") ?? GetIngestionMetricsEndpoint();
+        public string MetricsIngestionEndpoint => GetOptionalVariable("METRICS_INGEST_SUFFIX") ?? "monitoring.azure.com";
         public Uri LogsEndpoint => new(GetRecordedVariable("LOGS_ENDPOINT"));
         public Uri MetricsEndpoint => new(ResourceManagerUrl);
         public string ResourceId => GetRecordedVariable("RESOURCE_ID");
@@ -68,28 +68,6 @@ namespace Azure.Monitor.Query.Tests
             else if (authorityHost == AzureAuthorityHosts.AzureGovernment)
             {
                 return MetricsQueryAudience.AzureGovernment.ToString();
-            }
-
-            throw new NotSupportedException($"Cloud for authority host {authorityHost} is not supported.");
-        }
-
-        public string GetIngestionMetricsEndpoint()
-        {
-            Uri authorityHost = new(AuthorityHostUrl);
-
-            if (authorityHost == AzureAuthorityHosts.AzurePublicCloud)
-            {
-                return "monitoring.azure.com";
-            }
-
-            else if (authorityHost == AzureAuthorityHosts.AzureChina)
-            {
-                return "monitoring.azure.cn";
-            }
-
-            else if (authorityHost == AzureAuthorityHosts.AzureGovernment)
-            {
-                return "monitoring.azure.us";
             }
 
             throw new NotSupportedException($"Cloud for authority host {authorityHost} is not supported.");
