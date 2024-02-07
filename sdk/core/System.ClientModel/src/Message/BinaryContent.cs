@@ -40,14 +40,14 @@ public abstract class BinaryContent : IDisposable
     /// </summary>
     /// <param name="stream">The stream to write to.</param>
     /// <param name="cancellationToken">To cancellation token to use.</param>
-    public abstract Task WriteToAsync(Stream stream, CancellationToken cancellationToken);
+    public abstract Task WriteToAsync(Stream stream, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Writes contents of this object to an instance of <see cref="Stream"/>.
     /// </summary>
     /// <param name="stream">The stream to write to.</param>
     /// <param name="cancellationToken">To cancellation token to use.</param>
-    public abstract void WriteTo(Stream stream, CancellationToken cancellationToken);
+    public abstract void WriteTo(Stream stream, CancellationToken cancellationToken = default);
 
     /// <inheritdoc/>
     public abstract void Dispose();

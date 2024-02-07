@@ -39,5 +39,10 @@ namespace Azure.ResourceManager.DataFactory.Models
         {
             DatasetType = datasetType ?? "SapBwCube";
         }
+
+        /// <summary> Initializes a new instance of <see cref="SapBWCubeDataset"/> for deserialization. </summary>
+        internal SapBWCubeDataset()
+        {
+        }
     }
 }

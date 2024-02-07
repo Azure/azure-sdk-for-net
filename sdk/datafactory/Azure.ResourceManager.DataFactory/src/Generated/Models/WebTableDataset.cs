@@ -47,6 +47,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             DatasetType = datasetType ?? "WebTable";
         }
 
+        /// <summary> Initializes a new instance of <see cref="WebTableDataset"/> for deserialization. </summary>
+        internal WebTableDataset()
+        {
+        }
+
         /// <summary> The zero-based index of the table in the web page. Type: integer (or Expression with resultType integer), minimum: 0. </summary>
         public DataFactoryElement<int> Index { get; set; }
         /// <summary> The relative URL to the web page from the linked service URL. Type: string (or Expression with resultType string). </summary>

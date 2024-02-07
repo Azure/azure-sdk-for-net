@@ -64,6 +64,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             LinkedServiceType = linkedServiceType ?? "Phoenix";
         }
 
+        /// <summary> Initializes a new instance of <see cref="PhoenixLinkedService"/> for deserialization. </summary>
+        internal PhoenixLinkedService()
+        {
+        }
+
         /// <summary> The IP address or host name of the Phoenix server. (i.e. 192.168.222.160). </summary>
         public DataFactoryElement<string> Host { get; set; }
         /// <summary> The TCP port that the Phoenix server uses to listen for client connections. The default value is 8765. </summary>

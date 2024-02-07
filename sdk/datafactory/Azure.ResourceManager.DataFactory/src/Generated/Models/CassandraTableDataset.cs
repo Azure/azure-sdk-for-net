@@ -44,6 +44,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             DatasetType = datasetType ?? "CassandraTable";
         }
 
+        /// <summary> Initializes a new instance of <see cref="CassandraTableDataset"/> for deserialization. </summary>
+        internal CassandraTableDataset()
+        {
+        }
+
         /// <summary> The table name of the Cassandra database. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> TableName { get; set; }
         /// <summary> The keyspace of the Cassandra database. Type: string (or Expression with resultType string). </summary>

@@ -54,6 +54,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             LinkedServiceType = linkedServiceType ?? "Hubspot";
         }
 
+        /// <summary> Initializes a new instance of <see cref="HubspotLinkedService"/> for deserialization. </summary>
+        internal HubspotLinkedService()
+        {
+        }
+
         /// <summary> The client ID associated with your Hubspot application. </summary>
         public DataFactoryElement<string> ClientId { get; set; }
         /// <summary> The client secret associated with your Hubspot application. </summary>

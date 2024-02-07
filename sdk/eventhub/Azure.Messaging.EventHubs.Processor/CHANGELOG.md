@@ -25,6 +25,8 @@ Thank you to our developer community members who helped to make the Event Hubs c
 
 - Fixed a race condition that could lead to a synchronization primitive being double-released if `IsRunning` was called concurrently while starting or stopping the processor.
 
+- Fixed a bug in which cancellation honored by the processor was interpreted as an error surfaced by developer code and a warning was inappropriately emitted to the error handler.
+
 - Fixed an issue with event processor validation where an exception for quota exceeded may inappropriately be surfaced when starting the processor.
 
 - In the rare case that an event processor's load balancing and health monitoring task cannot recover from an error, it will now properly surrender ownership when processing stops.
