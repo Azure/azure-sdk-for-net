@@ -15,7 +15,7 @@ namespace Azure.Core.Perf;
 
 [SimpleJob(RuntimeMoniker.Net60)]
 [MemoryDiagnoser]
-public class HttpPipelineBenchmark
+public class PipelineBenchmark
 {
     // Azure.Core pipeline
     private HttpPipeline _httpPipeline;
