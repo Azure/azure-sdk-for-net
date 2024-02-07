@@ -1,6 +1,9 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Threading.Tasks;
+using System.Threading;
+using System;
 using Azure.Core.Pipeline;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
@@ -380,7 +383,52 @@ namespace Azure.Core.Tests
             Assert.IsTrue(message.ResponseClassifier.IsErrorResponse(message));
         }
 
+        [Test]
+        [TestCase(true)]
+        [TestCase(false)]
+        public async Task ResponseStreamAccessibleAfterMessageDisposed(bool buffer)
+        {
+            byte[] serverBytes = new byte[1000];
+            new Random().NextBytes(serverBytes);
+
+            HttpPipeline pipeline = HttpPipelineBuilder.Build(new MockClientOptions { Retry = { NetworkTimeout = Timeout.InfiniteTimeSpan } });
+
+            using TestServer testServer = new(async context =>
+            {
+                await context.Response.Body.WriteAsync(serverBytes, 0, serverBytes.Length).ConfigureAwait(false);
+            });
+
+            Response response;
+            using (HttpMessage message = pipeline.CreateMessage())
+            {
+                message.Request.Uri.Reset(testServer.Address);
+                message.BufferResponse = buffer;
+
+                await pipeline.SendAsync(message, default).ConfigureAwait(false);
+
+                response = message.ExtractResponse();
+
+                Assert.IsFalse(message.HasResponse);
+            }
+
+            Assert.NotNull(response.ContentStream);
+
+            byte[] clientBytes = new byte[serverBytes.Length];
+            int readLength = 0;
+            while (readLength < serverBytes.Length)
+            {
+                readLength += await response.ContentStream.ReadAsync(clientBytes, 0, serverBytes.Length);
+            }
+
+            Assert.AreEqual(serverBytes.Length, readLength);
+            CollectionAssert.AreEqual(serverBytes, clientBytes);
+        }
+
         #region Helpers
+        internal class MockClientOptions : ClientOptions
+        {
+        }
+
         private class StatusCodeHandler : ResponseClassificationHandler
         {
             private readonly int _statusCode;

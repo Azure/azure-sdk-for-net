@@ -4,6 +4,8 @@
 
 ### Features Added
 
+- Added `ExtractResponse` method to `PipelineMessage` to enable returning an undisposed `PipelineResponse` from protocol methods.
+
 ### Breaking Changes
 
 - Change `HttpClientPipelineTransport.Shared` from a field to a property.
