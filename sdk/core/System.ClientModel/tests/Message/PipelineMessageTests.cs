@@ -133,7 +133,7 @@ public class PipelineMessageTests : SyncAsyncTestBase
             await context.Response.Body.WriteAsync(serverBytes, 0, serverBytes.Length).ConfigureAwait(false);
         });
 
-        PipelineResponse response;
+        PipelineResponse? response;
         using (PipelineMessage message = pipeline.CreateMessage())
         {
             message.Request.Uri = testServer.Address;
@@ -142,9 +142,11 @@ public class PipelineMessageTests : SyncAsyncTestBase
             await pipeline.SendSyncOrAsync(message, IsAsync);
 
             response = message.ExtractResponse();
+
+            Assert.IsNull(message.Response);
         }
 
-        Assert.NotNull(response.ContentStream);
+        Assert.NotNull(response!.ContentStream);
         byte[] clientBytes = new byte[serverBytes.Length];
         int readLength = 0;
         while (readLength < serverBytes.Length)
