@@ -449,11 +449,18 @@ namespace Azure.Messaging.EventHubs.Primitives
         {
             Argument.AssertInRange(eventBatchMaximumCount, 1, int.MaxValue, nameof(eventBatchMaximumCount));
             Argument.AssertNotNullOrEmpty(consumerGroup, nameof(consumerGroup));
-            Argument.AssertWellFormedEventHubsNamespace(fullyQualifiedNamespace, nameof(fullyQualifiedNamespace));
+            Argument.AssertNotNullOrEmpty(fullyQualifiedNamespace, nameof(fullyQualifiedNamespace));
             Argument.AssertNotNullOrEmpty(eventHubName, nameof(eventHubName));
             Argument.AssertNotNull(credential, nameof(credential));
 
             options = options?.Clone() ?? new EventProcessorOptions();
+
+            if (Uri.TryCreate(fullyQualifiedNamespace, UriKind.Absolute, out var uri))
+            {
+                fullyQualifiedNamespace = uri.Host;
+            }
+
+            Argument.AssertWellFormedEventHubsNamespace(fullyQualifiedNamespace, nameof(fullyQualifiedNamespace));
 
             FullyQualifiedNamespace = fullyQualifiedNamespace;
             EventHubName = eventHubName;

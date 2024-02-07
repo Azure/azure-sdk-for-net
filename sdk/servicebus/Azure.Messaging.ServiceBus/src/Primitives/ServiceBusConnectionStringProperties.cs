@@ -38,6 +38,9 @@ namespace Azure.Messaging.ServiceBus
         /// <summary>The token that identifies the value of a shared access signature.</summary>
         private const string SharedAccessSignatureToken = "SharedAccessSignature";
 
+        /// <summary>The token that identifies the intent to use a local emulator for development.</summary>
+        private const string DevelopmentEmulatorToken = "UseDevelopmentEmulator";
+
         /// <summary>The formatted protocol used by an Service Bus endpoint. </summary>
         private static readonly string ServiceBusEndpointScheme = $"{ ServiceBusEndpointSchemeName }{ Uri.SchemeDelimiter }";
 
@@ -84,6 +87,15 @@ namespace Azure.Messaging.ServiceBus
         /// </summary>
         ///
         public string SharedAccessSignature { get; internal set; }
+
+        /// <summary>
+        ///   Indicates whether or not the connection string indicates that the
+        ///   local development emulator is being used.
+        /// </summary>
+        ///
+        /// <value><c>true</c> if the emulator is being used; otherwise, <c>false</c>.</value>
+        ///
+        internal bool UseDevelopmentEmulator { get; set; }
 
         /// <summary>
         ///   Determines whether the specified <see cref="System.Object" /> is equal to this instance.
@@ -202,6 +214,15 @@ namespace Azure.Messaging.ServiceBus
                     .Append(TokenValuePairDelimiter);
             }
 
+            if (UseDevelopmentEmulator)
+            {
+                builder
+                    .Append(DevelopmentEmulatorToken)
+                    .Append(TokenValueSeparator)
+                    .Append("true")
+                    .Append(TokenValuePairDelimiter);
+            }
+
             return builder.ToString();
         }
 
@@ -278,10 +299,29 @@ namespace Azure.Messaging.ServiceBus
 
                     if (string.Compare(EndpointToken, token, StringComparison.OrdinalIgnoreCase) == 0)
                     {
-                        var endpointBuilder = new UriBuilder(value)
+                        // If this is an absolute URI, then it may have a custom port specified, which we
+                        // want to preserve.  If no scheme was specified, the URI is considered relative and
+                        // the default port should be used.
+
+                        if (!Uri.TryCreate(value, UriKind.Absolute, out var endpointUri))
                         {
-                            Scheme = ServiceBusEndpointScheme,
-                            Port = -1
+                            endpointUri = null;
+                        }
+
+                        var endpointBuilder = endpointUri switch
+                        {
+                            null => new UriBuilder(value)
+                            {
+                                Scheme = ServiceBusEndpointSchemeName,
+                                Port = -1
+                            },
+
+                            _ => new UriBuilder()
+                            {
+                                Scheme = ServiceBusEndpointSchemeName,
+                                Host = endpointUri.Host,
+                                Port = endpointUri.IsDefaultPort ? -1 : endpointUri.Port,
+                            }
                         };
 
                         if ((string.Compare(endpointBuilder.Scheme, ServiceBusEndpointSchemeName, StringComparison.OrdinalIgnoreCase) != 0)
@@ -308,6 +348,16 @@ namespace Azure.Messaging.ServiceBus
                     {
                         parsedValues.SharedAccessSignature = value;
                     }
+                    else if (string.Compare(DevelopmentEmulatorToken, token, StringComparison.OrdinalIgnoreCase) == 0)
+                    {
+                        // Do not enforce a value for the development emulator token. If a valid boolean, use it.
+                        // Otherwise, leave the default value of false.
+
+                        if (bool.TryParse(value, out var useEmulator))
+                        {
+                            parsedValues.UseDevelopmentEmulator = useEmulator;
+                        }
+                    }
                 }
                 else if ((slice.Length != 1) || (slice[0] != TokenValuePairDelimiter))
                 {
@@ -319,6 +369,13 @@ namespace Azure.Messaging.ServiceBus
 
                 tokenPositionModifier = 0;
                 lastPosition = currentPosition;
+            }
+
+            // Enforce that the development emulator can only be used for local development.
+
+            if ((parsedValues.UseDevelopmentEmulator) && (!parsedValues.Endpoint.IsLoopback))
+            {
+                throw new ArgumentException("The Service Bus emulator is only available locally. The endpoint must reference to the local host.", connectionString);
             }
 
             return parsedValues;
