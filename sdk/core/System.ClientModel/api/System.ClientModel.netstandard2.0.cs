@@ -148,7 +148,7 @@ namespace System.ClientModel.Primitives
         public void Apply(System.ClientModel.Primitives.RequestOptions options) { }
         public void Dispose() { }
         protected virtual void Dispose(bool disposing) { }
-        public System.ClientModel.Primitives.PipelineResponse ExtractResponse() { throw null; }
+        public System.ClientModel.Primitives.PipelineResponse? ExtractResponse() { throw null; }
         public void SetProperty(System.Type type, object value) { }
         public bool TryGetProperty(System.Type type, out object? value) { throw null; }
     }
