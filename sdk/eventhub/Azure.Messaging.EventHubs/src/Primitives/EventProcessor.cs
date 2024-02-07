@@ -1115,7 +1115,7 @@ namespace Azure.Messaging.EventHubs.Primitives
         protected virtual Task UpdateCheckpointAsync(string partitionId,
                                                      long offset,
                                                      long? sequenceNumber,
-                                                     CancellationToken cancellationToken = default)
+                                                     CancellationToken cancellationToken)
         {
             if (sequenceNumber.HasValue)
             {
@@ -1135,7 +1135,7 @@ namespace Azure.Messaging.EventHubs.Primitives
         ///
         protected virtual Task UpdateCheckpointAsync(string partitionId,
                                                      CheckpointPosition startingPosition,
-                                                     CancellationToken cancellationToken = default) => throw new NotImplementedException();
+                                                     CancellationToken cancellationToken) => throw new NotImplementedException();
 
         /// <summary>
         ///   Requests a list of the ownership assignments for partitions between each of the cooperating event processor

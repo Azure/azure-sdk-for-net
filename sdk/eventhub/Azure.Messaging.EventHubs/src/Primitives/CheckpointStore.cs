@@ -88,7 +88,7 @@ namespace Azure.Messaging.EventHubs.Primitives
                                                   string partitionId,
                                                   long offset,
                                                   long? sequenceNumber,
-                                                  CancellationToken cancellationToken = default) => throw new NotImplementedException();
+                                                  CancellationToken cancellationToken) => throw new NotImplementedException();
 
         /// <summary>
         ///   Creates or updates a checkpoint for a specific partition, identifying a position in the partition's event stream
@@ -108,6 +108,6 @@ namespace Azure.Messaging.EventHubs.Primitives
                                                   string partitionId,
                                                   string clientIdentifier,
                                                   CheckpointPosition startingPosition,
-                                                  CancellationToken cancellationToken = default) => throw new NotImplementedException();
+                                                  CancellationToken cancellationToken) => throw new NotImplementedException();
     }
 }

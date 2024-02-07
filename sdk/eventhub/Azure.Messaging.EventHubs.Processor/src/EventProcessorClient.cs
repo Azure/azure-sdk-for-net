@@ -899,7 +899,7 @@ namespace Azure.Messaging.EventHubs
         protected override Task UpdateCheckpointAsync(string partitionId,
                                                       long offset,
                                                       long? sequenceNumber,
-                                                      CancellationToken cancellationToken = default)
+                                                      CancellationToken cancellationToken)
         {
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
             Argument.AssertNotNull(partitionId, nameof(partitionId));
@@ -940,7 +940,7 @@ namespace Azure.Messaging.EventHubs
         ///
         protected override Task UpdateCheckpointAsync(string partitionId,
                                                       CheckpointPosition startingPosition,
-                                                      CancellationToken cancellationToken = default)
+                                                      CancellationToken cancellationToken)
         {
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
 
