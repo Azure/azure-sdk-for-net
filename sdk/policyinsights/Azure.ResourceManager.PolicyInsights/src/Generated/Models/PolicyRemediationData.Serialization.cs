@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -321,6 +322,191 @@ namespace Azure.ResourceManager.PolicyInsights
             return new PolicyRemediationData(id, name, type, systemData.Value, policyAssignmentId.Value, policyDefinitionReferenceId.Value, Optional.ToNullable(resourceDiscoveryMode), provisioningState.Value, Optional.ToNullable(createdOn), Optional.ToNullable(lastUpdatedOn), filters.Value, deploymentStatus.Value, statusMessage.Value, correlationId.Value, Optional.ToNullable(resourceCount), Optional.ToNullable(parallelDeployments), failureThreshold.Value, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                if (Name.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{Name}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{Name}'");
+                }
+            }
+
+            if (Optional.IsDefined(Id))
+            {
+                builder.Append("  id:");
+                builder.AppendLine($" '{Id.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SystemData))
+            {
+                builder.Append("  systemData:");
+                builder.AppendLine($" '{SystemData.ToString()}'");
+            }
+
+            builder.Append("  properties:");
+            builder.AppendLine(" {");
+            if (Optional.IsDefined(PolicyAssignmentId))
+            {
+                builder.Append("    policyAssignmentId:");
+                builder.AppendLine($" '{PolicyAssignmentId.ToString()}'");
+            }
+
+            if (Optional.IsDefined(PolicyDefinitionReferenceId))
+            {
+                builder.Append("    policyDefinitionReferenceId:");
+                if (PolicyDefinitionReferenceId.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{PolicyDefinitionReferenceId}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{PolicyDefinitionReferenceId}'");
+                }
+            }
+
+            if (Optional.IsDefined(ResourceDiscoveryMode))
+            {
+                builder.Append("    resourceDiscoveryMode:");
+                builder.AppendLine($" '{ResourceDiscoveryMode.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ProvisioningState))
+            {
+                builder.Append("    provisioningState:");
+                if (ProvisioningState.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{ProvisioningState}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{ProvisioningState}'");
+                }
+            }
+
+            if (Optional.IsDefined(CreatedOn))
+            {
+                builder.Append("    createdOn:");
+                var formattedDateTimeString = TypeFormatters.ToString(CreatedOn.Value, "o");
+                builder.AppendLine($" '{formattedDateTimeString}'");
+            }
+
+            if (Optional.IsDefined(LastUpdatedOn))
+            {
+                builder.Append("    lastUpdatedOn:");
+                var formattedDateTimeString = TypeFormatters.ToString(LastUpdatedOn.Value, "o");
+                builder.AppendLine($" '{formattedDateTimeString}'");
+            }
+
+            if (Optional.IsDefined(Filter))
+            {
+                builder.Append("    filters:");
+                AppendChildObject(builder, Filter, options, 4, false);
+            }
+
+            if (Optional.IsDefined(DeploymentStatus))
+            {
+                builder.Append("    deploymentStatus:");
+                AppendChildObject(builder, DeploymentStatus, options, 4, false);
+            }
+
+            if (Optional.IsDefined(StatusMessage))
+            {
+                builder.Append("    statusMessage:");
+                if (StatusMessage.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{StatusMessage}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{StatusMessage}'");
+                }
+            }
+
+            if (Optional.IsDefined(CorrelationId))
+            {
+                builder.Append("    correlationId:");
+                if (CorrelationId.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{CorrelationId}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{CorrelationId}'");
+                }
+            }
+
+            if (Optional.IsDefined(ResourceCount))
+            {
+                builder.Append("    resourceCount:");
+                builder.AppendLine($" {ResourceCount.Value}");
+            }
+
+            if (Optional.IsDefined(ParallelDeployments))
+            {
+                builder.Append("    parallelDeployments:");
+                builder.AppendLine($" {ParallelDeployments.Value}");
+            }
+
+            if (Optional.IsDefined(FailureThreshold))
+            {
+                builder.Append("    failureThreshold:");
+                AppendChildObject(builder, FailureThreshold, options, 4, false);
+            }
+
+            builder.AppendLine("  }");
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            bool inMultilineString = false;
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (inMultilineString)
+                {
+                    if (line.Contains("'''"))
+                    {
+                        inMultilineString = false;
+                    }
+                    stringBuilder.AppendLine(line);
+                    continue;
+                }
+                if (line.Contains("'''"))
+                {
+                    inMultilineString = true;
+                    stringBuilder.AppendLine($"{indent}{line}");
+                    continue;
+                }
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<PolicyRemediationData>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<PolicyRemediationData>)this).GetFormatFromOptions(options) : options.Format;
@@ -329,6 +515,8 @@ namespace Azure.ResourceManager.PolicyInsights
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(PolicyRemediationData)} does not support '{options.Format}' format.");
             }
@@ -345,6 +533,8 @@ namespace Azure.ResourceManager.PolicyInsights
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializePolicyRemediationData(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(PolicyRemediationData)} does not support '{options.Format}' format.");
             }

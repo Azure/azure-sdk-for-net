@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -200,6 +201,129 @@ namespace Azure.ResourceManager.Nginx.Models
             return new NginxDeploymentProperties(Optional.ToNullable(provisioningState), nginxVersion.Value, managedResourceGroup.Value, networkProfile.Value, ipAddress.Value, Optional.ToNullable(enableDiagnosticsSupport), logging.Value, scalingProperties.Value, userProfile.Value, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(ProvisioningState))
+            {
+                builder.Append("  provisioningState:");
+                builder.AppendLine($" '{ProvisioningState.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(NginxVersion))
+            {
+                builder.Append("  nginxVersion:");
+                if (NginxVersion.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{NginxVersion}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{NginxVersion}'");
+                }
+            }
+
+            if (Optional.IsDefined(ManagedResourceGroup))
+            {
+                builder.Append("  managedResourceGroup:");
+                if (ManagedResourceGroup.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{ManagedResourceGroup}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{ManagedResourceGroup}'");
+                }
+            }
+
+            if (Optional.IsDefined(NetworkProfile))
+            {
+                builder.Append("  networkProfile:");
+                AppendChildObject(builder, NetworkProfile, options, 2, false);
+            }
+
+            if (Optional.IsDefined(IPAddress))
+            {
+                builder.Append("  ipAddress:");
+                if (IPAddress.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{IPAddress}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{IPAddress}'");
+                }
+            }
+
+            if (Optional.IsDefined(EnableDiagnosticsSupport))
+            {
+                builder.Append("  enableDiagnosticsSupport:");
+                var boolValue = EnableDiagnosticsSupport.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(Logging))
+            {
+                builder.Append("  logging:");
+                AppendChildObject(builder, Logging, options, 2, false);
+            }
+
+            if (Optional.IsDefined(ScalingProperties))
+            {
+                builder.Append("  scalingProperties:");
+                AppendChildObject(builder, ScalingProperties, options, 2, false);
+            }
+
+            if (Optional.IsDefined(UserProfile))
+            {
+                builder.Append("  userProfile:");
+                AppendChildObject(builder, UserProfile, options, 2, false);
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            bool inMultilineString = false;
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (inMultilineString)
+                {
+                    if (line.Contains("'''"))
+                    {
+                        inMultilineString = false;
+                    }
+                    stringBuilder.AppendLine(line);
+                    continue;
+                }
+                if (line.Contains("'''"))
+                {
+                    inMultilineString = true;
+                    stringBuilder.AppendLine($"{indent}{line}");
+                    continue;
+                }
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<NginxDeploymentProperties>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<NginxDeploymentProperties>)this).GetFormatFromOptions(options) : options.Format;
@@ -208,6 +332,8 @@ namespace Azure.ResourceManager.Nginx.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(NginxDeploymentProperties)} does not support '{options.Format}' format.");
             }
@@ -224,6 +350,8 @@ namespace Azure.ResourceManager.Nginx.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeNginxDeploymentProperties(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(NginxDeploymentProperties)} does not support '{options.Format}' format.");
             }

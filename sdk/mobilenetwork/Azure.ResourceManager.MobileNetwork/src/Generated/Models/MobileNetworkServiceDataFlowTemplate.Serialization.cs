@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -154,6 +156,151 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             return new MobileNetworkServiceDataFlowTemplate(templateName, direction, protocol, remoteIPList, Optional.ToList(ports), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(TemplateName))
+            {
+                builder.Append("  templateName:");
+                if (TemplateName.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{TemplateName}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{TemplateName}'");
+                }
+            }
+
+            if (Optional.IsDefined(Direction))
+            {
+                builder.Append("  direction:");
+                builder.AppendLine($" '{Direction.ToString()}'");
+            }
+
+            if (Optional.IsCollectionDefined(Protocol))
+            {
+                if (Protocol.Any())
+                {
+                    builder.Append("  protocol:");
+                    builder.AppendLine(" [");
+                    foreach (var item in Protocol)
+                    {
+                        if (item == null)
+                        {
+                            builder.Append("null");
+                            continue;
+                        }
+                        if (item.Contains(Environment.NewLine))
+                        {
+                            builder.AppendLine("    '''");
+                            builder.AppendLine($"{item}'''");
+                        }
+                        else
+                        {
+                            builder.AppendLine($"    '{item}'");
+                        }
+                    }
+                    builder.AppendLine("  ]");
+                }
+            }
+
+            if (Optional.IsCollectionDefined(RemoteIPList))
+            {
+                if (RemoteIPList.Any())
+                {
+                    builder.Append("  remoteIpList:");
+                    builder.AppendLine(" [");
+                    foreach (var item in RemoteIPList)
+                    {
+                        if (item == null)
+                        {
+                            builder.Append("null");
+                            continue;
+                        }
+                        if (item.Contains(Environment.NewLine))
+                        {
+                            builder.AppendLine("    '''");
+                            builder.AppendLine($"{item}'''");
+                        }
+                        else
+                        {
+                            builder.AppendLine($"    '{item}'");
+                        }
+                    }
+                    builder.AppendLine("  ]");
+                }
+            }
+
+            if (Optional.IsCollectionDefined(Ports))
+            {
+                if (Ports.Any())
+                {
+                    builder.Append("  ports:");
+                    builder.AppendLine(" [");
+                    foreach (var item in Ports)
+                    {
+                        if (item == null)
+                        {
+                            builder.Append("null");
+                            continue;
+                        }
+                        if (item.Contains(Environment.NewLine))
+                        {
+                            builder.AppendLine("    '''");
+                            builder.AppendLine($"{item}'''");
+                        }
+                        else
+                        {
+                            builder.AppendLine($"    '{item}'");
+                        }
+                    }
+                    builder.AppendLine("  ]");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            bool inMultilineString = false;
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (inMultilineString)
+                {
+                    if (line.Contains("'''"))
+                    {
+                        inMultilineString = false;
+                    }
+                    stringBuilder.AppendLine(line);
+                    continue;
+                }
+                if (line.Contains("'''"))
+                {
+                    inMultilineString = true;
+                    stringBuilder.AppendLine($"{indent}{line}");
+                    continue;
+                }
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<MobileNetworkServiceDataFlowTemplate>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<MobileNetworkServiceDataFlowTemplate>)this).GetFormatFromOptions(options) : options.Format;
@@ -162,6 +309,8 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(MobileNetworkServiceDataFlowTemplate)} does not support '{options.Format}' format.");
             }
@@ -178,6 +327,8 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeMobileNetworkServiceDataFlowTemplate(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(MobileNetworkServiceDataFlowTemplate)} does not support '{options.Format}' format.");
             }

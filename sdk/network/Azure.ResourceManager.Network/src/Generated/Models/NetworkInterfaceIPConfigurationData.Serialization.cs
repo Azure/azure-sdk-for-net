@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
@@ -407,6 +409,212 @@ namespace Azure.ResourceManager.Network
             return new NetworkInterfaceIPConfigurationData(id.Value, name.Value, Optional.ToNullable(type), serializedAdditionalRawData, Optional.ToNullable(etag), gatewayLoadBalancer, Optional.ToList(virtualNetworkTaps), Optional.ToList(applicationGatewayBackendAddressPools), Optional.ToList(loadBalancerBackendAddressPools), Optional.ToList(loadBalancerInboundNatRules), privateIPAddress.Value, Optional.ToNullable(privateIPAllocationMethod), Optional.ToNullable(privateIPAddressVersion), subnet.Value, Optional.ToNullable(primary), publicIPAddress.Value, Optional.ToList(applicationSecurityGroups), Optional.ToNullable(provisioningState), privateLinkConnectionProperties.Value);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                if (Name.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{Name}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{Name}'");
+                }
+            }
+
+            if (Optional.IsDefined(ETag))
+            {
+                builder.Append("  etag:");
+                builder.AppendLine($" '{ETag.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Id))
+            {
+                builder.Append("  id:");
+                builder.AppendLine($" '{Id.ToString()}'");
+            }
+
+            builder.Append("  properties:");
+            builder.AppendLine(" {");
+            if (Optional.IsDefined(GatewayLoadBalancer))
+            {
+                builder.Append("    gatewayLoadBalancer:");
+                AppendChildObject(builder, GatewayLoadBalancer, options, 4, false);
+            }
+
+            if (Optional.IsCollectionDefined(VirtualNetworkTaps))
+            {
+                if (VirtualNetworkTaps.Any())
+                {
+                    builder.Append("    virtualNetworkTaps:");
+                    builder.AppendLine(" [");
+                    foreach (var item in VirtualNetworkTaps)
+                    {
+                        AppendChildObject(builder, item, options, 6, true);
+                    }
+                    builder.AppendLine("    ]");
+                }
+            }
+
+            if (Optional.IsCollectionDefined(ApplicationGatewayBackendAddressPools))
+            {
+                if (ApplicationGatewayBackendAddressPools.Any())
+                {
+                    builder.Append("    applicationGatewayBackendAddressPools:");
+                    builder.AppendLine(" [");
+                    foreach (var item in ApplicationGatewayBackendAddressPools)
+                    {
+                        AppendChildObject(builder, item, options, 6, true);
+                    }
+                    builder.AppendLine("    ]");
+                }
+            }
+
+            if (Optional.IsCollectionDefined(LoadBalancerBackendAddressPools))
+            {
+                if (LoadBalancerBackendAddressPools.Any())
+                {
+                    builder.Append("    loadBalancerBackendAddressPools:");
+                    builder.AppendLine(" [");
+                    foreach (var item in LoadBalancerBackendAddressPools)
+                    {
+                        AppendChildObject(builder, item, options, 6, true);
+                    }
+                    builder.AppendLine("    ]");
+                }
+            }
+
+            if (Optional.IsCollectionDefined(LoadBalancerInboundNatRules))
+            {
+                if (LoadBalancerInboundNatRules.Any())
+                {
+                    builder.Append("    loadBalancerInboundNatRules:");
+                    builder.AppendLine(" [");
+                    foreach (var item in LoadBalancerInboundNatRules)
+                    {
+                        AppendChildObject(builder, item, options, 6, true);
+                    }
+                    builder.AppendLine("    ]");
+                }
+            }
+
+            if (Optional.IsDefined(PrivateIPAddress))
+            {
+                builder.Append("    privateIPAddress:");
+                if (PrivateIPAddress.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{PrivateIPAddress}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{PrivateIPAddress}'");
+                }
+            }
+
+            if (Optional.IsDefined(PrivateIPAllocationMethod))
+            {
+                builder.Append("    privateIPAllocationMethod:");
+                builder.AppendLine($" '{PrivateIPAllocationMethod.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(PrivateIPAddressVersion))
+            {
+                builder.Append("    privateIPAddressVersion:");
+                builder.AppendLine($" '{PrivateIPAddressVersion.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Subnet))
+            {
+                builder.Append("    subnet:");
+                AppendChildObject(builder, Subnet, options, 4, false);
+            }
+
+            if (Optional.IsDefined(Primary))
+            {
+                builder.Append("    primary:");
+                var boolValue = Primary.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(PublicIPAddress))
+            {
+                builder.Append("    publicIPAddress:");
+                AppendChildObject(builder, PublicIPAddress, options, 4, false);
+            }
+
+            if (Optional.IsCollectionDefined(ApplicationSecurityGroups))
+            {
+                if (ApplicationSecurityGroups.Any())
+                {
+                    builder.Append("    applicationSecurityGroups:");
+                    builder.AppendLine(" [");
+                    foreach (var item in ApplicationSecurityGroups)
+                    {
+                        AppendChildObject(builder, item, options, 6, true);
+                    }
+                    builder.AppendLine("    ]");
+                }
+            }
+
+            if (Optional.IsDefined(ProvisioningState))
+            {
+                builder.Append("    provisioningState:");
+                builder.AppendLine($" '{ProvisioningState.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(PrivateLinkConnectionProperties))
+            {
+                builder.Append("    privateLinkConnectionProperties:");
+                AppendChildObject(builder, PrivateLinkConnectionProperties, options, 4, false);
+            }
+
+            builder.AppendLine("  }");
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            bool inMultilineString = false;
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (inMultilineString)
+                {
+                    if (line.Contains("'''"))
+                    {
+                        inMultilineString = false;
+                    }
+                    stringBuilder.AppendLine(line);
+                    continue;
+                }
+                if (line.Contains("'''"))
+                {
+                    inMultilineString = true;
+                    stringBuilder.AppendLine($"{indent}{line}");
+                    continue;
+                }
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<NetworkInterfaceIPConfigurationData>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<NetworkInterfaceIPConfigurationData>)this).GetFormatFromOptions(options) : options.Format;
@@ -415,6 +623,8 @@ namespace Azure.ResourceManager.Network
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(NetworkInterfaceIPConfigurationData)} does not support '{options.Format}' format.");
             }
@@ -431,6 +641,8 @@ namespace Azure.ResourceManager.Network
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeNetworkInterfaceIPConfigurationData(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(NetworkInterfaceIPConfigurationData)} does not support '{options.Format}' format.");
             }

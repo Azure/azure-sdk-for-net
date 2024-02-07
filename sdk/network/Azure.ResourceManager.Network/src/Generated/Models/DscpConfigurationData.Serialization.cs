@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
@@ -422,6 +424,243 @@ namespace Azure.ResourceManager.Network
             return new DscpConfigurationData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(location), Optional.ToDictionary(tags), serializedAdditionalRawData, Optional.ToNullable(etag), Optional.ToList(markings), Optional.ToList(sourceIPRanges), Optional.ToList(destinationIPRanges), Optional.ToList(sourcePortRanges), Optional.ToList(destinationPortRanges), Optional.ToNullable(protocol), Optional.ToList(qosDefinitionCollection), qosCollectionId.Value, Optional.ToList(associatedNetworkInterfaces), Optional.ToNullable(resourceGuid), Optional.ToNullable(provisioningState));
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                if (Name.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{Name}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{Name}'");
+                }
+            }
+
+            if (Optional.IsDefined(Location))
+            {
+                builder.Append("  location:");
+                builder.AppendLine($" '{Location.Value.ToString()}'");
+            }
+
+            if (Optional.IsCollectionDefined(Tags))
+            {
+                if (Tags.Any())
+                {
+                    builder.Append("  tags:");
+                    builder.AppendLine(" {");
+                    foreach (var item in Tags)
+                    {
+                        builder.Append($"    {item.Key}:");
+                        if (item.Value == null)
+                        {
+                            builder.Append("null");
+                            continue;
+                        }
+                        if (item.Value.Contains(Environment.NewLine))
+                        {
+                            builder.AppendLine(" '''");
+                            builder.AppendLine($"{item.Value}'''");
+                        }
+                        else
+                        {
+                            builder.AppendLine($" '{item.Value}'");
+                        }
+                    }
+                    builder.AppendLine("  }");
+                }
+            }
+
+            if (Optional.IsDefined(ETag))
+            {
+                builder.Append("  etag:");
+                builder.AppendLine($" '{ETag.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Id))
+            {
+                builder.Append("  id:");
+                builder.AppendLine($" '{Id.ToString()}'");
+            }
+
+            builder.Append("  properties:");
+            builder.AppendLine(" {");
+            if (Optional.IsCollectionDefined(Markings))
+            {
+                if (Markings.Any())
+                {
+                    builder.Append("    markings:");
+                    builder.AppendLine(" [");
+                    foreach (var item in Markings)
+                    {
+                        builder.AppendLine($"      {item}");
+                    }
+                    builder.AppendLine("    ]");
+                }
+            }
+
+            if (Optional.IsCollectionDefined(SourceIPRanges))
+            {
+                if (SourceIPRanges.Any())
+                {
+                    builder.Append("    sourceIpRanges:");
+                    builder.AppendLine(" [");
+                    foreach (var item in SourceIPRanges)
+                    {
+                        AppendChildObject(builder, item, options, 6, true);
+                    }
+                    builder.AppendLine("    ]");
+                }
+            }
+
+            if (Optional.IsCollectionDefined(DestinationIPRanges))
+            {
+                if (DestinationIPRanges.Any())
+                {
+                    builder.Append("    destinationIpRanges:");
+                    builder.AppendLine(" [");
+                    foreach (var item in DestinationIPRanges)
+                    {
+                        AppendChildObject(builder, item, options, 6, true);
+                    }
+                    builder.AppendLine("    ]");
+                }
+            }
+
+            if (Optional.IsCollectionDefined(SourcePortRanges))
+            {
+                if (SourcePortRanges.Any())
+                {
+                    builder.Append("    sourcePortRanges:");
+                    builder.AppendLine(" [");
+                    foreach (var item in SourcePortRanges)
+                    {
+                        AppendChildObject(builder, item, options, 6, true);
+                    }
+                    builder.AppendLine("    ]");
+                }
+            }
+
+            if (Optional.IsCollectionDefined(DestinationPortRanges))
+            {
+                if (DestinationPortRanges.Any())
+                {
+                    builder.Append("    destinationPortRanges:");
+                    builder.AppendLine(" [");
+                    foreach (var item in DestinationPortRanges)
+                    {
+                        AppendChildObject(builder, item, options, 6, true);
+                    }
+                    builder.AppendLine("    ]");
+                }
+            }
+
+            if (Optional.IsDefined(Protocol))
+            {
+                builder.Append("    protocol:");
+                builder.AppendLine($" '{Protocol.Value.ToString()}'");
+            }
+
+            if (Optional.IsCollectionDefined(QosDefinitionCollection))
+            {
+                if (QosDefinitionCollection.Any())
+                {
+                    builder.Append("    qosDefinitionCollection:");
+                    builder.AppendLine(" [");
+                    foreach (var item in QosDefinitionCollection)
+                    {
+                        AppendChildObject(builder, item, options, 6, true);
+                    }
+                    builder.AppendLine("    ]");
+                }
+            }
+
+            if (Optional.IsDefined(QosCollectionId))
+            {
+                builder.Append("    qosCollectionId:");
+                if (QosCollectionId.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{QosCollectionId}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{QosCollectionId}'");
+                }
+            }
+
+            if (Optional.IsCollectionDefined(AssociatedNetworkInterfaces))
+            {
+                if (AssociatedNetworkInterfaces.Any())
+                {
+                    builder.Append("    associatedNetworkInterfaces:");
+                    builder.AppendLine(" [");
+                    foreach (var item in AssociatedNetworkInterfaces)
+                    {
+                        AppendChildObject(builder, item, options, 6, true);
+                    }
+                    builder.AppendLine("    ]");
+                }
+            }
+
+            if (Optional.IsDefined(ResourceGuid))
+            {
+                builder.Append("    resourceGuid:");
+                builder.AppendLine($" '{ResourceGuid.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ProvisioningState))
+            {
+                builder.Append("    provisioningState:");
+                builder.AppendLine($" '{ProvisioningState.Value.ToString()}'");
+            }
+
+            builder.AppendLine("  }");
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            bool inMultilineString = false;
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (inMultilineString)
+                {
+                    if (line.Contains("'''"))
+                    {
+                        inMultilineString = false;
+                    }
+                    stringBuilder.AppendLine(line);
+                    continue;
+                }
+                if (line.Contains("'''"))
+                {
+                    inMultilineString = true;
+                    stringBuilder.AppendLine($"{indent}{line}");
+                    continue;
+                }
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<DscpConfigurationData>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<DscpConfigurationData>)this).GetFormatFromOptions(options) : options.Format;
@@ -430,6 +669,8 @@ namespace Azure.ResourceManager.Network
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(DscpConfigurationData)} does not support '{options.Format}' format.");
             }
@@ -446,6 +687,8 @@ namespace Azure.ResourceManager.Network
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeDscpConfigurationData(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(DscpConfigurationData)} does not support '{options.Format}' format.");
             }

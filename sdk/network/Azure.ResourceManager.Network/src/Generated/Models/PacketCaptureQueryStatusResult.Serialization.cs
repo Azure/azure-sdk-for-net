@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -165,6 +167,119 @@ namespace Azure.ResourceManager.Network.Models
             return new PacketCaptureQueryStatusResult(name.Value, id.Value, Optional.ToNullable(captureStartTime), Optional.ToNullable(packetCaptureStatus), stopReason.Value, Optional.ToList(packetCaptureError), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                if (Name.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{Name}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{Name}'");
+                }
+            }
+
+            if (Optional.IsDefined(Id))
+            {
+                builder.Append("  id:");
+                if (Id.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{Id}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{Id}'");
+                }
+            }
+
+            if (Optional.IsDefined(CaptureStartOn))
+            {
+                builder.Append("  captureStartTime:");
+                var formattedDateTimeString = TypeFormatters.ToString(CaptureStartOn.Value, "o");
+                builder.AppendLine($" '{formattedDateTimeString}'");
+            }
+
+            if (Optional.IsDefined(PacketCaptureStatus))
+            {
+                builder.Append("  packetCaptureStatus:");
+                builder.AppendLine($" '{PacketCaptureStatus.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(StopReason))
+            {
+                builder.Append("  stopReason:");
+                if (StopReason.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{StopReason}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{StopReason}'");
+                }
+            }
+
+            if (Optional.IsCollectionDefined(PacketCaptureError))
+            {
+                if (PacketCaptureError.Any())
+                {
+                    builder.Append("  packetCaptureError:");
+                    builder.AppendLine(" [");
+                    foreach (var item in PacketCaptureError)
+                    {
+                        builder.AppendLine($"    '{item.ToString()}'");
+                    }
+                    builder.AppendLine("  ]");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            bool inMultilineString = false;
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (inMultilineString)
+                {
+                    if (line.Contains("'''"))
+                    {
+                        inMultilineString = false;
+                    }
+                    stringBuilder.AppendLine(line);
+                    continue;
+                }
+                if (line.Contains("'''"))
+                {
+                    inMultilineString = true;
+                    stringBuilder.AppendLine($"{indent}{line}");
+                    continue;
+                }
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<PacketCaptureQueryStatusResult>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<PacketCaptureQueryStatusResult>)this).GetFormatFromOptions(options) : options.Format;
@@ -173,6 +288,8 @@ namespace Azure.ResourceManager.Network.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(PacketCaptureQueryStatusResult)} does not support '{options.Format}' format.");
             }
@@ -189,6 +306,8 @@ namespace Azure.ResourceManager.Network.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializePacketCaptureQueryStatusResult(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(PacketCaptureQueryStatusResult)} does not support '{options.Format}' format.");
             }

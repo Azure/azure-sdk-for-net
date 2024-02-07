@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -244,6 +246,169 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             return new InitialAgentPoolConfiguration(administratorConfiguration.Value, agentOptions.Value, attachedNetworkConfiguration.Value, Optional.ToList(availabilityZones), count, Optional.ToList(labels), mode, name, Optional.ToList(taints), upgradeSettings.Value, vmSkuName, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                if (Name.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{Name}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{Name}'");
+                }
+            }
+
+            if (Optional.IsDefined(AdministratorConfiguration))
+            {
+                builder.Append("  administratorConfiguration:");
+                AppendChildObject(builder, AdministratorConfiguration, options, 2, false);
+            }
+
+            if (Optional.IsDefined(AgentOptions))
+            {
+                builder.Append("  agentOptions:");
+                AppendChildObject(builder, AgentOptions, options, 2, false);
+            }
+
+            if (Optional.IsDefined(AttachedNetworkConfiguration))
+            {
+                builder.Append("  attachedNetworkConfiguration:");
+                AppendChildObject(builder, AttachedNetworkConfiguration, options, 2, false);
+            }
+
+            if (Optional.IsCollectionDefined(AvailabilityZones))
+            {
+                if (AvailabilityZones.Any())
+                {
+                    builder.Append("  availabilityZones:");
+                    builder.AppendLine(" [");
+                    foreach (var item in AvailabilityZones)
+                    {
+                        if (item == null)
+                        {
+                            builder.Append("null");
+                            continue;
+                        }
+                        if (item.Contains(Environment.NewLine))
+                        {
+                            builder.AppendLine("    '''");
+                            builder.AppendLine($"{item}'''");
+                        }
+                        else
+                        {
+                            builder.AppendLine($"    '{item}'");
+                        }
+                    }
+                    builder.AppendLine("  ]");
+                }
+            }
+
+            if (Optional.IsDefined(Count))
+            {
+                builder.Append("  count:");
+                builder.AppendLine($" '{Count.ToString()}'");
+            }
+
+            if (Optional.IsCollectionDefined(Labels))
+            {
+                if (Labels.Any())
+                {
+                    builder.Append("  labels:");
+                    builder.AppendLine(" [");
+                    foreach (var item in Labels)
+                    {
+                        AppendChildObject(builder, item, options, 4, true);
+                    }
+                    builder.AppendLine("  ]");
+                }
+            }
+
+            if (Optional.IsDefined(Mode))
+            {
+                builder.Append("  mode:");
+                builder.AppendLine($" '{Mode.ToString()}'");
+            }
+
+            if (Optional.IsCollectionDefined(Taints))
+            {
+                if (Taints.Any())
+                {
+                    builder.Append("  taints:");
+                    builder.AppendLine(" [");
+                    foreach (var item in Taints)
+                    {
+                        AppendChildObject(builder, item, options, 4, true);
+                    }
+                    builder.AppendLine("  ]");
+                }
+            }
+
+            if (Optional.IsDefined(UpgradeSettings))
+            {
+                builder.Append("  upgradeSettings:");
+                AppendChildObject(builder, UpgradeSettings, options, 2, false);
+            }
+
+            if (Optional.IsDefined(VmSkuName))
+            {
+                builder.Append("  vmSkuName:");
+                if (VmSkuName.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{VmSkuName}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{VmSkuName}'");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            bool inMultilineString = false;
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (inMultilineString)
+                {
+                    if (line.Contains("'''"))
+                    {
+                        inMultilineString = false;
+                    }
+                    stringBuilder.AppendLine(line);
+                    continue;
+                }
+                if (line.Contains("'''"))
+                {
+                    inMultilineString = true;
+                    stringBuilder.AppendLine($"{indent}{line}");
+                    continue;
+                }
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<InitialAgentPoolConfiguration>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<InitialAgentPoolConfiguration>)this).GetFormatFromOptions(options) : options.Format;
@@ -252,6 +417,8 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(InitialAgentPoolConfiguration)} does not support '{options.Format}' format.");
             }
@@ -268,6 +435,8 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeInitialAgentPoolConfiguration(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(InitialAgentPoolConfiguration)} does not support '{options.Format}' format.");
             }

@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -241,6 +242,155 @@ namespace Azure.ResourceManager.Network.Models
             return new VpnClientConnectionHealthDetail(vpnConnectionId.Value, Optional.ToNullable(vpnConnectionDuration), Optional.ToNullable(vpnConnectionTime), publicIPAddress.Value, privateIPAddress.Value, vpnUserName.Value, Optional.ToNullable(maxBandwidth), Optional.ToNullable(egressPacketsTransferred), Optional.ToNullable(egressBytesTransferred), Optional.ToNullable(ingressPacketsTransferred), Optional.ToNullable(ingressBytesTransferred), Optional.ToNullable(maxPacketsPerSecond), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(VpnConnectionId))
+            {
+                builder.Append("  vpnConnectionId:");
+                if (VpnConnectionId.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{VpnConnectionId}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{VpnConnectionId}'");
+                }
+            }
+
+            if (Optional.IsDefined(VpnConnectionDurationInSeconds))
+            {
+                builder.Append("  vpnConnectionDuration:");
+                builder.AppendLine($" '{VpnConnectionDurationInSeconds.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(VpnConnectionOn))
+            {
+                builder.Append("  vpnConnectionTime:");
+                var formattedDateTimeString = TypeFormatters.ToString(VpnConnectionOn.Value, "o");
+                builder.AppendLine($" '{formattedDateTimeString}'");
+            }
+
+            if (Optional.IsDefined(PublicIPAddress))
+            {
+                builder.Append("  publicIpAddress:");
+                if (PublicIPAddress.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{PublicIPAddress}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{PublicIPAddress}'");
+                }
+            }
+
+            if (Optional.IsDefined(PrivateIPAddress))
+            {
+                builder.Append("  privateIpAddress:");
+                if (PrivateIPAddress.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{PrivateIPAddress}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{PrivateIPAddress}'");
+                }
+            }
+
+            if (Optional.IsDefined(VpnUserName))
+            {
+                builder.Append("  vpnUserName:");
+                if (VpnUserName.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{VpnUserName}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{VpnUserName}'");
+                }
+            }
+
+            if (Optional.IsDefined(MaxBandwidth))
+            {
+                builder.Append("  maxBandwidth:");
+                builder.AppendLine($" '{MaxBandwidth.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(EgressPacketsTransferred))
+            {
+                builder.Append("  egressPacketsTransferred:");
+                builder.AppendLine($" '{EgressPacketsTransferred.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(EgressBytesTransferred))
+            {
+                builder.Append("  egressBytesTransferred:");
+                builder.AppendLine($" '{EgressBytesTransferred.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(IngressPacketsTransferred))
+            {
+                builder.Append("  ingressPacketsTransferred:");
+                builder.AppendLine($" '{IngressPacketsTransferred.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(IngressBytesTransferred))
+            {
+                builder.Append("  ingressBytesTransferred:");
+                builder.AppendLine($" '{IngressBytesTransferred.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(MaxPacketsPerSecond))
+            {
+                builder.Append("  maxPacketsPerSecond:");
+                builder.AppendLine($" '{MaxPacketsPerSecond.Value.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            bool inMultilineString = false;
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (inMultilineString)
+                {
+                    if (line.Contains("'''"))
+                    {
+                        inMultilineString = false;
+                    }
+                    stringBuilder.AppendLine(line);
+                    continue;
+                }
+                if (line.Contains("'''"))
+                {
+                    inMultilineString = true;
+                    stringBuilder.AppendLine($"{indent}{line}");
+                    continue;
+                }
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<VpnClientConnectionHealthDetail>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<VpnClientConnectionHealthDetail>)this).GetFormatFromOptions(options) : options.Format;
@@ -249,6 +399,8 @@ namespace Azure.ResourceManager.Network.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(VpnClientConnectionHealthDetail)} does not support '{options.Format}' format.");
             }
@@ -265,6 +417,8 @@ namespace Azure.ResourceManager.Network.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeVpnClientConnectionHealthDetail(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(VpnClientConnectionHealthDetail)} does not support '{options.Format}' format.");
             }

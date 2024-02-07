@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.MobileNetwork.Models;
@@ -427,6 +429,274 @@ namespace Azure.ResourceManager.MobileNetwork
             return new PacketCoreControlPlaneData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, identity.Value, Optional.ToNullable(provisioningState), installation.Value, sites, platform, Optional.ToNullable(coreNetworkTechnology), version.Value, installedVersion.Value, rollbackVersion.Value, controlPlaneAccessInterface, Optional.ToList(controlPlaneAccessVirtualIPv4Addresses), sku, Optional.ToNullable(ueMtu), localDiagnosticsAccess, diagnosticsUpload.Value, eventHub.Value, signaling.Value, interopSettings.Value, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                if (Name.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{Name}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{Name}'");
+                }
+            }
+
+            if (Optional.IsDefined(Location))
+            {
+                builder.Append("  location:");
+                builder.AppendLine($" '{Location.ToString()}'");
+            }
+
+            if (Optional.IsCollectionDefined(Tags))
+            {
+                if (Tags.Any())
+                {
+                    builder.Append("  tags:");
+                    builder.AppendLine(" {");
+                    foreach (var item in Tags)
+                    {
+                        builder.Append($"    {item.Key}:");
+                        if (item.Value == null)
+                        {
+                            builder.Append("null");
+                            continue;
+                        }
+                        if (item.Value.Contains(Environment.NewLine))
+                        {
+                            builder.AppendLine(" '''");
+                            builder.AppendLine($"{item.Value}'''");
+                        }
+                        else
+                        {
+                            builder.AppendLine($" '{item.Value}'");
+                        }
+                    }
+                    builder.AppendLine("  }");
+                }
+            }
+
+            if (Optional.IsDefined(UserAssignedIdentity))
+            {
+                builder.Append("  identity:");
+                AppendChildObject(builder, UserAssignedIdentity, options, 2, false);
+            }
+
+            if (Optional.IsDefined(Id))
+            {
+                builder.Append("  id:");
+                builder.AppendLine($" '{Id.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SystemData))
+            {
+                builder.Append("  systemData:");
+                builder.AppendLine($" '{SystemData.ToString()}'");
+            }
+
+            builder.Append("  properties:");
+            builder.AppendLine(" {");
+            if (Optional.IsDefined(ProvisioningState))
+            {
+                builder.Append("    provisioningState:");
+                builder.AppendLine($" '{ProvisioningState.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Installation))
+            {
+                builder.Append("    installation:");
+                AppendChildObject(builder, Installation, options, 4, false);
+            }
+
+            if (Optional.IsCollectionDefined(Sites))
+            {
+                if (Sites.Any())
+                {
+                    builder.Append("    sites:");
+                    builder.AppendLine(" [");
+                    foreach (var item in Sites)
+                    {
+                        AppendChildObject(builder, item, options, 6, true);
+                    }
+                    builder.AppendLine("    ]");
+                }
+            }
+
+            if (Optional.IsDefined(Platform))
+            {
+                builder.Append("    platform:");
+                AppendChildObject(builder, Platform, options, 4, false);
+            }
+
+            if (Optional.IsDefined(CoreNetworkTechnology))
+            {
+                builder.Append("    coreNetworkTechnology:");
+                builder.AppendLine($" '{CoreNetworkTechnology.Value.ToSerialString()}'");
+            }
+
+            if (Optional.IsDefined(Version))
+            {
+                builder.Append("    version:");
+                if (Version.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{Version}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{Version}'");
+                }
+            }
+
+            if (Optional.IsDefined(InstalledVersion))
+            {
+                builder.Append("    installedVersion:");
+                if (InstalledVersion.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{InstalledVersion}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{InstalledVersion}'");
+                }
+            }
+
+            if (Optional.IsDefined(RollbackVersion))
+            {
+                builder.Append("    rollbackVersion:");
+                if (RollbackVersion.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{RollbackVersion}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{RollbackVersion}'");
+                }
+            }
+
+            if (Optional.IsDefined(ControlPlaneAccessInterface))
+            {
+                builder.Append("    controlPlaneAccessInterface:");
+                AppendChildObject(builder, ControlPlaneAccessInterface, options, 4, false);
+            }
+
+            if (Optional.IsCollectionDefined(ControlPlaneAccessVirtualIPv4Addresses))
+            {
+                if (ControlPlaneAccessVirtualIPv4Addresses.Any())
+                {
+                    builder.Append("    controlPlaneAccessVirtualIpv4Addresses:");
+                    builder.AppendLine(" [");
+                    foreach (var item in ControlPlaneAccessVirtualIPv4Addresses)
+                    {
+                        if (item == null)
+                        {
+                            builder.Append("null");
+                            continue;
+                        }
+                        if (item.Contains(Environment.NewLine))
+                        {
+                            builder.AppendLine("      '''");
+                            builder.AppendLine($"{item}'''");
+                        }
+                        else
+                        {
+                            builder.AppendLine($"      '{item}'");
+                        }
+                    }
+                    builder.AppendLine("    ]");
+                }
+            }
+
+            if (Optional.IsDefined(Sku))
+            {
+                builder.Append("    sku:");
+                builder.AppendLine($" '{Sku.ToString()}'");
+            }
+
+            if (Optional.IsDefined(UeMtu))
+            {
+                builder.Append("    ueMtu:");
+                builder.AppendLine($" {UeMtu.Value}");
+            }
+
+            if (Optional.IsDefined(LocalDiagnosticsAccess))
+            {
+                builder.Append("    localDiagnosticsAccess:");
+                AppendChildObject(builder, LocalDiagnosticsAccess, options, 4, false);
+            }
+
+            if (Optional.IsDefined(DiagnosticsUpload))
+            {
+                builder.Append("    diagnosticsUpload:");
+                AppendChildObject(builder, DiagnosticsUpload, options, 4, false);
+            }
+
+            if (Optional.IsDefined(EventHub))
+            {
+                builder.Append("    eventHub:");
+                AppendChildObject(builder, EventHub, options, 4, false);
+            }
+
+            if (Optional.IsDefined(Signaling))
+            {
+                builder.Append("    signaling:");
+                AppendChildObject(builder, Signaling, options, 4, false);
+            }
+
+            if (Optional.IsDefined(InteropSettings))
+            {
+                builder.Append("    interopSettings:");
+                builder.AppendLine($" '{InteropSettings.ToString()}'");
+            }
+
+            builder.AppendLine("  }");
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            bool inMultilineString = false;
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (inMultilineString)
+                {
+                    if (line.Contains("'''"))
+                    {
+                        inMultilineString = false;
+                    }
+                    stringBuilder.AppendLine(line);
+                    continue;
+                }
+                if (line.Contains("'''"))
+                {
+                    inMultilineString = true;
+                    stringBuilder.AppendLine($"{indent}{line}");
+                    continue;
+                }
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<PacketCoreControlPlaneData>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<PacketCoreControlPlaneData>)this).GetFormatFromOptions(options) : options.Format;
@@ -435,6 +705,8 @@ namespace Azure.ResourceManager.MobileNetwork
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(PacketCoreControlPlaneData)} does not support '{options.Format}' format.");
             }
@@ -451,6 +723,8 @@ namespace Azure.ResourceManager.MobileNetwork
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializePacketCoreControlPlaneData(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(PacketCoreControlPlaneData)} does not support '{options.Format}' format.");
             }

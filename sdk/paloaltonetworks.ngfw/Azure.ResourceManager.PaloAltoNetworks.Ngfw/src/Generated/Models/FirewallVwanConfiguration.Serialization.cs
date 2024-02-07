@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -141,6 +142,88 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             return new FirewallVwanConfiguration(networkVirtualApplianceId.Value, vHub, trustSubnet.Value, unTrustSubnet.Value, ipOfTrustSubnetForUdr.Value, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(NetworkVirtualApplianceId))
+            {
+                builder.Append("  networkVirtualApplianceId:");
+                if (NetworkVirtualApplianceId.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{NetworkVirtualApplianceId}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{NetworkVirtualApplianceId}'");
+                }
+            }
+
+            if (Optional.IsDefined(Vhub))
+            {
+                builder.Append("  vHub:");
+                AppendChildObject(builder, Vhub, options, 2, false);
+            }
+
+            if (Optional.IsDefined(TrustSubnet))
+            {
+                builder.Append("  trustSubnet:");
+                AppendChildObject(builder, TrustSubnet, options, 2, false);
+            }
+
+            if (Optional.IsDefined(UnTrustSubnet))
+            {
+                builder.Append("  unTrustSubnet:");
+                AppendChildObject(builder, UnTrustSubnet, options, 2, false);
+            }
+
+            if (Optional.IsDefined(IPOfTrustSubnetForUdr))
+            {
+                builder.Append("  ipOfTrustSubnetForUdr:");
+                AppendChildObject(builder, IPOfTrustSubnetForUdr, options, 2, false);
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            bool inMultilineString = false;
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (inMultilineString)
+                {
+                    if (line.Contains("'''"))
+                    {
+                        inMultilineString = false;
+                    }
+                    stringBuilder.AppendLine(line);
+                    continue;
+                }
+                if (line.Contains("'''"))
+                {
+                    inMultilineString = true;
+                    stringBuilder.AppendLine($"{indent}{line}");
+                    continue;
+                }
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<FirewallVwanConfiguration>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<FirewallVwanConfiguration>)this).GetFormatFromOptions(options) : options.Format;
@@ -149,6 +232,8 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(FirewallVwanConfiguration)} does not support '{options.Format}' format.");
             }
@@ -165,6 +250,8 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeFirewallVwanConfiguration(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(FirewallVwanConfiguration)} does not support '{options.Format}' format.");
             }

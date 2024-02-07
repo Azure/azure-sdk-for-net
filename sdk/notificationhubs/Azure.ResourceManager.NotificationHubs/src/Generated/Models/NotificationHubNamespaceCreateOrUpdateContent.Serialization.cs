@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -368,6 +370,271 @@ namespace Azure.ResourceManager.NotificationHubs.Models
             return new NotificationHubNamespaceCreateOrUpdateContent(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, name0.Value, provisioningState.Value, region.Value, metricId.Value, status.Value, Optional.ToNullable(createdAt), Optional.ToNullable(updatedAt), serviceBusEndpoint.Value, subscriptionId.Value, scaleUnit.Value, Optional.ToNullable(enabled), Optional.ToNullable(critical), dataCenter.Value, Optional.ToNullable(namespaceType), sku.Value, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                if (Name.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{Name}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{Name}'");
+                }
+            }
+
+            if (Optional.IsDefined(Location))
+            {
+                builder.Append("  location:");
+                builder.AppendLine($" '{Location.ToString()}'");
+            }
+
+            if (Optional.IsCollectionDefined(Tags))
+            {
+                if (Tags.Any())
+                {
+                    builder.Append("  tags:");
+                    builder.AppendLine(" {");
+                    foreach (var item in Tags)
+                    {
+                        builder.Append($"    {item.Key}:");
+                        if (item.Value == null)
+                        {
+                            builder.Append("null");
+                            continue;
+                        }
+                        if (item.Value.Contains(Environment.NewLine))
+                        {
+                            builder.AppendLine(" '''");
+                            builder.AppendLine($"{item.Value}'''");
+                        }
+                        else
+                        {
+                            builder.AppendLine($" '{item.Value}'");
+                        }
+                    }
+                    builder.AppendLine("  }");
+                }
+            }
+
+            if (Optional.IsDefined(Sku))
+            {
+                builder.Append("  sku:");
+                AppendChildObject(builder, Sku, options, 2, false);
+            }
+
+            if (Optional.IsDefined(Id))
+            {
+                builder.Append("  id:");
+                builder.AppendLine($" '{Id.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SystemData))
+            {
+                builder.Append("  systemData:");
+                builder.AppendLine($" '{SystemData.ToString()}'");
+            }
+
+            builder.Append("  properties:");
+            builder.AppendLine(" {");
+            if (Optional.IsDefined(NamespaceName))
+            {
+                builder.Append("    name:");
+                if (NamespaceName.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{NamespaceName}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{NamespaceName}'");
+                }
+            }
+
+            if (Optional.IsDefined(ProvisioningState))
+            {
+                builder.Append("    provisioningState:");
+                if (ProvisioningState.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{ProvisioningState}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{ProvisioningState}'");
+                }
+            }
+
+            if (Optional.IsDefined(Region))
+            {
+                builder.Append("    region:");
+                if (Region.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{Region}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{Region}'");
+                }
+            }
+
+            if (Optional.IsDefined(MetricId))
+            {
+                builder.Append("    metricId:");
+                if (MetricId.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{MetricId}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{MetricId}'");
+                }
+            }
+
+            if (Optional.IsDefined(Status))
+            {
+                builder.Append("    status:");
+                if (Status.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{Status}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{Status}'");
+                }
+            }
+
+            if (Optional.IsDefined(CreatedOn))
+            {
+                builder.Append("    createdAt:");
+                var formattedDateTimeString = TypeFormatters.ToString(CreatedOn.Value, "o");
+                builder.AppendLine($" '{formattedDateTimeString}'");
+            }
+
+            if (Optional.IsDefined(UpdatedOn))
+            {
+                builder.Append("    updatedAt:");
+                var formattedDateTimeString = TypeFormatters.ToString(UpdatedOn.Value, "o");
+                builder.AppendLine($" '{formattedDateTimeString}'");
+            }
+
+            if (Optional.IsDefined(ServiceBusEndpoint))
+            {
+                builder.Append("    serviceBusEndpoint:");
+                builder.AppendLine($" '{ServiceBusEndpoint.AbsoluteUri}'");
+            }
+
+            if (Optional.IsDefined(SubscriptionId))
+            {
+                builder.Append("    subscriptionId:");
+                if (SubscriptionId.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{SubscriptionId}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{SubscriptionId}'");
+                }
+            }
+
+            if (Optional.IsDefined(ScaleUnit))
+            {
+                builder.Append("    scaleUnit:");
+                if (ScaleUnit.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{ScaleUnit}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{ScaleUnit}'");
+                }
+            }
+
+            if (Optional.IsDefined(IsEnabled))
+            {
+                builder.Append("    enabled:");
+                var boolValue = IsEnabled.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(IsCritical))
+            {
+                builder.Append("    critical:");
+                var boolValue = IsCritical.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(DataCenter))
+            {
+                builder.Append("    dataCenter:");
+                if (DataCenter.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{DataCenter}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{DataCenter}'");
+                }
+            }
+
+            if (Optional.IsDefined(NamespaceType))
+            {
+                builder.Append("    namespaceType:");
+                builder.AppendLine($" '{NamespaceType.Value.ToSerialString()}'");
+            }
+
+            builder.AppendLine("  }");
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            bool inMultilineString = false;
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (inMultilineString)
+                {
+                    if (line.Contains("'''"))
+                    {
+                        inMultilineString = false;
+                    }
+                    stringBuilder.AppendLine(line);
+                    continue;
+                }
+                if (line.Contains("'''"))
+                {
+                    inMultilineString = true;
+                    stringBuilder.AppendLine($"{indent}{line}");
+                    continue;
+                }
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<NotificationHubNamespaceCreateOrUpdateContent>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<NotificationHubNamespaceCreateOrUpdateContent>)this).GetFormatFromOptions(options) : options.Format;
@@ -376,6 +643,8 @@ namespace Azure.ResourceManager.NotificationHubs.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(NotificationHubNamespaceCreateOrUpdateContent)} does not support '{options.Format}' format.");
             }
@@ -392,6 +661,8 @@ namespace Azure.ResourceManager.NotificationHubs.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeNotificationHubNamespaceCreateOrUpdateContent(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(NotificationHubNamespaceCreateOrUpdateContent)} does not support '{options.Format}' format.");
             }

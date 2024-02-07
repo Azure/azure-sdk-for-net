@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -144,6 +145,97 @@ namespace Azure.ResourceManager.NetApp.Models
             return new NetAppVolumeReplicationStatus(Optional.ToNullable(healthy), Optional.ToNullable(relationshipStatus), Optional.ToNullable(mirrorState), totalProgress.Value, errorMessage.Value, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(IsHealthy))
+            {
+                builder.Append("  healthy:");
+                var boolValue = IsHealthy.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(RelationshipStatus))
+            {
+                builder.Append("  relationshipStatus:");
+                builder.AppendLine($" '{RelationshipStatus.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(MirrorState))
+            {
+                builder.Append("  mirrorState:");
+                builder.AppendLine($" '{MirrorState.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(TotalProgress))
+            {
+                builder.Append("  totalProgress:");
+                if (TotalProgress.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{TotalProgress}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{TotalProgress}'");
+                }
+            }
+
+            if (Optional.IsDefined(ErrorMessage))
+            {
+                builder.Append("  errorMessage:");
+                if (ErrorMessage.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{ErrorMessage}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{ErrorMessage}'");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            bool inMultilineString = false;
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (inMultilineString)
+                {
+                    if (line.Contains("'''"))
+                    {
+                        inMultilineString = false;
+                    }
+                    stringBuilder.AppendLine(line);
+                    continue;
+                }
+                if (line.Contains("'''"))
+                {
+                    inMultilineString = true;
+                    stringBuilder.AppendLine($"{indent}{line}");
+                    continue;
+                }
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<NetAppVolumeReplicationStatus>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<NetAppVolumeReplicationStatus>)this).GetFormatFromOptions(options) : options.Format;
@@ -152,6 +244,8 @@ namespace Azure.ResourceManager.NetApp.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(NetAppVolumeReplicationStatus)} does not support '{options.Format}' format.");
             }
@@ -168,6 +262,8 @@ namespace Azure.ResourceManager.NetApp.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeNetAppVolumeReplicationStatus(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(NetAppVolumeReplicationStatus)} does not support '{options.Format}' format.");
             }

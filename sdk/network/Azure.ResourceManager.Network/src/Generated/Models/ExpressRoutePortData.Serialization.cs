@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
@@ -392,6 +394,239 @@ namespace Azure.ResourceManager.Network
             return new ExpressRoutePortData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(location), Optional.ToDictionary(tags), serializedAdditionalRawData, Optional.ToNullable(etag), identity, peeringLocation.Value, Optional.ToNullable(bandwidthInGbps), Optional.ToNullable(provisionedBandwidthInGbps), mtu.Value, Optional.ToNullable(encapsulation), etherType.Value, allocationDate.Value, Optional.ToList(links), Optional.ToList(circuits), Optional.ToNullable(provisioningState), Optional.ToNullable(resourceGuid), Optional.ToNullable(billingType));
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                if (Name.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{Name}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{Name}'");
+                }
+            }
+
+            if (Optional.IsDefined(Location))
+            {
+                builder.Append("  location:");
+                builder.AppendLine($" '{Location.Value.ToString()}'");
+            }
+
+            if (Optional.IsCollectionDefined(Tags))
+            {
+                if (Tags.Any())
+                {
+                    builder.Append("  tags:");
+                    builder.AppendLine(" {");
+                    foreach (var item in Tags)
+                    {
+                        builder.Append($"    {item.Key}:");
+                        if (item.Value == null)
+                        {
+                            builder.Append("null");
+                            continue;
+                        }
+                        if (item.Value.Contains(Environment.NewLine))
+                        {
+                            builder.AppendLine(" '''");
+                            builder.AppendLine($"{item.Value}'''");
+                        }
+                        else
+                        {
+                            builder.AppendLine($" '{item.Value}'");
+                        }
+                    }
+                    builder.AppendLine("  }");
+                }
+            }
+
+            if (Optional.IsDefined(ETag))
+            {
+                builder.Append("  etag:");
+                builder.AppendLine($" '{ETag.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Identity))
+            {
+                builder.Append("  identity:");
+                AppendChildObject(builder, Identity, options, 2, false);
+            }
+
+            if (Optional.IsDefined(Id))
+            {
+                builder.Append("  id:");
+                builder.AppendLine($" '{Id.ToString()}'");
+            }
+
+            builder.Append("  properties:");
+            builder.AppendLine(" {");
+            if (Optional.IsDefined(PeeringLocation))
+            {
+                builder.Append("    peeringLocation:");
+                if (PeeringLocation.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{PeeringLocation}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{PeeringLocation}'");
+                }
+            }
+
+            if (Optional.IsDefined(BandwidthInGbps))
+            {
+                builder.Append("    bandwidthInGbps:");
+                builder.AppendLine($" {BandwidthInGbps.Value}");
+            }
+
+            if (Optional.IsDefined(ProvisionedBandwidthInGbps))
+            {
+                builder.Append("    provisionedBandwidthInGbps:");
+                builder.AppendLine($" '{ProvisionedBandwidthInGbps.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Mtu))
+            {
+                builder.Append("    mtu:");
+                if (Mtu.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{Mtu}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{Mtu}'");
+                }
+            }
+
+            if (Optional.IsDefined(Encapsulation))
+            {
+                builder.Append("    encapsulation:");
+                builder.AppendLine($" '{Encapsulation.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(EtherType))
+            {
+                builder.Append("    etherType:");
+                if (EtherType.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{EtherType}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{EtherType}'");
+                }
+            }
+
+            if (Optional.IsDefined(AllocationDate))
+            {
+                builder.Append("    allocationDate:");
+                if (AllocationDate.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{AllocationDate}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{AllocationDate}'");
+                }
+            }
+
+            if (Optional.IsCollectionDefined(Links))
+            {
+                if (Links.Any())
+                {
+                    builder.Append("    links:");
+                    builder.AppendLine(" [");
+                    foreach (var item in Links)
+                    {
+                        AppendChildObject(builder, item, options, 6, true);
+                    }
+                    builder.AppendLine("    ]");
+                }
+            }
+
+            if (Optional.IsCollectionDefined(Circuits))
+            {
+                if (Circuits.Any())
+                {
+                    builder.Append("    circuits:");
+                    builder.AppendLine(" [");
+                    foreach (var item in Circuits)
+                    {
+                        AppendChildObject(builder, item, options, 6, true);
+                    }
+                    builder.AppendLine("    ]");
+                }
+            }
+
+            if (Optional.IsDefined(ProvisioningState))
+            {
+                builder.Append("    provisioningState:");
+                builder.AppendLine($" '{ProvisioningState.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ResourceGuid))
+            {
+                builder.Append("    resourceGuid:");
+                builder.AppendLine($" '{ResourceGuid.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(BillingType))
+            {
+                builder.Append("    billingType:");
+                builder.AppendLine($" '{BillingType.Value.ToString()}'");
+            }
+
+            builder.AppendLine("  }");
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            bool inMultilineString = false;
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (inMultilineString)
+                {
+                    if (line.Contains("'''"))
+                    {
+                        inMultilineString = false;
+                    }
+                    stringBuilder.AppendLine(line);
+                    continue;
+                }
+                if (line.Contains("'''"))
+                {
+                    inMultilineString = true;
+                    stringBuilder.AppendLine($"{indent}{line}");
+                    continue;
+                }
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<ExpressRoutePortData>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ExpressRoutePortData>)this).GetFormatFromOptions(options) : options.Format;
@@ -400,6 +635,8 @@ namespace Azure.ResourceManager.Network
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(ExpressRoutePortData)} does not support '{options.Format}' format.");
             }
@@ -416,6 +653,8 @@ namespace Azure.ResourceManager.Network
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeExpressRoutePortData(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(ExpressRoutePortData)} does not support '{options.Format}' format.");
             }
