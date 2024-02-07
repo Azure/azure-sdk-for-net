@@ -14,7 +14,13 @@
   were not being included.
   Now, tags linked to an `ActivityEvent` of type exception are correctly exported as Custom Properties.
   ([#41767](https://github.com/Azure/azure-sdk-for-net/pull/41767))
-  
+
+### Other Changes
+
+* Changed `AzureMonitorLogExporter` to be public.
+  This will allow users to write custom processors for filtering logs.
+  ([#41553](https://github.com/Azure/azure-sdk-for-net/pull/41553))
+
 ## 1.2.0 (2024-01-24)
 
 ### Other Changes
