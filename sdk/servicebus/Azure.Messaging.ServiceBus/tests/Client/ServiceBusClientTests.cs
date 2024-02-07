@@ -26,7 +26,6 @@ namespace Azure.Messaging.ServiceBus.Tests.Client
             yield return new object[] { null, credential.Object };
             yield return new object[] { "", credential.Object };
             yield return new object[] { "FakeNamespace", null };
-            yield return new object[] { "sb://fakenamspace.com", credential.Object };
         }
 
         /// <summary>
@@ -40,7 +39,6 @@ namespace Azure.Messaging.ServiceBus.Tests.Client
             yield return new object[] { null, credential };
             yield return new object[] { "", credential };
             yield return new object[] { "FakeNamespace", null };
-            yield return new object[] { "sb://fakenamspace.com", credential };
         }
 
         /// <summary>
@@ -54,7 +52,6 @@ namespace Azure.Messaging.ServiceBus.Tests.Client
             yield return new object[] { null, credential };
             yield return new object[] { "", credential };
             yield return new object[] { "FakeNamespace", null };
-            yield return new object[] { "sb://fakenamspace.com", credential };
         }
 
         /// <summary>
@@ -405,6 +402,55 @@ namespace Azure.Messaging.ServiceBus.Tests.Client
             var client = new ServiceBusClient("fullyQualifiedNamespace", token, options);
 
             Assert.That(client.TransportType, Is.EqualTo(options.TransportType));
+        }
+
+        /// <summary>
+        ///    Verifies functionality of the <see cref="ServiceBusClient" />
+        ///    constructor.
+        /// </summary>
+        ///
+        [Test]
+        public void ConstructorWithTokenCredentialParsesNamespaceFromUri()
+        {
+            var token = Mock.Of<TokenCredential>();
+            var host = "mynamespace.servicebus.windows.net";
+            var namespaceUri = $"sb://{ host }";
+            var client = new ServiceBusClient(namespaceUri, token);
+
+            Assert.That(client.FullyQualifiedNamespace, Is.EqualTo(host), "The constructor should parse the namespace from the URI");
+        }
+
+        /// <summary>
+        ///    Verifies functionality of the <see cref="ServiceBusClient" />
+        ///    constructor.
+        /// </summary>
+        ///
+        [Test]
+        public void ConstructorWithSharedKeyCredentialParsesNamespaceFromUri()
+        {
+            var token = new AzureNamedKeyCredential("key", "value");
+            var host = "mynamespace.servicebus.windows.net";
+            var namespaceUri = $"sb://{ host }";
+            var client = new ServiceBusClient(namespaceUri, token);
+
+            Assert.That(client.FullyQualifiedNamespace, Is.EqualTo(host), "The constructor should parse the namespace from the URI");
+        }
+
+        /// <summary>
+        ///    Verifies functionality of the <see cref="ServiceBusClient" />
+        ///    constructor.
+        /// </summary>
+        ///
+        [Test]
+        public void ConstructorWithSasCredentialParsesNamespaceFromUri()
+        {
+            var signature = new SharedAccessSignature("sb://fake.thing.com", "fakeKey", "fakeValue");
+            var token = new AzureSasCredential(signature.Value);
+            var host = "mynamespace.servicebus.windows.net";
+            var namespaceUri = $"sb://{ host }";
+            var client = new ServiceBusClient(namespaceUri, token);
+
+            Assert.That(client.FullyQualifiedNamespace, Is.EqualTo(host), "The constructor should parse the namespace from the URI");
         }
 
         /// <summary>

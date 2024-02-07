@@ -482,7 +482,7 @@ namespace Azure.Monitor.Query.Tests
         public async Task CanQueryWithTimespan()
         {
             var timespan = TimeSpan.FromSeconds(5);
-            DateTime recordingUtcNow = DateTime.SpecifyKind(DateTime.UtcNow.Date, DateTimeKind.Utc).AddDays(-14);
+            DateTime recordingUtcNow = DateTime.SpecifyKind(Recording.UtcNow.Date, DateTimeKind.Utc).AddDays(-14);
             string mockQuery = "let dt = datatable (Int: int, String: string, Bool: bool, TimeGenerated: datetime)\n" +
                 "[" +
                 $"1, 'a', false, datetime(\"{recordingUtcNow.ToString("yyyy-MM-ddTHH:mm:ss.fffZ")}\"), " +
@@ -506,7 +506,7 @@ namespace Azure.Monitor.Query.Tests
 
             var client = CreateClient();
 
-            DateTime recordingUtcNow = DateTime.SpecifyKind(DateTime.UtcNow.Date, DateTimeKind.Utc).AddDays(-14);
+            DateTime recordingUtcNow = DateTime.SpecifyKind(Recording.UtcNow.Date, DateTimeKind.Utc).AddDays(-14);
             string mockQuery = "let dt = datatable (Int: int, String: string, Bool: bool, TimeGenerated: datetime)\n" +
                 "[" +
                 $"1, 'a', false, datetime(\"{recordingUtcNow.ToString("yyyy-MM-ddTHH:mm:ss.fffZ")}\"), " +
@@ -735,7 +735,7 @@ namespace Azure.Monitor.Query.Tests
 
             var client = CreateClient();
 
-            DateTime recordingUtcNow = DateTime.SpecifyKind(DateTime.UtcNow.Date, DateTimeKind.Utc).AddDays(-14);
+            DateTime recordingUtcNow = DateTime.SpecifyKind(Recording.UtcNow.Date, DateTimeKind.Utc).AddDays(-14);
             string mockQuery = "let dt = datatable (Int: int, String: string, Bool: bool, TimeGenerated: datetime)\n" +
                 "[" +
                 $"1, 'a', false, datetime(\"{recordingUtcNow.ToString("yyyy-MM-ddTHH:mm:ss.fffZ")}\"), " +
@@ -758,7 +758,7 @@ namespace Azure.Monitor.Query.Tests
             var timespan = TimeSpan.FromSeconds(5);
 
             var client = CreateClient();
-            DateTime recordingUtcNow = DateTime.SpecifyKind(DateTime.UtcNow.Date, DateTimeKind.Utc).AddDays(-14);
+            DateTime recordingUtcNow = DateTime.SpecifyKind(Recording.UtcNow.Date, DateTimeKind.Utc).AddDays(-14);
             string mockQuery = "let dt = datatable (Int: int, String: string, Bool: bool, TimeGenerated: datetime)\n" +
                 "[" +
                 $"1, 'a', false, datetime(\"{recordingUtcNow.ToString("yyyy-MM-ddTHH:mm:ss.fffZ")}\"), " +
@@ -781,7 +781,7 @@ namespace Azure.Monitor.Query.Tests
 
             var client = CreateClient();
 
-            DateTime recordingUtcNow = DateTime.SpecifyKind(DateTime.UtcNow.Date, DateTimeKind.Utc).AddDays(-14);
+            DateTime recordingUtcNow = DateTime.SpecifyKind(Recording.UtcNow.Date, DateTimeKind.Utc).AddDays(-14);
             string mockQuery = "let dt = datatable (Int: int, String: string, Bool: bool, TimeGenerated: datetime)\n" +
                 "[" +
                 $"1, 'a', false, datetime(\"{recordingUtcNow.ToString("yyyy-MM-ddTHH:mm:ss.fffZ")}\"), " +
@@ -816,7 +816,7 @@ namespace Azure.Monitor.Query.Tests
 
             var client = CreateClient();
 
-            DateTime recordingUtcNow = DateTime.SpecifyKind(DateTime.UtcNow.Date, DateTimeKind.Utc).AddDays(-14);
+            DateTime recordingUtcNow = DateTime.SpecifyKind(Recording.UtcNow.Date, DateTimeKind.Utc).AddDays(-14);
             string mockQuery = "let dt = datatable (Int: int, String: string, Bool: bool, TimeGenerated: datetime)\n" +
                 "[" +
                 $"1, 'a', false, datetime(\"{recordingUtcNow.ToString("yyyy-MM-ddTHH:mm:ss.fffZ")}\"), " +
