@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Net;
 using System.Reflection;
 using System.Threading;
@@ -12,6 +13,7 @@ using Azure.Messaging.EventHubs.Authorization;
 using Azure.Messaging.EventHubs.Consumer;
 using Azure.Messaging.EventHubs.Core;
 using Azure.Messaging.EventHubs.Producer;
+using Microsoft.Extensions.Options;
 using Moq;
 using NUnit.Framework;
 
@@ -38,7 +40,7 @@ namespace Azure.Messaging.EventHubs.Tests
             yield return new object[] { "FakeNamespace", null, credential.Object };
             yield return new object[] { "FakNamespace", "", credential.Object };
             yield return new object[] { "FakeNamespace", "FakePath", null };
-            yield return new object[] { "sb://fakenamspace.com", "FakePath", credential.Object };
+            yield return new object[] { "[126.77.889.2", "FakePath", credential.Object };
         }
 
         /// <summary>
@@ -54,7 +56,7 @@ namespace Azure.Messaging.EventHubs.Tests
             yield return new object[] { "FakeNamespace", null, credential };
             yield return new object[] { "FakNamespace", "", credential };
             yield return new object[] { "FakeNamespace", "FakePath", null };
-            yield return new object[] { "sb://fakenamspace.com", "FakePath", credential };
+            yield return new object[] { "[126.77.889.2]", "FakePath", credential };
         }
 
         /// <summary>
@@ -71,7 +73,7 @@ namespace Azure.Messaging.EventHubs.Tests
             yield return new object[] { "FakeNamespace", null, credential };
             yield return new object[] { "FakNamespace", "", credential };
             yield return new object[] { "FakeNamespace", "FakePath", null };
-            yield return new object[] { "sb://fakenamspace.com", "FakePath", credential };
+            yield return new object[] { "[126.77.889.2", "FakePath", credential };
         }
 
         /// <summary>
@@ -533,7 +535,7 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
-        public void CConstructorWithSasCredentialCreatesTheTransportClient()
+        public void ConstructorWithSasCredentialCreatesTheTransportClient()
         {
             var fullyQualifiedNamespace = "my.eventhubs.com";
             var path = "some-hub";
@@ -545,6 +547,51 @@ namespace Azure.Messaging.EventHubs.Tests
             var connection = new EventHubConnection(fullyQualifiedNamespace, path, credential, options);
 
             Assert.That(GetTransportClient(connection), Is.Not.Null);
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the constructor.
+        /// </summary>
+        ///
+        [Test]
+        public void TokenCredentialConstructorParsesNamespaceFromUri()
+        {
+            var credential = Mock.Of<TokenCredential>();
+            var host = "mynamespace.servicebus.windows.net";
+            var namespaceUri = $"sb://{ host }";
+            var connection = new EventHubConnection(namespaceUri, "eventhub", credential);
+
+            Assert.That(connection.FullyQualifiedNamespace, Is.EqualTo(host), "The constructor should parse the namespace from the URI");
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the constructor.
+        /// </summary>
+        ///
+        [Test]
+        public void SharedKeyCredentialConstructorParsesNamespaceFromUri()
+        {
+            var credential = new AzureNamedKeyCredential("key", "value");
+            var host = "mynamespace.servicebus.windows.net";
+            var namespaceUri = $"sb://{ host }";
+            var connection = new EventHubConnection(namespaceUri, "eventhub", credential);
+
+            Assert.That(connection.FullyQualifiedNamespace, Is.EqualTo(host), "The constructor should parse the namespace from the URI");
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the constructor.
+        /// </summary>
+        ///
+        [Test]
+        public void SasCredentialConstructorParsesNamespaceFromUri()
+        {
+            var credential = new AzureSasCredential(new SharedAccessSignature("sb://this.is.Fake/blah", "key", "value").Value);
+            var host = "mynamespace.servicebus.windows.net";
+            var namespaceUri = $"sb://{ host }";
+            var connection = new EventHubConnection(namespaceUri, "eventhub", credential);
+
+            Assert.That(connection.FullyQualifiedNamespace, Is.EqualTo(host), "The constructor should parse the namespace from the URI");
         }
 
         /// <summary>
@@ -826,6 +873,25 @@ namespace Azure.Messaging.EventHubs.Tests
             await connection.CloseAsync();
 
             Assert.That(transportClient.WasCloseCalled, Is.True);
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="EventHubConnection.BuildResource" />
+        ///   method.
+        /// </summary>
+        ///
+        [Test]
+        [TestCase(null)]
+        [TestCase("")]
+        [TestCase("[123.45676.0]")]
+        public void BuildConnectionAudienceDetectsInvalidNamespace(string fullyQualifiedNamespace)
+        {
+            var path = "someHub/";
+            var transportClient = new ObservableTransportClientMock();
+            var client = new InjectableTransportClientMock(transportClient, "Endpoint=sb://not-real.servicebus.windows.net/;SharedAccessKeyName=DummyKey;SharedAccessKey=[not_real];EntityPath=fake");
+            var resource = EventHubConnection.BuildConnectionSignatureAuthorizationResource(EventHubsTransportType.AmqpWebSockets, fullyQualifiedNamespace, path);
+
+            Assert.That(resource, Is.Empty, "The resource should not have been populated.");
         }
 
         /// <summary>
