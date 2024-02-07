@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <Description>An OpenTelemetry .NET AzureMonitor OpenTelemetry Live Metrics</Description>
     <AssemblyTitle>AzureMonitor OpenTelemetry Live Metrics</AssemblyTitle>

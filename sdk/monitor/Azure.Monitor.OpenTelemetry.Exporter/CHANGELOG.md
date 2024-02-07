@@ -1,10 +1,6 @@
 # Release History
 
-## 1.3.0-beta.1 (Unreleased)
-
-### Features Added
-
-### Breaking Changes
+## 1.3.0-beta.1 (2024-02-08)
 
 ### Bugs Fixed
 
@@ -19,8 +15,6 @@
   Now, tags linked to an `ActivityEvent` of type exception are correctly exported as Custom Properties.
   ([#41767](https://github.com/Azure/azure-sdk-for-net/pull/41767))
   
-### Other Changes
-
 ## 1.2.0 (2024-01-24)
 
 ### Other Changes
