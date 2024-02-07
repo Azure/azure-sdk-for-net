@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -475,6 +477,405 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             return new ReplicationProtectedItemProperties(friendlyName.Value, protectedItemType.Value, protectableItemId.Value, recoveryServicesProviderId.Value, primaryFabricFriendlyName.Value, primaryFabricProvider.Value, recoveryFabricFriendlyName.Value, recoveryFabricId.Value, primaryProtectionContainerFriendlyName.Value, recoveryProtectionContainerFriendlyName.Value, protectionState.Value, protectionStateDescription.Value, activeLocation.Value, testFailoverState.Value, testFailoverStateDescription.Value, switchProviderState.Value, switchProviderStateDescription.Value, Optional.ToList(allowedOperations), replicationHealth.Value, failoverHealth.Value, Optional.ToList(healthErrors), policyId.Value, policyFriendlyName.Value, Optional.ToNullable(lastSuccessfulFailoverTime), Optional.ToNullable(lastSuccessfulTestFailoverTime), currentScenario.Value, failoverRecoveryPointId.Value, providerSpecificDetails.Value, recoveryContainerId.Value, Optional.ToNullable(eventCorrelationId), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(FriendlyName))
+            {
+                builder.Append("  friendlyName:");
+                if (FriendlyName.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{FriendlyName}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{FriendlyName}'");
+                }
+            }
+
+            if (Optional.IsDefined(ProtectedItemType))
+            {
+                builder.Append("  protectedItemType:");
+                if (ProtectedItemType.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{ProtectedItemType}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{ProtectedItemType}'");
+                }
+            }
+
+            if (Optional.IsDefined(ProtectableItemId))
+            {
+                builder.Append("  protectableItemId:");
+                builder.AppendLine($" '{ProtectableItemId.ToString()}'");
+            }
+
+            if (Optional.IsDefined(RecoveryServicesProviderId))
+            {
+                builder.Append("  recoveryServicesProviderId:");
+                if (RecoveryServicesProviderId.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{RecoveryServicesProviderId}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{RecoveryServicesProviderId}'");
+                }
+            }
+
+            if (Optional.IsDefined(PrimaryFabricFriendlyName))
+            {
+                builder.Append("  primaryFabricFriendlyName:");
+                if (PrimaryFabricFriendlyName.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{PrimaryFabricFriendlyName}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{PrimaryFabricFriendlyName}'");
+                }
+            }
+
+            if (Optional.IsDefined(PrimaryFabricProvider))
+            {
+                builder.Append("  primaryFabricProvider:");
+                if (PrimaryFabricProvider.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{PrimaryFabricProvider}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{PrimaryFabricProvider}'");
+                }
+            }
+
+            if (Optional.IsDefined(RecoveryFabricFriendlyName))
+            {
+                builder.Append("  recoveryFabricFriendlyName:");
+                if (RecoveryFabricFriendlyName.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{RecoveryFabricFriendlyName}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{RecoveryFabricFriendlyName}'");
+                }
+            }
+
+            if (Optional.IsDefined(RecoveryFabricId))
+            {
+                builder.Append("  recoveryFabricId:");
+                builder.AppendLine($" '{RecoveryFabricId.ToString()}'");
+            }
+
+            if (Optional.IsDefined(PrimaryProtectionContainerFriendlyName))
+            {
+                builder.Append("  primaryProtectionContainerFriendlyName:");
+                if (PrimaryProtectionContainerFriendlyName.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{PrimaryProtectionContainerFriendlyName}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{PrimaryProtectionContainerFriendlyName}'");
+                }
+            }
+
+            if (Optional.IsDefined(RecoveryProtectionContainerFriendlyName))
+            {
+                builder.Append("  recoveryProtectionContainerFriendlyName:");
+                if (RecoveryProtectionContainerFriendlyName.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{RecoveryProtectionContainerFriendlyName}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{RecoveryProtectionContainerFriendlyName}'");
+                }
+            }
+
+            if (Optional.IsDefined(ProtectionState))
+            {
+                builder.Append("  protectionState:");
+                if (ProtectionState.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{ProtectionState}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{ProtectionState}'");
+                }
+            }
+
+            if (Optional.IsDefined(ProtectionStateDescription))
+            {
+                builder.Append("  protectionStateDescription:");
+                if (ProtectionStateDescription.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{ProtectionStateDescription}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{ProtectionStateDescription}'");
+                }
+            }
+
+            if (Optional.IsDefined(ActiveLocation))
+            {
+                builder.Append("  activeLocation:");
+                if (ActiveLocation.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{ActiveLocation}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{ActiveLocation}'");
+                }
+            }
+
+            if (Optional.IsDefined(TestFailoverState))
+            {
+                builder.Append("  testFailoverState:");
+                if (TestFailoverState.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{TestFailoverState}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{TestFailoverState}'");
+                }
+            }
+
+            if (Optional.IsDefined(TestFailoverStateDescription))
+            {
+                builder.Append("  testFailoverStateDescription:");
+                if (TestFailoverStateDescription.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{TestFailoverStateDescription}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{TestFailoverStateDescription}'");
+                }
+            }
+
+            if (Optional.IsDefined(SwitchProviderState))
+            {
+                builder.Append("  switchProviderState:");
+                if (SwitchProviderState.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{SwitchProviderState}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{SwitchProviderState}'");
+                }
+            }
+
+            if (Optional.IsDefined(SwitchProviderStateDescription))
+            {
+                builder.Append("  switchProviderStateDescription:");
+                if (SwitchProviderStateDescription.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{SwitchProviderStateDescription}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{SwitchProviderStateDescription}'");
+                }
+            }
+
+            if (Optional.IsCollectionDefined(AllowedOperations))
+            {
+                if (AllowedOperations.Any())
+                {
+                    builder.Append("  allowedOperations:");
+                    builder.AppendLine(" [");
+                    foreach (var item in AllowedOperations)
+                    {
+                        if (item == null)
+                        {
+                            builder.Append("null");
+                            continue;
+                        }
+                        if (item.Contains(Environment.NewLine))
+                        {
+                            builder.AppendLine("    '''");
+                            builder.AppendLine($"{item}'''");
+                        }
+                        else
+                        {
+                            builder.AppendLine($"    '{item}'");
+                        }
+                    }
+                    builder.AppendLine("  ]");
+                }
+            }
+
+            if (Optional.IsDefined(ReplicationHealth))
+            {
+                builder.Append("  replicationHealth:");
+                if (ReplicationHealth.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{ReplicationHealth}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{ReplicationHealth}'");
+                }
+            }
+
+            if (Optional.IsDefined(FailoverHealth))
+            {
+                builder.Append("  failoverHealth:");
+                if (FailoverHealth.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{FailoverHealth}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{FailoverHealth}'");
+                }
+            }
+
+            if (Optional.IsCollectionDefined(HealthErrors))
+            {
+                if (HealthErrors.Any())
+                {
+                    builder.Append("  healthErrors:");
+                    builder.AppendLine(" [");
+                    foreach (var item in HealthErrors)
+                    {
+                        AppendChildObject(builder, item, options, 4, true);
+                    }
+                    builder.AppendLine("  ]");
+                }
+            }
+
+            if (Optional.IsDefined(PolicyId))
+            {
+                builder.Append("  policyId:");
+                builder.AppendLine($" '{PolicyId.ToString()}'");
+            }
+
+            if (Optional.IsDefined(PolicyFriendlyName))
+            {
+                builder.Append("  policyFriendlyName:");
+                if (PolicyFriendlyName.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{PolicyFriendlyName}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{PolicyFriendlyName}'");
+                }
+            }
+
+            if (Optional.IsDefined(LastSuccessfulFailoverOn))
+            {
+                builder.Append("  lastSuccessfulFailoverTime:");
+                var formattedDateTimeString = TypeFormatters.ToString(LastSuccessfulFailoverOn.Value, "o");
+                builder.AppendLine($" '{formattedDateTimeString}'");
+            }
+
+            if (Optional.IsDefined(LastSuccessfulTestFailoverOn))
+            {
+                builder.Append("  lastSuccessfulTestFailoverTime:");
+                var formattedDateTimeString = TypeFormatters.ToString(LastSuccessfulTestFailoverOn.Value, "o");
+                builder.AppendLine($" '{formattedDateTimeString}'");
+            }
+
+            if (Optional.IsDefined(CurrentScenario))
+            {
+                builder.Append("  currentScenario:");
+                AppendChildObject(builder, CurrentScenario, options, 2, false);
+            }
+
+            if (Optional.IsDefined(FailoverRecoveryPointId))
+            {
+                builder.Append("  failoverRecoveryPointId:");
+                builder.AppendLine($" '{FailoverRecoveryPointId.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ProviderSpecificDetails))
+            {
+                builder.Append("  providerSpecificDetails:");
+                AppendChildObject(builder, ProviderSpecificDetails, options, 2, false);
+            }
+
+            if (Optional.IsDefined(RecoveryContainerId))
+            {
+                builder.Append("  recoveryContainerId:");
+                builder.AppendLine($" '{RecoveryContainerId.ToString()}'");
+            }
+
+            if (Optional.IsDefined(EventCorrelationId))
+            {
+                builder.Append("  eventCorrelationId:");
+                builder.AppendLine($" '{EventCorrelationId.Value.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            bool inMultilineString = false;
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (inMultilineString)
+                {
+                    if (line.Contains("'''"))
+                    {
+                        inMultilineString = false;
+                    }
+                    stringBuilder.AppendLine(line);
+                    continue;
+                }
+                if (line.Contains("'''"))
+                {
+                    inMultilineString = true;
+                    stringBuilder.AppendLine($"{indent}{line}");
+                    continue;
+                }
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<ReplicationProtectedItemProperties>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ReplicationProtectedItemProperties>)this).GetFormatFromOptions(options) : options.Format;
@@ -483,6 +884,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(ReplicationProtectedItemProperties)} does not support '{options.Format}' format.");
             }
@@ -499,6 +902,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeReplicationProtectedItemProperties(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(ReplicationProtectedItemProperties)} does not support '{options.Format}' format.");
             }

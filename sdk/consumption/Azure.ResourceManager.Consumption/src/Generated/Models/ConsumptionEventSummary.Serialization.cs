@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
@@ -463,6 +464,266 @@ namespace Azure.ResourceManager.Consumption.Models
             return new ConsumptionEventSummary(id, name, type, systemData.Value, Optional.ToNullable(transactionDate), description.Value, newCredit.Value, adjustments.Value, creditExpired.Value, charges.Value, closedBalance.Value, Optional.ToNullable(eventType), invoiceNumber.Value, billingProfileId.Value, billingProfileDisplayName.Value, lotId.Value, lotSource.Value, canceledCredit.Value, creditCurrency.Value, billingCurrency.Value, reseller.Value, creditExpiredInBillingCurrency.Value, newCreditInBillingCurrency.Value, adjustmentsInBillingCurrency.Value, chargesInBillingCurrency.Value, closedBalanceInBillingCurrency.Value, Optional.ToNullable(eTag), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                if (Name.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{Name}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{Name}'");
+                }
+            }
+
+            if (Optional.IsDefined(ETag))
+            {
+                builder.Append("  eTag:");
+                builder.AppendLine($" '{ETag.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Id))
+            {
+                builder.Append("  id:");
+                builder.AppendLine($" '{Id.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SystemData))
+            {
+                builder.Append("  systemData:");
+                builder.AppendLine($" '{SystemData.ToString()}'");
+            }
+
+            builder.Append("  properties:");
+            builder.AppendLine(" {");
+            if (Optional.IsDefined(TransactOn))
+            {
+                builder.Append("    transactionDate:");
+                var formattedDateTimeString = TypeFormatters.ToString(TransactOn.Value, "o");
+                builder.AppendLine($" '{formattedDateTimeString}'");
+            }
+
+            if (Optional.IsDefined(Description))
+            {
+                builder.Append("    description:");
+                if (Description.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{Description}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{Description}'");
+                }
+            }
+
+            if (Optional.IsDefined(NewCredit))
+            {
+                builder.Append("    newCredit:");
+                AppendChildObject(builder, NewCredit, options, 4, false);
+            }
+
+            if (Optional.IsDefined(Adjustments))
+            {
+                builder.Append("    adjustments:");
+                AppendChildObject(builder, Adjustments, options, 4, false);
+            }
+
+            if (Optional.IsDefined(CreditExpired))
+            {
+                builder.Append("    creditExpired:");
+                AppendChildObject(builder, CreditExpired, options, 4, false);
+            }
+
+            if (Optional.IsDefined(Charges))
+            {
+                builder.Append("    charges:");
+                AppendChildObject(builder, Charges, options, 4, false);
+            }
+
+            if (Optional.IsDefined(ClosedBalance))
+            {
+                builder.Append("    closedBalance:");
+                AppendChildObject(builder, ClosedBalance, options, 4, false);
+            }
+
+            if (Optional.IsDefined(EventType))
+            {
+                builder.Append("    eventType:");
+                builder.AppendLine($" '{EventType.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(InvoiceNumber))
+            {
+                builder.Append("    invoiceNumber:");
+                if (InvoiceNumber.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{InvoiceNumber}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{InvoiceNumber}'");
+                }
+            }
+
+            if (Optional.IsDefined(BillingProfileId))
+            {
+                builder.Append("    billingProfileId:");
+                builder.AppendLine($" '{BillingProfileId.ToString()}'");
+            }
+
+            if (Optional.IsDefined(BillingProfileDisplayName))
+            {
+                builder.Append("    billingProfileDisplayName:");
+                if (BillingProfileDisplayName.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{BillingProfileDisplayName}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{BillingProfileDisplayName}'");
+                }
+            }
+
+            if (Optional.IsDefined(LotId))
+            {
+                builder.Append("    lotId:");
+                builder.AppendLine($" '{LotId.ToString()}'");
+            }
+
+            if (Optional.IsDefined(LotSource))
+            {
+                builder.Append("    lotSource:");
+                if (LotSource.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{LotSource}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{LotSource}'");
+                }
+            }
+
+            if (Optional.IsDefined(CanceledCredit))
+            {
+                builder.Append("    canceledCredit:");
+                AppendChildObject(builder, CanceledCredit, options, 4, false);
+            }
+
+            if (Optional.IsDefined(CreditCurrency))
+            {
+                builder.Append("    creditCurrency:");
+                if (CreditCurrency.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{CreditCurrency}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{CreditCurrency}'");
+                }
+            }
+
+            if (Optional.IsDefined(BillingCurrency))
+            {
+                builder.Append("    billingCurrency:");
+                if (BillingCurrency.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{BillingCurrency}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{BillingCurrency}'");
+                }
+            }
+
+            if (Optional.IsDefined(Reseller))
+            {
+                builder.Append("    reseller:");
+                AppendChildObject(builder, Reseller, options, 4, false);
+            }
+
+            if (Optional.IsDefined(CreditExpiredInBillingCurrency))
+            {
+                builder.Append("    creditExpiredInBillingCurrency:");
+                AppendChildObject(builder, CreditExpiredInBillingCurrency, options, 4, false);
+            }
+
+            if (Optional.IsDefined(NewCreditInBillingCurrency))
+            {
+                builder.Append("    newCreditInBillingCurrency:");
+                AppendChildObject(builder, NewCreditInBillingCurrency, options, 4, false);
+            }
+
+            if (Optional.IsDefined(AdjustmentsInBillingCurrency))
+            {
+                builder.Append("    adjustmentsInBillingCurrency:");
+                AppendChildObject(builder, AdjustmentsInBillingCurrency, options, 4, false);
+            }
+
+            if (Optional.IsDefined(ChargesInBillingCurrency))
+            {
+                builder.Append("    chargesInBillingCurrency:");
+                AppendChildObject(builder, ChargesInBillingCurrency, options, 4, false);
+            }
+
+            if (Optional.IsDefined(ClosedBalanceInBillingCurrency))
+            {
+                builder.Append("    closedBalanceInBillingCurrency:");
+                AppendChildObject(builder, ClosedBalanceInBillingCurrency, options, 4, false);
+            }
+
+            builder.AppendLine("  }");
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            bool inMultilineString = false;
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (inMultilineString)
+                {
+                    if (line.Contains("'''"))
+                    {
+                        inMultilineString = false;
+                    }
+                    stringBuilder.AppendLine(line);
+                    continue;
+                }
+                if (line.Contains("'''"))
+                {
+                    inMultilineString = true;
+                    stringBuilder.AppendLine($"{indent}{line}");
+                    continue;
+                }
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<ConsumptionEventSummary>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ConsumptionEventSummary>)this).GetFormatFromOptions(options) : options.Format;
@@ -471,6 +732,8 @@ namespace Azure.ResourceManager.Consumption.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(ConsumptionEventSummary)} does not support '{options.Format}' format.");
             }
@@ -487,6 +750,8 @@ namespace Azure.ResourceManager.Consumption.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeConsumptionEventSummary(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(ConsumptionEventSummary)} does not support '{options.Format}' format.");
             }

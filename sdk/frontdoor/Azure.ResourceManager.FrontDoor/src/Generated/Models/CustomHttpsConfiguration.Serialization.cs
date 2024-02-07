@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
@@ -184,6 +185,114 @@ namespace Azure.ResourceManager.FrontDoor.Models
             return new CustomHttpsConfiguration(certificateSource, protocolType, minimumTlsVersion, Optional.ToNullable(certificateType), vault, secretName.Value, secretVersion.Value, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(CertificateSource))
+            {
+                builder.Append("  certificateSource:");
+                builder.AppendLine($" '{CertificateSource.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ProtocolType))
+            {
+                builder.Append("  protocolType:");
+                builder.AppendLine($" '{ProtocolType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(MinimumTlsVersion))
+            {
+                builder.Append("  minimumTlsVersion:");
+                builder.AppendLine($" '{MinimumTlsVersion.ToString()}'");
+            }
+
+            builder.Append("  frontDoorCertificateSourceParameters:");
+            builder.AppendLine(" {");
+            if (Optional.IsDefined(CertificateType))
+            {
+                builder.Append("    certificateType:");
+                builder.AppendLine($" '{CertificateType.Value.ToString()}'");
+            }
+
+            builder.AppendLine("  }");
+            builder.Append("  keyVaultCertificateSourceParameters:");
+            builder.AppendLine(" {");
+            if (Optional.IsDefined(Vault))
+            {
+                builder.Append("    vault:");
+                AppendChildObject(builder, Vault, options, 4, false);
+            }
+
+            if (Optional.IsDefined(SecretName))
+            {
+                builder.Append("    secretName:");
+                if (SecretName.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{SecretName}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{SecretName}'");
+                }
+            }
+
+            if (Optional.IsDefined(SecretVersion))
+            {
+                builder.Append("    secretVersion:");
+                if (SecretVersion.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{SecretVersion}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{SecretVersion}'");
+                }
+            }
+
+            builder.AppendLine("  }");
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            bool inMultilineString = false;
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (inMultilineString)
+                {
+                    if (line.Contains("'''"))
+                    {
+                        inMultilineString = false;
+                    }
+                    stringBuilder.AppendLine(line);
+                    continue;
+                }
+                if (line.Contains("'''"))
+                {
+                    inMultilineString = true;
+                    stringBuilder.AppendLine($"{indent}{line}");
+                    continue;
+                }
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<CustomHttpsConfiguration>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<CustomHttpsConfiguration>)this).GetFormatFromOptions(options) : options.Format;
@@ -192,6 +301,8 @@ namespace Azure.ResourceManager.FrontDoor.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(CustomHttpsConfiguration)} does not support '{options.Format}' format.");
             }
@@ -208,6 +319,8 @@ namespace Azure.ResourceManager.FrontDoor.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeCustomHttpsConfiguration(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(CustomHttpsConfiguration)} does not support '{options.Format}' format.");
             }

@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.CustomerInsights.Models;
@@ -475,6 +477,338 @@ namespace Azure.ResourceManager.CustomerInsights
             return new KpiResourceFormatData(id, name, type, systemData.Value, Optional.ToNullable(entityType), entityTypeName.Value, Optional.ToNullable(tenantId), kpiName.Value, Optional.ToDictionary(displayName), Optional.ToDictionary(description), Optional.ToNullable(calculationWindow), calculationWindowFieldName.Value, Optional.ToNullable(function), expression.Value, unit.Value, filter.Value, Optional.ToList(groupBy), Optional.ToList(groupByMetadata), Optional.ToList(participantProfilesMetadata), Optional.ToNullable(provisioningState), thresHolds.Value, Optional.ToList(aliases), Optional.ToList(extracts), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                if (Name.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{Name}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{Name}'");
+                }
+            }
+
+            if (Optional.IsDefined(Id))
+            {
+                builder.Append("  id:");
+                builder.AppendLine($" '{Id.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SystemData))
+            {
+                builder.Append("  systemData:");
+                builder.AppendLine($" '{SystemData.ToString()}'");
+            }
+
+            builder.Append("  properties:");
+            builder.AppendLine(" {");
+            if (Optional.IsDefined(EntityType))
+            {
+                builder.Append("    entityType:");
+                builder.AppendLine($" '{EntityType.Value.ToSerialString()}'");
+            }
+
+            if (Optional.IsDefined(EntityTypeName))
+            {
+                builder.Append("    entityTypeName:");
+                if (EntityTypeName.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{EntityTypeName}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{EntityTypeName}'");
+                }
+            }
+
+            if (Optional.IsDefined(TenantId))
+            {
+                builder.Append("    tenantId:");
+                builder.AppendLine($" '{TenantId.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(KpiName))
+            {
+                builder.Append("    kpiName:");
+                if (KpiName.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{KpiName}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{KpiName}'");
+                }
+            }
+
+            if (Optional.IsCollectionDefined(DisplayName))
+            {
+                if (DisplayName.Any())
+                {
+                    builder.Append("    displayName:");
+                    builder.AppendLine(" {");
+                    foreach (var item in DisplayName)
+                    {
+                        builder.Append($"        {item.Key}:");
+                        if (item.Value == null)
+                        {
+                            builder.Append("null");
+                            continue;
+                        }
+                        if (item.Value.Contains(Environment.NewLine))
+                        {
+                            builder.AppendLine(" '''");
+                            builder.AppendLine($"{item.Value}'''");
+                        }
+                        else
+                        {
+                            builder.AppendLine($" '{item.Value}'");
+                        }
+                    }
+                    builder.AppendLine("    }");
+                }
+            }
+
+            if (Optional.IsCollectionDefined(Description))
+            {
+                if (Description.Any())
+                {
+                    builder.Append("    description:");
+                    builder.AppendLine(" {");
+                    foreach (var item in Description)
+                    {
+                        builder.Append($"        {item.Key}:");
+                        if (item.Value == null)
+                        {
+                            builder.Append("null");
+                            continue;
+                        }
+                        if (item.Value.Contains(Environment.NewLine))
+                        {
+                            builder.AppendLine(" '''");
+                            builder.AppendLine($"{item.Value}'''");
+                        }
+                        else
+                        {
+                            builder.AppendLine($" '{item.Value}'");
+                        }
+                    }
+                    builder.AppendLine("    }");
+                }
+            }
+
+            if (Optional.IsDefined(CalculationWindow))
+            {
+                builder.Append("    calculationWindow:");
+                builder.AppendLine($" '{CalculationWindow.Value.ToSerialString()}'");
+            }
+
+            if (Optional.IsDefined(CalculationWindowFieldName))
+            {
+                builder.Append("    calculationWindowFieldName:");
+                if (CalculationWindowFieldName.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{CalculationWindowFieldName}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{CalculationWindowFieldName}'");
+                }
+            }
+
+            if (Optional.IsDefined(Function))
+            {
+                builder.Append("    function:");
+                builder.AppendLine($" '{Function.Value.ToSerialString()}'");
+            }
+
+            if (Optional.IsDefined(Expression))
+            {
+                builder.Append("    expression:");
+                if (Expression.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{Expression}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{Expression}'");
+                }
+            }
+
+            if (Optional.IsDefined(Unit))
+            {
+                builder.Append("    unit:");
+                if (Unit.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{Unit}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{Unit}'");
+                }
+            }
+
+            if (Optional.IsDefined(Filter))
+            {
+                builder.Append("    filter:");
+                if (Filter.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{Filter}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{Filter}'");
+                }
+            }
+
+            if (Optional.IsCollectionDefined(GroupBy))
+            {
+                if (GroupBy.Any())
+                {
+                    builder.Append("    groupBy:");
+                    builder.AppendLine(" [");
+                    foreach (var item in GroupBy)
+                    {
+                        if (item == null)
+                        {
+                            builder.Append("null");
+                            continue;
+                        }
+                        if (item.Contains(Environment.NewLine))
+                        {
+                            builder.AppendLine("      '''");
+                            builder.AppendLine($"{item}'''");
+                        }
+                        else
+                        {
+                            builder.AppendLine($"      '{item}'");
+                        }
+                    }
+                    builder.AppendLine("    ]");
+                }
+            }
+
+            if (Optional.IsCollectionDefined(GroupByMetadata))
+            {
+                if (GroupByMetadata.Any())
+                {
+                    builder.Append("    groupByMetadata:");
+                    builder.AppendLine(" [");
+                    foreach (var item in GroupByMetadata)
+                    {
+                        AppendChildObject(builder, item, options, 6, true);
+                    }
+                    builder.AppendLine("    ]");
+                }
+            }
+
+            if (Optional.IsCollectionDefined(ParticipantProfilesMetadata))
+            {
+                if (ParticipantProfilesMetadata.Any())
+                {
+                    builder.Append("    participantProfilesMetadata:");
+                    builder.AppendLine(" [");
+                    foreach (var item in ParticipantProfilesMetadata)
+                    {
+                        AppendChildObject(builder, item, options, 6, true);
+                    }
+                    builder.AppendLine("    ]");
+                }
+            }
+
+            if (Optional.IsDefined(ProvisioningState))
+            {
+                builder.Append("    provisioningState:");
+                builder.AppendLine($" '{ProvisioningState.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ThresHolds))
+            {
+                builder.Append("    thresHolds:");
+                AppendChildObject(builder, ThresHolds, options, 4, false);
+            }
+
+            if (Optional.IsCollectionDefined(Aliases))
+            {
+                if (Aliases.Any())
+                {
+                    builder.Append("    aliases:");
+                    builder.AppendLine(" [");
+                    foreach (var item in Aliases)
+                    {
+                        AppendChildObject(builder, item, options, 6, true);
+                    }
+                    builder.AppendLine("    ]");
+                }
+            }
+
+            if (Optional.IsCollectionDefined(Extracts))
+            {
+                if (Extracts.Any())
+                {
+                    builder.Append("    extracts:");
+                    builder.AppendLine(" [");
+                    foreach (var item in Extracts)
+                    {
+                        AppendChildObject(builder, item, options, 6, true);
+                    }
+                    builder.AppendLine("    ]");
+                }
+            }
+
+            builder.AppendLine("  }");
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            bool inMultilineString = false;
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (inMultilineString)
+                {
+                    if (line.Contains("'''"))
+                    {
+                        inMultilineString = false;
+                    }
+                    stringBuilder.AppendLine(line);
+                    continue;
+                }
+                if (line.Contains("'''"))
+                {
+                    inMultilineString = true;
+                    stringBuilder.AppendLine($"{indent}{line}");
+                    continue;
+                }
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<KpiResourceFormatData>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<KpiResourceFormatData>)this).GetFormatFromOptions(options) : options.Format;
@@ -483,6 +817,8 @@ namespace Azure.ResourceManager.CustomerInsights
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(KpiResourceFormatData)} does not support '{options.Format}' format.");
             }
@@ -499,6 +835,8 @@ namespace Azure.ResourceManager.CustomerInsights
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeKpiResourceFormatData(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(KpiResourceFormatData)} does not support '{options.Format}' format.");
             }

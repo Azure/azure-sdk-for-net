@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -451,6 +453,237 @@ namespace Azure.ResourceManager.MachineLearning.Models
             return new MachineLearningManagedOnlineDeployment(codeConfiguration.Value, description.Value, environmentId.Value, Optional.ToDictionary(environmentVariables), Optional.ToDictionary(properties), serializedAdditionalRawData, Optional.ToNullable(appInsightsEnabled), dataCollector.Value, Optional.ToNullable(egressPublicNetworkAccess), endpointComputeType, instanceType.Value, livenessProbe.Value, model.Value, modelMountPath.Value, Optional.ToNullable(provisioningState), readinessProbe.Value, requestSettings.Value, scaleSettings.Value);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(AppInsightsEnabled))
+            {
+                builder.Append("  appInsightsEnabled:");
+                var boolValue = AppInsightsEnabled.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(DataCollector))
+            {
+                builder.Append("  dataCollector:");
+                AppendChildObject(builder, DataCollector, options, 2, false);
+            }
+
+            if (Optional.IsDefined(EgressPublicNetworkAccess))
+            {
+                builder.Append("  egressPublicNetworkAccess:");
+                builder.AppendLine($" '{EgressPublicNetworkAccess.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(EndpointComputeType))
+            {
+                builder.Append("  endpointComputeType:");
+                builder.AppendLine($" '{EndpointComputeType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(InstanceType))
+            {
+                builder.Append("  instanceType:");
+                if (InstanceType.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{InstanceType}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{InstanceType}'");
+                }
+            }
+
+            if (Optional.IsDefined(LivenessProbe))
+            {
+                builder.Append("  livenessProbe:");
+                AppendChildObject(builder, LivenessProbe, options, 2, false);
+            }
+
+            if (Optional.IsDefined(Model))
+            {
+                builder.Append("  model:");
+                if (Model.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{Model}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{Model}'");
+                }
+            }
+
+            if (Optional.IsDefined(ModelMountPath))
+            {
+                builder.Append("  modelMountPath:");
+                if (ModelMountPath.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{ModelMountPath}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{ModelMountPath}'");
+                }
+            }
+
+            if (Optional.IsDefined(ProvisioningState))
+            {
+                builder.Append("  provisioningState:");
+                builder.AppendLine($" '{ProvisioningState.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ReadinessProbe))
+            {
+                builder.Append("  readinessProbe:");
+                AppendChildObject(builder, ReadinessProbe, options, 2, false);
+            }
+
+            if (Optional.IsDefined(RequestSettings))
+            {
+                builder.Append("  requestSettings:");
+                AppendChildObject(builder, RequestSettings, options, 2, false);
+            }
+
+            if (Optional.IsDefined(ScaleSettings))
+            {
+                builder.Append("  scaleSettings:");
+                AppendChildObject(builder, ScaleSettings, options, 2, false);
+            }
+
+            if (Optional.IsDefined(CodeConfiguration))
+            {
+                builder.Append("  codeConfiguration:");
+                AppendChildObject(builder, CodeConfiguration, options, 2, false);
+            }
+
+            if (Optional.IsDefined(Description))
+            {
+                builder.Append("  description:");
+                if (Description.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{Description}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{Description}'");
+                }
+            }
+
+            if (Optional.IsDefined(EnvironmentId))
+            {
+                builder.Append("  environmentId:");
+                if (EnvironmentId.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{EnvironmentId}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{EnvironmentId}'");
+                }
+            }
+
+            if (Optional.IsCollectionDefined(EnvironmentVariables))
+            {
+                if (EnvironmentVariables.Any())
+                {
+                    builder.Append("  environmentVariables:");
+                    builder.AppendLine(" {");
+                    foreach (var item in EnvironmentVariables)
+                    {
+                        builder.Append($"    {item.Key}:");
+                        if (item.Value == null)
+                        {
+                            builder.Append("null");
+                            continue;
+                        }
+                        if (item.Value.Contains(Environment.NewLine))
+                        {
+                            builder.AppendLine(" '''");
+                            builder.AppendLine($"{item.Value}'''");
+                        }
+                        else
+                        {
+                            builder.AppendLine($" '{item.Value}'");
+                        }
+                    }
+                    builder.AppendLine("  }");
+                }
+            }
+
+            if (Optional.IsCollectionDefined(Properties))
+            {
+                if (Properties.Any())
+                {
+                    builder.Append("  properties:");
+                    builder.AppendLine(" {");
+                    foreach (var item in Properties)
+                    {
+                        builder.Append($"    {item.Key}:");
+                        if (item.Value == null)
+                        {
+                            builder.Append("null");
+                            continue;
+                        }
+                        if (item.Value.Contains(Environment.NewLine))
+                        {
+                            builder.AppendLine(" '''");
+                            builder.AppendLine($"{item.Value}'''");
+                        }
+                        else
+                        {
+                            builder.AppendLine($" '{item.Value}'");
+                        }
+                    }
+                    builder.AppendLine("  }");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            bool inMultilineString = false;
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (inMultilineString)
+                {
+                    if (line.Contains("'''"))
+                    {
+                        inMultilineString = false;
+                    }
+                    stringBuilder.AppendLine(line);
+                    continue;
+                }
+                if (line.Contains("'''"))
+                {
+                    inMultilineString = true;
+                    stringBuilder.AppendLine($"{indent}{line}");
+                    continue;
+                }
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<MachineLearningManagedOnlineDeployment>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<MachineLearningManagedOnlineDeployment>)this).GetFormatFromOptions(options) : options.Format;
@@ -459,6 +692,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(MachineLearningManagedOnlineDeployment)} does not support '{options.Format}' format.");
             }
@@ -475,6 +710,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeMachineLearningManagedOnlineDeployment(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(MachineLearningManagedOnlineDeployment)} does not support '{options.Format}' format.");
             }

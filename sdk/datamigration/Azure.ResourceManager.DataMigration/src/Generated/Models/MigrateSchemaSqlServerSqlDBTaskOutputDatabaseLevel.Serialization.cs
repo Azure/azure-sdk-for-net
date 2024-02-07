@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -230,6 +231,172 @@ namespace Azure.ResourceManager.DataMigration.Models
             return new MigrateSchemaSqlServerSqlDBTaskOutputDatabaseLevel(id.Value, resultType, serializedAdditionalRawData, databaseName.Value, Optional.ToNullable(state), Optional.ToNullable(stage), Optional.ToNullable(startedOn), Optional.ToNullable(endedOn), databaseErrorResultPrefix.Value, schemaErrorResultPrefix.Value, Optional.ToNullable(numberOfSuccessfulOperations), Optional.ToNullable(numberOfFailedOperations), fileId.Value);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(DatabaseName))
+            {
+                builder.Append("  databaseName:");
+                if (DatabaseName.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{DatabaseName}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{DatabaseName}'");
+                }
+            }
+
+            if (Optional.IsDefined(State))
+            {
+                builder.Append("  state:");
+                builder.AppendLine($" '{State.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Stage))
+            {
+                builder.Append("  stage:");
+                builder.AppendLine($" '{Stage.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(StartedOn))
+            {
+                builder.Append("  startedOn:");
+                var formattedDateTimeString = TypeFormatters.ToString(StartedOn.Value, "o");
+                builder.AppendLine($" '{formattedDateTimeString}'");
+            }
+
+            if (Optional.IsDefined(EndedOn))
+            {
+                builder.Append("  endedOn:");
+                var formattedDateTimeString = TypeFormatters.ToString(EndedOn.Value, "o");
+                builder.AppendLine($" '{formattedDateTimeString}'");
+            }
+
+            if (Optional.IsDefined(DatabaseErrorResultPrefix))
+            {
+                builder.Append("  databaseErrorResultPrefix:");
+                if (DatabaseErrorResultPrefix.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{DatabaseErrorResultPrefix}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{DatabaseErrorResultPrefix}'");
+                }
+            }
+
+            if (Optional.IsDefined(SchemaErrorResultPrefix))
+            {
+                builder.Append("  schemaErrorResultPrefix:");
+                if (SchemaErrorResultPrefix.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{SchemaErrorResultPrefix}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{SchemaErrorResultPrefix}'");
+                }
+            }
+
+            if (Optional.IsDefined(NumberOfSuccessfulOperations))
+            {
+                builder.Append("  numberOfSuccessfulOperations:");
+                builder.AppendLine($" '{NumberOfSuccessfulOperations.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(NumberOfFailedOperations))
+            {
+                builder.Append("  numberOfFailedOperations:");
+                builder.AppendLine($" '{NumberOfFailedOperations.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(FileId))
+            {
+                builder.Append("  fileId:");
+                if (FileId.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{FileId}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{FileId}'");
+                }
+            }
+
+            if (Optional.IsDefined(Id))
+            {
+                builder.Append("  id:");
+                if (Id.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{Id}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{Id}'");
+                }
+            }
+
+            if (Optional.IsDefined(ResultType))
+            {
+                builder.Append("  resultType:");
+                if (ResultType.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{ResultType}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{ResultType}'");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            bool inMultilineString = false;
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (inMultilineString)
+                {
+                    if (line.Contains("'''"))
+                    {
+                        inMultilineString = false;
+                    }
+                    stringBuilder.AppendLine(line);
+                    continue;
+                }
+                if (line.Contains("'''"))
+                {
+                    inMultilineString = true;
+                    stringBuilder.AppendLine($"{indent}{line}");
+                    continue;
+                }
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<MigrateSchemaSqlServerSqlDBTaskOutputDatabaseLevel>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<MigrateSchemaSqlServerSqlDBTaskOutputDatabaseLevel>)this).GetFormatFromOptions(options) : options.Format;
@@ -238,6 +405,8 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(MigrateSchemaSqlServerSqlDBTaskOutputDatabaseLevel)} does not support '{options.Format}' format.");
             }
@@ -254,6 +423,8 @@ namespace Azure.ResourceManager.DataMigration.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeMigrateSchemaSqlServerSqlDBTaskOutputDatabaseLevel(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(MigrateSchemaSqlServerSqlDBTaskOutputDatabaseLevel)} does not support '{options.Format}' format.");
             }

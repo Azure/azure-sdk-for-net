@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -301,6 +303,188 @@ namespace Azure.ResourceManager.PolicyInsights
             return new PolicyAttestationData(id, name, type, systemData.Value, policyAssignmentId, policyDefinitionReferenceId.Value, Optional.ToNullable(complianceState), Optional.ToNullable(expiresOn), owner.Value, comments.Value, Optional.ToList(evidence), provisioningState.Value, Optional.ToNullable(lastComplianceStateChangeAt), Optional.ToNullable(assessmentDate), metadata.Value, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                if (Name.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{Name}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{Name}'");
+                }
+            }
+
+            if (Optional.IsDefined(Id))
+            {
+                builder.Append("  id:");
+                builder.AppendLine($" '{Id.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SystemData))
+            {
+                builder.Append("  systemData:");
+                builder.AppendLine($" '{SystemData.ToString()}'");
+            }
+
+            builder.Append("  properties:");
+            builder.AppendLine(" {");
+            if (Optional.IsDefined(PolicyAssignmentId))
+            {
+                builder.Append("    policyAssignmentId:");
+                builder.AppendLine($" '{PolicyAssignmentId.ToString()}'");
+            }
+
+            if (Optional.IsDefined(PolicyDefinitionReferenceId))
+            {
+                builder.Append("    policyDefinitionReferenceId:");
+                if (PolicyDefinitionReferenceId.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{PolicyDefinitionReferenceId}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{PolicyDefinitionReferenceId}'");
+                }
+            }
+
+            if (Optional.IsDefined(ComplianceState))
+            {
+                builder.Append("    complianceState:");
+                builder.AppendLine($" '{ComplianceState.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ExpireOn))
+            {
+                builder.Append("    expiresOn:");
+                var formattedDateTimeString = TypeFormatters.ToString(ExpireOn.Value, "o");
+                builder.AppendLine($" '{formattedDateTimeString}'");
+            }
+
+            if (Optional.IsDefined(Owner))
+            {
+                builder.Append("    owner:");
+                if (Owner.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{Owner}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{Owner}'");
+                }
+            }
+
+            if (Optional.IsDefined(Comments))
+            {
+                builder.Append("    comments:");
+                if (Comments.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{Comments}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{Comments}'");
+                }
+            }
+
+            if (Optional.IsCollectionDefined(Evidence))
+            {
+                if (Evidence.Any())
+                {
+                    builder.Append("    evidence:");
+                    builder.AppendLine(" [");
+                    foreach (var item in Evidence)
+                    {
+                        AppendChildObject(builder, item, options, 6, true);
+                    }
+                    builder.AppendLine("    ]");
+                }
+            }
+
+            if (Optional.IsDefined(ProvisioningState))
+            {
+                builder.Append("    provisioningState:");
+                if (ProvisioningState.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{ProvisioningState}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{ProvisioningState}'");
+                }
+            }
+
+            if (Optional.IsDefined(LastComplianceStateChangeOn))
+            {
+                builder.Append("    lastComplianceStateChangeAt:");
+                var formattedDateTimeString = TypeFormatters.ToString(LastComplianceStateChangeOn.Value, "o");
+                builder.AppendLine($" '{formattedDateTimeString}'");
+            }
+
+            if (Optional.IsDefined(AssessOn))
+            {
+                builder.Append("    assessmentDate:");
+                var formattedDateTimeString = TypeFormatters.ToString(AssessOn.Value, "o");
+                builder.AppendLine($" '{formattedDateTimeString}'");
+            }
+
+            if (Optional.IsDefined(Metadata))
+            {
+                builder.Append("    metadata:");
+                builder.AppendLine($" '{Metadata.ToString()}'");
+            }
+
+            builder.AppendLine("  }");
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            bool inMultilineString = false;
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (inMultilineString)
+                {
+                    if (line.Contains("'''"))
+                    {
+                        inMultilineString = false;
+                    }
+                    stringBuilder.AppendLine(line);
+                    continue;
+                }
+                if (line.Contains("'''"))
+                {
+                    inMultilineString = true;
+                    stringBuilder.AppendLine($"{indent}{line}");
+                    continue;
+                }
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<PolicyAttestationData>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<PolicyAttestationData>)this).GetFormatFromOptions(options) : options.Format;
@@ -309,6 +493,8 @@ namespace Azure.ResourceManager.PolicyInsights
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(PolicyAttestationData)} does not support '{options.Format}' format.");
             }
@@ -325,6 +511,8 @@ namespace Azure.ResourceManager.PolicyInsights
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializePolicyAttestationData(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(PolicyAttestationData)} does not support '{options.Format}' format.");
             }

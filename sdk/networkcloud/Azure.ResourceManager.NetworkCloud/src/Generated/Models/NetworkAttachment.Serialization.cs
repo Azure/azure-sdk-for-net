@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -152,6 +153,132 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             return new NetworkAttachment(attachedNetworkId, Optional.ToNullable(defaultGateway), ipAllocationMethod, ipv4Address.Value, ipv6Address.Value, macAddress.Value, networkAttachmentName.Value, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(AttachedNetworkId))
+            {
+                builder.Append("  attachedNetworkId:");
+                if (AttachedNetworkId.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{AttachedNetworkId}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{AttachedNetworkId}'");
+                }
+            }
+
+            if (Optional.IsDefined(DefaultGateway))
+            {
+                builder.Append("  defaultGateway:");
+                builder.AppendLine($" '{DefaultGateway.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(IPAllocationMethod))
+            {
+                builder.Append("  ipAllocationMethod:");
+                builder.AppendLine($" '{IPAllocationMethod.ToString()}'");
+            }
+
+            if (Optional.IsDefined(IPv4Address))
+            {
+                builder.Append("  ipv4Address:");
+                if (IPv4Address.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{IPv4Address}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{IPv4Address}'");
+                }
+            }
+
+            if (Optional.IsDefined(IPv6Address))
+            {
+                builder.Append("  ipv6Address:");
+                if (IPv6Address.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{IPv6Address}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{IPv6Address}'");
+                }
+            }
+
+            if (Optional.IsDefined(MacAddress))
+            {
+                builder.Append("  macAddress:");
+                if (MacAddress.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{MacAddress}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{MacAddress}'");
+                }
+            }
+
+            if (Optional.IsDefined(NetworkAttachmentName))
+            {
+                builder.Append("  networkAttachmentName:");
+                if (NetworkAttachmentName.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{NetworkAttachmentName}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{NetworkAttachmentName}'");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            bool inMultilineString = false;
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (inMultilineString)
+                {
+                    if (line.Contains("'''"))
+                    {
+                        inMultilineString = false;
+                    }
+                    stringBuilder.AppendLine(line);
+                    continue;
+                }
+                if (line.Contains("'''"))
+                {
+                    inMultilineString = true;
+                    stringBuilder.AppendLine($"{indent}{line}");
+                    continue;
+                }
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<NetworkAttachment>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<NetworkAttachment>)this).GetFormatFromOptions(options) : options.Format;
@@ -160,6 +287,8 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(NetworkAttachment)} does not support '{options.Format}' format.");
             }
@@ -176,6 +305,8 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeNetworkAttachment(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(NetworkAttachment)} does not support '{options.Format}' format.");
             }

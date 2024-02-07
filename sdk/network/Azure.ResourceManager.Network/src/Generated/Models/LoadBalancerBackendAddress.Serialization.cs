@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
@@ -215,6 +217,125 @@ namespace Azure.ResourceManager.Network.Models
             return new LoadBalancerBackendAddress(name.Value, virtualNetwork, subnet, ipAddress.Value, networkInterfaceIPConfiguration, loadBalancerFrontendIPConfiguration, Optional.ToList(inboundNatRulesPortMapping), Optional.ToNullable(adminState), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                if (Name.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{Name}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{Name}'");
+                }
+            }
+
+            builder.Append("  properties:");
+            builder.AppendLine(" {");
+            if (Optional.IsDefined(VirtualNetwork))
+            {
+                builder.Append("    virtualNetwork:");
+                AppendChildObject(builder, VirtualNetwork, options, 4, false);
+            }
+
+            if (Optional.IsDefined(Subnet))
+            {
+                builder.Append("    subnet:");
+                AppendChildObject(builder, Subnet, options, 4, false);
+            }
+
+            if (Optional.IsDefined(IPAddress))
+            {
+                builder.Append("    ipAddress:");
+                if (IPAddress.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{IPAddress}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{IPAddress}'");
+                }
+            }
+
+            if (Optional.IsDefined(NetworkInterfaceIPConfiguration))
+            {
+                builder.Append("    networkInterfaceIPConfiguration:");
+                AppendChildObject(builder, NetworkInterfaceIPConfiguration, options, 4, false);
+            }
+
+            if (Optional.IsDefined(LoadBalancerFrontendIPConfiguration))
+            {
+                builder.Append("    loadBalancerFrontendIPConfiguration:");
+                AppendChildObject(builder, LoadBalancerFrontendIPConfiguration, options, 4, false);
+            }
+
+            if (Optional.IsCollectionDefined(InboundNatRulesPortMapping))
+            {
+                if (InboundNatRulesPortMapping.Any())
+                {
+                    builder.Append("    inboundNatRulesPortMapping:");
+                    builder.AppendLine(" [");
+                    foreach (var item in InboundNatRulesPortMapping)
+                    {
+                        AppendChildObject(builder, item, options, 6, true);
+                    }
+                    builder.AppendLine("    ]");
+                }
+            }
+
+            if (Optional.IsDefined(AdminState))
+            {
+                builder.Append("    adminState:");
+                builder.AppendLine($" '{AdminState.Value.ToString()}'");
+            }
+
+            builder.AppendLine("  }");
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            bool inMultilineString = false;
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (inMultilineString)
+                {
+                    if (line.Contains("'''"))
+                    {
+                        inMultilineString = false;
+                    }
+                    stringBuilder.AppendLine(line);
+                    continue;
+                }
+                if (line.Contains("'''"))
+                {
+                    inMultilineString = true;
+                    stringBuilder.AppendLine($"{indent}{line}");
+                    continue;
+                }
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<LoadBalancerBackendAddress>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<LoadBalancerBackendAddress>)this).GetFormatFromOptions(options) : options.Format;
@@ -223,6 +344,8 @@ namespace Azure.ResourceManager.Network.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(LoadBalancerBackendAddress)} does not support '{options.Format}' format.");
             }
@@ -239,6 +362,8 @@ namespace Azure.ResourceManager.Network.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeLoadBalancerBackendAddress(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(LoadBalancerBackendAddress)} does not support '{options.Format}' format.");
             }

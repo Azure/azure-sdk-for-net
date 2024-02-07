@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -231,6 +233,175 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             return new ContainerRegistryDockerBuildStep(type, Optional.ToList(baseImageDependencies), contextPath.Value, contextAccessToken.Value, serializedAdditionalRawData, Optional.ToList(imageNames), Optional.ToNullable(isPushEnabled), Optional.ToNullable(noCache), dockerFilePath, target.Value, Optional.ToList(arguments));
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsCollectionDefined(ImageNames))
+            {
+                if (ImageNames.Any())
+                {
+                    builder.Append("  imageNames:");
+                    builder.AppendLine(" [");
+                    foreach (var item in ImageNames)
+                    {
+                        if (item == null)
+                        {
+                            builder.Append("null");
+                            continue;
+                        }
+                        if (item.Contains(Environment.NewLine))
+                        {
+                            builder.AppendLine("    '''");
+                            builder.AppendLine($"{item}'''");
+                        }
+                        else
+                        {
+                            builder.AppendLine($"    '{item}'");
+                        }
+                    }
+                    builder.AppendLine("  ]");
+                }
+            }
+
+            if (Optional.IsDefined(IsPushEnabled))
+            {
+                builder.Append("  isPushEnabled:");
+                var boolValue = IsPushEnabled.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(NoCache))
+            {
+                builder.Append("  noCache:");
+                var boolValue = NoCache.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(DockerFilePath))
+            {
+                builder.Append("  dockerFilePath:");
+                if (DockerFilePath.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{DockerFilePath}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{DockerFilePath}'");
+                }
+            }
+
+            if (Optional.IsDefined(Target))
+            {
+                builder.Append("  target:");
+                if (Target.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{Target}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{Target}'");
+                }
+            }
+
+            if (Optional.IsCollectionDefined(Arguments))
+            {
+                if (Arguments.Any())
+                {
+                    builder.Append("  arguments:");
+                    builder.AppendLine(" [");
+                    foreach (var item in Arguments)
+                    {
+                        AppendChildObject(builder, item, options, 4, true);
+                    }
+                    builder.AppendLine("  ]");
+                }
+            }
+
+            if (Optional.IsCollectionDefined(BaseImageDependencies))
+            {
+                if (BaseImageDependencies.Any())
+                {
+                    builder.Append("  baseImageDependencies:");
+                    builder.AppendLine(" [");
+                    foreach (var item in BaseImageDependencies)
+                    {
+                        AppendChildObject(builder, item, options, 4, true);
+                    }
+                    builder.AppendLine("  ]");
+                }
+            }
+
+            if (Optional.IsDefined(ContextPath))
+            {
+                builder.Append("  contextPath:");
+                if (ContextPath.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{ContextPath}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{ContextPath}'");
+                }
+            }
+
+            if (Optional.IsDefined(ContextAccessToken))
+            {
+                builder.Append("  contextAccessToken:");
+                if (ContextAccessToken.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{ContextAccessToken}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{ContextAccessToken}'");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            bool inMultilineString = false;
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (inMultilineString)
+                {
+                    if (line.Contains("'''"))
+                    {
+                        inMultilineString = false;
+                    }
+                    stringBuilder.AppendLine(line);
+                    continue;
+                }
+                if (line.Contains("'''"))
+                {
+                    inMultilineString = true;
+                    stringBuilder.AppendLine($"{indent}{line}");
+                    continue;
+                }
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<ContainerRegistryDockerBuildStep>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ContainerRegistryDockerBuildStep>)this).GetFormatFromOptions(options) : options.Format;
@@ -239,6 +410,8 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(ContainerRegistryDockerBuildStep)} does not support '{options.Format}' format.");
             }
@@ -255,6 +428,8 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeContainerRegistryDockerBuildStep(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(ContainerRegistryDockerBuildStep)} does not support '{options.Format}' format.");
             }

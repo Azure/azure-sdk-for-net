@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -188,6 +189,154 @@ namespace Azure.ResourceManager.AppService.Models
             return new AppServiceCertificateDetails(Optional.ToNullable(version), serialNumber.Value, thumbprint.Value, subject.Value, Optional.ToNullable(notBefore), Optional.ToNullable(notAfter), signatureAlgorithm.Value, issuer.Value, rawData.Value, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(Version))
+            {
+                builder.Append("  version:");
+                builder.AppendLine($" {Version.Value}");
+            }
+
+            if (Optional.IsDefined(SerialNumber))
+            {
+                builder.Append("  serialNumber:");
+                if (SerialNumber.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{SerialNumber}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{SerialNumber}'");
+                }
+            }
+
+            if (Optional.IsDefined(ThumbprintString))
+            {
+                builder.Append("  thumbprint:");
+                if (ThumbprintString.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{ThumbprintString}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{ThumbprintString}'");
+                }
+            }
+
+            if (Optional.IsDefined(Subject))
+            {
+                builder.Append("  subject:");
+                if (Subject.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{Subject}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{Subject}'");
+                }
+            }
+
+            if (Optional.IsDefined(NotBefore))
+            {
+                builder.Append("  notBefore:");
+                var formattedDateTimeString = TypeFormatters.ToString(NotBefore.Value, "o");
+                builder.AppendLine($" '{formattedDateTimeString}'");
+            }
+
+            if (Optional.IsDefined(NotAfter))
+            {
+                builder.Append("  notAfter:");
+                var formattedDateTimeString = TypeFormatters.ToString(NotAfter.Value, "o");
+                builder.AppendLine($" '{formattedDateTimeString}'");
+            }
+
+            if (Optional.IsDefined(SignatureAlgorithm))
+            {
+                builder.Append("  signatureAlgorithm:");
+                if (SignatureAlgorithm.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{SignatureAlgorithm}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{SignatureAlgorithm}'");
+                }
+            }
+
+            if (Optional.IsDefined(Issuer))
+            {
+                builder.Append("  issuer:");
+                if (Issuer.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{Issuer}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{Issuer}'");
+                }
+            }
+
+            if (Optional.IsDefined(RawData))
+            {
+                builder.Append("  rawData:");
+                if (RawData.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{RawData}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{RawData}'");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            bool inMultilineString = false;
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (inMultilineString)
+                {
+                    if (line.Contains("'''"))
+                    {
+                        inMultilineString = false;
+                    }
+                    stringBuilder.AppendLine(line);
+                    continue;
+                }
+                if (line.Contains("'''"))
+                {
+                    inMultilineString = true;
+                    stringBuilder.AppendLine($"{indent}{line}");
+                    continue;
+                }
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<AppServiceCertificateDetails>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<AppServiceCertificateDetails>)this).GetFormatFromOptions(options) : options.Format;
@@ -196,6 +345,8 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(AppServiceCertificateDetails)} does not support '{options.Format}' format.");
             }
@@ -212,6 +363,8 @@ namespace Azure.ResourceManager.AppService.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeAppServiceCertificateDetails(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(AppServiceCertificateDetails)} does not support '{options.Format}' format.");
             }

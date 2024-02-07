@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -198,6 +200,160 @@ namespace Azure.ResourceManager.SelfHelp.Models
             return new StepInput(questionId.Value, questionType.Value, questionContent.Value, Optional.ToNullable(questionContentType), responseHint.Value, recommendedOption.Value, selectedOptionValue.Value, responseValidationProperties.Value, Optional.ToList(responseOptions), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(QuestionId))
+            {
+                builder.Append("  questionId:");
+                if (QuestionId.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{QuestionId}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{QuestionId}'");
+                }
+            }
+
+            if (Optional.IsDefined(QuestionType))
+            {
+                builder.Append("  questionType:");
+                if (QuestionType.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{QuestionType}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{QuestionType}'");
+                }
+            }
+
+            if (Optional.IsDefined(QuestionContent))
+            {
+                builder.Append("  questionContent:");
+                if (QuestionContent.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{QuestionContent}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{QuestionContent}'");
+                }
+            }
+
+            if (Optional.IsDefined(QuestionContentType))
+            {
+                builder.Append("  questionContentType:");
+                builder.AppendLine($" '{QuestionContentType.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ResponseHint))
+            {
+                builder.Append("  responseHint:");
+                if (ResponseHint.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{ResponseHint}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{ResponseHint}'");
+                }
+            }
+
+            if (Optional.IsDefined(RecommendedOption))
+            {
+                builder.Append("  recommendedOption:");
+                if (RecommendedOption.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{RecommendedOption}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{RecommendedOption}'");
+                }
+            }
+
+            if (Optional.IsDefined(SelectedOptionValue))
+            {
+                builder.Append("  selectedOptionValue:");
+                if (SelectedOptionValue.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{SelectedOptionValue}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{SelectedOptionValue}'");
+                }
+            }
+
+            if (Optional.IsDefined(ResponseValidationProperties))
+            {
+                builder.Append("  responseValidationProperties:");
+                AppendChildObject(builder, ResponseValidationProperties, options, 2, false);
+            }
+
+            if (Optional.IsCollectionDefined(ResponseOptions))
+            {
+                if (ResponseOptions.Any())
+                {
+                    builder.Append("  responseOptions:");
+                    builder.AppendLine(" [");
+                    foreach (var item in ResponseOptions)
+                    {
+                        AppendChildObject(builder, item, options, 4, true);
+                    }
+                    builder.AppendLine("  ]");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            bool inMultilineString = false;
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (inMultilineString)
+                {
+                    if (line.Contains("'''"))
+                    {
+                        inMultilineString = false;
+                    }
+                    stringBuilder.AppendLine(line);
+                    continue;
+                }
+                if (line.Contains("'''"))
+                {
+                    inMultilineString = true;
+                    stringBuilder.AppendLine($"{indent}{line}");
+                    continue;
+                }
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<StepInput>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<StepInput>)this).GetFormatFromOptions(options) : options.Format;
@@ -206,6 +362,8 @@ namespace Azure.ResourceManager.SelfHelp.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(StepInput)} does not support '{options.Format}' format.");
             }
@@ -222,6 +380,8 @@ namespace Azure.ResourceManager.SelfHelp.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeStepInput(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(StepInput)} does not support '{options.Format}' format.");
             }

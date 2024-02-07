@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -555,6 +557,278 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             return new FirmwareCryptoCertificate(cryptoCertId.Value, name.Value, subject.Value, issuer.Value, Optional.ToNullable(issuedDate), Optional.ToNullable(expirationDate), role.Value, signatureAlgorithm.Value, Optional.ToNullable(keySize), keyAlgorithm.Value, encoding.Value, serialNumber.Value, fingerprint.Value, Optional.ToList(usage), Optional.ToList(filePaths), pairedKey.Value, Optional.ToNullable(isExpired), Optional.ToNullable(isSelfSigned), Optional.ToNullable(isWeakSignature), Optional.ToNullable(isShortKeySize), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                if (Name.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{Name}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{Name}'");
+                }
+            }
+
+            if (Optional.IsDefined(CryptoCertId))
+            {
+                builder.Append("  cryptoCertId:");
+                if (CryptoCertId.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{CryptoCertId}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{CryptoCertId}'");
+                }
+            }
+
+            if (Optional.IsDefined(Subject))
+            {
+                builder.Append("  subject:");
+                AppendChildObject(builder, Subject, options, 2, false);
+            }
+
+            if (Optional.IsDefined(Issuer))
+            {
+                builder.Append("  issuer:");
+                AppendChildObject(builder, Issuer, options, 2, false);
+            }
+
+            if (Optional.IsDefined(IssuedOn))
+            {
+                builder.Append("  issuedDate:");
+                var formattedDateTimeString = TypeFormatters.ToString(IssuedOn.Value, "o");
+                builder.AppendLine($" '{formattedDateTimeString}'");
+            }
+
+            if (Optional.IsDefined(ExpireOn))
+            {
+                builder.Append("  expirationDate:");
+                var formattedDateTimeString = TypeFormatters.ToString(ExpireOn.Value, "o");
+                builder.AppendLine($" '{formattedDateTimeString}'");
+            }
+
+            if (Optional.IsDefined(Role))
+            {
+                builder.Append("  role:");
+                if (Role.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{Role}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{Role}'");
+                }
+            }
+
+            if (Optional.IsDefined(SignatureAlgorithm))
+            {
+                builder.Append("  signatureAlgorithm:");
+                if (SignatureAlgorithm.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{SignatureAlgorithm}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{SignatureAlgorithm}'");
+                }
+            }
+
+            if (Optional.IsDefined(KeySize))
+            {
+                builder.Append("  keySize:");
+                builder.AppendLine($" '{KeySize.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(KeyAlgorithm))
+            {
+                builder.Append("  keyAlgorithm:");
+                if (KeyAlgorithm.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{KeyAlgorithm}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{KeyAlgorithm}'");
+                }
+            }
+
+            if (Optional.IsDefined(Encoding))
+            {
+                builder.Append("  encoding:");
+                if (Encoding.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{Encoding}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{Encoding}'");
+                }
+            }
+
+            if (Optional.IsDefined(SerialNumber))
+            {
+                builder.Append("  serialNumber:");
+                if (SerialNumber.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{SerialNumber}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{SerialNumber}'");
+                }
+            }
+
+            if (Optional.IsDefined(Fingerprint))
+            {
+                builder.Append("  fingerprint:");
+                if (Fingerprint.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{Fingerprint}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{Fingerprint}'");
+                }
+            }
+
+            if (Optional.IsCollectionDefined(Usage))
+            {
+                if (Usage.Any())
+                {
+                    builder.Append("  usage:");
+                    builder.AppendLine(" [");
+                    foreach (var item in Usage)
+                    {
+                        if (item == null)
+                        {
+                            builder.Append("null");
+                            continue;
+                        }
+                        if (item.Contains(Environment.NewLine))
+                        {
+                            builder.AppendLine("    '''");
+                            builder.AppendLine($"{item}'''");
+                        }
+                        else
+                        {
+                            builder.AppendLine($"    '{item}'");
+                        }
+                    }
+                    builder.AppendLine("  ]");
+                }
+            }
+
+            if (Optional.IsCollectionDefined(FilePaths))
+            {
+                if (FilePaths.Any())
+                {
+                    builder.Append("  filePaths:");
+                    builder.AppendLine(" [");
+                    foreach (var item in FilePaths)
+                    {
+                        if (item == null)
+                        {
+                            builder.Append("null");
+                            continue;
+                        }
+                        if (item.Contains(Environment.NewLine))
+                        {
+                            builder.AppendLine("    '''");
+                            builder.AppendLine($"{item}'''");
+                        }
+                        else
+                        {
+                            builder.AppendLine($"    '{item}'");
+                        }
+                    }
+                    builder.AppendLine("  ]");
+                }
+            }
+
+            if (Optional.IsDefined(PairedKey))
+            {
+                builder.Append("  pairedKey:");
+                AppendChildObject(builder, PairedKey, options, 2, false);
+            }
+
+            if (Optional.IsDefined(IsExpired))
+            {
+                builder.Append("  isExpired:");
+                builder.AppendLine($" '{IsExpired.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(IsSelfSigned))
+            {
+                builder.Append("  isSelfSigned:");
+                builder.AppendLine($" '{IsSelfSigned.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(IsWeakSignature))
+            {
+                builder.Append("  isWeakSignature:");
+                builder.AppendLine($" '{IsWeakSignature.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(IsShortKeySize))
+            {
+                builder.Append("  isShortKeySize:");
+                builder.AppendLine($" '{IsShortKeySize.Value.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            bool inMultilineString = false;
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (inMultilineString)
+                {
+                    if (line.Contains("'''"))
+                    {
+                        inMultilineString = false;
+                    }
+                    stringBuilder.AppendLine(line);
+                    continue;
+                }
+                if (line.Contains("'''"))
+                {
+                    inMultilineString = true;
+                    stringBuilder.AppendLine($"{indent}{line}");
+                    continue;
+                }
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<FirmwareCryptoCertificate>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<FirmwareCryptoCertificate>)this).GetFormatFromOptions(options) : options.Format;
@@ -563,6 +837,8 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(FirmwareCryptoCertificate)} does not support '{options.Format}' format.");
             }
@@ -579,6 +855,8 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeFirmwareCryptoCertificate(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(FirmwareCryptoCertificate)} does not support '{options.Format}' format.");
             }

@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
@@ -608,6 +610,309 @@ namespace Azure.ResourceManager.Network
             return new VirtualNetworkGatewayData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(location), Optional.ToDictionary(tags), serializedAdditionalRawData, extendedLocation, Optional.ToNullable(etag), autoScaleConfiguration.Value, Optional.ToList(ipConfigurations), Optional.ToNullable(gatewayType), Optional.ToNullable(vpnType), Optional.ToNullable(vpnGatewayGeneration), Optional.ToNullable(enableBgp), Optional.ToNullable(enablePrivateIPAddress), Optional.ToNullable(activeActive), Optional.ToNullable(disableIPSecReplayProtection), gatewayDefaultSite, sku.Value, vpnClientConfiguration.Value, Optional.ToList(virtualNetworkGatewayPolicyGroups), bgpSettings.Value, customRoutes.Value, Optional.ToNullable(resourceGuid), Optional.ToNullable(provisioningState), Optional.ToNullable(enableDnsForwarding), inboundDnsForwardingEndpoint.Value, vNetExtendedLocationResourceId.Value, Optional.ToList(natRules), Optional.ToNullable(enableBgpRouteTranslationForNat), Optional.ToNullable(allowVirtualWanTraffic), Optional.ToNullable(allowRemoteVnetTraffic), Optional.ToNullable(adminState));
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                if (Name.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{Name}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{Name}'");
+                }
+            }
+
+            if (Optional.IsDefined(Location))
+            {
+                builder.Append("  location:");
+                builder.AppendLine($" '{Location.Value.ToString()}'");
+            }
+
+            if (Optional.IsCollectionDefined(Tags))
+            {
+                if (Tags.Any())
+                {
+                    builder.Append("  tags:");
+                    builder.AppendLine(" {");
+                    foreach (var item in Tags)
+                    {
+                        builder.Append($"    {item.Key}:");
+                        if (item.Value == null)
+                        {
+                            builder.Append("null");
+                            continue;
+                        }
+                        if (item.Value.Contains(Environment.NewLine))
+                        {
+                            builder.AppendLine(" '''");
+                            builder.AppendLine($"{item.Value}'''");
+                        }
+                        else
+                        {
+                            builder.AppendLine($" '{item.Value}'");
+                        }
+                    }
+                    builder.AppendLine("  }");
+                }
+            }
+
+            if (Optional.IsDefined(ExtendedLocation))
+            {
+                builder.Append("  extendedLocation:");
+                AppendChildObject(builder, ExtendedLocation, options, 2, false);
+            }
+
+            if (Optional.IsDefined(ETag))
+            {
+                builder.Append("  etag:");
+                builder.AppendLine($" '{ETag.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Id))
+            {
+                builder.Append("  id:");
+                builder.AppendLine($" '{Id.ToString()}'");
+            }
+
+            builder.Append("  properties:");
+            builder.AppendLine(" {");
+            if (Optional.IsDefined(AutoScaleConfiguration))
+            {
+                builder.Append("    autoScaleConfiguration:");
+                AppendChildObject(builder, AutoScaleConfiguration, options, 4, false);
+            }
+
+            if (Optional.IsCollectionDefined(IPConfigurations))
+            {
+                if (IPConfigurations.Any())
+                {
+                    builder.Append("    ipConfigurations:");
+                    builder.AppendLine(" [");
+                    foreach (var item in IPConfigurations)
+                    {
+                        AppendChildObject(builder, item, options, 6, true);
+                    }
+                    builder.AppendLine("    ]");
+                }
+            }
+
+            if (Optional.IsDefined(GatewayType))
+            {
+                builder.Append("    gatewayType:");
+                builder.AppendLine($" '{GatewayType.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(VpnType))
+            {
+                builder.Append("    vpnType:");
+                builder.AppendLine($" '{VpnType.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(VpnGatewayGeneration))
+            {
+                builder.Append("    vpnGatewayGeneration:");
+                builder.AppendLine($" '{VpnGatewayGeneration.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(EnableBgp))
+            {
+                builder.Append("    enableBgp:");
+                var boolValue = EnableBgp.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(EnablePrivateIPAddress))
+            {
+                builder.Append("    enablePrivateIpAddress:");
+                var boolValue = EnablePrivateIPAddress.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(Active))
+            {
+                builder.Append("    activeActive:");
+                var boolValue = Active.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(DisableIPSecReplayProtection))
+            {
+                builder.Append("    disableIPSecReplayProtection:");
+                var boolValue = DisableIPSecReplayProtection.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(GatewayDefaultSite))
+            {
+                builder.Append("    gatewayDefaultSite:");
+                AppendChildObject(builder, GatewayDefaultSite, options, 4, false);
+            }
+
+            if (Optional.IsDefined(Sku))
+            {
+                builder.Append("    sku:");
+                AppendChildObject(builder, Sku, options, 4, false);
+            }
+
+            if (Optional.IsDefined(VpnClientConfiguration))
+            {
+                builder.Append("    vpnClientConfiguration:");
+                AppendChildObject(builder, VpnClientConfiguration, options, 4, false);
+            }
+
+            if (Optional.IsCollectionDefined(VirtualNetworkGatewayPolicyGroups))
+            {
+                if (VirtualNetworkGatewayPolicyGroups.Any())
+                {
+                    builder.Append("    virtualNetworkGatewayPolicyGroups:");
+                    builder.AppendLine(" [");
+                    foreach (var item in VirtualNetworkGatewayPolicyGroups)
+                    {
+                        AppendChildObject(builder, item, options, 6, true);
+                    }
+                    builder.AppendLine("    ]");
+                }
+            }
+
+            if (Optional.IsDefined(BgpSettings))
+            {
+                builder.Append("    bgpSettings:");
+                AppendChildObject(builder, BgpSettings, options, 4, false);
+            }
+
+            if (Optional.IsDefined(CustomRoutes))
+            {
+                builder.Append("    customRoutes:");
+                AppendChildObject(builder, CustomRoutes, options, 4, false);
+            }
+
+            if (Optional.IsDefined(ResourceGuid))
+            {
+                builder.Append("    resourceGuid:");
+                builder.AppendLine($" '{ResourceGuid.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ProvisioningState))
+            {
+                builder.Append("    provisioningState:");
+                builder.AppendLine($" '{ProvisioningState.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(EnableDnsForwarding))
+            {
+                builder.Append("    enableDnsForwarding:");
+                var boolValue = EnableDnsForwarding.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(InboundDnsForwardingEndpoint))
+            {
+                builder.Append("    inboundDnsForwardingEndpoint:");
+                if (InboundDnsForwardingEndpoint.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{InboundDnsForwardingEndpoint}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{InboundDnsForwardingEndpoint}'");
+                }
+            }
+
+            if (Optional.IsDefined(VNetExtendedLocationResourceId))
+            {
+                builder.Append("    vNetExtendedLocationResourceId:");
+                builder.AppendLine($" '{VNetExtendedLocationResourceId.ToString()}'");
+            }
+
+            if (Optional.IsCollectionDefined(NatRules))
+            {
+                if (NatRules.Any())
+                {
+                    builder.Append("    natRules:");
+                    builder.AppendLine(" [");
+                    foreach (var item in NatRules)
+                    {
+                        AppendChildObject(builder, item, options, 6, true);
+                    }
+                    builder.AppendLine("    ]");
+                }
+            }
+
+            if (Optional.IsDefined(EnableBgpRouteTranslationForNat))
+            {
+                builder.Append("    enableBgpRouteTranslationForNat:");
+                var boolValue = EnableBgpRouteTranslationForNat.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(AllowVirtualWanTraffic))
+            {
+                builder.Append("    allowVirtualWanTraffic:");
+                var boolValue = AllowVirtualWanTraffic.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(AllowRemoteVnetTraffic))
+            {
+                builder.Append("    allowRemoteVnetTraffic:");
+                var boolValue = AllowRemoteVnetTraffic.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(AdminState))
+            {
+                builder.Append("    adminState:");
+                builder.AppendLine($" '{AdminState.Value.ToString()}'");
+            }
+
+            builder.AppendLine("  }");
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            bool inMultilineString = false;
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (inMultilineString)
+                {
+                    if (line.Contains("'''"))
+                    {
+                        inMultilineString = false;
+                    }
+                    stringBuilder.AppendLine(line);
+                    continue;
+                }
+                if (line.Contains("'''"))
+                {
+                    inMultilineString = true;
+                    stringBuilder.AppendLine($"{indent}{line}");
+                    continue;
+                }
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<VirtualNetworkGatewayData>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<VirtualNetworkGatewayData>)this).GetFormatFromOptions(options) : options.Format;
@@ -616,6 +921,8 @@ namespace Azure.ResourceManager.Network
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(VirtualNetworkGatewayData)} does not support '{options.Format}' format.");
             }
@@ -632,6 +939,8 @@ namespace Azure.ResourceManager.Network
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeVirtualNetworkGatewayData(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(VirtualNetworkGatewayData)} does not support '{options.Format}' format.");
             }

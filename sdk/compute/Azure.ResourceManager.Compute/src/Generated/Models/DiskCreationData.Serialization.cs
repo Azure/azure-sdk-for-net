@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -261,6 +262,137 @@ namespace Azure.ResourceManager.Compute.Models
             return new DiskCreationData(createOption, storageAccountId.Value, imageReference.Value, galleryImageReference.Value, sourceUri.Value, sourceResourceId.Value, sourceUniqueId.Value, Optional.ToNullable(uploadSizeBytes), Optional.ToNullable(logicalSectorSize), securityDataUri.Value, Optional.ToNullable(performancePlus), elasticSanResourceId.Value, Optional.ToNullable(provisionedBandwidthCopySpeed), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(CreateOption))
+            {
+                builder.Append("  createOption:");
+                builder.AppendLine($" '{CreateOption.ToString()}'");
+            }
+
+            if (Optional.IsDefined(StorageAccountId))
+            {
+                builder.Append("  storageAccountId:");
+                builder.AppendLine($" '{StorageAccountId.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ImageReference))
+            {
+                builder.Append("  imageReference:");
+                AppendChildObject(builder, ImageReference, options, 2, false);
+            }
+
+            if (Optional.IsDefined(GalleryImageReference))
+            {
+                builder.Append("  galleryImageReference:");
+                AppendChildObject(builder, GalleryImageReference, options, 2, false);
+            }
+
+            if (Optional.IsDefined(SourceUri))
+            {
+                builder.Append("  sourceUri:");
+                builder.AppendLine($" '{SourceUri.AbsoluteUri}'");
+            }
+
+            if (Optional.IsDefined(SourceResourceId))
+            {
+                builder.Append("  sourceResourceId:");
+                builder.AppendLine($" '{SourceResourceId.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SourceUniqueId))
+            {
+                builder.Append("  sourceUniqueId:");
+                if (SourceUniqueId.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{SourceUniqueId}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{SourceUniqueId}'");
+                }
+            }
+
+            if (Optional.IsDefined(UploadSizeBytes))
+            {
+                builder.Append("  uploadSizeBytes:");
+                builder.AppendLine($" '{UploadSizeBytes.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(LogicalSectorSize))
+            {
+                builder.Append("  logicalSectorSize:");
+                builder.AppendLine($" {LogicalSectorSize.Value}");
+            }
+
+            if (Optional.IsDefined(SecurityDataUri))
+            {
+                builder.Append("  securityDataUri:");
+                builder.AppendLine($" '{SecurityDataUri.AbsoluteUri}'");
+            }
+
+            if (Optional.IsDefined(IsPerformancePlusEnabled))
+            {
+                builder.Append("  performancePlus:");
+                var boolValue = IsPerformancePlusEnabled.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(ElasticSanResourceId))
+            {
+                builder.Append("  elasticSanResourceId:");
+                builder.AppendLine($" '{ElasticSanResourceId.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ProvisionedBandwidthCopySpeed))
+            {
+                builder.Append("  provisionedBandwidthCopySpeed:");
+                builder.AppendLine($" '{ProvisionedBandwidthCopySpeed.Value.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            bool inMultilineString = false;
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (inMultilineString)
+                {
+                    if (line.Contains("'''"))
+                    {
+                        inMultilineString = false;
+                    }
+                    stringBuilder.AppendLine(line);
+                    continue;
+                }
+                if (line.Contains("'''"))
+                {
+                    inMultilineString = true;
+                    stringBuilder.AppendLine($"{indent}{line}");
+                    continue;
+                }
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<DiskCreationData>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<DiskCreationData>)this).GetFormatFromOptions(options) : options.Format;
@@ -269,6 +401,8 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(DiskCreationData)} does not support '{options.Format}' format.");
             }
@@ -285,6 +419,8 @@ namespace Azure.ResourceManager.Compute.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeDiskCreationData(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(DiskCreationData)} does not support '{options.Format}' format.");
             }

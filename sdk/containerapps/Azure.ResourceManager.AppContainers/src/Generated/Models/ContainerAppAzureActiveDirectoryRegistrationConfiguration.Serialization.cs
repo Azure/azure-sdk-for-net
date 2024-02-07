@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -143,6 +144,134 @@ namespace Azure.ResourceManager.AppContainers.Models
             return new ContainerAppAzureActiveDirectoryRegistrationConfiguration(openIdIssuer.Value, clientId.Value, clientSecretSettingName.Value, clientSecretCertificateThumbprint.Value, clientSecretCertificateSubjectAlternativeName.Value, clientSecretCertificateIssuer.Value, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(OpenIdIssuer))
+            {
+                builder.Append("  openIdIssuer:");
+                if (OpenIdIssuer.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{OpenIdIssuer}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{OpenIdIssuer}'");
+                }
+            }
+
+            if (Optional.IsDefined(ClientId))
+            {
+                builder.Append("  clientId:");
+                if (ClientId.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{ClientId}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{ClientId}'");
+                }
+            }
+
+            if (Optional.IsDefined(ClientSecretSettingName))
+            {
+                builder.Append("  clientSecretSettingName:");
+                if (ClientSecretSettingName.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{ClientSecretSettingName}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{ClientSecretSettingName}'");
+                }
+            }
+
+            if (Optional.IsDefined(ClientSecretCertificateThumbprint))
+            {
+                builder.Append("  clientSecretCertificateThumbprint:");
+                if (ClientSecretCertificateThumbprint.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{ClientSecretCertificateThumbprint}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{ClientSecretCertificateThumbprint}'");
+                }
+            }
+
+            if (Optional.IsDefined(ClientSecretCertificateSubjectAlternativeName))
+            {
+                builder.Append("  clientSecretCertificateSubjectAlternativeName:");
+                if (ClientSecretCertificateSubjectAlternativeName.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{ClientSecretCertificateSubjectAlternativeName}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{ClientSecretCertificateSubjectAlternativeName}'");
+                }
+            }
+
+            if (Optional.IsDefined(ClientSecretCertificateIssuer))
+            {
+                builder.Append("  clientSecretCertificateIssuer:");
+                if (ClientSecretCertificateIssuer.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{ClientSecretCertificateIssuer}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{ClientSecretCertificateIssuer}'");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            bool inMultilineString = false;
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (inMultilineString)
+                {
+                    if (line.Contains("'''"))
+                    {
+                        inMultilineString = false;
+                    }
+                    stringBuilder.AppendLine(line);
+                    continue;
+                }
+                if (line.Contains("'''"))
+                {
+                    inMultilineString = true;
+                    stringBuilder.AppendLine($"{indent}{line}");
+                    continue;
+                }
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<ContainerAppAzureActiveDirectoryRegistrationConfiguration>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ContainerAppAzureActiveDirectoryRegistrationConfiguration>)this).GetFormatFromOptions(options) : options.Format;
@@ -151,6 +280,8 @@ namespace Azure.ResourceManager.AppContainers.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(ContainerAppAzureActiveDirectoryRegistrationConfiguration)} does not support '{options.Format}' format.");
             }
@@ -167,6 +298,8 @@ namespace Azure.ResourceManager.AppContainers.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeContainerAppAzureActiveDirectoryRegistrationConfiguration(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(ContainerAppAzureActiveDirectoryRegistrationConfiguration)} does not support '{options.Format}' format.");
             }

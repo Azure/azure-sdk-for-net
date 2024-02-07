@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -224,6 +225,180 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             return new ResourceCertificateAndAcsDetails(authType, certificate.Value, friendlyName.Value, issuer.Value, Optional.ToNullable(resourceId), subject.Value, thumbprint.Value, Optional.ToNullable(validFrom), Optional.ToNullable(validTo), serializedAdditionalRawData, globalAcsNamespace, globalAcsHostName, globalAcsRPRealm);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(GlobalAcsNamespace))
+            {
+                builder.Append("  globalAcsNamespace:");
+                if (GlobalAcsNamespace.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{GlobalAcsNamespace}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{GlobalAcsNamespace}'");
+                }
+            }
+
+            if (Optional.IsDefined(GlobalAcsHostName))
+            {
+                builder.Append("  globalAcsHostName:");
+                if (GlobalAcsHostName.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{GlobalAcsHostName}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{GlobalAcsHostName}'");
+                }
+            }
+
+            if (Optional.IsDefined(GlobalAcsRPRealm))
+            {
+                builder.Append("  globalAcsRPRealm:");
+                if (GlobalAcsRPRealm.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{GlobalAcsRPRealm}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{GlobalAcsRPRealm}'");
+                }
+            }
+
+            if (Optional.IsDefined(AuthType))
+            {
+                builder.Append("  authType:");
+                if (AuthType.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{AuthType}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{AuthType}'");
+                }
+            }
+
+            if (Optional.IsDefined(Certificate))
+            {
+                builder.Append("  certificate:");
+                builder.AppendLine($" '{Certificate.ToString()}'");
+            }
+
+            if (Optional.IsDefined(FriendlyName))
+            {
+                builder.Append("  friendlyName:");
+                if (FriendlyName.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{FriendlyName}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{FriendlyName}'");
+                }
+            }
+
+            if (Optional.IsDefined(Issuer))
+            {
+                builder.Append("  issuer:");
+                if (Issuer.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{Issuer}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{Issuer}'");
+                }
+            }
+
+            if (Optional.IsDefined(ResourceId))
+            {
+                builder.Append("  resourceId:");
+                builder.AppendLine($" '{ResourceId.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Subject))
+            {
+                builder.Append("  subject:");
+                if (Subject.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{Subject}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{Subject}'");
+                }
+            }
+
+            if (Optional.IsDefined(Thumbprint))
+            {
+                builder.Append("  thumbprint:");
+                builder.AppendLine($" '{Thumbprint.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ValidStartOn))
+            {
+                builder.Append("  validFrom:");
+                var formattedDateTimeString = TypeFormatters.ToString(ValidStartOn.Value, "o");
+                builder.AppendLine($" '{formattedDateTimeString}'");
+            }
+
+            if (Optional.IsDefined(ValidEndOn))
+            {
+                builder.Append("  validTo:");
+                var formattedDateTimeString = TypeFormatters.ToString(ValidEndOn.Value, "o");
+                builder.AppendLine($" '{formattedDateTimeString}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            bool inMultilineString = false;
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (inMultilineString)
+                {
+                    if (line.Contains("'''"))
+                    {
+                        inMultilineString = false;
+                    }
+                    stringBuilder.AppendLine(line);
+                    continue;
+                }
+                if (line.Contains("'''"))
+                {
+                    inMultilineString = true;
+                    stringBuilder.AppendLine($"{indent}{line}");
+                    continue;
+                }
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<ResourceCertificateAndAcsDetails>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ResourceCertificateAndAcsDetails>)this).GetFormatFromOptions(options) : options.Format;
@@ -232,6 +407,8 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(ResourceCertificateAndAcsDetails)} does not support '{options.Format}' format.");
             }
@@ -248,6 +425,8 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeResourceCertificateAndAcsDetails(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(ResourceCertificateAndAcsDetails)} does not support '{options.Format}' format.");
             }

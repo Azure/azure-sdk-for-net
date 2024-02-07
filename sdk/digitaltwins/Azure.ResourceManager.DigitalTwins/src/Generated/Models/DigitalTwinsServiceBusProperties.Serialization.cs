@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -307,6 +308,149 @@ namespace Azure.ResourceManager.DigitalTwins.Models
             return new DigitalTwinsServiceBusProperties(endpointType, Optional.ToNullable(provisioningState), Optional.ToNullable(createdTime), Optional.ToNullable(authenticationType), deadLetterSecret.Value, deadLetterUri.Value, identity.Value, serializedAdditionalRawData, primaryConnectionString.Value, secondaryConnectionString.Value, endpointUri.Value, entityPath.Value);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(PrimaryConnectionString))
+            {
+                builder.Append("  primaryConnectionString:");
+                if (PrimaryConnectionString.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{PrimaryConnectionString}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{PrimaryConnectionString}'");
+                }
+            }
+
+            if (Optional.IsDefined(SecondaryConnectionString))
+            {
+                builder.Append("  secondaryConnectionString:");
+                if (SecondaryConnectionString.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{SecondaryConnectionString}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{SecondaryConnectionString}'");
+                }
+            }
+
+            if (Optional.IsDefined(EndpointUri))
+            {
+                builder.Append("  endpointUri:");
+                builder.AppendLine($" '{EndpointUri.AbsoluteUri}'");
+            }
+
+            if (Optional.IsDefined(EntityPath))
+            {
+                builder.Append("  entityPath:");
+                if (EntityPath.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{EntityPath}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{EntityPath}'");
+                }
+            }
+
+            if (Optional.IsDefined(EndpointType))
+            {
+                builder.Append("  endpointType:");
+                builder.AppendLine($" '{EndpointType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ProvisioningState))
+            {
+                builder.Append("  provisioningState:");
+                builder.AppendLine($" '{ProvisioningState.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(CreatedOn))
+            {
+                builder.Append("  createdTime:");
+                var formattedDateTimeString = TypeFormatters.ToString(CreatedOn.Value, "o");
+                builder.AppendLine($" '{formattedDateTimeString}'");
+            }
+
+            if (Optional.IsDefined(AuthenticationType))
+            {
+                builder.Append("  authenticationType:");
+                builder.AppendLine($" '{AuthenticationType.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(DeadLetterSecret))
+            {
+                builder.Append("  deadLetterSecret:");
+                if (DeadLetterSecret.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{DeadLetterSecret}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{DeadLetterSecret}'");
+                }
+            }
+
+            if (Optional.IsDefined(DeadLetterUri))
+            {
+                builder.Append("  deadLetterUri:");
+                builder.AppendLine($" '{DeadLetterUri.AbsoluteUri}'");
+            }
+
+            if (Optional.IsDefined(Identity))
+            {
+                builder.Append("  identity:");
+                AppendChildObject(builder, Identity, options, 2, false);
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            bool inMultilineString = false;
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (inMultilineString)
+                {
+                    if (line.Contains("'''"))
+                    {
+                        inMultilineString = false;
+                    }
+                    stringBuilder.AppendLine(line);
+                    continue;
+                }
+                if (line.Contains("'''"))
+                {
+                    inMultilineString = true;
+                    stringBuilder.AppendLine($"{indent}{line}");
+                    continue;
+                }
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<DigitalTwinsServiceBusProperties>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<DigitalTwinsServiceBusProperties>)this).GetFormatFromOptions(options) : options.Format;
@@ -315,6 +459,8 @@ namespace Azure.ResourceManager.DigitalTwins.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(DigitalTwinsServiceBusProperties)} does not support '{options.Format}' format.");
             }
@@ -331,6 +477,8 @@ namespace Azure.ResourceManager.DigitalTwins.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeDigitalTwinsServiceBusProperties(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(DigitalTwinsServiceBusProperties)} does not support '{options.Format}' format.");
             }

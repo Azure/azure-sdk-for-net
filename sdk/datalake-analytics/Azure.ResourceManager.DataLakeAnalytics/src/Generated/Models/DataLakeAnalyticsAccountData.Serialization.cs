@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.DataLakeAnalytics.Models;
@@ -680,6 +682,361 @@ namespace Azure.ResourceManager.DataLakeAnalytics
             return new DataLakeAnalyticsAccountData(id, name, type, systemData.Value, Optional.ToNullable(accountId), Optional.ToNullable(provisioningState), Optional.ToNullable(state), Optional.ToNullable(creationTime), Optional.ToNullable(lastModifiedTime), endpoint.Value, defaultDataLakeStoreAccount.Value, Optional.ToList(dataLakeStoreAccounts), Optional.ToList(publicDataLakeStoreAccounts), Optional.ToList(storageAccounts), Optional.ToList(computePolicies), Optional.ToList(hiveMetastores), Optional.ToList(virtualNetworkRules), Optional.ToList(firewallRules), Optional.ToNullable(firewallState), Optional.ToNullable(firewallAllowAzureIPs), Optional.ToNullable(newTier), Optional.ToNullable(currentTier), Optional.ToNullable(maxJobCount), Optional.ToNullable(maxActiveJobCountPerUser), Optional.ToNullable(maxQueuedJobCountPerUser), Optional.ToNullable(maxJobRunningTimeInMin), Optional.ToNullable(systemMaxJobCount), Optional.ToNullable(maxDegreeOfParallelism), Optional.ToNullable(systemMaxDegreeOfParallelism), Optional.ToNullable(maxDegreeOfParallelismPerJob), Optional.ToNullable(minPriorityPerJob), Optional.ToNullable(queryStoreRetention), Optional.ToNullable(debugDataAccessLevel), Optional.ToNullable(location), Optional.ToDictionary(tags), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                if (Name.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{Name}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{Name}'");
+                }
+            }
+
+            if (Optional.IsDefined(Location))
+            {
+                builder.Append("  location:");
+                builder.AppendLine($" '{Location.Value.ToString()}'");
+            }
+
+            if (Optional.IsCollectionDefined(Tags))
+            {
+                if (Tags.Any())
+                {
+                    builder.Append("  tags:");
+                    builder.AppendLine(" {");
+                    foreach (var item in Tags)
+                    {
+                        builder.Append($"    {item.Key}:");
+                        if (item.Value == null)
+                        {
+                            builder.Append("null");
+                            continue;
+                        }
+                        if (item.Value.Contains(Environment.NewLine))
+                        {
+                            builder.AppendLine(" '''");
+                            builder.AppendLine($"{item.Value}'''");
+                        }
+                        else
+                        {
+                            builder.AppendLine($" '{item.Value}'");
+                        }
+                    }
+                    builder.AppendLine("  }");
+                }
+            }
+
+            if (Optional.IsDefined(Id))
+            {
+                builder.Append("  id:");
+                builder.AppendLine($" '{Id.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SystemData))
+            {
+                builder.Append("  systemData:");
+                builder.AppendLine($" '{SystemData.ToString()}'");
+            }
+
+            builder.Append("  properties:");
+            builder.AppendLine(" {");
+            if (Optional.IsDefined(AccountId))
+            {
+                builder.Append("    accountId:");
+                builder.AppendLine($" '{AccountId.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ProvisioningState))
+            {
+                builder.Append("    provisioningState:");
+                builder.AppendLine($" '{ProvisioningState.Value.ToSerialString()}'");
+            }
+
+            if (Optional.IsDefined(State))
+            {
+                builder.Append("    state:");
+                builder.AppendLine($" '{State.Value.ToSerialString()}'");
+            }
+
+            if (Optional.IsDefined(CreatedOn))
+            {
+                builder.Append("    creationTime:");
+                var formattedDateTimeString = TypeFormatters.ToString(CreatedOn.Value, "o");
+                builder.AppendLine($" '{formattedDateTimeString}'");
+            }
+
+            if (Optional.IsDefined(LastModifiedOn))
+            {
+                builder.Append("    lastModifiedTime:");
+                var formattedDateTimeString = TypeFormatters.ToString(LastModifiedOn.Value, "o");
+                builder.AppendLine($" '{formattedDateTimeString}'");
+            }
+
+            if (Optional.IsDefined(Endpoint))
+            {
+                builder.Append("    endpoint:");
+                if (Endpoint.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{Endpoint}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{Endpoint}'");
+                }
+            }
+
+            if (Optional.IsDefined(DefaultDataLakeStoreAccount))
+            {
+                builder.Append("    defaultDataLakeStoreAccount:");
+                if (DefaultDataLakeStoreAccount.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{DefaultDataLakeStoreAccount}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{DefaultDataLakeStoreAccount}'");
+                }
+            }
+
+            if (Optional.IsCollectionDefined(DataLakeStoreAccounts))
+            {
+                if (DataLakeStoreAccounts.Any())
+                {
+                    builder.Append("    dataLakeStoreAccounts:");
+                    builder.AppendLine(" [");
+                    foreach (var item in DataLakeStoreAccounts)
+                    {
+                        AppendChildObject(builder, item, options, 6, true);
+                    }
+                    builder.AppendLine("    ]");
+                }
+            }
+
+            if (Optional.IsCollectionDefined(PublicDataLakeStoreAccounts))
+            {
+                if (PublicDataLakeStoreAccounts.Any())
+                {
+                    builder.Append("    publicDataLakeStoreAccounts:");
+                    builder.AppendLine(" [");
+                    foreach (var item in PublicDataLakeStoreAccounts)
+                    {
+                        AppendChildObject(builder, item, options, 6, true);
+                    }
+                    builder.AppendLine("    ]");
+                }
+            }
+
+            if (Optional.IsCollectionDefined(StorageAccounts))
+            {
+                if (StorageAccounts.Any())
+                {
+                    builder.Append("    storageAccounts:");
+                    builder.AppendLine(" [");
+                    foreach (var item in StorageAccounts)
+                    {
+                        AppendChildObject(builder, item, options, 6, true);
+                    }
+                    builder.AppendLine("    ]");
+                }
+            }
+
+            if (Optional.IsCollectionDefined(ComputePolicies))
+            {
+                if (ComputePolicies.Any())
+                {
+                    builder.Append("    computePolicies:");
+                    builder.AppendLine(" [");
+                    foreach (var item in ComputePolicies)
+                    {
+                        AppendChildObject(builder, item, options, 6, true);
+                    }
+                    builder.AppendLine("    ]");
+                }
+            }
+
+            if (Optional.IsCollectionDefined(HiveMetastores))
+            {
+                if (HiveMetastores.Any())
+                {
+                    builder.Append("    hiveMetastores:");
+                    builder.AppendLine(" [");
+                    foreach (var item in HiveMetastores)
+                    {
+                        AppendChildObject(builder, item, options, 6, true);
+                    }
+                    builder.AppendLine("    ]");
+                }
+            }
+
+            if (Optional.IsCollectionDefined(VirtualNetworkRules))
+            {
+                if (VirtualNetworkRules.Any())
+                {
+                    builder.Append("    virtualNetworkRules:");
+                    builder.AppendLine(" [");
+                    foreach (var item in VirtualNetworkRules)
+                    {
+                        AppendChildObject(builder, item, options, 6, true);
+                    }
+                    builder.AppendLine("    ]");
+                }
+            }
+
+            if (Optional.IsCollectionDefined(FirewallRules))
+            {
+                if (FirewallRules.Any())
+                {
+                    builder.Append("    firewallRules:");
+                    builder.AppendLine(" [");
+                    foreach (var item in FirewallRules)
+                    {
+                        AppendChildObject(builder, item, options, 6, true);
+                    }
+                    builder.AppendLine("    ]");
+                }
+            }
+
+            if (Optional.IsDefined(FirewallState))
+            {
+                builder.Append("    firewallState:");
+                builder.AppendLine($" '{FirewallState.Value.ToSerialString()}'");
+            }
+
+            if (Optional.IsDefined(FirewallAllowAzureIPs))
+            {
+                builder.Append("    firewallAllowAzureIps:");
+                builder.AppendLine($" '{FirewallAllowAzureIPs.Value.ToSerialString()}'");
+            }
+
+            if (Optional.IsDefined(NewTier))
+            {
+                builder.Append("    newTier:");
+                builder.AppendLine($" '{NewTier.Value.ToSerialString()}'");
+            }
+
+            if (Optional.IsDefined(CurrentTier))
+            {
+                builder.Append("    currentTier:");
+                builder.AppendLine($" '{CurrentTier.Value.ToSerialString()}'");
+            }
+
+            if (Optional.IsDefined(MaxJobCount))
+            {
+                builder.Append("    maxJobCount:");
+                builder.AppendLine($" {MaxJobCount.Value}");
+            }
+
+            if (Optional.IsDefined(MaxActiveJobCountPerUser))
+            {
+                builder.Append("    maxActiveJobCountPerUser:");
+                builder.AppendLine($" {MaxActiveJobCountPerUser.Value}");
+            }
+
+            if (Optional.IsDefined(MaxQueuedJobCountPerUser))
+            {
+                builder.Append("    maxQueuedJobCountPerUser:");
+                builder.AppendLine($" {MaxQueuedJobCountPerUser.Value}");
+            }
+
+            if (Optional.IsDefined(MaxJobRunningTimeInMin))
+            {
+                builder.Append("    maxJobRunningTimeInMin:");
+                builder.AppendLine($" {MaxJobRunningTimeInMin.Value}");
+            }
+
+            if (Optional.IsDefined(SystemMaxJobCount))
+            {
+                builder.Append("    systemMaxJobCount:");
+                builder.AppendLine($" {SystemMaxJobCount.Value}");
+            }
+
+            if (Optional.IsDefined(MaxDegreeOfParallelism))
+            {
+                builder.Append("    maxDegreeOfParallelism:");
+                builder.AppendLine($" {MaxDegreeOfParallelism.Value}");
+            }
+
+            if (Optional.IsDefined(SystemMaxDegreeOfParallelism))
+            {
+                builder.Append("    systemMaxDegreeOfParallelism:");
+                builder.AppendLine($" {SystemMaxDegreeOfParallelism.Value}");
+            }
+
+            if (Optional.IsDefined(MaxDegreeOfParallelismPerJob))
+            {
+                builder.Append("    maxDegreeOfParallelismPerJob:");
+                builder.AppendLine($" {MaxDegreeOfParallelismPerJob.Value}");
+            }
+
+            if (Optional.IsDefined(MinPriorityPerJob))
+            {
+                builder.Append("    minPriorityPerJob:");
+                builder.AppendLine($" {MinPriorityPerJob.Value}");
+            }
+
+            if (Optional.IsDefined(QueryStoreRetention))
+            {
+                builder.Append("    queryStoreRetention:");
+                builder.AppendLine($" {QueryStoreRetention.Value}");
+            }
+
+            if (Optional.IsDefined(DebugDataAccessLevel))
+            {
+                builder.Append("    debugDataAccessLevel:");
+                builder.AppendLine($" '{DebugDataAccessLevel.Value.ToSerialString()}'");
+            }
+
+            builder.AppendLine("  }");
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            bool inMultilineString = false;
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (inMultilineString)
+                {
+                    if (line.Contains("'''"))
+                    {
+                        inMultilineString = false;
+                    }
+                    stringBuilder.AppendLine(line);
+                    continue;
+                }
+                if (line.Contains("'''"))
+                {
+                    inMultilineString = true;
+                    stringBuilder.AppendLine($"{indent}{line}");
+                    continue;
+                }
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<DataLakeAnalyticsAccountData>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<DataLakeAnalyticsAccountData>)this).GetFormatFromOptions(options) : options.Format;
@@ -688,6 +1045,8 @@ namespace Azure.ResourceManager.DataLakeAnalytics
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(DataLakeAnalyticsAccountData)} does not support '{options.Format}' format.");
             }
@@ -704,6 +1063,8 @@ namespace Azure.ResourceManager.DataLakeAnalytics
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeDataLakeAnalyticsAccountData(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(DataLakeAnalyticsAccountData)} does not support '{options.Format}' format.");
             }

@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -191,6 +193,176 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             return new TestFailoverJobDetails(instanceType, Optional.ToDictionary(affectedObjectDetails), serializedAdditionalRawData, testFailoverStatus.Value, comments.Value, networkName.Value, networkFriendlyName.Value, networkType.Value, Optional.ToList(protectedItemDetails));
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(TestFailoverStatus))
+            {
+                builder.Append("  testFailoverStatus:");
+                if (TestFailoverStatus.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{TestFailoverStatus}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{TestFailoverStatus}'");
+                }
+            }
+
+            if (Optional.IsDefined(Comments))
+            {
+                builder.Append("  comments:");
+                if (Comments.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{Comments}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{Comments}'");
+                }
+            }
+
+            if (Optional.IsDefined(NetworkName))
+            {
+                builder.Append("  networkName:");
+                if (NetworkName.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{NetworkName}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{NetworkName}'");
+                }
+            }
+
+            if (Optional.IsDefined(NetworkFriendlyName))
+            {
+                builder.Append("  networkFriendlyName:");
+                if (NetworkFriendlyName.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{NetworkFriendlyName}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{NetworkFriendlyName}'");
+                }
+            }
+
+            if (Optional.IsDefined(NetworkType))
+            {
+                builder.Append("  networkType:");
+                if (NetworkType.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{NetworkType}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{NetworkType}'");
+                }
+            }
+
+            if (Optional.IsCollectionDefined(ProtectedItemDetails))
+            {
+                if (ProtectedItemDetails.Any())
+                {
+                    builder.Append("  protectedItemDetails:");
+                    builder.AppendLine(" [");
+                    foreach (var item in ProtectedItemDetails)
+                    {
+                        AppendChildObject(builder, item, options, 4, true);
+                    }
+                    builder.AppendLine("  ]");
+                }
+            }
+
+            if (Optional.IsDefined(InstanceType))
+            {
+                builder.Append("  instanceType:");
+                if (InstanceType.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{InstanceType}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{InstanceType}'");
+                }
+            }
+
+            if (Optional.IsCollectionDefined(AffectedObjectDetails))
+            {
+                if (AffectedObjectDetails.Any())
+                {
+                    builder.Append("  affectedObjectDetails:");
+                    builder.AppendLine(" {");
+                    foreach (var item in AffectedObjectDetails)
+                    {
+                        builder.Append($"    {item.Key}:");
+                        if (item.Value == null)
+                        {
+                            builder.Append("null");
+                            continue;
+                        }
+                        if (item.Value.Contains(Environment.NewLine))
+                        {
+                            builder.AppendLine(" '''");
+                            builder.AppendLine($"{item.Value}'''");
+                        }
+                        else
+                        {
+                            builder.AppendLine($" '{item.Value}'");
+                        }
+                    }
+                    builder.AppendLine("  }");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            bool inMultilineString = false;
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (inMultilineString)
+                {
+                    if (line.Contains("'''"))
+                    {
+                        inMultilineString = false;
+                    }
+                    stringBuilder.AppendLine(line);
+                    continue;
+                }
+                if (line.Contains("'''"))
+                {
+                    inMultilineString = true;
+                    stringBuilder.AppendLine($"{indent}{line}");
+                    continue;
+                }
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<TestFailoverJobDetails>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<TestFailoverJobDetails>)this).GetFormatFromOptions(options) : options.Format;
@@ -199,6 +371,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(TestFailoverJobDetails)} does not support '{options.Format}' format.");
             }
@@ -215,6 +389,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeTestFailoverJobDetails(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(TestFailoverJobDetails)} does not support '{options.Format}' format.");
             }

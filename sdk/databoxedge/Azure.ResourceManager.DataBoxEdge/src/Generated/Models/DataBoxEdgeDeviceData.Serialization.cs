@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
@@ -466,6 +468,319 @@ namespace Azure.ResourceManager.DataBoxEdge
             return new DataBoxEdgeDeviceData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, sku.Value, Optional.ToNullable(etag), identity, Optional.ToNullable(kind), Optional.ToNullable(dataBoxEdgeDeviceStatus), serialNumber.Value, description.Value, modelDescription.Value, Optional.ToNullable(deviceType), friendlyName.Value, culture.Value, deviceModel.Value, deviceSoftwareVersion.Value, Optional.ToNullable(deviceLocalCapacity), timeZone.Value, deviceHcsVersion.Value, Optional.ToList(configuredRoleTypes), Optional.ToNullable(nodeCount), resourceMoveDetails.Value, edgeProfile.Value, dataResidency.Value, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                if (Name.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{Name}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{Name}'");
+                }
+            }
+
+            if (Optional.IsDefined(Location))
+            {
+                builder.Append("  location:");
+                builder.AppendLine($" '{Location.ToString()}'");
+            }
+
+            if (Optional.IsCollectionDefined(Tags))
+            {
+                if (Tags.Any())
+                {
+                    builder.Append("  tags:");
+                    builder.AppendLine(" {");
+                    foreach (var item in Tags)
+                    {
+                        builder.Append($"    {item.Key}:");
+                        if (item.Value == null)
+                        {
+                            builder.Append("null");
+                            continue;
+                        }
+                        if (item.Value.Contains(Environment.NewLine))
+                        {
+                            builder.AppendLine(" '''");
+                            builder.AppendLine($"{item.Value}'''");
+                        }
+                        else
+                        {
+                            builder.AppendLine($" '{item.Value}'");
+                        }
+                    }
+                    builder.AppendLine("  }");
+                }
+            }
+
+            if (Optional.IsDefined(Sku))
+            {
+                builder.Append("  sku:");
+                AppendChildObject(builder, Sku, options, 2, false);
+            }
+
+            if (Optional.IsDefined(ETag))
+            {
+                builder.Append("  etag:");
+                builder.AppendLine($" '{ETag.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Identity))
+            {
+                builder.Append("  identity:");
+                AppendChildObject(builder, Identity, options, 2, false);
+            }
+
+            if (Optional.IsDefined(Kind))
+            {
+                builder.Append("  kind:");
+                builder.AppendLine($" '{Kind.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Id))
+            {
+                builder.Append("  id:");
+                builder.AppendLine($" '{Id.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SystemData))
+            {
+                builder.Append("  systemData:");
+                builder.AppendLine($" '{SystemData.ToString()}'");
+            }
+
+            builder.Append("  properties:");
+            builder.AppendLine(" {");
+            if (Optional.IsDefined(DataBoxEdgeDeviceStatus))
+            {
+                builder.Append("    dataBoxEdgeDeviceStatus:");
+                builder.AppendLine($" '{DataBoxEdgeDeviceStatus.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SerialNumber))
+            {
+                builder.Append("    serialNumber:");
+                if (SerialNumber.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{SerialNumber}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{SerialNumber}'");
+                }
+            }
+
+            if (Optional.IsDefined(Description))
+            {
+                builder.Append("    description:");
+                if (Description.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{Description}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{Description}'");
+                }
+            }
+
+            if (Optional.IsDefined(ModelDescription))
+            {
+                builder.Append("    modelDescription:");
+                if (ModelDescription.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{ModelDescription}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{ModelDescription}'");
+                }
+            }
+
+            if (Optional.IsDefined(DeviceType))
+            {
+                builder.Append("    deviceType:");
+                builder.AppendLine($" '{DeviceType.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(FriendlyName))
+            {
+                builder.Append("    friendlyName:");
+                if (FriendlyName.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{FriendlyName}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{FriendlyName}'");
+                }
+            }
+
+            if (Optional.IsDefined(Culture))
+            {
+                builder.Append("    culture:");
+                if (Culture.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{Culture}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{Culture}'");
+                }
+            }
+
+            if (Optional.IsDefined(DeviceModel))
+            {
+                builder.Append("    deviceModel:");
+                if (DeviceModel.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{DeviceModel}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{DeviceModel}'");
+                }
+            }
+
+            if (Optional.IsDefined(DeviceSoftwareVersion))
+            {
+                builder.Append("    deviceSoftwareVersion:");
+                if (DeviceSoftwareVersion.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{DeviceSoftwareVersion}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{DeviceSoftwareVersion}'");
+                }
+            }
+
+            if (Optional.IsDefined(DeviceLocalCapacity))
+            {
+                builder.Append("    deviceLocalCapacity:");
+                builder.AppendLine($" '{DeviceLocalCapacity.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(TimeZone))
+            {
+                builder.Append("    timeZone:");
+                if (TimeZone.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{TimeZone}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{TimeZone}'");
+                }
+            }
+
+            if (Optional.IsDefined(DeviceHcsVersion))
+            {
+                builder.Append("    deviceHcsVersion:");
+                if (DeviceHcsVersion.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{DeviceHcsVersion}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{DeviceHcsVersion}'");
+                }
+            }
+
+            if (Optional.IsCollectionDefined(ConfiguredRoleTypes))
+            {
+                if (ConfiguredRoleTypes.Any())
+                {
+                    builder.Append("    configuredRoleTypes:");
+                    builder.AppendLine(" [");
+                    foreach (var item in ConfiguredRoleTypes)
+                    {
+                        builder.AppendLine($"      '{item.ToString()}'");
+                    }
+                    builder.AppendLine("    ]");
+                }
+            }
+
+            if (Optional.IsDefined(NodeCount))
+            {
+                builder.Append("    nodeCount:");
+                builder.AppendLine($" {NodeCount.Value}");
+            }
+
+            if (Optional.IsDefined(ResourceMoveDetails))
+            {
+                builder.Append("    resourceMoveDetails:");
+                AppendChildObject(builder, ResourceMoveDetails, options, 4, false);
+            }
+
+            if (Optional.IsDefined(EdgeProfile))
+            {
+                builder.Append("    edgeProfile:");
+                AppendChildObject(builder, EdgeProfile, options, 4, false);
+            }
+
+            if (Optional.IsDefined(DataResidency))
+            {
+                builder.Append("    dataResidency:");
+                AppendChildObject(builder, DataResidency, options, 4, false);
+            }
+
+            builder.AppendLine("  }");
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            bool inMultilineString = false;
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (inMultilineString)
+                {
+                    if (line.Contains("'''"))
+                    {
+                        inMultilineString = false;
+                    }
+                    stringBuilder.AppendLine(line);
+                    continue;
+                }
+                if (line.Contains("'''"))
+                {
+                    inMultilineString = true;
+                    stringBuilder.AppendLine($"{indent}{line}");
+                    continue;
+                }
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<DataBoxEdgeDeviceData>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<DataBoxEdgeDeviceData>)this).GetFormatFromOptions(options) : options.Format;
@@ -474,6 +789,8 @@ namespace Azure.ResourceManager.DataBoxEdge
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(DataBoxEdgeDeviceData)} does not support '{options.Format}' format.");
             }
@@ -490,6 +807,8 @@ namespace Azure.ResourceManager.DataBoxEdge
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeDataBoxEdgeDeviceData(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(DataBoxEdgeDeviceData)} does not support '{options.Format}' format.");
             }

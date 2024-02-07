@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.EventGrid.Models;
@@ -313,6 +315,175 @@ namespace Azure.ResourceManager.EventGrid
             return new EventGridSubscriptionData(id, name, type, systemData.Value, topic.Value, Optional.ToNullable(provisioningState), destination.Value, deliveryWithResourceIdentity.Value, filter.Value, Optional.ToList(labels), Optional.ToNullable(expirationTimeUtc), Optional.ToNullable(eventDeliverySchema), retryPolicy.Value, deadLetterDestination.Value, deadLetterWithResourceIdentity.Value, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                if (Name.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{Name}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{Name}'");
+                }
+            }
+
+            if (Optional.IsDefined(Id))
+            {
+                builder.Append("  id:");
+                builder.AppendLine($" '{Id.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SystemData))
+            {
+                builder.Append("  systemData:");
+                builder.AppendLine($" '{SystemData.ToString()}'");
+            }
+
+            builder.Append("  properties:");
+            builder.AppendLine(" {");
+            if (Optional.IsDefined(Topic))
+            {
+                builder.Append("    topic:");
+                if (Topic.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{Topic}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{Topic}'");
+                }
+            }
+
+            if (Optional.IsDefined(ProvisioningState))
+            {
+                builder.Append("    provisioningState:");
+                builder.AppendLine($" '{ProvisioningState.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Destination))
+            {
+                builder.Append("    destination:");
+                AppendChildObject(builder, Destination, options, 4, false);
+            }
+
+            if (Optional.IsDefined(DeliveryWithResourceIdentity))
+            {
+                builder.Append("    deliveryWithResourceIdentity:");
+                AppendChildObject(builder, DeliveryWithResourceIdentity, options, 4, false);
+            }
+
+            if (Optional.IsDefined(Filter))
+            {
+                builder.Append("    filter:");
+                AppendChildObject(builder, Filter, options, 4, false);
+            }
+
+            if (Optional.IsCollectionDefined(Labels))
+            {
+                if (Labels.Any())
+                {
+                    builder.Append("    labels:");
+                    builder.AppendLine(" [");
+                    foreach (var item in Labels)
+                    {
+                        if (item == null)
+                        {
+                            builder.Append("null");
+                            continue;
+                        }
+                        if (item.Contains(Environment.NewLine))
+                        {
+                            builder.AppendLine("      '''");
+                            builder.AppendLine($"{item}'''");
+                        }
+                        else
+                        {
+                            builder.AppendLine($"      '{item}'");
+                        }
+                    }
+                    builder.AppendLine("    ]");
+                }
+            }
+
+            if (Optional.IsDefined(ExpireOn))
+            {
+                builder.Append("    expirationTimeUtc:");
+                var formattedDateTimeString = TypeFormatters.ToString(ExpireOn.Value, "o");
+                builder.AppendLine($" '{formattedDateTimeString}'");
+            }
+
+            if (Optional.IsDefined(EventDeliverySchema))
+            {
+                builder.Append("    eventDeliverySchema:");
+                builder.AppendLine($" '{EventDeliverySchema.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(RetryPolicy))
+            {
+                builder.Append("    retryPolicy:");
+                AppendChildObject(builder, RetryPolicy, options, 4, false);
+            }
+
+            if (Optional.IsDefined(DeadLetterDestination))
+            {
+                builder.Append("    deadLetterDestination:");
+                AppendChildObject(builder, DeadLetterDestination, options, 4, false);
+            }
+
+            if (Optional.IsDefined(DeadLetterWithResourceIdentity))
+            {
+                builder.Append("    deadLetterWithResourceIdentity:");
+                AppendChildObject(builder, DeadLetterWithResourceIdentity, options, 4, false);
+            }
+
+            builder.AppendLine("  }");
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            bool inMultilineString = false;
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (inMultilineString)
+                {
+                    if (line.Contains("'''"))
+                    {
+                        inMultilineString = false;
+                    }
+                    stringBuilder.AppendLine(line);
+                    continue;
+                }
+                if (line.Contains("'''"))
+                {
+                    inMultilineString = true;
+                    stringBuilder.AppendLine($"{indent}{line}");
+                    continue;
+                }
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<EventGridSubscriptionData>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<EventGridSubscriptionData>)this).GetFormatFromOptions(options) : options.Format;
@@ -321,6 +492,8 @@ namespace Azure.ResourceManager.EventGrid
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(EventGridSubscriptionData)} does not support '{options.Format}' format.");
             }
@@ -337,6 +510,8 @@ namespace Azure.ResourceManager.EventGrid
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeEventGridSubscriptionData(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(EventGridSubscriptionData)} does not support '{options.Format}' format.");
             }

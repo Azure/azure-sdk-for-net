@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -495,6 +497,356 @@ namespace Azure.ResourceManager.CostManagement.Models
             return new AlertPropertiesDetails(Optional.ToNullable(timeGrainType), periodStartDate.Value, triggeredBy.Value, Optional.ToList(resourceGroupFilter), Optional.ToList(resourceFilter), Optional.ToList(meterFilter), tagFilter.Value, Optional.ToNullable(threshold), Optional.ToNullable(@operator), Optional.ToNullable(amount), unit.Value, Optional.ToNullable(currentSpend), Optional.ToList(contactEmails), Optional.ToList(contactGroups), Optional.ToList(contactRoles), overridingAlert.Value, departmentName.Value, companyName.Value, enrollmentNumber.Value, enrollmentStartDate.Value, enrollmentEndDate.Value, Optional.ToNullable(invoicingThreshold), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(TimeGrainType))
+            {
+                builder.Append("  timeGrainType:");
+                builder.AppendLine($" '{TimeGrainType.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(PeriodStartDate))
+            {
+                builder.Append("  periodStartDate:");
+                if (PeriodStartDate.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{PeriodStartDate}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{PeriodStartDate}'");
+                }
+            }
+
+            if (Optional.IsDefined(TriggeredBy))
+            {
+                builder.Append("  triggeredBy:");
+                if (TriggeredBy.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{TriggeredBy}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{TriggeredBy}'");
+                }
+            }
+
+            if (Optional.IsCollectionDefined(ResourceGroupFilter))
+            {
+                if (ResourceGroupFilter.Any())
+                {
+                    builder.Append("  resourceGroupFilter:");
+                    builder.AppendLine(" [");
+                    foreach (var item in ResourceGroupFilter)
+                    {
+                        if (item == null)
+                        {
+                            builder.Append("null");
+                            continue;
+                        }
+                        builder.AppendLine($"    '{item.ToString()}'");
+                    }
+                    builder.AppendLine("  ]");
+                }
+            }
+
+            if (Optional.IsCollectionDefined(ResourceFilter))
+            {
+                if (ResourceFilter.Any())
+                {
+                    builder.Append("  resourceFilter:");
+                    builder.AppendLine(" [");
+                    foreach (var item in ResourceFilter)
+                    {
+                        if (item == null)
+                        {
+                            builder.Append("null");
+                            continue;
+                        }
+                        builder.AppendLine($"    '{item.ToString()}'");
+                    }
+                    builder.AppendLine("  ]");
+                }
+            }
+
+            if (Optional.IsCollectionDefined(MeterFilter))
+            {
+                if (MeterFilter.Any())
+                {
+                    builder.Append("  meterFilter:");
+                    builder.AppendLine(" [");
+                    foreach (var item in MeterFilter)
+                    {
+                        if (item == null)
+                        {
+                            builder.Append("null");
+                            continue;
+                        }
+                        builder.AppendLine($"    '{item.ToString()}'");
+                    }
+                    builder.AppendLine("  ]");
+                }
+            }
+
+            if (Optional.IsDefined(TagFilter))
+            {
+                builder.Append("  tagFilter:");
+                builder.AppendLine($" '{TagFilter.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Threshold))
+            {
+                builder.Append("  threshold:");
+                builder.AppendLine($" '{Threshold.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Operator))
+            {
+                builder.Append("  operator:");
+                builder.AppendLine($" '{Operator.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Amount))
+            {
+                builder.Append("  amount:");
+                builder.AppendLine($" '{Amount.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Unit))
+            {
+                builder.Append("  unit:");
+                if (Unit.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{Unit}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{Unit}'");
+                }
+            }
+
+            if (Optional.IsDefined(CurrentSpend))
+            {
+                builder.Append("  currentSpend:");
+                builder.AppendLine($" '{CurrentSpend.Value.ToString()}'");
+            }
+
+            if (Optional.IsCollectionDefined(ContactEmails))
+            {
+                if (ContactEmails.Any())
+                {
+                    builder.Append("  contactEmails:");
+                    builder.AppendLine(" [");
+                    foreach (var item in ContactEmails)
+                    {
+                        if (item == null)
+                        {
+                            builder.Append("null");
+                            continue;
+                        }
+                        if (item.Contains(Environment.NewLine))
+                        {
+                            builder.AppendLine("    '''");
+                            builder.AppendLine($"{item}'''");
+                        }
+                        else
+                        {
+                            builder.AppendLine($"    '{item}'");
+                        }
+                    }
+                    builder.AppendLine("  ]");
+                }
+            }
+
+            if (Optional.IsCollectionDefined(ContactGroups))
+            {
+                if (ContactGroups.Any())
+                {
+                    builder.Append("  contactGroups:");
+                    builder.AppendLine(" [");
+                    foreach (var item in ContactGroups)
+                    {
+                        if (item == null)
+                        {
+                            builder.Append("null");
+                            continue;
+                        }
+                        if (item.Contains(Environment.NewLine))
+                        {
+                            builder.AppendLine("    '''");
+                            builder.AppendLine($"{item}'''");
+                        }
+                        else
+                        {
+                            builder.AppendLine($"    '{item}'");
+                        }
+                    }
+                    builder.AppendLine("  ]");
+                }
+            }
+
+            if (Optional.IsCollectionDefined(ContactRoles))
+            {
+                if (ContactRoles.Any())
+                {
+                    builder.Append("  contactRoles:");
+                    builder.AppendLine(" [");
+                    foreach (var item in ContactRoles)
+                    {
+                        if (item == null)
+                        {
+                            builder.Append("null");
+                            continue;
+                        }
+                        if (item.Contains(Environment.NewLine))
+                        {
+                            builder.AppendLine("    '''");
+                            builder.AppendLine($"{item}'''");
+                        }
+                        else
+                        {
+                            builder.AppendLine($"    '{item}'");
+                        }
+                    }
+                    builder.AppendLine("  ]");
+                }
+            }
+
+            if (Optional.IsDefined(OverridingAlert))
+            {
+                builder.Append("  overridingAlert:");
+                if (OverridingAlert.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{OverridingAlert}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{OverridingAlert}'");
+                }
+            }
+
+            if (Optional.IsDefined(DepartmentName))
+            {
+                builder.Append("  departmentName:");
+                if (DepartmentName.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{DepartmentName}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{DepartmentName}'");
+                }
+            }
+
+            if (Optional.IsDefined(CompanyName))
+            {
+                builder.Append("  companyName:");
+                if (CompanyName.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{CompanyName}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{CompanyName}'");
+                }
+            }
+
+            if (Optional.IsDefined(EnrollmentNumber))
+            {
+                builder.Append("  enrollmentNumber:");
+                if (EnrollmentNumber.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{EnrollmentNumber}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{EnrollmentNumber}'");
+                }
+            }
+
+            if (Optional.IsDefined(EnrollmentStartDate))
+            {
+                builder.Append("  enrollmentStartDate:");
+                if (EnrollmentStartDate.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{EnrollmentStartDate}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{EnrollmentStartDate}'");
+                }
+            }
+
+            if (Optional.IsDefined(EnrollmentEndDate))
+            {
+                builder.Append("  enrollmentEndDate:");
+                if (EnrollmentEndDate.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{EnrollmentEndDate}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{EnrollmentEndDate}'");
+                }
+            }
+
+            if (Optional.IsDefined(InvoicingThreshold))
+            {
+                builder.Append("  invoicingThreshold:");
+                builder.AppendLine($" '{InvoicingThreshold.Value.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            bool inMultilineString = false;
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (inMultilineString)
+                {
+                    if (line.Contains("'''"))
+                    {
+                        inMultilineString = false;
+                    }
+                    stringBuilder.AppendLine(line);
+                    continue;
+                }
+                if (line.Contains("'''"))
+                {
+                    inMultilineString = true;
+                    stringBuilder.AppendLine($"{indent}{line}");
+                    continue;
+                }
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<AlertPropertiesDetails>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<AlertPropertiesDetails>)this).GetFormatFromOptions(options) : options.Format;
@@ -503,6 +855,8 @@ namespace Azure.ResourceManager.CostManagement.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(AlertPropertiesDetails)} does not support '{options.Format}' format.");
             }
@@ -519,6 +873,8 @@ namespace Azure.ResourceManager.CostManagement.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeAlertPropertiesDetails(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(AlertPropertiesDetails)} does not support '{options.Format}' format.");
             }

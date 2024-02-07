@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -167,6 +168,89 @@ namespace Azure.ResourceManager.StorageSync.Models
             return new CloudEndpointLastChangeEnumerationStatus(Optional.ToNullable(startedTimestamp), Optional.ToNullable(completedTimestamp), Optional.ToNullable(namespaceFilesCount), Optional.ToNullable(namespaceDirectoriesCount), Optional.ToNullable(namespaceSizeBytes), Optional.ToNullable(nextRunTimestamp), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(StartedOn))
+            {
+                builder.Append("  startedTimestamp:");
+                var formattedDateTimeString = TypeFormatters.ToString(StartedOn.Value, "o");
+                builder.AppendLine($" '{formattedDateTimeString}'");
+            }
+
+            if (Optional.IsDefined(CompletedOn))
+            {
+                builder.Append("  completedTimestamp:");
+                var formattedDateTimeString = TypeFormatters.ToString(CompletedOn.Value, "o");
+                builder.AppendLine($" '{formattedDateTimeString}'");
+            }
+
+            if (Optional.IsDefined(NamespaceFilesCount))
+            {
+                builder.Append("  namespaceFilesCount:");
+                builder.AppendLine($" '{NamespaceFilesCount.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(NamespaceDirectoriesCount))
+            {
+                builder.Append("  namespaceDirectoriesCount:");
+                builder.AppendLine($" '{NamespaceDirectoriesCount.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(NamespaceSizeInBytes))
+            {
+                builder.Append("  namespaceSizeBytes:");
+                builder.AppendLine($" '{NamespaceSizeInBytes.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(NextRunTimestamp))
+            {
+                builder.Append("  nextRunTimestamp:");
+                var formattedDateTimeString = TypeFormatters.ToString(NextRunTimestamp.Value, "o");
+                builder.AppendLine($" '{formattedDateTimeString}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            bool inMultilineString = false;
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (inMultilineString)
+                {
+                    if (line.Contains("'''"))
+                    {
+                        inMultilineString = false;
+                    }
+                    stringBuilder.AppendLine(line);
+                    continue;
+                }
+                if (line.Contains("'''"))
+                {
+                    inMultilineString = true;
+                    stringBuilder.AppendLine($"{indent}{line}");
+                    continue;
+                }
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<CloudEndpointLastChangeEnumerationStatus>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<CloudEndpointLastChangeEnumerationStatus>)this).GetFormatFromOptions(options) : options.Format;
@@ -175,6 +259,8 @@ namespace Azure.ResourceManager.StorageSync.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(CloudEndpointLastChangeEnumerationStatus)} does not support '{options.Format}' format.");
             }
@@ -191,6 +277,8 @@ namespace Azure.ResourceManager.StorageSync.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeCloudEndpointLastChangeEnumerationStatus(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(CloudEndpointLastChangeEnumerationStatus)} does not support '{options.Format}' format.");
             }

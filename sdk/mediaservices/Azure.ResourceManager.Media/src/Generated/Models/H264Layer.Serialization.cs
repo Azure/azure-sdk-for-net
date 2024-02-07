@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -275,6 +276,182 @@ namespace Azure.ResourceManager.Media.Models
             return new H264Layer(width.Value, height.Value, label.Value, serializedAdditionalRawData, bitrate, Optional.ToNullable(maxBitrate), Optional.ToNullable(bFrames), frameRate.Value, Optional.ToNullable(slices), Optional.ToNullable(adaptiveBFrame), Optional.ToNullable(profile), level.Value, Optional.ToNullable(bufferWindow), Optional.ToNullable(crf), Optional.ToNullable(referenceFrames), Optional.ToNullable(entropyMode));
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(Profile))
+            {
+                builder.Append("  profile:");
+                builder.AppendLine($" '{Profile.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Level))
+            {
+                builder.Append("  level:");
+                if (Level.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{Level}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{Level}'");
+                }
+            }
+
+            if (Optional.IsDefined(BufferWindow))
+            {
+                builder.Append("  bufferWindow:");
+                var formattedTimeSpan = TypeFormatters.ToString(BufferWindow.Value, "P");
+                builder.AppendLine($" '{formattedTimeSpan}'");
+            }
+
+            if (Optional.IsDefined(ConstantRateFactor))
+            {
+                builder.Append("  crf:");
+                builder.AppendLine($" '{ConstantRateFactor.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ReferenceFrames))
+            {
+                builder.Append("  referenceFrames:");
+                builder.AppendLine($" {ReferenceFrames.Value}");
+            }
+
+            if (Optional.IsDefined(EntropyMode))
+            {
+                builder.Append("  entropyMode:");
+                builder.AppendLine($" '{EntropyMode.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Bitrate))
+            {
+                builder.Append("  bitrate:");
+                builder.AppendLine($" {Bitrate}");
+            }
+
+            if (Optional.IsDefined(MaxBitrate))
+            {
+                builder.Append("  maxBitrate:");
+                builder.AppendLine($" {MaxBitrate.Value}");
+            }
+
+            if (Optional.IsDefined(BFrames))
+            {
+                builder.Append("  bFrames:");
+                builder.AppendLine($" {BFrames.Value}");
+            }
+
+            if (Optional.IsDefined(FrameRate))
+            {
+                builder.Append("  frameRate:");
+                if (FrameRate.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{FrameRate}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{FrameRate}'");
+                }
+            }
+
+            if (Optional.IsDefined(Slices))
+            {
+                builder.Append("  slices:");
+                builder.AppendLine($" {Slices.Value}");
+            }
+
+            if (Optional.IsDefined(UseAdaptiveBFrame))
+            {
+                builder.Append("  adaptiveBFrame:");
+                var boolValue = UseAdaptiveBFrame.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(Width))
+            {
+                builder.Append("  width:");
+                if (Width.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{Width}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{Width}'");
+                }
+            }
+
+            if (Optional.IsDefined(Height))
+            {
+                builder.Append("  height:");
+                if (Height.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{Height}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{Height}'");
+                }
+            }
+
+            if (Optional.IsDefined(Label))
+            {
+                builder.Append("  label:");
+                if (Label.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{Label}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{Label}'");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            bool inMultilineString = false;
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (inMultilineString)
+                {
+                    if (line.Contains("'''"))
+                    {
+                        inMultilineString = false;
+                    }
+                    stringBuilder.AppendLine(line);
+                    continue;
+                }
+                if (line.Contains("'''"))
+                {
+                    inMultilineString = true;
+                    stringBuilder.AppendLine($"{indent}{line}");
+                    continue;
+                }
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<H264Layer>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<H264Layer>)this).GetFormatFromOptions(options) : options.Format;
@@ -283,6 +460,8 @@ namespace Azure.ResourceManager.Media.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(H264Layer)} does not support '{options.Format}' format.");
             }
@@ -299,6 +478,8 @@ namespace Azure.ResourceManager.Media.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeH264Layer(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(H264Layer)} does not support '{options.Format}' format.");
             }

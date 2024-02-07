@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
@@ -441,6 +443,244 @@ namespace Azure.ResourceManager.Storage
             return new FileShareData(id, name, type, systemData.Value, Optional.ToNullable(lastModifiedTime), Optional.ToDictionary(metadata), Optional.ToNullable(shareQuota), Optional.ToNullable(enabledProtocols), Optional.ToNullable(rootSquash), version.Value, Optional.ToNullable(deleted), Optional.ToNullable(deletedTime), Optional.ToNullable(remainingRetentionDays), Optional.ToNullable(accessTier), Optional.ToNullable(accessTierChangeTime), accessTierStatus.Value, Optional.ToNullable(shareUsageBytes), Optional.ToNullable(leaseStatus), Optional.ToNullable(leaseState), Optional.ToNullable(leaseDuration), Optional.ToList(signedIdentifiers), Optional.ToNullable(snapshotTime), Optional.ToNullable(etag), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                if (Name.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{Name}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{Name}'");
+                }
+            }
+
+            if (Optional.IsDefined(ETag))
+            {
+                builder.Append("  etag:");
+                builder.AppendLine($" '{ETag.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Id))
+            {
+                builder.Append("  id:");
+                builder.AppendLine($" '{Id.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SystemData))
+            {
+                builder.Append("  systemData:");
+                builder.AppendLine($" '{SystemData.ToString()}'");
+            }
+
+            builder.Append("  properties:");
+            builder.AppendLine(" {");
+            if (Optional.IsDefined(LastModifiedOn))
+            {
+                builder.Append("    lastModifiedTime:");
+                var formattedDateTimeString = TypeFormatters.ToString(LastModifiedOn.Value, "o");
+                builder.AppendLine($" '{formattedDateTimeString}'");
+            }
+
+            if (Optional.IsCollectionDefined(Metadata))
+            {
+                if (Metadata.Any())
+                {
+                    builder.Append("    metadata:");
+                    builder.AppendLine(" {");
+                    foreach (var item in Metadata)
+                    {
+                        builder.Append($"        {item.Key}:");
+                        if (item.Value == null)
+                        {
+                            builder.Append("null");
+                            continue;
+                        }
+                        if (item.Value.Contains(Environment.NewLine))
+                        {
+                            builder.AppendLine(" '''");
+                            builder.AppendLine($"{item.Value}'''");
+                        }
+                        else
+                        {
+                            builder.AppendLine($" '{item.Value}'");
+                        }
+                    }
+                    builder.AppendLine("    }");
+                }
+            }
+
+            if (Optional.IsDefined(ShareQuota))
+            {
+                builder.Append("    shareQuota:");
+                builder.AppendLine($" {ShareQuota.Value}");
+            }
+
+            if (Optional.IsDefined(EnabledProtocol))
+            {
+                builder.Append("    enabledProtocols:");
+                builder.AppendLine($" '{EnabledProtocol.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(RootSquash))
+            {
+                builder.Append("    rootSquash:");
+                builder.AppendLine($" '{RootSquash.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Version))
+            {
+                builder.Append("    version:");
+                if (Version.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{Version}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{Version}'");
+                }
+            }
+
+            if (Optional.IsDefined(IsDeleted))
+            {
+                builder.Append("    deleted:");
+                var boolValue = IsDeleted.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(DeletedOn))
+            {
+                builder.Append("    deletedTime:");
+                var formattedDateTimeString = TypeFormatters.ToString(DeletedOn.Value, "o");
+                builder.AppendLine($" '{formattedDateTimeString}'");
+            }
+
+            if (Optional.IsDefined(RemainingRetentionDays))
+            {
+                builder.Append("    remainingRetentionDays:");
+                builder.AppendLine($" {RemainingRetentionDays.Value}");
+            }
+
+            if (Optional.IsDefined(AccessTier))
+            {
+                builder.Append("    accessTier:");
+                builder.AppendLine($" '{AccessTier.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(AccessTierChangeOn))
+            {
+                builder.Append("    accessTierChangeTime:");
+                var formattedDateTimeString = TypeFormatters.ToString(AccessTierChangeOn.Value, "o");
+                builder.AppendLine($" '{formattedDateTimeString}'");
+            }
+
+            if (Optional.IsDefined(AccessTierStatus))
+            {
+                builder.Append("    accessTierStatus:");
+                if (AccessTierStatus.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{AccessTierStatus}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{AccessTierStatus}'");
+                }
+            }
+
+            if (Optional.IsDefined(ShareUsageBytes))
+            {
+                builder.Append("    shareUsageBytes:");
+                builder.AppendLine($" '{ShareUsageBytes.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(LeaseStatus))
+            {
+                builder.Append("    leaseStatus:");
+                builder.AppendLine($" '{LeaseStatus.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(LeaseState))
+            {
+                builder.Append("    leaseState:");
+                builder.AppendLine($" '{LeaseState.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(LeaseDuration))
+            {
+                builder.Append("    leaseDuration:");
+                builder.AppendLine($" '{LeaseDuration.Value.ToString()}'");
+            }
+
+            if (Optional.IsCollectionDefined(SignedIdentifiers))
+            {
+                if (SignedIdentifiers.Any())
+                {
+                    builder.Append("    signedIdentifiers:");
+                    builder.AppendLine(" [");
+                    foreach (var item in SignedIdentifiers)
+                    {
+                        AppendChildObject(builder, item, options, 6, true);
+                    }
+                    builder.AppendLine("    ]");
+                }
+            }
+
+            if (Optional.IsDefined(SnapshotOn))
+            {
+                builder.Append("    snapshotTime:");
+                var formattedDateTimeString = TypeFormatters.ToString(SnapshotOn.Value, "o");
+                builder.AppendLine($" '{formattedDateTimeString}'");
+            }
+
+            builder.AppendLine("  }");
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            bool inMultilineString = false;
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (inMultilineString)
+                {
+                    if (line.Contains("'''"))
+                    {
+                        inMultilineString = false;
+                    }
+                    stringBuilder.AppendLine(line);
+                    continue;
+                }
+                if (line.Contains("'''"))
+                {
+                    inMultilineString = true;
+                    stringBuilder.AppendLine($"{indent}{line}");
+                    continue;
+                }
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<FileShareData>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<FileShareData>)this).GetFormatFromOptions(options) : options.Format;
@@ -449,6 +689,8 @@ namespace Azure.ResourceManager.Storage
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(FileShareData)} does not support '{options.Format}' format.");
             }
@@ -465,6 +707,8 @@ namespace Azure.ResourceManager.Storage
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeFileShareData(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(FileShareData)} does not support '{options.Format}' format.");
             }

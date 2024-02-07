@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -187,6 +189,146 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
             return new Control(controlId.Value, controlShortName.Value, controlFullName.Value, Optional.ToNullable(controlType), controlDescription.Value, controlDescriptionHyperLink.Value, Optional.ToNullable(controlStatus), Optional.ToList(assessments), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(ControlId))
+            {
+                builder.Append("  controlId:");
+                if (ControlId.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{ControlId}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{ControlId}'");
+                }
+            }
+
+            if (Optional.IsDefined(ControlShortName))
+            {
+                builder.Append("  controlShortName:");
+                if (ControlShortName.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{ControlShortName}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{ControlShortName}'");
+                }
+            }
+
+            if (Optional.IsDefined(ControlFullName))
+            {
+                builder.Append("  controlFullName:");
+                if (ControlFullName.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{ControlFullName}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{ControlFullName}'");
+                }
+            }
+
+            if (Optional.IsDefined(ControlType))
+            {
+                builder.Append("  controlType:");
+                builder.AppendLine($" '{ControlType.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ControlDescription))
+            {
+                builder.Append("  controlDescription:");
+                if (ControlDescription.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{ControlDescription}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{ControlDescription}'");
+                }
+            }
+
+            if (Optional.IsDefined(ControlDescriptionHyperLink))
+            {
+                builder.Append("  controlDescriptionHyperLink:");
+                if (ControlDescriptionHyperLink.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{ControlDescriptionHyperLink}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{ControlDescriptionHyperLink}'");
+                }
+            }
+
+            if (Optional.IsDefined(ControlStatus))
+            {
+                builder.Append("  controlStatus:");
+                builder.AppendLine($" '{ControlStatus.Value.ToString()}'");
+            }
+
+            if (Optional.IsCollectionDefined(Assessments))
+            {
+                if (Assessments.Any())
+                {
+                    builder.Append("  assessments:");
+                    builder.AppendLine(" [");
+                    foreach (var item in Assessments)
+                    {
+                        AppendChildObject(builder, item, options, 4, true);
+                    }
+                    builder.AppendLine("  ]");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            bool inMultilineString = false;
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (inMultilineString)
+                {
+                    if (line.Contains("'''"))
+                    {
+                        inMultilineString = false;
+                    }
+                    stringBuilder.AppendLine(line);
+                    continue;
+                }
+                if (line.Contains("'''"))
+                {
+                    inMultilineString = true;
+                    stringBuilder.AppendLine($"{indent}{line}");
+                    continue;
+                }
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<Control>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<Control>)this).GetFormatFromOptions(options) : options.Format;
@@ -195,6 +337,8 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(Control)} does not support '{options.Format}' format.");
             }
@@ -211,6 +355,8 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeControl(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(Control)} does not support '{options.Format}' format.");
             }

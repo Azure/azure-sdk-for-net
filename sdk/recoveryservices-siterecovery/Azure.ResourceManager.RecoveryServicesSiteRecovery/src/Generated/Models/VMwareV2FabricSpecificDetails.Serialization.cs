@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -192,6 +194,130 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             return new VMwareV2FabricSpecificDetails(instanceType, serializedAdditionalRawData, vmwareSiteId.Value, physicalSiteId.Value, migrationSolutionId.Value, serviceEndpoint.Value, serviceResourceId.Value, serviceContainerId.Value, Optional.ToList(processServers));
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(VMwareSiteId))
+            {
+                builder.Append("  vmwareSiteId:");
+                builder.AppendLine($" '{VMwareSiteId.ToString()}'");
+            }
+
+            if (Optional.IsDefined(PhysicalSiteId))
+            {
+                builder.Append("  physicalSiteId:");
+                builder.AppendLine($" '{PhysicalSiteId.ToString()}'");
+            }
+
+            if (Optional.IsDefined(MigrationSolutionId))
+            {
+                builder.Append("  migrationSolutionId:");
+                builder.AppendLine($" '{MigrationSolutionId.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ServiceEndpoint))
+            {
+                builder.Append("  serviceEndpoint:");
+                if (ServiceEndpoint.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{ServiceEndpoint}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{ServiceEndpoint}'");
+                }
+            }
+
+            if (Optional.IsDefined(ServiceResourceId))
+            {
+                builder.Append("  serviceResourceId:");
+                builder.AppendLine($" '{ServiceResourceId.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ServiceContainerId))
+            {
+                builder.Append("  serviceContainerId:");
+                if (ServiceContainerId.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{ServiceContainerId}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{ServiceContainerId}'");
+                }
+            }
+
+            if (Optional.IsCollectionDefined(ProcessServers))
+            {
+                if (ProcessServers.Any())
+                {
+                    builder.Append("  processServers:");
+                    builder.AppendLine(" [");
+                    foreach (var item in ProcessServers)
+                    {
+                        AppendChildObject(builder, item, options, 4, true);
+                    }
+                    builder.AppendLine("  ]");
+                }
+            }
+
+            if (Optional.IsDefined(InstanceType))
+            {
+                builder.Append("  instanceType:");
+                if (InstanceType.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{InstanceType}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{InstanceType}'");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            bool inMultilineString = false;
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (inMultilineString)
+                {
+                    if (line.Contains("'''"))
+                    {
+                        inMultilineString = false;
+                    }
+                    stringBuilder.AppendLine(line);
+                    continue;
+                }
+                if (line.Contains("'''"))
+                {
+                    inMultilineString = true;
+                    stringBuilder.AppendLine($"{indent}{line}");
+                    continue;
+                }
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<VMwareV2FabricSpecificDetails>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<VMwareV2FabricSpecificDetails>)this).GetFormatFromOptions(options) : options.Format;
@@ -200,6 +326,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(VMwareV2FabricSpecificDetails)} does not support '{options.Format}' format.");
             }
@@ -216,6 +344,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeVMwareV2FabricSpecificDetails(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(VMwareV2FabricSpecificDetails)} does not support '{options.Format}' format.");
             }

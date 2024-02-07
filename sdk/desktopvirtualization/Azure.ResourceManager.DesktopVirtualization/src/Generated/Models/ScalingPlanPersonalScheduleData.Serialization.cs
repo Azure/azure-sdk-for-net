@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.DesktopVirtualization.Models;
@@ -542,6 +544,243 @@ namespace Azure.ResourceManager.DesktopVirtualization
             return new ScalingPlanPersonalScheduleData(id, name, type, systemData.Value, Optional.ToList(daysOfWeek), rampUpStartTime.Value, Optional.ToNullable(rampUpAutoStartHosts), Optional.ToNullable(rampUpStartVmOnConnect), Optional.ToNullable(rampUpActionOnDisconnect), Optional.ToNullable(rampUpMinutesToWaitOnDisconnect), Optional.ToNullable(rampUpActionOnLogoff), Optional.ToNullable(rampUpMinutesToWaitOnLogoff), peakStartTime.Value, Optional.ToNullable(peakStartVmOnConnect), Optional.ToNullable(peakActionOnDisconnect), Optional.ToNullable(peakMinutesToWaitOnDisconnect), Optional.ToNullable(peakActionOnLogoff), Optional.ToNullable(peakMinutesToWaitOnLogoff), rampDownStartTime.Value, Optional.ToNullable(rampDownStartVmOnConnect), Optional.ToNullable(rampDownActionOnDisconnect), Optional.ToNullable(rampDownMinutesToWaitOnDisconnect), Optional.ToNullable(rampDownActionOnLogoff), Optional.ToNullable(rampDownMinutesToWaitOnLogoff), offPeakStartTime.Value, Optional.ToNullable(offPeakStartVmOnConnect), Optional.ToNullable(offPeakActionOnDisconnect), Optional.ToNullable(offPeakMinutesToWaitOnDisconnect), Optional.ToNullable(offPeakActionOnLogoff), Optional.ToNullable(offPeakMinutesToWaitOnLogoff), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                if (Name.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{Name}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{Name}'");
+                }
+            }
+
+            if (Optional.IsDefined(Id))
+            {
+                builder.Append("  id:");
+                builder.AppendLine($" '{Id.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SystemData))
+            {
+                builder.Append("  systemData:");
+                builder.AppendLine($" '{SystemData.ToString()}'");
+            }
+
+            builder.Append("  properties:");
+            builder.AppendLine(" {");
+            if (Optional.IsCollectionDefined(DaysOfWeek))
+            {
+                if (DaysOfWeek.Any())
+                {
+                    builder.Append("    daysOfWeek:");
+                    builder.AppendLine(" [");
+                    foreach (var item in DaysOfWeek)
+                    {
+                        builder.AppendLine($"      '{item.ToSerialString()}'");
+                    }
+                    builder.AppendLine("    ]");
+                }
+            }
+
+            if (Optional.IsDefined(RampUpStartTime))
+            {
+                builder.Append("    rampUpStartTime:");
+                AppendChildObject(builder, RampUpStartTime, options, 4, false);
+            }
+
+            if (Optional.IsDefined(RampUpAutoStartHosts))
+            {
+                builder.Append("    rampUpAutoStartHosts:");
+                builder.AppendLine($" '{RampUpAutoStartHosts.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(RampUpStartVmOnConnect))
+            {
+                builder.Append("    rampUpStartVMOnConnect:");
+                builder.AppendLine($" '{RampUpStartVmOnConnect.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(RampUpActionOnDisconnect))
+            {
+                builder.Append("    rampUpActionOnDisconnect:");
+                builder.AppendLine($" '{RampUpActionOnDisconnect.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(RampUpMinutesToWaitOnDisconnect))
+            {
+                builder.Append("    rampUpMinutesToWaitOnDisconnect:");
+                builder.AppendLine($" {RampUpMinutesToWaitOnDisconnect.Value}");
+            }
+
+            if (Optional.IsDefined(RampUpActionOnLogoff))
+            {
+                builder.Append("    rampUpActionOnLogoff:");
+                builder.AppendLine($" '{RampUpActionOnLogoff.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(RampUpMinutesToWaitOnLogoff))
+            {
+                builder.Append("    rampUpMinutesToWaitOnLogoff:");
+                builder.AppendLine($" {RampUpMinutesToWaitOnLogoff.Value}");
+            }
+
+            if (Optional.IsDefined(PeakStartTime))
+            {
+                builder.Append("    peakStartTime:");
+                AppendChildObject(builder, PeakStartTime, options, 4, false);
+            }
+
+            if (Optional.IsDefined(PeakStartVmOnConnect))
+            {
+                builder.Append("    peakStartVMOnConnect:");
+                builder.AppendLine($" '{PeakStartVmOnConnect.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(PeakActionOnDisconnect))
+            {
+                builder.Append("    peakActionOnDisconnect:");
+                builder.AppendLine($" '{PeakActionOnDisconnect.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(PeakMinutesToWaitOnDisconnect))
+            {
+                builder.Append("    peakMinutesToWaitOnDisconnect:");
+                builder.AppendLine($" {PeakMinutesToWaitOnDisconnect.Value}");
+            }
+
+            if (Optional.IsDefined(PeakActionOnLogoff))
+            {
+                builder.Append("    peakActionOnLogoff:");
+                builder.AppendLine($" '{PeakActionOnLogoff.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(PeakMinutesToWaitOnLogoff))
+            {
+                builder.Append("    peakMinutesToWaitOnLogoff:");
+                builder.AppendLine($" {PeakMinutesToWaitOnLogoff.Value}");
+            }
+
+            if (Optional.IsDefined(RampDownStartTime))
+            {
+                builder.Append("    rampDownStartTime:");
+                AppendChildObject(builder, RampDownStartTime, options, 4, false);
+            }
+
+            if (Optional.IsDefined(RampDownStartVmOnConnect))
+            {
+                builder.Append("    rampDownStartVMOnConnect:");
+                builder.AppendLine($" '{RampDownStartVmOnConnect.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(RampDownActionOnDisconnect))
+            {
+                builder.Append("    rampDownActionOnDisconnect:");
+                builder.AppendLine($" '{RampDownActionOnDisconnect.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(RampDownMinutesToWaitOnDisconnect))
+            {
+                builder.Append("    rampDownMinutesToWaitOnDisconnect:");
+                builder.AppendLine($" {RampDownMinutesToWaitOnDisconnect.Value}");
+            }
+
+            if (Optional.IsDefined(RampDownActionOnLogoff))
+            {
+                builder.Append("    rampDownActionOnLogoff:");
+                builder.AppendLine($" '{RampDownActionOnLogoff.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(RampDownMinutesToWaitOnLogoff))
+            {
+                builder.Append("    rampDownMinutesToWaitOnLogoff:");
+                builder.AppendLine($" {RampDownMinutesToWaitOnLogoff.Value}");
+            }
+
+            if (Optional.IsDefined(OffPeakStartTime))
+            {
+                builder.Append("    offPeakStartTime:");
+                AppendChildObject(builder, OffPeakStartTime, options, 4, false);
+            }
+
+            if (Optional.IsDefined(OffPeakStartVmOnConnect))
+            {
+                builder.Append("    offPeakStartVMOnConnect:");
+                builder.AppendLine($" '{OffPeakStartVmOnConnect.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(OffPeakActionOnDisconnect))
+            {
+                builder.Append("    offPeakActionOnDisconnect:");
+                builder.AppendLine($" '{OffPeakActionOnDisconnect.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(OffPeakMinutesToWaitOnDisconnect))
+            {
+                builder.Append("    offPeakMinutesToWaitOnDisconnect:");
+                builder.AppendLine($" {OffPeakMinutesToWaitOnDisconnect.Value}");
+            }
+
+            if (Optional.IsDefined(OffPeakActionOnLogoff))
+            {
+                builder.Append("    offPeakActionOnLogoff:");
+                builder.AppendLine($" '{OffPeakActionOnLogoff.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(OffPeakMinutesToWaitOnLogoff))
+            {
+                builder.Append("    offPeakMinutesToWaitOnLogoff:");
+                builder.AppendLine($" {OffPeakMinutesToWaitOnLogoff.Value}");
+            }
+
+            builder.AppendLine("  }");
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            bool inMultilineString = false;
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (inMultilineString)
+                {
+                    if (line.Contains("'''"))
+                    {
+                        inMultilineString = false;
+                    }
+                    stringBuilder.AppendLine(line);
+                    continue;
+                }
+                if (line.Contains("'''"))
+                {
+                    inMultilineString = true;
+                    stringBuilder.AppendLine($"{indent}{line}");
+                    continue;
+                }
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<ScalingPlanPersonalScheduleData>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ScalingPlanPersonalScheduleData>)this).GetFormatFromOptions(options) : options.Format;
@@ -550,6 +789,8 @@ namespace Azure.ResourceManager.DesktopVirtualization
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(ScalingPlanPersonalScheduleData)} does not support '{options.Format}' format.");
             }
@@ -566,6 +807,8 @@ namespace Azure.ResourceManager.DesktopVirtualization
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeScalingPlanPersonalScheduleData(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(ScalingPlanPersonalScheduleData)} does not support '{options.Format}' format.");
             }

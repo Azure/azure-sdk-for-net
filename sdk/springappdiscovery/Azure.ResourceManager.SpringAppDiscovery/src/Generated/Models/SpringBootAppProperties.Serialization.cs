@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -603,6 +605,492 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Models
             return new SpringBootAppProperties(appName.Value, artifactName.Value, Optional.ToNullable(appPort), appType.Value, Optional.ToList(applicationConfigurations), Optional.ToList(bindingPorts), buildJdkVersion.Value, Optional.ToList(certificates), checksum.Value, Optional.ToList(dependencies), Optional.ToList(environments), Optional.ToNullable(instanceCount), jarFileLocation.Value, Optional.ToNullable(jvmMemoryInMB), Optional.ToList(jvmOptions), Optional.ToList(miscs), Optional.ToList(instances), runtimeJdkVersion.Value, Optional.ToList(servers), Optional.ToList(machineArmIds), siteName.Value, springBootVersion.Value, Optional.ToList(staticContentLocations), Optional.ToList(connectionStrings), Optional.ToNullable(lastModifiedTime), Optional.ToNullable(lastUpdatedTime), Optional.ToNullable(provisioningState), Optional.ToList(errors), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(AppName))
+            {
+                builder.Append("  appName:");
+                if (AppName.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{AppName}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{AppName}'");
+                }
+            }
+
+            if (Optional.IsDefined(ArtifactName))
+            {
+                builder.Append("  artifactName:");
+                if (ArtifactName.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{ArtifactName}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{ArtifactName}'");
+                }
+            }
+
+            if (Optional.IsDefined(AppPort))
+            {
+                builder.Append("  appPort:");
+                builder.AppendLine($" {AppPort.Value}");
+            }
+
+            if (Optional.IsDefined(AppType))
+            {
+                builder.Append("  appType:");
+                if (AppType.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{AppType}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{AppType}'");
+                }
+            }
+
+            if (Optional.IsCollectionDefined(ApplicationConfigurations))
+            {
+                if (ApplicationConfigurations.Any())
+                {
+                    builder.Append("  applicationConfigurations:");
+                    builder.AppendLine(" [");
+                    foreach (var item in ApplicationConfigurations)
+                    {
+                        AppendChildObject(builder, item, options, 4, true);
+                    }
+                    builder.AppendLine("  ]");
+                }
+            }
+
+            if (Optional.IsCollectionDefined(BindingPorts))
+            {
+                if (BindingPorts.Any())
+                {
+                    builder.Append("  bindingPorts:");
+                    builder.AppendLine(" [");
+                    foreach (var item in BindingPorts)
+                    {
+                        builder.AppendLine($"    {item}");
+                    }
+                    builder.AppendLine("  ]");
+                }
+            }
+
+            if (Optional.IsDefined(BuildJdkVersion))
+            {
+                builder.Append("  buildJdkVersion:");
+                if (BuildJdkVersion.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{BuildJdkVersion}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{BuildJdkVersion}'");
+                }
+            }
+
+            if (Optional.IsCollectionDefined(Certificates))
+            {
+                if (Certificates.Any())
+                {
+                    builder.Append("  certificates:");
+                    builder.AppendLine(" [");
+                    foreach (var item in Certificates)
+                    {
+                        if (item == null)
+                        {
+                            builder.Append("null");
+                            continue;
+                        }
+                        if (item.Contains(Environment.NewLine))
+                        {
+                            builder.AppendLine("    '''");
+                            builder.AppendLine($"{item}'''");
+                        }
+                        else
+                        {
+                            builder.AppendLine($"    '{item}'");
+                        }
+                    }
+                    builder.AppendLine("  ]");
+                }
+            }
+
+            if (Optional.IsDefined(Checksum))
+            {
+                builder.Append("  checksum:");
+                if (Checksum.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{Checksum}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{Checksum}'");
+                }
+            }
+
+            if (Optional.IsCollectionDefined(Dependencies))
+            {
+                if (Dependencies.Any())
+                {
+                    builder.Append("  dependencies:");
+                    builder.AppendLine(" [");
+                    foreach (var item in Dependencies)
+                    {
+                        if (item == null)
+                        {
+                            builder.Append("null");
+                            continue;
+                        }
+                        if (item.Contains(Environment.NewLine))
+                        {
+                            builder.AppendLine("    '''");
+                            builder.AppendLine($"{item}'''");
+                        }
+                        else
+                        {
+                            builder.AppendLine($"    '{item}'");
+                        }
+                    }
+                    builder.AppendLine("  ]");
+                }
+            }
+
+            if (Optional.IsCollectionDefined(Environments))
+            {
+                if (Environments.Any())
+                {
+                    builder.Append("  environments:");
+                    builder.AppendLine(" [");
+                    foreach (var item in Environments)
+                    {
+                        if (item == null)
+                        {
+                            builder.Append("null");
+                            continue;
+                        }
+                        if (item.Contains(Environment.NewLine))
+                        {
+                            builder.AppendLine("    '''");
+                            builder.AppendLine($"{item}'''");
+                        }
+                        else
+                        {
+                            builder.AppendLine($"    '{item}'");
+                        }
+                    }
+                    builder.AppendLine("  ]");
+                }
+            }
+
+            if (Optional.IsDefined(InstanceCount))
+            {
+                builder.Append("  instanceCount:");
+                builder.AppendLine($" {InstanceCount.Value}");
+            }
+
+            if (Optional.IsDefined(JarFileLocation))
+            {
+                builder.Append("  jarFileLocation:");
+                if (JarFileLocation.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{JarFileLocation}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{JarFileLocation}'");
+                }
+            }
+
+            if (Optional.IsDefined(JvmMemoryInMB))
+            {
+                builder.Append("  jvmMemoryInMB:");
+                builder.AppendLine($" {JvmMemoryInMB.Value}");
+            }
+
+            if (Optional.IsCollectionDefined(JvmOptions))
+            {
+                if (JvmOptions.Any())
+                {
+                    builder.Append("  jvmOptions:");
+                    builder.AppendLine(" [");
+                    foreach (var item in JvmOptions)
+                    {
+                        if (item == null)
+                        {
+                            builder.Append("null");
+                            continue;
+                        }
+                        if (item.Contains(Environment.NewLine))
+                        {
+                            builder.AppendLine("    '''");
+                            builder.AppendLine($"{item}'''");
+                        }
+                        else
+                        {
+                            builder.AppendLine($"    '{item}'");
+                        }
+                    }
+                    builder.AppendLine("  ]");
+                }
+            }
+
+            if (Optional.IsCollectionDefined(Miscs))
+            {
+                if (Miscs.Any())
+                {
+                    builder.Append("  miscs:");
+                    builder.AppendLine(" [");
+                    foreach (var item in Miscs)
+                    {
+                        AppendChildObject(builder, item, options, 4, true);
+                    }
+                    builder.AppendLine("  ]");
+                }
+            }
+
+            if (Optional.IsCollectionDefined(Instances))
+            {
+                if (Instances.Any())
+                {
+                    builder.Append("  instances:");
+                    builder.AppendLine(" [");
+                    foreach (var item in Instances)
+                    {
+                        AppendChildObject(builder, item, options, 4, true);
+                    }
+                    builder.AppendLine("  ]");
+                }
+            }
+
+            if (Optional.IsDefined(RuntimeJdkVersion))
+            {
+                builder.Append("  runtimeJdkVersion:");
+                if (RuntimeJdkVersion.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{RuntimeJdkVersion}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{RuntimeJdkVersion}'");
+                }
+            }
+
+            if (Optional.IsCollectionDefined(Servers))
+            {
+                if (Servers.Any())
+                {
+                    builder.Append("  servers:");
+                    builder.AppendLine(" [");
+                    foreach (var item in Servers)
+                    {
+                        if (item == null)
+                        {
+                            builder.Append("null");
+                            continue;
+                        }
+                        if (item.Contains(Environment.NewLine))
+                        {
+                            builder.AppendLine("    '''");
+                            builder.AppendLine($"{item}'''");
+                        }
+                        else
+                        {
+                            builder.AppendLine($"    '{item}'");
+                        }
+                    }
+                    builder.AppendLine("  ]");
+                }
+            }
+
+            if (Optional.IsCollectionDefined(MachineArmIds))
+            {
+                if (MachineArmIds.Any())
+                {
+                    builder.Append("  machineArmIds:");
+                    builder.AppendLine(" [");
+                    foreach (var item in MachineArmIds)
+                    {
+                        if (item == null)
+                        {
+                            builder.Append("null");
+                            continue;
+                        }
+                        builder.AppendLine($"    '{item.ToString()}'");
+                    }
+                    builder.AppendLine("  ]");
+                }
+            }
+
+            if (Optional.IsDefined(SiteName))
+            {
+                builder.Append("  siteName:");
+                if (SiteName.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{SiteName}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{SiteName}'");
+                }
+            }
+
+            if (Optional.IsDefined(SpringBootVersion))
+            {
+                builder.Append("  springBootVersion:");
+                if (SpringBootVersion.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{SpringBootVersion}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{SpringBootVersion}'");
+                }
+            }
+
+            if (Optional.IsCollectionDefined(StaticContentLocations))
+            {
+                if (StaticContentLocations.Any())
+                {
+                    builder.Append("  staticContentLocations:");
+                    builder.AppendLine(" [");
+                    foreach (var item in StaticContentLocations)
+                    {
+                        if (item == null)
+                        {
+                            builder.Append("null");
+                            continue;
+                        }
+                        if (item.Contains(Environment.NewLine))
+                        {
+                            builder.AppendLine("    '''");
+                            builder.AppendLine($"{item}'''");
+                        }
+                        else
+                        {
+                            builder.AppendLine($"    '{item}'");
+                        }
+                    }
+                    builder.AppendLine("  ]");
+                }
+            }
+
+            if (Optional.IsCollectionDefined(ConnectionStrings))
+            {
+                if (ConnectionStrings.Any())
+                {
+                    builder.Append("  connectionStrings:");
+                    builder.AppendLine(" [");
+                    foreach (var item in ConnectionStrings)
+                    {
+                        if (item == null)
+                        {
+                            builder.Append("null");
+                            continue;
+                        }
+                        if (item.Contains(Environment.NewLine))
+                        {
+                            builder.AppendLine("    '''");
+                            builder.AppendLine($"{item}'''");
+                        }
+                        else
+                        {
+                            builder.AppendLine($"    '{item}'");
+                        }
+                    }
+                    builder.AppendLine("  ]");
+                }
+            }
+
+            if (Optional.IsDefined(LastModifiedOn))
+            {
+                builder.Append("  lastModifiedTime:");
+                var formattedDateTimeString = TypeFormatters.ToString(LastModifiedOn.Value, "o");
+                builder.AppendLine($" '{formattedDateTimeString}'");
+            }
+
+            if (Optional.IsDefined(LastUpdatedOn))
+            {
+                builder.Append("  lastUpdatedTime:");
+                var formattedDateTimeString = TypeFormatters.ToString(LastUpdatedOn.Value, "o");
+                builder.AppendLine($" '{formattedDateTimeString}'");
+            }
+
+            if (Optional.IsDefined(ProvisioningState))
+            {
+                builder.Append("  provisioningState:");
+                builder.AppendLine($" '{ProvisioningState.Value.ToString()}'");
+            }
+
+            if (Optional.IsCollectionDefined(Errors))
+            {
+                if (Errors.Any())
+                {
+                    builder.Append("  errors:");
+                    builder.AppendLine(" [");
+                    foreach (var item in Errors)
+                    {
+                        AppendChildObject(builder, item, options, 4, true);
+                    }
+                    builder.AppendLine("  ]");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            bool inMultilineString = false;
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (inMultilineString)
+                {
+                    if (line.Contains("'''"))
+                    {
+                        inMultilineString = false;
+                    }
+                    stringBuilder.AppendLine(line);
+                    continue;
+                }
+                if (line.Contains("'''"))
+                {
+                    inMultilineString = true;
+                    stringBuilder.AppendLine($"{indent}{line}");
+                    continue;
+                }
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<SpringBootAppProperties>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<SpringBootAppProperties>)this).GetFormatFromOptions(options) : options.Format;
@@ -611,6 +1099,8 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(SpringBootAppProperties)} does not support '{options.Format}' format.");
             }
@@ -627,6 +1117,8 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeSpringBootAppProperties(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(SpringBootAppProperties)} does not support '{options.Format}' format.");
             }

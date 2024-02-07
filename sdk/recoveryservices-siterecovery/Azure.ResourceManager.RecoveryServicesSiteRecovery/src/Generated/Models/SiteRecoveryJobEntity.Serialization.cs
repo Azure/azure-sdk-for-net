@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -147,6 +148,126 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             return new SiteRecoveryJobEntity(jobId.Value, jobFriendlyName.Value, targetObjectId.Value, targetObjectName.Value, targetInstanceType.Value, jobScenarioName.Value, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(JobId))
+            {
+                builder.Append("  jobId:");
+                builder.AppendLine($" '{JobId.ToString()}'");
+            }
+
+            if (Optional.IsDefined(JobFriendlyName))
+            {
+                builder.Append("  jobFriendlyName:");
+                if (JobFriendlyName.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{JobFriendlyName}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{JobFriendlyName}'");
+                }
+            }
+
+            if (Optional.IsDefined(TargetObjectId))
+            {
+                builder.Append("  targetObjectId:");
+                if (TargetObjectId.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{TargetObjectId}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{TargetObjectId}'");
+                }
+            }
+
+            if (Optional.IsDefined(TargetObjectName))
+            {
+                builder.Append("  targetObjectName:");
+                if (TargetObjectName.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{TargetObjectName}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{TargetObjectName}'");
+                }
+            }
+
+            if (Optional.IsDefined(TargetInstanceType))
+            {
+                builder.Append("  targetInstanceType:");
+                if (TargetInstanceType.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{TargetInstanceType}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{TargetInstanceType}'");
+                }
+            }
+
+            if (Optional.IsDefined(JobScenarioName))
+            {
+                builder.Append("  jobScenarioName:");
+                if (JobScenarioName.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{JobScenarioName}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{JobScenarioName}'");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            bool inMultilineString = false;
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (inMultilineString)
+                {
+                    if (line.Contains("'''"))
+                    {
+                        inMultilineString = false;
+                    }
+                    stringBuilder.AppendLine(line);
+                    continue;
+                }
+                if (line.Contains("'''"))
+                {
+                    inMultilineString = true;
+                    stringBuilder.AppendLine($"{indent}{line}");
+                    continue;
+                }
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<SiteRecoveryJobEntity>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<SiteRecoveryJobEntity>)this).GetFormatFromOptions(options) : options.Format;
@@ -155,6 +276,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(SiteRecoveryJobEntity)} does not support '{options.Format}' format.");
             }
@@ -171,6 +294,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeSiteRecoveryJobEntity(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(SiteRecoveryJobEntity)} does not support '{options.Format}' format.");
             }

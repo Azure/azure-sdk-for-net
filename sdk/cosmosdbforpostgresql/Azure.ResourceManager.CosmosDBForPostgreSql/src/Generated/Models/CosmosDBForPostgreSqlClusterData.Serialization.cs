@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.CosmosDBForPostgreSql.Models;
@@ -560,6 +562,384 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
             return new CosmosDBForPostgreSqlClusterData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, administratorLogin.Value, administratorLoginPassword.Value, provisioningState.Value, state.Value, postgresqlVersion.Value, citusVersion.Value, maintenanceWindow.Value, preferredPrimaryZone.Value, Optional.ToNullable(enableShardsOnCoordinator), Optional.ToNullable(enableHa), coordinatorServerEdition.Value, Optional.ToNullable(coordinatorStorageQuotaInMb), Optional.ToNullable(coordinatorVCores), Optional.ToNullable(coordinatorEnablePublicIPAccess), nodeServerEdition.Value, Optional.ToNullable(nodeCount), Optional.ToNullable(nodeStorageQuotaInMb), Optional.ToNullable(nodeVCores), Optional.ToNullable(nodeEnablePublicIPAccess), Optional.ToList(serverNames), sourceResourceId.Value, Optional.ToNullable(sourceLocation), Optional.ToNullable(pointInTimeUTC), Optional.ToList(readReplicas), Optional.ToNullable(earliestRestoreTime), Optional.ToList(privateEndpointConnections), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                if (Name.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{Name}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{Name}'");
+                }
+            }
+
+            if (Optional.IsDefined(Location))
+            {
+                builder.Append("  location:");
+                builder.AppendLine($" '{Location.ToString()}'");
+            }
+
+            if (Optional.IsCollectionDefined(Tags))
+            {
+                if (Tags.Any())
+                {
+                    builder.Append("  tags:");
+                    builder.AppendLine(" {");
+                    foreach (var item in Tags)
+                    {
+                        builder.Append($"    {item.Key}:");
+                        if (item.Value == null)
+                        {
+                            builder.Append("null");
+                            continue;
+                        }
+                        if (item.Value.Contains(Environment.NewLine))
+                        {
+                            builder.AppendLine(" '''");
+                            builder.AppendLine($"{item.Value}'''");
+                        }
+                        else
+                        {
+                            builder.AppendLine($" '{item.Value}'");
+                        }
+                    }
+                    builder.AppendLine("  }");
+                }
+            }
+
+            if (Optional.IsDefined(Id))
+            {
+                builder.Append("  id:");
+                builder.AppendLine($" '{Id.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SystemData))
+            {
+                builder.Append("  systemData:");
+                builder.AppendLine($" '{SystemData.ToString()}'");
+            }
+
+            builder.Append("  properties:");
+            builder.AppendLine(" {");
+            if (Optional.IsDefined(AdministratorLogin))
+            {
+                builder.Append("    administratorLogin:");
+                if (AdministratorLogin.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{AdministratorLogin}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{AdministratorLogin}'");
+                }
+            }
+
+            if (Optional.IsDefined(AdministratorLoginPassword))
+            {
+                builder.Append("    administratorLoginPassword:");
+                if (AdministratorLoginPassword.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{AdministratorLoginPassword}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{AdministratorLoginPassword}'");
+                }
+            }
+
+            if (Optional.IsDefined(ProvisioningState))
+            {
+                builder.Append("    provisioningState:");
+                if (ProvisioningState.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{ProvisioningState}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{ProvisioningState}'");
+                }
+            }
+
+            if (Optional.IsDefined(State))
+            {
+                builder.Append("    state:");
+                if (State.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{State}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{State}'");
+                }
+            }
+
+            if (Optional.IsDefined(PostgresqlVersion))
+            {
+                builder.Append("    postgresqlVersion:");
+                if (PostgresqlVersion.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{PostgresqlVersion}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{PostgresqlVersion}'");
+                }
+            }
+
+            if (Optional.IsDefined(CitusVersion))
+            {
+                builder.Append("    citusVersion:");
+                if (CitusVersion.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{CitusVersion}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{CitusVersion}'");
+                }
+            }
+
+            if (Optional.IsDefined(MaintenanceWindow))
+            {
+                builder.Append("    maintenanceWindow:");
+                AppendChildObject(builder, MaintenanceWindow, options, 4, false);
+            }
+
+            if (Optional.IsDefined(PreferredPrimaryZone))
+            {
+                builder.Append("    preferredPrimaryZone:");
+                if (PreferredPrimaryZone.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{PreferredPrimaryZone}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{PreferredPrimaryZone}'");
+                }
+            }
+
+            if (Optional.IsDefined(IsShardsOnCoordinatorEnabled))
+            {
+                builder.Append("    enableShardsOnCoordinator:");
+                var boolValue = IsShardsOnCoordinatorEnabled.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(IsHAEnabled))
+            {
+                builder.Append("    enableHa:");
+                var boolValue = IsHAEnabled.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(CoordinatorServerEdition))
+            {
+                builder.Append("    coordinatorServerEdition:");
+                if (CoordinatorServerEdition.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{CoordinatorServerEdition}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{CoordinatorServerEdition}'");
+                }
+            }
+
+            if (Optional.IsDefined(CoordinatorStorageQuotaInMb))
+            {
+                builder.Append("    coordinatorStorageQuotaInMb:");
+                builder.AppendLine($" {CoordinatorStorageQuotaInMb.Value}");
+            }
+
+            if (Optional.IsDefined(CoordinatorVCores))
+            {
+                builder.Append("    coordinatorVCores:");
+                builder.AppendLine($" {CoordinatorVCores.Value}");
+            }
+
+            if (Optional.IsDefined(IsCoordinatorPublicIPAccessEnabled))
+            {
+                builder.Append("    coordinatorEnablePublicIpAccess:");
+                var boolValue = IsCoordinatorPublicIPAccessEnabled.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(NodeServerEdition))
+            {
+                builder.Append("    nodeServerEdition:");
+                if (NodeServerEdition.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{NodeServerEdition}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{NodeServerEdition}'");
+                }
+            }
+
+            if (Optional.IsDefined(NodeCount))
+            {
+                builder.Append("    nodeCount:");
+                builder.AppendLine($" {NodeCount.Value}");
+            }
+
+            if (Optional.IsDefined(NodeStorageQuotaInMb))
+            {
+                builder.Append("    nodeStorageQuotaInMb:");
+                builder.AppendLine($" {NodeStorageQuotaInMb.Value}");
+            }
+
+            if (Optional.IsDefined(NodeVCores))
+            {
+                builder.Append("    nodeVCores:");
+                builder.AppendLine($" {NodeVCores.Value}");
+            }
+
+            if (Optional.IsDefined(IsNodePublicIPAccessEnabled))
+            {
+                builder.Append("    nodeEnablePublicIpAccess:");
+                var boolValue = IsNodePublicIPAccessEnabled.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsCollectionDefined(ServerNames))
+            {
+                if (ServerNames.Any())
+                {
+                    builder.Append("    serverNames:");
+                    builder.AppendLine(" [");
+                    foreach (var item in ServerNames)
+                    {
+                        AppendChildObject(builder, item, options, 6, true);
+                    }
+                    builder.AppendLine("    ]");
+                }
+            }
+
+            if (Optional.IsDefined(SourceResourceId))
+            {
+                builder.Append("    sourceResourceId:");
+                builder.AppendLine($" '{SourceResourceId.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SourceLocation))
+            {
+                builder.Append("    sourceLocation:");
+                builder.AppendLine($" '{SourceLocation.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(PointInTimeUTC))
+            {
+                builder.Append("    pointInTimeUTC:");
+                var formattedDateTimeString = TypeFormatters.ToString(PointInTimeUTC.Value, "o");
+                builder.AppendLine($" '{formattedDateTimeString}'");
+            }
+
+            if (Optional.IsCollectionDefined(ReadReplicas))
+            {
+                if (ReadReplicas.Any())
+                {
+                    builder.Append("    readReplicas:");
+                    builder.AppendLine(" [");
+                    foreach (var item in ReadReplicas)
+                    {
+                        if (item == null)
+                        {
+                            builder.Append("null");
+                            continue;
+                        }
+                        if (item.Contains(Environment.NewLine))
+                        {
+                            builder.AppendLine("      '''");
+                            builder.AppendLine($"{item}'''");
+                        }
+                        else
+                        {
+                            builder.AppendLine($"      '{item}'");
+                        }
+                    }
+                    builder.AppendLine("    ]");
+                }
+            }
+
+            if (Optional.IsDefined(EarliestRestoreOn))
+            {
+                builder.Append("    earliestRestoreTime:");
+                var formattedDateTimeString = TypeFormatters.ToString(EarliestRestoreOn.Value, "o");
+                builder.AppendLine($" '{formattedDateTimeString}'");
+            }
+
+            if (Optional.IsCollectionDefined(PrivateEndpointConnections))
+            {
+                if (PrivateEndpointConnections.Any())
+                {
+                    builder.Append("    privateEndpointConnections:");
+                    builder.AppendLine(" [");
+                    foreach (var item in PrivateEndpointConnections)
+                    {
+                        AppendChildObject(builder, item, options, 6, true);
+                    }
+                    builder.AppendLine("    ]");
+                }
+            }
+
+            builder.AppendLine("  }");
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            bool inMultilineString = false;
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (inMultilineString)
+                {
+                    if (line.Contains("'''"))
+                    {
+                        inMultilineString = false;
+                    }
+                    stringBuilder.AppendLine(line);
+                    continue;
+                }
+                if (line.Contains("'''"))
+                {
+                    inMultilineString = true;
+                    stringBuilder.AppendLine($"{indent}{line}");
+                    continue;
+                }
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<CosmosDBForPostgreSqlClusterData>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<CosmosDBForPostgreSqlClusterData>)this).GetFormatFromOptions(options) : options.Format;
@@ -568,6 +948,8 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(CosmosDBForPostgreSqlClusterData)} does not support '{options.Format}' format.");
             }
@@ -584,6 +966,8 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeCosmosDBForPostgreSqlClusterData(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(CosmosDBForPostgreSqlClusterData)} does not support '{options.Format}' format.");
             }

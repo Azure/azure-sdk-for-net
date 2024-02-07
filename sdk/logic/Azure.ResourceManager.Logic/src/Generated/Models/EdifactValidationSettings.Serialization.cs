@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -157,6 +158,118 @@ namespace Azure.ResourceManager.Logic.Models
             return new EdifactValidationSettings(validateCharacterSet, checkDuplicateInterchangeControlNumber, interchangeControlNumberValidityDays, checkDuplicateGroupControlNumber, checkDuplicateTransactionSetControlNumber, validateEdiTypes, validateXsdTypes, allowLeadingAndTrailingSpacesAndZeroes, trimLeadingAndTrailingSpacesAndZeroes, trailingSeparatorPolicy, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(ValidateCharacterSet))
+            {
+                builder.Append("  validateCharacterSet:");
+                var boolValue = ValidateCharacterSet == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(CheckDuplicateInterchangeControlNumber))
+            {
+                builder.Append("  checkDuplicateInterchangeControlNumber:");
+                var boolValue = CheckDuplicateInterchangeControlNumber == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(InterchangeControlNumberValidityDays))
+            {
+                builder.Append("  interchangeControlNumberValidityDays:");
+                builder.AppendLine($" {InterchangeControlNumberValidityDays}");
+            }
+
+            if (Optional.IsDefined(CheckDuplicateGroupControlNumber))
+            {
+                builder.Append("  checkDuplicateGroupControlNumber:");
+                var boolValue = CheckDuplicateGroupControlNumber == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(CheckDuplicateTransactionSetControlNumber))
+            {
+                builder.Append("  checkDuplicateTransactionSetControlNumber:");
+                var boolValue = CheckDuplicateTransactionSetControlNumber == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(ValidateEdiTypes))
+            {
+                builder.Append("  validateEDITypes:");
+                var boolValue = ValidateEdiTypes == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(ValidateXsdTypes))
+            {
+                builder.Append("  validateXSDTypes:");
+                var boolValue = ValidateXsdTypes == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(AllowLeadingAndTrailingSpacesAndZeroes))
+            {
+                builder.Append("  allowLeadingAndTrailingSpacesAndZeroes:");
+                var boolValue = AllowLeadingAndTrailingSpacesAndZeroes == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(TrimLeadingAndTrailingSpacesAndZeroes))
+            {
+                builder.Append("  trimLeadingAndTrailingSpacesAndZeroes:");
+                var boolValue = TrimLeadingAndTrailingSpacesAndZeroes == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(TrailingSeparatorPolicy))
+            {
+                builder.Append("  trailingSeparatorPolicy:");
+                builder.AppendLine($" '{TrailingSeparatorPolicy.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            bool inMultilineString = false;
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (inMultilineString)
+                {
+                    if (line.Contains("'''"))
+                    {
+                        inMultilineString = false;
+                    }
+                    stringBuilder.AppendLine(line);
+                    continue;
+                }
+                if (line.Contains("'''"))
+                {
+                    inMultilineString = true;
+                    stringBuilder.AppendLine($"{indent}{line}");
+                    continue;
+                }
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<EdifactValidationSettings>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<EdifactValidationSettings>)this).GetFormatFromOptions(options) : options.Format;
@@ -165,6 +278,8 @@ namespace Azure.ResourceManager.Logic.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(EdifactValidationSettings)} does not support '{options.Format}' format.");
             }
@@ -181,6 +296,8 @@ namespace Azure.ResourceManager.Logic.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeEdifactValidationSettings(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(EdifactValidationSettings)} does not support '{options.Format}' format.");
             }

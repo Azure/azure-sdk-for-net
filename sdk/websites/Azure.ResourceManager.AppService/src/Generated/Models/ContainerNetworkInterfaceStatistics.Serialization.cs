@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -197,6 +198,98 @@ namespace Azure.ResourceManager.AppService.Models
             return new ContainerNetworkInterfaceStatistics(Optional.ToNullable(rxBytes), Optional.ToNullable(rxPackets), Optional.ToNullable(rxErrors), Optional.ToNullable(rxDropped), Optional.ToNullable(txBytes), Optional.ToNullable(txPackets), Optional.ToNullable(txErrors), Optional.ToNullable(txDropped), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(RxBytes))
+            {
+                builder.Append("  rxBytes:");
+                builder.AppendLine($" '{RxBytes.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(RxPackets))
+            {
+                builder.Append("  rxPackets:");
+                builder.AppendLine($" '{RxPackets.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(RxErrors))
+            {
+                builder.Append("  rxErrors:");
+                builder.AppendLine($" '{RxErrors.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(RxDropped))
+            {
+                builder.Append("  rxDropped:");
+                builder.AppendLine($" '{RxDropped.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(TxBytes))
+            {
+                builder.Append("  txBytes:");
+                builder.AppendLine($" '{TxBytes.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(TxPackets))
+            {
+                builder.Append("  txPackets:");
+                builder.AppendLine($" '{TxPackets.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(TxErrors))
+            {
+                builder.Append("  txErrors:");
+                builder.AppendLine($" '{TxErrors.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(TxDropped))
+            {
+                builder.Append("  txDropped:");
+                builder.AppendLine($" '{TxDropped.Value.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            bool inMultilineString = false;
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (inMultilineString)
+                {
+                    if (line.Contains("'''"))
+                    {
+                        inMultilineString = false;
+                    }
+                    stringBuilder.AppendLine(line);
+                    continue;
+                }
+                if (line.Contains("'''"))
+                {
+                    inMultilineString = true;
+                    stringBuilder.AppendLine($"{indent}{line}");
+                    continue;
+                }
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<ContainerNetworkInterfaceStatistics>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ContainerNetworkInterfaceStatistics>)this).GetFormatFromOptions(options) : options.Format;
@@ -205,6 +298,8 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(ContainerNetworkInterfaceStatistics)} does not support '{options.Format}' format.");
             }
@@ -221,6 +316,8 @@ namespace Azure.ResourceManager.AppService.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeContainerNetworkInterfaceStatistics(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(ContainerNetworkInterfaceStatistics)} does not support '{options.Format}' format.");
             }

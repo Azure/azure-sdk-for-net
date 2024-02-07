@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -500,6 +502,336 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             return new InMageRcmFailbackReplicationDetails(instanceType, serializedAdditionalRawData, internalIdentifier.Value, azureVirtualMachineId.Value, multiVmGroupName.Value, reprotectAgentId.Value, reprotectAgentName.Value, osType.Value, logStorageAccountId.Value, targetvCenterId.Value, targetDataStoreName.Value, targetVmName.Value, Optional.ToNullable(initialReplicationProgressPercentage), Optional.ToNullable(initialReplicationProcessedBytes), Optional.ToNullable(initialReplicationTransferredBytes), Optional.ToNullable(initialReplicationProgressHealth), Optional.ToNullable(resyncProgressPercentage), Optional.ToNullable(resyncProcessedBytes), Optional.ToNullable(resyncTransferredBytes), Optional.ToNullable(resyncProgressHealth), resyncRequired.Value, Optional.ToNullable(resyncState), Optional.ToList(protectedDisks), mobilityAgentDetails.Value, Optional.ToList(vmNics), Optional.ToNullable(lastPlannedFailoverStartTime), Optional.ToNullable(lastPlannedFailoverStatus), discoveredVmDetails.Value, lastUsedPolicyId.Value, lastUsedPolicyFriendlyName.Value, Optional.ToNullable(isAgentRegistrationSuccessfulAfterFailover));
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(InternalIdentifier))
+            {
+                builder.Append("  internalIdentifier:");
+                if (InternalIdentifier.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{InternalIdentifier}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{InternalIdentifier}'");
+                }
+            }
+
+            if (Optional.IsDefined(AzureVirtualMachineId))
+            {
+                builder.Append("  azureVirtualMachineId:");
+                builder.AppendLine($" '{AzureVirtualMachineId.ToString()}'");
+            }
+
+            if (Optional.IsDefined(MultiVmGroupName))
+            {
+                builder.Append("  multiVmGroupName:");
+                if (MultiVmGroupName.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{MultiVmGroupName}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{MultiVmGroupName}'");
+                }
+            }
+
+            if (Optional.IsDefined(ReprotectAgentId))
+            {
+                builder.Append("  reprotectAgentId:");
+                if (ReprotectAgentId.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{ReprotectAgentId}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{ReprotectAgentId}'");
+                }
+            }
+
+            if (Optional.IsDefined(ReprotectAgentName))
+            {
+                builder.Append("  reprotectAgentName:");
+                if (ReprotectAgentName.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{ReprotectAgentName}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{ReprotectAgentName}'");
+                }
+            }
+
+            if (Optional.IsDefined(OSType))
+            {
+                builder.Append("  osType:");
+                if (OSType.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{OSType}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{OSType}'");
+                }
+            }
+
+            if (Optional.IsDefined(LogStorageAccountId))
+            {
+                builder.Append("  logStorageAccountId:");
+                builder.AppendLine($" '{LogStorageAccountId.ToString()}'");
+            }
+
+            if (Optional.IsDefined(TargetVCenterId))
+            {
+                builder.Append("  targetvCenterId:");
+                if (TargetVCenterId.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{TargetVCenterId}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{TargetVCenterId}'");
+                }
+            }
+
+            if (Optional.IsDefined(TargetDataStoreName))
+            {
+                builder.Append("  targetDataStoreName:");
+                if (TargetDataStoreName.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{TargetDataStoreName}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{TargetDataStoreName}'");
+                }
+            }
+
+            if (Optional.IsDefined(TargetVmName))
+            {
+                builder.Append("  targetVmName:");
+                if (TargetVmName.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{TargetVmName}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{TargetVmName}'");
+                }
+            }
+
+            if (Optional.IsDefined(InitialReplicationProgressPercentage))
+            {
+                builder.Append("  initialReplicationProgressPercentage:");
+                builder.AppendLine($" {InitialReplicationProgressPercentage.Value}");
+            }
+
+            if (Optional.IsDefined(InitialReplicationProcessedBytes))
+            {
+                builder.Append("  initialReplicationProcessedBytes:");
+                builder.AppendLine($" '{InitialReplicationProcessedBytes.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(InitialReplicationTransferredBytes))
+            {
+                builder.Append("  initialReplicationTransferredBytes:");
+                builder.AppendLine($" '{InitialReplicationTransferredBytes.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(InitialReplicationProgressHealth))
+            {
+                builder.Append("  initialReplicationProgressHealth:");
+                builder.AppendLine($" '{InitialReplicationProgressHealth.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ResyncProgressPercentage))
+            {
+                builder.Append("  resyncProgressPercentage:");
+                builder.AppendLine($" {ResyncProgressPercentage.Value}");
+            }
+
+            if (Optional.IsDefined(ResyncProcessedBytes))
+            {
+                builder.Append("  resyncProcessedBytes:");
+                builder.AppendLine($" '{ResyncProcessedBytes.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ResyncTransferredBytes))
+            {
+                builder.Append("  resyncTransferredBytes:");
+                builder.AppendLine($" '{ResyncTransferredBytes.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ResyncProgressHealth))
+            {
+                builder.Append("  resyncProgressHealth:");
+                builder.AppendLine($" '{ResyncProgressHealth.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ResyncRequired))
+            {
+                builder.Append("  resyncRequired:");
+                if (ResyncRequired.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{ResyncRequired}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{ResyncRequired}'");
+                }
+            }
+
+            if (Optional.IsDefined(ResyncState))
+            {
+                builder.Append("  resyncState:");
+                builder.AppendLine($" '{ResyncState.Value.ToString()}'");
+            }
+
+            if (Optional.IsCollectionDefined(ProtectedDisks))
+            {
+                if (ProtectedDisks.Any())
+                {
+                    builder.Append("  protectedDisks:");
+                    builder.AppendLine(" [");
+                    foreach (var item in ProtectedDisks)
+                    {
+                        AppendChildObject(builder, item, options, 4, true);
+                    }
+                    builder.AppendLine("  ]");
+                }
+            }
+
+            if (Optional.IsDefined(MobilityAgentDetails))
+            {
+                builder.Append("  mobilityAgentDetails:");
+                AppendChildObject(builder, MobilityAgentDetails, options, 2, false);
+            }
+
+            if (Optional.IsCollectionDefined(VmNics))
+            {
+                if (VmNics.Any())
+                {
+                    builder.Append("  vmNics:");
+                    builder.AppendLine(" [");
+                    foreach (var item in VmNics)
+                    {
+                        AppendChildObject(builder, item, options, 4, true);
+                    }
+                    builder.AppendLine("  ]");
+                }
+            }
+
+            if (Optional.IsDefined(LastPlannedFailoverStartOn))
+            {
+                builder.Append("  lastPlannedFailoverStartTime:");
+                var formattedDateTimeString = TypeFormatters.ToString(LastPlannedFailoverStartOn.Value, "o");
+                builder.AppendLine($" '{formattedDateTimeString}'");
+            }
+
+            if (Optional.IsDefined(LastPlannedFailoverStatus))
+            {
+                builder.Append("  lastPlannedFailoverStatus:");
+                builder.AppendLine($" '{LastPlannedFailoverStatus.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(DiscoveredVmDetails))
+            {
+                builder.Append("  discoveredVmDetails:");
+                AppendChildObject(builder, DiscoveredVmDetails, options, 2, false);
+            }
+
+            if (Optional.IsDefined(LastUsedPolicyId))
+            {
+                builder.Append("  lastUsedPolicyId:");
+                builder.AppendLine($" '{LastUsedPolicyId.ToString()}'");
+            }
+
+            if (Optional.IsDefined(LastUsedPolicyFriendlyName))
+            {
+                builder.Append("  lastUsedPolicyFriendlyName:");
+                if (LastUsedPolicyFriendlyName.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{LastUsedPolicyFriendlyName}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{LastUsedPolicyFriendlyName}'");
+                }
+            }
+
+            if (Optional.IsDefined(IsAgentRegistrationSuccessfulAfterFailover))
+            {
+                builder.Append("  isAgentRegistrationSuccessfulAfterFailover:");
+                var boolValue = IsAgentRegistrationSuccessfulAfterFailover.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(InstanceType))
+            {
+                builder.Append("  instanceType:");
+                if (InstanceType.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{InstanceType}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{InstanceType}'");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            bool inMultilineString = false;
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (inMultilineString)
+                {
+                    if (line.Contains("'''"))
+                    {
+                        inMultilineString = false;
+                    }
+                    stringBuilder.AppendLine(line);
+                    continue;
+                }
+                if (line.Contains("'''"))
+                {
+                    inMultilineString = true;
+                    stringBuilder.AppendLine($"{indent}{line}");
+                    continue;
+                }
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<InMageRcmFailbackReplicationDetails>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<InMageRcmFailbackReplicationDetails>)this).GetFormatFromOptions(options) : options.Format;
@@ -508,6 +840,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(InMageRcmFailbackReplicationDetails)} does not support '{options.Format}' format.");
             }
@@ -524,6 +858,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeInMageRcmFailbackReplicationDetails(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(InMageRcmFailbackReplicationDetails)} does not support '{options.Format}' format.");
             }

@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -266,6 +268,190 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             return new HybridContainerServiceNamedAgentPoolProfile(Optional.ToNullable(osType), Optional.ToNullable(ossku), Optional.ToDictionary(nodeLabels), Optional.ToList(nodeTaints), Optional.ToNullable(maxCount), Optional.ToNullable(minCount), Optional.ToNullable(enableAutoScaling), Optional.ToNullable(maxPods), serializedAdditionalRawData, Optional.ToNullable(count), vmSize.Value, kubernetesVersion.Value, name.Value);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                if (Name.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{Name}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{Name}'");
+                }
+            }
+
+            if (Optional.IsDefined(Count))
+            {
+                builder.Append("  count:");
+                builder.AppendLine($" {Count.Value}");
+            }
+
+            if (Optional.IsDefined(VmSize))
+            {
+                builder.Append("  vmSize:");
+                if (VmSize.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{VmSize}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{VmSize}'");
+                }
+            }
+
+            if (Optional.IsDefined(KubernetesVersion))
+            {
+                builder.Append("  kubernetesVersion:");
+                if (KubernetesVersion.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{KubernetesVersion}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{KubernetesVersion}'");
+                }
+            }
+
+            if (Optional.IsDefined(OSType))
+            {
+                builder.Append("  osType:");
+                builder.AppendLine($" '{OSType.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(OSSku))
+            {
+                builder.Append("  osSKU:");
+                builder.AppendLine($" '{OSSku.Value.ToString()}'");
+            }
+
+            if (Optional.IsCollectionDefined(NodeLabels))
+            {
+                if (NodeLabels.Any())
+                {
+                    builder.Append("  nodeLabels:");
+                    builder.AppendLine(" {");
+                    foreach (var item in NodeLabels)
+                    {
+                        builder.Append($"    {item.Key}:");
+                        if (item.Value == null)
+                        {
+                            builder.Append("null");
+                            continue;
+                        }
+                        if (item.Value.Contains(Environment.NewLine))
+                        {
+                            builder.AppendLine(" '''");
+                            builder.AppendLine($"{item.Value}'''");
+                        }
+                        else
+                        {
+                            builder.AppendLine($" '{item.Value}'");
+                        }
+                    }
+                    builder.AppendLine("  }");
+                }
+            }
+
+            if (Optional.IsCollectionDefined(NodeTaints))
+            {
+                if (NodeTaints.Any())
+                {
+                    builder.Append("  nodeTaints:");
+                    builder.AppendLine(" [");
+                    foreach (var item in NodeTaints)
+                    {
+                        if (item == null)
+                        {
+                            builder.Append("null");
+                            continue;
+                        }
+                        if (item.Contains(Environment.NewLine))
+                        {
+                            builder.AppendLine("    '''");
+                            builder.AppendLine($"{item}'''");
+                        }
+                        else
+                        {
+                            builder.AppendLine($"    '{item}'");
+                        }
+                    }
+                    builder.AppendLine("  ]");
+                }
+            }
+
+            if (Optional.IsDefined(MaxCount))
+            {
+                builder.Append("  maxCount:");
+                builder.AppendLine($" {MaxCount.Value}");
+            }
+
+            if (Optional.IsDefined(MinCount))
+            {
+                builder.Append("  minCount:");
+                builder.AppendLine($" {MinCount.Value}");
+            }
+
+            if (Optional.IsDefined(EnableAutoScaling))
+            {
+                builder.Append("  enableAutoScaling:");
+                var boolValue = EnableAutoScaling.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(MaxPods))
+            {
+                builder.Append("  maxPods:");
+                builder.AppendLine($" {MaxPods.Value}");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            bool inMultilineString = false;
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (inMultilineString)
+                {
+                    if (line.Contains("'''"))
+                    {
+                        inMultilineString = false;
+                    }
+                    stringBuilder.AppendLine(line);
+                    continue;
+                }
+                if (line.Contains("'''"))
+                {
+                    inMultilineString = true;
+                    stringBuilder.AppendLine($"{indent}{line}");
+                    continue;
+                }
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<HybridContainerServiceNamedAgentPoolProfile>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<HybridContainerServiceNamedAgentPoolProfile>)this).GetFormatFromOptions(options) : options.Format;
@@ -274,6 +460,8 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(HybridContainerServiceNamedAgentPoolProfile)} does not support '{options.Format}' format.");
             }
@@ -290,6 +478,8 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeHybridContainerServiceNamedAgentPoolProfile(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(HybridContainerServiceNamedAgentPoolProfile)} does not support '{options.Format}' format.");
             }

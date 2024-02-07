@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -217,6 +219,117 @@ namespace Azure.ResourceManager.Compute.Models
             return new GalleryImageVersionPublishingProfile(Optional.ToList(targetRegions), Optional.ToNullable(replicaCount), Optional.ToNullable(excludeFromLatest), Optional.ToNullable(publishedDate), Optional.ToNullable(endOfLifeDate), Optional.ToNullable(storageAccountType), Optional.ToNullable(replicationMode), Optional.ToList(targetExtendedLocations), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsCollectionDefined(TargetRegions))
+            {
+                if (TargetRegions.Any())
+                {
+                    builder.Append("  targetRegions:");
+                    builder.AppendLine(" [");
+                    foreach (var item in TargetRegions)
+                    {
+                        AppendChildObject(builder, item, options, 4, true);
+                    }
+                    builder.AppendLine("  ]");
+                }
+            }
+
+            if (Optional.IsDefined(ReplicaCount))
+            {
+                builder.Append("  replicaCount:");
+                builder.AppendLine($" {ReplicaCount.Value}");
+            }
+
+            if (Optional.IsDefined(IsExcludedFromLatest))
+            {
+                builder.Append("  excludeFromLatest:");
+                var boolValue = IsExcludedFromLatest.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(PublishedOn))
+            {
+                builder.Append("  publishedDate:");
+                var formattedDateTimeString = TypeFormatters.ToString(PublishedOn.Value, "o");
+                builder.AppendLine($" '{formattedDateTimeString}'");
+            }
+
+            if (Optional.IsDefined(EndOfLifeOn))
+            {
+                builder.Append("  endOfLifeDate:");
+                var formattedDateTimeString = TypeFormatters.ToString(EndOfLifeOn.Value, "o");
+                builder.AppendLine($" '{formattedDateTimeString}'");
+            }
+
+            if (Optional.IsDefined(StorageAccountType))
+            {
+                builder.Append("  storageAccountType:");
+                builder.AppendLine($" '{StorageAccountType.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ReplicationMode))
+            {
+                builder.Append("  replicationMode:");
+                builder.AppendLine($" '{ReplicationMode.Value.ToString()}'");
+            }
+
+            if (Optional.IsCollectionDefined(TargetExtendedLocations))
+            {
+                if (TargetExtendedLocations.Any())
+                {
+                    builder.Append("  targetExtendedLocations:");
+                    builder.AppendLine(" [");
+                    foreach (var item in TargetExtendedLocations)
+                    {
+                        AppendChildObject(builder, item, options, 4, true);
+                    }
+                    builder.AppendLine("  ]");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            bool inMultilineString = false;
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (inMultilineString)
+                {
+                    if (line.Contains("'''"))
+                    {
+                        inMultilineString = false;
+                    }
+                    stringBuilder.AppendLine(line);
+                    continue;
+                }
+                if (line.Contains("'''"))
+                {
+                    inMultilineString = true;
+                    stringBuilder.AppendLine($"{indent}{line}");
+                    continue;
+                }
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<GalleryImageVersionPublishingProfile>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<GalleryImageVersionPublishingProfile>)this).GetFormatFromOptions(options) : options.Format;
@@ -225,6 +338,8 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(GalleryImageVersionPublishingProfile)} does not support '{options.Format}' format.");
             }
@@ -241,6 +356,8 @@ namespace Azure.ResourceManager.Compute.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeGalleryImageVersionPublishingProfile(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(GalleryImageVersionPublishingProfile)} does not support '{options.Format}' format.");
             }

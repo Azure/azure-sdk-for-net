@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
@@ -254,6 +255,131 @@ namespace Azure.ResourceManager.Orbital.Models
             return new OrbitalAvailableContact(spacecraft, groundStationName.Value, Optional.ToNullable(maximumElevationDegrees), Optional.ToNullable(txStartTime), Optional.ToNullable(txEndTime), Optional.ToNullable(rxStartTime), Optional.ToNullable(rxEndTime), Optional.ToNullable(startAzimuthDegrees), Optional.ToNullable(endAzimuthDegrees), Optional.ToNullable(startElevationDegrees), Optional.ToNullable(endElevationDegrees), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(Spacecraft))
+            {
+                builder.Append("  spacecraft:");
+                AppendChildObject(builder, Spacecraft, options, 2, false);
+            }
+
+            if (Optional.IsDefined(GroundStationName))
+            {
+                builder.Append("  groundStationName:");
+                if (GroundStationName.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{GroundStationName}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{GroundStationName}'");
+                }
+            }
+
+            builder.Append("  properties:");
+            builder.AppendLine(" {");
+            if (Optional.IsDefined(MaximumElevationDegrees))
+            {
+                builder.Append("    maximumElevationDegrees:");
+                builder.AppendLine($" '{MaximumElevationDegrees.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(TxStartOn))
+            {
+                builder.Append("    txStartTime:");
+                var formattedDateTimeString = TypeFormatters.ToString(TxStartOn.Value, "o");
+                builder.AppendLine($" '{formattedDateTimeString}'");
+            }
+
+            if (Optional.IsDefined(TxEndOn))
+            {
+                builder.Append("    txEndTime:");
+                var formattedDateTimeString = TypeFormatters.ToString(TxEndOn.Value, "o");
+                builder.AppendLine($" '{formattedDateTimeString}'");
+            }
+
+            if (Optional.IsDefined(RxStartOn))
+            {
+                builder.Append("    rxStartTime:");
+                var formattedDateTimeString = TypeFormatters.ToString(RxStartOn.Value, "o");
+                builder.AppendLine($" '{formattedDateTimeString}'");
+            }
+
+            if (Optional.IsDefined(RxEndOn))
+            {
+                builder.Append("    rxEndTime:");
+                var formattedDateTimeString = TypeFormatters.ToString(RxEndOn.Value, "o");
+                builder.AppendLine($" '{formattedDateTimeString}'");
+            }
+
+            if (Optional.IsDefined(StartAzimuthDegrees))
+            {
+                builder.Append("    startAzimuthDegrees:");
+                builder.AppendLine($" '{StartAzimuthDegrees.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(EndAzimuthDegrees))
+            {
+                builder.Append("    endAzimuthDegrees:");
+                builder.AppendLine($" '{EndAzimuthDegrees.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(StartElevationDegrees))
+            {
+                builder.Append("    startElevationDegrees:");
+                builder.AppendLine($" '{StartElevationDegrees.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(EndElevationDegrees))
+            {
+                builder.Append("    endElevationDegrees:");
+                builder.AppendLine($" '{EndElevationDegrees.Value.ToString()}'");
+            }
+
+            builder.AppendLine("  }");
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            bool inMultilineString = false;
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (inMultilineString)
+                {
+                    if (line.Contains("'''"))
+                    {
+                        inMultilineString = false;
+                    }
+                    stringBuilder.AppendLine(line);
+                    continue;
+                }
+                if (line.Contains("'''"))
+                {
+                    inMultilineString = true;
+                    stringBuilder.AppendLine($"{indent}{line}");
+                    continue;
+                }
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<OrbitalAvailableContact>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<OrbitalAvailableContact>)this).GetFormatFromOptions(options) : options.Format;
@@ -262,6 +388,8 @@ namespace Azure.ResourceManager.Orbital.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(OrbitalAvailableContact)} does not support '{options.Format}' format.");
             }
@@ -278,6 +406,8 @@ namespace Azure.ResourceManager.Orbital.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeOrbitalAvailableContact(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(OrbitalAvailableContact)} does not support '{options.Format}' format.");
             }

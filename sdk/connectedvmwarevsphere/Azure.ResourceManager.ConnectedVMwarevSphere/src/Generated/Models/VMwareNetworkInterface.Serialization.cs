@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -228,6 +230,185 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
             return new VMwareNetworkInterface(name.Value, label.Value, Optional.ToList(ipAddresses), macAddress.Value, networkId.Value, Optional.ToNullable(nicType), Optional.ToNullable(powerOnBoot), networkMoRefId.Value, networkMoName.Value, Optional.ToNullable(deviceKey), ipSettings.Value, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                if (Name.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{Name}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{Name}'");
+                }
+            }
+
+            if (Optional.IsDefined(Label))
+            {
+                builder.Append("  label:");
+                if (Label.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{Label}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{Label}'");
+                }
+            }
+
+            if (Optional.IsCollectionDefined(IPAddresses))
+            {
+                if (IPAddresses.Any())
+                {
+                    builder.Append("  ipAddresses:");
+                    builder.AppendLine(" [");
+                    foreach (var item in IPAddresses)
+                    {
+                        if (item == null)
+                        {
+                            builder.Append("null");
+                            continue;
+                        }
+                        if (item.Contains(Environment.NewLine))
+                        {
+                            builder.AppendLine("    '''");
+                            builder.AppendLine($"{item}'''");
+                        }
+                        else
+                        {
+                            builder.AppendLine($"    '{item}'");
+                        }
+                    }
+                    builder.AppendLine("  ]");
+                }
+            }
+
+            if (Optional.IsDefined(MacAddress))
+            {
+                builder.Append("  macAddress:");
+                if (MacAddress.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{MacAddress}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{MacAddress}'");
+                }
+            }
+
+            if (Optional.IsDefined(NetworkId))
+            {
+                builder.Append("  networkId:");
+                if (NetworkId.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{NetworkId}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{NetworkId}'");
+                }
+            }
+
+            if (Optional.IsDefined(NicType))
+            {
+                builder.Append("  nicType:");
+                builder.AppendLine($" '{NicType.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(PowerOnBoot))
+            {
+                builder.Append("  powerOnBoot:");
+                builder.AppendLine($" '{PowerOnBoot.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(NetworkMoRefId))
+            {
+                builder.Append("  networkMoRefId:");
+                if (NetworkMoRefId.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{NetworkMoRefId}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{NetworkMoRefId}'");
+                }
+            }
+
+            if (Optional.IsDefined(NetworkMoName))
+            {
+                builder.Append("  networkMoName:");
+                if (NetworkMoName.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{NetworkMoName}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{NetworkMoName}'");
+                }
+            }
+
+            if (Optional.IsDefined(DeviceKey))
+            {
+                builder.Append("  deviceKey:");
+                builder.AppendLine($" {DeviceKey.Value}");
+            }
+
+            if (Optional.IsDefined(IPSettings))
+            {
+                builder.Append("  ipSettings:");
+                AppendChildObject(builder, IPSettings, options, 2, false);
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            bool inMultilineString = false;
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (inMultilineString)
+                {
+                    if (line.Contains("'''"))
+                    {
+                        inMultilineString = false;
+                    }
+                    stringBuilder.AppendLine(line);
+                    continue;
+                }
+                if (line.Contains("'''"))
+                {
+                    inMultilineString = true;
+                    stringBuilder.AppendLine($"{indent}{line}");
+                    continue;
+                }
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<VMwareNetworkInterface>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<VMwareNetworkInterface>)this).GetFormatFromOptions(options) : options.Format;
@@ -236,6 +417,8 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(VMwareNetworkInterface)} does not support '{options.Format}' format.");
             }
@@ -252,6 +435,8 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeVMwareNetworkInterface(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(VMwareNetworkInterface)} does not support '{options.Format}' format.");
             }

@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -214,6 +215,122 @@ namespace Azure.ResourceManager.Media.Models
             return new ContentKeyPolicyPlayReadyLicense(allowTestDevices, Optional.ToNullable(securityLevel), Optional.ToNullable(beginDate), Optional.ToNullable(expirationDate), Optional.ToNullable(relativeBeginDate), Optional.ToNullable(relativeExpirationDate), Optional.ToNullable(gracePeriod), playRight.Value, licenseType, contentKeyLocation, contentType, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(AllowTestDevices))
+            {
+                builder.Append("  allowTestDevices:");
+                var boolValue = AllowTestDevices == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(SecurityLevel))
+            {
+                builder.Append("  securityLevel:");
+                builder.AppendLine($" '{SecurityLevel.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(BeginOn))
+            {
+                builder.Append("  beginDate:");
+                var formattedDateTimeString = TypeFormatters.ToString(BeginOn.Value, "o");
+                builder.AppendLine($" '{formattedDateTimeString}'");
+            }
+
+            if (Optional.IsDefined(ExpireOn))
+            {
+                builder.Append("  expirationDate:");
+                var formattedDateTimeString = TypeFormatters.ToString(ExpireOn.Value, "o");
+                builder.AppendLine($" '{formattedDateTimeString}'");
+            }
+
+            if (Optional.IsDefined(RelativeBeginDate))
+            {
+                builder.Append("  relativeBeginDate:");
+                var formattedTimeSpan = TypeFormatters.ToString(RelativeBeginDate.Value, "P");
+                builder.AppendLine($" '{formattedTimeSpan}'");
+            }
+
+            if (Optional.IsDefined(RelativeExpirationDate))
+            {
+                builder.Append("  relativeExpirationDate:");
+                var formattedTimeSpan = TypeFormatters.ToString(RelativeExpirationDate.Value, "P");
+                builder.AppendLine($" '{formattedTimeSpan}'");
+            }
+
+            if (Optional.IsDefined(GracePeriod))
+            {
+                builder.Append("  gracePeriod:");
+                var formattedTimeSpan = TypeFormatters.ToString(GracePeriod.Value, "P");
+                builder.AppendLine($" '{formattedTimeSpan}'");
+            }
+
+            if (Optional.IsDefined(PlayRight))
+            {
+                builder.Append("  playRight:");
+                AppendChildObject(builder, PlayRight, options, 2, false);
+            }
+
+            if (Optional.IsDefined(LicenseType))
+            {
+                builder.Append("  licenseType:");
+                builder.AppendLine($" '{LicenseType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ContentKeyLocation))
+            {
+                builder.Append("  contentKeyLocation:");
+                AppendChildObject(builder, ContentKeyLocation, options, 2, false);
+            }
+
+            if (Optional.IsDefined(ContentType))
+            {
+                builder.Append("  contentType:");
+                builder.AppendLine($" '{ContentType.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            bool inMultilineString = false;
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (inMultilineString)
+                {
+                    if (line.Contains("'''"))
+                    {
+                        inMultilineString = false;
+                    }
+                    stringBuilder.AppendLine(line);
+                    continue;
+                }
+                if (line.Contains("'''"))
+                {
+                    inMultilineString = true;
+                    stringBuilder.AppendLine($"{indent}{line}");
+                    continue;
+                }
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<ContentKeyPolicyPlayReadyLicense>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ContentKeyPolicyPlayReadyLicense>)this).GetFormatFromOptions(options) : options.Format;
@@ -222,6 +339,8 @@ namespace Azure.ResourceManager.Media.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(ContentKeyPolicyPlayReadyLicense)} does not support '{options.Format}' format.");
             }
@@ -238,6 +357,8 @@ namespace Azure.ResourceManager.Media.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeContentKeyPolicyPlayReadyLicense(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(ContentKeyPolicyPlayReadyLicense)} does not support '{options.Format}' format.");
             }

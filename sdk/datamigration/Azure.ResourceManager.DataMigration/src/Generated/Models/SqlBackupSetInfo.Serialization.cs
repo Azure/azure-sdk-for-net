@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -250,6 +252,173 @@ namespace Azure.ResourceManager.DataMigration.Models
             return new SqlBackupSetInfo(Optional.ToNullable(backupSetId), firstLSN.Value, lastLSN.Value, backupType.Value, Optional.ToList(listOfBackupFiles), Optional.ToNullable(backupStartDate), Optional.ToNullable(backupFinishDate), Optional.ToNullable(isBackupRestored), Optional.ToNullable(hasBackupChecksums), Optional.ToNullable(familyCount), Optional.ToList(ignoreReasons), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(BackupSetId))
+            {
+                builder.Append("  backupSetId:");
+                builder.AppendLine($" '{BackupSetId.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(FirstLSN))
+            {
+                builder.Append("  firstLSN:");
+                if (FirstLSN.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{FirstLSN}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{FirstLSN}'");
+                }
+            }
+
+            if (Optional.IsDefined(LastLSN))
+            {
+                builder.Append("  lastLSN:");
+                if (LastLSN.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{LastLSN}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{LastLSN}'");
+                }
+            }
+
+            if (Optional.IsDefined(BackupType))
+            {
+                builder.Append("  backupType:");
+                if (BackupType.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{BackupType}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{BackupType}'");
+                }
+            }
+
+            if (Optional.IsCollectionDefined(ListOfBackupFiles))
+            {
+                if (ListOfBackupFiles.Any())
+                {
+                    builder.Append("  listOfBackupFiles:");
+                    builder.AppendLine(" [");
+                    foreach (var item in ListOfBackupFiles)
+                    {
+                        AppendChildObject(builder, item, options, 4, true);
+                    }
+                    builder.AppendLine("  ]");
+                }
+            }
+
+            if (Optional.IsDefined(BackupStartOn))
+            {
+                builder.Append("  backupStartDate:");
+                var formattedDateTimeString = TypeFormatters.ToString(BackupStartOn.Value, "o");
+                builder.AppendLine($" '{formattedDateTimeString}'");
+            }
+
+            if (Optional.IsDefined(BackupFinishOn))
+            {
+                builder.Append("  backupFinishDate:");
+                var formattedDateTimeString = TypeFormatters.ToString(BackupFinishOn.Value, "o");
+                builder.AppendLine($" '{formattedDateTimeString}'");
+            }
+
+            if (Optional.IsDefined(IsBackupRestored))
+            {
+                builder.Append("  isBackupRestored:");
+                var boolValue = IsBackupRestored.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(HasBackupChecksums))
+            {
+                builder.Append("  hasBackupChecksums:");
+                var boolValue = HasBackupChecksums.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(FamilyCount))
+            {
+                builder.Append("  familyCount:");
+                builder.AppendLine($" {FamilyCount.Value}");
+            }
+
+            if (Optional.IsCollectionDefined(IgnoreReasons))
+            {
+                if (IgnoreReasons.Any())
+                {
+                    builder.Append("  ignoreReasons:");
+                    builder.AppendLine(" [");
+                    foreach (var item in IgnoreReasons)
+                    {
+                        if (item == null)
+                        {
+                            builder.Append("null");
+                            continue;
+                        }
+                        if (item.Contains(Environment.NewLine))
+                        {
+                            builder.AppendLine("    '''");
+                            builder.AppendLine($"{item}'''");
+                        }
+                        else
+                        {
+                            builder.AppendLine($"    '{item}'");
+                        }
+                    }
+                    builder.AppendLine("  ]");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            bool inMultilineString = false;
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (inMultilineString)
+                {
+                    if (line.Contains("'''"))
+                    {
+                        inMultilineString = false;
+                    }
+                    stringBuilder.AppendLine(line);
+                    continue;
+                }
+                if (line.Contains("'''"))
+                {
+                    inMultilineString = true;
+                    stringBuilder.AppendLine($"{indent}{line}");
+                    continue;
+                }
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<SqlBackupSetInfo>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<SqlBackupSetInfo>)this).GetFormatFromOptions(options) : options.Format;
@@ -258,6 +427,8 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(SqlBackupSetInfo)} does not support '{options.Format}' format.");
             }
@@ -274,6 +445,8 @@ namespace Azure.ResourceManager.DataMigration.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeSqlBackupSetInfo(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(SqlBackupSetInfo)} does not support '{options.Format}' format.");
             }

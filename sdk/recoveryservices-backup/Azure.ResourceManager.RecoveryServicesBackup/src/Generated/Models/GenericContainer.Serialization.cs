@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -170,6 +171,138 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             return new GenericContainer(friendlyName.Value, Optional.ToNullable(backupManagementType), registrationStatus.Value, healthStatus.Value, containerType, protectableObjectType.Value, serializedAdditionalRawData, fabricName.Value, extendedInformation.Value);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(FabricName))
+            {
+                builder.Append("  fabricName:");
+                if (FabricName.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{FabricName}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{FabricName}'");
+                }
+            }
+
+            if (Optional.IsDefined(ExtendedInformation))
+            {
+                builder.Append("  extendedInformation:");
+                AppendChildObject(builder, ExtendedInformation, options, 2, false);
+            }
+
+            if (Optional.IsDefined(FriendlyName))
+            {
+                builder.Append("  friendlyName:");
+                if (FriendlyName.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{FriendlyName}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{FriendlyName}'");
+                }
+            }
+
+            if (Optional.IsDefined(BackupManagementType))
+            {
+                builder.Append("  backupManagementType:");
+                builder.AppendLine($" '{BackupManagementType.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(RegistrationStatus))
+            {
+                builder.Append("  registrationStatus:");
+                if (RegistrationStatus.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{RegistrationStatus}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{RegistrationStatus}'");
+                }
+            }
+
+            if (Optional.IsDefined(HealthStatus))
+            {
+                builder.Append("  healthStatus:");
+                if (HealthStatus.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{HealthStatus}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{HealthStatus}'");
+                }
+            }
+
+            if (Optional.IsDefined(ContainerType))
+            {
+                builder.Append("  containerType:");
+                builder.AppendLine($" '{ContainerType.ToSerialString()}'");
+            }
+
+            if (Optional.IsDefined(ProtectableObjectType))
+            {
+                builder.Append("  protectableObjectType:");
+                if (ProtectableObjectType.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{ProtectableObjectType}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{ProtectableObjectType}'");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            bool inMultilineString = false;
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (inMultilineString)
+                {
+                    if (line.Contains("'''"))
+                    {
+                        inMultilineString = false;
+                    }
+                    stringBuilder.AppendLine(line);
+                    continue;
+                }
+                if (line.Contains("'''"))
+                {
+                    inMultilineString = true;
+                    stringBuilder.AppendLine($"{indent}{line}");
+                    continue;
+                }
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<GenericContainer>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<GenericContainer>)this).GetFormatFromOptions(options) : options.Format;
@@ -178,6 +311,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(GenericContainer)} does not support '{options.Format}' format.");
             }
@@ -194,6 +329,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeGenericContainer(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(GenericContainer)} does not support '{options.Format}' format.");
             }

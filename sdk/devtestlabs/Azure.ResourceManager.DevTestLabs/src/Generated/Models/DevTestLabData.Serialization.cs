@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.DevTestLabs.Models;
@@ -467,6 +469,378 @@ namespace Azure.ResourceManager.DevTestLabs
             return new DevTestLabData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, defaultStorageAccount.Value, defaultPremiumStorageAccount.Value, artifactsStorageAccount.Value, premiumDataDiskStorageAccount.Value, vaultName.Value, Optional.ToNullable(labStorageType), Optional.ToList(mandatoryArtifactsResourceIdsLinux), Optional.ToList(mandatoryArtifactsResourceIdsWindows), Optional.ToNullable(createdDate), Optional.ToNullable(premiumDataDisks), Optional.ToNullable(environmentPermission), announcement.Value, support.Value, vmCreationResourceGroup.Value, publicIPId.Value, loadBalancerId.Value, networkSecurityGroupId.Value, Optional.ToDictionary(extendedProperties), provisioningState.Value, Optional.ToNullable(uniqueIdentifier), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                if (Name.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{Name}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{Name}'");
+                }
+            }
+
+            if (Optional.IsDefined(Location))
+            {
+                builder.Append("  location:");
+                builder.AppendLine($" '{Location.ToString()}'");
+            }
+
+            if (Optional.IsCollectionDefined(Tags))
+            {
+                if (Tags.Any())
+                {
+                    builder.Append("  tags:");
+                    builder.AppendLine(" {");
+                    foreach (var item in Tags)
+                    {
+                        builder.Append($"    {item.Key}:");
+                        if (item.Value == null)
+                        {
+                            builder.Append("null");
+                            continue;
+                        }
+                        if (item.Value.Contains(Environment.NewLine))
+                        {
+                            builder.AppendLine(" '''");
+                            builder.AppendLine($"{item.Value}'''");
+                        }
+                        else
+                        {
+                            builder.AppendLine($" '{item.Value}'");
+                        }
+                    }
+                    builder.AppendLine("  }");
+                }
+            }
+
+            if (Optional.IsDefined(Id))
+            {
+                builder.Append("  id:");
+                builder.AppendLine($" '{Id.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SystemData))
+            {
+                builder.Append("  systemData:");
+                builder.AppendLine($" '{SystemData.ToString()}'");
+            }
+
+            builder.Append("  properties:");
+            builder.AppendLine(" {");
+            if (Optional.IsDefined(DefaultStorageAccount))
+            {
+                builder.Append("    defaultStorageAccount:");
+                if (DefaultStorageAccount.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{DefaultStorageAccount}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{DefaultStorageAccount}'");
+                }
+            }
+
+            if (Optional.IsDefined(DefaultPremiumStorageAccount))
+            {
+                builder.Append("    defaultPremiumStorageAccount:");
+                if (DefaultPremiumStorageAccount.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{DefaultPremiumStorageAccount}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{DefaultPremiumStorageAccount}'");
+                }
+            }
+
+            if (Optional.IsDefined(ArtifactsStorageAccount))
+            {
+                builder.Append("    artifactsStorageAccount:");
+                if (ArtifactsStorageAccount.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{ArtifactsStorageAccount}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{ArtifactsStorageAccount}'");
+                }
+            }
+
+            if (Optional.IsDefined(PremiumDataDiskStorageAccount))
+            {
+                builder.Append("    premiumDataDiskStorageAccount:");
+                if (PremiumDataDiskStorageAccount.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{PremiumDataDiskStorageAccount}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{PremiumDataDiskStorageAccount}'");
+                }
+            }
+
+            if (Optional.IsDefined(VaultName))
+            {
+                builder.Append("    vaultName:");
+                if (VaultName.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{VaultName}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{VaultName}'");
+                }
+            }
+
+            if (Optional.IsDefined(LabStorageType))
+            {
+                builder.Append("    labStorageType:");
+                builder.AppendLine($" '{LabStorageType.Value.ToString()}'");
+            }
+
+            if (Optional.IsCollectionDefined(MandatoryArtifactsResourceIdsLinux))
+            {
+                if (MandatoryArtifactsResourceIdsLinux.Any())
+                {
+                    builder.Append("    mandatoryArtifactsResourceIdsLinux:");
+                    builder.AppendLine(" [");
+                    foreach (var item in MandatoryArtifactsResourceIdsLinux)
+                    {
+                        if (item == null)
+                        {
+                            builder.Append("null");
+                            continue;
+                        }
+                        if (item.Contains(Environment.NewLine))
+                        {
+                            builder.AppendLine("      '''");
+                            builder.AppendLine($"{item}'''");
+                        }
+                        else
+                        {
+                            builder.AppendLine($"      '{item}'");
+                        }
+                    }
+                    builder.AppendLine("    ]");
+                }
+            }
+
+            if (Optional.IsCollectionDefined(MandatoryArtifactsResourceIdsWindows))
+            {
+                if (MandatoryArtifactsResourceIdsWindows.Any())
+                {
+                    builder.Append("    mandatoryArtifactsResourceIdsWindows:");
+                    builder.AppendLine(" [");
+                    foreach (var item in MandatoryArtifactsResourceIdsWindows)
+                    {
+                        if (item == null)
+                        {
+                            builder.Append("null");
+                            continue;
+                        }
+                        if (item.Contains(Environment.NewLine))
+                        {
+                            builder.AppendLine("      '''");
+                            builder.AppendLine($"{item}'''");
+                        }
+                        else
+                        {
+                            builder.AppendLine($"      '{item}'");
+                        }
+                    }
+                    builder.AppendLine("    ]");
+                }
+            }
+
+            if (Optional.IsDefined(CreatedOn))
+            {
+                builder.Append("    createdDate:");
+                var formattedDateTimeString = TypeFormatters.ToString(CreatedOn.Value, "o");
+                builder.AppendLine($" '{formattedDateTimeString}'");
+            }
+
+            if (Optional.IsDefined(PremiumDataDisks))
+            {
+                builder.Append("    premiumDataDisks:");
+                builder.AppendLine($" '{PremiumDataDisks.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(EnvironmentPermission))
+            {
+                builder.Append("    environmentPermission:");
+                builder.AppendLine($" '{EnvironmentPermission.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Announcement))
+            {
+                builder.Append("    announcement:");
+                AppendChildObject(builder, Announcement, options, 4, false);
+            }
+
+            if (Optional.IsDefined(Support))
+            {
+                builder.Append("    support:");
+                AppendChildObject(builder, Support, options, 4, false);
+            }
+
+            if (Optional.IsDefined(VmCreationResourceGroup))
+            {
+                builder.Append("    vmCreationResourceGroup:");
+                if (VmCreationResourceGroup.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{VmCreationResourceGroup}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{VmCreationResourceGroup}'");
+                }
+            }
+
+            if (Optional.IsDefined(PublicIPId))
+            {
+                builder.Append("    publicIpId:");
+                if (PublicIPId.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{PublicIPId}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{PublicIPId}'");
+                }
+            }
+
+            if (Optional.IsDefined(LoadBalancerId))
+            {
+                builder.Append("    loadBalancerId:");
+                if (LoadBalancerId.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{LoadBalancerId}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{LoadBalancerId}'");
+                }
+            }
+
+            if (Optional.IsDefined(NetworkSecurityGroupId))
+            {
+                builder.Append("    networkSecurityGroupId:");
+                if (NetworkSecurityGroupId.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{NetworkSecurityGroupId}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{NetworkSecurityGroupId}'");
+                }
+            }
+
+            if (Optional.IsCollectionDefined(ExtendedProperties))
+            {
+                if (ExtendedProperties.Any())
+                {
+                    builder.Append("    extendedProperties:");
+                    builder.AppendLine(" {");
+                    foreach (var item in ExtendedProperties)
+                    {
+                        builder.Append($"        {item.Key}:");
+                        if (item.Value == null)
+                        {
+                            builder.Append("null");
+                            continue;
+                        }
+                        if (item.Value.Contains(Environment.NewLine))
+                        {
+                            builder.AppendLine(" '''");
+                            builder.AppendLine($"{item.Value}'''");
+                        }
+                        else
+                        {
+                            builder.AppendLine($" '{item.Value}'");
+                        }
+                    }
+                    builder.AppendLine("    }");
+                }
+            }
+
+            if (Optional.IsDefined(ProvisioningState))
+            {
+                builder.Append("    provisioningState:");
+                if (ProvisioningState.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{ProvisioningState}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{ProvisioningState}'");
+                }
+            }
+
+            if (Optional.IsDefined(UniqueIdentifier))
+            {
+                builder.Append("    uniqueIdentifier:");
+                builder.AppendLine($" '{UniqueIdentifier.Value.ToString()}'");
+            }
+
+            builder.AppendLine("  }");
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            bool inMultilineString = false;
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (inMultilineString)
+                {
+                    if (line.Contains("'''"))
+                    {
+                        inMultilineString = false;
+                    }
+                    stringBuilder.AppendLine(line);
+                    continue;
+                }
+                if (line.Contains("'''"))
+                {
+                    inMultilineString = true;
+                    stringBuilder.AppendLine($"{indent}{line}");
+                    continue;
+                }
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<DevTestLabData>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<DevTestLabData>)this).GetFormatFromOptions(options) : options.Format;
@@ -475,6 +849,8 @@ namespace Azure.ResourceManager.DevTestLabs
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(DevTestLabData)} does not support '{options.Format}' format.");
             }
@@ -491,6 +867,8 @@ namespace Azure.ResourceManager.DevTestLabs
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeDevTestLabData(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(DevTestLabData)} does not support '{options.Format}' format.");
             }

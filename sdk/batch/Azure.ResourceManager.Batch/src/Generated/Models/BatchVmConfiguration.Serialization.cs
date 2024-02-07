@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
@@ -260,6 +262,154 @@ namespace Azure.ResourceManager.Batch.Models
             return new BatchVmConfiguration(imageReference, nodeAgentSkuId, windowsConfiguration.Value, Optional.ToList(dataDisks), licenseType.Value, containerConfiguration.Value, diskEncryptionConfiguration.Value, nodePlacementConfiguration.Value, Optional.ToList(extensions), osDisk.Value, securityProfile.Value, serviceArtifactReference, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(ImageReference))
+            {
+                builder.Append("  imageReference:");
+                AppendChildObject(builder, ImageReference, options, 2, false);
+            }
+
+            if (Optional.IsDefined(NodeAgentSkuId))
+            {
+                builder.Append("  nodeAgentSkuId:");
+                if (NodeAgentSkuId.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{NodeAgentSkuId}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{NodeAgentSkuId}'");
+                }
+            }
+
+            if (Optional.IsDefined(WindowsConfiguration))
+            {
+                builder.Append("  windowsConfiguration:");
+                AppendChildObject(builder, WindowsConfiguration, options, 2, false);
+            }
+
+            if (Optional.IsCollectionDefined(DataDisks))
+            {
+                if (DataDisks.Any())
+                {
+                    builder.Append("  dataDisks:");
+                    builder.AppendLine(" [");
+                    foreach (var item in DataDisks)
+                    {
+                        AppendChildObject(builder, item, options, 4, true);
+                    }
+                    builder.AppendLine("  ]");
+                }
+            }
+
+            if (Optional.IsDefined(LicenseType))
+            {
+                builder.Append("  licenseType:");
+                if (LicenseType.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{LicenseType}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{LicenseType}'");
+                }
+            }
+
+            if (Optional.IsDefined(ContainerConfiguration))
+            {
+                builder.Append("  containerConfiguration:");
+                AppendChildObject(builder, ContainerConfiguration, options, 2, false);
+            }
+
+            if (Optional.IsDefined(DiskEncryptionConfiguration))
+            {
+                builder.Append("  diskEncryptionConfiguration:");
+                AppendChildObject(builder, DiskEncryptionConfiguration, options, 2, false);
+            }
+
+            if (Optional.IsDefined(NodePlacementConfiguration))
+            {
+                builder.Append("  nodePlacementConfiguration:");
+                AppendChildObject(builder, NodePlacementConfiguration, options, 2, false);
+            }
+
+            if (Optional.IsCollectionDefined(Extensions))
+            {
+                if (Extensions.Any())
+                {
+                    builder.Append("  extensions:");
+                    builder.AppendLine(" [");
+                    foreach (var item in Extensions)
+                    {
+                        AppendChildObject(builder, item, options, 4, true);
+                    }
+                    builder.AppendLine("  ]");
+                }
+            }
+
+            if (Optional.IsDefined(OSDisk))
+            {
+                builder.Append("  osDisk:");
+                AppendChildObject(builder, OSDisk, options, 2, false);
+            }
+
+            if (Optional.IsDefined(SecurityProfile))
+            {
+                builder.Append("  securityProfile:");
+                AppendChildObject(builder, SecurityProfile, options, 2, false);
+            }
+
+            if (Optional.IsDefined(ServiceArtifactReference))
+            {
+                builder.Append("  serviceArtifactReference:");
+                AppendChildObject(builder, ServiceArtifactReference, options, 2, false);
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            bool inMultilineString = false;
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (inMultilineString)
+                {
+                    if (line.Contains("'''"))
+                    {
+                        inMultilineString = false;
+                    }
+                    stringBuilder.AppendLine(line);
+                    continue;
+                }
+                if (line.Contains("'''"))
+                {
+                    inMultilineString = true;
+                    stringBuilder.AppendLine($"{indent}{line}");
+                    continue;
+                }
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<BatchVmConfiguration>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<BatchVmConfiguration>)this).GetFormatFromOptions(options) : options.Format;
@@ -268,6 +418,8 @@ namespace Azure.ResourceManager.Batch.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(BatchVmConfiguration)} does not support '{options.Format}' format.");
             }
@@ -284,6 +436,8 @@ namespace Azure.ResourceManager.Batch.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeBatchVmConfiguration(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(BatchVmConfiguration)} does not support '{options.Format}' format.");
             }

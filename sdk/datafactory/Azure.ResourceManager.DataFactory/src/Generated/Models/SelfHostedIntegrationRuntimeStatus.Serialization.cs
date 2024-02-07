@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -400,6 +402,272 @@ namespace Azure.ResourceManager.DataFactory.Models
             return new SelfHostedIntegrationRuntimeStatus(type, dataFactoryName.Value, Optional.ToNullable(state), additionalProperties, Optional.ToNullable(createTime), Optional.ToNullable(taskQueueId), Optional.ToNullable(internalChannelEncryption), version.Value, Optional.ToList(nodes), Optional.ToNullable(scheduledUpdateDate), Optional.ToNullable(updateDelayOffset), Optional.ToNullable(localTimeZoneOffset), Optional.ToDictionary(capabilities), Optional.ToList(serviceUrls), Optional.ToNullable(autoUpdate), versionStatus.Value, Optional.ToList(links), pushedVersion.Value, latestVersion.Value, Optional.ToNullable(autoUpdateEta), Optional.ToNullable(selfContainedInteractiveAuthoringEnabled));
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(DataFactoryName))
+            {
+                builder.Append("  dataFactoryName:");
+                if (DataFactoryName.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{DataFactoryName}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{DataFactoryName}'");
+                }
+            }
+
+            if (Optional.IsDefined(State))
+            {
+                builder.Append("  state:");
+                builder.AppendLine($" '{State.Value.ToString()}'");
+            }
+
+            builder.Append("  typeProperties:");
+            builder.AppendLine(" {");
+            if (Optional.IsDefined(CreatedOn))
+            {
+                builder.Append("    createTime:");
+                var formattedDateTimeString = TypeFormatters.ToString(CreatedOn.Value, "o");
+                builder.AppendLine($" '{formattedDateTimeString}'");
+            }
+
+            if (Optional.IsDefined(TaskQueueId))
+            {
+                builder.Append("    taskQueueId:");
+                builder.AppendLine($" '{TaskQueueId.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(InternalChannelEncryption))
+            {
+                builder.Append("    internalChannelEncryption:");
+                builder.AppendLine($" '{InternalChannelEncryption.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Version))
+            {
+                builder.Append("    version:");
+                if (Version.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{Version}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{Version}'");
+                }
+            }
+
+            if (Optional.IsCollectionDefined(Nodes))
+            {
+                if (Nodes.Any())
+                {
+                    builder.Append("    nodes:");
+                    builder.AppendLine(" [");
+                    foreach (var item in Nodes)
+                    {
+                        AppendChildObject(builder, item, options, 6, true);
+                    }
+                    builder.AppendLine("    ]");
+                }
+            }
+
+            if (Optional.IsDefined(ScheduledUpdateOn))
+            {
+                builder.Append("    scheduledUpdateDate:");
+                var formattedDateTimeString = TypeFormatters.ToString(ScheduledUpdateOn.Value, "o");
+                builder.AppendLine($" '{formattedDateTimeString}'");
+            }
+
+            if (Optional.IsDefined(UpdateDelayOffset))
+            {
+                builder.Append("    updateDelayOffset:");
+                var formattedTimeSpan = TypeFormatters.ToString(UpdateDelayOffset.Value, "P");
+                builder.AppendLine($" '{formattedTimeSpan}'");
+            }
+
+            if (Optional.IsDefined(LocalTimeZoneOffset))
+            {
+                builder.Append("    localTimeZoneOffset:");
+                var formattedTimeSpan = TypeFormatters.ToString(LocalTimeZoneOffset.Value, "P");
+                builder.AppendLine($" '{formattedTimeSpan}'");
+            }
+
+            if (Optional.IsCollectionDefined(Capabilities))
+            {
+                if (Capabilities.Any())
+                {
+                    builder.Append("    capabilities:");
+                    builder.AppendLine(" {");
+                    foreach (var item in Capabilities)
+                    {
+                        builder.Append($"        {item.Key}:");
+                        if (item.Value == null)
+                        {
+                            builder.Append("null");
+                            continue;
+                        }
+                        if (item.Value.Contains(Environment.NewLine))
+                        {
+                            builder.AppendLine(" '''");
+                            builder.AppendLine($"{item.Value}'''");
+                        }
+                        else
+                        {
+                            builder.AppendLine($" '{item.Value}'");
+                        }
+                    }
+                    builder.AppendLine("    }");
+                }
+            }
+
+            if (Optional.IsCollectionDefined(ServiceUriStringList))
+            {
+                if (ServiceUriStringList.Any())
+                {
+                    builder.Append("    serviceUrls:");
+                    builder.AppendLine(" [");
+                    foreach (var item in ServiceUriStringList)
+                    {
+                        if (item == null)
+                        {
+                            builder.Append("null");
+                            continue;
+                        }
+                        if (item.Contains(Environment.NewLine))
+                        {
+                            builder.AppendLine("      '''");
+                            builder.AppendLine($"{item}'''");
+                        }
+                        else
+                        {
+                            builder.AppendLine($"      '{item}'");
+                        }
+                    }
+                    builder.AppendLine("    ]");
+                }
+            }
+
+            if (Optional.IsDefined(AutoUpdate))
+            {
+                builder.Append("    autoUpdate:");
+                builder.AppendLine($" '{AutoUpdate.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(VersionStatus))
+            {
+                builder.Append("    versionStatus:");
+                if (VersionStatus.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{VersionStatus}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{VersionStatus}'");
+                }
+            }
+
+            if (Optional.IsCollectionDefined(Links))
+            {
+                if (Links.Any())
+                {
+                    builder.Append("    links:");
+                    builder.AppendLine(" [");
+                    foreach (var item in Links)
+                    {
+                        AppendChildObject(builder, item, options, 6, true);
+                    }
+                    builder.AppendLine("    ]");
+                }
+            }
+
+            if (Optional.IsDefined(PushedVersion))
+            {
+                builder.Append("    pushedVersion:");
+                if (PushedVersion.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{PushedVersion}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{PushedVersion}'");
+                }
+            }
+
+            if (Optional.IsDefined(LatestVersion))
+            {
+                builder.Append("    latestVersion:");
+                if (LatestVersion.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{LatestVersion}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{LatestVersion}'");
+                }
+            }
+
+            if (Optional.IsDefined(AutoUpdateEta))
+            {
+                builder.Append("    autoUpdateETA:");
+                var formattedDateTimeString = TypeFormatters.ToString(AutoUpdateEta.Value, "o");
+                builder.AppendLine($" '{formattedDateTimeString}'");
+            }
+
+            if (Optional.IsDefined(IsSelfContainedInteractiveAuthoringEnabled))
+            {
+                builder.Append("    selfContainedInteractiveAuthoringEnabled:");
+                var boolValue = IsSelfContainedInteractiveAuthoringEnabled.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            builder.AppendLine("  }");
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            bool inMultilineString = false;
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (inMultilineString)
+                {
+                    if (line.Contains("'''"))
+                    {
+                        inMultilineString = false;
+                    }
+                    stringBuilder.AppendLine(line);
+                    continue;
+                }
+                if (line.Contains("'''"))
+                {
+                    inMultilineString = true;
+                    stringBuilder.AppendLine($"{indent}{line}");
+                    continue;
+                }
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<SelfHostedIntegrationRuntimeStatus>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<SelfHostedIntegrationRuntimeStatus>)this).GetFormatFromOptions(options) : options.Format;
@@ -408,6 +676,8 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(SelfHostedIntegrationRuntimeStatus)} does not support '{options.Format}' format.");
             }
@@ -424,6 +694,8 @@ namespace Azure.ResourceManager.DataFactory.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeSelfHostedIntegrationRuntimeStatus(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(SelfHostedIntegrationRuntimeStatus)} does not support '{options.Format}' format.");
             }

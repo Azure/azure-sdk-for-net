@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -158,6 +159,141 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             return new FailoverProtectedItemProperties(protectedItemName.Value, vmName.Value, testVmName.Value, recoveryPointId.Value, Optional.ToNullable(recoveryPointTime), networkName.Value, subnet.Value, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(ProtectedItemName))
+            {
+                builder.Append("  protectedItemName:");
+                if (ProtectedItemName.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{ProtectedItemName}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{ProtectedItemName}'");
+                }
+            }
+
+            if (Optional.IsDefined(VmName))
+            {
+                builder.Append("  vmName:");
+                if (VmName.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{VmName}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{VmName}'");
+                }
+            }
+
+            if (Optional.IsDefined(TestVmName))
+            {
+                builder.Append("  testVmName:");
+                if (TestVmName.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{TestVmName}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{TestVmName}'");
+                }
+            }
+
+            if (Optional.IsDefined(RecoveryPointId))
+            {
+                builder.Append("  recoveryPointId:");
+                if (RecoveryPointId.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{RecoveryPointId}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{RecoveryPointId}'");
+                }
+            }
+
+            if (Optional.IsDefined(RecoveryPointOn))
+            {
+                builder.Append("  recoveryPointTime:");
+                var formattedDateTimeString = TypeFormatters.ToString(RecoveryPointOn.Value, "o");
+                builder.AppendLine($" '{formattedDateTimeString}'");
+            }
+
+            if (Optional.IsDefined(NetworkName))
+            {
+                builder.Append("  networkName:");
+                if (NetworkName.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{NetworkName}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{NetworkName}'");
+                }
+            }
+
+            if (Optional.IsDefined(Subnet))
+            {
+                builder.Append("  subnet:");
+                if (Subnet.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{Subnet}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{Subnet}'");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            bool inMultilineString = false;
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (inMultilineString)
+                {
+                    if (line.Contains("'''"))
+                    {
+                        inMultilineString = false;
+                    }
+                    stringBuilder.AppendLine(line);
+                    continue;
+                }
+                if (line.Contains("'''"))
+                {
+                    inMultilineString = true;
+                    stringBuilder.AppendLine($"{indent}{line}");
+                    continue;
+                }
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<FailoverProtectedItemProperties>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<FailoverProtectedItemProperties>)this).GetFormatFromOptions(options) : options.Format;
@@ -166,6 +302,8 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(FailoverProtectedItemProperties)} does not support '{options.Format}' format.");
             }
@@ -182,6 +320,8 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeFailoverProtectedItemProperties(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(FailoverProtectedItemProperties)} does not support '{options.Format}' format.");
             }

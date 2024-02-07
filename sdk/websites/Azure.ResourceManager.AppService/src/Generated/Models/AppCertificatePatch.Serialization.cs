@@ -7,6 +7,8 @@
 
 using System;
 using System.ClientModel.Primitives;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -193,6 +195,331 @@ namespace Azure.ResourceManager.AppService.Models
             return DeserializeAppCertificatePatch(document.RootElement, options);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                if (Name.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{Name}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{Name}'");
+                }
+            }
+
+            if (Optional.IsDefined(Kind))
+            {
+                builder.Append("  kind:");
+                if (Kind.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{Kind}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{Kind}'");
+                }
+            }
+
+            if (Optional.IsDefined(Id))
+            {
+                builder.Append("  id:");
+                builder.AppendLine($" '{Id.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SystemData))
+            {
+                builder.Append("  systemData:");
+                builder.AppendLine($" '{SystemData.ToString()}'");
+            }
+
+            builder.Append("  properties:");
+            builder.AppendLine(" {");
+            if (Optional.IsDefined(Password))
+            {
+                builder.Append("    password:");
+                if (Password.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{Password}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{Password}'");
+                }
+            }
+
+            if (Optional.IsDefined(FriendlyName))
+            {
+                builder.Append("    friendlyName:");
+                if (FriendlyName.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{FriendlyName}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{FriendlyName}'");
+                }
+            }
+
+            if (Optional.IsDefined(SubjectName))
+            {
+                builder.Append("    subjectName:");
+                if (SubjectName.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{SubjectName}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{SubjectName}'");
+                }
+            }
+
+            if (Optional.IsCollectionDefined(HostNames))
+            {
+                if (HostNames.Any())
+                {
+                    builder.Append("    hostNames:");
+                    builder.AppendLine(" [");
+                    foreach (var item in HostNames)
+                    {
+                        if (item == null)
+                        {
+                            builder.Append("null");
+                            continue;
+                        }
+                        if (item.Contains(Environment.NewLine))
+                        {
+                            builder.AppendLine("      '''");
+                            builder.AppendLine($"{item}'''");
+                        }
+                        else
+                        {
+                            builder.AppendLine($"      '{item}'");
+                        }
+                    }
+                    builder.AppendLine("    ]");
+                }
+            }
+
+            if (Optional.IsDefined(PfxBlob))
+            {
+                builder.Append("    pfxBlob:");
+                builder.AppendLine($" '{PfxBlob.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SiteName))
+            {
+                builder.Append("    siteName:");
+                if (SiteName.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{SiteName}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{SiteName}'");
+                }
+            }
+
+            if (Optional.IsDefined(SelfLink))
+            {
+                builder.Append("    selfLink:");
+                if (SelfLink.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{SelfLink}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{SelfLink}'");
+                }
+            }
+
+            if (Optional.IsDefined(Issuer))
+            {
+                builder.Append("    issuer:");
+                if (Issuer.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{Issuer}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{Issuer}'");
+                }
+            }
+
+            if (Optional.IsDefined(IssueOn))
+            {
+                builder.Append("    issueDate:");
+                var formattedDateTimeString = TypeFormatters.ToString(IssueOn.Value, "o");
+                builder.AppendLine($" '{formattedDateTimeString}'");
+            }
+
+            if (Optional.IsDefined(ExpireOn))
+            {
+                builder.Append("    expirationDate:");
+                var formattedDateTimeString = TypeFormatters.ToString(ExpireOn.Value, "o");
+                builder.AppendLine($" '{formattedDateTimeString}'");
+            }
+
+            if (Optional.IsDefined(ThumbprintString))
+            {
+                builder.Append("    thumbprint:");
+                if (ThumbprintString.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{ThumbprintString}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{ThumbprintString}'");
+                }
+            }
+
+            if (Optional.IsDefined(IsValid))
+            {
+                builder.Append("    valid:");
+                var boolValue = IsValid.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(CerBlob))
+            {
+                builder.Append("    cerBlob:");
+                builder.AppendLine($" '{CerBlob.ToString()}'");
+            }
+
+            if (Optional.IsDefined(PublicKeyHash))
+            {
+                builder.Append("    publicKeyHash:");
+                if (PublicKeyHash.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{PublicKeyHash}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{PublicKeyHash}'");
+                }
+            }
+
+            if (Optional.IsDefined(HostingEnvironmentProfile))
+            {
+                builder.Append("    hostingEnvironmentProfile:");
+                AppendChildObject(builder, HostingEnvironmentProfile, options, 4, false);
+            }
+
+            if (Optional.IsDefined(KeyVaultId))
+            {
+                builder.Append("    keyVaultId:");
+                builder.AppendLine($" '{KeyVaultId.ToString()}'");
+            }
+
+            if (Optional.IsDefined(KeyVaultSecretName))
+            {
+                builder.Append("    keyVaultSecretName:");
+                if (KeyVaultSecretName.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{KeyVaultSecretName}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{KeyVaultSecretName}'");
+                }
+            }
+
+            if (Optional.IsDefined(KeyVaultSecretStatus))
+            {
+                builder.Append("    keyVaultSecretStatus:");
+                builder.AppendLine($" '{KeyVaultSecretStatus.Value.ToSerialString()}'");
+            }
+
+            if (Optional.IsDefined(ServerFarmId))
+            {
+                builder.Append("    serverFarmId:");
+                builder.AppendLine($" '{ServerFarmId.ToString()}'");
+            }
+
+            if (Optional.IsDefined(CanonicalName))
+            {
+                builder.Append("    canonicalName:");
+                if (CanonicalName.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{CanonicalName}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{CanonicalName}'");
+                }
+            }
+
+            if (Optional.IsDefined(DomainValidationMethod))
+            {
+                builder.Append("    domainValidationMethod:");
+                if (DomainValidationMethod.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{DomainValidationMethod}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{DomainValidationMethod}'");
+                }
+            }
+
+            builder.AppendLine("  }");
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            bool inMultilineString = false;
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (inMultilineString)
+                {
+                    if (line.Contains("'''"))
+                    {
+                        inMultilineString = false;
+                    }
+                    stringBuilder.AppendLine(line);
+                    continue;
+                }
+                if (line.Contains("'''"))
+                {
+                    inMultilineString = true;
+                    stringBuilder.AppendLine($"{indent}{line}");
+                    continue;
+                }
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<AppCertificatePatch>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<AppCertificatePatch>)this).GetFormatFromOptions(options) : options.Format;
@@ -201,6 +528,8 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(AppCertificatePatch)} does not support '{options.Format}' format.");
             }
@@ -217,6 +546,8 @@ namespace Azure.ResourceManager.AppService.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeAppCertificatePatch(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(AppCertificatePatch)} does not support '{options.Format}' format.");
             }

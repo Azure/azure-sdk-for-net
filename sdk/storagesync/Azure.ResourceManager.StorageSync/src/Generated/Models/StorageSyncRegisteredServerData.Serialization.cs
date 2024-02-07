@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -450,6 +451,306 @@ namespace Azure.ResourceManager.StorageSync
             return new StorageSyncRegisteredServerData(id, name, type, systemData.Value, serverCertificate.Value, agentVersion.Value, Optional.ToNullable(agentVersionStatus), Optional.ToNullable(agentVersionExpirationDate), serverOSVersion.Value, Optional.ToNullable(serverManagementErrorCode), lastHeartbeat.Value, provisioningState.Value, serverRole.Value, Optional.ToNullable(clusterId), clusterName.Value, Optional.ToNullable(serverId), Optional.ToNullable(storageSyncServiceUid), lastWorkflowId.Value, lastOperationName.Value, discoveryEndpointUri.Value, Optional.ToNullable(resourceLocation), Optional.ToNullable(serviceLocation), friendlyName.Value, managementEndpointUri.Value, monitoringEndpointUri.Value, monitoringConfiguration.Value, serverName.Value, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                if (Name.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{Name}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{Name}'");
+                }
+            }
+
+            if (Optional.IsDefined(Id))
+            {
+                builder.Append("  id:");
+                builder.AppendLine($" '{Id.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SystemData))
+            {
+                builder.Append("  systemData:");
+                builder.AppendLine($" '{SystemData.ToString()}'");
+            }
+
+            builder.Append("  properties:");
+            builder.AppendLine(" {");
+            if (Optional.IsDefined(ServerCertificate))
+            {
+                builder.Append("    serverCertificate:");
+                builder.AppendLine($" '{ServerCertificate.ToString()}'");
+            }
+
+            if (Optional.IsDefined(AgentVersion))
+            {
+                builder.Append("    agentVersion:");
+                if (AgentVersion.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{AgentVersion}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{AgentVersion}'");
+                }
+            }
+
+            if (Optional.IsDefined(AgentVersionStatus))
+            {
+                builder.Append("    agentVersionStatus:");
+                builder.AppendLine($" '{AgentVersionStatus.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(AgentVersionExpireOn))
+            {
+                builder.Append("    agentVersionExpirationDate:");
+                var formattedDateTimeString = TypeFormatters.ToString(AgentVersionExpireOn.Value, "o");
+                builder.AppendLine($" '{formattedDateTimeString}'");
+            }
+
+            if (Optional.IsDefined(ServerOSVersion))
+            {
+                builder.Append("    serverOSVersion:");
+                if (ServerOSVersion.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{ServerOSVersion}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{ServerOSVersion}'");
+                }
+            }
+
+            if (Optional.IsDefined(ServerManagementErrorCode))
+            {
+                builder.Append("    serverManagementErrorCode:");
+                builder.AppendLine($" {ServerManagementErrorCode.Value}");
+            }
+
+            if (Optional.IsDefined(LastHeartbeat))
+            {
+                builder.Append("    lastHeartBeat:");
+                if (LastHeartbeat.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{LastHeartbeat}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{LastHeartbeat}'");
+                }
+            }
+
+            if (Optional.IsDefined(ProvisioningState))
+            {
+                builder.Append("    provisioningState:");
+                if (ProvisioningState.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{ProvisioningState}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{ProvisioningState}'");
+                }
+            }
+
+            if (Optional.IsDefined(ServerRole))
+            {
+                builder.Append("    serverRole:");
+                if (ServerRole.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{ServerRole}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{ServerRole}'");
+                }
+            }
+
+            if (Optional.IsDefined(ClusterId))
+            {
+                builder.Append("    clusterId:");
+                builder.AppendLine($" '{ClusterId.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ClusterName))
+            {
+                builder.Append("    clusterName:");
+                if (ClusterName.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{ClusterName}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{ClusterName}'");
+                }
+            }
+
+            if (Optional.IsDefined(ServerId))
+            {
+                builder.Append("    serverId:");
+                builder.AppendLine($" '{ServerId.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(StorageSyncServiceUid))
+            {
+                builder.Append("    storageSyncServiceUid:");
+                builder.AppendLine($" '{StorageSyncServiceUid.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(LastWorkflowId))
+            {
+                builder.Append("    lastWorkflowId:");
+                if (LastWorkflowId.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{LastWorkflowId}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{LastWorkflowId}'");
+                }
+            }
+
+            if (Optional.IsDefined(LastOperationName))
+            {
+                builder.Append("    lastOperationName:");
+                if (LastOperationName.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{LastOperationName}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{LastOperationName}'");
+                }
+            }
+
+            if (Optional.IsDefined(DiscoveryEndpointUri))
+            {
+                builder.Append("    discoveryEndpointUri:");
+                builder.AppendLine($" '{DiscoveryEndpointUri.AbsoluteUri}'");
+            }
+
+            if (Optional.IsDefined(ResourceLocation))
+            {
+                builder.Append("    resourceLocation:");
+                builder.AppendLine($" '{ResourceLocation.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ServiceLocation))
+            {
+                builder.Append("    serviceLocation:");
+                builder.AppendLine($" '{ServiceLocation.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(FriendlyName))
+            {
+                builder.Append("    friendlyName:");
+                if (FriendlyName.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{FriendlyName}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{FriendlyName}'");
+                }
+            }
+
+            if (Optional.IsDefined(ManagementEndpointUri))
+            {
+                builder.Append("    managementEndpointUri:");
+                builder.AppendLine($" '{ManagementEndpointUri.AbsoluteUri}'");
+            }
+
+            if (Optional.IsDefined(MonitoringEndpointUri))
+            {
+                builder.Append("    monitoringEndpointUri:");
+                builder.AppendLine($" '{MonitoringEndpointUri.AbsoluteUri}'");
+            }
+
+            if (Optional.IsDefined(MonitoringConfiguration))
+            {
+                builder.Append("    monitoringConfiguration:");
+                if (MonitoringConfiguration.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{MonitoringConfiguration}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{MonitoringConfiguration}'");
+                }
+            }
+
+            if (Optional.IsDefined(ServerName))
+            {
+                builder.Append("    serverName:");
+                if (ServerName.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{ServerName}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{ServerName}'");
+                }
+            }
+
+            builder.AppendLine("  }");
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            bool inMultilineString = false;
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (inMultilineString)
+                {
+                    if (line.Contains("'''"))
+                    {
+                        inMultilineString = false;
+                    }
+                    stringBuilder.AppendLine(line);
+                    continue;
+                }
+                if (line.Contains("'''"))
+                {
+                    inMultilineString = true;
+                    stringBuilder.AppendLine($"{indent}{line}");
+                    continue;
+                }
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<StorageSyncRegisteredServerData>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<StorageSyncRegisteredServerData>)this).GetFormatFromOptions(options) : options.Format;
@@ -458,6 +759,8 @@ namespace Azure.ResourceManager.StorageSync
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(StorageSyncRegisteredServerData)} does not support '{options.Format}' format.");
             }
@@ -474,6 +777,8 @@ namespace Azure.ResourceManager.StorageSync
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeStorageSyncRegisteredServerData(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(StorageSyncRegisteredServerData)} does not support '{options.Format}' format.");
             }

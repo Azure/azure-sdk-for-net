@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -493,6 +494,227 @@ namespace Azure.ResourceManager.ContainerService.Models
             return new SysctlConfig(Optional.ToNullable(netCoreSomaxconn), Optional.ToNullable(netCoreNetdevMaxBacklog), Optional.ToNullable(netCoreRmemDefault), Optional.ToNullable(netCoreRmemMax), Optional.ToNullable(netCoreWmemDefault), Optional.ToNullable(netCoreWmemMax), Optional.ToNullable(netCoreOptmemMax), Optional.ToNullable(netIPv4TcpMaxSynBacklog), Optional.ToNullable(netIPv4TcpMaxTwBuckets), Optional.ToNullable(netIPv4TcpFinTimeout), Optional.ToNullable(netIPv4TcpKeepaliveTime), Optional.ToNullable(netIPv4TcpKeepaliveProbes), Optional.ToNullable(netIPv4TcpKeepaliveIntvl), Optional.ToNullable(netIPv4TcpTwReuse), netIPv4IPLocalPortRange.Value, Optional.ToNullable(netIPv4NeighDefaultGcThresh1), Optional.ToNullable(netIPv4NeighDefaultGcThresh2), Optional.ToNullable(netIPv4NeighDefaultGcThresh3), Optional.ToNullable(netNetfilterNfConntrackMax), Optional.ToNullable(netNetfilterNfConntrackBuckets), Optional.ToNullable(fsInotifyMaxUserWatches), Optional.ToNullable(fsFileMax), Optional.ToNullable(fsAioMaxNr), Optional.ToNullable(fsNrOpen), Optional.ToNullable(kernelThreadsMax), Optional.ToNullable(vmMaxMapCount), Optional.ToNullable(vmSwappiness), Optional.ToNullable(vmVfsCachePressure), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(NetCoreSomaxconn))
+            {
+                builder.Append("  netCoreSomaxconn:");
+                builder.AppendLine($" {NetCoreSomaxconn.Value}");
+            }
+
+            if (Optional.IsDefined(NetCoreNetdevMaxBacklog))
+            {
+                builder.Append("  netCoreNetdevMaxBacklog:");
+                builder.AppendLine($" {NetCoreNetdevMaxBacklog.Value}");
+            }
+
+            if (Optional.IsDefined(NetCoreRmemDefault))
+            {
+                builder.Append("  netCoreRmemDefault:");
+                builder.AppendLine($" {NetCoreRmemDefault.Value}");
+            }
+
+            if (Optional.IsDefined(NetCoreRmemMax))
+            {
+                builder.Append("  netCoreRmemMax:");
+                builder.AppendLine($" {NetCoreRmemMax.Value}");
+            }
+
+            if (Optional.IsDefined(NetCoreWmemDefault))
+            {
+                builder.Append("  netCoreWmemDefault:");
+                builder.AppendLine($" {NetCoreWmemDefault.Value}");
+            }
+
+            if (Optional.IsDefined(NetCoreWmemMax))
+            {
+                builder.Append("  netCoreWmemMax:");
+                builder.AppendLine($" {NetCoreWmemMax.Value}");
+            }
+
+            if (Optional.IsDefined(NetCoreOptmemMax))
+            {
+                builder.Append("  netCoreOptmemMax:");
+                builder.AppendLine($" {NetCoreOptmemMax.Value}");
+            }
+
+            if (Optional.IsDefined(NetIPv4TcpMaxSynBacklog))
+            {
+                builder.Append("  netIpv4TcpMaxSynBacklog:");
+                builder.AppendLine($" {NetIPv4TcpMaxSynBacklog.Value}");
+            }
+
+            if (Optional.IsDefined(NetIPv4TcpMaxTwBuckets))
+            {
+                builder.Append("  netIpv4TcpMaxTwBuckets:");
+                builder.AppendLine($" {NetIPv4TcpMaxTwBuckets.Value}");
+            }
+
+            if (Optional.IsDefined(NetIPv4TcpFinTimeout))
+            {
+                builder.Append("  netIpv4TcpFinTimeout:");
+                builder.AppendLine($" {NetIPv4TcpFinTimeout.Value}");
+            }
+
+            if (Optional.IsDefined(NetIPv4TcpKeepaliveTime))
+            {
+                builder.Append("  netIpv4TcpKeepaliveTime:");
+                builder.AppendLine($" {NetIPv4TcpKeepaliveTime.Value}");
+            }
+
+            if (Optional.IsDefined(NetIPv4TcpKeepaliveProbes))
+            {
+                builder.Append("  netIpv4TcpKeepaliveProbes:");
+                builder.AppendLine($" {NetIPv4TcpKeepaliveProbes.Value}");
+            }
+
+            if (Optional.IsDefined(NetIPv4TcpKeepaliveIntvl))
+            {
+                builder.Append("  netIpv4TcpkeepaliveIntvl:");
+                builder.AppendLine($" {NetIPv4TcpKeepaliveIntvl.Value}");
+            }
+
+            if (Optional.IsDefined(NetIPv4TcpTwReuse))
+            {
+                builder.Append("  netIpv4TcpTwReuse:");
+                var boolValue = NetIPv4TcpTwReuse.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(NetIPv4IPLocalPortRange))
+            {
+                builder.Append("  netIpv4IpLocalPortRange:");
+                if (NetIPv4IPLocalPortRange.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{NetIPv4IPLocalPortRange}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{NetIPv4IPLocalPortRange}'");
+                }
+            }
+
+            if (Optional.IsDefined(NetIPv4NeighDefaultGcThresh1))
+            {
+                builder.Append("  netIpv4NeighDefaultGcThresh1:");
+                builder.AppendLine($" {NetIPv4NeighDefaultGcThresh1.Value}");
+            }
+
+            if (Optional.IsDefined(NetIPv4NeighDefaultGcThresh2))
+            {
+                builder.Append("  netIpv4NeighDefaultGcThresh2:");
+                builder.AppendLine($" {NetIPv4NeighDefaultGcThresh2.Value}");
+            }
+
+            if (Optional.IsDefined(NetIPv4NeighDefaultGcThresh3))
+            {
+                builder.Append("  netIpv4NeighDefaultGcThresh3:");
+                builder.AppendLine($" {NetIPv4NeighDefaultGcThresh3.Value}");
+            }
+
+            if (Optional.IsDefined(NetNetfilterNfConntrackMax))
+            {
+                builder.Append("  netNetfilterNfConntrackMax:");
+                builder.AppendLine($" {NetNetfilterNfConntrackMax.Value}");
+            }
+
+            if (Optional.IsDefined(NetNetfilterNfConntrackBuckets))
+            {
+                builder.Append("  netNetfilterNfConntrackBuckets:");
+                builder.AppendLine($" {NetNetfilterNfConntrackBuckets.Value}");
+            }
+
+            if (Optional.IsDefined(FsInotifyMaxUserWatches))
+            {
+                builder.Append("  fsInotifyMaxUserWatches:");
+                builder.AppendLine($" {FsInotifyMaxUserWatches.Value}");
+            }
+
+            if (Optional.IsDefined(FsFileMax))
+            {
+                builder.Append("  fsFileMax:");
+                builder.AppendLine($" {FsFileMax.Value}");
+            }
+
+            if (Optional.IsDefined(FsAioMaxNr))
+            {
+                builder.Append("  fsAioMaxNr:");
+                builder.AppendLine($" {FsAioMaxNr.Value}");
+            }
+
+            if (Optional.IsDefined(FsNrOpen))
+            {
+                builder.Append("  fsNrOpen:");
+                builder.AppendLine($" {FsNrOpen.Value}");
+            }
+
+            if (Optional.IsDefined(KernelThreadsMax))
+            {
+                builder.Append("  kernelThreadsMax:");
+                builder.AppendLine($" {KernelThreadsMax.Value}");
+            }
+
+            if (Optional.IsDefined(VmMaxMapCount))
+            {
+                builder.Append("  vmMaxMapCount:");
+                builder.AppendLine($" {VmMaxMapCount.Value}");
+            }
+
+            if (Optional.IsDefined(VmSwappiness))
+            {
+                builder.Append("  vmSwappiness:");
+                builder.AppendLine($" {VmSwappiness.Value}");
+            }
+
+            if (Optional.IsDefined(VmVfsCachePressure))
+            {
+                builder.Append("  vmVfsCachePressure:");
+                builder.AppendLine($" {VmVfsCachePressure.Value}");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            bool inMultilineString = false;
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (inMultilineString)
+                {
+                    if (line.Contains("'''"))
+                    {
+                        inMultilineString = false;
+                    }
+                    stringBuilder.AppendLine(line);
+                    continue;
+                }
+                if (line.Contains("'''"))
+                {
+                    inMultilineString = true;
+                    stringBuilder.AppendLine($"{indent}{line}");
+                    continue;
+                }
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<SysctlConfig>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<SysctlConfig>)this).GetFormatFromOptions(options) : options.Format;
@@ -501,6 +723,8 @@ namespace Azure.ResourceManager.ContainerService.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(SysctlConfig)} does not support '{options.Format}' format.");
             }
@@ -517,6 +741,8 @@ namespace Azure.ResourceManager.ContainerService.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeSysctlConfig(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(SysctlConfig)} does not support '{options.Format}' format.");
             }

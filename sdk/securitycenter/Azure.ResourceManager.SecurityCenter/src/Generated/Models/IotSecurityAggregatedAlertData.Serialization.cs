@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -337,6 +339,266 @@ namespace Azure.ResourceManager.SecurityCenter
             return new IotSecurityAggregatedAlertData(id, name, type, systemData.Value, alertType.Value, alertDisplayName.Value, Optional.ToNullable(aggregatedDateUtc), vendorName.Value, Optional.ToNullable(reportedSeverity), remediationSteps.Value, description.Value, Optional.ToNullable(count), effectedResourceType.Value, systemSource.Value, actionTaken.Value, logAnalyticsQuery.Value, Optional.ToList(topDevicesList), Optional.ToDictionary(tags), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                if (Name.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{Name}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{Name}'");
+                }
+            }
+
+            if (Optional.IsCollectionDefined(Tags))
+            {
+                if (Tags.Any())
+                {
+                    builder.Append("  tags:");
+                    builder.AppendLine(" {");
+                    foreach (var item in Tags)
+                    {
+                        builder.Append($"    {item.Key}:");
+                        if (item.Value == null)
+                        {
+                            builder.Append("null");
+                            continue;
+                        }
+                        if (item.Value.Contains(Environment.NewLine))
+                        {
+                            builder.AppendLine(" '''");
+                            builder.AppendLine($"{item.Value}'''");
+                        }
+                        else
+                        {
+                            builder.AppendLine($" '{item.Value}'");
+                        }
+                    }
+                    builder.AppendLine("  }");
+                }
+            }
+
+            if (Optional.IsDefined(Id))
+            {
+                builder.Append("  id:");
+                builder.AppendLine($" '{Id.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SystemData))
+            {
+                builder.Append("  systemData:");
+                builder.AppendLine($" '{SystemData.ToString()}'");
+            }
+
+            builder.Append("  properties:");
+            builder.AppendLine(" {");
+            if (Optional.IsDefined(AlertType))
+            {
+                builder.Append("    alertType:");
+                if (AlertType.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{AlertType}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{AlertType}'");
+                }
+            }
+
+            if (Optional.IsDefined(AlertDisplayName))
+            {
+                builder.Append("    alertDisplayName:");
+                if (AlertDisplayName.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{AlertDisplayName}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{AlertDisplayName}'");
+                }
+            }
+
+            if (Optional.IsDefined(AggregatedOn))
+            {
+                builder.Append("    aggregatedDateUtc:");
+                var formattedDateTimeString = TypeFormatters.ToString(AggregatedOn.Value, "o");
+                builder.AppendLine($" '{formattedDateTimeString}'");
+            }
+
+            if (Optional.IsDefined(VendorName))
+            {
+                builder.Append("    vendorName:");
+                if (VendorName.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{VendorName}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{VendorName}'");
+                }
+            }
+
+            if (Optional.IsDefined(ReportedSeverity))
+            {
+                builder.Append("    reportedSeverity:");
+                builder.AppendLine($" '{ReportedSeverity.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(RemediationSteps))
+            {
+                builder.Append("    remediationSteps:");
+                if (RemediationSteps.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{RemediationSteps}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{RemediationSteps}'");
+                }
+            }
+
+            if (Optional.IsDefined(Description))
+            {
+                builder.Append("    description:");
+                if (Description.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{Description}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{Description}'");
+                }
+            }
+
+            if (Optional.IsDefined(Count))
+            {
+                builder.Append("    count:");
+                builder.AppendLine($" '{Count.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(EffectedResourceType))
+            {
+                builder.Append("    effectedResourceType:");
+                if (EffectedResourceType.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{EffectedResourceType}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{EffectedResourceType}'");
+                }
+            }
+
+            if (Optional.IsDefined(SystemSource))
+            {
+                builder.Append("    systemSource:");
+                if (SystemSource.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{SystemSource}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{SystemSource}'");
+                }
+            }
+
+            if (Optional.IsDefined(ActionTaken))
+            {
+                builder.Append("    actionTaken:");
+                if (ActionTaken.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{ActionTaken}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{ActionTaken}'");
+                }
+            }
+
+            if (Optional.IsDefined(LogAnalyticsQuery))
+            {
+                builder.Append("    logAnalyticsQuery:");
+                if (LogAnalyticsQuery.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{LogAnalyticsQuery}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{LogAnalyticsQuery}'");
+                }
+            }
+
+            if (Optional.IsCollectionDefined(TopDevicesList))
+            {
+                if (TopDevicesList.Any())
+                {
+                    builder.Append("    topDevicesList:");
+                    builder.AppendLine(" [");
+                    foreach (var item in TopDevicesList)
+                    {
+                        AppendChildObject(builder, item, options, 6, true);
+                    }
+                    builder.AppendLine("    ]");
+                }
+            }
+
+            builder.AppendLine("  }");
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            bool inMultilineString = false;
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (inMultilineString)
+                {
+                    if (line.Contains("'''"))
+                    {
+                        inMultilineString = false;
+                    }
+                    stringBuilder.AppendLine(line);
+                    continue;
+                }
+                if (line.Contains("'''"))
+                {
+                    inMultilineString = true;
+                    stringBuilder.AppendLine($"{indent}{line}");
+                    continue;
+                }
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<IotSecurityAggregatedAlertData>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<IotSecurityAggregatedAlertData>)this).GetFormatFromOptions(options) : options.Format;
@@ -345,6 +607,8 @@ namespace Azure.ResourceManager.SecurityCenter
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(IotSecurityAggregatedAlertData)} does not support '{options.Format}' format.");
             }
@@ -361,6 +625,8 @@ namespace Azure.ResourceManager.SecurityCenter
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeIotSecurityAggregatedAlertData(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(IotSecurityAggregatedAlertData)} does not support '{options.Format}' format.");
             }

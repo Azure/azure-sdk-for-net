@@ -8,7 +8,9 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -356,6 +358,227 @@ namespace Azure.ResourceManager.NetworkCloud
             return new NetworkCloudStorageApplianceData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, extendedLocation, administratorCredentials, Optional.ToNullable(capacity), Optional.ToNullable(capacityUsed), clusterId.Value, Optional.ToNullable(detailedStatus), detailedStatusMessage.Value, managementIPv4Address.Value, Optional.ToNullable(provisioningState), rackId, rackSlot, Optional.ToNullable(remoteVendorManagementFeature), Optional.ToNullable(remoteVendorManagementStatus), serialNumber, storageApplianceSkuId, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                if (Name.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{Name}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{Name}'");
+                }
+            }
+
+            if (Optional.IsDefined(Location))
+            {
+                builder.Append("  location:");
+                builder.AppendLine($" '{Location.ToString()}'");
+            }
+
+            if (Optional.IsCollectionDefined(Tags))
+            {
+                if (Tags.Any())
+                {
+                    builder.Append("  tags:");
+                    builder.AppendLine(" {");
+                    foreach (var item in Tags)
+                    {
+                        builder.Append($"    {item.Key}:");
+                        if (item.Value == null)
+                        {
+                            builder.Append("null");
+                            continue;
+                        }
+                        if (item.Value.Contains(Environment.NewLine))
+                        {
+                            builder.AppendLine(" '''");
+                            builder.AppendLine($"{item.Value}'''");
+                        }
+                        else
+                        {
+                            builder.AppendLine($" '{item.Value}'");
+                        }
+                    }
+                    builder.AppendLine("  }");
+                }
+            }
+
+            if (Optional.IsDefined(ExtendedLocation))
+            {
+                builder.Append("  extendedLocation:");
+                AppendChildObject(builder, ExtendedLocation, options, 2, false);
+            }
+
+            if (Optional.IsDefined(Id))
+            {
+                builder.Append("  id:");
+                builder.AppendLine($" '{Id.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SystemData))
+            {
+                builder.Append("  systemData:");
+                builder.AppendLine($" '{SystemData.ToString()}'");
+            }
+
+            builder.Append("  properties:");
+            builder.AppendLine(" {");
+            if (Optional.IsDefined(AdministratorCredentials))
+            {
+                builder.Append("    administratorCredentials:");
+                AppendChildObject(builder, AdministratorCredentials, options, 4, false);
+            }
+
+            if (Optional.IsDefined(Capacity))
+            {
+                builder.Append("    capacity:");
+                builder.AppendLine($" '{Capacity.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(CapacityUsed))
+            {
+                builder.Append("    capacityUsed:");
+                builder.AppendLine($" '{CapacityUsed.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ClusterId))
+            {
+                builder.Append("    clusterId:");
+                builder.AppendLine($" '{ClusterId.ToString()}'");
+            }
+
+            if (Optional.IsDefined(DetailedStatus))
+            {
+                builder.Append("    detailedStatus:");
+                builder.AppendLine($" '{DetailedStatus.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(DetailedStatusMessage))
+            {
+                builder.Append("    detailedStatusMessage:");
+                if (DetailedStatusMessage.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{DetailedStatusMessage}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{DetailedStatusMessage}'");
+                }
+            }
+
+            if (Optional.IsDefined(ManagementIPv4Address))
+            {
+                builder.Append("    managementIpv4Address:");
+                builder.AppendLine($" '{ManagementIPv4Address.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ProvisioningState))
+            {
+                builder.Append("    provisioningState:");
+                builder.AppendLine($" '{ProvisioningState.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(RackId))
+            {
+                builder.Append("    rackId:");
+                builder.AppendLine($" '{RackId.ToString()}'");
+            }
+
+            if (Optional.IsDefined(RackSlot))
+            {
+                builder.Append("    rackSlot:");
+                builder.AppendLine($" '{RackSlot.ToString()}'");
+            }
+
+            if (Optional.IsDefined(RemoteVendorManagementFeature))
+            {
+                builder.Append("    remoteVendorManagementFeature:");
+                builder.AppendLine($" '{RemoteVendorManagementFeature.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(RemoteVendorManagementStatus))
+            {
+                builder.Append("    remoteVendorManagementStatus:");
+                builder.AppendLine($" '{RemoteVendorManagementStatus.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SerialNumber))
+            {
+                builder.Append("    serialNumber:");
+                if (SerialNumber.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{SerialNumber}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{SerialNumber}'");
+                }
+            }
+
+            if (Optional.IsDefined(StorageApplianceSkuId))
+            {
+                builder.Append("    storageApplianceSkuId:");
+                if (StorageApplianceSkuId.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{StorageApplianceSkuId}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{StorageApplianceSkuId}'");
+                }
+            }
+
+            builder.AppendLine("  }");
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            bool inMultilineString = false;
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (inMultilineString)
+                {
+                    if (line.Contains("'''"))
+                    {
+                        inMultilineString = false;
+                    }
+                    stringBuilder.AppendLine(line);
+                    continue;
+                }
+                if (line.Contains("'''"))
+                {
+                    inMultilineString = true;
+                    stringBuilder.AppendLine($"{indent}{line}");
+                    continue;
+                }
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<NetworkCloudStorageApplianceData>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<NetworkCloudStorageApplianceData>)this).GetFormatFromOptions(options) : options.Format;
@@ -364,6 +587,8 @@ namespace Azure.ResourceManager.NetworkCloud
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(NetworkCloudStorageApplianceData)} does not support '{options.Format}' format.");
             }
@@ -380,6 +605,8 @@ namespace Azure.ResourceManager.NetworkCloud
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeNetworkCloudStorageApplianceData(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(NetworkCloudStorageApplianceData)} does not support '{options.Format}' format.");
             }

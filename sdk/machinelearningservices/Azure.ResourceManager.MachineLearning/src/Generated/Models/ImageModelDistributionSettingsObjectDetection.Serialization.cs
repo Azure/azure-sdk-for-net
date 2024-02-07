@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -1020,6 +1021,624 @@ namespace Azure.ResourceManager.MachineLearning.Models
             return new ImageModelDistributionSettingsObjectDetection(amsGradient.Value, augmentations.Value, beta1.Value, beta2.Value, distributed.Value, earlyStopping.Value, earlyStoppingDelay.Value, earlyStoppingPatience.Value, enableOnnxNormalization.Value, evaluationFrequency.Value, gradientAccumulationStep.Value, layersToFreeze.Value, learningRate.Value, learningRateScheduler.Value, modelName.Value, momentum.Value, nesterov.Value, numberOfEpochs.Value, numberOfWorkers.Value, optimizer.Value, randomSeed.Value, stepLRGamma.Value, stepLRStepSize.Value, trainingBatchSize.Value, validationBatchSize.Value, warmupCosineLRCycles.Value, warmupCosineLRWarmupEpochs.Value, weightDecay.Value, serializedAdditionalRawData, boxDetectionsPerImage.Value, boxScoreThreshold.Value, imageSize.Value, maxSize.Value, minSize.Value, modelSize.Value, multiScale.Value, nmsIouThreshold.Value, tileGridSize.Value, tileOverlapRatio.Value, tilePredictionsNmsThreshold.Value, validationIouThreshold.Value, validationMetricType.Value);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(BoxDetectionsPerImage))
+            {
+                builder.Append("  boxDetectionsPerImage:");
+                if (BoxDetectionsPerImage.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{BoxDetectionsPerImage}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{BoxDetectionsPerImage}'");
+                }
+            }
+
+            if (Optional.IsDefined(BoxScoreThreshold))
+            {
+                builder.Append("  boxScoreThreshold:");
+                if (BoxScoreThreshold.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{BoxScoreThreshold}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{BoxScoreThreshold}'");
+                }
+            }
+
+            if (Optional.IsDefined(ImageSize))
+            {
+                builder.Append("  imageSize:");
+                if (ImageSize.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{ImageSize}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{ImageSize}'");
+                }
+            }
+
+            if (Optional.IsDefined(MaxSize))
+            {
+                builder.Append("  maxSize:");
+                if (MaxSize.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{MaxSize}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{MaxSize}'");
+                }
+            }
+
+            if (Optional.IsDefined(MinSize))
+            {
+                builder.Append("  minSize:");
+                if (MinSize.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{MinSize}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{MinSize}'");
+                }
+            }
+
+            if (Optional.IsDefined(ModelSize))
+            {
+                builder.Append("  modelSize:");
+                if (ModelSize.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{ModelSize}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{ModelSize}'");
+                }
+            }
+
+            if (Optional.IsDefined(MultiScale))
+            {
+                builder.Append("  multiScale:");
+                if (MultiScale.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{MultiScale}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{MultiScale}'");
+                }
+            }
+
+            if (Optional.IsDefined(NmsIouThreshold))
+            {
+                builder.Append("  nmsIouThreshold:");
+                if (NmsIouThreshold.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{NmsIouThreshold}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{NmsIouThreshold}'");
+                }
+            }
+
+            if (Optional.IsDefined(TileGridSize))
+            {
+                builder.Append("  tileGridSize:");
+                if (TileGridSize.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{TileGridSize}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{TileGridSize}'");
+                }
+            }
+
+            if (Optional.IsDefined(TileOverlapRatio))
+            {
+                builder.Append("  tileOverlapRatio:");
+                if (TileOverlapRatio.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{TileOverlapRatio}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{TileOverlapRatio}'");
+                }
+            }
+
+            if (Optional.IsDefined(TilePredictionsNmsThreshold))
+            {
+                builder.Append("  tilePredictionsNmsThreshold:");
+                if (TilePredictionsNmsThreshold.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{TilePredictionsNmsThreshold}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{TilePredictionsNmsThreshold}'");
+                }
+            }
+
+            if (Optional.IsDefined(ValidationIouThreshold))
+            {
+                builder.Append("  validationIouThreshold:");
+                if (ValidationIouThreshold.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{ValidationIouThreshold}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{ValidationIouThreshold}'");
+                }
+            }
+
+            if (Optional.IsDefined(ValidationMetricType))
+            {
+                builder.Append("  validationMetricType:");
+                if (ValidationMetricType.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{ValidationMetricType}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{ValidationMetricType}'");
+                }
+            }
+
+            if (Optional.IsDefined(AmsGradient))
+            {
+                builder.Append("  amsGradient:");
+                if (AmsGradient.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{AmsGradient}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{AmsGradient}'");
+                }
+            }
+
+            if (Optional.IsDefined(Augmentations))
+            {
+                builder.Append("  augmentations:");
+                if (Augmentations.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{Augmentations}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{Augmentations}'");
+                }
+            }
+
+            if (Optional.IsDefined(Beta1))
+            {
+                builder.Append("  beta1:");
+                if (Beta1.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{Beta1}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{Beta1}'");
+                }
+            }
+
+            if (Optional.IsDefined(Beta2))
+            {
+                builder.Append("  beta2:");
+                if (Beta2.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{Beta2}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{Beta2}'");
+                }
+            }
+
+            if (Optional.IsDefined(Distributed))
+            {
+                builder.Append("  distributed:");
+                if (Distributed.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{Distributed}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{Distributed}'");
+                }
+            }
+
+            if (Optional.IsDefined(EarlyStopping))
+            {
+                builder.Append("  earlyStopping:");
+                if (EarlyStopping.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{EarlyStopping}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{EarlyStopping}'");
+                }
+            }
+
+            if (Optional.IsDefined(EarlyStoppingDelay))
+            {
+                builder.Append("  earlyStoppingDelay:");
+                if (EarlyStoppingDelay.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{EarlyStoppingDelay}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{EarlyStoppingDelay}'");
+                }
+            }
+
+            if (Optional.IsDefined(EarlyStoppingPatience))
+            {
+                builder.Append("  earlyStoppingPatience:");
+                if (EarlyStoppingPatience.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{EarlyStoppingPatience}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{EarlyStoppingPatience}'");
+                }
+            }
+
+            if (Optional.IsDefined(EnableOnnxNormalization))
+            {
+                builder.Append("  enableOnnxNormalization:");
+                if (EnableOnnxNormalization.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{EnableOnnxNormalization}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{EnableOnnxNormalization}'");
+                }
+            }
+
+            if (Optional.IsDefined(EvaluationFrequency))
+            {
+                builder.Append("  evaluationFrequency:");
+                if (EvaluationFrequency.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{EvaluationFrequency}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{EvaluationFrequency}'");
+                }
+            }
+
+            if (Optional.IsDefined(GradientAccumulationStep))
+            {
+                builder.Append("  gradientAccumulationStep:");
+                if (GradientAccumulationStep.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{GradientAccumulationStep}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{GradientAccumulationStep}'");
+                }
+            }
+
+            if (Optional.IsDefined(LayersToFreeze))
+            {
+                builder.Append("  layersToFreeze:");
+                if (LayersToFreeze.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{LayersToFreeze}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{LayersToFreeze}'");
+                }
+            }
+
+            if (Optional.IsDefined(LearningRate))
+            {
+                builder.Append("  learningRate:");
+                if (LearningRate.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{LearningRate}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{LearningRate}'");
+                }
+            }
+
+            if (Optional.IsDefined(LearningRateScheduler))
+            {
+                builder.Append("  learningRateScheduler:");
+                if (LearningRateScheduler.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{LearningRateScheduler}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{LearningRateScheduler}'");
+                }
+            }
+
+            if (Optional.IsDefined(ModelName))
+            {
+                builder.Append("  modelName:");
+                if (ModelName.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{ModelName}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{ModelName}'");
+                }
+            }
+
+            if (Optional.IsDefined(Momentum))
+            {
+                builder.Append("  momentum:");
+                if (Momentum.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{Momentum}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{Momentum}'");
+                }
+            }
+
+            if (Optional.IsDefined(Nesterov))
+            {
+                builder.Append("  nesterov:");
+                if (Nesterov.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{Nesterov}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{Nesterov}'");
+                }
+            }
+
+            if (Optional.IsDefined(NumberOfEpochs))
+            {
+                builder.Append("  numberOfEpochs:");
+                if (NumberOfEpochs.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{NumberOfEpochs}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{NumberOfEpochs}'");
+                }
+            }
+
+            if (Optional.IsDefined(NumberOfWorkers))
+            {
+                builder.Append("  numberOfWorkers:");
+                if (NumberOfWorkers.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{NumberOfWorkers}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{NumberOfWorkers}'");
+                }
+            }
+
+            if (Optional.IsDefined(Optimizer))
+            {
+                builder.Append("  optimizer:");
+                if (Optimizer.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{Optimizer}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{Optimizer}'");
+                }
+            }
+
+            if (Optional.IsDefined(RandomSeed))
+            {
+                builder.Append("  randomSeed:");
+                if (RandomSeed.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{RandomSeed}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{RandomSeed}'");
+                }
+            }
+
+            if (Optional.IsDefined(StepLRGamma))
+            {
+                builder.Append("  stepLRGamma:");
+                if (StepLRGamma.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{StepLRGamma}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{StepLRGamma}'");
+                }
+            }
+
+            if (Optional.IsDefined(StepLRStepSize))
+            {
+                builder.Append("  stepLRStepSize:");
+                if (StepLRStepSize.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{StepLRStepSize}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{StepLRStepSize}'");
+                }
+            }
+
+            if (Optional.IsDefined(TrainingBatchSize))
+            {
+                builder.Append("  trainingBatchSize:");
+                if (TrainingBatchSize.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{TrainingBatchSize}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{TrainingBatchSize}'");
+                }
+            }
+
+            if (Optional.IsDefined(ValidationBatchSize))
+            {
+                builder.Append("  validationBatchSize:");
+                if (ValidationBatchSize.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{ValidationBatchSize}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{ValidationBatchSize}'");
+                }
+            }
+
+            if (Optional.IsDefined(WarmupCosineLRCycles))
+            {
+                builder.Append("  warmupCosineLRCycles:");
+                if (WarmupCosineLRCycles.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{WarmupCosineLRCycles}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{WarmupCosineLRCycles}'");
+                }
+            }
+
+            if (Optional.IsDefined(WarmupCosineLRWarmupEpochs))
+            {
+                builder.Append("  warmupCosineLRWarmupEpochs:");
+                if (WarmupCosineLRWarmupEpochs.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{WarmupCosineLRWarmupEpochs}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{WarmupCosineLRWarmupEpochs}'");
+                }
+            }
+
+            if (Optional.IsDefined(WeightDecay))
+            {
+                builder.Append("  weightDecay:");
+                if (WeightDecay.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{WeightDecay}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{WeightDecay}'");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            bool inMultilineString = false;
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (inMultilineString)
+                {
+                    if (line.Contains("'''"))
+                    {
+                        inMultilineString = false;
+                    }
+                    stringBuilder.AppendLine(line);
+                    continue;
+                }
+                if (line.Contains("'''"))
+                {
+                    inMultilineString = true;
+                    stringBuilder.AppendLine($"{indent}{line}");
+                    continue;
+                }
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<ImageModelDistributionSettingsObjectDetection>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ImageModelDistributionSettingsObjectDetection>)this).GetFormatFromOptions(options) : options.Format;
@@ -1028,6 +1647,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(ImageModelDistributionSettingsObjectDetection)} does not support '{options.Format}' format.");
             }
@@ -1044,6 +1665,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeImageModelDistributionSettingsObjectDetection(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(ImageModelDistributionSettingsObjectDetection)} does not support '{options.Format}' format.");
             }

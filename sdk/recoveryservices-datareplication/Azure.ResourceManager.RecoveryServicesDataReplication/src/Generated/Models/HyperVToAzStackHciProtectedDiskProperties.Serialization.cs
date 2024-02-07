@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -214,6 +215,174 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             return new HyperVToAzStackHciProtectedDiskProperties(storageContainerId.Value, storageContainerLocalPath.Value, sourceDiskId.Value, sourceDiskName.Value, seedDiskName.Value, testMigrateDiskName.Value, migrateDiskName.Value, Optional.ToNullable(isOSDisk), Optional.ToNullable(capacityInBytes), Optional.ToNullable(isDynamic), diskType.Value, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(StorageContainerId))
+            {
+                builder.Append("  storageContainerId:");
+                builder.AppendLine($" '{StorageContainerId.ToString()}'");
+            }
+
+            if (Optional.IsDefined(StorageContainerLocalPath))
+            {
+                builder.Append("  storageContainerLocalPath:");
+                if (StorageContainerLocalPath.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{StorageContainerLocalPath}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{StorageContainerLocalPath}'");
+                }
+            }
+
+            if (Optional.IsDefined(SourceDiskId))
+            {
+                builder.Append("  sourceDiskId:");
+                if (SourceDiskId.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{SourceDiskId}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{SourceDiskId}'");
+                }
+            }
+
+            if (Optional.IsDefined(SourceDiskName))
+            {
+                builder.Append("  sourceDiskName:");
+                if (SourceDiskName.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{SourceDiskName}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{SourceDiskName}'");
+                }
+            }
+
+            if (Optional.IsDefined(SeedDiskName))
+            {
+                builder.Append("  seedDiskName:");
+                if (SeedDiskName.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{SeedDiskName}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{SeedDiskName}'");
+                }
+            }
+
+            if (Optional.IsDefined(TestMigrateDiskName))
+            {
+                builder.Append("  testMigrateDiskName:");
+                if (TestMigrateDiskName.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{TestMigrateDiskName}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{TestMigrateDiskName}'");
+                }
+            }
+
+            if (Optional.IsDefined(MigrateDiskName))
+            {
+                builder.Append("  migrateDiskName:");
+                if (MigrateDiskName.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{MigrateDiskName}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{MigrateDiskName}'");
+                }
+            }
+
+            if (Optional.IsDefined(IsOSDisk))
+            {
+                builder.Append("  isOsDisk:");
+                var boolValue = IsOSDisk.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(CapacityInBytes))
+            {
+                builder.Append("  capacityInBytes:");
+                builder.AppendLine($" '{CapacityInBytes.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(IsDynamic))
+            {
+                builder.Append("  isDynamic:");
+                var boolValue = IsDynamic.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(DiskType))
+            {
+                builder.Append("  diskType:");
+                if (DiskType.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{DiskType}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{DiskType}'");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            bool inMultilineString = false;
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (inMultilineString)
+                {
+                    if (line.Contains("'''"))
+                    {
+                        inMultilineString = false;
+                    }
+                    stringBuilder.AppendLine(line);
+                    continue;
+                }
+                if (line.Contains("'''"))
+                {
+                    inMultilineString = true;
+                    stringBuilder.AppendLine($"{indent}{line}");
+                    continue;
+                }
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<HyperVToAzStackHciProtectedDiskProperties>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<HyperVToAzStackHciProtectedDiskProperties>)this).GetFormatFromOptions(options) : options.Format;
@@ -222,6 +391,8 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(HyperVToAzStackHciProtectedDiskProperties)} does not support '{options.Format}' format.");
             }
@@ -238,6 +409,8 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeHyperVToAzStackHciProtectedDiskProperties(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(HyperVToAzStackHciProtectedDiskProperties)} does not support '{options.Format}' format.");
             }

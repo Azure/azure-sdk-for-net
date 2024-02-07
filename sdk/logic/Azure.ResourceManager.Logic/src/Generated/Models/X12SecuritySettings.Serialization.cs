@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -115,6 +116,106 @@ namespace Azure.ResourceManager.Logic.Models
             return new X12SecuritySettings(authorizationQualifier, authorizationValue.Value, securityQualifier, passwordValue.Value, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(AuthorizationQualifier))
+            {
+                builder.Append("  authorizationQualifier:");
+                if (AuthorizationQualifier.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{AuthorizationQualifier}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{AuthorizationQualifier}'");
+                }
+            }
+
+            if (Optional.IsDefined(AuthorizationValue))
+            {
+                builder.Append("  authorizationValue:");
+                if (AuthorizationValue.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{AuthorizationValue}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{AuthorizationValue}'");
+                }
+            }
+
+            if (Optional.IsDefined(SecurityQualifier))
+            {
+                builder.Append("  securityQualifier:");
+                if (SecurityQualifier.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{SecurityQualifier}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{SecurityQualifier}'");
+                }
+            }
+
+            if (Optional.IsDefined(PasswordValue))
+            {
+                builder.Append("  passwordValue:");
+                if (PasswordValue.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{PasswordValue}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{PasswordValue}'");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            bool inMultilineString = false;
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (inMultilineString)
+                {
+                    if (line.Contains("'''"))
+                    {
+                        inMultilineString = false;
+                    }
+                    stringBuilder.AppendLine(line);
+                    continue;
+                }
+                if (line.Contains("'''"))
+                {
+                    inMultilineString = true;
+                    stringBuilder.AppendLine($"{indent}{line}");
+                    continue;
+                }
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<X12SecuritySettings>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<X12SecuritySettings>)this).GetFormatFromOptions(options) : options.Format;
@@ -123,6 +224,8 @@ namespace Azure.ResourceManager.Logic.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(X12SecuritySettings)} does not support '{options.Format}' format.");
             }
@@ -139,6 +242,8 @@ namespace Azure.ResourceManager.Logic.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeX12SecuritySettings(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(X12SecuritySettings)} does not support '{options.Format}' format.");
             }

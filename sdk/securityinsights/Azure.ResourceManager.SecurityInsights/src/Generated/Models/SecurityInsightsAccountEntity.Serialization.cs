@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -345,6 +347,272 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             return new SecurityInsightsAccountEntity(id, name, type, systemData.Value, kind, serializedAdditionalRawData, Optional.ToDictionary(additionalData), friendlyName.Value, aadTenantId.Value, aadUserId.Value, accountName.Value, displayName.Value, hostEntityId.Value, Optional.ToNullable(isDomainJoined), ntDomain.Value, Optional.ToNullable(objectGuid), puid.Value, sid.Value, upnSuffix.Value, dnsDomain.Value);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                if (Name.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{Name}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{Name}'");
+                }
+            }
+
+            if (Optional.IsDefined(Kind))
+            {
+                builder.Append("  kind:");
+                builder.AppendLine($" '{Kind.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Id))
+            {
+                builder.Append("  id:");
+                builder.AppendLine($" '{Id.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SystemData))
+            {
+                builder.Append("  systemData:");
+                builder.AppendLine($" '{SystemData.ToString()}'");
+            }
+
+            builder.Append("  properties:");
+            builder.AppendLine(" {");
+            if (Optional.IsCollectionDefined(AdditionalData))
+            {
+                if (AdditionalData.Any())
+                {
+                    builder.Append("    additionalData:");
+                    builder.AppendLine(" {");
+                    foreach (var item in AdditionalData)
+                    {
+                        builder.Append($"        {item.Key}:");
+                        if (item.Value == null)
+                        {
+                            builder.Append("null");
+                            continue;
+                        }
+                        builder.AppendLine($" '{item.Value.ToString()}'");
+                    }
+                    builder.AppendLine("    }");
+                }
+            }
+
+            if (Optional.IsDefined(FriendlyName))
+            {
+                builder.Append("    friendlyName:");
+                if (FriendlyName.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{FriendlyName}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{FriendlyName}'");
+                }
+            }
+
+            if (Optional.IsDefined(AadTenantId))
+            {
+                builder.Append("    aadTenantId:");
+                if (AadTenantId.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{AadTenantId}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{AadTenantId}'");
+                }
+            }
+
+            if (Optional.IsDefined(AadUserId))
+            {
+                builder.Append("    aadUserId:");
+                if (AadUserId.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{AadUserId}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{AadUserId}'");
+                }
+            }
+
+            if (Optional.IsDefined(AccountName))
+            {
+                builder.Append("    accountName:");
+                if (AccountName.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{AccountName}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{AccountName}'");
+                }
+            }
+
+            if (Optional.IsDefined(DisplayName))
+            {
+                builder.Append("    displayName:");
+                if (DisplayName.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{DisplayName}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{DisplayName}'");
+                }
+            }
+
+            if (Optional.IsDefined(HostEntityId))
+            {
+                builder.Append("    hostEntityId:");
+                if (HostEntityId.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{HostEntityId}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{HostEntityId}'");
+                }
+            }
+
+            if (Optional.IsDefined(IsDomainJoined))
+            {
+                builder.Append("    isDomainJoined:");
+                var boolValue = IsDomainJoined.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(NtDomain))
+            {
+                builder.Append("    ntDomain:");
+                if (NtDomain.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{NtDomain}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{NtDomain}'");
+                }
+            }
+
+            if (Optional.IsDefined(ObjectGuid))
+            {
+                builder.Append("    objectGuid:");
+                builder.AppendLine($" '{ObjectGuid.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Puid))
+            {
+                builder.Append("    puid:");
+                if (Puid.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{Puid}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{Puid}'");
+                }
+            }
+
+            if (Optional.IsDefined(Sid))
+            {
+                builder.Append("    sid:");
+                if (Sid.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{Sid}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{Sid}'");
+                }
+            }
+
+            if (Optional.IsDefined(UpnSuffix))
+            {
+                builder.Append("    upnSuffix:");
+                if (UpnSuffix.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{UpnSuffix}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{UpnSuffix}'");
+                }
+            }
+
+            if (Optional.IsDefined(DnsDomain))
+            {
+                builder.Append("    dnsDomain:");
+                if (DnsDomain.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{DnsDomain}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{DnsDomain}'");
+                }
+            }
+
+            builder.AppendLine("  }");
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            bool inMultilineString = false;
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (inMultilineString)
+                {
+                    if (line.Contains("'''"))
+                    {
+                        inMultilineString = false;
+                    }
+                    stringBuilder.AppendLine(line);
+                    continue;
+                }
+                if (line.Contains("'''"))
+                {
+                    inMultilineString = true;
+                    stringBuilder.AppendLine($"{indent}{line}");
+                    continue;
+                }
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<SecurityInsightsAccountEntity>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<SecurityInsightsAccountEntity>)this).GetFormatFromOptions(options) : options.Format;
@@ -353,6 +621,8 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(SecurityInsightsAccountEntity)} does not support '{options.Format}' format.");
             }
@@ -369,6 +639,8 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeSecurityInsightsAccountEntity(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(SecurityInsightsAccountEntity)} does not support '{options.Format}' format.");
             }

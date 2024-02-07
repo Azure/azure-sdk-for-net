@@ -8,7 +8,9 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -830,6 +832,563 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             return new InMageRcmReplicationDetails(instanceType, serializedAdditionalRawData, internalIdentifier.Value, fabricDiscoveryMachineId.Value, multiVmGroupName.Value, discoveryType.Value, Optional.ToNullable(processServerId), Optional.ToNullable(processorCoreCount), Optional.ToNullable(allocatedMemoryInMB), processServerName.Value, runAsAccountId.Value, osType.Value, firmwareType.Value, primaryNicIPAddress.Value, targetGeneration.Value, licenseType.Value, storageAccountId.Value, targetVmName.Value, targetVmSize.Value, targetResourceGroupId.Value, targetLocation.Value, targetAvailabilitySetId.Value, targetAvailabilityZone.Value, targetProximityPlacementGroupId.Value, targetBootDiagnosticsStorageAccountId.Value, targetNetworkId.Value, testNetworkId.Value, failoverRecoveryPointId.Value, Optional.ToNullable(lastRecoveryPointReceived), Optional.ToNullable(lastRpoInSeconds), Optional.ToNullable(lastRpoCalculatedTime), lastRecoveryPointId.Value, Optional.ToNullable(initialReplicationProgressPercentage), Optional.ToNullable(initialReplicationProcessedBytes), Optional.ToNullable(initialReplicationTransferredBytes), Optional.ToNullable(initialReplicationProgressHealth), Optional.ToNullable(resyncProgressPercentage), Optional.ToNullable(resyncProcessedBytes), Optional.ToNullable(resyncTransferredBytes), Optional.ToNullable(resyncProgressHealth), resyncRequired.Value, Optional.ToNullable(resyncState), Optional.ToNullable(agentUpgradeState), lastAgentUpgradeType.Value, agentUpgradeJobId.Value, agentUpgradeAttemptToVersion.Value, Optional.ToList(protectedDisks), isLastUpgradeSuccessful.Value, Optional.ToNullable(isAgentRegistrationSuccessfulAfterFailover), mobilityAgentDetails.Value, Optional.ToList(lastAgentUpgradeErrorDetails), Optional.ToList(agentUpgradeBlockingErrorDetails), Optional.ToList(vmNics), discoveredVmDetails.Value);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(InternalIdentifier))
+            {
+                builder.Append("  internalIdentifier:");
+                if (InternalIdentifier.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{InternalIdentifier}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{InternalIdentifier}'");
+                }
+            }
+
+            if (Optional.IsDefined(FabricDiscoveryMachineId))
+            {
+                builder.Append("  fabricDiscoveryMachineId:");
+                if (FabricDiscoveryMachineId.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{FabricDiscoveryMachineId}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{FabricDiscoveryMachineId}'");
+                }
+            }
+
+            if (Optional.IsDefined(MultiVmGroupName))
+            {
+                builder.Append("  multiVmGroupName:");
+                if (MultiVmGroupName.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{MultiVmGroupName}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{MultiVmGroupName}'");
+                }
+            }
+
+            if (Optional.IsDefined(DiscoveryType))
+            {
+                builder.Append("  discoveryType:");
+                if (DiscoveryType.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{DiscoveryType}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{DiscoveryType}'");
+                }
+            }
+
+            if (Optional.IsDefined(ProcessServerId))
+            {
+                builder.Append("  processServerId:");
+                builder.AppendLine($" '{ProcessServerId.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ProcessorCoreCount))
+            {
+                builder.Append("  processorCoreCount:");
+                builder.AppendLine($" {ProcessorCoreCount.Value}");
+            }
+
+            if (Optional.IsDefined(AllocatedMemoryInMB))
+            {
+                builder.Append("  allocatedMemoryInMB:");
+                builder.AppendLine($" '{AllocatedMemoryInMB.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ProcessServerName))
+            {
+                builder.Append("  processServerName:");
+                if (ProcessServerName.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{ProcessServerName}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{ProcessServerName}'");
+                }
+            }
+
+            if (Optional.IsDefined(RunAsAccountId))
+            {
+                builder.Append("  runAsAccountId:");
+                if (RunAsAccountId.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{RunAsAccountId}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{RunAsAccountId}'");
+                }
+            }
+
+            if (Optional.IsDefined(OSType))
+            {
+                builder.Append("  osType:");
+                if (OSType.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{OSType}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{OSType}'");
+                }
+            }
+
+            if (Optional.IsDefined(FirmwareType))
+            {
+                builder.Append("  firmwareType:");
+                if (FirmwareType.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{FirmwareType}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{FirmwareType}'");
+                }
+            }
+
+            if (Optional.IsDefined(PrimaryNicIPAddress))
+            {
+                builder.Append("  primaryNicIpAddress:");
+                builder.AppendLine($" '{PrimaryNicIPAddress.ToString()}'");
+            }
+
+            if (Optional.IsDefined(TargetGeneration))
+            {
+                builder.Append("  targetGeneration:");
+                if (TargetGeneration.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{TargetGeneration}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{TargetGeneration}'");
+                }
+            }
+
+            if (Optional.IsDefined(LicenseType))
+            {
+                builder.Append("  licenseType:");
+                if (LicenseType.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{LicenseType}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{LicenseType}'");
+                }
+            }
+
+            if (Optional.IsDefined(StorageAccountId))
+            {
+                builder.Append("  storageAccountId:");
+                builder.AppendLine($" '{StorageAccountId.ToString()}'");
+            }
+
+            if (Optional.IsDefined(TargetVmName))
+            {
+                builder.Append("  targetVmName:");
+                if (TargetVmName.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{TargetVmName}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{TargetVmName}'");
+                }
+            }
+
+            if (Optional.IsDefined(TargetVmSize))
+            {
+                builder.Append("  targetVmSize:");
+                if (TargetVmSize.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{TargetVmSize}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{TargetVmSize}'");
+                }
+            }
+
+            if (Optional.IsDefined(TargetResourceGroupId))
+            {
+                builder.Append("  targetResourceGroupId:");
+                builder.AppendLine($" '{TargetResourceGroupId.ToString()}'");
+            }
+
+            if (Optional.IsDefined(TargetLocation))
+            {
+                builder.Append("  targetLocation:");
+                if (TargetLocation.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{TargetLocation}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{TargetLocation}'");
+                }
+            }
+
+            if (Optional.IsDefined(TargetAvailabilitySetId))
+            {
+                builder.Append("  targetAvailabilitySetId:");
+                builder.AppendLine($" '{TargetAvailabilitySetId.ToString()}'");
+            }
+
+            if (Optional.IsDefined(TargetAvailabilityZone))
+            {
+                builder.Append("  targetAvailabilityZone:");
+                if (TargetAvailabilityZone.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{TargetAvailabilityZone}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{TargetAvailabilityZone}'");
+                }
+            }
+
+            if (Optional.IsDefined(TargetProximityPlacementGroupId))
+            {
+                builder.Append("  targetProximityPlacementGroupId:");
+                builder.AppendLine($" '{TargetProximityPlacementGroupId.ToString()}'");
+            }
+
+            if (Optional.IsDefined(TargetBootDiagnosticsStorageAccountId))
+            {
+                builder.Append("  targetBootDiagnosticsStorageAccountId:");
+                builder.AppendLine($" '{TargetBootDiagnosticsStorageAccountId.ToString()}'");
+            }
+
+            if (Optional.IsDefined(TargetNetworkId))
+            {
+                builder.Append("  targetNetworkId:");
+                builder.AppendLine($" '{TargetNetworkId.ToString()}'");
+            }
+
+            if (Optional.IsDefined(TestNetworkId))
+            {
+                builder.Append("  testNetworkId:");
+                builder.AppendLine($" '{TestNetworkId.ToString()}'");
+            }
+
+            if (Optional.IsDefined(FailoverRecoveryPointId))
+            {
+                builder.Append("  failoverRecoveryPointId:");
+                builder.AppendLine($" '{FailoverRecoveryPointId.ToString()}'");
+            }
+
+            if (Optional.IsDefined(LastRecoveryPointReceived))
+            {
+                builder.Append("  lastRecoveryPointReceived:");
+                var formattedDateTimeString = TypeFormatters.ToString(LastRecoveryPointReceived.Value, "o");
+                builder.AppendLine($" '{formattedDateTimeString}'");
+            }
+
+            if (Optional.IsDefined(LastRpoInSeconds))
+            {
+                builder.Append("  lastRpoInSeconds:");
+                builder.AppendLine($" '{LastRpoInSeconds.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(LastRpoCalculatedOn))
+            {
+                builder.Append("  lastRpoCalculatedTime:");
+                var formattedDateTimeString = TypeFormatters.ToString(LastRpoCalculatedOn.Value, "o");
+                builder.AppendLine($" '{formattedDateTimeString}'");
+            }
+
+            if (Optional.IsDefined(LastRecoveryPointId))
+            {
+                builder.Append("  lastRecoveryPointId:");
+                builder.AppendLine($" '{LastRecoveryPointId.ToString()}'");
+            }
+
+            if (Optional.IsDefined(InitialReplicationProgressPercentage))
+            {
+                builder.Append("  initialReplicationProgressPercentage:");
+                builder.AppendLine($" {InitialReplicationProgressPercentage.Value}");
+            }
+
+            if (Optional.IsDefined(InitialReplicationProcessedBytes))
+            {
+                builder.Append("  initialReplicationProcessedBytes:");
+                builder.AppendLine($" '{InitialReplicationProcessedBytes.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(InitialReplicationTransferredBytes))
+            {
+                builder.Append("  initialReplicationTransferredBytes:");
+                builder.AppendLine($" '{InitialReplicationTransferredBytes.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(InitialReplicationProgressHealth))
+            {
+                builder.Append("  initialReplicationProgressHealth:");
+                builder.AppendLine($" '{InitialReplicationProgressHealth.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ResyncProgressPercentage))
+            {
+                builder.Append("  resyncProgressPercentage:");
+                builder.AppendLine($" {ResyncProgressPercentage.Value}");
+            }
+
+            if (Optional.IsDefined(ResyncProcessedBytes))
+            {
+                builder.Append("  resyncProcessedBytes:");
+                builder.AppendLine($" '{ResyncProcessedBytes.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ResyncTransferredBytes))
+            {
+                builder.Append("  resyncTransferredBytes:");
+                builder.AppendLine($" '{ResyncTransferredBytes.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ResyncProgressHealth))
+            {
+                builder.Append("  resyncProgressHealth:");
+                builder.AppendLine($" '{ResyncProgressHealth.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ResyncRequired))
+            {
+                builder.Append("  resyncRequired:");
+                if (ResyncRequired.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{ResyncRequired}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{ResyncRequired}'");
+                }
+            }
+
+            if (Optional.IsDefined(ResyncState))
+            {
+                builder.Append("  resyncState:");
+                builder.AppendLine($" '{ResyncState.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(AgentUpgradeState))
+            {
+                builder.Append("  agentUpgradeState:");
+                builder.AppendLine($" '{AgentUpgradeState.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(LastAgentUpgradeType))
+            {
+                builder.Append("  lastAgentUpgradeType:");
+                if (LastAgentUpgradeType.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{LastAgentUpgradeType}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{LastAgentUpgradeType}'");
+                }
+            }
+
+            if (Optional.IsDefined(AgentUpgradeJobId))
+            {
+                builder.Append("  agentUpgradeJobId:");
+                if (AgentUpgradeJobId.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{AgentUpgradeJobId}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{AgentUpgradeJobId}'");
+                }
+            }
+
+            if (Optional.IsDefined(AgentUpgradeAttemptToVersion))
+            {
+                builder.Append("  agentUpgradeAttemptToVersion:");
+                if (AgentUpgradeAttemptToVersion.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{AgentUpgradeAttemptToVersion}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{AgentUpgradeAttemptToVersion}'");
+                }
+            }
+
+            if (Optional.IsCollectionDefined(ProtectedDisks))
+            {
+                if (ProtectedDisks.Any())
+                {
+                    builder.Append("  protectedDisks:");
+                    builder.AppendLine(" [");
+                    foreach (var item in ProtectedDisks)
+                    {
+                        AppendChildObject(builder, item, options, 4, true);
+                    }
+                    builder.AppendLine("  ]");
+                }
+            }
+
+            if (Optional.IsDefined(IsLastUpgradeSuccessful))
+            {
+                builder.Append("  isLastUpgradeSuccessful:");
+                if (IsLastUpgradeSuccessful.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{IsLastUpgradeSuccessful}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{IsLastUpgradeSuccessful}'");
+                }
+            }
+
+            if (Optional.IsDefined(IsAgentRegistrationSuccessfulAfterFailover))
+            {
+                builder.Append("  isAgentRegistrationSuccessfulAfterFailover:");
+                var boolValue = IsAgentRegistrationSuccessfulAfterFailover.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(MobilityAgentDetails))
+            {
+                builder.Append("  mobilityAgentDetails:");
+                AppendChildObject(builder, MobilityAgentDetails, options, 2, false);
+            }
+
+            if (Optional.IsCollectionDefined(LastAgentUpgradeErrorDetails))
+            {
+                if (LastAgentUpgradeErrorDetails.Any())
+                {
+                    builder.Append("  lastAgentUpgradeErrorDetails:");
+                    builder.AppendLine(" [");
+                    foreach (var item in LastAgentUpgradeErrorDetails)
+                    {
+                        AppendChildObject(builder, item, options, 4, true);
+                    }
+                    builder.AppendLine("  ]");
+                }
+            }
+
+            if (Optional.IsCollectionDefined(AgentUpgradeBlockingErrorDetails))
+            {
+                if (AgentUpgradeBlockingErrorDetails.Any())
+                {
+                    builder.Append("  agentUpgradeBlockingErrorDetails:");
+                    builder.AppendLine(" [");
+                    foreach (var item in AgentUpgradeBlockingErrorDetails)
+                    {
+                        AppendChildObject(builder, item, options, 4, true);
+                    }
+                    builder.AppendLine("  ]");
+                }
+            }
+
+            if (Optional.IsCollectionDefined(VmNics))
+            {
+                if (VmNics.Any())
+                {
+                    builder.Append("  vmNics:");
+                    builder.AppendLine(" [");
+                    foreach (var item in VmNics)
+                    {
+                        AppendChildObject(builder, item, options, 4, true);
+                    }
+                    builder.AppendLine("  ]");
+                }
+            }
+
+            if (Optional.IsDefined(DiscoveredVmDetails))
+            {
+                builder.Append("  discoveredVmDetails:");
+                AppendChildObject(builder, DiscoveredVmDetails, options, 2, false);
+            }
+
+            if (Optional.IsDefined(InstanceType))
+            {
+                builder.Append("  instanceType:");
+                if (InstanceType.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{InstanceType}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{InstanceType}'");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            bool inMultilineString = false;
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (inMultilineString)
+                {
+                    if (line.Contains("'''"))
+                    {
+                        inMultilineString = false;
+                    }
+                    stringBuilder.AppendLine(line);
+                    continue;
+                }
+                if (line.Contains("'''"))
+                {
+                    inMultilineString = true;
+                    stringBuilder.AppendLine($"{indent}{line}");
+                    continue;
+                }
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<InMageRcmReplicationDetails>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<InMageRcmReplicationDetails>)this).GetFormatFromOptions(options) : options.Format;
@@ -838,6 +1397,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(InMageRcmReplicationDetails)} does not support '{options.Format}' format.");
             }
@@ -854,6 +1415,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeInMageRcmReplicationDetails(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(InMageRcmReplicationDetails)} does not support '{options.Format}' format.");
             }

@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -207,6 +208,163 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             return new DataLakeStoreOutputDataSource(type, serializedAdditionalRawData, refreshToken.Value, tokenUserPrincipalName.Value, tokenUserDisplayName.Value, accountName.Value, Optional.ToNullable(tenantId), filePathPrefix.Value, dateFormat.Value, timeFormat.Value, Optional.ToNullable(authenticationMode));
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            builder.Append("  properties:");
+            builder.AppendLine(" {");
+            if (Optional.IsDefined(RefreshToken))
+            {
+                builder.Append("    refreshToken:");
+                if (RefreshToken.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{RefreshToken}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{RefreshToken}'");
+                }
+            }
+
+            if (Optional.IsDefined(TokenUserPrincipalName))
+            {
+                builder.Append("    tokenUserPrincipalName:");
+                if (TokenUserPrincipalName.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{TokenUserPrincipalName}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{TokenUserPrincipalName}'");
+                }
+            }
+
+            if (Optional.IsDefined(TokenUserDisplayName))
+            {
+                builder.Append("    tokenUserDisplayName:");
+                if (TokenUserDisplayName.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{TokenUserDisplayName}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{TokenUserDisplayName}'");
+                }
+            }
+
+            if (Optional.IsDefined(AccountName))
+            {
+                builder.Append("    accountName:");
+                if (AccountName.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{AccountName}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{AccountName}'");
+                }
+            }
+
+            if (Optional.IsDefined(TenantId))
+            {
+                builder.Append("    tenantId:");
+                builder.AppendLine($" '{TenantId.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(FilePathPrefix))
+            {
+                builder.Append("    filePathPrefix:");
+                if (FilePathPrefix.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{FilePathPrefix}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{FilePathPrefix}'");
+                }
+            }
+
+            if (Optional.IsDefined(DateFormat))
+            {
+                builder.Append("    dateFormat:");
+                if (DateFormat.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{DateFormat}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{DateFormat}'");
+                }
+            }
+
+            if (Optional.IsDefined(TimeFormat))
+            {
+                builder.Append("    timeFormat:");
+                if (TimeFormat.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{TimeFormat}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{TimeFormat}'");
+                }
+            }
+
+            if (Optional.IsDefined(AuthenticationMode))
+            {
+                builder.Append("    authenticationMode:");
+                builder.AppendLine($" '{AuthenticationMode.Value.ToString()}'");
+            }
+
+            builder.AppendLine("  }");
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            bool inMultilineString = false;
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (inMultilineString)
+                {
+                    if (line.Contains("'''"))
+                    {
+                        inMultilineString = false;
+                    }
+                    stringBuilder.AppendLine(line);
+                    continue;
+                }
+                if (line.Contains("'''"))
+                {
+                    inMultilineString = true;
+                    stringBuilder.AppendLine($"{indent}{line}");
+                    continue;
+                }
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<DataLakeStoreOutputDataSource>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<DataLakeStoreOutputDataSource>)this).GetFormatFromOptions(options) : options.Format;
@@ -215,6 +373,8 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(DataLakeStoreOutputDataSource)} does not support '{options.Format}' format.");
             }
@@ -231,6 +391,8 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeDataLakeStoreOutputDataSource(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(DataLakeStoreOutputDataSource)} does not support '{options.Format}' format.");
             }

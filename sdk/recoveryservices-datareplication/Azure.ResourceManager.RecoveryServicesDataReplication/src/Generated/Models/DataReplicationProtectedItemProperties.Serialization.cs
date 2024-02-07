@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -467,6 +469,361 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             return new DataReplicationProtectedItemProperties(policyName, replicationExtensionName, correlationId.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(protectionState), protectionStateDescription.Value, Optional.ToNullable(testFailoverState), testFailoverStateDescription.Value, Optional.ToNullable(resynchronizationState), fabricObjectId.Value, fabricObjectName.Value, sourceFabricProviderId.Value, targetFabricProviderId.Value, fabricId.Value, targetFabricId.Value, draId.Value, targetDraId.Value, Optional.ToNullable(resyncRequired), Optional.ToNullable(lastSuccessfulPlannedFailoverTime), Optional.ToNullable(lastSuccessfulUnplannedFailoverTime), Optional.ToNullable(lastSuccessfulTestFailoverTime), currentJob.Value, Optional.ToList(allowedJobs), lastFailedEnableProtectionJob.Value, lastFailedPlannedFailoverJob.Value, lastTestFailoverJob.Value, Optional.ToNullable(replicationHealth), Optional.ToList(healthErrors), customProperties, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(PolicyName))
+            {
+                builder.Append("  policyName:");
+                if (PolicyName.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{PolicyName}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{PolicyName}'");
+                }
+            }
+
+            if (Optional.IsDefined(ReplicationExtensionName))
+            {
+                builder.Append("  replicationExtensionName:");
+                if (ReplicationExtensionName.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{ReplicationExtensionName}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{ReplicationExtensionName}'");
+                }
+            }
+
+            if (Optional.IsDefined(CorrelationId))
+            {
+                builder.Append("  correlationId:");
+                if (CorrelationId.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{CorrelationId}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{CorrelationId}'");
+                }
+            }
+
+            if (Optional.IsDefined(ProvisioningState))
+            {
+                builder.Append("  provisioningState:");
+                builder.AppendLine($" '{ProvisioningState.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ProtectionState))
+            {
+                builder.Append("  protectionState:");
+                builder.AppendLine($" '{ProtectionState.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ProtectionStateDescription))
+            {
+                builder.Append("  protectionStateDescription:");
+                if (ProtectionStateDescription.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{ProtectionStateDescription}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{ProtectionStateDescription}'");
+                }
+            }
+
+            if (Optional.IsDefined(TestFailoverState))
+            {
+                builder.Append("  testFailoverState:");
+                builder.AppendLine($" '{TestFailoverState.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(TestFailoverStateDescription))
+            {
+                builder.Append("  testFailoverStateDescription:");
+                if (TestFailoverStateDescription.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{TestFailoverStateDescription}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{TestFailoverStateDescription}'");
+                }
+            }
+
+            if (Optional.IsDefined(ResynchronizationState))
+            {
+                builder.Append("  resynchronizationState:");
+                builder.AppendLine($" '{ResynchronizationState.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(FabricObjectId))
+            {
+                builder.Append("  fabricObjectId:");
+                if (FabricObjectId.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{FabricObjectId}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{FabricObjectId}'");
+                }
+            }
+
+            if (Optional.IsDefined(FabricObjectName))
+            {
+                builder.Append("  fabricObjectName:");
+                if (FabricObjectName.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{FabricObjectName}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{FabricObjectName}'");
+                }
+            }
+
+            if (Optional.IsDefined(SourceFabricProviderId))
+            {
+                builder.Append("  sourceFabricProviderId:");
+                if (SourceFabricProviderId.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{SourceFabricProviderId}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{SourceFabricProviderId}'");
+                }
+            }
+
+            if (Optional.IsDefined(TargetFabricProviderId))
+            {
+                builder.Append("  targetFabricProviderId:");
+                if (TargetFabricProviderId.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{TargetFabricProviderId}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{TargetFabricProviderId}'");
+                }
+            }
+
+            if (Optional.IsDefined(FabricId))
+            {
+                builder.Append("  fabricId:");
+                if (FabricId.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{FabricId}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{FabricId}'");
+                }
+            }
+
+            if (Optional.IsDefined(TargetFabricId))
+            {
+                builder.Append("  targetFabricId:");
+                if (TargetFabricId.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{TargetFabricId}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{TargetFabricId}'");
+                }
+            }
+
+            if (Optional.IsDefined(DraId))
+            {
+                builder.Append("  draId:");
+                if (DraId.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{DraId}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{DraId}'");
+                }
+            }
+
+            if (Optional.IsDefined(TargetDraId))
+            {
+                builder.Append("  targetDraId:");
+                if (TargetDraId.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{TargetDraId}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{TargetDraId}'");
+                }
+            }
+
+            if (Optional.IsDefined(IsResyncRequired))
+            {
+                builder.Append("  resyncRequired:");
+                var boolValue = IsResyncRequired.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(LastSuccessfulPlannedFailoverOn))
+            {
+                builder.Append("  lastSuccessfulPlannedFailoverTime:");
+                var formattedDateTimeString = TypeFormatters.ToString(LastSuccessfulPlannedFailoverOn.Value, "o");
+                builder.AppendLine($" '{formattedDateTimeString}'");
+            }
+
+            if (Optional.IsDefined(LastSuccessfulUnplannedFailoverOn))
+            {
+                builder.Append("  lastSuccessfulUnplannedFailoverTime:");
+                var formattedDateTimeString = TypeFormatters.ToString(LastSuccessfulUnplannedFailoverOn.Value, "o");
+                builder.AppendLine($" '{formattedDateTimeString}'");
+            }
+
+            if (Optional.IsDefined(LastSuccessfulTestFailoverOn))
+            {
+                builder.Append("  lastSuccessfulTestFailoverTime:");
+                var formattedDateTimeString = TypeFormatters.ToString(LastSuccessfulTestFailoverOn.Value, "o");
+                builder.AppendLine($" '{formattedDateTimeString}'");
+            }
+
+            if (Optional.IsDefined(CurrentJob))
+            {
+                builder.Append("  currentJob:");
+                AppendChildObject(builder, CurrentJob, options, 2, false);
+            }
+
+            if (Optional.IsCollectionDefined(AllowedJobs))
+            {
+                if (AllowedJobs.Any())
+                {
+                    builder.Append("  allowedJobs:");
+                    builder.AppendLine(" [");
+                    foreach (var item in AllowedJobs)
+                    {
+                        if (item == null)
+                        {
+                            builder.Append("null");
+                            continue;
+                        }
+                        if (item.Contains(Environment.NewLine))
+                        {
+                            builder.AppendLine("    '''");
+                            builder.AppendLine($"{item}'''");
+                        }
+                        else
+                        {
+                            builder.AppendLine($"    '{item}'");
+                        }
+                    }
+                    builder.AppendLine("  ]");
+                }
+            }
+
+            if (Optional.IsDefined(LastFailedEnableProtectionJob))
+            {
+                builder.Append("  lastFailedEnableProtectionJob:");
+                AppendChildObject(builder, LastFailedEnableProtectionJob, options, 2, false);
+            }
+
+            if (Optional.IsDefined(LastFailedPlannedFailoverJob))
+            {
+                builder.Append("  lastFailedPlannedFailoverJob:");
+                AppendChildObject(builder, LastFailedPlannedFailoverJob, options, 2, false);
+            }
+
+            if (Optional.IsDefined(LastTestFailoverJob))
+            {
+                builder.Append("  lastTestFailoverJob:");
+                AppendChildObject(builder, LastTestFailoverJob, options, 2, false);
+            }
+
+            if (Optional.IsDefined(ReplicationHealth))
+            {
+                builder.Append("  replicationHealth:");
+                builder.AppendLine($" '{ReplicationHealth.Value.ToString()}'");
+            }
+
+            if (Optional.IsCollectionDefined(HealthErrors))
+            {
+                if (HealthErrors.Any())
+                {
+                    builder.Append("  healthErrors:");
+                    builder.AppendLine(" [");
+                    foreach (var item in HealthErrors)
+                    {
+                        AppendChildObject(builder, item, options, 4, true);
+                    }
+                    builder.AppendLine("  ]");
+                }
+            }
+
+            if (Optional.IsDefined(CustomProperties))
+            {
+                builder.Append("  customProperties:");
+                AppendChildObject(builder, CustomProperties, options, 2, false);
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            bool inMultilineString = false;
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (inMultilineString)
+                {
+                    if (line.Contains("'''"))
+                    {
+                        inMultilineString = false;
+                    }
+                    stringBuilder.AppendLine(line);
+                    continue;
+                }
+                if (line.Contains("'''"))
+                {
+                    inMultilineString = true;
+                    stringBuilder.AppendLine($"{indent}{line}");
+                    continue;
+                }
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<DataReplicationProtectedItemProperties>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<DataReplicationProtectedItemProperties>)this).GetFormatFromOptions(options) : options.Format;
@@ -475,6 +832,8 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(DataReplicationProtectedItemProperties)} does not support '{options.Format}' format.");
             }
@@ -491,6 +850,8 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeDataReplicationProtectedItemProperties(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(DataReplicationProtectedItemProperties)} does not support '{options.Format}' format.");
             }

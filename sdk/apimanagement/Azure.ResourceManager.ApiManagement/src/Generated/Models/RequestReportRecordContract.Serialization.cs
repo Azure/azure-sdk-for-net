@@ -9,6 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Net;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -316,6 +317,223 @@ namespace Azure.ResourceManager.ApiManagement.Models
             return new RequestReportRecordContract(apiId.Value, operationId.Value, productId.Value, userId.Value, Optional.ToNullable(method), uri.Value, ipAddress.Value, backendResponseCode.Value, Optional.ToNullable(responseCode), Optional.ToNullable(responseSize), Optional.ToNullable(timestamp), cache.Value, Optional.ToNullable(apiTime), Optional.ToNullable(serviceTime), apiRegion.Value, subscriptionId.Value, requestId.Value, Optional.ToNullable(requestSize), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(ApiId))
+            {
+                builder.Append("  apiId:");
+                if (ApiId.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{ApiId}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{ApiId}'");
+                }
+            }
+
+            if (Optional.IsDefined(OperationId))
+            {
+                builder.Append("  operationId:");
+                if (OperationId.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{OperationId}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{OperationId}'");
+                }
+            }
+
+            if (Optional.IsDefined(ProductId))
+            {
+                builder.Append("  productId:");
+                if (ProductId.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{ProductId}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{ProductId}'");
+                }
+            }
+
+            if (Optional.IsDefined(UserId))
+            {
+                builder.Append("  userId:");
+                if (UserId.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{UserId}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{UserId}'");
+                }
+            }
+
+            if (Optional.IsDefined(Method))
+            {
+                builder.Append("  method:");
+                builder.AppendLine($" '{Method.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Uri))
+            {
+                builder.Append("  url:");
+                builder.AppendLine($" '{Uri.AbsoluteUri}'");
+            }
+
+            if (Optional.IsDefined(IPAddress))
+            {
+                builder.Append("  ipAddress:");
+                builder.AppendLine($" '{IPAddress.ToString()}'");
+            }
+
+            if (Optional.IsDefined(BackendResponseCode))
+            {
+                builder.Append("  backendResponseCode:");
+                if (BackendResponseCode.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{BackendResponseCode}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{BackendResponseCode}'");
+                }
+            }
+
+            if (Optional.IsDefined(ResponseCode))
+            {
+                builder.Append("  responseCode:");
+                builder.AppendLine($" {ResponseCode.Value}");
+            }
+
+            if (Optional.IsDefined(ResponseSize))
+            {
+                builder.Append("  responseSize:");
+                builder.AppendLine($" {ResponseSize.Value}");
+            }
+
+            if (Optional.IsDefined(Timestamp))
+            {
+                builder.Append("  timestamp:");
+                var formattedDateTimeString = TypeFormatters.ToString(Timestamp.Value, "o");
+                builder.AppendLine($" '{formattedDateTimeString}'");
+            }
+
+            if (Optional.IsDefined(Cache))
+            {
+                builder.Append("  cache:");
+                if (Cache.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{Cache}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{Cache}'");
+                }
+            }
+
+            if (Optional.IsDefined(ApiTime))
+            {
+                builder.Append("  apiTime:");
+                builder.AppendLine($" '{ApiTime.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ServiceTime))
+            {
+                builder.Append("  serviceTime:");
+                builder.AppendLine($" '{ServiceTime.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ApiRegion))
+            {
+                builder.Append("  apiRegion:");
+                if (ApiRegion.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{ApiRegion}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{ApiRegion}'");
+                }
+            }
+
+            if (Optional.IsDefined(SubscriptionResourceId))
+            {
+                builder.Append("  subscriptionId:");
+                builder.AppendLine($" '{SubscriptionResourceId.ToString()}'");
+            }
+
+            if (Optional.IsDefined(RequestId))
+            {
+                builder.Append("  requestId:");
+                if (RequestId.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{RequestId}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{RequestId}'");
+                }
+            }
+
+            if (Optional.IsDefined(RequestSize))
+            {
+                builder.Append("  requestSize:");
+                builder.AppendLine($" {RequestSize.Value}");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            bool inMultilineString = false;
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (inMultilineString)
+                {
+                    if (line.Contains("'''"))
+                    {
+                        inMultilineString = false;
+                    }
+                    stringBuilder.AppendLine(line);
+                    continue;
+                }
+                if (line.Contains("'''"))
+                {
+                    inMultilineString = true;
+                    stringBuilder.AppendLine($"{indent}{line}");
+                    continue;
+                }
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<RequestReportRecordContract>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<RequestReportRecordContract>)this).GetFormatFromOptions(options) : options.Format;
@@ -324,6 +542,8 @@ namespace Azure.ResourceManager.ApiManagement.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(RequestReportRecordContract)} does not support '{options.Format}' format.");
             }
@@ -340,6 +560,8 @@ namespace Azure.ResourceManager.ApiManagement.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeRequestReportRecordContract(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(RequestReportRecordContract)} does not support '{options.Format}' format.");
             }

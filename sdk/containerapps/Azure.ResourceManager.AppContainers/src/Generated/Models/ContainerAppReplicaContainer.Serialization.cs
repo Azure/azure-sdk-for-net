@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -192,6 +193,146 @@ namespace Azure.ResourceManager.AppContainers.Models
             return new ContainerAppReplicaContainer(name.Value, containerId.Value, Optional.ToNullable(ready), Optional.ToNullable(started), Optional.ToNullable(restartCount), Optional.ToNullable(runningState), runningStateDetails.Value, logStreamEndpoint.Value, execEndpoint.Value, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                if (Name.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{Name}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{Name}'");
+                }
+            }
+
+            if (Optional.IsDefined(ContainerId))
+            {
+                builder.Append("  containerId:");
+                if (ContainerId.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{ContainerId}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{ContainerId}'");
+                }
+            }
+
+            if (Optional.IsDefined(IsReady))
+            {
+                builder.Append("  ready:");
+                var boolValue = IsReady.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(IsStarted))
+            {
+                builder.Append("  started:");
+                var boolValue = IsStarted.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(RestartCount))
+            {
+                builder.Append("  restartCount:");
+                builder.AppendLine($" {RestartCount.Value}");
+            }
+
+            if (Optional.IsDefined(RunningState))
+            {
+                builder.Append("  runningState:");
+                builder.AppendLine($" '{RunningState.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(RunningStateDetails))
+            {
+                builder.Append("  runningStateDetails:");
+                if (RunningStateDetails.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{RunningStateDetails}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{RunningStateDetails}'");
+                }
+            }
+
+            if (Optional.IsDefined(LogStreamEndpoint))
+            {
+                builder.Append("  logStreamEndpoint:");
+                if (LogStreamEndpoint.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{LogStreamEndpoint}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{LogStreamEndpoint}'");
+                }
+            }
+
+            if (Optional.IsDefined(ExecEndpoint))
+            {
+                builder.Append("  execEndpoint:");
+                if (ExecEndpoint.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{ExecEndpoint}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{ExecEndpoint}'");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            bool inMultilineString = false;
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (inMultilineString)
+                {
+                    if (line.Contains("'''"))
+                    {
+                        inMultilineString = false;
+                    }
+                    stringBuilder.AppendLine(line);
+                    continue;
+                }
+                if (line.Contains("'''"))
+                {
+                    inMultilineString = true;
+                    stringBuilder.AppendLine($"{indent}{line}");
+                    continue;
+                }
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<ContainerAppReplicaContainer>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ContainerAppReplicaContainer>)this).GetFormatFromOptions(options) : options.Format;
@@ -200,6 +341,8 @@ namespace Azure.ResourceManager.AppContainers.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(ContainerAppReplicaContainer)} does not support '{options.Format}' format.");
             }
@@ -216,6 +359,8 @@ namespace Azure.ResourceManager.AppContainers.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeContainerAppReplicaContainer(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(ContainerAppReplicaContainer)} does not support '{options.Format}' format.");
             }

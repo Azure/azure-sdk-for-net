@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -215,6 +217,149 @@ namespace Azure.ResourceManager.Monitor.Models
             return new MetricTrigger(metricName, metricNamespace.Value, metricResourceUri, Optional.ToNullable(metricResourceLocation), timeGrain, statistic, timeWindow, timeAggregation, @operator, threshold, Optional.ToList(dimensions), Optional.ToNullable(dividePerInstance), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(MetricName))
+            {
+                builder.Append("  metricName:");
+                if (MetricName.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{MetricName}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{MetricName}'");
+                }
+            }
+
+            if (Optional.IsDefined(MetricNamespace))
+            {
+                builder.Append("  metricNamespace:");
+                if (MetricNamespace.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{MetricNamespace}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{MetricNamespace}'");
+                }
+            }
+
+            if (Optional.IsDefined(MetricResourceId))
+            {
+                builder.Append("  metricResourceUri:");
+                builder.AppendLine($" '{MetricResourceId.ToString()}'");
+            }
+
+            if (Optional.IsDefined(MetricResourceLocation))
+            {
+                builder.Append("  metricResourceLocation:");
+                builder.AppendLine($" '{MetricResourceLocation.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(TimeGrain))
+            {
+                builder.Append("  timeGrain:");
+                var formattedTimeSpan = TypeFormatters.ToString(TimeGrain, "P");
+                builder.AppendLine($" '{formattedTimeSpan}'");
+            }
+
+            if (Optional.IsDefined(Statistic))
+            {
+                builder.Append("  statistic:");
+                builder.AppendLine($" '{Statistic.ToSerialString()}'");
+            }
+
+            if (Optional.IsDefined(TimeWindow))
+            {
+                builder.Append("  timeWindow:");
+                var formattedTimeSpan = TypeFormatters.ToString(TimeWindow, "P");
+                builder.AppendLine($" '{formattedTimeSpan}'");
+            }
+
+            if (Optional.IsDefined(TimeAggregation))
+            {
+                builder.Append("  timeAggregation:");
+                builder.AppendLine($" '{TimeAggregation.ToSerialString()}'");
+            }
+
+            if (Optional.IsDefined(Operator))
+            {
+                builder.Append("  operator:");
+                builder.AppendLine($" '{Operator.ToSerialString()}'");
+            }
+
+            if (Optional.IsDefined(Threshold))
+            {
+                builder.Append("  threshold:");
+                builder.AppendLine($" '{Threshold.ToString()}'");
+            }
+
+            if (Optional.IsCollectionDefined(Dimensions))
+            {
+                if (Dimensions.Any())
+                {
+                    builder.Append("  dimensions:");
+                    builder.AppendLine(" [");
+                    foreach (var item in Dimensions)
+                    {
+                        AppendChildObject(builder, item, options, 4, true);
+                    }
+                    builder.AppendLine("  ]");
+                }
+            }
+
+            if (Optional.IsDefined(IsDividedPerInstance))
+            {
+                builder.Append("  dividePerInstance:");
+                var boolValue = IsDividedPerInstance.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            bool inMultilineString = false;
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (inMultilineString)
+                {
+                    if (line.Contains("'''"))
+                    {
+                        inMultilineString = false;
+                    }
+                    stringBuilder.AppendLine(line);
+                    continue;
+                }
+                if (line.Contains("'''"))
+                {
+                    inMultilineString = true;
+                    stringBuilder.AppendLine($"{indent}{line}");
+                    continue;
+                }
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<MetricTrigger>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<MetricTrigger>)this).GetFormatFromOptions(options) : options.Format;
@@ -223,6 +368,8 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(MetricTrigger)} does not support '{options.Format}' format.");
             }
@@ -239,6 +386,8 @@ namespace Azure.ResourceManager.Monitor.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeMetricTrigger(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(MetricTrigger)} does not support '{options.Format}' format.");
             }

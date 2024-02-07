@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -353,6 +355,289 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             return new SiteRecoveryServicesProviderProperties(fabricType.Value, friendlyName.Value, providerVersion.Value, serverVersion.Value, providerVersionState.Value, Optional.ToNullable(providerVersionExpireOn), fabricFriendlyName.Value, Optional.ToNullable(lastHeartBeat), connectionStatus.Value, Optional.ToNullable(protectedItemCount), Optional.ToList(allowedScenarios), Optional.ToList(healthErrorDetails), draIdentifier.Value, machineId.Value, machineName.Value, biosId.Value, authenticationIdentityDetails.Value, resourceAccessIdentityDetails.Value, dataPlaneAuthenticationIdentityDetails.Value, providerVersionDetails.Value, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(FabricType))
+            {
+                builder.Append("  fabricType:");
+                if (FabricType.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{FabricType}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{FabricType}'");
+                }
+            }
+
+            if (Optional.IsDefined(FriendlyName))
+            {
+                builder.Append("  friendlyName:");
+                if (FriendlyName.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{FriendlyName}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{FriendlyName}'");
+                }
+            }
+
+            if (Optional.IsDefined(ProviderVersion))
+            {
+                builder.Append("  providerVersion:");
+                if (ProviderVersion.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{ProviderVersion}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{ProviderVersion}'");
+                }
+            }
+
+            if (Optional.IsDefined(ServerVersion))
+            {
+                builder.Append("  serverVersion:");
+                if (ServerVersion.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{ServerVersion}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{ServerVersion}'");
+                }
+            }
+
+            if (Optional.IsDefined(ProviderVersionState))
+            {
+                builder.Append("  providerVersionState:");
+                if (ProviderVersionState.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{ProviderVersionState}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{ProviderVersionState}'");
+                }
+            }
+
+            if (Optional.IsDefined(ProviderVersionExpireOn))
+            {
+                builder.Append("  providerVersionExpiryDate:");
+                var formattedDateTimeString = TypeFormatters.ToString(ProviderVersionExpireOn.Value, "o");
+                builder.AppendLine($" '{formattedDateTimeString}'");
+            }
+
+            if (Optional.IsDefined(FabricFriendlyName))
+            {
+                builder.Append("  fabricFriendlyName:");
+                if (FabricFriendlyName.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{FabricFriendlyName}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{FabricFriendlyName}'");
+                }
+            }
+
+            if (Optional.IsDefined(LastHeartbeatReceivedOn))
+            {
+                builder.Append("  lastHeartBeat:");
+                var formattedDateTimeString = TypeFormatters.ToString(LastHeartbeatReceivedOn.Value, "o");
+                builder.AppendLine($" '{formattedDateTimeString}'");
+            }
+
+            if (Optional.IsDefined(ConnectionStatus))
+            {
+                builder.Append("  connectionStatus:");
+                if (ConnectionStatus.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{ConnectionStatus}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{ConnectionStatus}'");
+                }
+            }
+
+            if (Optional.IsDefined(ProtectedItemCount))
+            {
+                builder.Append("  protectedItemCount:");
+                builder.AppendLine($" {ProtectedItemCount.Value}");
+            }
+
+            if (Optional.IsCollectionDefined(AllowedScenarios))
+            {
+                if (AllowedScenarios.Any())
+                {
+                    builder.Append("  allowedScenarios:");
+                    builder.AppendLine(" [");
+                    foreach (var item in AllowedScenarios)
+                    {
+                        if (item == null)
+                        {
+                            builder.Append("null");
+                            continue;
+                        }
+                        if (item.Contains(Environment.NewLine))
+                        {
+                            builder.AppendLine("    '''");
+                            builder.AppendLine($"{item}'''");
+                        }
+                        else
+                        {
+                            builder.AppendLine($"    '{item}'");
+                        }
+                    }
+                    builder.AppendLine("  ]");
+                }
+            }
+
+            if (Optional.IsCollectionDefined(HealthErrorDetails))
+            {
+                if (HealthErrorDetails.Any())
+                {
+                    builder.Append("  healthErrorDetails:");
+                    builder.AppendLine(" [");
+                    foreach (var item in HealthErrorDetails)
+                    {
+                        AppendChildObject(builder, item, options, 4, true);
+                    }
+                    builder.AppendLine("  ]");
+                }
+            }
+
+            if (Optional.IsDefined(DraIdentifier))
+            {
+                builder.Append("  draIdentifier:");
+                if (DraIdentifier.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{DraIdentifier}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{DraIdentifier}'");
+                }
+            }
+
+            if (Optional.IsDefined(MachineId))
+            {
+                builder.Append("  machineId:");
+                if (MachineId.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{MachineId}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{MachineId}'");
+                }
+            }
+
+            if (Optional.IsDefined(MachineName))
+            {
+                builder.Append("  machineName:");
+                if (MachineName.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{MachineName}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{MachineName}'");
+                }
+            }
+
+            if (Optional.IsDefined(BiosId))
+            {
+                builder.Append("  biosId:");
+                if (BiosId.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{BiosId}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{BiosId}'");
+                }
+            }
+
+            if (Optional.IsDefined(AuthenticationIdentityDetails))
+            {
+                builder.Append("  authenticationIdentityDetails:");
+                AppendChildObject(builder, AuthenticationIdentityDetails, options, 2, false);
+            }
+
+            if (Optional.IsDefined(ResourceAccessIdentityDetails))
+            {
+                builder.Append("  resourceAccessIdentityDetails:");
+                AppendChildObject(builder, ResourceAccessIdentityDetails, options, 2, false);
+            }
+
+            if (Optional.IsDefined(DataPlaneAuthenticationIdentityDetails))
+            {
+                builder.Append("  dataPlaneAuthenticationIdentityDetails:");
+                AppendChildObject(builder, DataPlaneAuthenticationIdentityDetails, options, 2, false);
+            }
+
+            if (Optional.IsDefined(ProviderVersionDetails))
+            {
+                builder.Append("  providerVersionDetails:");
+                AppendChildObject(builder, ProviderVersionDetails, options, 2, false);
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            bool inMultilineString = false;
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (inMultilineString)
+                {
+                    if (line.Contains("'''"))
+                    {
+                        inMultilineString = false;
+                    }
+                    stringBuilder.AppendLine(line);
+                    continue;
+                }
+                if (line.Contains("'''"))
+                {
+                    inMultilineString = true;
+                    stringBuilder.AppendLine($"{indent}{line}");
+                    continue;
+                }
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<SiteRecoveryServicesProviderProperties>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<SiteRecoveryServicesProviderProperties>)this).GetFormatFromOptions(options) : options.Format;
@@ -361,6 +646,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(SiteRecoveryServicesProviderProperties)} does not support '{options.Format}' format.");
             }
@@ -377,6 +664,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeSiteRecoveryServicesProviderProperties(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(SiteRecoveryServicesProviderProperties)} does not support '{options.Format}' format.");
             }

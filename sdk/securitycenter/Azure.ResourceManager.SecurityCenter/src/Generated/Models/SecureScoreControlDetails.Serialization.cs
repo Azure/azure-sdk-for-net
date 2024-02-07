@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -287,6 +288,144 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             return new SecureScoreControlDetails(id, name, type, systemData.Value, displayName.Value, Optional.ToNullable(healthyResourceCount), Optional.ToNullable(unhealthyResourceCount), Optional.ToNullable(notApplicableResourceCount), Optional.ToNullable(weight), definition.Value, Optional.ToNullable(max), Optional.ToNullable(current), Optional.ToNullable(percentage), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                if (Name.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{Name}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{Name}'");
+                }
+            }
+
+            if (Optional.IsDefined(Id))
+            {
+                builder.Append("  id:");
+                builder.AppendLine($" '{Id.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SystemData))
+            {
+                builder.Append("  systemData:");
+                builder.AppendLine($" '{SystemData.ToString()}'");
+            }
+
+            builder.Append("  properties:");
+            builder.AppendLine(" {");
+            if (Optional.IsDefined(DisplayName))
+            {
+                builder.Append("    displayName:");
+                if (DisplayName.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{DisplayName}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{DisplayName}'");
+                }
+            }
+
+            if (Optional.IsDefined(HealthyResourceCount))
+            {
+                builder.Append("    healthyResourceCount:");
+                builder.AppendLine($" {HealthyResourceCount.Value}");
+            }
+
+            if (Optional.IsDefined(UnhealthyResourceCount))
+            {
+                builder.Append("    unhealthyResourceCount:");
+                builder.AppendLine($" {UnhealthyResourceCount.Value}");
+            }
+
+            if (Optional.IsDefined(NotApplicableResourceCount))
+            {
+                builder.Append("    notApplicableResourceCount:");
+                builder.AppendLine($" {NotApplicableResourceCount.Value}");
+            }
+
+            if (Optional.IsDefined(Weight))
+            {
+                builder.Append("    weight:");
+                builder.AppendLine($" '{Weight.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Definition))
+            {
+                builder.Append("    definition:");
+                AppendChildObject(builder, Definition, options, 4, false);
+            }
+
+            builder.Append("    score:");
+            builder.AppendLine(" {");
+            if (Optional.IsDefined(Max))
+            {
+                builder.Append("      max:");
+                builder.AppendLine($" {Max.Value}");
+            }
+
+            if (Optional.IsDefined(Current))
+            {
+                builder.Append("      current:");
+                builder.AppendLine($" '{Current.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Percentage))
+            {
+                builder.Append("      percentage:");
+                builder.AppendLine($" '{Percentage.Value.ToString()}'");
+            }
+
+            builder.AppendLine("    }");
+            builder.AppendLine("  }");
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            bool inMultilineString = false;
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (inMultilineString)
+                {
+                    if (line.Contains("'''"))
+                    {
+                        inMultilineString = false;
+                    }
+                    stringBuilder.AppendLine(line);
+                    continue;
+                }
+                if (line.Contains("'''"))
+                {
+                    inMultilineString = true;
+                    stringBuilder.AppendLine($"{indent}{line}");
+                    continue;
+                }
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<SecureScoreControlDetails>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<SecureScoreControlDetails>)this).GetFormatFromOptions(options) : options.Format;
@@ -295,6 +434,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(SecureScoreControlDetails)} does not support '{options.Format}' format.");
             }
@@ -311,6 +452,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeSecureScoreControlDetails(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(SecureScoreControlDetails)} does not support '{options.Format}' format.");
             }

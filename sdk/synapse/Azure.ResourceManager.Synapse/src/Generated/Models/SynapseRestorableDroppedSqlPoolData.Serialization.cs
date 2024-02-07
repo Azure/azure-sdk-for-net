@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -256,6 +257,176 @@ namespace Azure.ResourceManager.Synapse
             return new SynapseRestorableDroppedSqlPoolData(id, name, type, systemData.Value, Optional.ToNullable(location), databaseName.Value, edition.Value, maxSizeBytes.Value, serviceLevelObjective.Value, elasticPoolName.Value, Optional.ToNullable(creationDate), Optional.ToNullable(deletionDate), Optional.ToNullable(earliestRestoreDate), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                if (Name.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{Name}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{Name}'");
+                }
+            }
+
+            if (Optional.IsDefined(Location))
+            {
+                builder.Append("  location:");
+                builder.AppendLine($" '{Location.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Id))
+            {
+                builder.Append("  id:");
+                builder.AppendLine($" '{Id.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SystemData))
+            {
+                builder.Append("  systemData:");
+                builder.AppendLine($" '{SystemData.ToString()}'");
+            }
+
+            builder.Append("  properties:");
+            builder.AppendLine(" {");
+            if (Optional.IsDefined(DatabaseName))
+            {
+                builder.Append("    databaseName:");
+                if (DatabaseName.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{DatabaseName}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{DatabaseName}'");
+                }
+            }
+
+            if (Optional.IsDefined(Edition))
+            {
+                builder.Append("    edition:");
+                if (Edition.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{Edition}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{Edition}'");
+                }
+            }
+
+            if (Optional.IsDefined(MaxSizeBytes))
+            {
+                builder.Append("    maxSizeBytes:");
+                if (MaxSizeBytes.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{MaxSizeBytes}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{MaxSizeBytes}'");
+                }
+            }
+
+            if (Optional.IsDefined(ServiceLevelObjective))
+            {
+                builder.Append("    serviceLevelObjective:");
+                if (ServiceLevelObjective.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{ServiceLevelObjective}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{ServiceLevelObjective}'");
+                }
+            }
+
+            if (Optional.IsDefined(ElasticPoolName))
+            {
+                builder.Append("    elasticPoolName:");
+                if (ElasticPoolName.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{ElasticPoolName}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{ElasticPoolName}'");
+                }
+            }
+
+            if (Optional.IsDefined(CreatedOn))
+            {
+                builder.Append("    creationDate:");
+                var formattedDateTimeString = TypeFormatters.ToString(CreatedOn.Value, "o");
+                builder.AppendLine($" '{formattedDateTimeString}'");
+            }
+
+            if (Optional.IsDefined(DeletedOn))
+            {
+                builder.Append("    deletionDate:");
+                var formattedDateTimeString = TypeFormatters.ToString(DeletedOn.Value, "o");
+                builder.AppendLine($" '{formattedDateTimeString}'");
+            }
+
+            if (Optional.IsDefined(EarliestRestoreOn))
+            {
+                builder.Append("    earliestRestoreDate:");
+                var formattedDateTimeString = TypeFormatters.ToString(EarliestRestoreOn.Value, "o");
+                builder.AppendLine($" '{formattedDateTimeString}'");
+            }
+
+            builder.AppendLine("  }");
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            bool inMultilineString = false;
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (inMultilineString)
+                {
+                    if (line.Contains("'''"))
+                    {
+                        inMultilineString = false;
+                    }
+                    stringBuilder.AppendLine(line);
+                    continue;
+                }
+                if (line.Contains("'''"))
+                {
+                    inMultilineString = true;
+                    stringBuilder.AppendLine($"{indent}{line}");
+                    continue;
+                }
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<SynapseRestorableDroppedSqlPoolData>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<SynapseRestorableDroppedSqlPoolData>)this).GetFormatFromOptions(options) : options.Format;
@@ -264,6 +435,8 @@ namespace Azure.ResourceManager.Synapse
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(SynapseRestorableDroppedSqlPoolData)} does not support '{options.Format}' format.");
             }
@@ -280,6 +453,8 @@ namespace Azure.ResourceManager.Synapse
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeSynapseRestorableDroppedSqlPoolData(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(SynapseRestorableDroppedSqlPoolData)} does not support '{options.Format}' format.");
             }

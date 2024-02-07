@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -257,6 +258,158 @@ namespace Azure.ResourceManager.CostManagement.Models
             return new SavingsPlanUtilizationSummary(id, name, type, systemData.Value, kind, serializedAdditionalRawData, armSkuName.Value, benefitId.Value, benefitOrderId.Value, Optional.ToNullable(benefitType), Optional.ToNullable(usageDate), Optional.ToNullable(avgUtilizationPercentage), Optional.ToNullable(minUtilizationPercentage), Optional.ToNullable(maxUtilizationPercentage));
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                if (Name.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{Name}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{Name}'");
+                }
+            }
+
+            if (Optional.IsDefined(Kind))
+            {
+                builder.Append("  kind:");
+                builder.AppendLine($" '{Kind.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Id))
+            {
+                builder.Append("  id:");
+                builder.AppendLine($" '{Id.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SystemData))
+            {
+                builder.Append("  systemData:");
+                builder.AppendLine($" '{SystemData.ToString()}'");
+            }
+
+            builder.Append("  properties:");
+            builder.AppendLine(" {");
+            if (Optional.IsDefined(ArmSkuName))
+            {
+                builder.Append("    armSkuName:");
+                if (ArmSkuName.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{ArmSkuName}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{ArmSkuName}'");
+                }
+            }
+
+            if (Optional.IsDefined(BenefitId))
+            {
+                builder.Append("    benefitId:");
+                if (BenefitId.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{BenefitId}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{BenefitId}'");
+                }
+            }
+
+            if (Optional.IsDefined(BenefitOrderId))
+            {
+                builder.Append("    benefitOrderId:");
+                if (BenefitOrderId.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{BenefitOrderId}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{BenefitOrderId}'");
+                }
+            }
+
+            if (Optional.IsDefined(BenefitType))
+            {
+                builder.Append("    benefitType:");
+                builder.AppendLine($" '{BenefitType.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(UsageOn))
+            {
+                builder.Append("    usageDate:");
+                var formattedDateTimeString = TypeFormatters.ToString(UsageOn.Value, "o");
+                builder.AppendLine($" '{formattedDateTimeString}'");
+            }
+
+            if (Optional.IsDefined(AvgUtilizationPercentage))
+            {
+                builder.Append("    avgUtilizationPercentage:");
+                builder.AppendLine($" '{AvgUtilizationPercentage.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(MinUtilizationPercentage))
+            {
+                builder.Append("    minUtilizationPercentage:");
+                builder.AppendLine($" '{MinUtilizationPercentage.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(MaxUtilizationPercentage))
+            {
+                builder.Append("    maxUtilizationPercentage:");
+                builder.AppendLine($" '{MaxUtilizationPercentage.Value.ToString()}'");
+            }
+
+            builder.AppendLine("  }");
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            bool inMultilineString = false;
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (inMultilineString)
+                {
+                    if (line.Contains("'''"))
+                    {
+                        inMultilineString = false;
+                    }
+                    stringBuilder.AppendLine(line);
+                    continue;
+                }
+                if (line.Contains("'''"))
+                {
+                    inMultilineString = true;
+                    stringBuilder.AppendLine($"{indent}{line}");
+                    continue;
+                }
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<SavingsPlanUtilizationSummary>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<SavingsPlanUtilizationSummary>)this).GetFormatFromOptions(options) : options.Format;
@@ -265,6 +418,8 @@ namespace Azure.ResourceManager.CostManagement.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(SavingsPlanUtilizationSummary)} does not support '{options.Format}' format.");
             }
@@ -281,6 +436,8 @@ namespace Azure.ResourceManager.CostManagement.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeSavingsPlanUtilizationSummary(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(SavingsPlanUtilizationSummary)} does not support '{options.Format}' format.");
             }

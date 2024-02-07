@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
@@ -260,6 +262,180 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             return new SiteNetworkServicePropertiesFormat(Optional.ToNullable(provisioningState), managedResourceGroupConfiguration.Value, siteReference, publisherName.Value, Optional.ToNullable(publisherScope), networkServiceDesignGroupName.Value, networkServiceDesignVersionName.Value, networkServiceDesignVersionOfferingLocation.Value, networkServiceDesignVersionResourceReference.Value, Optional.ToDictionary(desiredStateConfigurationGroupValueReferences), lastStateNetworkServiceDesignVersionName.Value, Optional.ToDictionary(lastStateConfigurationGroupValueReferences), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(ProvisioningState))
+            {
+                builder.Append("  provisioningState:");
+                builder.AppendLine($" '{ProvisioningState.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ManagedResourceGroupConfiguration))
+            {
+                builder.Append("  managedResourceGroupConfiguration:");
+                AppendChildObject(builder, ManagedResourceGroupConfiguration, options, 2, false);
+            }
+
+            if (Optional.IsDefined(SiteReference))
+            {
+                builder.Append("  siteReference:");
+                AppendChildObject(builder, SiteReference, options, 2, false);
+            }
+
+            if (Optional.IsDefined(PublisherName))
+            {
+                builder.Append("  publisherName:");
+                if (PublisherName.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{PublisherName}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{PublisherName}'");
+                }
+            }
+
+            if (Optional.IsDefined(PublisherScope))
+            {
+                builder.Append("  publisherScope:");
+                builder.AppendLine($" '{PublisherScope.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(NetworkServiceDesignGroupName))
+            {
+                builder.Append("  networkServiceDesignGroupName:");
+                if (NetworkServiceDesignGroupName.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{NetworkServiceDesignGroupName}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{NetworkServiceDesignGroupName}'");
+                }
+            }
+
+            if (Optional.IsDefined(NetworkServiceDesignVersionName))
+            {
+                builder.Append("  networkServiceDesignVersionName:");
+                if (NetworkServiceDesignVersionName.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{NetworkServiceDesignVersionName}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{NetworkServiceDesignVersionName}'");
+                }
+            }
+
+            if (Optional.IsDefined(NetworkServiceDesignVersionOfferingLocation))
+            {
+                builder.Append("  networkServiceDesignVersionOfferingLocation:");
+                if (NetworkServiceDesignVersionOfferingLocation.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{NetworkServiceDesignVersionOfferingLocation}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{NetworkServiceDesignVersionOfferingLocation}'");
+                }
+            }
+
+            if (Optional.IsDefined(NetworkServiceDesignVersionResourceReference))
+            {
+                builder.Append("  networkServiceDesignVersionResourceReference:");
+                AppendChildObject(builder, NetworkServiceDesignVersionResourceReference, options, 2, false);
+            }
+
+            if (Optional.IsCollectionDefined(DesiredStateConfigurationGroupValueReferences))
+            {
+                if (DesiredStateConfigurationGroupValueReferences.Any())
+                {
+                    builder.Append("  desiredStateConfigurationGroupValueReferences:");
+                    builder.AppendLine(" {");
+                    foreach (var item in DesiredStateConfigurationGroupValueReferences)
+                    {
+                        builder.Append($"    {item.Key}:");
+                        AppendChildObject(builder, item.Value, options, 4, false);
+                    }
+                    builder.AppendLine("  }");
+                }
+            }
+
+            if (Optional.IsDefined(LastStateNetworkServiceDesignVersionName))
+            {
+                builder.Append("  lastStateNetworkServiceDesignVersionName:");
+                if (LastStateNetworkServiceDesignVersionName.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{LastStateNetworkServiceDesignVersionName}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{LastStateNetworkServiceDesignVersionName}'");
+                }
+            }
+
+            if (Optional.IsCollectionDefined(LastStateConfigurationGroupValueReferences))
+            {
+                if (LastStateConfigurationGroupValueReferences.Any())
+                {
+                    builder.Append("  lastStateConfigurationGroupValueReferences:");
+                    builder.AppendLine(" {");
+                    foreach (var item in LastStateConfigurationGroupValueReferences)
+                    {
+                        builder.Append($"    {item.Key}:");
+                        AppendChildObject(builder, item.Value, options, 4, false);
+                    }
+                    builder.AppendLine("  }");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            bool inMultilineString = false;
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (inMultilineString)
+                {
+                    if (line.Contains("'''"))
+                    {
+                        inMultilineString = false;
+                    }
+                    stringBuilder.AppendLine(line);
+                    continue;
+                }
+                if (line.Contains("'''"))
+                {
+                    inMultilineString = true;
+                    stringBuilder.AppendLine($"{indent}{line}");
+                    continue;
+                }
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<SiteNetworkServicePropertiesFormat>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<SiteNetworkServicePropertiesFormat>)this).GetFormatFromOptions(options) : options.Format;
@@ -268,6 +444,8 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(SiteNetworkServicePropertiesFormat)} does not support '{options.Format}' format.");
             }
@@ -284,6 +462,8 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeSiteNetworkServicePropertiesFormat(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(SiteNetworkServicePropertiesFormat)} does not support '{options.Format}' format.");
             }

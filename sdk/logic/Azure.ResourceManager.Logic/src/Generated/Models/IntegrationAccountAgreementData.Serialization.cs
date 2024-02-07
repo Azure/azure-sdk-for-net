@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Logic.Models;
@@ -276,6 +278,185 @@ namespace Azure.ResourceManager.Logic
             return new IntegrationAccountAgreementData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(createdTime), Optional.ToNullable(changedTime), metadata.Value, agreementType, hostPartner, guestPartner, hostIdentity, guestIdentity, content, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                if (Name.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{Name}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{Name}'");
+                }
+            }
+
+            if (Optional.IsDefined(Location))
+            {
+                builder.Append("  location:");
+                builder.AppendLine($" '{Location.ToString()}'");
+            }
+
+            if (Optional.IsCollectionDefined(Tags))
+            {
+                if (Tags.Any())
+                {
+                    builder.Append("  tags:");
+                    builder.AppendLine(" {");
+                    foreach (var item in Tags)
+                    {
+                        builder.Append($"    {item.Key}:");
+                        if (item.Value == null)
+                        {
+                            builder.Append("null");
+                            continue;
+                        }
+                        if (item.Value.Contains(Environment.NewLine))
+                        {
+                            builder.AppendLine(" '''");
+                            builder.AppendLine($"{item.Value}'''");
+                        }
+                        else
+                        {
+                            builder.AppendLine($" '{item.Value}'");
+                        }
+                    }
+                    builder.AppendLine("  }");
+                }
+            }
+
+            if (Optional.IsDefined(Id))
+            {
+                builder.Append("  id:");
+                builder.AppendLine($" '{Id.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SystemData))
+            {
+                builder.Append("  systemData:");
+                builder.AppendLine($" '{SystemData.ToString()}'");
+            }
+
+            builder.Append("  properties:");
+            builder.AppendLine(" {");
+            if (Optional.IsDefined(CreatedOn))
+            {
+                builder.Append("    createdTime:");
+                var formattedDateTimeString = TypeFormatters.ToString(CreatedOn.Value, "o");
+                builder.AppendLine($" '{formattedDateTimeString}'");
+            }
+
+            if (Optional.IsDefined(ChangedOn))
+            {
+                builder.Append("    changedTime:");
+                var formattedDateTimeString = TypeFormatters.ToString(ChangedOn.Value, "o");
+                builder.AppendLine($" '{formattedDateTimeString}'");
+            }
+
+            if (Optional.IsDefined(Metadata))
+            {
+                builder.Append("    metadata:");
+                builder.AppendLine($" '{Metadata.ToString()}'");
+            }
+
+            if (Optional.IsDefined(AgreementType))
+            {
+                builder.Append("    agreementType:");
+                builder.AppendLine($" '{AgreementType.ToSerialString()}'");
+            }
+
+            if (Optional.IsDefined(HostPartner))
+            {
+                builder.Append("    hostPartner:");
+                if (HostPartner.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{HostPartner}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{HostPartner}'");
+                }
+            }
+
+            if (Optional.IsDefined(GuestPartner))
+            {
+                builder.Append("    guestPartner:");
+                if (GuestPartner.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{GuestPartner}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{GuestPartner}'");
+                }
+            }
+
+            if (Optional.IsDefined(HostIdentity))
+            {
+                builder.Append("    hostIdentity:");
+                AppendChildObject(builder, HostIdentity, options, 4, false);
+            }
+
+            if (Optional.IsDefined(GuestIdentity))
+            {
+                builder.Append("    guestIdentity:");
+                AppendChildObject(builder, GuestIdentity, options, 4, false);
+            }
+
+            if (Optional.IsDefined(Content))
+            {
+                builder.Append("    content:");
+                AppendChildObject(builder, Content, options, 4, false);
+            }
+
+            builder.AppendLine("  }");
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            bool inMultilineString = false;
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (inMultilineString)
+                {
+                    if (line.Contains("'''"))
+                    {
+                        inMultilineString = false;
+                    }
+                    stringBuilder.AppendLine(line);
+                    continue;
+                }
+                if (line.Contains("'''"))
+                {
+                    inMultilineString = true;
+                    stringBuilder.AppendLine($"{indent}{line}");
+                    continue;
+                }
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<IntegrationAccountAgreementData>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<IntegrationAccountAgreementData>)this).GetFormatFromOptions(options) : options.Format;
@@ -284,6 +465,8 @@ namespace Azure.ResourceManager.Logic
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(IntegrationAccountAgreementData)} does not support '{options.Format}' format.");
             }
@@ -300,6 +483,8 @@ namespace Azure.ResourceManager.Logic
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeIntegrationAccountAgreementData(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(IntegrationAccountAgreementData)} does not support '{options.Format}' format.");
             }

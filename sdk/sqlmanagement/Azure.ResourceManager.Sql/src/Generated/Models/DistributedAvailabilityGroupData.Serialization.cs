@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -268,6 +269,187 @@ namespace Azure.ResourceManager.Sql
             return new DistributedAvailabilityGroupData(id, name, type, systemData.Value, targetDatabase.Value, sourceEndpoint.Value, primaryAvailabilityGroupName.Value, secondaryAvailabilityGroupName.Value, Optional.ToNullable(replicationMode), Optional.ToNullable(distributedAvailabilityGroupId), Optional.ToNullable(sourceReplicaId), Optional.ToNullable(targetReplicaId), linkState.Value, lastHardenedLsn.Value, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                if (Name.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{Name}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{Name}'");
+                }
+            }
+
+            if (Optional.IsDefined(Id))
+            {
+                builder.Append("  id:");
+                builder.AppendLine($" '{Id.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SystemData))
+            {
+                builder.Append("  systemData:");
+                builder.AppendLine($" '{SystemData.ToString()}'");
+            }
+
+            builder.Append("  properties:");
+            builder.AppendLine(" {");
+            if (Optional.IsDefined(TargetDatabase))
+            {
+                builder.Append("    targetDatabase:");
+                if (TargetDatabase.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{TargetDatabase}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{TargetDatabase}'");
+                }
+            }
+
+            if (Optional.IsDefined(SourceEndpoint))
+            {
+                builder.Append("    sourceEndpoint:");
+                if (SourceEndpoint.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{SourceEndpoint}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{SourceEndpoint}'");
+                }
+            }
+
+            if (Optional.IsDefined(PrimaryAvailabilityGroupName))
+            {
+                builder.Append("    primaryAvailabilityGroupName:");
+                if (PrimaryAvailabilityGroupName.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{PrimaryAvailabilityGroupName}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{PrimaryAvailabilityGroupName}'");
+                }
+            }
+
+            if (Optional.IsDefined(SecondaryAvailabilityGroupName))
+            {
+                builder.Append("    secondaryAvailabilityGroupName:");
+                if (SecondaryAvailabilityGroupName.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{SecondaryAvailabilityGroupName}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{SecondaryAvailabilityGroupName}'");
+                }
+            }
+
+            if (Optional.IsDefined(ReplicationMode))
+            {
+                builder.Append("    replicationMode:");
+                builder.AppendLine($" '{ReplicationMode.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(DistributedAvailabilityGroupId))
+            {
+                builder.Append("    distributedAvailabilityGroupId:");
+                builder.AppendLine($" '{DistributedAvailabilityGroupId.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SourceReplicaId))
+            {
+                builder.Append("    sourceReplicaId:");
+                builder.AppendLine($" '{SourceReplicaId.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(TargetReplicaId))
+            {
+                builder.Append("    targetReplicaId:");
+                builder.AppendLine($" '{TargetReplicaId.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(LinkState))
+            {
+                builder.Append("    linkState:");
+                if (LinkState.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{LinkState}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{LinkState}'");
+                }
+            }
+
+            if (Optional.IsDefined(LastHardenedLsn))
+            {
+                builder.Append("    lastHardenedLsn:");
+                if (LastHardenedLsn.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{LastHardenedLsn}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{LastHardenedLsn}'");
+                }
+            }
+
+            builder.AppendLine("  }");
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            bool inMultilineString = false;
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (inMultilineString)
+                {
+                    if (line.Contains("'''"))
+                    {
+                        inMultilineString = false;
+                    }
+                    stringBuilder.AppendLine(line);
+                    continue;
+                }
+                if (line.Contains("'''"))
+                {
+                    inMultilineString = true;
+                    stringBuilder.AppendLine($"{indent}{line}");
+                    continue;
+                }
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<DistributedAvailabilityGroupData>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<DistributedAvailabilityGroupData>)this).GetFormatFromOptions(options) : options.Format;
@@ -276,6 +458,8 @@ namespace Azure.ResourceManager.Sql
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(DistributedAvailabilityGroupData)} does not support '{options.Format}' format.");
             }
@@ -292,6 +476,8 @@ namespace Azure.ResourceManager.Sql
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeDistributedAvailabilityGroupData(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(DistributedAvailabilityGroupData)} does not support '{options.Format}' format.");
             }

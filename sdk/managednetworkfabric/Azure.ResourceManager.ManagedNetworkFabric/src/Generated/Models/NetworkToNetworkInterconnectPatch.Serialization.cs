@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -246,6 +247,121 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             return new NetworkToNetworkInterconnectPatch(id, name, type, systemData.Value, layer2Configuration.Value, optionBLayer3Configuration.Value, npbStaticRouteConfiguration.Value, importRoutePolicy.Value, exportRoutePolicy.Value, egressAclId.Value, ingressAclId.Value, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                if (Name.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{Name}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{Name}'");
+                }
+            }
+
+            if (Optional.IsDefined(Id))
+            {
+                builder.Append("  id:");
+                builder.AppendLine($" '{Id.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SystemData))
+            {
+                builder.Append("  systemData:");
+                builder.AppendLine($" '{SystemData.ToString()}'");
+            }
+
+            builder.Append("  properties:");
+            builder.AppendLine(" {");
+            if (Optional.IsDefined(Layer2Configuration))
+            {
+                builder.Append("    layer2Configuration:");
+                AppendChildObject(builder, Layer2Configuration, options, 4, false);
+            }
+
+            if (Optional.IsDefined(OptionBLayer3Configuration))
+            {
+                builder.Append("    optionBLayer3Configuration:");
+                AppendChildObject(builder, OptionBLayer3Configuration, options, 4, false);
+            }
+
+            if (Optional.IsDefined(NpbStaticRouteConfiguration))
+            {
+                builder.Append("    npbStaticRouteConfiguration:");
+                AppendChildObject(builder, NpbStaticRouteConfiguration, options, 4, false);
+            }
+
+            if (Optional.IsDefined(ImportRoutePolicy))
+            {
+                builder.Append("    importRoutePolicy:");
+                AppendChildObject(builder, ImportRoutePolicy, options, 4, false);
+            }
+
+            if (Optional.IsDefined(ExportRoutePolicy))
+            {
+                builder.Append("    exportRoutePolicy:");
+                AppendChildObject(builder, ExportRoutePolicy, options, 4, false);
+            }
+
+            if (Optional.IsDefined(EgressAclId))
+            {
+                builder.Append("    egressAclId:");
+                builder.AppendLine($" '{EgressAclId.ToString()}'");
+            }
+
+            if (Optional.IsDefined(IngressAclId))
+            {
+                builder.Append("    ingressAclId:");
+                builder.AppendLine($" '{IngressAclId.ToString()}'");
+            }
+
+            builder.AppendLine("  }");
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            bool inMultilineString = false;
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (inMultilineString)
+                {
+                    if (line.Contains("'''"))
+                    {
+                        inMultilineString = false;
+                    }
+                    stringBuilder.AppendLine(line);
+                    continue;
+                }
+                if (line.Contains("'''"))
+                {
+                    inMultilineString = true;
+                    stringBuilder.AppendLine($"{indent}{line}");
+                    continue;
+                }
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<NetworkToNetworkInterconnectPatch>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<NetworkToNetworkInterconnectPatch>)this).GetFormatFromOptions(options) : options.Format;
@@ -254,6 +370,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(NetworkToNetworkInterconnectPatch)} does not support '{options.Format}' format.");
             }
@@ -270,6 +388,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeNetworkToNetworkInterconnectPatch(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(NetworkToNetworkInterconnectPatch)} does not support '{options.Format}' format.");
             }

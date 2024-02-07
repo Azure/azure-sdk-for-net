@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -268,6 +269,280 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             return new ProvisionedClusterPropertiesAutoScalerProfile(balanceSimilarNodeGroups.Value, Optional.ToNullable(expander), maxEmptyBulkDelete.Value, maxGracefulTerminationSec.Value, maxNodeProvisionTime.Value, maxTotalUnreadyPercentage.Value, newPodScaleUpDelay.Value, okTotalUnreadyCount.Value, scanInterval.Value, scaleDownDelayAfterAdd.Value, scaleDownDelayAfterDelete.Value, scaleDownDelayAfterFailure.Value, scaleDownUnneededTime.Value, scaleDownUnreadyTime.Value, scaleDownUtilizationThreshold.Value, skipNodesWithLocalStorage.Value, skipNodesWithSystemPods.Value, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(BalanceSimilarNodeGroups))
+            {
+                builder.Append("  balance-similar-node-groups:");
+                if (BalanceSimilarNodeGroups.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{BalanceSimilarNodeGroups}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{BalanceSimilarNodeGroups}'");
+                }
+            }
+
+            if (Optional.IsDefined(Expander))
+            {
+                builder.Append("  expander:");
+                builder.AppendLine($" '{Expander.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(MaxEmptyBulkDelete))
+            {
+                builder.Append("  max-empty-bulk-delete:");
+                if (MaxEmptyBulkDelete.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{MaxEmptyBulkDelete}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{MaxEmptyBulkDelete}'");
+                }
+            }
+
+            if (Optional.IsDefined(MaxGracefulTerminationSec))
+            {
+                builder.Append("  max-graceful-termination-sec:");
+                if (MaxGracefulTerminationSec.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{MaxGracefulTerminationSec}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{MaxGracefulTerminationSec}'");
+                }
+            }
+
+            if (Optional.IsDefined(MaxNodeProvisionTime))
+            {
+                builder.Append("  max-node-provision-time:");
+                if (MaxNodeProvisionTime.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{MaxNodeProvisionTime}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{MaxNodeProvisionTime}'");
+                }
+            }
+
+            if (Optional.IsDefined(MaxTotalUnreadyPercentage))
+            {
+                builder.Append("  max-total-unready-percentage:");
+                if (MaxTotalUnreadyPercentage.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{MaxTotalUnreadyPercentage}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{MaxTotalUnreadyPercentage}'");
+                }
+            }
+
+            if (Optional.IsDefined(NewPodScaleUpDelay))
+            {
+                builder.Append("  new-pod-scale-up-delay:");
+                if (NewPodScaleUpDelay.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{NewPodScaleUpDelay}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{NewPodScaleUpDelay}'");
+                }
+            }
+
+            if (Optional.IsDefined(OkTotalUnreadyCount))
+            {
+                builder.Append("  ok-total-unready-count:");
+                if (OkTotalUnreadyCount.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{OkTotalUnreadyCount}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{OkTotalUnreadyCount}'");
+                }
+            }
+
+            if (Optional.IsDefined(ScanInterval))
+            {
+                builder.Append("  scan-interval:");
+                if (ScanInterval.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{ScanInterval}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{ScanInterval}'");
+                }
+            }
+
+            if (Optional.IsDefined(ScaleDownDelayAfterAdd))
+            {
+                builder.Append("  scale-down-delay-after-add:");
+                if (ScaleDownDelayAfterAdd.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{ScaleDownDelayAfterAdd}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{ScaleDownDelayAfterAdd}'");
+                }
+            }
+
+            if (Optional.IsDefined(ScaleDownDelayAfterDelete))
+            {
+                builder.Append("  scale-down-delay-after-delete:");
+                if (ScaleDownDelayAfterDelete.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{ScaleDownDelayAfterDelete}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{ScaleDownDelayAfterDelete}'");
+                }
+            }
+
+            if (Optional.IsDefined(ScaleDownDelayAfterFailure))
+            {
+                builder.Append("  scale-down-delay-after-failure:");
+                if (ScaleDownDelayAfterFailure.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{ScaleDownDelayAfterFailure}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{ScaleDownDelayAfterFailure}'");
+                }
+            }
+
+            if (Optional.IsDefined(ScaleDownUnneededTime))
+            {
+                builder.Append("  scale-down-unneeded-time:");
+                if (ScaleDownUnneededTime.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{ScaleDownUnneededTime}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{ScaleDownUnneededTime}'");
+                }
+            }
+
+            if (Optional.IsDefined(ScaleDownUnreadyTime))
+            {
+                builder.Append("  scale-down-unready-time:");
+                if (ScaleDownUnreadyTime.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{ScaleDownUnreadyTime}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{ScaleDownUnreadyTime}'");
+                }
+            }
+
+            if (Optional.IsDefined(ScaleDownUtilizationThreshold))
+            {
+                builder.Append("  scale-down-utilization-threshold:");
+                if (ScaleDownUtilizationThreshold.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{ScaleDownUtilizationThreshold}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{ScaleDownUtilizationThreshold}'");
+                }
+            }
+
+            if (Optional.IsDefined(SkipNodesWithLocalStorage))
+            {
+                builder.Append("  skip-nodes-with-local-storage:");
+                if (SkipNodesWithLocalStorage.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{SkipNodesWithLocalStorage}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{SkipNodesWithLocalStorage}'");
+                }
+            }
+
+            if (Optional.IsDefined(SkipNodesWithSystemPods))
+            {
+                builder.Append("  skip-nodes-with-system-pods:");
+                if (SkipNodesWithSystemPods.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{SkipNodesWithSystemPods}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{SkipNodesWithSystemPods}'");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            bool inMultilineString = false;
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (inMultilineString)
+                {
+                    if (line.Contains("'''"))
+                    {
+                        inMultilineString = false;
+                    }
+                    stringBuilder.AppendLine(line);
+                    continue;
+                }
+                if (line.Contains("'''"))
+                {
+                    inMultilineString = true;
+                    stringBuilder.AppendLine($"{indent}{line}");
+                    continue;
+                }
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<ProvisionedClusterPropertiesAutoScalerProfile>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ProvisionedClusterPropertiesAutoScalerProfile>)this).GetFormatFromOptions(options) : options.Format;
@@ -276,6 +551,8 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(ProvisionedClusterPropertiesAutoScalerProfile)} does not support '{options.Format}' format.");
             }
@@ -292,6 +569,8 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeProvisionedClusterPropertiesAutoScalerProfile(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(ProvisionedClusterPropertiesAutoScalerProfile)} does not support '{options.Format}' format.");
             }

@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Analysis.Models;
@@ -345,6 +347,193 @@ namespace Azure.ResourceManager.Analysis
             return new AnalysisServerData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, asAdministrators.Value, backupBlobContainerUri.Value, gatewayDetails.Value, ipV4FirewallSettings.Value, Optional.ToNullable(querypoolConnectionMode), Optional.ToNullable(managedMode), Optional.ToNullable(serverMonitorMode), Optional.ToNullable(state), Optional.ToNullable(provisioningState), serverFullName.Value, sku0.Value, sku, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                if (Name.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{Name}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{Name}'");
+                }
+            }
+
+            if (Optional.IsDefined(Location))
+            {
+                builder.Append("  location:");
+                builder.AppendLine($" '{Location.ToString()}'");
+            }
+
+            if (Optional.IsCollectionDefined(Tags))
+            {
+                if (Tags.Any())
+                {
+                    builder.Append("  tags:");
+                    builder.AppendLine(" {");
+                    foreach (var item in Tags)
+                    {
+                        builder.Append($"    {item.Key}:");
+                        if (item.Value == null)
+                        {
+                            builder.Append("null");
+                            continue;
+                        }
+                        if (item.Value.Contains(Environment.NewLine))
+                        {
+                            builder.AppendLine(" '''");
+                            builder.AppendLine($"{item.Value}'''");
+                        }
+                        else
+                        {
+                            builder.AppendLine($" '{item.Value}'");
+                        }
+                    }
+                    builder.AppendLine("  }");
+                }
+            }
+
+            if (Optional.IsDefined(AnalysisSku))
+            {
+                builder.Append("  sku:");
+                AppendChildObject(builder, AnalysisSku, options, 2, false);
+            }
+
+            if (Optional.IsDefined(Id))
+            {
+                builder.Append("  id:");
+                builder.AppendLine($" '{Id.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SystemData))
+            {
+                builder.Append("  systemData:");
+                builder.AppendLine($" '{SystemData.ToString()}'");
+            }
+
+            builder.Append("  properties:");
+            builder.AppendLine(" {");
+            if (Optional.IsDefined(AsAdministrators))
+            {
+                builder.Append("    asAdministrators:");
+                AppendChildObject(builder, AsAdministrators, options, 4, false);
+            }
+
+            if (Optional.IsDefined(BackupBlobContainerUri))
+            {
+                builder.Append("    backupBlobContainerUri:");
+                builder.AppendLine($" '{BackupBlobContainerUri.AbsoluteUri}'");
+            }
+
+            if (Optional.IsDefined(GatewayDetails))
+            {
+                builder.Append("    gatewayDetails:");
+                AppendChildObject(builder, GatewayDetails, options, 4, false);
+            }
+
+            if (Optional.IsDefined(IPv4FirewallSettings))
+            {
+                builder.Append("    ipV4FirewallSettings:");
+                AppendChildObject(builder, IPv4FirewallSettings, options, 4, false);
+            }
+
+            if (Optional.IsDefined(QueryPoolConnectionMode))
+            {
+                builder.Append("    querypoolConnectionMode:");
+                builder.AppendLine($" '{QueryPoolConnectionMode.Value.ToSerialString()}'");
+            }
+
+            if (Optional.IsDefined(ManagedMode))
+            {
+                builder.Append("    managedMode:");
+                builder.AppendLine(ManagedMode.Value.ToString());
+            }
+
+            if (Optional.IsDefined(ServerMonitorMode))
+            {
+                builder.Append("    serverMonitorMode:");
+                builder.AppendLine(ServerMonitorMode.Value.ToString());
+            }
+
+            if (Optional.IsDefined(State))
+            {
+                builder.Append("    state:");
+                builder.AppendLine($" '{State.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ProvisioningState))
+            {
+                builder.Append("    provisioningState:");
+                builder.AppendLine($" '{ProvisioningState.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ServerFullName))
+            {
+                builder.Append("    serverFullName:");
+                if (ServerFullName.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{ServerFullName}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{ServerFullName}'");
+                }
+            }
+
+            if (Optional.IsDefined(AnalysisServerSku))
+            {
+                builder.Append("    sku:");
+                AppendChildObject(builder, AnalysisServerSku, options, 4, false);
+            }
+
+            builder.AppendLine("  }");
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            bool inMultilineString = false;
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (inMultilineString)
+                {
+                    if (line.Contains("'''"))
+                    {
+                        inMultilineString = false;
+                    }
+                    stringBuilder.AppendLine(line);
+                    continue;
+                }
+                if (line.Contains("'''"))
+                {
+                    inMultilineString = true;
+                    stringBuilder.AppendLine($"{indent}{line}");
+                    continue;
+                }
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<AnalysisServerData>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<AnalysisServerData>)this).GetFormatFromOptions(options) : options.Format;
@@ -353,6 +542,8 @@ namespace Azure.ResourceManager.Analysis
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(AnalysisServerData)} does not support '{options.Format}' format.");
             }
@@ -369,6 +560,8 @@ namespace Azure.ResourceManager.Analysis
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeAnalysisServerData(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(AnalysisServerData)} does not support '{options.Format}' format.");
             }

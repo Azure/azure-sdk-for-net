@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.ContainerService.Models;
@@ -813,6 +815,474 @@ namespace Azure.ResourceManager.ContainerService
             return new ContainerServiceManagedClusterData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, sku.Value, extendedLocation, identity.Value, provisioningState.Value, powerState.Value, Optional.ToNullable(maxAgentPools), kubernetesVersion.Value, currentKubernetesVersion.Value, dnsPrefix.Value, fqdnSubdomain.Value, fqdn.Value, privateFQDN.Value, azurePortalFQDN.Value, Optional.ToList(agentPoolProfiles), linuxProfile.Value, windowsProfile.Value, servicePrincipalProfile.Value, Optional.ToDictionary(addonProfiles), podIdentityProfile.Value, oidcIssuerProfile.Value, nodeResourceGroup.Value, Optional.ToNullable(enableRBAC), Optional.ToNullable(supportPlan), Optional.ToNullable(enablePodSecurityPolicy), networkProfile.Value, aadProfile.Value, autoUpgradeProfile.Value, upgradeSettings.Value, autoScalerProfile.Value, apiServerAccessProfile.Value, diskEncryptionSetId.Value, Optional.ToDictionary(identityProfile), Optional.ToList(privateLinkResources), Optional.ToNullable(disableLocalAccounts), httpProxyConfig.Value, securityProfile.Value, storageProfile.Value, Optional.ToNullable(publicNetworkAccess), workloadAutoScalerProfile.Value, azureMonitorProfile.Value, serviceMeshProfile.Value, resourceUID.Value, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                if (Name.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{Name}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{Name}'");
+                }
+            }
+
+            if (Optional.IsDefined(Location))
+            {
+                builder.Append("  location:");
+                builder.AppendLine($" '{Location.ToString()}'");
+            }
+
+            if (Optional.IsCollectionDefined(Tags))
+            {
+                if (Tags.Any())
+                {
+                    builder.Append("  tags:");
+                    builder.AppendLine(" {");
+                    foreach (var item in Tags)
+                    {
+                        builder.Append($"    {item.Key}:");
+                        if (item.Value == null)
+                        {
+                            builder.Append("null");
+                            continue;
+                        }
+                        if (item.Value.Contains(Environment.NewLine))
+                        {
+                            builder.AppendLine(" '''");
+                            builder.AppendLine($"{item.Value}'''");
+                        }
+                        else
+                        {
+                            builder.AppendLine($" '{item.Value}'");
+                        }
+                    }
+                    builder.AppendLine("  }");
+                }
+            }
+
+            if (Optional.IsDefined(Sku))
+            {
+                builder.Append("  sku:");
+                AppendChildObject(builder, Sku, options, 2, false);
+            }
+
+            if (Optional.IsDefined(ExtendedLocation))
+            {
+                builder.Append("  extendedLocation:");
+                AppendChildObject(builder, ExtendedLocation, options, 2, false);
+            }
+
+            if (Optional.IsDefined(ClusterIdentity))
+            {
+                builder.Append("  identity:");
+                AppendChildObject(builder, ClusterIdentity, options, 2, false);
+            }
+
+            if (Optional.IsDefined(Id))
+            {
+                builder.Append("  id:");
+                builder.AppendLine($" '{Id.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SystemData))
+            {
+                builder.Append("  systemData:");
+                builder.AppendLine($" '{SystemData.ToString()}'");
+            }
+
+            builder.Append("  properties:");
+            builder.AppendLine(" {");
+            if (Optional.IsDefined(ProvisioningState))
+            {
+                builder.Append("    provisioningState:");
+                if (ProvisioningState.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{ProvisioningState}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{ProvisioningState}'");
+                }
+            }
+
+            if (Optional.IsDefined(PowerState))
+            {
+                builder.Append("    powerState:");
+                AppendChildObject(builder, PowerState, options, 4, false);
+            }
+
+            if (Optional.IsDefined(MaxAgentPools))
+            {
+                builder.Append("    maxAgentPools:");
+                builder.AppendLine($" {MaxAgentPools.Value}");
+            }
+
+            if (Optional.IsDefined(KubernetesVersion))
+            {
+                builder.Append("    kubernetesVersion:");
+                if (KubernetesVersion.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{KubernetesVersion}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{KubernetesVersion}'");
+                }
+            }
+
+            if (Optional.IsDefined(CurrentKubernetesVersion))
+            {
+                builder.Append("    currentKubernetesVersion:");
+                if (CurrentKubernetesVersion.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{CurrentKubernetesVersion}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{CurrentKubernetesVersion}'");
+                }
+            }
+
+            if (Optional.IsDefined(DnsPrefix))
+            {
+                builder.Append("    dnsPrefix:");
+                if (DnsPrefix.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{DnsPrefix}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{DnsPrefix}'");
+                }
+            }
+
+            if (Optional.IsDefined(FqdnSubdomain))
+            {
+                builder.Append("    fqdnSubdomain:");
+                if (FqdnSubdomain.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{FqdnSubdomain}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{FqdnSubdomain}'");
+                }
+            }
+
+            if (Optional.IsDefined(Fqdn))
+            {
+                builder.Append("    fqdn:");
+                if (Fqdn.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{Fqdn}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{Fqdn}'");
+                }
+            }
+
+            if (Optional.IsDefined(PrivateFqdn))
+            {
+                builder.Append("    privateFQDN:");
+                if (PrivateFqdn.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{PrivateFqdn}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{PrivateFqdn}'");
+                }
+            }
+
+            if (Optional.IsDefined(AzurePortalFqdn))
+            {
+                builder.Append("    azurePortalFQDN:");
+                if (AzurePortalFqdn.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{AzurePortalFqdn}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{AzurePortalFqdn}'");
+                }
+            }
+
+            if (Optional.IsCollectionDefined(AgentPoolProfiles))
+            {
+                if (AgentPoolProfiles.Any())
+                {
+                    builder.Append("    agentPoolProfiles:");
+                    builder.AppendLine(" [");
+                    foreach (var item in AgentPoolProfiles)
+                    {
+                        AppendChildObject(builder, item, options, 6, true);
+                    }
+                    builder.AppendLine("    ]");
+                }
+            }
+
+            if (Optional.IsDefined(LinuxProfile))
+            {
+                builder.Append("    linuxProfile:");
+                AppendChildObject(builder, LinuxProfile, options, 4, false);
+            }
+
+            if (Optional.IsDefined(WindowsProfile))
+            {
+                builder.Append("    windowsProfile:");
+                AppendChildObject(builder, WindowsProfile, options, 4, false);
+            }
+
+            if (Optional.IsDefined(ServicePrincipalProfile))
+            {
+                builder.Append("    servicePrincipalProfile:");
+                AppendChildObject(builder, ServicePrincipalProfile, options, 4, false);
+            }
+
+            if (Optional.IsCollectionDefined(AddonProfiles))
+            {
+                if (AddonProfiles.Any())
+                {
+                    builder.Append("    addonProfiles:");
+                    builder.AppendLine(" {");
+                    foreach (var item in AddonProfiles)
+                    {
+                        builder.Append($"        {item.Key}:");
+                        AppendChildObject(builder, item.Value, options, 6, false);
+                    }
+                    builder.AppendLine("    }");
+                }
+            }
+
+            if (Optional.IsDefined(PodIdentityProfile))
+            {
+                builder.Append("    podIdentityProfile:");
+                AppendChildObject(builder, PodIdentityProfile, options, 4, false);
+            }
+
+            if (Optional.IsDefined(OidcIssuerProfile))
+            {
+                builder.Append("    oidcIssuerProfile:");
+                AppendChildObject(builder, OidcIssuerProfile, options, 4, false);
+            }
+
+            if (Optional.IsDefined(NodeResourceGroup))
+            {
+                builder.Append("    nodeResourceGroup:");
+                if (NodeResourceGroup.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{NodeResourceGroup}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{NodeResourceGroup}'");
+                }
+            }
+
+            if (Optional.IsDefined(EnableRbac))
+            {
+                builder.Append("    enableRBAC:");
+                var boolValue = EnableRbac.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(SupportPlan))
+            {
+                builder.Append("    supportPlan:");
+                builder.AppendLine($" '{SupportPlan.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(EnablePodSecurityPolicy))
+            {
+                builder.Append("    enablePodSecurityPolicy:");
+                var boolValue = EnablePodSecurityPolicy.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(NetworkProfile))
+            {
+                builder.Append("    networkProfile:");
+                AppendChildObject(builder, NetworkProfile, options, 4, false);
+            }
+
+            if (Optional.IsDefined(AadProfile))
+            {
+                builder.Append("    aadProfile:");
+                AppendChildObject(builder, AadProfile, options, 4, false);
+            }
+
+            if (Optional.IsDefined(AutoUpgradeProfile))
+            {
+                builder.Append("    autoUpgradeProfile:");
+                AppendChildObject(builder, AutoUpgradeProfile, options, 4, false);
+            }
+
+            if (Optional.IsDefined(UpgradeSettings))
+            {
+                builder.Append("    upgradeSettings:");
+                AppendChildObject(builder, UpgradeSettings, options, 4, false);
+            }
+
+            if (Optional.IsDefined(AutoScalerProfile))
+            {
+                builder.Append("    autoScalerProfile:");
+                AppendChildObject(builder, AutoScalerProfile, options, 4, false);
+            }
+
+            if (Optional.IsDefined(ApiServerAccessProfile))
+            {
+                builder.Append("    apiServerAccessProfile:");
+                AppendChildObject(builder, ApiServerAccessProfile, options, 4, false);
+            }
+
+            if (Optional.IsDefined(DiskEncryptionSetId))
+            {
+                builder.Append("    diskEncryptionSetID:");
+                builder.AppendLine($" '{DiskEncryptionSetId.ToString()}'");
+            }
+
+            if (Optional.IsCollectionDefined(IdentityProfile))
+            {
+                if (IdentityProfile.Any())
+                {
+                    builder.Append("    identityProfile:");
+                    builder.AppendLine(" {");
+                    foreach (var item in IdentityProfile)
+                    {
+                        builder.Append($"        {item.Key}:");
+                        AppendChildObject(builder, item.Value, options, 6, false);
+                    }
+                    builder.AppendLine("    }");
+                }
+            }
+
+            if (Optional.IsCollectionDefined(PrivateLinkResources))
+            {
+                if (PrivateLinkResources.Any())
+                {
+                    builder.Append("    privateLinkResources:");
+                    builder.AppendLine(" [");
+                    foreach (var item in PrivateLinkResources)
+                    {
+                        AppendChildObject(builder, item, options, 6, true);
+                    }
+                    builder.AppendLine("    ]");
+                }
+            }
+
+            if (Optional.IsDefined(DisableLocalAccounts))
+            {
+                builder.Append("    disableLocalAccounts:");
+                var boolValue = DisableLocalAccounts.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(HttpProxyConfig))
+            {
+                builder.Append("    httpProxyConfig:");
+                AppendChildObject(builder, HttpProxyConfig, options, 4, false);
+            }
+
+            if (Optional.IsDefined(SecurityProfile))
+            {
+                builder.Append("    securityProfile:");
+                AppendChildObject(builder, SecurityProfile, options, 4, false);
+            }
+
+            if (Optional.IsDefined(StorageProfile))
+            {
+                builder.Append("    storageProfile:");
+                AppendChildObject(builder, StorageProfile, options, 4, false);
+            }
+
+            if (Optional.IsDefined(PublicNetworkAccess))
+            {
+                builder.Append("    publicNetworkAccess:");
+                builder.AppendLine($" '{PublicNetworkAccess.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(WorkloadAutoScalerProfile))
+            {
+                builder.Append("    workloadAutoScalerProfile:");
+                AppendChildObject(builder, WorkloadAutoScalerProfile, options, 4, false);
+            }
+
+            if (Optional.IsDefined(AzureMonitorProfile))
+            {
+                builder.Append("    azureMonitorProfile:");
+                AppendChildObject(builder, AzureMonitorProfile, options, 4, false);
+            }
+
+            if (Optional.IsDefined(ServiceMeshProfile))
+            {
+                builder.Append("    serviceMeshProfile:");
+                AppendChildObject(builder, ServiceMeshProfile, options, 4, false);
+            }
+
+            if (Optional.IsDefined(ResourceId))
+            {
+                builder.Append("    resourceUID:");
+                builder.AppendLine($" '{ResourceId.ToString()}'");
+            }
+
+            builder.AppendLine("  }");
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            bool inMultilineString = false;
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (inMultilineString)
+                {
+                    if (line.Contains("'''"))
+                    {
+                        inMultilineString = false;
+                    }
+                    stringBuilder.AppendLine(line);
+                    continue;
+                }
+                if (line.Contains("'''"))
+                {
+                    inMultilineString = true;
+                    stringBuilder.AppendLine($"{indent}{line}");
+                    continue;
+                }
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<ContainerServiceManagedClusterData>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ContainerServiceManagedClusterData>)this).GetFormatFromOptions(options) : options.Format;
@@ -821,6 +1291,8 @@ namespace Azure.ResourceManager.ContainerService
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(ContainerServiceManagedClusterData)} does not support '{options.Format}' format.");
             }
@@ -837,6 +1309,8 @@ namespace Azure.ResourceManager.ContainerService
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeContainerServiceManagedClusterData(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(ContainerServiceManagedClusterData)} does not support '{options.Format}' format.");
             }

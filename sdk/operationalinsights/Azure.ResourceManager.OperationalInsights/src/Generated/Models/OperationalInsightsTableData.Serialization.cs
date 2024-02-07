@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -318,6 +319,161 @@ namespace Azure.ResourceManager.OperationalInsights
             return new OperationalInsightsTableData(id, name, type, systemData.Value, Optional.ToNullable(retentionInDays), Optional.ToNullable(totalRetentionInDays), Optional.ToNullable(archiveRetentionInDays), searchResults.Value, restoredLogs.Value, resultStatistics.Value, Optional.ToNullable(plan), lastPlanModifiedDate.Value, schema.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(retentionInDaysAsDefault), Optional.ToNullable(totalRetentionInDaysAsDefault), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                if (Name.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{Name}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{Name}'");
+                }
+            }
+
+            if (Optional.IsDefined(Id))
+            {
+                builder.Append("  id:");
+                builder.AppendLine($" '{Id.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SystemData))
+            {
+                builder.Append("  systemData:");
+                builder.AppendLine($" '{SystemData.ToString()}'");
+            }
+
+            builder.Append("  properties:");
+            builder.AppendLine(" {");
+            if (Optional.IsDefined(RetentionInDays))
+            {
+                builder.Append("    retentionInDays:");
+                builder.AppendLine($" {RetentionInDays.Value}");
+            }
+
+            if (Optional.IsDefined(TotalRetentionInDays))
+            {
+                builder.Append("    totalRetentionInDays:");
+                builder.AppendLine($" {TotalRetentionInDays.Value}");
+            }
+
+            if (Optional.IsDefined(ArchiveRetentionInDays))
+            {
+                builder.Append("    archiveRetentionInDays:");
+                builder.AppendLine($" {ArchiveRetentionInDays.Value}");
+            }
+
+            if (Optional.IsDefined(SearchResults))
+            {
+                builder.Append("    searchResults:");
+                AppendChildObject(builder, SearchResults, options, 4, false);
+            }
+
+            if (Optional.IsDefined(RestoredLogs))
+            {
+                builder.Append("    restoredLogs:");
+                AppendChildObject(builder, RestoredLogs, options, 4, false);
+            }
+
+            if (Optional.IsDefined(ResultStatistics))
+            {
+                builder.Append("    resultStatistics:");
+                AppendChildObject(builder, ResultStatistics, options, 4, false);
+            }
+
+            if (Optional.IsDefined(Plan))
+            {
+                builder.Append("    plan:");
+                builder.AppendLine($" '{Plan.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(LastPlanModifiedDate))
+            {
+                builder.Append("    lastPlanModifiedDate:");
+                if (LastPlanModifiedDate.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{LastPlanModifiedDate}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{LastPlanModifiedDate}'");
+                }
+            }
+
+            if (Optional.IsDefined(Schema))
+            {
+                builder.Append("    schema:");
+                AppendChildObject(builder, Schema, options, 4, false);
+            }
+
+            if (Optional.IsDefined(ProvisioningState))
+            {
+                builder.Append("    provisioningState:");
+                builder.AppendLine($" '{ProvisioningState.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(IsRetentionInDaysAsDefault))
+            {
+                builder.Append("    retentionInDaysAsDefault:");
+                var boolValue = IsRetentionInDaysAsDefault.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(IsTotalRetentionInDaysAsDefault))
+            {
+                builder.Append("    totalRetentionInDaysAsDefault:");
+                var boolValue = IsTotalRetentionInDaysAsDefault.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            builder.AppendLine("  }");
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            bool inMultilineString = false;
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (inMultilineString)
+                {
+                    if (line.Contains("'''"))
+                    {
+                        inMultilineString = false;
+                    }
+                    stringBuilder.AppendLine(line);
+                    continue;
+                }
+                if (line.Contains("'''"))
+                {
+                    inMultilineString = true;
+                    stringBuilder.AppendLine($"{indent}{line}");
+                    continue;
+                }
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<OperationalInsightsTableData>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<OperationalInsightsTableData>)this).GetFormatFromOptions(options) : options.Format;
@@ -326,6 +482,8 @@ namespace Azure.ResourceManager.OperationalInsights
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(OperationalInsightsTableData)} does not support '{options.Format}' format.");
             }
@@ -342,6 +500,8 @@ namespace Azure.ResourceManager.OperationalInsights
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeOperationalInsightsTableData(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(OperationalInsightsTableData)} does not support '{options.Format}' format.");
             }

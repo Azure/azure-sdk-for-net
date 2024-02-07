@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -173,6 +174,147 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             return new VMwareToAzStackHciProtectedNicProperties(nicId.Value, macAddress.Value, label.Value, Optional.ToNullable(isPrimaryNic), networkName.Value, targetNetworkId.Value, testNetworkId.Value, Optional.ToNullable(selectionTypeForFailover), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(NicId))
+            {
+                builder.Append("  nicId:");
+                if (NicId.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{NicId}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{NicId}'");
+                }
+            }
+
+            if (Optional.IsDefined(MacAddress))
+            {
+                builder.Append("  macAddress:");
+                if (MacAddress.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{MacAddress}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{MacAddress}'");
+                }
+            }
+
+            if (Optional.IsDefined(Label))
+            {
+                builder.Append("  label:");
+                if (Label.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{Label}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{Label}'");
+                }
+            }
+
+            if (Optional.IsDefined(IsPrimaryNic))
+            {
+                builder.Append("  isPrimaryNic:");
+                var boolValue = IsPrimaryNic.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(NetworkName))
+            {
+                builder.Append("  networkName:");
+                if (NetworkName.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{NetworkName}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{NetworkName}'");
+                }
+            }
+
+            if (Optional.IsDefined(TargetNetworkId))
+            {
+                builder.Append("  targetNetworkId:");
+                if (TargetNetworkId.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{TargetNetworkId}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{TargetNetworkId}'");
+                }
+            }
+
+            if (Optional.IsDefined(TestNetworkId))
+            {
+                builder.Append("  testNetworkId:");
+                if (TestNetworkId.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{TestNetworkId}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{TestNetworkId}'");
+                }
+            }
+
+            if (Optional.IsDefined(SelectionTypeForFailover))
+            {
+                builder.Append("  selectionTypeForFailover:");
+                builder.AppendLine($" '{SelectionTypeForFailover.Value.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            bool inMultilineString = false;
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (inMultilineString)
+                {
+                    if (line.Contains("'''"))
+                    {
+                        inMultilineString = false;
+                    }
+                    stringBuilder.AppendLine(line);
+                    continue;
+                }
+                if (line.Contains("'''"))
+                {
+                    inMultilineString = true;
+                    stringBuilder.AppendLine($"{indent}{line}");
+                    continue;
+                }
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<VMwareToAzStackHciProtectedNicProperties>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<VMwareToAzStackHciProtectedNicProperties>)this).GetFormatFromOptions(options) : options.Format;
@@ -181,6 +323,8 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(VMwareToAzStackHciProtectedNicProperties)} does not support '{options.Format}' format.");
             }
@@ -197,6 +341,8 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeVMwareToAzStackHciProtectedNicProperties(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(VMwareToAzStackHciProtectedNicProperties)} does not support '{options.Format}' format.");
             }

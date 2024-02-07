@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -295,6 +297,133 @@ namespace Azure.ResourceManager.ResourceMover.Models
             return new MoverResourceProperties(Optional.ToNullable(provisioningState), sourceId, targetId.Value, existingTargetId.Value, resourceSettings.Value, sourceResourceSettings.Value, moveStatus.Value, Optional.ToList(dependsOn), Optional.ToList(dependsOnOverrides), Optional.ToNullable(isResolveRequired), errors.Value, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(ProvisioningState))
+            {
+                builder.Append("  provisioningState:");
+                builder.AppendLine($" '{ProvisioningState.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SourceId))
+            {
+                builder.Append("  sourceId:");
+                builder.AppendLine($" '{SourceId.ToString()}'");
+            }
+
+            if (Optional.IsDefined(TargetId))
+            {
+                builder.Append("  targetId:");
+                builder.AppendLine($" '{TargetId.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ExistingTargetId))
+            {
+                builder.Append("  existingTargetId:");
+                builder.AppendLine($" '{ExistingTargetId.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ResourceSettings))
+            {
+                builder.Append("  resourceSettings:");
+                AppendChildObject(builder, ResourceSettings, options, 2, false);
+            }
+
+            if (Optional.IsDefined(SourceResourceSettings))
+            {
+                builder.Append("  sourceResourceSettings:");
+                AppendChildObject(builder, SourceResourceSettings, options, 2, false);
+            }
+
+            if (Optional.IsDefined(MoveStatus))
+            {
+                builder.Append("  moveStatus:");
+                AppendChildObject(builder, MoveStatus, options, 2, false);
+            }
+
+            if (Optional.IsCollectionDefined(DependsOn))
+            {
+                if (DependsOn.Any())
+                {
+                    builder.Append("  dependsOn:");
+                    builder.AppendLine(" [");
+                    foreach (var item in DependsOn)
+                    {
+                        AppendChildObject(builder, item, options, 4, true);
+                    }
+                    builder.AppendLine("  ]");
+                }
+            }
+
+            if (Optional.IsCollectionDefined(DependsOnOverrides))
+            {
+                if (DependsOnOverrides.Any())
+                {
+                    builder.Append("  dependsOnOverrides:");
+                    builder.AppendLine(" [");
+                    foreach (var item in DependsOnOverrides)
+                    {
+                        AppendChildObject(builder, item, options, 4, true);
+                    }
+                    builder.AppendLine("  ]");
+                }
+            }
+
+            if (Optional.IsDefined(IsResolveRequired))
+            {
+                builder.Append("  isResolveRequired:");
+                var boolValue = IsResolveRequired.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(Errors))
+            {
+                builder.Append("  errors:");
+                AppendChildObject(builder, Errors, options, 2, false);
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            bool inMultilineString = false;
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (inMultilineString)
+                {
+                    if (line.Contains("'''"))
+                    {
+                        inMultilineString = false;
+                    }
+                    stringBuilder.AppendLine(line);
+                    continue;
+                }
+                if (line.Contains("'''"))
+                {
+                    inMultilineString = true;
+                    stringBuilder.AppendLine($"{indent}{line}");
+                    continue;
+                }
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<MoverResourceProperties>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<MoverResourceProperties>)this).GetFormatFromOptions(options) : options.Format;
@@ -303,6 +432,8 @@ namespace Azure.ResourceManager.ResourceMover.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(MoverResourceProperties)} does not support '{options.Format}' format.");
             }
@@ -319,6 +450,8 @@ namespace Azure.ResourceManager.ResourceMover.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeMoverResourceProperties(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(MoverResourceProperties)} does not support '{options.Format}' format.");
             }

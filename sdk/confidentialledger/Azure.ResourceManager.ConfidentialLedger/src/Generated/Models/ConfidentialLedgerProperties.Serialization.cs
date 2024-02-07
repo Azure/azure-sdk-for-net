@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -224,6 +226,136 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
             return new ConfidentialLedgerProperties(ledgerName.Value, ledgerUri.Value, identityServiceUri.Value, ledgerInternalNamespace.Value, Optional.ToNullable(runningState), Optional.ToNullable(ledgerType), Optional.ToNullable(provisioningState), Optional.ToList(aadBasedSecurityPrincipals), Optional.ToList(certBasedSecurityPrincipals), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(LedgerName))
+            {
+                builder.Append("  ledgerName:");
+                if (LedgerName.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{LedgerName}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{LedgerName}'");
+                }
+            }
+
+            if (Optional.IsDefined(LedgerUri))
+            {
+                builder.Append("  ledgerUri:");
+                builder.AppendLine($" '{LedgerUri.AbsoluteUri}'");
+            }
+
+            if (Optional.IsDefined(IdentityServiceUri))
+            {
+                builder.Append("  identityServiceUri:");
+                builder.AppendLine($" '{IdentityServiceUri.AbsoluteUri}'");
+            }
+
+            if (Optional.IsDefined(LedgerInternalNamespace))
+            {
+                builder.Append("  ledgerInternalNamespace:");
+                if (LedgerInternalNamespace.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{LedgerInternalNamespace}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{LedgerInternalNamespace}'");
+                }
+            }
+
+            if (Optional.IsDefined(RunningState))
+            {
+                builder.Append("  runningState:");
+                builder.AppendLine($" '{RunningState.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(LedgerType))
+            {
+                builder.Append("  ledgerType:");
+                builder.AppendLine($" '{LedgerType.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ProvisioningState))
+            {
+                builder.Append("  provisioningState:");
+                builder.AppendLine($" '{ProvisioningState.Value.ToString()}'");
+            }
+
+            if (Optional.IsCollectionDefined(AadBasedSecurityPrincipals))
+            {
+                if (AadBasedSecurityPrincipals.Any())
+                {
+                    builder.Append("  aadBasedSecurityPrincipals:");
+                    builder.AppendLine(" [");
+                    foreach (var item in AadBasedSecurityPrincipals)
+                    {
+                        AppendChildObject(builder, item, options, 4, true);
+                    }
+                    builder.AppendLine("  ]");
+                }
+            }
+
+            if (Optional.IsCollectionDefined(CertBasedSecurityPrincipals))
+            {
+                if (CertBasedSecurityPrincipals.Any())
+                {
+                    builder.Append("  certBasedSecurityPrincipals:");
+                    builder.AppendLine(" [");
+                    foreach (var item in CertBasedSecurityPrincipals)
+                    {
+                        AppendChildObject(builder, item, options, 4, true);
+                    }
+                    builder.AppendLine("  ]");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            bool inMultilineString = false;
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (inMultilineString)
+                {
+                    if (line.Contains("'''"))
+                    {
+                        inMultilineString = false;
+                    }
+                    stringBuilder.AppendLine(line);
+                    continue;
+                }
+                if (line.Contains("'''"))
+                {
+                    inMultilineString = true;
+                    stringBuilder.AppendLine($"{indent}{line}");
+                    continue;
+                }
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<ConfidentialLedgerProperties>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ConfidentialLedgerProperties>)this).GetFormatFromOptions(options) : options.Format;
@@ -232,6 +364,8 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(ConfidentialLedgerProperties)} does not support '{options.Format}' format.");
             }
@@ -248,6 +382,8 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeConfidentialLedgerProperties(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(ConfidentialLedgerProperties)} does not support '{options.Format}' format.");
             }

@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -168,6 +169,81 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
             return new GuestConfigurationVmssVmInfo(Optional.ToNullable(vmId), vmResourceId.Value, Optional.ToNullable(complianceStatus), Optional.ToNullable(latestReportId), Optional.ToNullable(lastComplianceChecked), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(VmId))
+            {
+                builder.Append("  vmId:");
+                builder.AppendLine($" '{VmId.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(VmResourceId))
+            {
+                builder.Append("  vmResourceId:");
+                builder.AppendLine($" '{VmResourceId.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ComplianceStatus))
+            {
+                builder.Append("  complianceStatus:");
+                builder.AppendLine($" '{ComplianceStatus.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(LatestReportId))
+            {
+                builder.Append("  latestReportId:");
+                builder.AppendLine($" '{LatestReportId.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(LastComplianceCheckedOn))
+            {
+                builder.Append("  lastComplianceChecked:");
+                var formattedDateTimeString = TypeFormatters.ToString(LastComplianceCheckedOn.Value, "o");
+                builder.AppendLine($" '{formattedDateTimeString}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            bool inMultilineString = false;
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (inMultilineString)
+                {
+                    if (line.Contains("'''"))
+                    {
+                        inMultilineString = false;
+                    }
+                    stringBuilder.AppendLine(line);
+                    continue;
+                }
+                if (line.Contains("'''"))
+                {
+                    inMultilineString = true;
+                    stringBuilder.AppendLine($"{indent}{line}");
+                    continue;
+                }
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<GuestConfigurationVmssVmInfo>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<GuestConfigurationVmssVmInfo>)this).GetFormatFromOptions(options) : options.Format;
@@ -176,6 +252,8 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(GuestConfigurationVmssVmInfo)} does not support '{options.Format}' format.");
             }
@@ -192,6 +270,8 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeGuestConfigurationVmssVmInfo(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(GuestConfigurationVmssVmInfo)} does not support '{options.Format}' format.");
             }

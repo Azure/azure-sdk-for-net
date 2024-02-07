@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -206,6 +207,190 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             return new DataReplicationInnerHealthErrorInfo(code.Value, healthCategory.Value, category.Value, severity.Value, source.Value, Optional.ToNullable(creationTime), Optional.ToNullable(isCustomerResolvable), summary.Value, message.Value, causes.Value, recommendation.Value, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(Code))
+            {
+                builder.Append("  code:");
+                if (Code.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{Code}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{Code}'");
+                }
+            }
+
+            if (Optional.IsDefined(HealthCategory))
+            {
+                builder.Append("  healthCategory:");
+                if (HealthCategory.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{HealthCategory}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{HealthCategory}'");
+                }
+            }
+
+            if (Optional.IsDefined(Category))
+            {
+                builder.Append("  category:");
+                if (Category.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{Category}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{Category}'");
+                }
+            }
+
+            if (Optional.IsDefined(Severity))
+            {
+                builder.Append("  severity:");
+                if (Severity.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{Severity}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{Severity}'");
+                }
+            }
+
+            if (Optional.IsDefined(Source))
+            {
+                builder.Append("  source:");
+                if (Source.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{Source}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{Source}'");
+                }
+            }
+
+            if (Optional.IsDefined(CreatedOn))
+            {
+                builder.Append("  creationTime:");
+                var formattedDateTimeString = TypeFormatters.ToString(CreatedOn.Value, "o");
+                builder.AppendLine($" '{formattedDateTimeString}'");
+            }
+
+            if (Optional.IsDefined(IsCustomerResolvable))
+            {
+                builder.Append("  isCustomerResolvable:");
+                var boolValue = IsCustomerResolvable.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(Summary))
+            {
+                builder.Append("  summary:");
+                if (Summary.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{Summary}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{Summary}'");
+                }
+            }
+
+            if (Optional.IsDefined(Message))
+            {
+                builder.Append("  message:");
+                if (Message.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{Message}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{Message}'");
+                }
+            }
+
+            if (Optional.IsDefined(Causes))
+            {
+                builder.Append("  causes:");
+                if (Causes.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{Causes}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{Causes}'");
+                }
+            }
+
+            if (Optional.IsDefined(Recommendation))
+            {
+                builder.Append("  recommendation:");
+                if (Recommendation.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{Recommendation}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{Recommendation}'");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            bool inMultilineString = false;
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (inMultilineString)
+                {
+                    if (line.Contains("'''"))
+                    {
+                        inMultilineString = false;
+                    }
+                    stringBuilder.AppendLine(line);
+                    continue;
+                }
+                if (line.Contains("'''"))
+                {
+                    inMultilineString = true;
+                    stringBuilder.AppendLine($"{indent}{line}");
+                    continue;
+                }
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<DataReplicationInnerHealthErrorInfo>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<DataReplicationInnerHealthErrorInfo>)this).GetFormatFromOptions(options) : options.Format;
@@ -214,6 +399,8 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(DataReplicationInnerHealthErrorInfo)} does not support '{options.Format}' format.");
             }
@@ -230,6 +417,8 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeDataReplicationInnerHealthErrorInfo(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(DataReplicationInnerHealthErrorInfo)} does not support '{options.Format}' format.");
             }

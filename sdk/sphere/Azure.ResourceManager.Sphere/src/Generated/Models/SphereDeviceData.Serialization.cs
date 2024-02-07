@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -231,6 +232,155 @@ namespace Azure.ResourceManager.Sphere
             return new SphereDeviceData(id, name, type, systemData.Value, deviceId.Value, chipSku.Value, lastAvailableOSVersion.Value, lastInstalledOSVersion.Value, Optional.ToNullable(lastOSUpdateUtc), Optional.ToNullable(lastUpdateRequestUtc), Optional.ToNullable(provisioningState), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                if (Name.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{Name}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{Name}'");
+                }
+            }
+
+            if (Optional.IsDefined(Id))
+            {
+                builder.Append("  id:");
+                builder.AppendLine($" '{Id.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SystemData))
+            {
+                builder.Append("  systemData:");
+                builder.AppendLine($" '{SystemData.ToString()}'");
+            }
+
+            builder.Append("  properties:");
+            builder.AppendLine(" {");
+            if (Optional.IsDefined(DeviceId))
+            {
+                builder.Append("    deviceId:");
+                if (DeviceId.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{DeviceId}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{DeviceId}'");
+                }
+            }
+
+            if (Optional.IsDefined(ChipSku))
+            {
+                builder.Append("    chipSku:");
+                if (ChipSku.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{ChipSku}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{ChipSku}'");
+                }
+            }
+
+            if (Optional.IsDefined(LastAvailableOSVersion))
+            {
+                builder.Append("    lastAvailableOsVersion:");
+                if (LastAvailableOSVersion.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{LastAvailableOSVersion}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{LastAvailableOSVersion}'");
+                }
+            }
+
+            if (Optional.IsDefined(LastInstalledOSVersion))
+            {
+                builder.Append("    lastInstalledOsVersion:");
+                if (LastInstalledOSVersion.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{LastInstalledOSVersion}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{LastInstalledOSVersion}'");
+                }
+            }
+
+            if (Optional.IsDefined(LastOSUpdateUtc))
+            {
+                builder.Append("    lastOsUpdateUtc:");
+                var formattedDateTimeString = TypeFormatters.ToString(LastOSUpdateUtc.Value, "o");
+                builder.AppendLine($" '{formattedDateTimeString}'");
+            }
+
+            if (Optional.IsDefined(LastUpdateRequestUtc))
+            {
+                builder.Append("    lastUpdateRequestUtc:");
+                var formattedDateTimeString = TypeFormatters.ToString(LastUpdateRequestUtc.Value, "o");
+                builder.AppendLine($" '{formattedDateTimeString}'");
+            }
+
+            if (Optional.IsDefined(ProvisioningState))
+            {
+                builder.Append("    provisioningState:");
+                builder.AppendLine($" '{ProvisioningState.Value.ToString()}'");
+            }
+
+            builder.AppendLine("  }");
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            bool inMultilineString = false;
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (inMultilineString)
+                {
+                    if (line.Contains("'''"))
+                    {
+                        inMultilineString = false;
+                    }
+                    stringBuilder.AppendLine(line);
+                    continue;
+                }
+                if (line.Contains("'''"))
+                {
+                    inMultilineString = true;
+                    stringBuilder.AppendLine($"{indent}{line}");
+                    continue;
+                }
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<SphereDeviceData>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<SphereDeviceData>)this).GetFormatFromOptions(options) : options.Format;
@@ -239,6 +389,8 @@ namespace Azure.ResourceManager.Sphere
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(SphereDeviceData)} does not support '{options.Format}' format.");
             }
@@ -255,6 +407,8 @@ namespace Azure.ResourceManager.Sphere
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeSphereDeviceData(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(SphereDeviceData)} does not support '{options.Format}' format.");
             }

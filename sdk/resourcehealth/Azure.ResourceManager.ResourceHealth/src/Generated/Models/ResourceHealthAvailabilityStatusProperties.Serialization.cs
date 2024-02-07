@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -353,6 +355,278 @@ namespace Azure.ResourceManager.ResourceHealth.Models
             return new ResourceHealthAvailabilityStatusProperties(Optional.ToNullable(availabilityState), title.Value, summary.Value, detailedStatus.Value, reasonType.Value, context.Value, category.Value, articleId.Value, Optional.ToNullable(rootCauseAttributionTime), healthEventType.Value, healthEventCause.Value, healthEventCategory.Value, healthEventId.Value, Optional.ToNullable(resolutionETA), Optional.ToNullable(occuredTime), Optional.ToNullable(reasonChronicity), Optional.ToNullable(reportedTime), recentlyResolved.Value, Optional.ToList(recommendedActions), Optional.ToList(serviceImpactingEvents), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(AvailabilityState))
+            {
+                builder.Append("  availabilityState:");
+                builder.AppendLine($" '{AvailabilityState.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Title))
+            {
+                builder.Append("  title:");
+                if (Title.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{Title}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{Title}'");
+                }
+            }
+
+            if (Optional.IsDefined(Summary))
+            {
+                builder.Append("  summary:");
+                if (Summary.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{Summary}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{Summary}'");
+                }
+            }
+
+            if (Optional.IsDefined(DetailedStatus))
+            {
+                builder.Append("  detailedStatus:");
+                if (DetailedStatus.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{DetailedStatus}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{DetailedStatus}'");
+                }
+            }
+
+            if (Optional.IsDefined(ReasonType))
+            {
+                builder.Append("  reasonType:");
+                if (ReasonType.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{ReasonType}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{ReasonType}'");
+                }
+            }
+
+            if (Optional.IsDefined(Context))
+            {
+                builder.Append("  context:");
+                if (Context.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{Context}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{Context}'");
+                }
+            }
+
+            if (Optional.IsDefined(Category))
+            {
+                builder.Append("  category:");
+                if (Category.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{Category}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{Category}'");
+                }
+            }
+
+            if (Optional.IsDefined(ArticleId))
+            {
+                builder.Append("  articleId:");
+                if (ArticleId.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{ArticleId}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{ArticleId}'");
+                }
+            }
+
+            if (Optional.IsDefined(RootCauseAttributionOn))
+            {
+                builder.Append("  rootCauseAttributionTime:");
+                var formattedDateTimeString = TypeFormatters.ToString(RootCauseAttributionOn.Value, "o");
+                builder.AppendLine($" '{formattedDateTimeString}'");
+            }
+
+            if (Optional.IsDefined(HealthEventType))
+            {
+                builder.Append("  healthEventType:");
+                if (HealthEventType.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{HealthEventType}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{HealthEventType}'");
+                }
+            }
+
+            if (Optional.IsDefined(HealthEventCause))
+            {
+                builder.Append("  healthEventCause:");
+                if (HealthEventCause.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{HealthEventCause}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{HealthEventCause}'");
+                }
+            }
+
+            if (Optional.IsDefined(HealthEventCategory))
+            {
+                builder.Append("  healthEventCategory:");
+                if (HealthEventCategory.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{HealthEventCategory}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{HealthEventCategory}'");
+                }
+            }
+
+            if (Optional.IsDefined(HealthEventId))
+            {
+                builder.Append("  healthEventId:");
+                if (HealthEventId.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{HealthEventId}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{HealthEventId}'");
+                }
+            }
+
+            if (Optional.IsDefined(ResolutionEta))
+            {
+                builder.Append("  resolutionETA:");
+                var formattedDateTimeString = TypeFormatters.ToString(ResolutionEta.Value, "o");
+                builder.AppendLine($" '{formattedDateTimeString}'");
+            }
+
+            if (Optional.IsDefined(OccuredOn))
+            {
+                builder.Append("  occuredTime:");
+                var formattedDateTimeString = TypeFormatters.ToString(OccuredOn.Value, "o");
+                builder.AppendLine($" '{formattedDateTimeString}'");
+            }
+
+            if (Optional.IsDefined(ReasonChronicity))
+            {
+                builder.Append("  reasonChronicity:");
+                builder.AppendLine($" '{ReasonChronicity.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ReportedOn))
+            {
+                builder.Append("  reportedTime:");
+                var formattedDateTimeString = TypeFormatters.ToString(ReportedOn.Value, "o");
+                builder.AppendLine($" '{formattedDateTimeString}'");
+            }
+
+            if (Optional.IsDefined(RecentlyResolved))
+            {
+                builder.Append("  recentlyResolved:");
+                AppendChildObject(builder, RecentlyResolved, options, 2, false);
+            }
+
+            if (Optional.IsCollectionDefined(RecommendedActions))
+            {
+                if (RecommendedActions.Any())
+                {
+                    builder.Append("  recommendedActions:");
+                    builder.AppendLine(" [");
+                    foreach (var item in RecommendedActions)
+                    {
+                        AppendChildObject(builder, item, options, 4, true);
+                    }
+                    builder.AppendLine("  ]");
+                }
+            }
+
+            if (Optional.IsCollectionDefined(ServiceImpactingEvents))
+            {
+                if (ServiceImpactingEvents.Any())
+                {
+                    builder.Append("  serviceImpactingEvents:");
+                    builder.AppendLine(" [");
+                    foreach (var item in ServiceImpactingEvents)
+                    {
+                        AppendChildObject(builder, item, options, 4, true);
+                    }
+                    builder.AppendLine("  ]");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            bool inMultilineString = false;
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (inMultilineString)
+                {
+                    if (line.Contains("'''"))
+                    {
+                        inMultilineString = false;
+                    }
+                    stringBuilder.AppendLine(line);
+                    continue;
+                }
+                if (line.Contains("'''"))
+                {
+                    inMultilineString = true;
+                    stringBuilder.AppendLine($"{indent}{line}");
+                    continue;
+                }
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<ResourceHealthAvailabilityStatusProperties>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ResourceHealthAvailabilityStatusProperties>)this).GetFormatFromOptions(options) : options.Format;
@@ -361,6 +635,8 @@ namespace Azure.ResourceManager.ResourceHealth.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(ResourceHealthAvailabilityStatusProperties)} does not support '{options.Format}' format.");
             }
@@ -377,6 +653,8 @@ namespace Azure.ResourceManager.ResourceHealth.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeResourceHealthAvailabilityStatusProperties(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(ResourceHealthAvailabilityStatusProperties)} does not support '{options.Format}' format.");
             }

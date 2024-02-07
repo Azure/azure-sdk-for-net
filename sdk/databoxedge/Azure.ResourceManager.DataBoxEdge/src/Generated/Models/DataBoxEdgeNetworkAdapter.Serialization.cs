@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -292,6 +294,201 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             return new DataBoxEdgeNetworkAdapter(adapterId.Value, adapterPosition.Value, Optional.ToNullable(index), Optional.ToNullable(nodeId), networkAdapterName.Value, label.Value, macAddress.Value, Optional.ToNullable(linkSpeed), Optional.ToNullable(status), Optional.ToNullable(rdmaStatus), Optional.ToNullable(dhcpStatus), ipv4Configuration.Value, ipv6Configuration.Value, ipv6LinkLocalAddress.Value, Optional.ToList(dnsServers), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(AdapterId))
+            {
+                builder.Append("  adapterId:");
+                if (AdapterId.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{AdapterId}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{AdapterId}'");
+                }
+            }
+
+            if (Optional.IsDefined(AdapterPosition))
+            {
+                builder.Append("  adapterPosition:");
+                AppendChildObject(builder, AdapterPosition, options, 2, false);
+            }
+
+            if (Optional.IsDefined(Index))
+            {
+                builder.Append("  index:");
+                builder.AppendLine($" {Index.Value}");
+            }
+
+            if (Optional.IsDefined(NodeId))
+            {
+                builder.Append("  nodeId:");
+                builder.AppendLine($" '{NodeId.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(NetworkAdapterName))
+            {
+                builder.Append("  networkAdapterName:");
+                if (NetworkAdapterName.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{NetworkAdapterName}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{NetworkAdapterName}'");
+                }
+            }
+
+            if (Optional.IsDefined(Label))
+            {
+                builder.Append("  label:");
+                if (Label.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{Label}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{Label}'");
+                }
+            }
+
+            if (Optional.IsDefined(MacAddress))
+            {
+                builder.Append("  macAddress:");
+                if (MacAddress.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{MacAddress}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{MacAddress}'");
+                }
+            }
+
+            if (Optional.IsDefined(LinkSpeed))
+            {
+                builder.Append("  linkSpeed:");
+                builder.AppendLine($" '{LinkSpeed.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Status))
+            {
+                builder.Append("  status:");
+                builder.AppendLine($" '{Status.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(RdmaStatus))
+            {
+                builder.Append("  rdmaStatus:");
+                builder.AppendLine($" '{RdmaStatus.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(DhcpStatus))
+            {
+                builder.Append("  dhcpStatus:");
+                builder.AppendLine($" '{DhcpStatus.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(IPv4Configuration))
+            {
+                builder.Append("  ipv4Configuration:");
+                AppendChildObject(builder, IPv4Configuration, options, 2, false);
+            }
+
+            if (Optional.IsDefined(IPv6Configuration))
+            {
+                builder.Append("  ipv6Configuration:");
+                AppendChildObject(builder, IPv6Configuration, options, 2, false);
+            }
+
+            if (Optional.IsDefined(IPv6LinkLocalAddress))
+            {
+                builder.Append("  ipv6LinkLocalAddress:");
+                if (IPv6LinkLocalAddress.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{IPv6LinkLocalAddress}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{IPv6LinkLocalAddress}'");
+                }
+            }
+
+            if (Optional.IsCollectionDefined(DnsServers))
+            {
+                if (DnsServers.Any())
+                {
+                    builder.Append("  dnsServers:");
+                    builder.AppendLine(" [");
+                    foreach (var item in DnsServers)
+                    {
+                        if (item == null)
+                        {
+                            builder.Append("null");
+                            continue;
+                        }
+                        if (item.Contains(Environment.NewLine))
+                        {
+                            builder.AppendLine("    '''");
+                            builder.AppendLine($"{item}'''");
+                        }
+                        else
+                        {
+                            builder.AppendLine($"    '{item}'");
+                        }
+                    }
+                    builder.AppendLine("  ]");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            bool inMultilineString = false;
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (inMultilineString)
+                {
+                    if (line.Contains("'''"))
+                    {
+                        inMultilineString = false;
+                    }
+                    stringBuilder.AppendLine(line);
+                    continue;
+                }
+                if (line.Contains("'''"))
+                {
+                    inMultilineString = true;
+                    stringBuilder.AppendLine($"{indent}{line}");
+                    continue;
+                }
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<DataBoxEdgeNetworkAdapter>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<DataBoxEdgeNetworkAdapter>)this).GetFormatFromOptions(options) : options.Format;
@@ -300,6 +497,8 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(DataBoxEdgeNetworkAdapter)} does not support '{options.Format}' format.");
             }
@@ -316,6 +515,8 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeDataBoxEdgeNetworkAdapter(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(DataBoxEdgeNetworkAdapter)} does not support '{options.Format}' format.");
             }

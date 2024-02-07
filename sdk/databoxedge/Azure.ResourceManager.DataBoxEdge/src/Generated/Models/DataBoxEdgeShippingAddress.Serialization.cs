@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -151,6 +152,148 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             return new DataBoxEdgeShippingAddress(addressLine1.Value, addressLine2.Value, addressLine3.Value, postalCode.Value, city.Value, state.Value, country, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(AddressLine1))
+            {
+                builder.Append("  addressLine1:");
+                if (AddressLine1.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{AddressLine1}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{AddressLine1}'");
+                }
+            }
+
+            if (Optional.IsDefined(AddressLine2))
+            {
+                builder.Append("  addressLine2:");
+                if (AddressLine2.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{AddressLine2}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{AddressLine2}'");
+                }
+            }
+
+            if (Optional.IsDefined(AddressLine3))
+            {
+                builder.Append("  addressLine3:");
+                if (AddressLine3.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{AddressLine3}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{AddressLine3}'");
+                }
+            }
+
+            if (Optional.IsDefined(PostalCode))
+            {
+                builder.Append("  postalCode:");
+                if (PostalCode.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{PostalCode}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{PostalCode}'");
+                }
+            }
+
+            if (Optional.IsDefined(City))
+            {
+                builder.Append("  city:");
+                if (City.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{City}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{City}'");
+                }
+            }
+
+            if (Optional.IsDefined(State))
+            {
+                builder.Append("  state:");
+                if (State.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{State}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{State}'");
+                }
+            }
+
+            if (Optional.IsDefined(Country))
+            {
+                builder.Append("  country:");
+                if (Country.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{Country}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{Country}'");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            bool inMultilineString = false;
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (inMultilineString)
+                {
+                    if (line.Contains("'''"))
+                    {
+                        inMultilineString = false;
+                    }
+                    stringBuilder.AppendLine(line);
+                    continue;
+                }
+                if (line.Contains("'''"))
+                {
+                    inMultilineString = true;
+                    stringBuilder.AppendLine($"{indent}{line}");
+                    continue;
+                }
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<DataBoxEdgeShippingAddress>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<DataBoxEdgeShippingAddress>)this).GetFormatFromOptions(options) : options.Format;
@@ -159,6 +302,8 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(DataBoxEdgeShippingAddress)} does not support '{options.Format}' format.");
             }
@@ -175,6 +320,8 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeDataBoxEdgeShippingAddress(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(DataBoxEdgeShippingAddress)} does not support '{options.Format}' format.");
             }

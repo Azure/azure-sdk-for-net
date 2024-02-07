@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -244,6 +246,244 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             return new FlinkJobProperties(jobType, serializedAdditionalRawData, jobName, jobJarDirectory.Value, jarName.Value, entryClass.Value, args.Value, savePointName.Value, Optional.ToNullable(action), Optional.ToDictionary(flinkConfiguration), jobId.Value, status.Value, jobOutput.Value, actionResult.Value, lastSavePoint.Value);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(JobName))
+            {
+                builder.Append("  jobName:");
+                if (JobName.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{JobName}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{JobName}'");
+                }
+            }
+
+            if (Optional.IsDefined(JobJarDirectory))
+            {
+                builder.Append("  jobJarDirectory:");
+                if (JobJarDirectory.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{JobJarDirectory}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{JobJarDirectory}'");
+                }
+            }
+
+            if (Optional.IsDefined(JarName))
+            {
+                builder.Append("  jarName:");
+                if (JarName.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{JarName}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{JarName}'");
+                }
+            }
+
+            if (Optional.IsDefined(EntryClass))
+            {
+                builder.Append("  entryClass:");
+                if (EntryClass.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{EntryClass}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{EntryClass}'");
+                }
+            }
+
+            if (Optional.IsDefined(Args))
+            {
+                builder.Append("  args:");
+                if (Args.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{Args}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{Args}'");
+                }
+            }
+
+            if (Optional.IsDefined(SavePointName))
+            {
+                builder.Append("  savePointName:");
+                if (SavePointName.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{SavePointName}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{SavePointName}'");
+                }
+            }
+
+            if (Optional.IsDefined(Action))
+            {
+                builder.Append("  action:");
+                builder.AppendLine($" '{Action.Value.ToString()}'");
+            }
+
+            if (Optional.IsCollectionDefined(FlinkConfiguration))
+            {
+                if (FlinkConfiguration.Any())
+                {
+                    builder.Append("  flinkConfiguration:");
+                    builder.AppendLine(" {");
+                    foreach (var item in FlinkConfiguration)
+                    {
+                        builder.Append($"    {item.Key}:");
+                        if (item.Value == null)
+                        {
+                            builder.Append("null");
+                            continue;
+                        }
+                        if (item.Value.Contains(Environment.NewLine))
+                        {
+                            builder.AppendLine(" '''");
+                            builder.AppendLine($"{item.Value}'''");
+                        }
+                        else
+                        {
+                            builder.AppendLine($" '{item.Value}'");
+                        }
+                    }
+                    builder.AppendLine("  }");
+                }
+            }
+
+            if (Optional.IsDefined(JobId))
+            {
+                builder.Append("  jobId:");
+                if (JobId.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{JobId}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{JobId}'");
+                }
+            }
+
+            if (Optional.IsDefined(Status))
+            {
+                builder.Append("  status:");
+                if (Status.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{Status}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{Status}'");
+                }
+            }
+
+            if (Optional.IsDefined(JobOutput))
+            {
+                builder.Append("  jobOutput:");
+                if (JobOutput.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{JobOutput}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{JobOutput}'");
+                }
+            }
+
+            if (Optional.IsDefined(ActionResult))
+            {
+                builder.Append("  actionResult:");
+                if (ActionResult.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{ActionResult}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{ActionResult}'");
+                }
+            }
+
+            if (Optional.IsDefined(LastSavePoint))
+            {
+                builder.Append("  lastSavePoint:");
+                if (LastSavePoint.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{LastSavePoint}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{LastSavePoint}'");
+                }
+            }
+
+            if (Optional.IsDefined(JobType))
+            {
+                builder.Append("  jobType:");
+                builder.AppendLine($" '{JobType.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            bool inMultilineString = false;
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (inMultilineString)
+                {
+                    if (line.Contains("'''"))
+                    {
+                        inMultilineString = false;
+                    }
+                    stringBuilder.AppendLine(line);
+                    continue;
+                }
+                if (line.Contains("'''"))
+                {
+                    inMultilineString = true;
+                    stringBuilder.AppendLine($"{indent}{line}");
+                    continue;
+                }
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<FlinkJobProperties>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<FlinkJobProperties>)this).GetFormatFromOptions(options) : options.Format;
@@ -252,6 +492,8 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(FlinkJobProperties)} does not support '{options.Format}' format.");
             }
@@ -268,6 +510,8 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeFlinkJobProperties(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(FlinkJobProperties)} does not support '{options.Format}' format.");
             }

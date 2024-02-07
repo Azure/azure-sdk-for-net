@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -230,6 +231,141 @@ namespace Azure.ResourceManager.DataMigration.Models
             return new CopyProgressDetails(tableName.Value, status.Value, parallelCopyType.Value, Optional.ToNullable(usedParallelCopies), Optional.ToNullable(dataRead), Optional.ToNullable(dataWritten), Optional.ToNullable(rowsRead), Optional.ToNullable(rowsCopied), Optional.ToNullable(copyStart), Optional.ToNullable(copyThroughput), Optional.ToNullable(copyDuration), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(TableName))
+            {
+                builder.Append("  tableName:");
+                if (TableName.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{TableName}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{TableName}'");
+                }
+            }
+
+            if (Optional.IsDefined(Status))
+            {
+                builder.Append("  status:");
+                if (Status.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{Status}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{Status}'");
+                }
+            }
+
+            if (Optional.IsDefined(ParallelCopyType))
+            {
+                builder.Append("  parallelCopyType:");
+                if (ParallelCopyType.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{ParallelCopyType}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{ParallelCopyType}'");
+                }
+            }
+
+            if (Optional.IsDefined(UsedParallelCopies))
+            {
+                builder.Append("  usedParallelCopies:");
+                builder.AppendLine($" {UsedParallelCopies.Value}");
+            }
+
+            if (Optional.IsDefined(DataRead))
+            {
+                builder.Append("  dataRead:");
+                builder.AppendLine($" '{DataRead.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(DataWritten))
+            {
+                builder.Append("  dataWritten:");
+                builder.AppendLine($" '{DataWritten.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(RowsRead))
+            {
+                builder.Append("  rowsRead:");
+                builder.AppendLine($" '{RowsRead.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(RowsCopied))
+            {
+                builder.Append("  rowsCopied:");
+                builder.AppendLine($" '{RowsCopied.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(CopyStart))
+            {
+                builder.Append("  copyStart:");
+                var formattedDateTimeString = TypeFormatters.ToString(CopyStart.Value, "o");
+                builder.AppendLine($" '{formattedDateTimeString}'");
+            }
+
+            if (Optional.IsDefined(CopyThroughput))
+            {
+                builder.Append("  copyThroughput:");
+                builder.AppendLine($" '{CopyThroughput.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(CopyDuration))
+            {
+                builder.Append("  copyDuration:");
+                builder.AppendLine($" {CopyDuration.Value}");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            bool inMultilineString = false;
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (inMultilineString)
+                {
+                    if (line.Contains("'''"))
+                    {
+                        inMultilineString = false;
+                    }
+                    stringBuilder.AppendLine(line);
+                    continue;
+                }
+                if (line.Contains("'''"))
+                {
+                    inMultilineString = true;
+                    stringBuilder.AppendLine($"{indent}{line}");
+                    continue;
+                }
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<CopyProgressDetails>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<CopyProgressDetails>)this).GetFormatFromOptions(options) : options.Format;
@@ -238,6 +374,8 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(CopyProgressDetails)} does not support '{options.Format}' format.");
             }
@@ -254,6 +392,8 @@ namespace Azure.ResourceManager.DataMigration.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeCopyProgressDetails(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(CopyProgressDetails)} does not support '{options.Format}' format.");
             }

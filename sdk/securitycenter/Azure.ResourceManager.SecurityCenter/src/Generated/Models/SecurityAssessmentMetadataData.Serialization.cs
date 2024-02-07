@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -402,6 +404,240 @@ namespace Azure.ResourceManager.SecurityCenter
             return new SecurityAssessmentMetadataData(id, name, type, systemData.Value, displayName.Value, policyDefinitionId.Value, description.Value, remediationDescription.Value, Optional.ToList(categories), Optional.ToNullable(severity), Optional.ToNullable(userImpact), Optional.ToNullable(implementationEffort), Optional.ToList(threats), Optional.ToNullable(preview), Optional.ToNullable(assessmentType), partnerData.Value, publishDates.Value, plannedDeprecationDate.Value, Optional.ToList(tactics), Optional.ToList(techniques), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                if (Name.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{Name}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{Name}'");
+                }
+            }
+
+            if (Optional.IsDefined(Id))
+            {
+                builder.Append("  id:");
+                builder.AppendLine($" '{Id.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SystemData))
+            {
+                builder.Append("  systemData:");
+                builder.AppendLine($" '{SystemData.ToString()}'");
+            }
+
+            builder.Append("  properties:");
+            builder.AppendLine(" {");
+            if (Optional.IsDefined(DisplayName))
+            {
+                builder.Append("    displayName:");
+                if (DisplayName.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{DisplayName}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{DisplayName}'");
+                }
+            }
+
+            if (Optional.IsDefined(PolicyDefinitionId))
+            {
+                builder.Append("    policyDefinitionId:");
+                builder.AppendLine($" '{PolicyDefinitionId.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Description))
+            {
+                builder.Append("    description:");
+                if (Description.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{Description}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{Description}'");
+                }
+            }
+
+            if (Optional.IsDefined(RemediationDescription))
+            {
+                builder.Append("    remediationDescription:");
+                if (RemediationDescription.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{RemediationDescription}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{RemediationDescription}'");
+                }
+            }
+
+            if (Optional.IsCollectionDefined(Categories))
+            {
+                if (Categories.Any())
+                {
+                    builder.Append("    categories:");
+                    builder.AppendLine(" [");
+                    foreach (var item in Categories)
+                    {
+                        builder.AppendLine($"      '{item.ToString()}'");
+                    }
+                    builder.AppendLine("    ]");
+                }
+            }
+
+            if (Optional.IsDefined(Severity))
+            {
+                builder.Append("    severity:");
+                builder.AppendLine($" '{Severity.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(UserImpact))
+            {
+                builder.Append("    userImpact:");
+                builder.AppendLine($" '{UserImpact.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ImplementationEffort))
+            {
+                builder.Append("    implementationEffort:");
+                builder.AppendLine($" '{ImplementationEffort.Value.ToString()}'");
+            }
+
+            if (Optional.IsCollectionDefined(Threats))
+            {
+                if (Threats.Any())
+                {
+                    builder.Append("    threats:");
+                    builder.AppendLine(" [");
+                    foreach (var item in Threats)
+                    {
+                        builder.AppendLine($"      '{item.ToString()}'");
+                    }
+                    builder.AppendLine("    ]");
+                }
+            }
+
+            if (Optional.IsDefined(IsPreview))
+            {
+                builder.Append("    preview:");
+                var boolValue = IsPreview.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(AssessmentType))
+            {
+                builder.Append("    assessmentType:");
+                builder.AppendLine($" '{AssessmentType.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(PartnerData))
+            {
+                builder.Append("    partnerData:");
+                AppendChildObject(builder, PartnerData, options, 4, false);
+            }
+
+            if (Optional.IsDefined(PublishDates))
+            {
+                builder.Append("    publishDates:");
+                AppendChildObject(builder, PublishDates, options, 4, false);
+            }
+
+            if (Optional.IsDefined(PlannedDeprecationDate))
+            {
+                builder.Append("    plannedDeprecationDate:");
+                if (PlannedDeprecationDate.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{PlannedDeprecationDate}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{PlannedDeprecationDate}'");
+                }
+            }
+
+            if (Optional.IsCollectionDefined(Tactics))
+            {
+                if (Tactics.Any())
+                {
+                    builder.Append("    tactics:");
+                    builder.AppendLine(" [");
+                    foreach (var item in Tactics)
+                    {
+                        builder.AppendLine($"      '{item.ToString()}'");
+                    }
+                    builder.AppendLine("    ]");
+                }
+            }
+
+            if (Optional.IsCollectionDefined(Techniques))
+            {
+                if (Techniques.Any())
+                {
+                    builder.Append("    techniques:");
+                    builder.AppendLine(" [");
+                    foreach (var item in Techniques)
+                    {
+                        builder.AppendLine($"      '{item.ToString()}'");
+                    }
+                    builder.AppendLine("    ]");
+                }
+            }
+
+            builder.AppendLine("  }");
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            bool inMultilineString = false;
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (inMultilineString)
+                {
+                    if (line.Contains("'''"))
+                    {
+                        inMultilineString = false;
+                    }
+                    stringBuilder.AppendLine(line);
+                    continue;
+                }
+                if (line.Contains("'''"))
+                {
+                    inMultilineString = true;
+                    stringBuilder.AppendLine($"{indent}{line}");
+                    continue;
+                }
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<SecurityAssessmentMetadataData>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<SecurityAssessmentMetadataData>)this).GetFormatFromOptions(options) : options.Format;
@@ -410,6 +646,8 @@ namespace Azure.ResourceManager.SecurityCenter
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(SecurityAssessmentMetadataData)} does not support '{options.Format}' format.");
             }
@@ -426,6 +664,8 @@ namespace Azure.ResourceManager.SecurityCenter
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeSecurityAssessmentMetadataData(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(SecurityAssessmentMetadataData)} does not support '{options.Format}' format.");
             }

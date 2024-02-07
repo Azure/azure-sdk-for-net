@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -189,6 +190,114 @@ namespace Azure.ResourceManager.DataMigration.Models
             return new SqlBackupFileInfo(fileName.Value, status.Value, Optional.ToNullable(totalSize), Optional.ToNullable(dataRead), Optional.ToNullable(dataWritten), Optional.ToNullable(copyThroughput), Optional.ToNullable(copyDuration), Optional.ToNullable(familySequenceNumber), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(FileName))
+            {
+                builder.Append("  fileName:");
+                if (FileName.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{FileName}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{FileName}'");
+                }
+            }
+
+            if (Optional.IsDefined(Status))
+            {
+                builder.Append("  status:");
+                if (Status.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{Status}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{Status}'");
+                }
+            }
+
+            if (Optional.IsDefined(TotalSize))
+            {
+                builder.Append("  totalSize:");
+                builder.AppendLine($" '{TotalSize.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(DataRead))
+            {
+                builder.Append("  dataRead:");
+                builder.AppendLine($" '{DataRead.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(DataWritten))
+            {
+                builder.Append("  dataWritten:");
+                builder.AppendLine($" '{DataWritten.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(CopyThroughput))
+            {
+                builder.Append("  copyThroughput:");
+                builder.AppendLine($" '{CopyThroughput.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(CopyDuration))
+            {
+                builder.Append("  copyDuration:");
+                builder.AppendLine($" {CopyDuration.Value}");
+            }
+
+            if (Optional.IsDefined(FamilySequenceNumber))
+            {
+                builder.Append("  familySequenceNumber:");
+                builder.AppendLine($" {FamilySequenceNumber.Value}");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            bool inMultilineString = false;
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (inMultilineString)
+                {
+                    if (line.Contains("'''"))
+                    {
+                        inMultilineString = false;
+                    }
+                    stringBuilder.AppendLine(line);
+                    continue;
+                }
+                if (line.Contains("'''"))
+                {
+                    inMultilineString = true;
+                    stringBuilder.AppendLine($"{indent}{line}");
+                    continue;
+                }
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<SqlBackupFileInfo>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<SqlBackupFileInfo>)this).GetFormatFromOptions(options) : options.Format;
@@ -197,6 +306,8 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(SqlBackupFileInfo)} does not support '{options.Format}' format.");
             }
@@ -213,6 +324,8 @@ namespace Azure.ResourceManager.DataMigration.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeSqlBackupFileInfo(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(SqlBackupFileInfo)} does not support '{options.Format}' format.");
             }

@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -154,6 +155,148 @@ namespace Azure.ResourceManager.EventHubs.Models
             return new EventHubsAccessKeys(primaryConnectionString.Value, secondaryConnectionString.Value, aliasPrimaryConnectionString.Value, aliasSecondaryConnectionString.Value, primaryKey.Value, secondaryKey.Value, keyName.Value, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(PrimaryConnectionString))
+            {
+                builder.Append("  primaryConnectionString:");
+                if (PrimaryConnectionString.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{PrimaryConnectionString}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{PrimaryConnectionString}'");
+                }
+            }
+
+            if (Optional.IsDefined(SecondaryConnectionString))
+            {
+                builder.Append("  secondaryConnectionString:");
+                if (SecondaryConnectionString.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{SecondaryConnectionString}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{SecondaryConnectionString}'");
+                }
+            }
+
+            if (Optional.IsDefined(AliasPrimaryConnectionString))
+            {
+                builder.Append("  aliasPrimaryConnectionString:");
+                if (AliasPrimaryConnectionString.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{AliasPrimaryConnectionString}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{AliasPrimaryConnectionString}'");
+                }
+            }
+
+            if (Optional.IsDefined(AliasSecondaryConnectionString))
+            {
+                builder.Append("  aliasSecondaryConnectionString:");
+                if (AliasSecondaryConnectionString.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{AliasSecondaryConnectionString}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{AliasSecondaryConnectionString}'");
+                }
+            }
+
+            if (Optional.IsDefined(PrimaryKey))
+            {
+                builder.Append("  primaryKey:");
+                if (PrimaryKey.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{PrimaryKey}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{PrimaryKey}'");
+                }
+            }
+
+            if (Optional.IsDefined(SecondaryKey))
+            {
+                builder.Append("  secondaryKey:");
+                if (SecondaryKey.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{SecondaryKey}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{SecondaryKey}'");
+                }
+            }
+
+            if (Optional.IsDefined(KeyName))
+            {
+                builder.Append("  keyName:");
+                if (KeyName.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{KeyName}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{KeyName}'");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            bool inMultilineString = false;
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (inMultilineString)
+                {
+                    if (line.Contains("'''"))
+                    {
+                        inMultilineString = false;
+                    }
+                    stringBuilder.AppendLine(line);
+                    continue;
+                }
+                if (line.Contains("'''"))
+                {
+                    inMultilineString = true;
+                    stringBuilder.AppendLine($"{indent}{line}");
+                    continue;
+                }
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<EventHubsAccessKeys>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<EventHubsAccessKeys>)this).GetFormatFromOptions(options) : options.Format;
@@ -162,6 +305,8 @@ namespace Azure.ResourceManager.EventHubs.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(EventHubsAccessKeys)} does not support '{options.Format}' format.");
             }
@@ -178,6 +323,8 @@ namespace Azure.ResourceManager.EventHubs.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeEventHubsAccessKeys(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(EventHubsAccessKeys)} does not support '{options.Format}' format.");
             }

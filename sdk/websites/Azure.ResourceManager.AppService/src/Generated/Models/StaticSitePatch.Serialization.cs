@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.AppService;
@@ -369,6 +371,263 @@ namespace Azure.ResourceManager.AppService.Models
             return new StaticSitePatch(id, name, type, systemData.Value, defaultHostname.Value, repositoryUrl.Value, branch.Value, Optional.ToList(customDomains), repositoryToken.Value, buildProperties.Value, Optional.ToList(privateEndpointConnections), Optional.ToNullable(stagingEnvironmentPolicy), Optional.ToNullable(allowConfigFileUpdates), templateProperties.Value, contentDistributionEndpoint.Value, keyVaultReferenceIdentity.Value, Optional.ToList(userProvidedFunctionApps), provider.Value, kind.Value, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                if (Name.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{Name}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{Name}'");
+                }
+            }
+
+            if (Optional.IsDefined(Kind))
+            {
+                builder.Append("  kind:");
+                if (Kind.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{Kind}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{Kind}'");
+                }
+            }
+
+            if (Optional.IsDefined(Id))
+            {
+                builder.Append("  id:");
+                builder.AppendLine($" '{Id.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SystemData))
+            {
+                builder.Append("  systemData:");
+                builder.AppendLine($" '{SystemData.ToString()}'");
+            }
+
+            builder.Append("  properties:");
+            builder.AppendLine(" {");
+            if (Optional.IsDefined(DefaultHostname))
+            {
+                builder.Append("    defaultHostname:");
+                if (DefaultHostname.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{DefaultHostname}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{DefaultHostname}'");
+                }
+            }
+
+            if (Optional.IsDefined(RepositoryUri))
+            {
+                builder.Append("    repositoryUrl:");
+                builder.AppendLine($" '{RepositoryUri.AbsoluteUri}'");
+            }
+
+            if (Optional.IsDefined(Branch))
+            {
+                builder.Append("    branch:");
+                if (Branch.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{Branch}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{Branch}'");
+                }
+            }
+
+            if (Optional.IsCollectionDefined(CustomDomains))
+            {
+                if (CustomDomains.Any())
+                {
+                    builder.Append("    customDomains:");
+                    builder.AppendLine(" [");
+                    foreach (var item in CustomDomains)
+                    {
+                        if (item == null)
+                        {
+                            builder.Append("null");
+                            continue;
+                        }
+                        if (item.Contains(Environment.NewLine))
+                        {
+                            builder.AppendLine("      '''");
+                            builder.AppendLine($"{item}'''");
+                        }
+                        else
+                        {
+                            builder.AppendLine($"      '{item}'");
+                        }
+                    }
+                    builder.AppendLine("    ]");
+                }
+            }
+
+            if (Optional.IsDefined(RepositoryToken))
+            {
+                builder.Append("    repositoryToken:");
+                if (RepositoryToken.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{RepositoryToken}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{RepositoryToken}'");
+                }
+            }
+
+            if (Optional.IsDefined(BuildProperties))
+            {
+                builder.Append("    buildProperties:");
+                AppendChildObject(builder, BuildProperties, options, 4, false);
+            }
+
+            if (Optional.IsCollectionDefined(PrivateEndpointConnections))
+            {
+                if (PrivateEndpointConnections.Any())
+                {
+                    builder.Append("    privateEndpointConnections:");
+                    builder.AppendLine(" [");
+                    foreach (var item in PrivateEndpointConnections)
+                    {
+                        AppendChildObject(builder, item, options, 6, true);
+                    }
+                    builder.AppendLine("    ]");
+                }
+            }
+
+            if (Optional.IsDefined(StagingEnvironmentPolicy))
+            {
+                builder.Append("    stagingEnvironmentPolicy:");
+                builder.AppendLine($" '{StagingEnvironmentPolicy.Value.ToSerialString()}'");
+            }
+
+            if (Optional.IsDefined(AllowConfigFileUpdates))
+            {
+                builder.Append("    allowConfigFileUpdates:");
+                var boolValue = AllowConfigFileUpdates.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(TemplateProperties))
+            {
+                builder.Append("    templateProperties:");
+                AppendChildObject(builder, TemplateProperties, options, 4, false);
+            }
+
+            if (Optional.IsDefined(ContentDistributionEndpoint))
+            {
+                builder.Append("    contentDistributionEndpoint:");
+                if (ContentDistributionEndpoint.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{ContentDistributionEndpoint}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{ContentDistributionEndpoint}'");
+                }
+            }
+
+            if (Optional.IsDefined(KeyVaultReferenceIdentity))
+            {
+                builder.Append("    keyVaultReferenceIdentity:");
+                if (KeyVaultReferenceIdentity.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{KeyVaultReferenceIdentity}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{KeyVaultReferenceIdentity}'");
+                }
+            }
+
+            if (Optional.IsCollectionDefined(UserProvidedFunctionApps))
+            {
+                if (UserProvidedFunctionApps.Any())
+                {
+                    builder.Append("    userProvidedFunctionApps:");
+                    builder.AppendLine(" [");
+                    foreach (var item in UserProvidedFunctionApps)
+                    {
+                        AppendChildObject(builder, item, options, 6, true);
+                    }
+                    builder.AppendLine("    ]");
+                }
+            }
+
+            if (Optional.IsDefined(Provider))
+            {
+                builder.Append("    provider:");
+                if (Provider.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{Provider}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{Provider}'");
+                }
+            }
+
+            builder.AppendLine("  }");
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            bool inMultilineString = false;
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (inMultilineString)
+                {
+                    if (line.Contains("'''"))
+                    {
+                        inMultilineString = false;
+                    }
+                    stringBuilder.AppendLine(line);
+                    continue;
+                }
+                if (line.Contains("'''"))
+                {
+                    inMultilineString = true;
+                    stringBuilder.AppendLine($"{indent}{line}");
+                    continue;
+                }
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<StaticSitePatch>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<StaticSitePatch>)this).GetFormatFromOptions(options) : options.Format;
@@ -377,6 +636,8 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(StaticSitePatch)} does not support '{options.Format}' format.");
             }
@@ -393,6 +654,8 @@ namespace Azure.ResourceManager.AppService.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeStaticSitePatch(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(StaticSitePatch)} does not support '{options.Format}' format.");
             }

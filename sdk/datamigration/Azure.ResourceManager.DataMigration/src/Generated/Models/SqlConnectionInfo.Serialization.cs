@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -245,6 +246,194 @@ namespace Azure.ResourceManager.DataMigration.Models
             return new SqlConnectionInfo(type, userName.Value, password.Value, serializedAdditionalRawData, dataSource, serverName.Value, Optional.ToNullable(port), serverVersion.Value, serverBrandVersion.Value, resourceId.Value, Optional.ToNullable(authentication), Optional.ToNullable(encryptConnection), additionalSettings.Value, Optional.ToNullable(trustServerCertificate), Optional.ToNullable(platform));
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(DataSource))
+            {
+                builder.Append("  dataSource:");
+                if (DataSource.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{DataSource}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{DataSource}'");
+                }
+            }
+
+            if (Optional.IsDefined(ServerName))
+            {
+                builder.Append("  serverName:");
+                if (ServerName.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{ServerName}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{ServerName}'");
+                }
+            }
+
+            if (Optional.IsDefined(Port))
+            {
+                builder.Append("  port:");
+                builder.AppendLine($" {Port.Value}");
+            }
+
+            if (Optional.IsDefined(ServerVersion))
+            {
+                builder.Append("  serverVersion:");
+                if (ServerVersion.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{ServerVersion}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{ServerVersion}'");
+                }
+            }
+
+            if (Optional.IsDefined(ServerBrandVersion))
+            {
+                builder.Append("  serverBrandVersion:");
+                if (ServerBrandVersion.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{ServerBrandVersion}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{ServerBrandVersion}'");
+                }
+            }
+
+            if (Optional.IsDefined(ResourceId))
+            {
+                builder.Append("  resourceId:");
+                if (ResourceId.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{ResourceId}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{ResourceId}'");
+                }
+            }
+
+            if (Optional.IsDefined(Authentication))
+            {
+                builder.Append("  authentication:");
+                builder.AppendLine($" '{Authentication.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(EncryptConnection))
+            {
+                builder.Append("  encryptConnection:");
+                var boolValue = EncryptConnection.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(AdditionalSettings))
+            {
+                builder.Append("  additionalSettings:");
+                if (AdditionalSettings.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{AdditionalSettings}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{AdditionalSettings}'");
+                }
+            }
+
+            if (Optional.IsDefined(TrustServerCertificate))
+            {
+                builder.Append("  trustServerCertificate:");
+                var boolValue = TrustServerCertificate.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(Platform))
+            {
+                builder.Append("  platform:");
+                builder.AppendLine($" '{Platform.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(UserName))
+            {
+                builder.Append("  userName:");
+                if (UserName.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{UserName}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{UserName}'");
+                }
+            }
+
+            if (Optional.IsDefined(Password))
+            {
+                builder.Append("  password:");
+                if (Password.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{Password}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{Password}'");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            bool inMultilineString = false;
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (inMultilineString)
+                {
+                    if (line.Contains("'''"))
+                    {
+                        inMultilineString = false;
+                    }
+                    stringBuilder.AppendLine(line);
+                    continue;
+                }
+                if (line.Contains("'''"))
+                {
+                    inMultilineString = true;
+                    stringBuilder.AppendLine($"{indent}{line}");
+                    continue;
+                }
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<SqlConnectionInfo>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<SqlConnectionInfo>)this).GetFormatFromOptions(options) : options.Format;
@@ -253,6 +442,8 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(SqlConnectionInfo)} does not support '{options.Format}' format.");
             }
@@ -269,6 +460,8 @@ namespace Azure.ResourceManager.DataMigration.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeSqlConnectionInfo(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(SqlConnectionInfo)} does not support '{options.Format}' format.");
             }

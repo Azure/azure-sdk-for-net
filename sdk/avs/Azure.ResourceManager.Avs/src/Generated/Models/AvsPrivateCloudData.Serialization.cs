@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Avs.Models;
@@ -509,6 +511,351 @@ namespace Azure.ResourceManager.Avs
             return new AvsPrivateCloudData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, sku, identity, managementCluster.Value, Optional.ToNullable(internet), Optional.ToList(identitySources), availability.Value, encryption.Value, Optional.ToList(extendedNetworkBlocks), Optional.ToNullable(provisioningState), circuit.Value, endpoints.Value, networkBlock.Value, managementNetwork.Value, provisioningNetwork.Value, vmotionNetwork.Value, vcenterPassword.Value, nsxtPassword.Value, vcenterCertificateThumbprint.Value, nsxtCertificateThumbprint.Value, Optional.ToList(externalCloudLinks), secondaryCircuit.Value, Optional.ToNullable(nsxPublicIPQuotaRaised), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                if (Name.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{Name}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{Name}'");
+                }
+            }
+
+            if (Optional.IsDefined(Location))
+            {
+                builder.Append("  location:");
+                builder.AppendLine($" '{Location.ToString()}'");
+            }
+
+            if (Optional.IsCollectionDefined(Tags))
+            {
+                if (Tags.Any())
+                {
+                    builder.Append("  tags:");
+                    builder.AppendLine(" {");
+                    foreach (var item in Tags)
+                    {
+                        builder.Append($"    {item.Key}:");
+                        if (item.Value == null)
+                        {
+                            builder.Append("null");
+                            continue;
+                        }
+                        if (item.Value.Contains(Environment.NewLine))
+                        {
+                            builder.AppendLine(" '''");
+                            builder.AppendLine($"{item.Value}'''");
+                        }
+                        else
+                        {
+                            builder.AppendLine($" '{item.Value}'");
+                        }
+                    }
+                    builder.AppendLine("  }");
+                }
+            }
+
+            if (Optional.IsDefined(Sku))
+            {
+                builder.Append("  sku:");
+                AppendChildObject(builder, Sku, options, 2, false);
+            }
+
+            if (Optional.IsDefined(Identity))
+            {
+                builder.Append("  identity:");
+                AppendChildObject(builder, Identity, options, 2, false);
+            }
+
+            if (Optional.IsDefined(Id))
+            {
+                builder.Append("  id:");
+                builder.AppendLine($" '{Id.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SystemData))
+            {
+                builder.Append("  systemData:");
+                builder.AppendLine($" '{SystemData.ToString()}'");
+            }
+
+            builder.Append("  properties:");
+            builder.AppendLine(" {");
+            if (Optional.IsDefined(ManagementCluster))
+            {
+                builder.Append("    managementCluster:");
+                AppendChildObject(builder, ManagementCluster, options, 4, false);
+            }
+
+            if (Optional.IsDefined(Internet))
+            {
+                builder.Append("    internet:");
+                builder.AppendLine($" '{Internet.Value.ToString()}'");
+            }
+
+            if (Optional.IsCollectionDefined(IdentitySources))
+            {
+                if (IdentitySources.Any())
+                {
+                    builder.Append("    identitySources:");
+                    builder.AppendLine(" [");
+                    foreach (var item in IdentitySources)
+                    {
+                        AppendChildObject(builder, item, options, 6, true);
+                    }
+                    builder.AppendLine("    ]");
+                }
+            }
+
+            if (Optional.IsDefined(Availability))
+            {
+                builder.Append("    availability:");
+                AppendChildObject(builder, Availability, options, 4, false);
+            }
+
+            if (Optional.IsDefined(Encryption))
+            {
+                builder.Append("    encryption:");
+                AppendChildObject(builder, Encryption, options, 4, false);
+            }
+
+            if (Optional.IsCollectionDefined(ExtendedNetworkBlocks))
+            {
+                if (ExtendedNetworkBlocks.Any())
+                {
+                    builder.Append("    extendedNetworkBlocks:");
+                    builder.AppendLine(" [");
+                    foreach (var item in ExtendedNetworkBlocks)
+                    {
+                        if (item == null)
+                        {
+                            builder.Append("null");
+                            continue;
+                        }
+                        if (item.Contains(Environment.NewLine))
+                        {
+                            builder.AppendLine("      '''");
+                            builder.AppendLine($"{item}'''");
+                        }
+                        else
+                        {
+                            builder.AppendLine($"      '{item}'");
+                        }
+                    }
+                    builder.AppendLine("    ]");
+                }
+            }
+
+            if (Optional.IsDefined(ProvisioningState))
+            {
+                builder.Append("    provisioningState:");
+                builder.AppendLine($" '{ProvisioningState.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Circuit))
+            {
+                builder.Append("    circuit:");
+                AppendChildObject(builder, Circuit, options, 4, false);
+            }
+
+            if (Optional.IsDefined(Endpoints))
+            {
+                builder.Append("    endpoints:");
+                AppendChildObject(builder, Endpoints, options, 4, false);
+            }
+
+            if (Optional.IsDefined(NetworkBlock))
+            {
+                builder.Append("    networkBlock:");
+                if (NetworkBlock.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{NetworkBlock}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{NetworkBlock}'");
+                }
+            }
+
+            if (Optional.IsDefined(ManagementNetwork))
+            {
+                builder.Append("    managementNetwork:");
+                if (ManagementNetwork.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{ManagementNetwork}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{ManagementNetwork}'");
+                }
+            }
+
+            if (Optional.IsDefined(ProvisioningNetwork))
+            {
+                builder.Append("    provisioningNetwork:");
+                if (ProvisioningNetwork.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{ProvisioningNetwork}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{ProvisioningNetwork}'");
+                }
+            }
+
+            if (Optional.IsDefined(VMotionNetwork))
+            {
+                builder.Append("    vmotionNetwork:");
+                if (VMotionNetwork.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{VMotionNetwork}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{VMotionNetwork}'");
+                }
+            }
+
+            if (Optional.IsDefined(VCenterPassword))
+            {
+                builder.Append("    vcenterPassword:");
+                if (VCenterPassword.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{VCenterPassword}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{VCenterPassword}'");
+                }
+            }
+
+            if (Optional.IsDefined(NsxtPassword))
+            {
+                builder.Append("    nsxtPassword:");
+                if (NsxtPassword.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{NsxtPassword}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{NsxtPassword}'");
+                }
+            }
+
+            if (Optional.IsDefined(VCenterCertificateThumbprint))
+            {
+                builder.Append("    vcenterCertificateThumbprint:");
+                if (VCenterCertificateThumbprint.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{VCenterCertificateThumbprint}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{VCenterCertificateThumbprint}'");
+                }
+            }
+
+            if (Optional.IsDefined(NsxtCertificateThumbprint))
+            {
+                builder.Append("    nsxtCertificateThumbprint:");
+                if (NsxtCertificateThumbprint.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{NsxtCertificateThumbprint}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{NsxtCertificateThumbprint}'");
+                }
+            }
+
+            if (Optional.IsCollectionDefined(ExternalCloudLinks))
+            {
+                if (ExternalCloudLinks.Any())
+                {
+                    builder.Append("    externalCloudLinks:");
+                    builder.AppendLine(" [");
+                    foreach (var item in ExternalCloudLinks)
+                    {
+                        if (item == null)
+                        {
+                            builder.Append("null");
+                            continue;
+                        }
+                        builder.AppendLine($"      '{item.ToString()}'");
+                    }
+                    builder.AppendLine("    ]");
+                }
+            }
+
+            if (Optional.IsDefined(SecondaryCircuit))
+            {
+                builder.Append("    secondaryCircuit:");
+                AppendChildObject(builder, SecondaryCircuit, options, 4, false);
+            }
+
+            if (Optional.IsDefined(NsxPublicIPQuotaRaised))
+            {
+                builder.Append("    nsxPublicIpQuotaRaised:");
+                builder.AppendLine($" '{NsxPublicIPQuotaRaised.Value.ToString()}'");
+            }
+
+            builder.AppendLine("  }");
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            bool inMultilineString = false;
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (inMultilineString)
+                {
+                    if (line.Contains("'''"))
+                    {
+                        inMultilineString = false;
+                    }
+                    stringBuilder.AppendLine(line);
+                    continue;
+                }
+                if (line.Contains("'''"))
+                {
+                    inMultilineString = true;
+                    stringBuilder.AppendLine($"{indent}{line}");
+                    continue;
+                }
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<AvsPrivateCloudData>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<AvsPrivateCloudData>)this).GetFormatFromOptions(options) : options.Format;
@@ -517,6 +864,8 @@ namespace Azure.ResourceManager.Avs
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(AvsPrivateCloudData)} does not support '{options.Format}' format.");
             }
@@ -533,6 +882,8 @@ namespace Azure.ResourceManager.Avs
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeAvsPrivateCloudData(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(AvsPrivateCloudData)} does not support '{options.Format}' format.");
             }

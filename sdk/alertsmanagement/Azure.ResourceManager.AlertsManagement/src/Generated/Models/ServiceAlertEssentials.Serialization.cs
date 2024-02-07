@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -326,6 +327,239 @@ namespace Azure.ResourceManager.AlertsManagement.Models
             return new ServiceAlertEssentials(Optional.ToNullable(severity), Optional.ToNullable(signalType), Optional.ToNullable(alertState), Optional.ToNullable(monitorCondition), targetResource.Value, targetResourceName.Value, targetResourceGroup.Value, targetResourceType.Value, Optional.ToNullable(monitorService), alertRule.Value, sourceCreatedId.Value, Optional.ToNullable(smartGroupId), smartGroupingReason.Value, Optional.ToNullable(startDateTime), Optional.ToNullable(lastModifiedDateTime), Optional.ToNullable(monitorConditionResolvedDateTime), lastModifiedUserName.Value, actionStatus.Value, description.Value, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(Severity))
+            {
+                builder.Append("  severity:");
+                builder.AppendLine($" '{Severity.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SignalType))
+            {
+                builder.Append("  signalType:");
+                builder.AppendLine($" '{SignalType.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(AlertState))
+            {
+                builder.Append("  alertState:");
+                builder.AppendLine($" '{AlertState.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(MonitorCondition))
+            {
+                builder.Append("  monitorCondition:");
+                builder.AppendLine($" '{MonitorCondition.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(TargetResource))
+            {
+                builder.Append("  targetResource:");
+                if (TargetResource.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{TargetResource}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{TargetResource}'");
+                }
+            }
+
+            if (Optional.IsDefined(TargetResourceName))
+            {
+                builder.Append("  targetResourceName:");
+                if (TargetResourceName.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{TargetResourceName}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{TargetResourceName}'");
+                }
+            }
+
+            if (Optional.IsDefined(TargetResourceGroup))
+            {
+                builder.Append("  targetResourceGroup:");
+                if (TargetResourceGroup.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{TargetResourceGroup}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{TargetResourceGroup}'");
+                }
+            }
+
+            if (Optional.IsDefined(TargetResourceType))
+            {
+                builder.Append("  targetResourceType:");
+                if (TargetResourceType.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{TargetResourceType}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{TargetResourceType}'");
+                }
+            }
+
+            if (Optional.IsDefined(MonitorService))
+            {
+                builder.Append("  monitorService:");
+                builder.AppendLine($" '{MonitorService.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(AlertRule))
+            {
+                builder.Append("  alertRule:");
+                if (AlertRule.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{AlertRule}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{AlertRule}'");
+                }
+            }
+
+            if (Optional.IsDefined(SourceCreatedId))
+            {
+                builder.Append("  sourceCreatedId:");
+                if (SourceCreatedId.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{SourceCreatedId}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{SourceCreatedId}'");
+                }
+            }
+
+            if (Optional.IsDefined(SmartGroupId))
+            {
+                builder.Append("  smartGroupId:");
+                builder.AppendLine($" '{SmartGroupId.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SmartGroupingReason))
+            {
+                builder.Append("  smartGroupingReason:");
+                if (SmartGroupingReason.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{SmartGroupingReason}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{SmartGroupingReason}'");
+                }
+            }
+
+            if (Optional.IsDefined(StartOn))
+            {
+                builder.Append("  startDateTime:");
+                var formattedDateTimeString = TypeFormatters.ToString(StartOn.Value, "o");
+                builder.AppendLine($" '{formattedDateTimeString}'");
+            }
+
+            if (Optional.IsDefined(LastModifiedOn))
+            {
+                builder.Append("  lastModifiedDateTime:");
+                var formattedDateTimeString = TypeFormatters.ToString(LastModifiedOn.Value, "o");
+                builder.AppendLine($" '{formattedDateTimeString}'");
+            }
+
+            if (Optional.IsDefined(MonitorConditionResolvedOn))
+            {
+                builder.Append("  monitorConditionResolvedDateTime:");
+                var formattedDateTimeString = TypeFormatters.ToString(MonitorConditionResolvedOn.Value, "o");
+                builder.AppendLine($" '{formattedDateTimeString}'");
+            }
+
+            if (Optional.IsDefined(LastModifiedBy))
+            {
+                builder.Append("  lastModifiedUserName:");
+                if (LastModifiedBy.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{LastModifiedBy}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{LastModifiedBy}'");
+                }
+            }
+
+            if (Optional.IsDefined(ActionStatus))
+            {
+                builder.Append("  actionStatus:");
+                AppendChildObject(builder, ActionStatus, options, 2, false);
+            }
+
+            if (Optional.IsDefined(Description))
+            {
+                builder.Append("  description:");
+                if (Description.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{Description}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{Description}'");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            bool inMultilineString = false;
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (inMultilineString)
+                {
+                    if (line.Contains("'''"))
+                    {
+                        inMultilineString = false;
+                    }
+                    stringBuilder.AppendLine(line);
+                    continue;
+                }
+                if (line.Contains("'''"))
+                {
+                    inMultilineString = true;
+                    stringBuilder.AppendLine($"{indent}{line}");
+                    continue;
+                }
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<ServiceAlertEssentials>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ServiceAlertEssentials>)this).GetFormatFromOptions(options) : options.Format;
@@ -334,6 +568,8 @@ namespace Azure.ResourceManager.AlertsManagement.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(ServiceAlertEssentials)} does not support '{options.Format}' format.");
             }
@@ -350,6 +586,8 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeServiceAlertEssentials(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(ServiceAlertEssentials)} does not support '{options.Format}' format.");
             }
