@@ -2715,7 +2715,6 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
 
                 Task ProcessMessage(ProcessSessionMessageEventArgs args)
                 {
-
                     Assert.That(
                         args.Message.SequenceNumber,
                         Is.EqualTo(lastSequenceNumber + 1),
