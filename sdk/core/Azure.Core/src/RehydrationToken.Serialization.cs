@@ -3,6 +3,7 @@
 
 using System;
 using System.ClientModel.Primitives;
+using System.Diagnostics;
 using System.Text.Json;
 
 namespace Azure.Core
@@ -43,27 +44,37 @@ namespace Azure.Core
                 }
                 if (property.NameEquals("version"u8))
                 {
-                    version = property.Value.GetString()!;
+                    var versionString = property.Value.GetString();
+                    Debug.Assert(versionString is not null);
+                    version = versionString!;
                     continue;
                 }
                 if (property.NameEquals("headerSource"u8))
                 {
-                    headerSource = property.Value.GetString()!;
+                    var headerSourceString = property.Value.GetString();
+                    Debug.Assert(headerSourceString is not null);
+                    headerSource = headerSourceString!;
                     continue;
                 }
                 if (property.NameEquals("nextRequestUri"u8))
                 {
-                    nextRequestUri = property.Value.GetString()!;
+                    var nextRequestUriString = property.Value.GetString();
+                    Debug.Assert(nextRequestUriString is not null);
+                    nextRequestUri = nextRequestUriString!;
                     continue;
                 }
                 if (property.NameEquals("initialUri"u8))
                 {
-                    initialUri = property.Value.GetString()!;
+                    var initialUriString = property.Value.GetString();
+                    Debug.Assert(initialUriString is not null);
+                    initialUri = initialUriString!;
                     continue;
                 }
                 if (property.NameEquals("requestMethod"u8))
                 {
-                    requestMethod = new RequestMethod(property.Value.GetString()!);
+                    var requestMethodString = property.Value.GetString();
+                    Debug.Assert(requestMethodString is not null);
+                    requestMethod = new RequestMethod(requestMethodString!);
                     continue;
                 }
                 if (property.NameEquals("lastKnownLocation"u8))
@@ -77,7 +88,9 @@ namespace Azure.Core
                 }
                 if (property.NameEquals("finalStateVia"u8))
                 {
-                    finalStateVia = property.Value.GetString()!;
+                    var finalStateViaString = property.Value.GetString();
+                    Debug.Assert(finalStateViaString is not null);
+                    finalStateVia = finalStateViaString!;
                     continue;
                 }
             }
