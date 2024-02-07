@@ -108,7 +108,6 @@ namespace Azure.Messaging.EventHubs.Tests
 
             var checkpoint = CheckpointPosition.FromEvent(eventData);
 
-            Assert.That(checkpoint.ToString(), Contains.Substring($"[{offset}]"), "The offset should be represented.");
             Assert.That(checkpoint.ToString(), Contains.Substring($"[{sequence}]"), "The sequence should be represented.");
         }
     }

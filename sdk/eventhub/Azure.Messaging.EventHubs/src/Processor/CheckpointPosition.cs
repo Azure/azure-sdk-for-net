@@ -16,7 +16,7 @@ namespace Azure.Messaging.EventHubs.Processor
     public struct CheckpointPosition : IEquatable<CheckpointPosition>
     {
         /// <summary>
-        ///   The sequence number to associate with the checkpoint. If no offset is present, this indicates that a processor should begin reading from the next event in the stream.
+        ///   The sequence number to associate with the checkpoint. This indicates that a processor should begin reading from the next event in the stream.
         /// </summary>
         ///
         public long SequenceNumber { get; }
@@ -25,7 +25,7 @@ namespace Azure.Messaging.EventHubs.Processor
         ///   Initializes a new instance of the <see cref="CheckpointPosition"/> struct.
         /// </summary>
         ///
-        /// <param name="sequenceNumber">The sequence number to associate with the checkpoint. If no offset is present, this indicates that a processor should begin reading from the next event in the stream.</param>
+        /// <param name="sequenceNumber">The sequence number to associate with the checkpoint. This indicates that a processor should begin reading from the next event in the stream.</param>
         ///
         public CheckpointPosition(long sequenceNumber)
         {

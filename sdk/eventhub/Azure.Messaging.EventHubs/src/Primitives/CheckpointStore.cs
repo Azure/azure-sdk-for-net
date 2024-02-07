@@ -107,7 +107,7 @@ namespace Azure.Messaging.EventHubs.Primitives
         /// <param name="consumerGroup">The name of the consumer group the checkpoint is associated with.</param>
         /// <param name="partitionId">The identifier of the partition the checkpoint is for.</param>
         /// <param name="clientIdentifier">The unique identifier of the client that authored this checkpoint.</param>
-        /// <param name="checkpointStartingPosition">The starting position to associate with the checkpoint, indicating that a processor should begin reading from the next event in the stream.</param>
+        /// <param name="startingPosition">The starting position to associate with the checkpoint, indicating that a processor should begin reading from the next event in the stream.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken" /> instance to signal a request to cancel the operation.</param>
         ///
         public virtual Task UpdateCheckpointAsync(string fullyQualifiedNamespace,
@@ -115,7 +115,7 @@ namespace Azure.Messaging.EventHubs.Primitives
                                                   string consumerGroup,
                                                   string partitionId,
                                                   string clientIdentifier,
-                                                  CheckpointPosition checkpointStartingPosition,
+                                                  CheckpointPosition startingPosition,
                                                   CancellationToken cancellationToken) => throw new NotImplementedException();
     }
 }
