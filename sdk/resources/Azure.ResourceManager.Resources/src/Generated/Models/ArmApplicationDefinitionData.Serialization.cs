@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -441,6 +443,258 @@ namespace Azure.ResourceManager.Resources
             return new ArmApplicationDefinitionData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, managedBy.Value, sku.Value, serializedAdditionalRawData, lockLevel, displayName.Value, Optional.ToNullable(isEnabled), Optional.ToList(authorizations), Optional.ToList(artifacts), description.Value, packageFileUri.Value, mainTemplate.Value, createUiDefinition.Value, notificationPolicy.Value, lockingPolicy.Value, deploymentPolicy.Value, managementPolicy.Value, Optional.ToList(policies));
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                if (Name.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{Name}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{Name}'");
+                }
+            }
+
+            if (Optional.IsDefined(Location))
+            {
+                builder.Append("  location:");
+                builder.AppendLine($" '{Location.ToString()}'");
+            }
+
+            if (Optional.IsCollectionDefined(Tags))
+            {
+                if (Tags.Any())
+                {
+                    builder.Append("  tags:");
+                    builder.AppendLine(" {");
+                    foreach (var item in Tags)
+                    {
+                        builder.Append($"    {item.Key}:");
+                        if (item.Value == null)
+                        {
+                            builder.Append("null");
+                            continue;
+                        }
+                        if (item.Value.Contains(Environment.NewLine))
+                        {
+                            builder.AppendLine(" '''");
+                            builder.AppendLine($"{item.Value}'''");
+                        }
+                        else
+                        {
+                            builder.AppendLine($" '{item.Value}'");
+                        }
+                    }
+                    builder.AppendLine("  }");
+                }
+            }
+
+            if (Optional.IsDefined(ManagedBy))
+            {
+                builder.Append("  managedBy:");
+                if (ManagedBy.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{ManagedBy}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{ManagedBy}'");
+                }
+            }
+
+            if (Optional.IsDefined(Sku))
+            {
+                builder.Append("  sku:");
+                AppendChildObject(builder, Sku, options, 2, false);
+            }
+
+            if (Optional.IsDefined(Id))
+            {
+                builder.Append("  id:");
+                builder.AppendLine($" '{Id.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SystemData))
+            {
+                builder.Append("  systemData:");
+                builder.AppendLine($" '{SystemData.ToString()}'");
+            }
+
+            builder.Append("  properties:");
+            builder.AppendLine(" {");
+            if (Optional.IsDefined(LockLevel))
+            {
+                builder.Append("    lockLevel:");
+                builder.AppendLine($" '{LockLevel.ToSerialString()}'");
+            }
+
+            if (Optional.IsDefined(DisplayName))
+            {
+                builder.Append("    displayName:");
+                if (DisplayName.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{DisplayName}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{DisplayName}'");
+                }
+            }
+
+            if (Optional.IsDefined(IsEnabled))
+            {
+                builder.Append("    isEnabled:");
+                var boolValue = IsEnabled.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsCollectionDefined(Authorizations))
+            {
+                if (Authorizations.Any())
+                {
+                    builder.Append("    authorizations:");
+                    builder.AppendLine(" [");
+                    foreach (var item in Authorizations)
+                    {
+                        AppendChildObject(builder, item, options, 6, true);
+                    }
+                    builder.AppendLine("    ]");
+                }
+            }
+
+            if (Optional.IsCollectionDefined(Artifacts))
+            {
+                if (Artifacts.Any())
+                {
+                    builder.Append("    artifacts:");
+                    builder.AppendLine(" [");
+                    foreach (var item in Artifacts)
+                    {
+                        AppendChildObject(builder, item, options, 6, true);
+                    }
+                    builder.AppendLine("    ]");
+                }
+            }
+
+            if (Optional.IsDefined(Description))
+            {
+                builder.Append("    description:");
+                if (Description.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{Description}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{Description}'");
+                }
+            }
+
+            if (Optional.IsDefined(PackageFileUri))
+            {
+                builder.Append("    packageFileUri:");
+                builder.AppendLine($" '{PackageFileUri.AbsoluteUri}'");
+            }
+
+            if (Optional.IsDefined(MainTemplate))
+            {
+                builder.Append("    mainTemplate:");
+                builder.AppendLine($" '{MainTemplate.ToString()}'");
+            }
+
+            if (Optional.IsDefined(CreateUiDefinition))
+            {
+                builder.Append("    createUiDefinition:");
+                builder.AppendLine($" '{CreateUiDefinition.ToString()}'");
+            }
+
+            if (Optional.IsDefined(NotificationPolicy))
+            {
+                builder.Append("    notificationPolicy:");
+                AppendChildObject(builder, NotificationPolicy, options, 4, false);
+            }
+
+            if (Optional.IsDefined(LockingPolicy))
+            {
+                builder.Append("    lockingPolicy:");
+                AppendChildObject(builder, LockingPolicy, options, 4, false);
+            }
+
+            if (Optional.IsDefined(DeploymentPolicy))
+            {
+                builder.Append("    deploymentPolicy:");
+                AppendChildObject(builder, DeploymentPolicy, options, 4, false);
+            }
+
+            if (Optional.IsDefined(ManagementPolicy))
+            {
+                builder.Append("    managementPolicy:");
+                AppendChildObject(builder, ManagementPolicy, options, 4, false);
+            }
+
+            if (Optional.IsCollectionDefined(Policies))
+            {
+                if (Policies.Any())
+                {
+                    builder.Append("    policies:");
+                    builder.AppendLine(" [");
+                    foreach (var item in Policies)
+                    {
+                        AppendChildObject(builder, item, options, 6, true);
+                    }
+                    builder.AppendLine("    ]");
+                }
+            }
+
+            builder.AppendLine("  }");
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            bool inMultilineString = false;
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (inMultilineString)
+                {
+                    if (line.Contains("'''"))
+                    {
+                        inMultilineString = false;
+                    }
+                    stringBuilder.AppendLine(line);
+                    continue;
+                }
+                if (line.Contains("'''"))
+                {
+                    inMultilineString = true;
+                    stringBuilder.AppendLine($"{indent}{line}");
+                    continue;
+                }
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<ArmApplicationDefinitionData>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ArmApplicationDefinitionData>)this).GetFormatFromOptions(options) : options.Format;
@@ -449,6 +703,8 @@ namespace Azure.ResourceManager.Resources
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(ArmApplicationDefinitionData)} does not support '{options.Format}' format.");
             }
@@ -465,6 +721,8 @@ namespace Azure.ResourceManager.Resources
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeArmApplicationDefinitionData(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(ArmApplicationDefinitionData)} does not support '{options.Format}' format.");
             }

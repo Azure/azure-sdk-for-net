@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -213,6 +215,184 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             return new GcpCredentialsDetailsProperties(Optional.ToNullable(authenticationProvisioningState), Optional.ToList(grantedPermissions), authenticationType, serializedAdditionalRawData, organizationId, type, projectId, privateKeyId, privateKey, clientEmail, clientId, authUri, tokenUri, authProviderX509CertUrl, clientX509CertUrl);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(OrganizationId))
+            {
+                builder.Append("  organizationId:");
+                if (OrganizationId.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{OrganizationId}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{OrganizationId}'");
+                }
+            }
+
+            if (Optional.IsDefined(ProjectId))
+            {
+                builder.Append("  projectId:");
+                if (ProjectId.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{ProjectId}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{ProjectId}'");
+                }
+            }
+
+            if (Optional.IsDefined(PrivateKeyId))
+            {
+                builder.Append("  privateKeyId:");
+                if (PrivateKeyId.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{PrivateKeyId}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{PrivateKeyId}'");
+                }
+            }
+
+            if (Optional.IsDefined(PrivateKey))
+            {
+                builder.Append("  privateKey:");
+                if (PrivateKey.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{PrivateKey}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{PrivateKey}'");
+                }
+            }
+
+            if (Optional.IsDefined(ClientEmail))
+            {
+                builder.Append("  clientEmail:");
+                if (ClientEmail.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{ClientEmail}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{ClientEmail}'");
+                }
+            }
+
+            if (Optional.IsDefined(ClientId))
+            {
+                builder.Append("  clientId:");
+                if (ClientId.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{ClientId}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{ClientId}'");
+                }
+            }
+
+            if (Optional.IsDefined(AuthUri))
+            {
+                builder.Append("  authUri:");
+                builder.AppendLine($" '{AuthUri.AbsoluteUri}'");
+            }
+
+            if (Optional.IsDefined(TokenUri))
+            {
+                builder.Append("  tokenUri:");
+                builder.AppendLine($" '{TokenUri.AbsoluteUri}'");
+            }
+
+            if (Optional.IsDefined(AuthProviderX509CertUri))
+            {
+                builder.Append("  authProviderX509CertUrl:");
+                builder.AppendLine($" '{AuthProviderX509CertUri.AbsoluteUri}'");
+            }
+
+            if (Optional.IsDefined(ClientX509CertUri))
+            {
+                builder.Append("  clientX509CertUrl:");
+                builder.AppendLine($" '{ClientX509CertUri.AbsoluteUri}'");
+            }
+
+            if (Optional.IsDefined(AuthenticationProvisioningState))
+            {
+                builder.Append("  authenticationProvisioningState:");
+                builder.AppendLine($" '{AuthenticationProvisioningState.Value.ToString()}'");
+            }
+
+            if (Optional.IsCollectionDefined(GrantedPermissions))
+            {
+                if (GrantedPermissions.Any())
+                {
+                    builder.Append("  grantedPermissions:");
+                    builder.AppendLine(" [");
+                    foreach (var item in GrantedPermissions)
+                    {
+                        builder.AppendLine($"    '{item.ToString()}'");
+                    }
+                    builder.AppendLine("  ]");
+                }
+            }
+
+            if (Optional.IsDefined(AuthenticationType))
+            {
+                builder.Append("  authenticationType:");
+                builder.AppendLine($" '{AuthenticationType.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            bool inMultilineString = false;
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (inMultilineString)
+                {
+                    if (line.Contains("'''"))
+                    {
+                        inMultilineString = false;
+                    }
+                    stringBuilder.AppendLine(line);
+                    continue;
+                }
+                if (line.Contains("'''"))
+                {
+                    inMultilineString = true;
+                    stringBuilder.AppendLine($"{indent}{line}");
+                    continue;
+                }
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<GcpCredentialsDetailsProperties>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<GcpCredentialsDetailsProperties>)this).GetFormatFromOptions(options) : options.Format;
@@ -221,6 +401,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(GcpCredentialsDetailsProperties)} does not support '{options.Format}' format.");
             }
@@ -237,6 +419,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeGcpCredentialsDetailsProperties(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(GcpCredentialsDetailsProperties)} does not support '{options.Format}' format.");
             }

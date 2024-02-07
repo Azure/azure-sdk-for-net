@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -192,6 +193,145 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             return new SecurityConnectorGitHubRepositoryProperties(provisioningStatusMessage.Value, Optional.ToNullable(provisioningStatusUpdateTimeUtc), Optional.ToNullable(provisioningState), repoId.Value, repoName.Value, repoFullName.Value, Optional.ToNullable(onboardingState), repoUrl.Value, parentOwnerName.Value, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(ProvisioningStatusMessage))
+            {
+                builder.Append("  provisioningStatusMessage:");
+                if (ProvisioningStatusMessage.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{ProvisioningStatusMessage}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{ProvisioningStatusMessage}'");
+                }
+            }
+
+            if (Optional.IsDefined(ProvisioningStatusUpdateTimeUtc))
+            {
+                builder.Append("  provisioningStatusUpdateTimeUtc:");
+                var formattedDateTimeString = TypeFormatters.ToString(ProvisioningStatusUpdateTimeUtc.Value, "o");
+                builder.AppendLine($" '{formattedDateTimeString}'");
+            }
+
+            if (Optional.IsDefined(ProvisioningState))
+            {
+                builder.Append("  provisioningState:");
+                builder.AppendLine($" '{ProvisioningState.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(RepoId))
+            {
+                builder.Append("  repoId:");
+                if (RepoId.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{RepoId}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{RepoId}'");
+                }
+            }
+
+            if (Optional.IsDefined(RepoName))
+            {
+                builder.Append("  repoName:");
+                if (RepoName.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{RepoName}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{RepoName}'");
+                }
+            }
+
+            if (Optional.IsDefined(RepoFullName))
+            {
+                builder.Append("  repoFullName:");
+                if (RepoFullName.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{RepoFullName}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{RepoFullName}'");
+                }
+            }
+
+            if (Optional.IsDefined(OnboardingState))
+            {
+                builder.Append("  onboardingState:");
+                builder.AppendLine($" '{OnboardingState.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(RepoUri))
+            {
+                builder.Append("  repoUrl:");
+                builder.AppendLine($" '{RepoUri.AbsoluteUri}'");
+            }
+
+            if (Optional.IsDefined(ParentOwnerName))
+            {
+                builder.Append("  parentOwnerName:");
+                if (ParentOwnerName.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{ParentOwnerName}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{ParentOwnerName}'");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            bool inMultilineString = false;
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (inMultilineString)
+                {
+                    if (line.Contains("'''"))
+                    {
+                        inMultilineString = false;
+                    }
+                    stringBuilder.AppendLine(line);
+                    continue;
+                }
+                if (line.Contains("'''"))
+                {
+                    inMultilineString = true;
+                    stringBuilder.AppendLine($"{indent}{line}");
+                    continue;
+                }
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<SecurityConnectorGitHubRepositoryProperties>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<SecurityConnectorGitHubRepositoryProperties>)this).GetFormatFromOptions(options) : options.Format;
@@ -200,6 +340,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(SecurityConnectorGitHubRepositoryProperties)} does not support '{options.Format}' format.");
             }
@@ -216,6 +358,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeSecurityConnectorGitHubRepositoryProperties(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(SecurityConnectorGitHubRepositoryProperties)} does not support '{options.Format}' format.");
             }

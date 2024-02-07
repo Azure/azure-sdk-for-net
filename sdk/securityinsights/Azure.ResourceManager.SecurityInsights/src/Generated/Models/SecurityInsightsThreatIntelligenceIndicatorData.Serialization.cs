@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
@@ -721,6 +723,531 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             return new SecurityInsightsThreatIntelligenceIndicatorData(id, name, type, systemData.Value, kind, Optional.ToNullable(etag), serializedAdditionalRawData, Optional.ToDictionary(additionalData), friendlyName.Value, Optional.ToList(threatIntelligenceTags), Optional.ToNullable(lastUpdatedTimeUtc), source.Value, displayName.Value, description.Value, Optional.ToList(indicatorTypes), pattern.Value, patternType.Value, patternVersion.Value, Optional.ToList(killChainPhases), Optional.ToList(parsedPattern), externalId.Value, createdByRef.Value, Optional.ToNullable(defanged), Optional.ToNullable(externalLastUpdatedTimeUtc), Optional.ToList(externalReferences), Optional.ToList(granularMarkings), Optional.ToList(labels), Optional.ToNullable(revoked), Optional.ToNullable(confidence), Optional.ToList(objectMarkingRefs), language.Value, Optional.ToList(threatTypes), Optional.ToNullable(validFrom), Optional.ToNullable(validUntil), Optional.ToNullable(created), modified.Value, Optional.ToDictionary(extensions));
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                if (Name.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{Name}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{Name}'");
+                }
+            }
+
+            if (Optional.IsDefined(Kind))
+            {
+                builder.Append("  kind:");
+                builder.AppendLine($" '{Kind.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ETag))
+            {
+                builder.Append("  etag:");
+                builder.AppendLine($" '{ETag.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Id))
+            {
+                builder.Append("  id:");
+                builder.AppendLine($" '{Id.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SystemData))
+            {
+                builder.Append("  systemData:");
+                builder.AppendLine($" '{SystemData.ToString()}'");
+            }
+
+            builder.Append("  properties:");
+            builder.AppendLine(" {");
+            if (Optional.IsCollectionDefined(AdditionalData))
+            {
+                if (AdditionalData.Any())
+                {
+                    builder.Append("    additionalData:");
+                    builder.AppendLine(" {");
+                    foreach (var item in AdditionalData)
+                    {
+                        builder.Append($"        {item.Key}:");
+                        if (item.Value == null)
+                        {
+                            builder.Append("null");
+                            continue;
+                        }
+                        builder.AppendLine($" '{item.Value.ToString()}'");
+                    }
+                    builder.AppendLine("    }");
+                }
+            }
+
+            if (Optional.IsDefined(FriendlyName))
+            {
+                builder.Append("    friendlyName:");
+                if (FriendlyName.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{FriendlyName}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{FriendlyName}'");
+                }
+            }
+
+            if (Optional.IsCollectionDefined(ThreatIntelligenceTags))
+            {
+                if (ThreatIntelligenceTags.Any())
+                {
+                    builder.Append("    threatIntelligenceTags:");
+                    builder.AppendLine(" [");
+                    foreach (var item in ThreatIntelligenceTags)
+                    {
+                        if (item == null)
+                        {
+                            builder.Append("null");
+                            continue;
+                        }
+                        if (item.Contains(Environment.NewLine))
+                        {
+                            builder.AppendLine("      '''");
+                            builder.AppendLine($"{item}'''");
+                        }
+                        else
+                        {
+                            builder.AppendLine($"      '{item}'");
+                        }
+                    }
+                    builder.AppendLine("    ]");
+                }
+            }
+
+            if (Optional.IsDefined(LastUpdatedOn))
+            {
+                builder.Append("    lastUpdatedTimeUtc:");
+                var formattedDateTimeString = TypeFormatters.ToString(LastUpdatedOn.Value, "o");
+                builder.AppendLine($" '{formattedDateTimeString}'");
+            }
+
+            if (Optional.IsDefined(Source))
+            {
+                builder.Append("    source:");
+                if (Source.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{Source}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{Source}'");
+                }
+            }
+
+            if (Optional.IsDefined(DisplayName))
+            {
+                builder.Append("    displayName:");
+                if (DisplayName.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{DisplayName}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{DisplayName}'");
+                }
+            }
+
+            if (Optional.IsDefined(Description))
+            {
+                builder.Append("    description:");
+                if (Description.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{Description}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{Description}'");
+                }
+            }
+
+            if (Optional.IsCollectionDefined(IndicatorTypes))
+            {
+                if (IndicatorTypes.Any())
+                {
+                    builder.Append("    indicatorTypes:");
+                    builder.AppendLine(" [");
+                    foreach (var item in IndicatorTypes)
+                    {
+                        if (item == null)
+                        {
+                            builder.Append("null");
+                            continue;
+                        }
+                        if (item.Contains(Environment.NewLine))
+                        {
+                            builder.AppendLine("      '''");
+                            builder.AppendLine($"{item}'''");
+                        }
+                        else
+                        {
+                            builder.AppendLine($"      '{item}'");
+                        }
+                    }
+                    builder.AppendLine("    ]");
+                }
+            }
+
+            if (Optional.IsDefined(Pattern))
+            {
+                builder.Append("    pattern:");
+                if (Pattern.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{Pattern}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{Pattern}'");
+                }
+            }
+
+            if (Optional.IsDefined(PatternType))
+            {
+                builder.Append("    patternType:");
+                if (PatternType.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{PatternType}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{PatternType}'");
+                }
+            }
+
+            if (Optional.IsDefined(PatternVersion))
+            {
+                builder.Append("    patternVersion:");
+                if (PatternVersion.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{PatternVersion}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{PatternVersion}'");
+                }
+            }
+
+            if (Optional.IsCollectionDefined(KillChainPhases))
+            {
+                if (KillChainPhases.Any())
+                {
+                    builder.Append("    killChainPhases:");
+                    builder.AppendLine(" [");
+                    foreach (var item in KillChainPhases)
+                    {
+                        AppendChildObject(builder, item, options, 6, true);
+                    }
+                    builder.AppendLine("    ]");
+                }
+            }
+
+            if (Optional.IsCollectionDefined(ParsedPattern))
+            {
+                if (ParsedPattern.Any())
+                {
+                    builder.Append("    parsedPattern:");
+                    builder.AppendLine(" [");
+                    foreach (var item in ParsedPattern)
+                    {
+                        AppendChildObject(builder, item, options, 6, true);
+                    }
+                    builder.AppendLine("    ]");
+                }
+            }
+
+            if (Optional.IsDefined(ExternalId))
+            {
+                builder.Append("    externalId:");
+                if (ExternalId.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{ExternalId}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{ExternalId}'");
+                }
+            }
+
+            if (Optional.IsDefined(CreatedByRef))
+            {
+                builder.Append("    createdByRef:");
+                if (CreatedByRef.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{CreatedByRef}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{CreatedByRef}'");
+                }
+            }
+
+            if (Optional.IsDefined(IsDefanged))
+            {
+                builder.Append("    defanged:");
+                var boolValue = IsDefanged.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(ExternalLastUpdatedOn))
+            {
+                builder.Append("    externalLastUpdatedTimeUtc:");
+                var formattedDateTimeString = TypeFormatters.ToString(ExternalLastUpdatedOn.Value, "o");
+                builder.AppendLine($" '{formattedDateTimeString}'");
+            }
+
+            if (Optional.IsCollectionDefined(ExternalReferences))
+            {
+                if (ExternalReferences.Any())
+                {
+                    builder.Append("    externalReferences:");
+                    builder.AppendLine(" [");
+                    foreach (var item in ExternalReferences)
+                    {
+                        AppendChildObject(builder, item, options, 6, true);
+                    }
+                    builder.AppendLine("    ]");
+                }
+            }
+
+            if (Optional.IsCollectionDefined(GranularMarkings))
+            {
+                if (GranularMarkings.Any())
+                {
+                    builder.Append("    granularMarkings:");
+                    builder.AppendLine(" [");
+                    foreach (var item in GranularMarkings)
+                    {
+                        AppendChildObject(builder, item, options, 6, true);
+                    }
+                    builder.AppendLine("    ]");
+                }
+            }
+
+            if (Optional.IsCollectionDefined(Labels))
+            {
+                if (Labels.Any())
+                {
+                    builder.Append("    labels:");
+                    builder.AppendLine(" [");
+                    foreach (var item in Labels)
+                    {
+                        if (item == null)
+                        {
+                            builder.Append("null");
+                            continue;
+                        }
+                        if (item.Contains(Environment.NewLine))
+                        {
+                            builder.AppendLine("      '''");
+                            builder.AppendLine($"{item}'''");
+                        }
+                        else
+                        {
+                            builder.AppendLine($"      '{item}'");
+                        }
+                    }
+                    builder.AppendLine("    ]");
+                }
+            }
+
+            if (Optional.IsDefined(IsRevoked))
+            {
+                builder.Append("    revoked:");
+                var boolValue = IsRevoked.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(Confidence))
+            {
+                builder.Append("    confidence:");
+                builder.AppendLine($" {Confidence.Value}");
+            }
+
+            if (Optional.IsCollectionDefined(ObjectMarkingRefs))
+            {
+                if (ObjectMarkingRefs.Any())
+                {
+                    builder.Append("    objectMarkingRefs:");
+                    builder.AppendLine(" [");
+                    foreach (var item in ObjectMarkingRefs)
+                    {
+                        if (item == null)
+                        {
+                            builder.Append("null");
+                            continue;
+                        }
+                        if (item.Contains(Environment.NewLine))
+                        {
+                            builder.AppendLine("      '''");
+                            builder.AppendLine($"{item}'''");
+                        }
+                        else
+                        {
+                            builder.AppendLine($"      '{item}'");
+                        }
+                    }
+                    builder.AppendLine("    ]");
+                }
+            }
+
+            if (Optional.IsDefined(Language))
+            {
+                builder.Append("    language:");
+                if (Language.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{Language}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{Language}'");
+                }
+            }
+
+            if (Optional.IsCollectionDefined(ThreatTypes))
+            {
+                if (ThreatTypes.Any())
+                {
+                    builder.Append("    threatTypes:");
+                    builder.AppendLine(" [");
+                    foreach (var item in ThreatTypes)
+                    {
+                        if (item == null)
+                        {
+                            builder.Append("null");
+                            continue;
+                        }
+                        if (item.Contains(Environment.NewLine))
+                        {
+                            builder.AppendLine("      '''");
+                            builder.AppendLine($"{item}'''");
+                        }
+                        else
+                        {
+                            builder.AppendLine($"      '{item}'");
+                        }
+                    }
+                    builder.AppendLine("    ]");
+                }
+            }
+
+            if (Optional.IsDefined(ValidFrom))
+            {
+                builder.Append("    validFrom:");
+                var formattedDateTimeString = TypeFormatters.ToString(ValidFrom.Value, "o");
+                builder.AppendLine($" '{formattedDateTimeString}'");
+            }
+
+            if (Optional.IsDefined(ValidUntil))
+            {
+                builder.Append("    validUntil:");
+                var formattedDateTimeString = TypeFormatters.ToString(ValidUntil.Value, "o");
+                builder.AppendLine($" '{formattedDateTimeString}'");
+            }
+
+            if (Optional.IsDefined(CreatedOn))
+            {
+                builder.Append("    created:");
+                var formattedDateTimeString = TypeFormatters.ToString(CreatedOn.Value, "o");
+                builder.AppendLine($" '{formattedDateTimeString}'");
+            }
+
+            if (Optional.IsDefined(Modified))
+            {
+                builder.Append("    modified:");
+                if (Modified.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{Modified}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{Modified}'");
+                }
+            }
+
+            if (Optional.IsCollectionDefined(Extensions))
+            {
+                if (Extensions.Any())
+                {
+                    builder.Append("    extensions:");
+                    builder.AppendLine(" {");
+                    foreach (var item in Extensions)
+                    {
+                        builder.Append($"        {item.Key}:");
+                        if (item.Value == null)
+                        {
+                            builder.Append("null");
+                            continue;
+                        }
+                        builder.AppendLine($" '{item.Value.ToString()}'");
+                    }
+                    builder.AppendLine("    }");
+                }
+            }
+
+            builder.AppendLine("  }");
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            bool inMultilineString = false;
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (inMultilineString)
+                {
+                    if (line.Contains("'''"))
+                    {
+                        inMultilineString = false;
+                    }
+                    stringBuilder.AppendLine(line);
+                    continue;
+                }
+                if (line.Contains("'''"))
+                {
+                    inMultilineString = true;
+                    stringBuilder.AppendLine($"{indent}{line}");
+                    continue;
+                }
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<SecurityInsightsThreatIntelligenceIndicatorData>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<SecurityInsightsThreatIntelligenceIndicatorData>)this).GetFormatFromOptions(options) : options.Format;
@@ -729,6 +1256,8 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(SecurityInsightsThreatIntelligenceIndicatorData)} does not support '{options.Format}' format.");
             }
@@ -745,6 +1274,8 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeSecurityInsightsThreatIntelligenceIndicatorData(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(SecurityInsightsThreatIntelligenceIndicatorData)} does not support '{options.Format}' format.");
             }

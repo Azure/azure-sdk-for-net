@@ -7,6 +7,7 @@
 
 using System;
 using System.ClientModel.Primitives;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -108,6 +109,112 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             return UnknownWorkloadProtectableItem.DeserializeUnknownWorkloadProtectableItem(element);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(BackupManagementType))
+            {
+                builder.Append("  backupManagementType:");
+                if (BackupManagementType.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{BackupManagementType}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{BackupManagementType}'");
+                }
+            }
+
+            if (Optional.IsDefined(WorkloadType))
+            {
+                builder.Append("  workloadType:");
+                if (WorkloadType.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{WorkloadType}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{WorkloadType}'");
+                }
+            }
+
+            if (Optional.IsDefined(ProtectableItemType))
+            {
+                builder.Append("  protectableItemType:");
+                if (ProtectableItemType.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{ProtectableItemType}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{ProtectableItemType}'");
+                }
+            }
+
+            if (Optional.IsDefined(FriendlyName))
+            {
+                builder.Append("  friendlyName:");
+                if (FriendlyName.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{FriendlyName}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{FriendlyName}'");
+                }
+            }
+
+            if (Optional.IsDefined(ProtectionState))
+            {
+                builder.Append("  protectionState:");
+                builder.AppendLine($" '{ProtectionState.Value.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            bool inMultilineString = false;
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (inMultilineString)
+                {
+                    if (line.Contains("'''"))
+                    {
+                        inMultilineString = false;
+                    }
+                    stringBuilder.AppendLine(line);
+                    continue;
+                }
+                if (line.Contains("'''"))
+                {
+                    inMultilineString = true;
+                    stringBuilder.AppendLine($"{indent}{line}");
+                    continue;
+                }
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<WorkloadProtectableItem>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<WorkloadProtectableItem>)this).GetFormatFromOptions(options) : options.Format;
@@ -116,6 +223,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(WorkloadProtectableItem)} does not support '{options.Format}' format.");
             }
@@ -132,6 +241,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeWorkloadProtectableItem(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(WorkloadProtectableItem)} does not support '{options.Format}' format.");
             }

@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -213,6 +215,169 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             return new InMageRcmMobilityAgentDetails(version.Value, latestVersion.Value, latestAgentReleaseDate.Value, driverVersion.Value, latestUpgradableVersionWithoutReboot.Value, Optional.ToNullable(agentVersionExpireOn), Optional.ToNullable(driverVersionExpireOn), Optional.ToNullable(lastHeartbeatUtc), Optional.ToList(reasonsBlockingUpgrade), isUpgradeable.Value, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(Version))
+            {
+                builder.Append("  version:");
+                if (Version.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{Version}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{Version}'");
+                }
+            }
+
+            if (Optional.IsDefined(LatestVersion))
+            {
+                builder.Append("  latestVersion:");
+                if (LatestVersion.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{LatestVersion}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{LatestVersion}'");
+                }
+            }
+
+            if (Optional.IsDefined(LatestAgentReleaseDate))
+            {
+                builder.Append("  latestAgentReleaseDate:");
+                if (LatestAgentReleaseDate.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{LatestAgentReleaseDate}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{LatestAgentReleaseDate}'");
+                }
+            }
+
+            if (Optional.IsDefined(DriverVersion))
+            {
+                builder.Append("  driverVersion:");
+                if (DriverVersion.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{DriverVersion}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{DriverVersion}'");
+                }
+            }
+
+            if (Optional.IsDefined(LatestUpgradableVersionWithoutReboot))
+            {
+                builder.Append("  latestUpgradableVersionWithoutReboot:");
+                if (LatestUpgradableVersionWithoutReboot.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{LatestUpgradableVersionWithoutReboot}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{LatestUpgradableVersionWithoutReboot}'");
+                }
+            }
+
+            if (Optional.IsDefined(AgentVersionExpireOn))
+            {
+                builder.Append("  agentVersionExpiryDate:");
+                var formattedDateTimeString = TypeFormatters.ToString(AgentVersionExpireOn.Value, "o");
+                builder.AppendLine($" '{formattedDateTimeString}'");
+            }
+
+            if (Optional.IsDefined(DriverVersionExpireOn))
+            {
+                builder.Append("  driverVersionExpiryDate:");
+                var formattedDateTimeString = TypeFormatters.ToString(DriverVersionExpireOn.Value, "o");
+                builder.AppendLine($" '{formattedDateTimeString}'");
+            }
+
+            if (Optional.IsDefined(LastHeartbeatReceivedOn))
+            {
+                builder.Append("  lastHeartbeatUtc:");
+                var formattedDateTimeString = TypeFormatters.ToString(LastHeartbeatReceivedOn.Value, "o");
+                builder.AppendLine($" '{formattedDateTimeString}'");
+            }
+
+            if (Optional.IsCollectionDefined(ReasonsBlockingUpgrade))
+            {
+                if (ReasonsBlockingUpgrade.Any())
+                {
+                    builder.Append("  reasonsBlockingUpgrade:");
+                    builder.AppendLine(" [");
+                    foreach (var item in ReasonsBlockingUpgrade)
+                    {
+                        builder.AppendLine($"    '{item.ToString()}'");
+                    }
+                    builder.AppendLine("  ]");
+                }
+            }
+
+            if (Optional.IsDefined(IsUpgradeable))
+            {
+                builder.Append("  isUpgradeable:");
+                if (IsUpgradeable.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{IsUpgradeable}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{IsUpgradeable}'");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            bool inMultilineString = false;
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (inMultilineString)
+                {
+                    if (line.Contains("'''"))
+                    {
+                        inMultilineString = false;
+                    }
+                    stringBuilder.AppendLine(line);
+                    continue;
+                }
+                if (line.Contains("'''"))
+                {
+                    inMultilineString = true;
+                    stringBuilder.AppendLine($"{indent}{line}");
+                    continue;
+                }
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<InMageRcmMobilityAgentDetails>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<InMageRcmMobilityAgentDetails>)this).GetFormatFromOptions(options) : options.Format;
@@ -221,6 +386,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(InMageRcmMobilityAgentDetails)} does not support '{options.Format}' format.");
             }
@@ -237,6 +404,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeInMageRcmMobilityAgentDetails(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(InMageRcmMobilityAgentDetails)} does not support '{options.Format}' format.");
             }

@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -198,6 +200,147 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             return new HyperVReplicaReplicationDetails(instanceType, serializedAdditionalRawData, Optional.ToNullable(lastReplicatedTime), Optional.ToList(vmNics), vmId.Value, vmProtectionState.Value, vmProtectionStateDescription.Value, initialReplicationDetails.Value, Optional.ToList(vmDiskDetails));
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(LastReplicatedOn))
+            {
+                builder.Append("  lastReplicatedTime:");
+                var formattedDateTimeString = TypeFormatters.ToString(LastReplicatedOn.Value, "o");
+                builder.AppendLine($" '{formattedDateTimeString}'");
+            }
+
+            if (Optional.IsCollectionDefined(VmNics))
+            {
+                if (VmNics.Any())
+                {
+                    builder.Append("  vmNics:");
+                    builder.AppendLine(" [");
+                    foreach (var item in VmNics)
+                    {
+                        AppendChildObject(builder, item, options, 4, true);
+                    }
+                    builder.AppendLine("  ]");
+                }
+            }
+
+            if (Optional.IsDefined(VmId))
+            {
+                builder.Append("  vmId:");
+                if (VmId.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{VmId}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{VmId}'");
+                }
+            }
+
+            if (Optional.IsDefined(VmProtectionState))
+            {
+                builder.Append("  vmProtectionState:");
+                if (VmProtectionState.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{VmProtectionState}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{VmProtectionState}'");
+                }
+            }
+
+            if (Optional.IsDefined(VmProtectionStateDescription))
+            {
+                builder.Append("  vmProtectionStateDescription:");
+                if (VmProtectionStateDescription.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{VmProtectionStateDescription}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{VmProtectionStateDescription}'");
+                }
+            }
+
+            if (Optional.IsDefined(InitialReplicationDetails))
+            {
+                builder.Append("  initialReplicationDetails:");
+                AppendChildObject(builder, InitialReplicationDetails, options, 2, false);
+            }
+
+            if (Optional.IsCollectionDefined(VmDiskDetails))
+            {
+                if (VmDiskDetails.Any())
+                {
+                    builder.Append("  vMDiskDetails:");
+                    builder.AppendLine(" [");
+                    foreach (var item in VmDiskDetails)
+                    {
+                        AppendChildObject(builder, item, options, 4, true);
+                    }
+                    builder.AppendLine("  ]");
+                }
+            }
+
+            if (Optional.IsDefined(InstanceType))
+            {
+                builder.Append("  instanceType:");
+                if (InstanceType.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{InstanceType}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{InstanceType}'");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            bool inMultilineString = false;
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (inMultilineString)
+                {
+                    if (line.Contains("'''"))
+                    {
+                        inMultilineString = false;
+                    }
+                    stringBuilder.AppendLine(line);
+                    continue;
+                }
+                if (line.Contains("'''"))
+                {
+                    inMultilineString = true;
+                    stringBuilder.AppendLine($"{indent}{line}");
+                    continue;
+                }
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<HyperVReplicaReplicationDetails>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<HyperVReplicaReplicationDetails>)this).GetFormatFromOptions(options) : options.Format;
@@ -206,6 +349,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(HyperVReplicaReplicationDetails)} does not support '{options.Format}' format.");
             }
@@ -222,6 +367,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeHyperVReplicaReplicationDetails(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(HyperVReplicaReplicationDetails)} does not support '{options.Format}' format.");
             }

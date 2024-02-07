@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -282,6 +284,195 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             return new DpmProtectedItemExtendedInfo(Optional.ToDictionary(protectableObjectLoadPath), Optional.ToNullable(@protected), Optional.ToNullable(isPresentOnCloud), lastBackupStatus.Value, Optional.ToNullable(lastRefreshedAt), Optional.ToNullable(oldestRecoveryPoint), Optional.ToNullable(recoveryPointCount), Optional.ToNullable(onPremiseOldestRecoveryPoint), Optional.ToNullable(onPremiseLatestRecoveryPoint), Optional.ToNullable(onPremiseRecoveryPointCount), Optional.ToNullable(isCollocated), protectionGroupName.Value, diskStorageUsedInBytes.Value, totalDiskStorageSizeInBytes.Value, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsCollectionDefined(ProtectableObjectLoadPath))
+            {
+                if (ProtectableObjectLoadPath.Any())
+                {
+                    builder.Append("  protectableObjectLoadPath:");
+                    builder.AppendLine(" {");
+                    foreach (var item in ProtectableObjectLoadPath)
+                    {
+                        builder.Append($"    {item.Key}:");
+                        if (item.Value == null)
+                        {
+                            builder.Append("null");
+                            continue;
+                        }
+                        if (item.Value.Contains(Environment.NewLine))
+                        {
+                            builder.AppendLine(" '''");
+                            builder.AppendLine($"{item.Value}'''");
+                        }
+                        else
+                        {
+                            builder.AppendLine($" '{item.Value}'");
+                        }
+                    }
+                    builder.AppendLine("  }");
+                }
+            }
+
+            if (Optional.IsDefined(IsProtected))
+            {
+                builder.Append("  protected:");
+                var boolValue = IsProtected.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(IsPresentOnCloud))
+            {
+                builder.Append("  isPresentOnCloud:");
+                var boolValue = IsPresentOnCloud.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(LastBackupStatus))
+            {
+                builder.Append("  lastBackupStatus:");
+                if (LastBackupStatus.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{LastBackupStatus}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{LastBackupStatus}'");
+                }
+            }
+
+            if (Optional.IsDefined(LastRefreshedOn))
+            {
+                builder.Append("  lastRefreshedAt:");
+                var formattedDateTimeString = TypeFormatters.ToString(LastRefreshedOn.Value, "o");
+                builder.AppendLine($" '{formattedDateTimeString}'");
+            }
+
+            if (Optional.IsDefined(OldestRecoverOn))
+            {
+                builder.Append("  oldestRecoveryPoint:");
+                var formattedDateTimeString = TypeFormatters.ToString(OldestRecoverOn.Value, "o");
+                builder.AppendLine($" '{formattedDateTimeString}'");
+            }
+
+            if (Optional.IsDefined(RecoveryPointCount))
+            {
+                builder.Append("  recoveryPointCount:");
+                builder.AppendLine($" {RecoveryPointCount.Value}");
+            }
+
+            if (Optional.IsDefined(OnPremiseOldestRecoverOn))
+            {
+                builder.Append("  onPremiseOldestRecoveryPoint:");
+                var formattedDateTimeString = TypeFormatters.ToString(OnPremiseOldestRecoverOn.Value, "o");
+                builder.AppendLine($" '{formattedDateTimeString}'");
+            }
+
+            if (Optional.IsDefined(OnPremiseLatestRecoverOn))
+            {
+                builder.Append("  onPremiseLatestRecoveryPoint:");
+                var formattedDateTimeString = TypeFormatters.ToString(OnPremiseLatestRecoverOn.Value, "o");
+                builder.AppendLine($" '{formattedDateTimeString}'");
+            }
+
+            if (Optional.IsDefined(OnPremiseRecoveryPointCount))
+            {
+                builder.Append("  onPremiseRecoveryPointCount:");
+                builder.AppendLine($" {OnPremiseRecoveryPointCount.Value}");
+            }
+
+            if (Optional.IsDefined(IsCollocated))
+            {
+                builder.Append("  isCollocated:");
+                var boolValue = IsCollocated.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(ProtectionGroupName))
+            {
+                builder.Append("  protectionGroupName:");
+                if (ProtectionGroupName.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{ProtectionGroupName}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{ProtectionGroupName}'");
+                }
+            }
+
+            if (Optional.IsDefined(DiskStorageUsedInBytes))
+            {
+                builder.Append("  diskStorageUsedInBytes:");
+                if (DiskStorageUsedInBytes.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{DiskStorageUsedInBytes}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{DiskStorageUsedInBytes}'");
+                }
+            }
+
+            if (Optional.IsDefined(TotalDiskStorageSizeInBytes))
+            {
+                builder.Append("  totalDiskStorageSizeInBytes:");
+                if (TotalDiskStorageSizeInBytes.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{TotalDiskStorageSizeInBytes}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{TotalDiskStorageSizeInBytes}'");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            bool inMultilineString = false;
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (inMultilineString)
+                {
+                    if (line.Contains("'''"))
+                    {
+                        inMultilineString = false;
+                    }
+                    stringBuilder.AppendLine(line);
+                    continue;
+                }
+                if (line.Contains("'''"))
+                {
+                    inMultilineString = true;
+                    stringBuilder.AppendLine($"{indent}{line}");
+                    continue;
+                }
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<DpmProtectedItemExtendedInfo>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<DpmProtectedItemExtendedInfo>)this).GetFormatFromOptions(options) : options.Format;
@@ -290,6 +481,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(DpmProtectedItemExtendedInfo)} does not support '{options.Format}' format.");
             }
@@ -306,6 +499,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeDpmProtectedItemExtendedInfo(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(DpmProtectedItemExtendedInfo)} does not support '{options.Format}' format.");
             }

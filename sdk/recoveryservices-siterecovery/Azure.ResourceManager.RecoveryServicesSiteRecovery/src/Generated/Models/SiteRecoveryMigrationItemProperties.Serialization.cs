@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -371,6 +373,268 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             return new SiteRecoveryMigrationItemProperties(machineName.Value, policyId.Value, policyFriendlyName.Value, recoveryServicesProviderId.Value, replicationStatus.Value, Optional.ToNullable(migrationState), migrationStateDescription.Value, Optional.ToNullable(lastTestMigrationTime), lastTestMigrationStatus.Value, Optional.ToNullable(lastMigrationTime), lastMigrationStatus.Value, Optional.ToNullable(testMigrateState), testMigrateStateDescription.Value, Optional.ToNullable(health), Optional.ToList(healthErrors), Optional.ToList(allowedOperations), currentJob.Value, Optional.ToList(criticalJobHistory), eventCorrelationId.Value, providerSpecificDetails.Value, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(MachineName))
+            {
+                builder.Append("  machineName:");
+                if (MachineName.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{MachineName}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{MachineName}'");
+                }
+            }
+
+            if (Optional.IsDefined(PolicyId))
+            {
+                builder.Append("  policyId:");
+                builder.AppendLine($" '{PolicyId.ToString()}'");
+            }
+
+            if (Optional.IsDefined(PolicyFriendlyName))
+            {
+                builder.Append("  policyFriendlyName:");
+                if (PolicyFriendlyName.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{PolicyFriendlyName}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{PolicyFriendlyName}'");
+                }
+            }
+
+            if (Optional.IsDefined(RecoveryServicesProviderId))
+            {
+                builder.Append("  recoveryServicesProviderId:");
+                if (RecoveryServicesProviderId.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{RecoveryServicesProviderId}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{RecoveryServicesProviderId}'");
+                }
+            }
+
+            if (Optional.IsDefined(ReplicationStatus))
+            {
+                builder.Append("  replicationStatus:");
+                if (ReplicationStatus.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{ReplicationStatus}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{ReplicationStatus}'");
+                }
+            }
+
+            if (Optional.IsDefined(MigrationState))
+            {
+                builder.Append("  migrationState:");
+                builder.AppendLine($" '{MigrationState.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(MigrationStateDescription))
+            {
+                builder.Append("  migrationStateDescription:");
+                if (MigrationStateDescription.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{MigrationStateDescription}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{MigrationStateDescription}'");
+                }
+            }
+
+            if (Optional.IsDefined(LastTestMigrationOn))
+            {
+                builder.Append("  lastTestMigrationTime:");
+                var formattedDateTimeString = TypeFormatters.ToString(LastTestMigrationOn.Value, "o");
+                builder.AppendLine($" '{formattedDateTimeString}'");
+            }
+
+            if (Optional.IsDefined(LastTestMigrationStatus))
+            {
+                builder.Append("  lastTestMigrationStatus:");
+                if (LastTestMigrationStatus.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{LastTestMigrationStatus}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{LastTestMigrationStatus}'");
+                }
+            }
+
+            if (Optional.IsDefined(LastMigrationOn))
+            {
+                builder.Append("  lastMigrationTime:");
+                var formattedDateTimeString = TypeFormatters.ToString(LastMigrationOn.Value, "o");
+                builder.AppendLine($" '{formattedDateTimeString}'");
+            }
+
+            if (Optional.IsDefined(LastMigrationStatus))
+            {
+                builder.Append("  lastMigrationStatus:");
+                if (LastMigrationStatus.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{LastMigrationStatus}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{LastMigrationStatus}'");
+                }
+            }
+
+            if (Optional.IsDefined(TestMigrateState))
+            {
+                builder.Append("  testMigrateState:");
+                builder.AppendLine($" '{TestMigrateState.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(TestMigrateStateDescription))
+            {
+                builder.Append("  testMigrateStateDescription:");
+                if (TestMigrateStateDescription.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{TestMigrateStateDescription}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{TestMigrateStateDescription}'");
+                }
+            }
+
+            if (Optional.IsDefined(Health))
+            {
+                builder.Append("  health:");
+                builder.AppendLine($" '{Health.Value.ToString()}'");
+            }
+
+            if (Optional.IsCollectionDefined(HealthErrors))
+            {
+                if (HealthErrors.Any())
+                {
+                    builder.Append("  healthErrors:");
+                    builder.AppendLine(" [");
+                    foreach (var item in HealthErrors)
+                    {
+                        AppendChildObject(builder, item, options, 4, true);
+                    }
+                    builder.AppendLine("  ]");
+                }
+            }
+
+            if (Optional.IsCollectionDefined(AllowedOperations))
+            {
+                if (AllowedOperations.Any())
+                {
+                    builder.Append("  allowedOperations:");
+                    builder.AppendLine(" [");
+                    foreach (var item in AllowedOperations)
+                    {
+                        builder.AppendLine($"    '{item.ToString()}'");
+                    }
+                    builder.AppendLine("  ]");
+                }
+            }
+
+            if (Optional.IsDefined(CurrentJob))
+            {
+                builder.Append("  currentJob:");
+                AppendChildObject(builder, CurrentJob, options, 2, false);
+            }
+
+            if (Optional.IsCollectionDefined(CriticalJobHistory))
+            {
+                if (CriticalJobHistory.Any())
+                {
+                    builder.Append("  criticalJobHistory:");
+                    builder.AppendLine(" [");
+                    foreach (var item in CriticalJobHistory)
+                    {
+                        AppendChildObject(builder, item, options, 4, true);
+                    }
+                    builder.AppendLine("  ]");
+                }
+            }
+
+            if (Optional.IsDefined(EventCorrelationId))
+            {
+                builder.Append("  eventCorrelationId:");
+                if (EventCorrelationId.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{EventCorrelationId}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{EventCorrelationId}'");
+                }
+            }
+
+            if (Optional.IsDefined(ProviderSpecificDetails))
+            {
+                builder.Append("  providerSpecificDetails:");
+                AppendChildObject(builder, ProviderSpecificDetails, options, 2, false);
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            bool inMultilineString = false;
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (inMultilineString)
+                {
+                    if (line.Contains("'''"))
+                    {
+                        inMultilineString = false;
+                    }
+                    stringBuilder.AppendLine(line);
+                    continue;
+                }
+                if (line.Contains("'''"))
+                {
+                    inMultilineString = true;
+                    stringBuilder.AppendLine($"{indent}{line}");
+                    continue;
+                }
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<SiteRecoveryMigrationItemProperties>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<SiteRecoveryMigrationItemProperties>)this).GetFormatFromOptions(options) : options.Format;
@@ -379,6 +643,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(SiteRecoveryMigrationItemProperties)} does not support '{options.Format}' format.");
             }
@@ -395,6 +661,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeSiteRecoveryMigrationItemProperties(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(SiteRecoveryMigrationItemProperties)} does not support '{options.Format}' format.");
             }

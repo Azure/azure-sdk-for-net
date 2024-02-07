@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -237,6 +239,156 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             return new IaasVmProtectionPolicy(Optional.ToNullable(protectedItemsCount), backupManagementType, Optional.ToList(resourceGuardOperationRequests), serializedAdditionalRawData, instantRPDetails.Value, schedulePolicy.Value, retentionPolicy.Value, Optional.ToDictionary(tieringPolicy), Optional.ToNullable(instantRpRetentionRangeInDays), timeZone.Value, Optional.ToNullable(policyType));
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(InstantRPDetails))
+            {
+                builder.Append("  instantRPDetails:");
+                AppendChildObject(builder, InstantRPDetails, options, 2, false);
+            }
+
+            if (Optional.IsDefined(SchedulePolicy))
+            {
+                builder.Append("  schedulePolicy:");
+                AppendChildObject(builder, SchedulePolicy, options, 2, false);
+            }
+
+            if (Optional.IsDefined(RetentionPolicy))
+            {
+                builder.Append("  retentionPolicy:");
+                AppendChildObject(builder, RetentionPolicy, options, 2, false);
+            }
+
+            if (Optional.IsCollectionDefined(TieringPolicy))
+            {
+                if (TieringPolicy.Any())
+                {
+                    builder.Append("  tieringPolicy:");
+                    builder.AppendLine(" {");
+                    foreach (var item in TieringPolicy)
+                    {
+                        builder.Append($"    {item.Key}:");
+                        AppendChildObject(builder, item.Value, options, 4, false);
+                    }
+                    builder.AppendLine("  }");
+                }
+            }
+
+            if (Optional.IsDefined(InstantRPRetentionRangeInDays))
+            {
+                builder.Append("  instantRpRetentionRangeInDays:");
+                builder.AppendLine($" {InstantRPRetentionRangeInDays.Value}");
+            }
+
+            if (Optional.IsDefined(TimeZone))
+            {
+                builder.Append("  timeZone:");
+                if (TimeZone.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{TimeZone}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{TimeZone}'");
+                }
+            }
+
+            if (Optional.IsDefined(PolicyType))
+            {
+                builder.Append("  policyType:");
+                builder.AppendLine($" '{PolicyType.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ProtectedItemsCount))
+            {
+                builder.Append("  protectedItemsCount:");
+                builder.AppendLine($" {ProtectedItemsCount.Value}");
+            }
+
+            if (Optional.IsDefined(BackupManagementType))
+            {
+                builder.Append("  backupManagementType:");
+                if (BackupManagementType.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{BackupManagementType}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{BackupManagementType}'");
+                }
+            }
+
+            if (Optional.IsCollectionDefined(ResourceGuardOperationRequests))
+            {
+                if (ResourceGuardOperationRequests.Any())
+                {
+                    builder.Append("  resourceGuardOperationRequests:");
+                    builder.AppendLine(" [");
+                    foreach (var item in ResourceGuardOperationRequests)
+                    {
+                        if (item == null)
+                        {
+                            builder.Append("null");
+                            continue;
+                        }
+                        if (item.Contains(Environment.NewLine))
+                        {
+                            builder.AppendLine("    '''");
+                            builder.AppendLine($"{item}'''");
+                        }
+                        else
+                        {
+                            builder.AppendLine($"    '{item}'");
+                        }
+                    }
+                    builder.AppendLine("  ]");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            bool inMultilineString = false;
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (inMultilineString)
+                {
+                    if (line.Contains("'''"))
+                    {
+                        inMultilineString = false;
+                    }
+                    stringBuilder.AppendLine(line);
+                    continue;
+                }
+                if (line.Contains("'''"))
+                {
+                    inMultilineString = true;
+                    stringBuilder.AppendLine($"{indent}{line}");
+                    continue;
+                }
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<IaasVmProtectionPolicy>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<IaasVmProtectionPolicy>)this).GetFormatFromOptions(options) : options.Format;
@@ -245,6 +397,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(IaasVmProtectionPolicy)} does not support '{options.Format}' format.");
             }
@@ -261,6 +415,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeIaasVmProtectionPolicy(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(IaasVmProtectionPolicy)} does not support '{options.Format}' format.");
             }

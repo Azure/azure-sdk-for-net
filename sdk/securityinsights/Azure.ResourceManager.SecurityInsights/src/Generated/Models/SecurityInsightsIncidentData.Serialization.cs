@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
@@ -433,6 +435,236 @@ namespace Azure.ResourceManager.SecurityInsights
             return new SecurityInsightsIncidentData(id, name, type, systemData.Value, additionalData.Value, Optional.ToNullable(classification), classificationComment.Value, Optional.ToNullable(classificationReason), Optional.ToNullable(createdTimeUtc), description.Value, Optional.ToNullable(firstActivityTimeUtc), incidentUrl.Value, Optional.ToNullable(incidentNumber), Optional.ToList(labels), Optional.ToNullable(lastActivityTimeUtc), Optional.ToNullable(lastModifiedTimeUtc), owner.Value, Optional.ToList(relatedAnalyticRuleIds), Optional.ToNullable(severity), Optional.ToNullable(status), title.Value, Optional.ToNullable(etag), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                if (Name.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{Name}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{Name}'");
+                }
+            }
+
+            if (Optional.IsDefined(ETag))
+            {
+                builder.Append("  etag:");
+                builder.AppendLine($" '{ETag.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Id))
+            {
+                builder.Append("  id:");
+                builder.AppendLine($" '{Id.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SystemData))
+            {
+                builder.Append("  systemData:");
+                builder.AppendLine($" '{SystemData.ToString()}'");
+            }
+
+            builder.Append("  properties:");
+            builder.AppendLine(" {");
+            if (Optional.IsDefined(AdditionalInfo))
+            {
+                builder.Append("    additionalData:");
+                AppendChildObject(builder, AdditionalInfo, options, 4, false);
+            }
+
+            if (Optional.IsDefined(Classification))
+            {
+                builder.Append("    classification:");
+                builder.AppendLine($" '{Classification.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ClassificationComment))
+            {
+                builder.Append("    classificationComment:");
+                if (ClassificationComment.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{ClassificationComment}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{ClassificationComment}'");
+                }
+            }
+
+            if (Optional.IsDefined(ClassificationReason))
+            {
+                builder.Append("    classificationReason:");
+                builder.AppendLine($" '{ClassificationReason.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(CreatedOn))
+            {
+                builder.Append("    createdTimeUtc:");
+                var formattedDateTimeString = TypeFormatters.ToString(CreatedOn.Value, "o");
+                builder.AppendLine($" '{formattedDateTimeString}'");
+            }
+
+            if (Optional.IsDefined(Description))
+            {
+                builder.Append("    description:");
+                if (Description.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{Description}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{Description}'");
+                }
+            }
+
+            if (Optional.IsDefined(FirstActivityOn))
+            {
+                builder.Append("    firstActivityTimeUtc:");
+                var formattedDateTimeString = TypeFormatters.ToString(FirstActivityOn.Value, "o");
+                builder.AppendLine($" '{formattedDateTimeString}'");
+            }
+
+            if (Optional.IsDefined(IncidentUri))
+            {
+                builder.Append("    incidentUrl:");
+                builder.AppendLine($" '{IncidentUri.AbsoluteUri}'");
+            }
+
+            if (Optional.IsDefined(IncidentNumber))
+            {
+                builder.Append("    incidentNumber:");
+                builder.AppendLine($" {IncidentNumber.Value}");
+            }
+
+            if (Optional.IsCollectionDefined(Labels))
+            {
+                if (Labels.Any())
+                {
+                    builder.Append("    labels:");
+                    builder.AppendLine(" [");
+                    foreach (var item in Labels)
+                    {
+                        AppendChildObject(builder, item, options, 6, true);
+                    }
+                    builder.AppendLine("    ]");
+                }
+            }
+
+            if (Optional.IsDefined(LastActivityOn))
+            {
+                builder.Append("    lastActivityTimeUtc:");
+                var formattedDateTimeString = TypeFormatters.ToString(LastActivityOn.Value, "o");
+                builder.AppendLine($" '{formattedDateTimeString}'");
+            }
+
+            if (Optional.IsDefined(LastModifiedOn))
+            {
+                builder.Append("    lastModifiedTimeUtc:");
+                var formattedDateTimeString = TypeFormatters.ToString(LastModifiedOn.Value, "o");
+                builder.AppendLine($" '{formattedDateTimeString}'");
+            }
+
+            if (Optional.IsDefined(Owner))
+            {
+                builder.Append("    owner:");
+                AppendChildObject(builder, Owner, options, 4, false);
+            }
+
+            if (Optional.IsCollectionDefined(RelatedAnalyticRuleIds))
+            {
+                if (RelatedAnalyticRuleIds.Any())
+                {
+                    builder.Append("    relatedAnalyticRuleIds:");
+                    builder.AppendLine(" [");
+                    foreach (var item in RelatedAnalyticRuleIds)
+                    {
+                        if (item == null)
+                        {
+                            builder.Append("null");
+                            continue;
+                        }
+                        builder.AppendLine($"      '{item.ToString()}'");
+                    }
+                    builder.AppendLine("    ]");
+                }
+            }
+
+            if (Optional.IsDefined(Severity))
+            {
+                builder.Append("    severity:");
+                builder.AppendLine($" '{Severity.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Status))
+            {
+                builder.Append("    status:");
+                builder.AppendLine($" '{Status.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Title))
+            {
+                builder.Append("    title:");
+                if (Title.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{Title}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{Title}'");
+                }
+            }
+
+            builder.AppendLine("  }");
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            bool inMultilineString = false;
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (inMultilineString)
+                {
+                    if (line.Contains("'''"))
+                    {
+                        inMultilineString = false;
+                    }
+                    stringBuilder.AppendLine(line);
+                    continue;
+                }
+                if (line.Contains("'''"))
+                {
+                    inMultilineString = true;
+                    stringBuilder.AppendLine($"{indent}{line}");
+                    continue;
+                }
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<SecurityInsightsIncidentData>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<SecurityInsightsIncidentData>)this).GetFormatFromOptions(options) : options.Format;
@@ -441,6 +673,8 @@ namespace Azure.ResourceManager.SecurityInsights
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(SecurityInsightsIncidentData)} does not support '{options.Format}' format.");
             }
@@ -457,6 +691,8 @@ namespace Azure.ResourceManager.SecurityInsights
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeSecurityInsightsIncidentData(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(SecurityInsightsIncidentData)} does not support '{options.Format}' format.");
             }

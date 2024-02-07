@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -332,6 +334,140 @@ namespace Azure.ResourceManager.ServiceLinker.Models
             return new LinkerValidateOperationResult(resourceId.Value, status.Value, linkerName.Value, Optional.ToNullable(isConnectionAvailable), Optional.ToNullable(reportStartTimeUtc), Optional.ToNullable(reportEndTimeUtc), sourceId.Value, targetId.Value, Optional.ToNullable(authType), Optional.ToList(validationDetail), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(ResourceId))
+            {
+                builder.Append("  resourceId:");
+                builder.AppendLine($" '{ResourceId.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Status))
+            {
+                builder.Append("  status:");
+                if (Status.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{Status}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{Status}'");
+                }
+            }
+
+            builder.Append("  properties:");
+            builder.AppendLine(" {");
+            if (Optional.IsDefined(LinkerName))
+            {
+                builder.Append("    linkerName:");
+                if (LinkerName.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{LinkerName}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{LinkerName}'");
+                }
+            }
+
+            if (Optional.IsDefined(IsConnectionAvailable))
+            {
+                builder.Append("    isConnectionAvailable:");
+                var boolValue = IsConnectionAvailable.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(ReportStartOn))
+            {
+                builder.Append("    reportStartTimeUtc:");
+                var formattedDateTimeString = TypeFormatters.ToString(ReportStartOn.Value, "o");
+                builder.AppendLine($" '{formattedDateTimeString}'");
+            }
+
+            if (Optional.IsDefined(ReportEndOn))
+            {
+                builder.Append("    reportEndTimeUtc:");
+                var formattedDateTimeString = TypeFormatters.ToString(ReportEndOn.Value, "o");
+                builder.AppendLine($" '{formattedDateTimeString}'");
+            }
+
+            if (Optional.IsDefined(SourceId))
+            {
+                builder.Append("    sourceId:");
+                builder.AppendLine($" '{SourceId.ToString()}'");
+            }
+
+            if (Optional.IsDefined(TargetId))
+            {
+                builder.Append("    targetId:");
+                builder.AppendLine($" '{TargetId.ToString()}'");
+            }
+
+            if (Optional.IsDefined(AuthType))
+            {
+                builder.Append("    authType:");
+                builder.AppendLine($" '{AuthType.Value.ToString()}'");
+            }
+
+            if (Optional.IsCollectionDefined(ValidationDetail))
+            {
+                if (ValidationDetail.Any())
+                {
+                    builder.Append("    validationDetail:");
+                    builder.AppendLine(" [");
+                    foreach (var item in ValidationDetail)
+                    {
+                        AppendChildObject(builder, item, options, 6, true);
+                    }
+                    builder.AppendLine("    ]");
+                }
+            }
+
+            builder.AppendLine("  }");
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            bool inMultilineString = false;
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (inMultilineString)
+                {
+                    if (line.Contains("'''"))
+                    {
+                        inMultilineString = false;
+                    }
+                    stringBuilder.AppendLine(line);
+                    continue;
+                }
+                if (line.Contains("'''"))
+                {
+                    inMultilineString = true;
+                    stringBuilder.AppendLine($"{indent}{line}");
+                    continue;
+                }
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<LinkerValidateOperationResult>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<LinkerValidateOperationResult>)this).GetFormatFromOptions(options) : options.Format;
@@ -340,6 +476,8 @@ namespace Azure.ResourceManager.ServiceLinker.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(LinkerValidateOperationResult)} does not support '{options.Format}' format.");
             }
@@ -356,6 +494,8 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeLinkerValidateOperationResult(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(LinkerValidateOperationResult)} does not support '{options.Format}' format.");
             }

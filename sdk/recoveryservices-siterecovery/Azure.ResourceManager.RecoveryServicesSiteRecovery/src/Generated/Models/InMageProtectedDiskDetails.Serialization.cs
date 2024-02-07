@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -375,6 +376,249 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             return new InMageProtectedDiskDetails(diskId.Value, diskName.Value, protectionStage.Value, healthErrorCode.Value, Optional.ToNullable(rpoInSeconds), resyncRequired.Value, Optional.ToNullable(resyncProgressPercentage), Optional.ToNullable(resyncDurationInSeconds), Optional.ToNullable(diskCapacityInBytes), Optional.ToNullable(fileSystemCapacityInBytes), Optional.ToNullable(sourceDataInMB), Optional.ToNullable(psDataInMB), Optional.ToNullable(targetDataInMB), diskResized.Value, Optional.ToNullable(lastRpoCalculatedTime), Optional.ToNullable(resyncProcessedBytes), Optional.ToNullable(resyncTotalTransferredBytes), Optional.ToNullable(resyncLast15MinutesTransferredBytes), Optional.ToNullable(resyncLastDataTransferTimeUTC), Optional.ToNullable(resyncStartTime), progressHealth.Value, progressStatus.Value, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(DiskId))
+            {
+                builder.Append("  diskId:");
+                if (DiskId.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{DiskId}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{DiskId}'");
+                }
+            }
+
+            if (Optional.IsDefined(DiskName))
+            {
+                builder.Append("  diskName:");
+                if (DiskName.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{DiskName}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{DiskName}'");
+                }
+            }
+
+            if (Optional.IsDefined(ProtectionStage))
+            {
+                builder.Append("  protectionStage:");
+                if (ProtectionStage.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{ProtectionStage}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{ProtectionStage}'");
+                }
+            }
+
+            if (Optional.IsDefined(HealthErrorCode))
+            {
+                builder.Append("  healthErrorCode:");
+                if (HealthErrorCode.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{HealthErrorCode}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{HealthErrorCode}'");
+                }
+            }
+
+            if (Optional.IsDefined(RpoInSeconds))
+            {
+                builder.Append("  rpoInSeconds:");
+                builder.AppendLine($" '{RpoInSeconds.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ResyncRequired))
+            {
+                builder.Append("  resyncRequired:");
+                if (ResyncRequired.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{ResyncRequired}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{ResyncRequired}'");
+                }
+            }
+
+            if (Optional.IsDefined(ResyncProgressPercentage))
+            {
+                builder.Append("  resyncProgressPercentage:");
+                builder.AppendLine($" {ResyncProgressPercentage.Value}");
+            }
+
+            if (Optional.IsDefined(ResyncDurationInSeconds))
+            {
+                builder.Append("  resyncDurationInSeconds:");
+                builder.AppendLine($" '{ResyncDurationInSeconds.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(DiskCapacityInBytes))
+            {
+                builder.Append("  diskCapacityInBytes:");
+                builder.AppendLine($" '{DiskCapacityInBytes.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(FileSystemCapacityInBytes))
+            {
+                builder.Append("  fileSystemCapacityInBytes:");
+                builder.AppendLine($" '{FileSystemCapacityInBytes.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SourceDataInMB))
+            {
+                builder.Append("  sourceDataInMB:");
+                builder.AppendLine($" '{SourceDataInMB.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(PSDataInMB))
+            {
+                builder.Append("  psDataInMB:");
+                builder.AppendLine($" '{PSDataInMB.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(TargetDataInMB))
+            {
+                builder.Append("  targetDataInMB:");
+                builder.AppendLine($" '{TargetDataInMB.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(DiskResized))
+            {
+                builder.Append("  diskResized:");
+                if (DiskResized.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{DiskResized}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{DiskResized}'");
+                }
+            }
+
+            if (Optional.IsDefined(LastRpoCalculatedOn))
+            {
+                builder.Append("  lastRpoCalculatedTime:");
+                var formattedDateTimeString = TypeFormatters.ToString(LastRpoCalculatedOn.Value, "o");
+                builder.AppendLine($" '{formattedDateTimeString}'");
+            }
+
+            if (Optional.IsDefined(ResyncProcessedBytes))
+            {
+                builder.Append("  resyncProcessedBytes:");
+                builder.AppendLine($" '{ResyncProcessedBytes.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ResyncTotalTransferredBytes))
+            {
+                builder.Append("  resyncTotalTransferredBytes:");
+                builder.AppendLine($" '{ResyncTotalTransferredBytes.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ResyncLast15MinutesTransferredBytes))
+            {
+                builder.Append("  resyncLast15MinutesTransferredBytes:");
+                builder.AppendLine($" '{ResyncLast15MinutesTransferredBytes.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ResyncLastDataTransferTimeUTC))
+            {
+                builder.Append("  resyncLastDataTransferTimeUTC:");
+                var formattedDateTimeString = TypeFormatters.ToString(ResyncLastDataTransferTimeUTC.Value, "o");
+                builder.AppendLine($" '{formattedDateTimeString}'");
+            }
+
+            if (Optional.IsDefined(ResyncStartOn))
+            {
+                builder.Append("  resyncStartTime:");
+                var formattedDateTimeString = TypeFormatters.ToString(ResyncStartOn.Value, "o");
+                builder.AppendLine($" '{formattedDateTimeString}'");
+            }
+
+            if (Optional.IsDefined(ProgressHealth))
+            {
+                builder.Append("  progressHealth:");
+                if (ProgressHealth.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{ProgressHealth}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{ProgressHealth}'");
+                }
+            }
+
+            if (Optional.IsDefined(ProgressStatus))
+            {
+                builder.Append("  progressStatus:");
+                if (ProgressStatus.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{ProgressStatus}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{ProgressStatus}'");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            bool inMultilineString = false;
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (inMultilineString)
+                {
+                    if (line.Contains("'''"))
+                    {
+                        inMultilineString = false;
+                    }
+                    stringBuilder.AppendLine(line);
+                    continue;
+                }
+                if (line.Contains("'''"))
+                {
+                    inMultilineString = true;
+                    stringBuilder.AppendLine($"{indent}{line}");
+                    continue;
+                }
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<InMageProtectedDiskDetails>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<InMageProtectedDiskDetails>)this).GetFormatFromOptions(options) : options.Format;
@@ -383,6 +627,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(InMageProtectedDiskDetails)} does not support '{options.Format}' format.");
             }
@@ -399,6 +645,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeInMageProtectedDiskDetails(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(InMageProtectedDiskDetails)} does not support '{options.Format}' format.");
             }

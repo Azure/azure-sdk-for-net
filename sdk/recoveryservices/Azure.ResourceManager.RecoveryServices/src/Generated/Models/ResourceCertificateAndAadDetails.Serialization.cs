@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -266,6 +267,220 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             return new ResourceCertificateAndAadDetails(authType, certificate.Value, friendlyName.Value, issuer.Value, Optional.ToNullable(resourceId), subject.Value, thumbprint.Value, Optional.ToNullable(validFrom), Optional.ToNullable(validTo), serializedAdditionalRawData, aadAuthority, aadTenantId, servicePrincipalClientId, servicePrincipalObjectId, azureManagementEndpointAudience, serviceResourceId.Value, aadAudience.Value);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(AadAuthority))
+            {
+                builder.Append("  aadAuthority:");
+                if (AadAuthority.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{AadAuthority}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{AadAuthority}'");
+                }
+            }
+
+            if (Optional.IsDefined(AadTenantId))
+            {
+                builder.Append("  aadTenantId:");
+                builder.AppendLine($" '{AadTenantId.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ServicePrincipalClientId))
+            {
+                builder.Append("  servicePrincipalClientId:");
+                if (ServicePrincipalClientId.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{ServicePrincipalClientId}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{ServicePrincipalClientId}'");
+                }
+            }
+
+            if (Optional.IsDefined(ServicePrincipalObjectId))
+            {
+                builder.Append("  servicePrincipalObjectId:");
+                if (ServicePrincipalObjectId.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{ServicePrincipalObjectId}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{ServicePrincipalObjectId}'");
+                }
+            }
+
+            if (Optional.IsDefined(AzureManagementEndpointAudience))
+            {
+                builder.Append("  azureManagementEndpointAudience:");
+                if (AzureManagementEndpointAudience.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{AzureManagementEndpointAudience}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{AzureManagementEndpointAudience}'");
+                }
+            }
+
+            if (Optional.IsDefined(ServiceResourceId))
+            {
+                builder.Append("  serviceResourceId:");
+                builder.AppendLine($" '{ServiceResourceId.ToString()}'");
+            }
+
+            if (Optional.IsDefined(AadAudience))
+            {
+                builder.Append("  aadAudience:");
+                if (AadAudience.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{AadAudience}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{AadAudience}'");
+                }
+            }
+
+            if (Optional.IsDefined(AuthType))
+            {
+                builder.Append("  authType:");
+                if (AuthType.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{AuthType}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{AuthType}'");
+                }
+            }
+
+            if (Optional.IsDefined(Certificate))
+            {
+                builder.Append("  certificate:");
+                builder.AppendLine($" '{Certificate.ToString()}'");
+            }
+
+            if (Optional.IsDefined(FriendlyName))
+            {
+                builder.Append("  friendlyName:");
+                if (FriendlyName.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{FriendlyName}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{FriendlyName}'");
+                }
+            }
+
+            if (Optional.IsDefined(Issuer))
+            {
+                builder.Append("  issuer:");
+                if (Issuer.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{Issuer}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{Issuer}'");
+                }
+            }
+
+            if (Optional.IsDefined(ResourceId))
+            {
+                builder.Append("  resourceId:");
+                builder.AppendLine($" '{ResourceId.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Subject))
+            {
+                builder.Append("  subject:");
+                if (Subject.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{Subject}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{Subject}'");
+                }
+            }
+
+            if (Optional.IsDefined(Thumbprint))
+            {
+                builder.Append("  thumbprint:");
+                builder.AppendLine($" '{Thumbprint.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ValidStartOn))
+            {
+                builder.Append("  validFrom:");
+                var formattedDateTimeString = TypeFormatters.ToString(ValidStartOn.Value, "o");
+                builder.AppendLine($" '{formattedDateTimeString}'");
+            }
+
+            if (Optional.IsDefined(ValidEndOn))
+            {
+                builder.Append("  validTo:");
+                var formattedDateTimeString = TypeFormatters.ToString(ValidEndOn.Value, "o");
+                builder.AppendLine($" '{formattedDateTimeString}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            bool inMultilineString = false;
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (inMultilineString)
+                {
+                    if (line.Contains("'''"))
+                    {
+                        inMultilineString = false;
+                    }
+                    stringBuilder.AppendLine(line);
+                    continue;
+                }
+                if (line.Contains("'''"))
+                {
+                    inMultilineString = true;
+                    stringBuilder.AppendLine($"{indent}{line}");
+                    continue;
+                }
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<ResourceCertificateAndAadDetails>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ResourceCertificateAndAadDetails>)this).GetFormatFromOptions(options) : options.Format;
@@ -274,6 +489,8 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(ResourceCertificateAndAadDetails)} does not support '{options.Format}' format.");
             }
@@ -290,6 +507,8 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeResourceCertificateAndAadDetails(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(ResourceCertificateAndAadDetails)} does not support '{options.Format}' format.");
             }

@@ -8,7 +8,9 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -318,6 +320,216 @@ namespace Azure.ResourceManager.Qumulo
             return new QumuloFileSystemResourceData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, identity, marketplaceDetails, Optional.ToNullable(provisioningState), storageSku, userDetails, delegatedSubnetId, clusterLoginUrl.Value, Optional.ToList(privateIPs), adminPassword, initialCapacity, availabilityZone.Value, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                if (Name.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{Name}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{Name}'");
+                }
+            }
+
+            if (Optional.IsDefined(Location))
+            {
+                builder.Append("  location:");
+                builder.AppendLine($" '{Location.ToString()}'");
+            }
+
+            if (Optional.IsCollectionDefined(Tags))
+            {
+                if (Tags.Any())
+                {
+                    builder.Append("  tags:");
+                    builder.AppendLine(" {");
+                    foreach (var item in Tags)
+                    {
+                        builder.Append($"    {item.Key}:");
+                        if (item.Value == null)
+                        {
+                            builder.Append("null");
+                            continue;
+                        }
+                        if (item.Value.Contains(Environment.NewLine))
+                        {
+                            builder.AppendLine(" '''");
+                            builder.AppendLine($"{item.Value}'''");
+                        }
+                        else
+                        {
+                            builder.AppendLine($" '{item.Value}'");
+                        }
+                    }
+                    builder.AppendLine("  }");
+                }
+            }
+
+            if (Optional.IsDefined(Identity))
+            {
+                builder.Append("  identity:");
+                AppendChildObject(builder, Identity, options, 2, false);
+            }
+
+            if (Optional.IsDefined(Id))
+            {
+                builder.Append("  id:");
+                builder.AppendLine($" '{Id.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SystemData))
+            {
+                builder.Append("  systemData:");
+                builder.AppendLine($" '{SystemData.ToString()}'");
+            }
+
+            builder.Append("  properties:");
+            builder.AppendLine(" {");
+            if (Optional.IsDefined(MarketplaceDetails))
+            {
+                builder.Append("    marketplaceDetails:");
+                AppendChildObject(builder, MarketplaceDetails, options, 4, false);
+            }
+
+            if (Optional.IsDefined(ProvisioningState))
+            {
+                builder.Append("    provisioningState:");
+                builder.AppendLine($" '{ProvisioningState.Value.ToSerialString()}'");
+            }
+
+            if (Optional.IsDefined(StorageSku))
+            {
+                builder.Append("    storageSku:");
+                builder.AppendLine($" '{StorageSku.ToSerialString()}'");
+            }
+
+            if (Optional.IsDefined(UserDetails))
+            {
+                builder.Append("    userDetails:");
+                AppendChildObject(builder, UserDetails, options, 4, false);
+            }
+
+            if (Optional.IsDefined(DelegatedSubnetId))
+            {
+                builder.Append("    delegatedSubnetId:");
+                if (DelegatedSubnetId.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{DelegatedSubnetId}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{DelegatedSubnetId}'");
+                }
+            }
+
+            if (Optional.IsDefined(ClusterLoginUri))
+            {
+                builder.Append("    clusterLoginUrl:");
+                builder.AppendLine($" '{ClusterLoginUri.AbsoluteUri}'");
+            }
+
+            if (Optional.IsCollectionDefined(PrivateIPs))
+            {
+                if (PrivateIPs.Any())
+                {
+                    builder.Append("    privateIPs:");
+                    builder.AppendLine(" [");
+                    foreach (var item in PrivateIPs)
+                    {
+                        if (item == null)
+                        {
+                            builder.Append("null");
+                            continue;
+                        }
+                        builder.AppendLine($"      '{item.ToString()}'");
+                    }
+                    builder.AppendLine("    ]");
+                }
+            }
+
+            if (Optional.IsDefined(AdminPassword))
+            {
+                builder.Append("    adminPassword:");
+                if (AdminPassword.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{AdminPassword}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{AdminPassword}'");
+                }
+            }
+
+            if (Optional.IsDefined(InitialCapacity))
+            {
+                builder.Append("    initialCapacity:");
+                builder.AppendLine($" {InitialCapacity}");
+            }
+
+            if (Optional.IsDefined(AvailabilityZone))
+            {
+                builder.Append("    availabilityZone:");
+                if (AvailabilityZone.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{AvailabilityZone}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{AvailabilityZone}'");
+                }
+            }
+
+            builder.AppendLine("  }");
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            bool inMultilineString = false;
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (inMultilineString)
+                {
+                    if (line.Contains("'''"))
+                    {
+                        inMultilineString = false;
+                    }
+                    stringBuilder.AppendLine(line);
+                    continue;
+                }
+                if (line.Contains("'''"))
+                {
+                    inMultilineString = true;
+                    stringBuilder.AppendLine($"{indent}{line}");
+                    continue;
+                }
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<QumuloFileSystemResourceData>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<QumuloFileSystemResourceData>)this).GetFormatFromOptions(options) : options.Format;
@@ -326,6 +538,8 @@ namespace Azure.ResourceManager.Qumulo
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(QumuloFileSystemResourceData)} does not support '{options.Format}' format.");
             }
@@ -342,6 +556,8 @@ namespace Azure.ResourceManager.Qumulo
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeQumuloFileSystemResourceData(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(QumuloFileSystemResourceData)} does not support '{options.Format}' format.");
             }

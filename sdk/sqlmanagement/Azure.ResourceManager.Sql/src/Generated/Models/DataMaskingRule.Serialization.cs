@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -296,6 +297,237 @@ namespace Azure.ResourceManager.Sql.Models
             return new DataMaskingRule(id, name, type, systemData.Value, Optional.ToNullable(location), kind.Value, aliasName.Value, Optional.ToNullable(ruleState), schemaName.Value, tableName.Value, columnName.Value, Optional.ToNullable(maskingFunction), numberFrom.Value, numberTo.Value, prefixSize.Value, suffixSize.Value, replacementString.Value, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                if (Name.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{Name}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{Name}'");
+                }
+            }
+
+            if (Optional.IsDefined(Location))
+            {
+                builder.Append("  location:");
+                builder.AppendLine($" '{Location.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Kind))
+            {
+                builder.Append("  kind:");
+                if (Kind.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{Kind}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{Kind}'");
+                }
+            }
+
+            if (Optional.IsDefined(Id))
+            {
+                builder.Append("  id:");
+                builder.AppendLine($" '{Id.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SystemData))
+            {
+                builder.Append("  systemData:");
+                builder.AppendLine($" '{SystemData.ToString()}'");
+            }
+
+            builder.Append("  properties:");
+            builder.AppendLine(" {");
+            if (Optional.IsDefined(AliasName))
+            {
+                builder.Append("    aliasName:");
+                if (AliasName.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{AliasName}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{AliasName}'");
+                }
+            }
+
+            if (Optional.IsDefined(RuleState))
+            {
+                builder.Append("    ruleState:");
+                builder.AppendLine($" '{RuleState.Value.ToSerialString()}'");
+            }
+
+            if (Optional.IsDefined(SchemaName))
+            {
+                builder.Append("    schemaName:");
+                if (SchemaName.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{SchemaName}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{SchemaName}'");
+                }
+            }
+
+            if (Optional.IsDefined(TableName))
+            {
+                builder.Append("    tableName:");
+                if (TableName.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{TableName}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{TableName}'");
+                }
+            }
+
+            if (Optional.IsDefined(ColumnName))
+            {
+                builder.Append("    columnName:");
+                if (ColumnName.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{ColumnName}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{ColumnName}'");
+                }
+            }
+
+            if (Optional.IsDefined(MaskingFunction))
+            {
+                builder.Append("    maskingFunction:");
+                builder.AppendLine($" '{MaskingFunction.Value.ToSerialString()}'");
+            }
+
+            if (Optional.IsDefined(NumberFrom))
+            {
+                builder.Append("    numberFrom:");
+                if (NumberFrom.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{NumberFrom}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{NumberFrom}'");
+                }
+            }
+
+            if (Optional.IsDefined(NumberTo))
+            {
+                builder.Append("    numberTo:");
+                if (NumberTo.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{NumberTo}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{NumberTo}'");
+                }
+            }
+
+            if (Optional.IsDefined(PrefixSize))
+            {
+                builder.Append("    prefixSize:");
+                if (PrefixSize.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{PrefixSize}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{PrefixSize}'");
+                }
+            }
+
+            if (Optional.IsDefined(SuffixSize))
+            {
+                builder.Append("    suffixSize:");
+                if (SuffixSize.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{SuffixSize}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{SuffixSize}'");
+                }
+            }
+
+            if (Optional.IsDefined(ReplacementString))
+            {
+                builder.Append("    replacementString:");
+                if (ReplacementString.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{ReplacementString}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{ReplacementString}'");
+                }
+            }
+
+            builder.AppendLine("  }");
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            bool inMultilineString = false;
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (inMultilineString)
+                {
+                    if (line.Contains("'''"))
+                    {
+                        inMultilineString = false;
+                    }
+                    stringBuilder.AppendLine(line);
+                    continue;
+                }
+                if (line.Contains("'''"))
+                {
+                    inMultilineString = true;
+                    stringBuilder.AppendLine($"{indent}{line}");
+                    continue;
+                }
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<DataMaskingRule>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<DataMaskingRule>)this).GetFormatFromOptions(options) : options.Format;
@@ -304,6 +536,8 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(DataMaskingRule)} does not support '{options.Format}' format.");
             }
@@ -320,6 +554,8 @@ namespace Azure.ResourceManager.Sql.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeDataMaskingRule(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(DataMaskingRule)} does not support '{options.Format}' format.");
             }

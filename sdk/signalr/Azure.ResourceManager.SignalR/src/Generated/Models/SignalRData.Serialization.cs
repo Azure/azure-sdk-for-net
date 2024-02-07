@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -516,6 +518,311 @@ namespace Azure.ResourceManager.SignalR
             return new SignalRData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, sku.Value, Optional.ToNullable(kind), identity, Optional.ToNullable(provisioningState), externalIP.Value, hostName.Value, Optional.ToNullable(publicPort), Optional.ToNullable(serverPort), version.Value, Optional.ToList(privateEndpointConnections), Optional.ToList(sharedPrivateLinkResources), tls.Value, hostNamePrefix.Value, Optional.ToList(features), liveTraceConfiguration.Value, resourceLogConfiguration.Value, cors.Value, upstream.Value, networkACLs.Value, publicNetworkAccess.Value, Optional.ToNullable(disableLocalAuth), Optional.ToNullable(disableAadAuth), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                if (Name.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{Name}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{Name}'");
+                }
+            }
+
+            if (Optional.IsDefined(Location))
+            {
+                builder.Append("  location:");
+                builder.AppendLine($" '{Location.ToString()}'");
+            }
+
+            if (Optional.IsCollectionDefined(Tags))
+            {
+                if (Tags.Any())
+                {
+                    builder.Append("  tags:");
+                    builder.AppendLine(" {");
+                    foreach (var item in Tags)
+                    {
+                        builder.Append($"    {item.Key}:");
+                        if (item.Value == null)
+                        {
+                            builder.Append("null");
+                            continue;
+                        }
+                        if (item.Value.Contains(Environment.NewLine))
+                        {
+                            builder.AppendLine(" '''");
+                            builder.AppendLine($"{item.Value}'''");
+                        }
+                        else
+                        {
+                            builder.AppendLine($" '{item.Value}'");
+                        }
+                    }
+                    builder.AppendLine("  }");
+                }
+            }
+
+            if (Optional.IsDefined(Sku))
+            {
+                builder.Append("  sku:");
+                AppendChildObject(builder, Sku, options, 2, false);
+            }
+
+            if (Optional.IsDefined(Kind))
+            {
+                builder.Append("  kind:");
+                builder.AppendLine($" '{Kind.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Identity))
+            {
+                builder.Append("  identity:");
+                AppendChildObject(builder, Identity, options, 2, false);
+            }
+
+            if (Optional.IsDefined(Id))
+            {
+                builder.Append("  id:");
+                builder.AppendLine($" '{Id.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SystemData))
+            {
+                builder.Append("  systemData:");
+                builder.AppendLine($" '{SystemData.ToString()}'");
+            }
+
+            builder.Append("  properties:");
+            builder.AppendLine(" {");
+            if (Optional.IsDefined(ProvisioningState))
+            {
+                builder.Append("    provisioningState:");
+                builder.AppendLine($" '{ProvisioningState.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ExternalIP))
+            {
+                builder.Append("    externalIP:");
+                if (ExternalIP.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{ExternalIP}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{ExternalIP}'");
+                }
+            }
+
+            if (Optional.IsDefined(HostName))
+            {
+                builder.Append("    hostName:");
+                if (HostName.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{HostName}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{HostName}'");
+                }
+            }
+
+            if (Optional.IsDefined(PublicPort))
+            {
+                builder.Append("    publicPort:");
+                builder.AppendLine($" {PublicPort.Value}");
+            }
+
+            if (Optional.IsDefined(ServerPort))
+            {
+                builder.Append("    serverPort:");
+                builder.AppendLine($" {ServerPort.Value}");
+            }
+
+            if (Optional.IsDefined(Version))
+            {
+                builder.Append("    version:");
+                if (Version.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{Version}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{Version}'");
+                }
+            }
+
+            if (Optional.IsCollectionDefined(PrivateEndpointConnections))
+            {
+                if (PrivateEndpointConnections.Any())
+                {
+                    builder.Append("    privateEndpointConnections:");
+                    builder.AppendLine(" [");
+                    foreach (var item in PrivateEndpointConnections)
+                    {
+                        AppendChildObject(builder, item, options, 6, true);
+                    }
+                    builder.AppendLine("    ]");
+                }
+            }
+
+            if (Optional.IsCollectionDefined(SharedPrivateLinkResources))
+            {
+                if (SharedPrivateLinkResources.Any())
+                {
+                    builder.Append("    sharedPrivateLinkResources:");
+                    builder.AppendLine(" [");
+                    foreach (var item in SharedPrivateLinkResources)
+                    {
+                        AppendChildObject(builder, item, options, 6, true);
+                    }
+                    builder.AppendLine("    ]");
+                }
+            }
+
+            if (Optional.IsDefined(Tls))
+            {
+                builder.Append("    tls:");
+                AppendChildObject(builder, Tls, options, 4, false);
+            }
+
+            if (Optional.IsDefined(HostNamePrefix))
+            {
+                builder.Append("    hostNamePrefix:");
+                if (HostNamePrefix.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{HostNamePrefix}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{HostNamePrefix}'");
+                }
+            }
+
+            if (Optional.IsCollectionDefined(Features))
+            {
+                if (Features.Any())
+                {
+                    builder.Append("    features:");
+                    builder.AppendLine(" [");
+                    foreach (var item in Features)
+                    {
+                        AppendChildObject(builder, item, options, 6, true);
+                    }
+                    builder.AppendLine("    ]");
+                }
+            }
+
+            if (Optional.IsDefined(LiveTraceConfiguration))
+            {
+                builder.Append("    liveTraceConfiguration:");
+                AppendChildObject(builder, LiveTraceConfiguration, options, 4, false);
+            }
+
+            if (Optional.IsDefined(ResourceLogConfiguration))
+            {
+                builder.Append("    resourceLogConfiguration:");
+                AppendChildObject(builder, ResourceLogConfiguration, options, 4, false);
+            }
+
+            if (Optional.IsDefined(Cors))
+            {
+                builder.Append("    cors:");
+                AppendChildObject(builder, Cors, options, 4, false);
+            }
+
+            if (Optional.IsDefined(Upstream))
+            {
+                builder.Append("    upstream:");
+                AppendChildObject(builder, Upstream, options, 4, false);
+            }
+
+            if (Optional.IsDefined(NetworkACLs))
+            {
+                builder.Append("    networkACLs:");
+                AppendChildObject(builder, NetworkACLs, options, 4, false);
+            }
+
+            if (Optional.IsDefined(PublicNetworkAccess))
+            {
+                builder.Append("    publicNetworkAccess:");
+                if (PublicNetworkAccess.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{PublicNetworkAccess}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{PublicNetworkAccess}'");
+                }
+            }
+
+            if (Optional.IsDefined(DisableLocalAuth))
+            {
+                builder.Append("    disableLocalAuth:");
+                var boolValue = DisableLocalAuth.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(DisableAadAuth))
+            {
+                builder.Append("    disableAadAuth:");
+                var boolValue = DisableAadAuth.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            builder.AppendLine("  }");
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            bool inMultilineString = false;
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (inMultilineString)
+                {
+                    if (line.Contains("'''"))
+                    {
+                        inMultilineString = false;
+                    }
+                    stringBuilder.AppendLine(line);
+                    continue;
+                }
+                if (line.Contains("'''"))
+                {
+                    inMultilineString = true;
+                    stringBuilder.AppendLine($"{indent}{line}");
+                    continue;
+                }
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<SignalRData>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<SignalRData>)this).GetFormatFromOptions(options) : options.Format;
@@ -524,6 +831,8 @@ namespace Azure.ResourceManager.SignalR
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(SignalRData)} does not support '{options.Format}' format.");
             }
@@ -540,6 +849,8 @@ namespace Azure.ResourceManager.SignalR
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeSignalRData(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(SignalRData)} does not support '{options.Format}' format.");
             }

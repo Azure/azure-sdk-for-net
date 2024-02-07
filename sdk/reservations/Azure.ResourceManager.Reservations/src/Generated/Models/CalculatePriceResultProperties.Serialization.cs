@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -244,6 +246,142 @@ namespace Azure.ResourceManager.Reservations.Models
             return new CalculatePriceResultProperties(billingCurrencyTotal.Value, Optional.ToNullable(netTotal), Optional.ToNullable(taxTotal), Optional.ToNullable(grandTotal), Optional.ToNullable(isTaxIncluded), Optional.ToNullable(isBillingPartnerManaged), Optional.ToNullable(reservationOrderId), skuTitle.Value, skuDescription.Value, pricingCurrencyTotal.Value, Optional.ToList(paymentSchedule), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(BillingCurrencyTotal))
+            {
+                builder.Append("  billingCurrencyTotal:");
+                AppendChildObject(builder, BillingCurrencyTotal, options, 2, false);
+            }
+
+            if (Optional.IsDefined(NetTotal))
+            {
+                builder.Append("  netTotal:");
+                builder.AppendLine($" '{NetTotal.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(TaxTotal))
+            {
+                builder.Append("  taxTotal:");
+                builder.AppendLine($" '{TaxTotal.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(GrandTotal))
+            {
+                builder.Append("  grandTotal:");
+                builder.AppendLine($" '{GrandTotal.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(IsTaxIncluded))
+            {
+                builder.Append("  isTaxIncluded:");
+                var boolValue = IsTaxIncluded.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(IsBillingPartnerManaged))
+            {
+                builder.Append("  isBillingPartnerManaged:");
+                var boolValue = IsBillingPartnerManaged.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(ReservationOrderId))
+            {
+                builder.Append("  reservationOrderId:");
+                builder.AppendLine($" '{ReservationOrderId.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SkuTitle))
+            {
+                builder.Append("  skuTitle:");
+                if (SkuTitle.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{SkuTitle}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{SkuTitle}'");
+                }
+            }
+
+            if (Optional.IsDefined(SkuDescription))
+            {
+                builder.Append("  skuDescription:");
+                if (SkuDescription.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{SkuDescription}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{SkuDescription}'");
+                }
+            }
+
+            if (Optional.IsDefined(PricingCurrencyTotal))
+            {
+                builder.Append("  pricingCurrencyTotal:");
+                AppendChildObject(builder, PricingCurrencyTotal, options, 2, false);
+            }
+
+            if (Optional.IsCollectionDefined(PaymentSchedule))
+            {
+                if (PaymentSchedule.Any())
+                {
+                    builder.Append("  paymentSchedule:");
+                    builder.AppendLine(" [");
+                    foreach (var item in PaymentSchedule)
+                    {
+                        AppendChildObject(builder, item, options, 4, true);
+                    }
+                    builder.AppendLine("  ]");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            bool inMultilineString = false;
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (inMultilineString)
+                {
+                    if (line.Contains("'''"))
+                    {
+                        inMultilineString = false;
+                    }
+                    stringBuilder.AppendLine(line);
+                    continue;
+                }
+                if (line.Contains("'''"))
+                {
+                    inMultilineString = true;
+                    stringBuilder.AppendLine($"{indent}{line}");
+                    continue;
+                }
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<CalculatePriceResultProperties>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<CalculatePriceResultProperties>)this).GetFormatFromOptions(options) : options.Format;
@@ -252,6 +390,8 @@ namespace Azure.ResourceManager.Reservations.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(CalculatePriceResultProperties)} does not support '{options.Format}' format.");
             }
@@ -268,6 +408,8 @@ namespace Azure.ResourceManager.Reservations.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeCalculatePriceResultProperties(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(CalculatePriceResultProperties)} does not support '{options.Format}' format.");
             }

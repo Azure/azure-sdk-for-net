@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -316,6 +317,201 @@ namespace Azure.ResourceManager.Sql.Models
             return new ServerOperationData(id, name, type, systemData.Value, operation.Value, operationFriendlyName.Value, Optional.ToNullable(percentComplete), serverName.Value, Optional.ToNullable(startTime), Optional.ToNullable(state), Optional.ToNullable(errorCode), errorDescription.Value, Optional.ToNullable(errorSeverity), Optional.ToNullable(isUserError), Optional.ToNullable(estimatedCompletionTime), description.Value, Optional.ToNullable(isCancellable), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                if (Name.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{Name}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{Name}'");
+                }
+            }
+
+            if (Optional.IsDefined(Id))
+            {
+                builder.Append("  id:");
+                builder.AppendLine($" '{Id.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SystemData))
+            {
+                builder.Append("  systemData:");
+                builder.AppendLine($" '{SystemData.ToString()}'");
+            }
+
+            builder.Append("  properties:");
+            builder.AppendLine(" {");
+            if (Optional.IsDefined(Operation))
+            {
+                builder.Append("    operation:");
+                if (Operation.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{Operation}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{Operation}'");
+                }
+            }
+
+            if (Optional.IsDefined(OperationFriendlyName))
+            {
+                builder.Append("    operationFriendlyName:");
+                if (OperationFriendlyName.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{OperationFriendlyName}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{OperationFriendlyName}'");
+                }
+            }
+
+            if (Optional.IsDefined(PercentComplete))
+            {
+                builder.Append("    percentComplete:");
+                builder.AppendLine($" {PercentComplete.Value}");
+            }
+
+            if (Optional.IsDefined(ServerName))
+            {
+                builder.Append("    serverName:");
+                if (ServerName.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{ServerName}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{ServerName}'");
+                }
+            }
+
+            if (Optional.IsDefined(StartOn))
+            {
+                builder.Append("    startTime:");
+                var formattedDateTimeString = TypeFormatters.ToString(StartOn.Value, "o");
+                builder.AppendLine($" '{formattedDateTimeString}'");
+            }
+
+            if (Optional.IsDefined(State))
+            {
+                builder.Append("    state:");
+                builder.AppendLine($" '{State.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ErrorCode))
+            {
+                builder.Append("    errorCode:");
+                builder.AppendLine($" {ErrorCode.Value}");
+            }
+
+            if (Optional.IsDefined(ErrorDescription))
+            {
+                builder.Append("    errorDescription:");
+                if (ErrorDescription.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{ErrorDescription}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{ErrorDescription}'");
+                }
+            }
+
+            if (Optional.IsDefined(ErrorSeverity))
+            {
+                builder.Append("    errorSeverity:");
+                builder.AppendLine($" {ErrorSeverity.Value}");
+            }
+
+            if (Optional.IsDefined(IsUserError))
+            {
+                builder.Append("    isUserError:");
+                var boolValue = IsUserError.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(EstimatedCompleteOn))
+            {
+                builder.Append("    estimatedCompletionTime:");
+                var formattedDateTimeString = TypeFormatters.ToString(EstimatedCompleteOn.Value, "o");
+                builder.AppendLine($" '{formattedDateTimeString}'");
+            }
+
+            if (Optional.IsDefined(Description))
+            {
+                builder.Append("    description:");
+                if (Description.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{Description}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{Description}'");
+                }
+            }
+
+            if (Optional.IsDefined(IsCancellable))
+            {
+                builder.Append("    isCancellable:");
+                var boolValue = IsCancellable.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            builder.AppendLine("  }");
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            bool inMultilineString = false;
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (inMultilineString)
+                {
+                    if (line.Contains("'''"))
+                    {
+                        inMultilineString = false;
+                    }
+                    stringBuilder.AppendLine(line);
+                    continue;
+                }
+                if (line.Contains("'''"))
+                {
+                    inMultilineString = true;
+                    stringBuilder.AppendLine($"{indent}{line}");
+                    continue;
+                }
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<ServerOperationData>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ServerOperationData>)this).GetFormatFromOptions(options) : options.Format;
@@ -324,6 +520,8 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(ServerOperationData)} does not support '{options.Format}' format.");
             }
@@ -340,6 +538,8 @@ namespace Azure.ResourceManager.Sql.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeServerOperationData(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(ServerOperationData)} does not support '{options.Format}' format.");
             }

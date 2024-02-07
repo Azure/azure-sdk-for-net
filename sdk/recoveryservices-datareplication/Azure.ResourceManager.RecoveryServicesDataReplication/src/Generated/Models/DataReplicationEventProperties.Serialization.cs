@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -206,6 +208,167 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             return new DataReplicationEventProperties(Optional.ToNullable(resourceType), resourceName.Value, eventType.Value, eventName.Value, Optional.ToNullable(timeOfOccurrence), severity.Value, description.Value, correlationId.Value, Optional.ToList(healthErrors), customProperties, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(ResourceType))
+            {
+                builder.Append("  resourceType:");
+                builder.AppendLine($" '{ResourceType.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ResourceName))
+            {
+                builder.Append("  resourceName:");
+                if (ResourceName.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{ResourceName}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{ResourceName}'");
+                }
+            }
+
+            if (Optional.IsDefined(EventType))
+            {
+                builder.Append("  eventType:");
+                if (EventType.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{EventType}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{EventType}'");
+                }
+            }
+
+            if (Optional.IsDefined(EventName))
+            {
+                builder.Append("  eventName:");
+                if (EventName.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{EventName}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{EventName}'");
+                }
+            }
+
+            if (Optional.IsDefined(OccurredOn))
+            {
+                builder.Append("  timeOfOccurrence:");
+                var formattedDateTimeString = TypeFormatters.ToString(OccurredOn.Value, "o");
+                builder.AppendLine($" '{formattedDateTimeString}'");
+            }
+
+            if (Optional.IsDefined(Severity))
+            {
+                builder.Append("  severity:");
+                if (Severity.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{Severity}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{Severity}'");
+                }
+            }
+
+            if (Optional.IsDefined(Description))
+            {
+                builder.Append("  description:");
+                if (Description.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{Description}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{Description}'");
+                }
+            }
+
+            if (Optional.IsDefined(CorrelationId))
+            {
+                builder.Append("  correlationId:");
+                if (CorrelationId.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{CorrelationId}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{CorrelationId}'");
+                }
+            }
+
+            if (Optional.IsCollectionDefined(HealthErrors))
+            {
+                if (HealthErrors.Any())
+                {
+                    builder.Append("  healthErrors:");
+                    builder.AppendLine(" [");
+                    foreach (var item in HealthErrors)
+                    {
+                        AppendChildObject(builder, item, options, 4, true);
+                    }
+                    builder.AppendLine("  ]");
+                }
+            }
+
+            if (Optional.IsDefined(CustomProperties))
+            {
+                builder.Append("  customProperties:");
+                AppendChildObject(builder, CustomProperties, options, 2, false);
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            bool inMultilineString = false;
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (inMultilineString)
+                {
+                    if (line.Contains("'''"))
+                    {
+                        inMultilineString = false;
+                    }
+                    stringBuilder.AppendLine(line);
+                    continue;
+                }
+                if (line.Contains("'''"))
+                {
+                    inMultilineString = true;
+                    stringBuilder.AppendLine($"{indent}{line}");
+                    continue;
+                }
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<DataReplicationEventProperties>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<DataReplicationEventProperties>)this).GetFormatFromOptions(options) : options.Format;
@@ -214,6 +377,8 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(DataReplicationEventProperties)} does not support '{options.Format}' format.");
             }
@@ -230,6 +395,8 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeDataReplicationEventProperties(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(DataReplicationEventProperties)} does not support '{options.Format}' format.");
             }

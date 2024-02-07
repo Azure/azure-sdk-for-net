@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -218,6 +219,164 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             return new BackupStatusResult(Optional.ToNullable(protectionStatus), vaultId.Value, Optional.ToNullable(fabricName), containerName.Value, protectedItemName.Value, errorCode.Value, errorMessage.Value, policyName.Value, registrationStatus.Value, Optional.ToNullable(protectedItemsCount), Optional.ToNullable(acquireStorageAccountLock), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(ProtectionStatus))
+            {
+                builder.Append("  protectionStatus:");
+                builder.AppendLine($" '{ProtectionStatus.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(VaultId))
+            {
+                builder.Append("  vaultId:");
+                builder.AppendLine($" '{VaultId.ToString()}'");
+            }
+
+            if (Optional.IsDefined(FabricName))
+            {
+                builder.Append("  fabricName:");
+                builder.AppendLine($" '{FabricName.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ContainerName))
+            {
+                builder.Append("  containerName:");
+                if (ContainerName.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{ContainerName}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{ContainerName}'");
+                }
+            }
+
+            if (Optional.IsDefined(ProtectedItemName))
+            {
+                builder.Append("  protectedItemName:");
+                if (ProtectedItemName.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{ProtectedItemName}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{ProtectedItemName}'");
+                }
+            }
+
+            if (Optional.IsDefined(ErrorCode))
+            {
+                builder.Append("  errorCode:");
+                if (ErrorCode.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{ErrorCode}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{ErrorCode}'");
+                }
+            }
+
+            if (Optional.IsDefined(ErrorMessage))
+            {
+                builder.Append("  errorMessage:");
+                if (ErrorMessage.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{ErrorMessage}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{ErrorMessage}'");
+                }
+            }
+
+            if (Optional.IsDefined(PolicyName))
+            {
+                builder.Append("  policyName:");
+                if (PolicyName.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{PolicyName}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{PolicyName}'");
+                }
+            }
+
+            if (Optional.IsDefined(RegistrationStatus))
+            {
+                builder.Append("  registrationStatus:");
+                if (RegistrationStatus.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{RegistrationStatus}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{RegistrationStatus}'");
+                }
+            }
+
+            if (Optional.IsDefined(ProtectedItemsCount))
+            {
+                builder.Append("  protectedItemsCount:");
+                builder.AppendLine($" {ProtectedItemsCount.Value}");
+            }
+
+            if (Optional.IsDefined(AcquireStorageAccountLock))
+            {
+                builder.Append("  acquireStorageAccountLock:");
+                builder.AppendLine($" '{AcquireStorageAccountLock.Value.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            bool inMultilineString = false;
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (inMultilineString)
+                {
+                    if (line.Contains("'''"))
+                    {
+                        inMultilineString = false;
+                    }
+                    stringBuilder.AppendLine(line);
+                    continue;
+                }
+                if (line.Contains("'''"))
+                {
+                    inMultilineString = true;
+                    stringBuilder.AppendLine($"{indent}{line}");
+                    continue;
+                }
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<BackupStatusResult>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<BackupStatusResult>)this).GetFormatFromOptions(options) : options.Format;
@@ -226,6 +385,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(BackupStatusResult)} does not support '{options.Format}' format.");
             }
@@ -242,6 +403,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeBackupStatusResult(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(BackupStatusResult)} does not support '{options.Format}' format.");
             }

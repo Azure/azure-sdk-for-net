@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -463,6 +465,330 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             return new A2AProtectedManagedDiskDetails(diskId.Value, recoveryResourceGroupId.Value, recoveryTargetDiskId.Value, recoveryReplicaDiskId.Value, recoveryOrignalTargetDiskId.Value, recoveryReplicaDiskAccountType.Value, recoveryTargetDiskAccountType.Value, recoveryDiskEncryptionSetId.Value, primaryDiskEncryptionSetId.Value, diskName.Value, Optional.ToNullable(diskCapacityInBytes), primaryStagingAzureStorageAccountId.Value, diskType.Value, Optional.ToNullable(resyncRequired), Optional.ToNullable(monitoringPercentageCompletion), monitoringJobType.Value, Optional.ToNullable(dataPendingInStagingStorageAccountInMB), Optional.ToNullable(dataPendingAtSourceAgentInMB), diskState.Value, Optional.ToList(allowedDiskLevelOperation), Optional.ToNullable(isDiskEncrypted), secretIdentifier.Value, dekKeyVaultArmId.Value, Optional.ToNullable(isDiskKeyEncrypted), keyIdentifier.Value, kekKeyVaultArmId.Value, failoverDiskName.Value, tfoDiskName.Value, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(DiskId))
+            {
+                builder.Append("  diskId:");
+                if (DiskId.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{DiskId}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{DiskId}'");
+                }
+            }
+
+            if (Optional.IsDefined(RecoveryResourceGroupId))
+            {
+                builder.Append("  recoveryResourceGroupId:");
+                builder.AppendLine($" '{RecoveryResourceGroupId.ToString()}'");
+            }
+
+            if (Optional.IsDefined(RecoveryTargetDiskId))
+            {
+                builder.Append("  recoveryTargetDiskId:");
+                builder.AppendLine($" '{RecoveryTargetDiskId.ToString()}'");
+            }
+
+            if (Optional.IsDefined(RecoveryReplicaDiskId))
+            {
+                builder.Append("  recoveryReplicaDiskId:");
+                builder.AppendLine($" '{RecoveryReplicaDiskId.ToString()}'");
+            }
+
+            if (Optional.IsDefined(RecoveryOrignalTargetDiskId))
+            {
+                builder.Append("  recoveryOrignalTargetDiskId:");
+                builder.AppendLine($" '{RecoveryOrignalTargetDiskId.ToString()}'");
+            }
+
+            if (Optional.IsDefined(RecoveryReplicaDiskAccountType))
+            {
+                builder.Append("  recoveryReplicaDiskAccountType:");
+                if (RecoveryReplicaDiskAccountType.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{RecoveryReplicaDiskAccountType}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{RecoveryReplicaDiskAccountType}'");
+                }
+            }
+
+            if (Optional.IsDefined(RecoveryTargetDiskAccountType))
+            {
+                builder.Append("  recoveryTargetDiskAccountType:");
+                if (RecoveryTargetDiskAccountType.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{RecoveryTargetDiskAccountType}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{RecoveryTargetDiskAccountType}'");
+                }
+            }
+
+            if (Optional.IsDefined(RecoveryDiskEncryptionSetId))
+            {
+                builder.Append("  recoveryDiskEncryptionSetId:");
+                builder.AppendLine($" '{RecoveryDiskEncryptionSetId.ToString()}'");
+            }
+
+            if (Optional.IsDefined(PrimaryDiskEncryptionSetId))
+            {
+                builder.Append("  primaryDiskEncryptionSetId:");
+                builder.AppendLine($" '{PrimaryDiskEncryptionSetId.ToString()}'");
+            }
+
+            if (Optional.IsDefined(DiskName))
+            {
+                builder.Append("  diskName:");
+                if (DiskName.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{DiskName}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{DiskName}'");
+                }
+            }
+
+            if (Optional.IsDefined(DiskCapacityInBytes))
+            {
+                builder.Append("  diskCapacityInBytes:");
+                builder.AppendLine($" '{DiskCapacityInBytes.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(PrimaryStagingAzureStorageAccountId))
+            {
+                builder.Append("  primaryStagingAzureStorageAccountId:");
+                builder.AppendLine($" '{PrimaryStagingAzureStorageAccountId.ToString()}'");
+            }
+
+            if (Optional.IsDefined(DiskType))
+            {
+                builder.Append("  diskType:");
+                if (DiskType.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{DiskType}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{DiskType}'");
+                }
+            }
+
+            if (Optional.IsDefined(IsResyncRequired))
+            {
+                builder.Append("  resyncRequired:");
+                var boolValue = IsResyncRequired.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(MonitoringPercentageCompletion))
+            {
+                builder.Append("  monitoringPercentageCompletion:");
+                builder.AppendLine($" {MonitoringPercentageCompletion.Value}");
+            }
+
+            if (Optional.IsDefined(MonitoringJobType))
+            {
+                builder.Append("  monitoringJobType:");
+                if (MonitoringJobType.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{MonitoringJobType}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{MonitoringJobType}'");
+                }
+            }
+
+            if (Optional.IsDefined(DataPendingInStagingStorageAccountInMB))
+            {
+                builder.Append("  dataPendingInStagingStorageAccountInMB:");
+                builder.AppendLine($" '{DataPendingInStagingStorageAccountInMB.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(DataPendingAtSourceAgentInMB))
+            {
+                builder.Append("  dataPendingAtSourceAgentInMB:");
+                builder.AppendLine($" '{DataPendingAtSourceAgentInMB.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(DiskState))
+            {
+                builder.Append("  diskState:");
+                if (DiskState.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{DiskState}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{DiskState}'");
+                }
+            }
+
+            if (Optional.IsCollectionDefined(AllowedDiskLevelOperation))
+            {
+                if (AllowedDiskLevelOperation.Any())
+                {
+                    builder.Append("  allowedDiskLevelOperation:");
+                    builder.AppendLine(" [");
+                    foreach (var item in AllowedDiskLevelOperation)
+                    {
+                        if (item == null)
+                        {
+                            builder.Append("null");
+                            continue;
+                        }
+                        if (item.Contains(Environment.NewLine))
+                        {
+                            builder.AppendLine("    '''");
+                            builder.AppendLine($"{item}'''");
+                        }
+                        else
+                        {
+                            builder.AppendLine($"    '{item}'");
+                        }
+                    }
+                    builder.AppendLine("  ]");
+                }
+            }
+
+            if (Optional.IsDefined(IsDiskEncrypted))
+            {
+                builder.Append("  isDiskEncrypted:");
+                var boolValue = IsDiskEncrypted.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(SecretIdentifier))
+            {
+                builder.Append("  secretIdentifier:");
+                if (SecretIdentifier.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{SecretIdentifier}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{SecretIdentifier}'");
+                }
+            }
+
+            if (Optional.IsDefined(DekKeyVaultArmId))
+            {
+                builder.Append("  dekKeyVaultArmId:");
+                builder.AppendLine($" '{DekKeyVaultArmId.ToString()}'");
+            }
+
+            if (Optional.IsDefined(IsDiskKeyEncrypted))
+            {
+                builder.Append("  isDiskKeyEncrypted:");
+                var boolValue = IsDiskKeyEncrypted.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(KeyIdentifier))
+            {
+                builder.Append("  keyIdentifier:");
+                if (KeyIdentifier.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{KeyIdentifier}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{KeyIdentifier}'");
+                }
+            }
+
+            if (Optional.IsDefined(KekKeyVaultArmId))
+            {
+                builder.Append("  kekKeyVaultArmId:");
+                builder.AppendLine($" '{KekKeyVaultArmId.ToString()}'");
+            }
+
+            if (Optional.IsDefined(FailoverDiskName))
+            {
+                builder.Append("  failoverDiskName:");
+                if (FailoverDiskName.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{FailoverDiskName}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{FailoverDiskName}'");
+                }
+            }
+
+            if (Optional.IsDefined(TfoDiskName))
+            {
+                builder.Append("  tfoDiskName:");
+                if (TfoDiskName.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{TfoDiskName}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{TfoDiskName}'");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            bool inMultilineString = false;
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (inMultilineString)
+                {
+                    if (line.Contains("'''"))
+                    {
+                        inMultilineString = false;
+                    }
+                    stringBuilder.AppendLine(line);
+                    continue;
+                }
+                if (line.Contains("'''"))
+                {
+                    inMultilineString = true;
+                    stringBuilder.AppendLine($"{indent}{line}");
+                    continue;
+                }
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<A2AProtectedManagedDiskDetails>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<A2AProtectedManagedDiskDetails>)this).GetFormatFromOptions(options) : options.Format;
@@ -471,6 +797,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(A2AProtectedManagedDiskDetails)} does not support '{options.Format}' format.");
             }
@@ -487,6 +815,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeA2AProtectedManagedDiskDetails(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(A2AProtectedManagedDiskDetails)} does not support '{options.Format}' format.");
             }

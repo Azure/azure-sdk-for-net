@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -162,6 +163,162 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             return new InMageAzureV2EventDetails(instanceType, serializedAdditionalRawData, eventType.Value, category.Value, component.Value, correctiveAction.Value, details.Value, summary.Value, siteName.Value);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(EventType))
+            {
+                builder.Append("  eventType:");
+                if (EventType.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{EventType}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{EventType}'");
+                }
+            }
+
+            if (Optional.IsDefined(Category))
+            {
+                builder.Append("  category:");
+                if (Category.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{Category}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{Category}'");
+                }
+            }
+
+            if (Optional.IsDefined(Component))
+            {
+                builder.Append("  component:");
+                if (Component.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{Component}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{Component}'");
+                }
+            }
+
+            if (Optional.IsDefined(CorrectiveAction))
+            {
+                builder.Append("  correctiveAction:");
+                if (CorrectiveAction.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{CorrectiveAction}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{CorrectiveAction}'");
+                }
+            }
+
+            if (Optional.IsDefined(Details))
+            {
+                builder.Append("  details:");
+                if (Details.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{Details}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{Details}'");
+                }
+            }
+
+            if (Optional.IsDefined(Summary))
+            {
+                builder.Append("  summary:");
+                if (Summary.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{Summary}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{Summary}'");
+                }
+            }
+
+            if (Optional.IsDefined(SiteName))
+            {
+                builder.Append("  siteName:");
+                if (SiteName.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{SiteName}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{SiteName}'");
+                }
+            }
+
+            if (Optional.IsDefined(InstanceType))
+            {
+                builder.Append("  instanceType:");
+                if (InstanceType.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{InstanceType}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{InstanceType}'");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            bool inMultilineString = false;
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (inMultilineString)
+                {
+                    if (line.Contains("'''"))
+                    {
+                        inMultilineString = false;
+                    }
+                    stringBuilder.AppendLine(line);
+                    continue;
+                }
+                if (line.Contains("'''"))
+                {
+                    inMultilineString = true;
+                    stringBuilder.AppendLine($"{indent}{line}");
+                    continue;
+                }
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<InMageAzureV2EventDetails>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<InMageAzureV2EventDetails>)this).GetFormatFromOptions(options) : options.Format;
@@ -170,6 +327,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(InMageAzureV2EventDetails)} does not support '{options.Format}' format.");
             }
@@ -186,6 +345,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeInMageAzureV2EventDetails(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(InMageAzureV2EventDetails)} does not support '{options.Format}' format.");
             }

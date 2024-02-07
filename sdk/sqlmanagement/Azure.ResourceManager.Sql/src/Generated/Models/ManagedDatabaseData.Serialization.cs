@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -490,6 +492,282 @@ namespace Azure.ResourceManager.Sql
             return new ManagedDatabaseData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, collation.Value, Optional.ToNullable(status), Optional.ToNullable(creationDate), Optional.ToNullable(earliestRestorePoint), Optional.ToNullable(restorePointInTime), Optional.ToNullable(defaultSecondaryLocation), Optional.ToNullable(catalogCollation), Optional.ToNullable(createMode), storageContainerUri.Value, sourceDatabaseId.Value, crossSubscriptionSourceDatabaseId.Value, restorableDroppedDatabaseId.Value, crossSubscriptionRestorableDroppedDatabaseId.Value, storageContainerIdentity.Value, storageContainerSasToken.Value, failoverGroupId.Value, recoverableDatabaseId.Value, longTermRetentionBackupResourceId.Value, Optional.ToNullable(autoCompleteRestore), lastBackupName.Value, crossSubscriptionTargetManagedInstanceId.Value, Optional.ToNullable(isLedgerOn), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                if (Name.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{Name}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{Name}'");
+                }
+            }
+
+            if (Optional.IsDefined(Location))
+            {
+                builder.Append("  location:");
+                builder.AppendLine($" '{Location.ToString()}'");
+            }
+
+            if (Optional.IsCollectionDefined(Tags))
+            {
+                if (Tags.Any())
+                {
+                    builder.Append("  tags:");
+                    builder.AppendLine(" {");
+                    foreach (var item in Tags)
+                    {
+                        builder.Append($"    {item.Key}:");
+                        if (item.Value == null)
+                        {
+                            builder.Append("null");
+                            continue;
+                        }
+                        if (item.Value.Contains(Environment.NewLine))
+                        {
+                            builder.AppendLine(" '''");
+                            builder.AppendLine($"{item.Value}'''");
+                        }
+                        else
+                        {
+                            builder.AppendLine($" '{item.Value}'");
+                        }
+                    }
+                    builder.AppendLine("  }");
+                }
+            }
+
+            if (Optional.IsDefined(Id))
+            {
+                builder.Append("  id:");
+                builder.AppendLine($" '{Id.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SystemData))
+            {
+                builder.Append("  systemData:");
+                builder.AppendLine($" '{SystemData.ToString()}'");
+            }
+
+            builder.Append("  properties:");
+            builder.AppendLine(" {");
+            if (Optional.IsDefined(Collation))
+            {
+                builder.Append("    collation:");
+                if (Collation.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{Collation}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{Collation}'");
+                }
+            }
+
+            if (Optional.IsDefined(Status))
+            {
+                builder.Append("    status:");
+                builder.AppendLine($" '{Status.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(CreatedOn))
+            {
+                builder.Append("    creationDate:");
+                var formattedDateTimeString = TypeFormatters.ToString(CreatedOn.Value, "o");
+                builder.AppendLine($" '{formattedDateTimeString}'");
+            }
+
+            if (Optional.IsDefined(EarliestRestorePoint))
+            {
+                builder.Append("    earliestRestorePoint:");
+                var formattedDateTimeString = TypeFormatters.ToString(EarliestRestorePoint.Value, "o");
+                builder.AppendLine($" '{formattedDateTimeString}'");
+            }
+
+            if (Optional.IsDefined(RestorePointInTime))
+            {
+                builder.Append("    restorePointInTime:");
+                var formattedDateTimeString = TypeFormatters.ToString(RestorePointInTime.Value, "o");
+                builder.AppendLine($" '{formattedDateTimeString}'");
+            }
+
+            if (Optional.IsDefined(DefaultSecondaryLocation))
+            {
+                builder.Append("    defaultSecondaryLocation:");
+                builder.AppendLine($" '{DefaultSecondaryLocation.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(CatalogCollation))
+            {
+                builder.Append("    catalogCollation:");
+                builder.AppendLine($" '{CatalogCollation.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(CreateMode))
+            {
+                builder.Append("    createMode:");
+                builder.AppendLine($" '{CreateMode.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(StorageContainerUri))
+            {
+                builder.Append("    storageContainerUri:");
+                builder.AppendLine($" '{StorageContainerUri.AbsoluteUri}'");
+            }
+
+            if (Optional.IsDefined(SourceDatabaseId))
+            {
+                builder.Append("    sourceDatabaseId:");
+                builder.AppendLine($" '{SourceDatabaseId.ToString()}'");
+            }
+
+            if (Optional.IsDefined(CrossSubscriptionSourceDatabaseId))
+            {
+                builder.Append("    crossSubscriptionSourceDatabaseId:");
+                builder.AppendLine($" '{CrossSubscriptionSourceDatabaseId.ToString()}'");
+            }
+
+            if (Optional.IsDefined(RestorableDroppedDatabaseId))
+            {
+                builder.Append("    restorableDroppedDatabaseId:");
+                builder.AppendLine($" '{RestorableDroppedDatabaseId.ToString()}'");
+            }
+
+            if (Optional.IsDefined(CrossSubscriptionRestorableDroppedDatabaseId))
+            {
+                builder.Append("    crossSubscriptionRestorableDroppedDatabaseId:");
+                builder.AppendLine($" '{CrossSubscriptionRestorableDroppedDatabaseId.ToString()}'");
+            }
+
+            if (Optional.IsDefined(StorageContainerIdentity))
+            {
+                builder.Append("    storageContainerIdentity:");
+                if (StorageContainerIdentity.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{StorageContainerIdentity}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{StorageContainerIdentity}'");
+                }
+            }
+
+            if (Optional.IsDefined(StorageContainerSasToken))
+            {
+                builder.Append("    storageContainerSasToken:");
+                if (StorageContainerSasToken.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{StorageContainerSasToken}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{StorageContainerSasToken}'");
+                }
+            }
+
+            if (Optional.IsDefined(FailoverGroupId))
+            {
+                builder.Append("    failoverGroupId:");
+                builder.AppendLine($" '{FailoverGroupId.ToString()}'");
+            }
+
+            if (Optional.IsDefined(RecoverableDatabaseId))
+            {
+                builder.Append("    recoverableDatabaseId:");
+                builder.AppendLine($" '{RecoverableDatabaseId.ToString()}'");
+            }
+
+            if (Optional.IsDefined(LongTermRetentionBackupResourceId))
+            {
+                builder.Append("    longTermRetentionBackupResourceId:");
+                builder.AppendLine($" '{LongTermRetentionBackupResourceId.ToString()}'");
+            }
+
+            if (Optional.IsDefined(AllowAutoCompleteRestore))
+            {
+                builder.Append("    autoCompleteRestore:");
+                var boolValue = AllowAutoCompleteRestore.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(LastBackupName))
+            {
+                builder.Append("    lastBackupName:");
+                if (LastBackupName.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{LastBackupName}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{LastBackupName}'");
+                }
+            }
+
+            if (Optional.IsDefined(CrossSubscriptionTargetManagedInstanceId))
+            {
+                builder.Append("    crossSubscriptionTargetManagedInstanceId:");
+                builder.AppendLine($" '{CrossSubscriptionTargetManagedInstanceId.ToString()}'");
+            }
+
+            if (Optional.IsDefined(IsLedgerOn))
+            {
+                builder.Append("    isLedgerOn:");
+                var boolValue = IsLedgerOn.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            builder.AppendLine("  }");
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            bool inMultilineString = false;
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (inMultilineString)
+                {
+                    if (line.Contains("'''"))
+                    {
+                        inMultilineString = false;
+                    }
+                    stringBuilder.AppendLine(line);
+                    continue;
+                }
+                if (line.Contains("'''"))
+                {
+                    inMultilineString = true;
+                    stringBuilder.AppendLine($"{indent}{line}");
+                    continue;
+                }
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<ManagedDatabaseData>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ManagedDatabaseData>)this).GetFormatFromOptions(options) : options.Format;
@@ -498,6 +776,8 @@ namespace Azure.ResourceManager.Sql
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(ManagedDatabaseData)} does not support '{options.Format}' format.");
             }
@@ -514,6 +794,8 @@ namespace Azure.ResourceManager.Sql
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeManagedDatabaseData(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(ManagedDatabaseData)} does not support '{options.Format}' format.");
             }
