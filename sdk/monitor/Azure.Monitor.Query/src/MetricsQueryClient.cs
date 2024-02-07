@@ -54,10 +54,17 @@ namespace Azure.Monitor.Query
             Argument.AssertNotNull(credential, nameof(credential));
 
             options ??= new MetricsQueryClientOptions();
+            string scope;
+            if (string.IsNullOrEmpty(options.Audience?.ToString()))
+            {
+                scope = $"{endpoint.AbsoluteUri}/.default";
+            }
+            else
+            {
+                scope = $"{options.Audience}/.default";
+            }
 
             _clientDiagnostics = new ClientDiagnostics(options);
-
-            var scope = $"{endpoint.AbsoluteUri}/.default";
 
             Endpoint = endpoint;
 
@@ -90,7 +97,7 @@ namespace Azure.Monitor.Query
         ///
         /// Response&lt;MetricsQueryResult&gt; results = await client.QueryResourceAsync(
         ///     resourceId,
-        ///     new[] { &quot;AvailabilityRate_Query&quot;, &quot;Query Count&quot; }
+        ///     new[] { &quot;Average_% Free Space&quot;, &quot;Average_% Used Space&quot; }
         /// );
         ///
         /// foreach (MetricResult metric in results.Value.Metrics)
@@ -151,7 +158,7 @@ namespace Azure.Monitor.Query
         ///
         /// Response&lt;MetricsQueryResult&gt; results = await client.QueryResourceAsync(
         ///     resourceId,
-        ///     new[] { &quot;AvailabilityRate_Query&quot;, &quot;Query Count&quot; }
+        ///     new[] { &quot;Average_% Free Space&quot;, &quot;Average_% Used Space&quot; }
         /// );
         ///
         /// foreach (MetricResult metric in results.Value.Metrics)

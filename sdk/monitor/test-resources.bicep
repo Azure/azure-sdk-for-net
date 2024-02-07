@@ -211,3 +211,4 @@ output DATAPLANE_ENDPOINT string = 'https://${location}.metrics.monitor.azure.co
 output STORAGE_NAME string = storageAccount.name
 output STORAGE_ID string = storageAccount.id
 output STORAGE_CONNECTION_STRING string = 'DefaultEndpointsProtocol=https;AccountName=${storageAccountName};AccountKey=${listKeys(storageAccount.id, storageAccount.apiVersion).keys[0].value};EndpointSuffix=${environment().suffixes.storage}'
+output METRICS_LOCATION string = primaryWorkspace.location

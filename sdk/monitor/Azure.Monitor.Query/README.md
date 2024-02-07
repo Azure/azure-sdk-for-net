@@ -470,7 +470,7 @@ var client = new MetricsQueryClient(new DefaultAzureCredential());
 
 Response<MetricsQueryResult> results = await client.QueryResourceAsync(
     resourceId,
-    new[] { "AvailabilityRate_Query", "Query Count" }
+    new[] { "Average_% Free Space", "Average_% Used Space" }
 );
 
 foreach (MetricResult metric in results.Value.Metrics)

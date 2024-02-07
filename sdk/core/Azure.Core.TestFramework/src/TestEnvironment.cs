@@ -297,7 +297,7 @@ namespace Azure.Core.TestFramework
             }
             else
             {
-                await ExtendResourceGroupExpirationAsync();
+                //await ExtendResourceGroupExpirationAsync();
             }
         }
 
