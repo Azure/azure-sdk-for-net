@@ -39,7 +39,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Models
         public string Name { get; set; }
         /// <summary> Request URL with all query string parameters. </summary>
         public string Url { get; set; }
-        /// <summary> Result of a request execution. For http requestss, it could be some HTTP status code. </summary>
+        /// <summary> Result of a request execution. For http requests, it could be some HTTP status code. </summary>
         public string ResponseCode { get; set; }
         /// <summary> Request duration in ISO 8601 duration format, i.e., P[n]Y[n]M[n]DT[n]H[n]M[n]S or P[n]W. </summary>
         public string Duration { get; set; }
