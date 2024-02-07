@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.AI.OpenAI
 {
-    /// <summary> Represents the output format for speech synthesis. </summary>
+    /// <summary> The supported audio output formats for text-to-speech. </summary>
     public readonly partial struct AudioSpeechOutputFormat : IEquatable<AudioSpeechOutputFormat>
     {
         private readonly string _value;
@@ -27,13 +27,13 @@ namespace Azure.AI.OpenAI
         private const string AacValue = "aac";
         private const string FlacValue = "flac";
 
-        /// <summary> Use mp3 as output format. </summary>
+        /// <summary> Use MP3 as the audio output format. MP3 is the default, general-purpose format. </summary>
         public static AudioSpeechOutputFormat Mp3 { get; } = new AudioSpeechOutputFormat(Mp3Value);
-        /// <summary> Use opus as output format. </summary>
+        /// <summary> Use Opus as the audio output format. Opus is optimized for internet streaming and low latency. </summary>
         public static AudioSpeechOutputFormat Opus { get; } = new AudioSpeechOutputFormat(OpusValue);
-        /// <summary> Use aac as output format. </summary>
+        /// <summary> Use AAC as the audio output format. AAC is optimized for digital audio compression and is preferred by YouTube, Android, and iOS. </summary>
         public static AudioSpeechOutputFormat Aac { get; } = new AudioSpeechOutputFormat(AacValue);
-        /// <summary> Use flac as output format. </summary>
+        /// <summary> Use FLAC as the audio output format. FLAC is a fully lossless format optimized for maximum quality at the expense of size. </summary>
         public static AudioSpeechOutputFormat Flac { get; } = new AudioSpeechOutputFormat(FlacValue);
         /// <summary> Determines if two <see cref="AudioSpeechOutputFormat"/> values are the same. </summary>
         public static bool operator ==(AudioSpeechOutputFormat left, AudioSpeechOutputFormat right) => left.Equals(right);

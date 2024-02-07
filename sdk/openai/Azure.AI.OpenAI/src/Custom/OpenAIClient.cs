@@ -842,10 +842,9 @@ public partial class OpenAIClient
         return Response.FromValue(AudioTranslation.FromResponse(rawResponse), rawResponse);
     }
 
-    /// <summary> Synthesize audio from the input text. </summary>
+    /// <summary> Generates text-to-speech audio from the input text. </summary>
     /// <param name="audioSpeechOptions">
-    ///     The configuration information for the speech synthesis request that controls the content,
-    ///     voice, and other details about the generated audio.
+    ///     A representation of the request options that control the behavior of a text-to-speech operation.
     /// </param>
     /// <param name="cancellationToken">
     ///     An optional cancellation token that may be used to abort an ongoing request.
@@ -884,10 +883,9 @@ public partial class OpenAIClient
         }
     }
 
-    /// <summary> Synthesize audio from the input text. </summary>
+    /// <summary> Generates text-to-speech audio from the input text. </summary>
     /// <param name="audioSpeechOptions">
-    ///     The configuration information for the speech synthesis request that controls the content,
-    ///     voice, and other details about the generated audio.
+    ///     A representation of the request options that control the behavior of a text-to-speech operation.
     /// </param>
     /// <param name="cancellationToken">
     ///     An optional cancellation token that may be used to abort an ongoing request.

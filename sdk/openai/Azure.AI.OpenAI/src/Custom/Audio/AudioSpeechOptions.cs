@@ -18,20 +18,32 @@ public partial class AudioSpeechOptions
     // Add setter to these properties to allow for an "init" pattern when using the public
     // default constructor.
 
-    /// <summary> The text to synthesize audio for. The maximum length is 4096 characters. </summary>
+    /// <summary>
+    ///     The text to generate audio for. The maximum length is 4096 characters.
+    /// </summary>
     public string Input { get; set; }
-    /// <summary> The voice to use for speech synthesis. </summary>
+
+    /// <summary>
+    ///     The voice to use for text-to-speech.
+    /// </summary>
     public AudioSpeechVoice Voice { get; set; }
-    /// <summary> The format to synthesize the audio in. </summary>
+
+    /// <summary>
+    ///     The audio output format for the spoken text. By default, the MP3 format will be used.
+    /// </summary>
     public AudioSpeechOutputFormat? ResponseFormat { get; set; }
-    /// <summary> The speed of the synthesize audio. Select a value from `0.25` to `4.0`. `1.0` is the default. </summary>
+
+    /// <summary>
+    ///     The speed of speech for generated audio. Values are valid in the range from 0.25 to 4.0, with 1.0 the
+    ///     default and higher values corresponding to faster speech.
+    /// </summary>
     public float? Speed { get; set; }
 
     // CUSTOM CODE NOTE:
     // Add custom doc comment.
 
     /// <summary>
-    /// The deployment name to use for speech synthesis.
+    /// The deployment name to use for text-to-speech.
     /// </summary>
     /// <remarks>
     /// <para>
@@ -50,9 +62,9 @@ public partial class AudioSpeechOptions
     // to the other required properties.
 
     /// <summary> Initializes a new instance of <see cref="AudioSpeechOptions"/>. </summary>
-    /// <param name="deploymentName"> The deployment name to use for speech synthesis. </param>
-    /// <param name="input"> The text to synthesize audio for. The maximum length is 4096 characters. </param>
-    /// <param name="voice"> The voice to use for speech synthesis. </param>
+    /// <param name="deploymentName"> The deployment name to use for text-to-speech. </param>
+    /// <param name="input"> The text to generate audio for. The maximum length is 4096 characters. </param>
+    /// <param name="voice"> The voice to use for text-to-speech. </param>
     /// <exception cref="ArgumentNullException">
     ///     <paramref name="deploymentName"/> or <paramref name="input"/> or <paramref name="voice"/> is null.
     /// </exception>
