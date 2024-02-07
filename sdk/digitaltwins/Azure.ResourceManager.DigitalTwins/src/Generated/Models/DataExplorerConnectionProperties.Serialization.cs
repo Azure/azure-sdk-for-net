@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -286,6 +287,182 @@ namespace Azure.ResourceManager.DigitalTwins.Models
             return new DataExplorerConnectionProperties(connectionType, Optional.ToNullable(provisioningState), identity.Value, serializedAdditionalRawData, adxResourceId, adxEndpointUri, adxDatabaseName, adxTableName.Value, adxTwinLifecycleEventsTableName.Value, adxRelationshipLifecycleEventsTableName.Value, eventHubEndpointUri, eventHubEntityPath, eventHubNamespaceResourceId, eventHubConsumerGroup.Value, Optional.ToNullable(recordPropertyAndItemRemovals));
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(AdxResourceId))
+            {
+                builder.Append("  adxResourceId:");
+                builder.AppendLine($" '{AdxResourceId.ToString()}'");
+            }
+
+            if (Optional.IsDefined(AdxEndpointUri))
+            {
+                builder.Append("  adxEndpointUri:");
+                builder.AppendLine($" '{AdxEndpointUri.AbsoluteUri}'");
+            }
+
+            if (Optional.IsDefined(AdxDatabaseName))
+            {
+                builder.Append("  adxDatabaseName:");
+                if (AdxDatabaseName.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{AdxDatabaseName}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{AdxDatabaseName}'");
+                }
+            }
+
+            if (Optional.IsDefined(AdxTableName))
+            {
+                builder.Append("  adxTableName:");
+                if (AdxTableName.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{AdxTableName}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{AdxTableName}'");
+                }
+            }
+
+            if (Optional.IsDefined(AdxTwinLifecycleEventsTableName))
+            {
+                builder.Append("  adxTwinLifecycleEventsTableName:");
+                if (AdxTwinLifecycleEventsTableName.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{AdxTwinLifecycleEventsTableName}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{AdxTwinLifecycleEventsTableName}'");
+                }
+            }
+
+            if (Optional.IsDefined(AdxRelationshipLifecycleEventsTableName))
+            {
+                builder.Append("  adxRelationshipLifecycleEventsTableName:");
+                if (AdxRelationshipLifecycleEventsTableName.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{AdxRelationshipLifecycleEventsTableName}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{AdxRelationshipLifecycleEventsTableName}'");
+                }
+            }
+
+            if (Optional.IsDefined(EventHubEndpointUri))
+            {
+                builder.Append("  eventHubEndpointUri:");
+                builder.AppendLine($" '{EventHubEndpointUri.AbsoluteUri}'");
+            }
+
+            if (Optional.IsDefined(EventHubEntityPath))
+            {
+                builder.Append("  eventHubEntityPath:");
+                if (EventHubEntityPath.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{EventHubEntityPath}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{EventHubEntityPath}'");
+                }
+            }
+
+            if (Optional.IsDefined(EventHubNamespaceResourceId))
+            {
+                builder.Append("  eventHubNamespaceResourceId:");
+                builder.AppendLine($" '{EventHubNamespaceResourceId.ToString()}'");
+            }
+
+            if (Optional.IsDefined(EventHubConsumerGroup))
+            {
+                builder.Append("  eventHubConsumerGroup:");
+                if (EventHubConsumerGroup.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{EventHubConsumerGroup}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{EventHubConsumerGroup}'");
+                }
+            }
+
+            if (Optional.IsDefined(RecordPropertyAndItemRemovals))
+            {
+                builder.Append("  recordPropertyAndItemRemovals:");
+                builder.AppendLine($" '{RecordPropertyAndItemRemovals.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ConnectionType))
+            {
+                builder.Append("  connectionType:");
+                builder.AppendLine($" '{ConnectionType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ProvisioningState))
+            {
+                builder.Append("  provisioningState:");
+                builder.AppendLine($" '{ProvisioningState.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Identity))
+            {
+                builder.Append("  identity:");
+                AppendChildObject(builder, Identity, options, 2, false);
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            bool inMultilineString = false;
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (inMultilineString)
+                {
+                    if (line.Contains("'''"))
+                    {
+                        inMultilineString = false;
+                    }
+                    stringBuilder.AppendLine(line);
+                    continue;
+                }
+                if (line.Contains("'''"))
+                {
+                    inMultilineString = true;
+                    stringBuilder.AppendLine($"{indent}{line}");
+                    continue;
+                }
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<DataExplorerConnectionProperties>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<DataExplorerConnectionProperties>)this).GetFormatFromOptions(options) : options.Format;
@@ -294,6 +471,8 @@ namespace Azure.ResourceManager.DigitalTwins.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(DataExplorerConnectionProperties)} does not support '{options.Format}' format.");
             }
@@ -310,6 +489,8 @@ namespace Azure.ResourceManager.DigitalTwins.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeDataExplorerConnectionProperties(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(DataExplorerConnectionProperties)} does not support '{options.Format}' format.");
             }

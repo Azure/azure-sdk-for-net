@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -409,6 +411,273 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             return new HostPoolPatch(id, name, type, systemData.Value, Optional.ToDictionary(tags), friendlyName.Value, description.Value, customRdpProperty.Value, Optional.ToNullable(maxSessionLimit), Optional.ToNullable(personalDesktopAssignmentType), Optional.ToNullable(loadBalancerType), Optional.ToNullable(ring), Optional.ToNullable(validationEnvironment), registrationInfo.Value, vmTemplate.Value, ssoadfsAuthority.Value, ssoClientId.Value, ssoClientSecretKeyVaultPath.Value, Optional.ToNullable(ssoSecretType), Optional.ToNullable(preferredAppGroupType), Optional.ToNullable(startVmOnConnect), Optional.ToNullable(publicNetworkAccess), agentUpdate.Value, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                if (Name.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{Name}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{Name}'");
+                }
+            }
+
+            if (Optional.IsCollectionDefined(Tags))
+            {
+                if (Tags.Any())
+                {
+                    builder.Append("  tags:");
+                    builder.AppendLine(" {");
+                    foreach (var item in Tags)
+                    {
+                        builder.Append($"    {item.Key}:");
+                        if (item.Value == null)
+                        {
+                            builder.Append("null");
+                            continue;
+                        }
+                        if (item.Value.Contains(Environment.NewLine))
+                        {
+                            builder.AppendLine(" '''");
+                            builder.AppendLine($"{item.Value}'''");
+                        }
+                        else
+                        {
+                            builder.AppendLine($" '{item.Value}'");
+                        }
+                    }
+                    builder.AppendLine("  }");
+                }
+            }
+
+            if (Optional.IsDefined(Id))
+            {
+                builder.Append("  id:");
+                builder.AppendLine($" '{Id.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SystemData))
+            {
+                builder.Append("  systemData:");
+                builder.AppendLine($" '{SystemData.ToString()}'");
+            }
+
+            builder.Append("  properties:");
+            builder.AppendLine(" {");
+            if (Optional.IsDefined(FriendlyName))
+            {
+                builder.Append("    friendlyName:");
+                if (FriendlyName.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{FriendlyName}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{FriendlyName}'");
+                }
+            }
+
+            if (Optional.IsDefined(Description))
+            {
+                builder.Append("    description:");
+                if (Description.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{Description}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{Description}'");
+                }
+            }
+
+            if (Optional.IsDefined(CustomRdpProperty))
+            {
+                builder.Append("    customRdpProperty:");
+                if (CustomRdpProperty.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{CustomRdpProperty}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{CustomRdpProperty}'");
+                }
+            }
+
+            if (Optional.IsDefined(MaxSessionLimit))
+            {
+                builder.Append("    maxSessionLimit:");
+                builder.AppendLine($" {MaxSessionLimit.Value}");
+            }
+
+            if (Optional.IsDefined(PersonalDesktopAssignmentType))
+            {
+                builder.Append("    personalDesktopAssignmentType:");
+                builder.AppendLine($" '{PersonalDesktopAssignmentType.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(LoadBalancerType))
+            {
+                builder.Append("    loadBalancerType:");
+                builder.AppendLine($" '{LoadBalancerType.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Ring))
+            {
+                builder.Append("    ring:");
+                builder.AppendLine($" {Ring.Value}");
+            }
+
+            if (Optional.IsDefined(IsValidationEnvironment))
+            {
+                builder.Append("    validationEnvironment:");
+                var boolValue = IsValidationEnvironment.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(RegistrationInfo))
+            {
+                builder.Append("    registrationInfo:");
+                AppendChildObject(builder, RegistrationInfo, options, 4, false);
+            }
+
+            if (Optional.IsDefined(VmTemplate))
+            {
+                builder.Append("    vmTemplate:");
+                if (VmTemplate.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{VmTemplate}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{VmTemplate}'");
+                }
+            }
+
+            if (Optional.IsDefined(SsoAdfsAuthority))
+            {
+                builder.Append("    ssoadfsAuthority:");
+                if (SsoAdfsAuthority.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{SsoAdfsAuthority}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{SsoAdfsAuthority}'");
+                }
+            }
+
+            if (Optional.IsDefined(SsoClientId))
+            {
+                builder.Append("    ssoClientId:");
+                if (SsoClientId.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{SsoClientId}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{SsoClientId}'");
+                }
+            }
+
+            if (Optional.IsDefined(SsoClientSecretKeyVaultPath))
+            {
+                builder.Append("    ssoClientSecretKeyVaultPath:");
+                if (SsoClientSecretKeyVaultPath.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{SsoClientSecretKeyVaultPath}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{SsoClientSecretKeyVaultPath}'");
+                }
+            }
+
+            if (Optional.IsDefined(SsoSecretType))
+            {
+                builder.Append("    ssoSecretType:");
+                builder.AppendLine($" '{SsoSecretType.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(PreferredAppGroupType))
+            {
+                builder.Append("    preferredAppGroupType:");
+                builder.AppendLine($" '{PreferredAppGroupType.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(StartVmOnConnect))
+            {
+                builder.Append("    startVMOnConnect:");
+                var boolValue = StartVmOnConnect.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(PublicNetworkAccess))
+            {
+                builder.Append("    publicNetworkAccess:");
+                builder.AppendLine($" '{PublicNetworkAccess.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(AgentUpdate))
+            {
+                builder.Append("    agentUpdate:");
+                AppendChildObject(builder, AgentUpdate, options, 4, false);
+            }
+
+            builder.AppendLine("  }");
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            bool inMultilineString = false;
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (inMultilineString)
+                {
+                    if (line.Contains("'''"))
+                    {
+                        inMultilineString = false;
+                    }
+                    stringBuilder.AppendLine(line);
+                    continue;
+                }
+                if (line.Contains("'''"))
+                {
+                    inMultilineString = true;
+                    stringBuilder.AppendLine($"{indent}{line}");
+                    continue;
+                }
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<HostPoolPatch>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<HostPoolPatch>)this).GetFormatFromOptions(options) : options.Format;
@@ -417,6 +686,8 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(HostPoolPatch)} does not support '{options.Format}' format.");
             }
@@ -433,6 +704,8 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeHostPoolPatch(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(HostPoolPatch)} does not support '{options.Format}' format.");
             }

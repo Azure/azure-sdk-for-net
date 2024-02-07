@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -219,6 +220,160 @@ namespace Azure.ResourceManager.HDInsight.Models
             return new HDInsightStorageAccountInfo(name.Value, Optional.ToNullable(isDefault), container.Value, fileSystem.Value, key.Value, resourceId.Value, msiResourceId.Value, saskey.Value, fileshare.Value, Optional.ToNullable(enableSecureChannel), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                if (Name.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{Name}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{Name}'");
+                }
+            }
+
+            if (Optional.IsDefined(IsDefault))
+            {
+                builder.Append("  isDefault:");
+                var boolValue = IsDefault.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(Container))
+            {
+                builder.Append("  container:");
+                if (Container.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{Container}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{Container}'");
+                }
+            }
+
+            if (Optional.IsDefined(FileSystem))
+            {
+                builder.Append("  fileSystem:");
+                if (FileSystem.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{FileSystem}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{FileSystem}'");
+                }
+            }
+
+            if (Optional.IsDefined(Key))
+            {
+                builder.Append("  key:");
+                if (Key.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{Key}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{Key}'");
+                }
+            }
+
+            if (Optional.IsDefined(ResourceId))
+            {
+                builder.Append("  resourceId:");
+                builder.AppendLine($" '{ResourceId.ToString()}'");
+            }
+
+            if (Optional.IsDefined(MsiResourceId))
+            {
+                builder.Append("  msiResourceId:");
+                builder.AppendLine($" '{MsiResourceId.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SasKey))
+            {
+                builder.Append("  saskey:");
+                if (SasKey.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{SasKey}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{SasKey}'");
+                }
+            }
+
+            if (Optional.IsDefined(Fileshare))
+            {
+                builder.Append("  fileshare:");
+                if (Fileshare.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{Fileshare}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{Fileshare}'");
+                }
+            }
+
+            if (Optional.IsDefined(EnableSecureChannel))
+            {
+                builder.Append("  enableSecureChannel:");
+                var boolValue = EnableSecureChannel.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            bool inMultilineString = false;
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (inMultilineString)
+                {
+                    if (line.Contains("'''"))
+                    {
+                        inMultilineString = false;
+                    }
+                    stringBuilder.AppendLine(line);
+                    continue;
+                }
+                if (line.Contains("'''"))
+                {
+                    inMultilineString = true;
+                    stringBuilder.AppendLine($"{indent}{line}");
+                    continue;
+                }
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<HDInsightStorageAccountInfo>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<HDInsightStorageAccountInfo>)this).GetFormatFromOptions(options) : options.Format;
@@ -227,6 +382,8 @@ namespace Azure.ResourceManager.HDInsight.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(HDInsightStorageAccountInfo)} does not support '{options.Format}' format.");
             }
@@ -243,6 +400,8 @@ namespace Azure.ResourceManager.HDInsight.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeHDInsightStorageAccountInfo(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(HDInsightStorageAccountInfo)} does not support '{options.Format}' format.");
             }

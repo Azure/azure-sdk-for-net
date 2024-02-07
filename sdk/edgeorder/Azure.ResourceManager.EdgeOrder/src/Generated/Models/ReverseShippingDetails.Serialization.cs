@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -136,6 +137,112 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             return new ReverseShippingDetails(sasKeyForLabel.Value, carrierName.Value, carrierDisplayName.Value, trackingId.Value, trackingUrl.Value, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(SasKeyForLabel))
+            {
+                builder.Append("  sasKeyForLabel:");
+                if (SasKeyForLabel.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{SasKeyForLabel}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{SasKeyForLabel}'");
+                }
+            }
+
+            if (Optional.IsDefined(CarrierName))
+            {
+                builder.Append("  carrierName:");
+                if (CarrierName.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{CarrierName}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{CarrierName}'");
+                }
+            }
+
+            if (Optional.IsDefined(CarrierDisplayName))
+            {
+                builder.Append("  carrierDisplayName:");
+                if (CarrierDisplayName.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{CarrierDisplayName}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{CarrierDisplayName}'");
+                }
+            }
+
+            if (Optional.IsDefined(TrackingId))
+            {
+                builder.Append("  trackingId:");
+                if (TrackingId.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{TrackingId}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{TrackingId}'");
+                }
+            }
+
+            if (Optional.IsDefined(TrackingUri))
+            {
+                builder.Append("  trackingUrl:");
+                builder.AppendLine($" '{TrackingUri.AbsoluteUri}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            bool inMultilineString = false;
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (inMultilineString)
+                {
+                    if (line.Contains("'''"))
+                    {
+                        inMultilineString = false;
+                    }
+                    stringBuilder.AppendLine(line);
+                    continue;
+                }
+                if (line.Contains("'''"))
+                {
+                    inMultilineString = true;
+                    stringBuilder.AppendLine($"{indent}{line}");
+                    continue;
+                }
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<ReverseShippingDetails>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ReverseShippingDetails>)this).GetFormatFromOptions(options) : options.Format;
@@ -144,6 +251,8 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(ReverseShippingDetails)} does not support '{options.Format}' format.");
             }
@@ -160,6 +269,8 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeReverseShippingDetails(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(ReverseShippingDetails)} does not support '{options.Format}' format.");
             }

@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.FrontDoor.Models;
@@ -275,6 +276,129 @@ namespace Azure.ResourceManager.FrontDoor
             return new FrontendEndpointData(id.Value, name.Value, Optional.ToNullable(type), serializedAdditionalRawData, hostName.Value, Optional.ToNullable(sessionAffinityEnabledState), Optional.ToNullable(sessionAffinityTtlSeconds), webApplicationFirewallPolicyLink, Optional.ToNullable(resourceState), Optional.ToNullable(customHttpsProvisioningState), Optional.ToNullable(customHttpsProvisioningSubstate), customHttpsConfiguration.Value);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                if (Name.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{Name}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{Name}'");
+                }
+            }
+
+            if (Optional.IsDefined(Id))
+            {
+                builder.Append("  id:");
+                builder.AppendLine($" '{Id.ToString()}'");
+            }
+
+            builder.Append("  properties:");
+            builder.AppendLine(" {");
+            if (Optional.IsDefined(HostName))
+            {
+                builder.Append("    hostName:");
+                if (HostName.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{HostName}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{HostName}'");
+                }
+            }
+
+            if (Optional.IsDefined(SessionAffinityEnabledState))
+            {
+                builder.Append("    sessionAffinityEnabledState:");
+                builder.AppendLine($" '{SessionAffinityEnabledState.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SessionAffinityTtlInSeconds))
+            {
+                builder.Append("    sessionAffinityTtlSeconds:");
+                builder.AppendLine($" {SessionAffinityTtlInSeconds.Value}");
+            }
+
+            if (Optional.IsDefined(WebApplicationFirewallPolicyLink))
+            {
+                builder.Append("    webApplicationFirewallPolicyLink:");
+                AppendChildObject(builder, WebApplicationFirewallPolicyLink, options, 4, false);
+            }
+
+            if (Optional.IsDefined(ResourceState))
+            {
+                builder.Append("    resourceState:");
+                builder.AppendLine($" '{ResourceState.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(CustomHttpsProvisioningState))
+            {
+                builder.Append("    customHttpsProvisioningState:");
+                builder.AppendLine($" '{CustomHttpsProvisioningState.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(CustomHttpsProvisioningSubstate))
+            {
+                builder.Append("    customHttpsProvisioningSubstate:");
+                builder.AppendLine($" '{CustomHttpsProvisioningSubstate.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(CustomHttpsConfiguration))
+            {
+                builder.Append("    customHttpsConfiguration:");
+                AppendChildObject(builder, CustomHttpsConfiguration, options, 4, false);
+            }
+
+            builder.AppendLine("  }");
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            bool inMultilineString = false;
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (inMultilineString)
+                {
+                    if (line.Contains("'''"))
+                    {
+                        inMultilineString = false;
+                    }
+                    stringBuilder.AppendLine(line);
+                    continue;
+                }
+                if (line.Contains("'''"))
+                {
+                    inMultilineString = true;
+                    stringBuilder.AppendLine($"{indent}{line}");
+                    continue;
+                }
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<FrontendEndpointData>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<FrontendEndpointData>)this).GetFormatFromOptions(options) : options.Format;
@@ -283,6 +407,8 @@ namespace Azure.ResourceManager.FrontDoor
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(FrontendEndpointData)} does not support '{options.Format}' format.");
             }
@@ -299,6 +425,8 @@ namespace Azure.ResourceManager.FrontDoor
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeFrontendEndpointData(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(FrontendEndpointData)} does not support '{options.Format}' format.");
             }

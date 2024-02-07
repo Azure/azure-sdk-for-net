@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -215,6 +216,136 @@ namespace Azure.ResourceManager.HDInsight.Models
             return new HDInsightVmSizeProperty(name.Value, Optional.ToNullable(cores), dataDiskStorageTier.Value, label.Value, Optional.ToNullable(maxDataDiskCount), Optional.ToNullable(memoryInMB), Optional.ToNullable(supportedByVirtualMachines), Optional.ToNullable(supportedByWebWorkerRoles), Optional.ToNullable(virtualMachineResourceDiskSizeInMB), Optional.ToNullable(webWorkerResourceDiskSizeInMB), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                if (Name.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{Name}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{Name}'");
+                }
+            }
+
+            if (Optional.IsDefined(Cores))
+            {
+                builder.Append("  cores:");
+                builder.AppendLine($" {Cores.Value}");
+            }
+
+            if (Optional.IsDefined(DataDiskStorageTier))
+            {
+                builder.Append("  dataDiskStorageTier:");
+                if (DataDiskStorageTier.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{DataDiskStorageTier}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{DataDiskStorageTier}'");
+                }
+            }
+
+            if (Optional.IsDefined(Label))
+            {
+                builder.Append("  label:");
+                if (Label.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{Label}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{Label}'");
+                }
+            }
+
+            if (Optional.IsDefined(MaxDataDiskCount))
+            {
+                builder.Append("  maxDataDiskCount:");
+                builder.AppendLine($" '{MaxDataDiskCount.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(MemoryInMB))
+            {
+                builder.Append("  memoryInMb:");
+                builder.AppendLine($" '{MemoryInMB.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(IsSupportedByVirtualMachines))
+            {
+                builder.Append("  supportedByVirtualMachines:");
+                var boolValue = IsSupportedByVirtualMachines.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(IsSupportedByWebWorkerRoles))
+            {
+                builder.Append("  supportedByWebWorkerRoles:");
+                var boolValue = IsSupportedByWebWorkerRoles.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(VirtualMachineResourceDiskSizeInMB))
+            {
+                builder.Append("  virtualMachineResourceDiskSizeInMb:");
+                builder.AppendLine($" '{VirtualMachineResourceDiskSizeInMB.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(WebWorkerResourceDiskSizeInMB))
+            {
+                builder.Append("  webWorkerResourceDiskSizeInMb:");
+                builder.AppendLine($" '{WebWorkerResourceDiskSizeInMB.Value.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            bool inMultilineString = false;
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (inMultilineString)
+                {
+                    if (line.Contains("'''"))
+                    {
+                        inMultilineString = false;
+                    }
+                    stringBuilder.AppendLine(line);
+                    continue;
+                }
+                if (line.Contains("'''"))
+                {
+                    inMultilineString = true;
+                    stringBuilder.AppendLine($"{indent}{line}");
+                    continue;
+                }
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<HDInsightVmSizeProperty>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<HDInsightVmSizeProperty>)this).GetFormatFromOptions(options) : options.Format;
@@ -223,6 +354,8 @@ namespace Azure.ResourceManager.HDInsight.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(HDInsightVmSizeProperty)} does not support '{options.Format}' format.");
             }
@@ -239,6 +372,8 @@ namespace Azure.ResourceManager.HDInsight.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeHDInsightVmSizeProperty(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(HDInsightVmSizeProperty)} does not support '{options.Format}' format.");
             }

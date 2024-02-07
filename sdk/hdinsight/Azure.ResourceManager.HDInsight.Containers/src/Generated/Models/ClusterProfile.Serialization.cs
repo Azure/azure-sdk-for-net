@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -454,6 +456,246 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             return new ClusterProfile(clusterVersion, ossVersion, Optional.ToList(components), identityProfile, authorizationProfile, secretsProfile.Value, Optional.ToList(serviceConfigsProfiles), connectivityProfile.Value, logAnalyticsProfile.Value, prometheusProfile.Value, sshProfile.Value, autoscaleProfile.Value, Optional.ToDictionary(kafkaProfile), trinoProfile.Value, Optional.ToDictionary(llapProfile), flinkProfile.Value, sparkProfile.Value, Optional.ToDictionary(stubProfile), Optional.ToList(scriptActionProfiles), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(ClusterVersion))
+            {
+                builder.Append("  clusterVersion:");
+                if (ClusterVersion.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{ClusterVersion}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{ClusterVersion}'");
+                }
+            }
+
+            if (Optional.IsDefined(OssVersion))
+            {
+                builder.Append("  ossVersion:");
+                if (OssVersion.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{OssVersion}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{OssVersion}'");
+                }
+            }
+
+            if (Optional.IsCollectionDefined(Components))
+            {
+                if (Components.Any())
+                {
+                    builder.Append("  components:");
+                    builder.AppendLine(" [");
+                    foreach (var item in Components)
+                    {
+                        AppendChildObject(builder, item, options, 4, true);
+                    }
+                    builder.AppendLine("  ]");
+                }
+            }
+
+            if (Optional.IsDefined(IdentityProfile))
+            {
+                builder.Append("  identityProfile:");
+                AppendChildObject(builder, IdentityProfile, options, 2, false);
+            }
+
+            if (Optional.IsDefined(AuthorizationProfile))
+            {
+                builder.Append("  authorizationProfile:");
+                AppendChildObject(builder, AuthorizationProfile, options, 2, false);
+            }
+
+            if (Optional.IsDefined(SecretsProfile))
+            {
+                builder.Append("  secretsProfile:");
+                AppendChildObject(builder, SecretsProfile, options, 2, false);
+            }
+
+            if (Optional.IsCollectionDefined(ServiceConfigsProfiles))
+            {
+                if (ServiceConfigsProfiles.Any())
+                {
+                    builder.Append("  serviceConfigsProfiles:");
+                    builder.AppendLine(" [");
+                    foreach (var item in ServiceConfigsProfiles)
+                    {
+                        AppendChildObject(builder, item, options, 4, true);
+                    }
+                    builder.AppendLine("  ]");
+                }
+            }
+
+            if (Optional.IsDefined(ConnectivityProfile))
+            {
+                builder.Append("  connectivityProfile:");
+                AppendChildObject(builder, ConnectivityProfile, options, 2, false);
+            }
+
+            if (Optional.IsDefined(LogAnalyticsProfile))
+            {
+                builder.Append("  logAnalyticsProfile:");
+                AppendChildObject(builder, LogAnalyticsProfile, options, 2, false);
+            }
+
+            if (Optional.IsDefined(PrometheusProfile))
+            {
+                builder.Append("  prometheusProfile:");
+                AppendChildObject(builder, PrometheusProfile, options, 2, false);
+            }
+
+            if (Optional.IsDefined(SshProfile))
+            {
+                builder.Append("  sshProfile:");
+                AppendChildObject(builder, SshProfile, options, 2, false);
+            }
+
+            if (Optional.IsDefined(AutoscaleProfile))
+            {
+                builder.Append("  autoscaleProfile:");
+                AppendChildObject(builder, AutoscaleProfile, options, 2, false);
+            }
+
+            if (Optional.IsCollectionDefined(KafkaProfile))
+            {
+                if (KafkaProfile.Any())
+                {
+                    builder.Append("  kafkaProfile:");
+                    builder.AppendLine(" {");
+                    foreach (var item in KafkaProfile)
+                    {
+                        builder.Append($"    {item.Key}:");
+                        if (item.Value == null)
+                        {
+                            builder.Append("null");
+                            continue;
+                        }
+                        builder.AppendLine($" '{item.Value.ToString()}'");
+                    }
+                    builder.AppendLine("  }");
+                }
+            }
+
+            if (Optional.IsDefined(TrinoProfile))
+            {
+                builder.Append("  trinoProfile:");
+                AppendChildObject(builder, TrinoProfile, options, 2, false);
+            }
+
+            if (Optional.IsCollectionDefined(LlapProfile))
+            {
+                if (LlapProfile.Any())
+                {
+                    builder.Append("  llapProfile:");
+                    builder.AppendLine(" {");
+                    foreach (var item in LlapProfile)
+                    {
+                        builder.Append($"    {item.Key}:");
+                        if (item.Value == null)
+                        {
+                            builder.Append("null");
+                            continue;
+                        }
+                        builder.AppendLine($" '{item.Value.ToString()}'");
+                    }
+                    builder.AppendLine("  }");
+                }
+            }
+
+            if (Optional.IsDefined(FlinkProfile))
+            {
+                builder.Append("  flinkProfile:");
+                AppendChildObject(builder, FlinkProfile, options, 2, false);
+            }
+
+            if (Optional.IsDefined(SparkProfile))
+            {
+                builder.Append("  sparkProfile:");
+                AppendChildObject(builder, SparkProfile, options, 2, false);
+            }
+
+            if (Optional.IsCollectionDefined(StubProfile))
+            {
+                if (StubProfile.Any())
+                {
+                    builder.Append("  stubProfile:");
+                    builder.AppendLine(" {");
+                    foreach (var item in StubProfile)
+                    {
+                        builder.Append($"    {item.Key}:");
+                        if (item.Value == null)
+                        {
+                            builder.Append("null");
+                            continue;
+                        }
+                        builder.AppendLine($" '{item.Value.ToString()}'");
+                    }
+                    builder.AppendLine("  }");
+                }
+            }
+
+            if (Optional.IsCollectionDefined(ScriptActionProfiles))
+            {
+                if (ScriptActionProfiles.Any())
+                {
+                    builder.Append("  scriptActionProfiles:");
+                    builder.AppendLine(" [");
+                    foreach (var item in ScriptActionProfiles)
+                    {
+                        AppendChildObject(builder, item, options, 4, true);
+                    }
+                    builder.AppendLine("  ]");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            bool inMultilineString = false;
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (inMultilineString)
+                {
+                    if (line.Contains("'''"))
+                    {
+                        inMultilineString = false;
+                    }
+                    stringBuilder.AppendLine(line);
+                    continue;
+                }
+                if (line.Contains("'''"))
+                {
+                    inMultilineString = true;
+                    stringBuilder.AppendLine($"{indent}{line}");
+                    continue;
+                }
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<ClusterProfile>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ClusterProfile>)this).GetFormatFromOptions(options) : options.Format;
@@ -462,6 +704,8 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(ClusterProfile)} does not support '{options.Format}' format.");
             }
@@ -478,6 +722,8 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeClusterProfile(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(ClusterProfile)} does not support '{options.Format}' format.");
             }

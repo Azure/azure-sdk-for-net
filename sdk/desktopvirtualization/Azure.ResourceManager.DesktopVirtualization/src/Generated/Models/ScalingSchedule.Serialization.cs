@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -349,6 +351,183 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             return new ScalingSchedule(name.Value, Optional.ToList(daysOfWeek), rampUpStartTime.Value, Optional.ToNullable(rampUpLoadBalancingAlgorithm), Optional.ToNullable(rampUpMinimumHostsPct), Optional.ToNullable(rampUpCapacityThresholdPct), peakStartTime.Value, Optional.ToNullable(peakLoadBalancingAlgorithm), rampDownStartTime.Value, Optional.ToNullable(rampDownLoadBalancingAlgorithm), Optional.ToNullable(rampDownMinimumHostsPct), Optional.ToNullable(rampDownCapacityThresholdPct), Optional.ToNullable(rampDownForceLogoffUsers), Optional.ToNullable(rampDownStopHostsWhen), Optional.ToNullable(rampDownWaitTimeMinutes), rampDownNotificationMessage.Value, offPeakStartTime.Value, Optional.ToNullable(offPeakLoadBalancingAlgorithm), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                if (Name.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{Name}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{Name}'");
+                }
+            }
+
+            if (Optional.IsCollectionDefined(DaysOfWeek))
+            {
+                if (DaysOfWeek.Any())
+                {
+                    builder.Append("  daysOfWeek:");
+                    builder.AppendLine(" [");
+                    foreach (var item in DaysOfWeek)
+                    {
+                        builder.AppendLine($"    '{item.ToString()}'");
+                    }
+                    builder.AppendLine("  ]");
+                }
+            }
+
+            if (Optional.IsDefined(RampUpStartTime))
+            {
+                builder.Append("  rampUpStartTime:");
+                AppendChildObject(builder, RampUpStartTime, options, 2, false);
+            }
+
+            if (Optional.IsDefined(RampUpLoadBalancingAlgorithm))
+            {
+                builder.Append("  rampUpLoadBalancingAlgorithm:");
+                builder.AppendLine($" '{RampUpLoadBalancingAlgorithm.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(RampUpMinimumHostsPct))
+            {
+                builder.Append("  rampUpMinimumHostsPct:");
+                builder.AppendLine($" {RampUpMinimumHostsPct.Value}");
+            }
+
+            if (Optional.IsDefined(RampUpCapacityThresholdPct))
+            {
+                builder.Append("  rampUpCapacityThresholdPct:");
+                builder.AppendLine($" {RampUpCapacityThresholdPct.Value}");
+            }
+
+            if (Optional.IsDefined(PeakStartTime))
+            {
+                builder.Append("  peakStartTime:");
+                AppendChildObject(builder, PeakStartTime, options, 2, false);
+            }
+
+            if (Optional.IsDefined(PeakLoadBalancingAlgorithm))
+            {
+                builder.Append("  peakLoadBalancingAlgorithm:");
+                builder.AppendLine($" '{PeakLoadBalancingAlgorithm.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(RampDownStartTime))
+            {
+                builder.Append("  rampDownStartTime:");
+                AppendChildObject(builder, RampDownStartTime, options, 2, false);
+            }
+
+            if (Optional.IsDefined(RampDownLoadBalancingAlgorithm))
+            {
+                builder.Append("  rampDownLoadBalancingAlgorithm:");
+                builder.AppendLine($" '{RampDownLoadBalancingAlgorithm.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(RampDownMinimumHostsPct))
+            {
+                builder.Append("  rampDownMinimumHostsPct:");
+                builder.AppendLine($" {RampDownMinimumHostsPct.Value}");
+            }
+
+            if (Optional.IsDefined(RampDownCapacityThresholdPct))
+            {
+                builder.Append("  rampDownCapacityThresholdPct:");
+                builder.AppendLine($" {RampDownCapacityThresholdPct.Value}");
+            }
+
+            if (Optional.IsDefined(RampDownForceLogoffUsers))
+            {
+                builder.Append("  rampDownForceLogoffUsers:");
+                var boolValue = RampDownForceLogoffUsers.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(RampDownStopHostsWhen))
+            {
+                builder.Append("  rampDownStopHostsWhen:");
+                builder.AppendLine($" '{RampDownStopHostsWhen.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(RampDownWaitTimeMinutes))
+            {
+                builder.Append("  rampDownWaitTimeMinutes:");
+                builder.AppendLine($" {RampDownWaitTimeMinutes.Value}");
+            }
+
+            if (Optional.IsDefined(RampDownNotificationMessage))
+            {
+                builder.Append("  rampDownNotificationMessage:");
+                if (RampDownNotificationMessage.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{RampDownNotificationMessage}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{RampDownNotificationMessage}'");
+                }
+            }
+
+            if (Optional.IsDefined(OffPeakStartTime))
+            {
+                builder.Append("  offPeakStartTime:");
+                AppendChildObject(builder, OffPeakStartTime, options, 2, false);
+            }
+
+            if (Optional.IsDefined(OffPeakLoadBalancingAlgorithm))
+            {
+                builder.Append("  offPeakLoadBalancingAlgorithm:");
+                builder.AppendLine($" '{OffPeakLoadBalancingAlgorithm.Value.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            bool inMultilineString = false;
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (inMultilineString)
+                {
+                    if (line.Contains("'''"))
+                    {
+                        inMultilineString = false;
+                    }
+                    stringBuilder.AppendLine(line);
+                    continue;
+                }
+                if (line.Contains("'''"))
+                {
+                    inMultilineString = true;
+                    stringBuilder.AppendLine($"{indent}{line}");
+                    continue;
+                }
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<ScalingSchedule>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ScalingSchedule>)this).GetFormatFromOptions(options) : options.Format;
@@ -357,6 +536,8 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(ScalingSchedule)} does not support '{options.Format}' format.");
             }
@@ -373,6 +554,8 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeScalingSchedule(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(ScalingSchedule)} does not support '{options.Format}' format.");
             }
