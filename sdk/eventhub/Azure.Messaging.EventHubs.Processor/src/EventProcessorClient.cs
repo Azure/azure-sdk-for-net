@@ -901,11 +901,6 @@ namespace Azure.Messaging.EventHubs
                                                       long? sequenceNumber,
                                                       CancellationToken cancellationToken)
         {
-            if (sequenceNumber.HasValue)
-            {
-                return UpdateCheckpointAsync(partitionId, new CheckpointPosition(sequenceNumber.Value), cancellationToken);
-            }
-
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
             Argument.AssertNotNull(partitionId, nameof(partitionId));
 

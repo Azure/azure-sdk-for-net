@@ -83,20 +83,12 @@ namespace Azure.Messaging.EventHubs.Primitives
         /// <param name="cancellationToken">A <see cref="CancellationToken" /> instance to signal a request to cancel the operation.</param>
         ///
         public virtual Task UpdateCheckpointAsync(string fullyQualifiedNamespace,
-                                                   string eventHubName,
-                                                   string consumerGroup,
-                                                   string partitionId,
-                                                   long offset,
-                                                   long? sequenceNumber,
-                                                   CancellationToken cancellationToken)
-        {
-            if (sequenceNumber.HasValue)
-            {
-                return UpdateCheckpointAsync(fullyQualifiedNamespace, eventHubName, consumerGroup, partitionId, null, new CheckpointPosition(sequenceNumber.Value), cancellationToken);
-            }
-
-            throw new NotImplementedException();
-        }
+                                                  string eventHubName,
+                                                  string consumerGroup,
+                                                  string partitionId,
+                                                  long offset,
+                                                  long? sequenceNumber,
+                                                  CancellationToken cancellationToken) => throw new NotImplementedException();
 
         /// <summary>
         ///   Creates or updates a checkpoint for a specific partition, identifying a position in the partition's event stream
