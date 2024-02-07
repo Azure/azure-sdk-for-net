@@ -384,7 +384,9 @@ namespace Azure.Core.Tests
         }
 
         [Test]
-        public async Task UnbufferedStreamAccessibleAfterMessageDisposed()
+        [TestCase(true)]
+        [TestCase(false)]
+        public async Task ResponseStreamAccessibleAfterMessageDisposed(bool buffer)
         {
             byte[] serverBytes = new byte[1000];
             new Random().NextBytes(serverBytes);
@@ -400,7 +402,7 @@ namespace Azure.Core.Tests
             using (HttpMessage message = pipeline.CreateMessage())
             {
                 message.Request.Uri.Reset(testServer.Address);
-                message.BufferResponse = false;
+                message.BufferResponse = buffer;
 
                 await pipeline.SendAsync(message, default).ConfigureAwait(false);
 
@@ -410,6 +412,7 @@ namespace Azure.Core.Tests
             }
 
             Assert.NotNull(response.ContentStream);
+
             byte[] clientBytes = new byte[serverBytes.Length];
             int readLength = 0;
             while (readLength < serverBytes.Length)
