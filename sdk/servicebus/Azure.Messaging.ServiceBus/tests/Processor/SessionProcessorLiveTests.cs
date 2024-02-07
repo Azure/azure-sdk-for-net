@@ -2715,11 +2715,11 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
 
                 Task ProcessMessage(ProcessSessionMessageEventArgs args)
                 {
-                    if (args.Message.SequenceNumber != lastSequenceNumber + 1)
-                    {
-                        Assert.Fail(
-                            $"Last sequence number: {lastSequenceNumber}, current sequence number: {args.Message.SequenceNumber}");
-                    }
+
+                    Assert.That(
+                        args.Message.SequenceNumber,
+                        Is.EqualTo(lastSequenceNumber + 1),
+                        $"Last sequence number: {lastSequenceNumber}, current sequence number: {args.Message.SequenceNumber}");
 
                     lastSequenceNumber = args.Message.SequenceNumber;
                     return Task.CompletedTask;
