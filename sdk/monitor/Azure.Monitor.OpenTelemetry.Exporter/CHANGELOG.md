@@ -13,8 +13,10 @@
   `_OTELRESOURCE_` metrics.
   ([#41761](https://github.com/Azure/azure-sdk-for-net/pull/41761))
 
-* Fixed an issue where tags associated with Exceptions, specifically those logged using RecordException, were not being included.
-  Now, tags linked to an ActivityEvent of type exception are correctly exported as Custom Properties.
+* Fixed an issue where tags associated with Exceptions, specifically those logged using
+  [Activity.RecordException()](https://github.com/open-telemetry/opentelemetry-dotnet/blob/f69c025178216d1879e5884f0a74ab15ca759a23/src/OpenTelemetry.Api/Trace/ActivityExtensions.cs#L81),
+  were not being included.
+  Now, tags linked to an `ActivityEvent` of type exception are correctly exported as Custom Properties.
   ([#41767](https://github.com/Azure/azure-sdk-for-net/pull/41767))
   
 ### Other Changes
