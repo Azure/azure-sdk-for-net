@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.ClientModel.Primitives;
 using System.Net;
 using System.Net.Http;
 using System.Threading;
@@ -16,32 +17,51 @@ namespace Azure.Core.Perf;
 [MemoryDiagnoser]
 public class HttpPipelineBenchmark
 {
-    private HttpPipeline _pipeline;
+    // Azure.Core pipeline
+    private HttpPipeline _httpPipeline;
+
+    // System.ClientModel pipeline
+    private ClientPipeline _clientPipeline;
 
     [GlobalSetup]
     public void SetUp()
     {
-        ClientOptions options = new BenchmarkOptions
+        ClientOptions clientOptions = new BenchmarkOptions
         {
             Transport = new HttpClientTransport(new HttpClient(new MockHttpMessageHandler()))
         };
 
-        _pipeline = HttpPipelineBuilder.Build(options);
+        _httpPipeline = HttpPipelineBuilder.Build(clientOptions);
+
+        ClientPipelineOptions pipelineOptions = new()
+        {
+            Transport = new HttpClientPipelineTransport(new HttpClient(new MockHttpMessageHandler()))
+        };
+
+        _clientPipeline = ClientPipeline.Create(pipelineOptions);
     }
 
     [Benchmark]
-    public async Task CreateAndSendMessage()
+    public async Task CreateAndSendAzureCoreMessage()
     {
-        HttpMessage message = _pipeline.CreateMessage();
+        HttpMessage message = _httpPipeline.CreateMessage();
         message.Request.Uri.Reset(new Uri("https://www.example.com"));
-        await _pipeline.SendAsync(message, CancellationToken.None);
+        await _httpPipeline.SendAsync(message, CancellationToken.None);
+    }
+
+    [Benchmark]
+    public async Task CreateAndSendClientModelMessage()
+    {
+        PipelineMessage message = _clientPipeline.CreateMessage();
+        message.Request.Uri = new Uri("https://www.example.com");
+        await _clientPipeline.SendAsync(message);
     }
 
     #region Helpers
 
     /// <summary>
     /// Mock out the network to isolate the performance test to only
-    /// Azure.Core pipeline code.
+    /// Core library pipeline code.
     /// </summary>
     private class MockHttpMessageHandler : HttpMessageHandler
     {
