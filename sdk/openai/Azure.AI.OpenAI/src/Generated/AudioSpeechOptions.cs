@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.AI.OpenAI
 {
-    /// <summary> Specifies the request for speech synthesis. </summary>
+    /// <summary> A representation of the request options that control the behavior of a text-to-speech operation. </summary>
     public partial class AudioSpeechOptions
     {
         /// <summary>
@@ -47,10 +47,10 @@ namespace Azure.AI.OpenAI
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="AudioSpeechOptions"/>. </summary>
-        /// <param name="input"> The text to synthesize audio for. The maximum length is 4096 characters. </param>
-        /// <param name="voice"> The voice to use for speech synthesis. </param>
-        /// <param name="responseFormat"> The format to synthesize the audio in. </param>
-        /// <param name="speed"> The speed of the synthesize audio. Select a value from `0.25` to `4.0`. `1.0` is the default. </param>
+        /// <param name="input"> The text to generate audio for. The maximum length is 4096 characters. </param>
+        /// <param name="voice"> The voice to use for text-to-speech. </param>
+        /// <param name="responseFormat"> The audio output format for the spoken text. By default, the MP3 format will be used. </param>
+        /// <param name="speed"> The speed of speech for generated audio. Values are valid in the range from 0.25 to 4.0, with 1.0 the default and higher values corresponding to faster speech. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal AudioSpeechOptions(string input, AudioSpeechVoice voice, AudioSpeechOutputFormat? responseFormat, float? speed, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {

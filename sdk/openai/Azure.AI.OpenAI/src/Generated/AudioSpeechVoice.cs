@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.AI.OpenAI
 {
-    /// <summary> Represents a voice for speech synthesis. </summary>
+    /// <summary> The available voices for text-to-speech. </summary>
     public readonly partial struct AudioSpeechVoice : IEquatable<AudioSpeechVoice>
     {
         private readonly string _value;
