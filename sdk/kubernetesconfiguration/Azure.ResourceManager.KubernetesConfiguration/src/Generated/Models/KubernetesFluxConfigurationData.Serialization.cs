@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.KubernetesConfiguration.Models;
@@ -513,6 +515,255 @@ namespace Azure.ResourceManager.KubernetesConfiguration
             return new KubernetesFluxConfigurationData(id, name, type, systemData.Value, Optional.ToNullable(scope), @namespace.Value, Optional.ToNullable(sourceKind), Optional.ToNullable(suspend), gitRepository.Value, bucket.Value, azureBlob.Value, Optional.ToDictionary(kustomizations), Optional.ToDictionary(configurationProtectedSettings), Optional.ToList(statuses), repositoryPublicKey.Value, sourceSyncedCommitId.Value, Optional.ToNullable(sourceUpdatedAt), Optional.ToNullable(statusUpdatedAt), Optional.ToNullable(complianceState), Optional.ToNullable(provisioningState), errorMessage.Value, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                if (Name.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{Name}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{Name}'");
+                }
+            }
+
+            if (Optional.IsDefined(Id))
+            {
+                builder.Append("  id:");
+                builder.AppendLine($" '{Id.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SystemData))
+            {
+                builder.Append("  systemData:");
+                builder.AppendLine($" '{SystemData.ToString()}'");
+            }
+
+            builder.Append("  properties:");
+            builder.AppendLine(" {");
+            if (Optional.IsDefined(Scope))
+            {
+                builder.Append("    scope:");
+                builder.AppendLine($" '{Scope.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Namespace))
+            {
+                builder.Append("    namespace:");
+                if (Namespace.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{Namespace}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{Namespace}'");
+                }
+            }
+
+            if (Optional.IsDefined(SourceKind))
+            {
+                builder.Append("    sourceKind:");
+                builder.AppendLine($" '{SourceKind.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(IsReconciliationSuspended))
+            {
+                builder.Append("    suspend:");
+                var boolValue = IsReconciliationSuspended.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(GitRepository))
+            {
+                builder.Append("    gitRepository:");
+                AppendChildObject(builder, GitRepository, options, 4, false);
+            }
+
+            if (Optional.IsDefined(Bucket))
+            {
+                builder.Append("    bucket:");
+                AppendChildObject(builder, Bucket, options, 4, false);
+            }
+
+            if (Optional.IsDefined(AzureBlob))
+            {
+                builder.Append("    azureBlob:");
+                AppendChildObject(builder, AzureBlob, options, 4, false);
+            }
+
+            if (Optional.IsCollectionDefined(Kustomizations))
+            {
+                if (Kustomizations.Any())
+                {
+                    builder.Append("    kustomizations:");
+                    builder.AppendLine(" {");
+                    foreach (var item in Kustomizations)
+                    {
+                        builder.Append($"        {item.Key}:");
+                        AppendChildObject(builder, item.Value, options, 6, false);
+                    }
+                    builder.AppendLine("    }");
+                }
+            }
+
+            if (Optional.IsCollectionDefined(ConfigurationProtectedSettings))
+            {
+                if (ConfigurationProtectedSettings.Any())
+                {
+                    builder.Append("    configurationProtectedSettings:");
+                    builder.AppendLine(" {");
+                    foreach (var item in ConfigurationProtectedSettings)
+                    {
+                        builder.Append($"        {item.Key}:");
+                        if (item.Value == null)
+                        {
+                            builder.Append("null");
+                            continue;
+                        }
+                        if (item.Value.Contains(Environment.NewLine))
+                        {
+                            builder.AppendLine(" '''");
+                            builder.AppendLine($"{item.Value}'''");
+                        }
+                        else
+                        {
+                            builder.AppendLine($" '{item.Value}'");
+                        }
+                    }
+                    builder.AppendLine("    }");
+                }
+            }
+
+            if (Optional.IsCollectionDefined(Statuses))
+            {
+                if (Statuses.Any())
+                {
+                    builder.Append("    statuses:");
+                    builder.AppendLine(" [");
+                    foreach (var item in Statuses)
+                    {
+                        AppendChildObject(builder, item, options, 6, true);
+                    }
+                    builder.AppendLine("    ]");
+                }
+            }
+
+            if (Optional.IsDefined(RepositoryPublicKey))
+            {
+                builder.Append("    repositoryPublicKey:");
+                if (RepositoryPublicKey.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{RepositoryPublicKey}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{RepositoryPublicKey}'");
+                }
+            }
+
+            if (Optional.IsDefined(SourceSyncedCommitId))
+            {
+                builder.Append("    sourceSyncedCommitId:");
+                if (SourceSyncedCommitId.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{SourceSyncedCommitId}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{SourceSyncedCommitId}'");
+                }
+            }
+
+            if (Optional.IsDefined(SourceUpdatedOn))
+            {
+                builder.Append("    sourceUpdatedAt:");
+                var formattedDateTimeString = TypeFormatters.ToString(SourceUpdatedOn.Value, "o");
+                builder.AppendLine($" '{formattedDateTimeString}'");
+            }
+
+            if (Optional.IsDefined(StatusUpdatedOn))
+            {
+                builder.Append("    statusUpdatedAt:");
+                var formattedDateTimeString = TypeFormatters.ToString(StatusUpdatedOn.Value, "o");
+                builder.AppendLine($" '{formattedDateTimeString}'");
+            }
+
+            if (Optional.IsDefined(ComplianceState))
+            {
+                builder.Append("    complianceState:");
+                builder.AppendLine($" '{ComplianceState.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ProvisioningState))
+            {
+                builder.Append("    provisioningState:");
+                builder.AppendLine($" '{ProvisioningState.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ErrorMessage))
+            {
+                builder.Append("    errorMessage:");
+                if (ErrorMessage.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{ErrorMessage}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{ErrorMessage}'");
+                }
+            }
+
+            builder.AppendLine("  }");
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            bool inMultilineString = false;
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (inMultilineString)
+                {
+                    if (line.Contains("'''"))
+                    {
+                        inMultilineString = false;
+                    }
+                    stringBuilder.AppendLine(line);
+                    continue;
+                }
+                if (line.Contains("'''"))
+                {
+                    inMultilineString = true;
+                    stringBuilder.AppendLine($"{indent}{line}");
+                    continue;
+                }
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<KubernetesFluxConfigurationData>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<KubernetesFluxConfigurationData>)this).GetFormatFromOptions(options) : options.Format;
@@ -521,6 +772,8 @@ namespace Azure.ResourceManager.KubernetesConfiguration
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(KubernetesFluxConfigurationData)} does not support '{options.Format}' format.");
             }
@@ -537,6 +790,8 @@ namespace Azure.ResourceManager.KubernetesConfiguration
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeKubernetesFluxConfigurationData(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(KubernetesFluxConfigurationData)} does not support '{options.Format}' format.");
             }

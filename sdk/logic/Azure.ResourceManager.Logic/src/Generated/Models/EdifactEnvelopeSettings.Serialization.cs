@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -486,6 +487,520 @@ namespace Azure.ResourceManager.Logic.Models
             return new EdifactEnvelopeSettings(groupAssociationAssignedCode.Value, communicationAgreementId.Value, applyDelimiterStringAdvice, createGroupingSegments, enableDefaultGroupHeaders, recipientReferencePasswordValue.Value, recipientReferencePasswordQualifier.Value, applicationReferenceId.Value, processingPriorityCode.Value, interchangeControlNumberLowerBound, interchangeControlNumberUpperBound, rolloverInterchangeControlNumber, interchangeControlNumberPrefix.Value, interchangeControlNumberSuffix.Value, senderReverseRoutingAddress.Value, receiverReverseRoutingAddress.Value, functionalGroupId.Value, groupControllingAgencyCode.Value, groupMessageVersion.Value, groupMessageRelease.Value, groupControlNumberLowerBound, groupControlNumberUpperBound, rolloverGroupControlNumber, groupControlNumberPrefix.Value, groupControlNumberSuffix.Value, groupApplicationReceiverQualifier.Value, groupApplicationReceiverId.Value, groupApplicationSenderQualifier.Value, groupApplicationSenderId.Value, groupApplicationPassword.Value, overwriteExistingTransactionSetControlNumber, transactionSetControlNumberPrefix.Value, transactionSetControlNumberSuffix.Value, transactionSetControlNumberLowerBound, transactionSetControlNumberUpperBound, rolloverTransactionSetControlNumber, isTestInterchange, senderInternalIdentification.Value, senderInternalSubIdentification.Value, receiverInternalIdentification.Value, receiverInternalSubIdentification.Value, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(GroupAssociationAssignedCode))
+            {
+                builder.Append("  groupAssociationAssignedCode:");
+                if (GroupAssociationAssignedCode.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{GroupAssociationAssignedCode}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{GroupAssociationAssignedCode}'");
+                }
+            }
+
+            if (Optional.IsDefined(CommunicationAgreementId))
+            {
+                builder.Append("  communicationAgreementId:");
+                if (CommunicationAgreementId.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{CommunicationAgreementId}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{CommunicationAgreementId}'");
+                }
+            }
+
+            if (Optional.IsDefined(ApplyDelimiterStringAdvice))
+            {
+                builder.Append("  applyDelimiterStringAdvice:");
+                var boolValue = ApplyDelimiterStringAdvice == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(CreateGroupingSegments))
+            {
+                builder.Append("  createGroupingSegments:");
+                var boolValue = CreateGroupingSegments == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(EnableDefaultGroupHeaders))
+            {
+                builder.Append("  enableDefaultGroupHeaders:");
+                var boolValue = EnableDefaultGroupHeaders == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(RecipientReferencePasswordValue))
+            {
+                builder.Append("  recipientReferencePasswordValue:");
+                if (RecipientReferencePasswordValue.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{RecipientReferencePasswordValue}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{RecipientReferencePasswordValue}'");
+                }
+            }
+
+            if (Optional.IsDefined(RecipientReferencePasswordQualifier))
+            {
+                builder.Append("  recipientReferencePasswordQualifier:");
+                if (RecipientReferencePasswordQualifier.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{RecipientReferencePasswordQualifier}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{RecipientReferencePasswordQualifier}'");
+                }
+            }
+
+            if (Optional.IsDefined(ApplicationReferenceId))
+            {
+                builder.Append("  applicationReferenceId:");
+                if (ApplicationReferenceId.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{ApplicationReferenceId}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{ApplicationReferenceId}'");
+                }
+            }
+
+            if (Optional.IsDefined(ProcessingPriorityCode))
+            {
+                builder.Append("  processingPriorityCode:");
+                if (ProcessingPriorityCode.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{ProcessingPriorityCode}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{ProcessingPriorityCode}'");
+                }
+            }
+
+            if (Optional.IsDefined(InterchangeControlNumberLowerBound))
+            {
+                builder.Append("  interchangeControlNumberLowerBound:");
+                builder.AppendLine($" '{InterchangeControlNumberLowerBound.ToString()}'");
+            }
+
+            if (Optional.IsDefined(InterchangeControlNumberUpperBound))
+            {
+                builder.Append("  interchangeControlNumberUpperBound:");
+                builder.AppendLine($" '{InterchangeControlNumberUpperBound.ToString()}'");
+            }
+
+            if (Optional.IsDefined(RolloverInterchangeControlNumber))
+            {
+                builder.Append("  rolloverInterchangeControlNumber:");
+                var boolValue = RolloverInterchangeControlNumber == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(InterchangeControlNumberPrefix))
+            {
+                builder.Append("  interchangeControlNumberPrefix:");
+                if (InterchangeControlNumberPrefix.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{InterchangeControlNumberPrefix}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{InterchangeControlNumberPrefix}'");
+                }
+            }
+
+            if (Optional.IsDefined(InterchangeControlNumberSuffix))
+            {
+                builder.Append("  interchangeControlNumberSuffix:");
+                if (InterchangeControlNumberSuffix.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{InterchangeControlNumberSuffix}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{InterchangeControlNumberSuffix}'");
+                }
+            }
+
+            if (Optional.IsDefined(SenderReverseRoutingAddress))
+            {
+                builder.Append("  senderReverseRoutingAddress:");
+                if (SenderReverseRoutingAddress.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{SenderReverseRoutingAddress}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{SenderReverseRoutingAddress}'");
+                }
+            }
+
+            if (Optional.IsDefined(ReceiverReverseRoutingAddress))
+            {
+                builder.Append("  receiverReverseRoutingAddress:");
+                if (ReceiverReverseRoutingAddress.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{ReceiverReverseRoutingAddress}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{ReceiverReverseRoutingAddress}'");
+                }
+            }
+
+            if (Optional.IsDefined(FunctionalGroupId))
+            {
+                builder.Append("  functionalGroupId:");
+                if (FunctionalGroupId.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{FunctionalGroupId}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{FunctionalGroupId}'");
+                }
+            }
+
+            if (Optional.IsDefined(GroupControllingAgencyCode))
+            {
+                builder.Append("  groupControllingAgencyCode:");
+                if (GroupControllingAgencyCode.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{GroupControllingAgencyCode}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{GroupControllingAgencyCode}'");
+                }
+            }
+
+            if (Optional.IsDefined(GroupMessageVersion))
+            {
+                builder.Append("  groupMessageVersion:");
+                if (GroupMessageVersion.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{GroupMessageVersion}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{GroupMessageVersion}'");
+                }
+            }
+
+            if (Optional.IsDefined(GroupMessageRelease))
+            {
+                builder.Append("  groupMessageRelease:");
+                if (GroupMessageRelease.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{GroupMessageRelease}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{GroupMessageRelease}'");
+                }
+            }
+
+            if (Optional.IsDefined(GroupControlNumberLowerBound))
+            {
+                builder.Append("  groupControlNumberLowerBound:");
+                builder.AppendLine($" '{GroupControlNumberLowerBound.ToString()}'");
+            }
+
+            if (Optional.IsDefined(GroupControlNumberUpperBound))
+            {
+                builder.Append("  groupControlNumberUpperBound:");
+                builder.AppendLine($" '{GroupControlNumberUpperBound.ToString()}'");
+            }
+
+            if (Optional.IsDefined(RolloverGroupControlNumber))
+            {
+                builder.Append("  rolloverGroupControlNumber:");
+                var boolValue = RolloverGroupControlNumber == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(GroupControlNumberPrefix))
+            {
+                builder.Append("  groupControlNumberPrefix:");
+                if (GroupControlNumberPrefix.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{GroupControlNumberPrefix}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{GroupControlNumberPrefix}'");
+                }
+            }
+
+            if (Optional.IsDefined(GroupControlNumberSuffix))
+            {
+                builder.Append("  groupControlNumberSuffix:");
+                if (GroupControlNumberSuffix.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{GroupControlNumberSuffix}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{GroupControlNumberSuffix}'");
+                }
+            }
+
+            if (Optional.IsDefined(GroupApplicationReceiverQualifier))
+            {
+                builder.Append("  groupApplicationReceiverQualifier:");
+                if (GroupApplicationReceiverQualifier.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{GroupApplicationReceiverQualifier}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{GroupApplicationReceiverQualifier}'");
+                }
+            }
+
+            if (Optional.IsDefined(GroupApplicationReceiverId))
+            {
+                builder.Append("  groupApplicationReceiverId:");
+                if (GroupApplicationReceiverId.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{GroupApplicationReceiverId}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{GroupApplicationReceiverId}'");
+                }
+            }
+
+            if (Optional.IsDefined(GroupApplicationSenderQualifier))
+            {
+                builder.Append("  groupApplicationSenderQualifier:");
+                if (GroupApplicationSenderQualifier.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{GroupApplicationSenderQualifier}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{GroupApplicationSenderQualifier}'");
+                }
+            }
+
+            if (Optional.IsDefined(GroupApplicationSenderId))
+            {
+                builder.Append("  groupApplicationSenderId:");
+                if (GroupApplicationSenderId.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{GroupApplicationSenderId}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{GroupApplicationSenderId}'");
+                }
+            }
+
+            if (Optional.IsDefined(GroupApplicationPassword))
+            {
+                builder.Append("  groupApplicationPassword:");
+                if (GroupApplicationPassword.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{GroupApplicationPassword}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{GroupApplicationPassword}'");
+                }
+            }
+
+            if (Optional.IsDefined(OverwriteExistingTransactionSetControlNumber))
+            {
+                builder.Append("  overwriteExistingTransactionSetControlNumber:");
+                var boolValue = OverwriteExistingTransactionSetControlNumber == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(TransactionSetControlNumberPrefix))
+            {
+                builder.Append("  transactionSetControlNumberPrefix:");
+                if (TransactionSetControlNumberPrefix.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{TransactionSetControlNumberPrefix}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{TransactionSetControlNumberPrefix}'");
+                }
+            }
+
+            if (Optional.IsDefined(TransactionSetControlNumberSuffix))
+            {
+                builder.Append("  transactionSetControlNumberSuffix:");
+                if (TransactionSetControlNumberSuffix.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{TransactionSetControlNumberSuffix}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{TransactionSetControlNumberSuffix}'");
+                }
+            }
+
+            if (Optional.IsDefined(TransactionSetControlNumberLowerBound))
+            {
+                builder.Append("  transactionSetControlNumberLowerBound:");
+                builder.AppendLine($" '{TransactionSetControlNumberLowerBound.ToString()}'");
+            }
+
+            if (Optional.IsDefined(TransactionSetControlNumberUpperBound))
+            {
+                builder.Append("  transactionSetControlNumberUpperBound:");
+                builder.AppendLine($" '{TransactionSetControlNumberUpperBound.ToString()}'");
+            }
+
+            if (Optional.IsDefined(RolloverTransactionSetControlNumber))
+            {
+                builder.Append("  rolloverTransactionSetControlNumber:");
+                var boolValue = RolloverTransactionSetControlNumber == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(IsTestInterchange))
+            {
+                builder.Append("  isTestInterchange:");
+                var boolValue = IsTestInterchange == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(SenderInternalIdentification))
+            {
+                builder.Append("  senderInternalIdentification:");
+                if (SenderInternalIdentification.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{SenderInternalIdentification}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{SenderInternalIdentification}'");
+                }
+            }
+
+            if (Optional.IsDefined(SenderInternalSubIdentification))
+            {
+                builder.Append("  senderInternalSubIdentification:");
+                if (SenderInternalSubIdentification.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{SenderInternalSubIdentification}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{SenderInternalSubIdentification}'");
+                }
+            }
+
+            if (Optional.IsDefined(ReceiverInternalIdentification))
+            {
+                builder.Append("  receiverInternalIdentification:");
+                if (ReceiverInternalIdentification.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{ReceiverInternalIdentification}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{ReceiverInternalIdentification}'");
+                }
+            }
+
+            if (Optional.IsDefined(ReceiverInternalSubIdentification))
+            {
+                builder.Append("  receiverInternalSubIdentification:");
+                if (ReceiverInternalSubIdentification.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{ReceiverInternalSubIdentification}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{ReceiverInternalSubIdentification}'");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            bool inMultilineString = false;
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (inMultilineString)
+                {
+                    if (line.Contains("'''"))
+                    {
+                        inMultilineString = false;
+                    }
+                    stringBuilder.AppendLine(line);
+                    continue;
+                }
+                if (line.Contains("'''"))
+                {
+                    inMultilineString = true;
+                    stringBuilder.AppendLine($"{indent}{line}");
+                    continue;
+                }
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<EdifactEnvelopeSettings>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<EdifactEnvelopeSettings>)this).GetFormatFromOptions(options) : options.Format;
@@ -494,6 +1009,8 @@ namespace Azure.ResourceManager.Logic.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(EdifactEnvelopeSettings)} does not support '{options.Format}' format.");
             }
@@ -510,6 +1027,8 @@ namespace Azure.ResourceManager.Logic.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeEdifactEnvelopeSettings(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(EdifactEnvelopeSettings)} does not support '{options.Format}' format.");
             }

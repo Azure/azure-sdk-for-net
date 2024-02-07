@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -160,6 +161,174 @@ namespace Azure.ResourceManager.Logic.Models
             return new X12EnvelopeOverride(targetNamespace, protocolVersion, messageId, responsibleAgencyCode, headerVersion, senderApplicationId, receiverApplicationId, functionalIdentifierCode.Value, dateFormat, timeFormat, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(TargetNamespace))
+            {
+                builder.Append("  targetNamespace:");
+                if (TargetNamespace.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{TargetNamespace}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{TargetNamespace}'");
+                }
+            }
+
+            if (Optional.IsDefined(ProtocolVersion))
+            {
+                builder.Append("  protocolVersion:");
+                if (ProtocolVersion.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{ProtocolVersion}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{ProtocolVersion}'");
+                }
+            }
+
+            if (Optional.IsDefined(MessageId))
+            {
+                builder.Append("  messageId:");
+                if (MessageId.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{MessageId}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{MessageId}'");
+                }
+            }
+
+            if (Optional.IsDefined(ResponsibleAgencyCode))
+            {
+                builder.Append("  responsibleAgencyCode:");
+                if (ResponsibleAgencyCode.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{ResponsibleAgencyCode}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{ResponsibleAgencyCode}'");
+                }
+            }
+
+            if (Optional.IsDefined(HeaderVersion))
+            {
+                builder.Append("  headerVersion:");
+                if (HeaderVersion.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{HeaderVersion}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{HeaderVersion}'");
+                }
+            }
+
+            if (Optional.IsDefined(SenderApplicationId))
+            {
+                builder.Append("  senderApplicationId:");
+                if (SenderApplicationId.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{SenderApplicationId}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{SenderApplicationId}'");
+                }
+            }
+
+            if (Optional.IsDefined(ReceiverApplicationId))
+            {
+                builder.Append("  receiverApplicationId:");
+                if (ReceiverApplicationId.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{ReceiverApplicationId}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{ReceiverApplicationId}'");
+                }
+            }
+
+            if (Optional.IsDefined(FunctionalIdentifierCode))
+            {
+                builder.Append("  functionalIdentifierCode:");
+                if (FunctionalIdentifierCode.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{FunctionalIdentifierCode}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{FunctionalIdentifierCode}'");
+                }
+            }
+
+            if (Optional.IsDefined(DateFormat))
+            {
+                builder.Append("  dateFormat:");
+                builder.AppendLine($" '{DateFormat.ToString()}'");
+            }
+
+            if (Optional.IsDefined(TimeFormat))
+            {
+                builder.Append("  timeFormat:");
+                builder.AppendLine($" '{TimeFormat.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            bool inMultilineString = false;
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (inMultilineString)
+                {
+                    if (line.Contains("'''"))
+                    {
+                        inMultilineString = false;
+                    }
+                    stringBuilder.AppendLine(line);
+                    continue;
+                }
+                if (line.Contains("'''"))
+                {
+                    inMultilineString = true;
+                    stringBuilder.AppendLine($"{indent}{line}");
+                    continue;
+                }
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<X12EnvelopeOverride>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<X12EnvelopeOverride>)this).GetFormatFromOptions(options) : options.Format;
@@ -168,6 +337,8 @@ namespace Azure.ResourceManager.Logic.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(X12EnvelopeOverride)} does not support '{options.Format}' format.");
             }
@@ -184,6 +355,8 @@ namespace Azure.ResourceManager.Logic.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeX12EnvelopeOverride(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(X12EnvelopeOverride)} does not support '{options.Format}' format.");
             }

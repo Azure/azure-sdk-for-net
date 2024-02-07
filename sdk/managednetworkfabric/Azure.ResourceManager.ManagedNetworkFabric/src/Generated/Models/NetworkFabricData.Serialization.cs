@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.ManagedNetworkFabric.Models;
@@ -425,6 +427,345 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             return new NetworkFabricData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, annotation.Value, networkFabricSku, fabricVersion.Value, Optional.ToList(routerIds), networkFabricControllerId, Optional.ToNullable(rackCount), serverCountPerRack, ipv4Prefix, ipv6Prefix.Value, fabricAsn, terminalServerConfiguration, managementNetworkConfiguration, Optional.ToList(racks), Optional.ToList(l2IsolationDomains), Optional.ToList(l3IsolationDomains), Optional.ToNullable(configurationState), Optional.ToNullable(provisioningState), Optional.ToNullable(administrativeState), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                if (Name.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{Name}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{Name}'");
+                }
+            }
+
+            if (Optional.IsDefined(Location))
+            {
+                builder.Append("  location:");
+                builder.AppendLine($" '{Location.ToString()}'");
+            }
+
+            if (Optional.IsCollectionDefined(Tags))
+            {
+                if (Tags.Any())
+                {
+                    builder.Append("  tags:");
+                    builder.AppendLine(" {");
+                    foreach (var item in Tags)
+                    {
+                        builder.Append($"    {item.Key}:");
+                        if (item.Value == null)
+                        {
+                            builder.Append("null");
+                            continue;
+                        }
+                        if (item.Value.Contains(Environment.NewLine))
+                        {
+                            builder.AppendLine(" '''");
+                            builder.AppendLine($"{item.Value}'''");
+                        }
+                        else
+                        {
+                            builder.AppendLine($" '{item.Value}'");
+                        }
+                    }
+                    builder.AppendLine("  }");
+                }
+            }
+
+            if (Optional.IsDefined(Id))
+            {
+                builder.Append("  id:");
+                builder.AppendLine($" '{Id.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SystemData))
+            {
+                builder.Append("  systemData:");
+                builder.AppendLine($" '{SystemData.ToString()}'");
+            }
+
+            builder.Append("  properties:");
+            builder.AppendLine(" {");
+            if (Optional.IsDefined(Annotation))
+            {
+                builder.Append("    annotation:");
+                if (Annotation.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{Annotation}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{Annotation}'");
+                }
+            }
+
+            if (Optional.IsDefined(NetworkFabricSku))
+            {
+                builder.Append("    networkFabricSku:");
+                if (NetworkFabricSku.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{NetworkFabricSku}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{NetworkFabricSku}'");
+                }
+            }
+
+            if (Optional.IsDefined(FabricVersion))
+            {
+                builder.Append("    fabricVersion:");
+                if (FabricVersion.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{FabricVersion}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{FabricVersion}'");
+                }
+            }
+
+            if (Optional.IsCollectionDefined(RouterIds))
+            {
+                if (RouterIds.Any())
+                {
+                    builder.Append("    routerIds:");
+                    builder.AppendLine(" [");
+                    foreach (var item in RouterIds)
+                    {
+                        if (item == null)
+                        {
+                            builder.Append("null");
+                            continue;
+                        }
+                        if (item.Contains(Environment.NewLine))
+                        {
+                            builder.AppendLine("      '''");
+                            builder.AppendLine($"{item}'''");
+                        }
+                        else
+                        {
+                            builder.AppendLine($"      '{item}'");
+                        }
+                    }
+                    builder.AppendLine("    ]");
+                }
+            }
+
+            if (Optional.IsDefined(NetworkFabricControllerId))
+            {
+                builder.Append("    networkFabricControllerId:");
+                builder.AppendLine($" '{NetworkFabricControllerId.ToString()}'");
+            }
+
+            if (Optional.IsDefined(RackCount))
+            {
+                builder.Append("    rackCount:");
+                builder.AppendLine($" {RackCount.Value}");
+            }
+
+            if (Optional.IsDefined(ServerCountPerRack))
+            {
+                builder.Append("    serverCountPerRack:");
+                builder.AppendLine($" {ServerCountPerRack}");
+            }
+
+            if (Optional.IsDefined(IPv4Prefix))
+            {
+                builder.Append("    ipv4Prefix:");
+                if (IPv4Prefix.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{IPv4Prefix}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{IPv4Prefix}'");
+                }
+            }
+
+            if (Optional.IsDefined(IPv6Prefix))
+            {
+                builder.Append("    ipv6Prefix:");
+                if (IPv6Prefix.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{IPv6Prefix}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{IPv6Prefix}'");
+                }
+            }
+
+            if (Optional.IsDefined(FabricAsn))
+            {
+                builder.Append("    fabricASN:");
+                builder.AppendLine($" '{FabricAsn.ToString()}'");
+            }
+
+            if (Optional.IsDefined(TerminalServerConfiguration))
+            {
+                builder.Append("    terminalServerConfiguration:");
+                AppendChildObject(builder, TerminalServerConfiguration, options, 4, false);
+            }
+
+            if (Optional.IsDefined(ManagementNetworkConfiguration))
+            {
+                builder.Append("    managementNetworkConfiguration:");
+                AppendChildObject(builder, ManagementNetworkConfiguration, options, 4, false);
+            }
+
+            if (Optional.IsCollectionDefined(Racks))
+            {
+                if (Racks.Any())
+                {
+                    builder.Append("    racks:");
+                    builder.AppendLine(" [");
+                    foreach (var item in Racks)
+                    {
+                        if (item == null)
+                        {
+                            builder.Append("null");
+                            continue;
+                        }
+                        if (item.Contains(Environment.NewLine))
+                        {
+                            builder.AppendLine("      '''");
+                            builder.AppendLine($"{item}'''");
+                        }
+                        else
+                        {
+                            builder.AppendLine($"      '{item}'");
+                        }
+                    }
+                    builder.AppendLine("    ]");
+                }
+            }
+
+            if (Optional.IsCollectionDefined(L2IsolationDomains))
+            {
+                if (L2IsolationDomains.Any())
+                {
+                    builder.Append("    l2IsolationDomains:");
+                    builder.AppendLine(" [");
+                    foreach (var item in L2IsolationDomains)
+                    {
+                        if (item == null)
+                        {
+                            builder.Append("null");
+                            continue;
+                        }
+                        if (item.Contains(Environment.NewLine))
+                        {
+                            builder.AppendLine("      '''");
+                            builder.AppendLine($"{item}'''");
+                        }
+                        else
+                        {
+                            builder.AppendLine($"      '{item}'");
+                        }
+                    }
+                    builder.AppendLine("    ]");
+                }
+            }
+
+            if (Optional.IsCollectionDefined(L3IsolationDomains))
+            {
+                if (L3IsolationDomains.Any())
+                {
+                    builder.Append("    l3IsolationDomains:");
+                    builder.AppendLine(" [");
+                    foreach (var item in L3IsolationDomains)
+                    {
+                        if (item == null)
+                        {
+                            builder.Append("null");
+                            continue;
+                        }
+                        if (item.Contains(Environment.NewLine))
+                        {
+                            builder.AppendLine("      '''");
+                            builder.AppendLine($"{item}'''");
+                        }
+                        else
+                        {
+                            builder.AppendLine($"      '{item}'");
+                        }
+                    }
+                    builder.AppendLine("    ]");
+                }
+            }
+
+            if (Optional.IsDefined(ConfigurationState))
+            {
+                builder.Append("    configurationState:");
+                builder.AppendLine($" '{ConfigurationState.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ProvisioningState))
+            {
+                builder.Append("    provisioningState:");
+                builder.AppendLine($" '{ProvisioningState.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(AdministrativeState))
+            {
+                builder.Append("    administrativeState:");
+                builder.AppendLine($" '{AdministrativeState.Value.ToString()}'");
+            }
+
+            builder.AppendLine("  }");
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            bool inMultilineString = false;
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (inMultilineString)
+                {
+                    if (line.Contains("'''"))
+                    {
+                        inMultilineString = false;
+                    }
+                    stringBuilder.AppendLine(line);
+                    continue;
+                }
+                if (line.Contains("'''"))
+                {
+                    inMultilineString = true;
+                    stringBuilder.AppendLine($"{indent}{line}");
+                    continue;
+                }
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<NetworkFabricData>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<NetworkFabricData>)this).GetFormatFromOptions(options) : options.Format;
@@ -433,6 +774,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(NetworkFabricData)} does not support '{options.Format}' format.");
             }
@@ -449,6 +792,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeNetworkFabricData(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(NetworkFabricData)} does not support '{options.Format}' format.");
             }

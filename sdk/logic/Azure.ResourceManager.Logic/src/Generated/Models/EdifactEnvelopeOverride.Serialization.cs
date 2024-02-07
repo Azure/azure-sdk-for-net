@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -242,6 +243,260 @@ namespace Azure.ResourceManager.Logic.Models
             return new EdifactEnvelopeOverride(messageId.Value, messageVersion.Value, messageRelease.Value, messageAssociationAssignedCode.Value, targetNamespace.Value, functionalGroupId.Value, senderApplicationQualifier.Value, senderApplicationId.Value, receiverApplicationQualifier.Value, receiverApplicationId.Value, controllingAgencyCode.Value, groupHeaderMessageVersion.Value, groupHeaderMessageRelease.Value, associationAssignedCode.Value, applicationPassword.Value, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(MessageId))
+            {
+                builder.Append("  messageId:");
+                if (MessageId.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{MessageId}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{MessageId}'");
+                }
+            }
+
+            if (Optional.IsDefined(MessageVersion))
+            {
+                builder.Append("  messageVersion:");
+                if (MessageVersion.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{MessageVersion}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{MessageVersion}'");
+                }
+            }
+
+            if (Optional.IsDefined(MessageRelease))
+            {
+                builder.Append("  messageRelease:");
+                if (MessageRelease.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{MessageRelease}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{MessageRelease}'");
+                }
+            }
+
+            if (Optional.IsDefined(MessageAssociationAssignedCode))
+            {
+                builder.Append("  messageAssociationAssignedCode:");
+                if (MessageAssociationAssignedCode.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{MessageAssociationAssignedCode}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{MessageAssociationAssignedCode}'");
+                }
+            }
+
+            if (Optional.IsDefined(TargetNamespace))
+            {
+                builder.Append("  targetNamespace:");
+                if (TargetNamespace.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{TargetNamespace}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{TargetNamespace}'");
+                }
+            }
+
+            if (Optional.IsDefined(FunctionalGroupId))
+            {
+                builder.Append("  functionalGroupId:");
+                if (FunctionalGroupId.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{FunctionalGroupId}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{FunctionalGroupId}'");
+                }
+            }
+
+            if (Optional.IsDefined(SenderApplicationQualifier))
+            {
+                builder.Append("  senderApplicationQualifier:");
+                if (SenderApplicationQualifier.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{SenderApplicationQualifier}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{SenderApplicationQualifier}'");
+                }
+            }
+
+            if (Optional.IsDefined(SenderApplicationId))
+            {
+                builder.Append("  senderApplicationId:");
+                if (SenderApplicationId.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{SenderApplicationId}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{SenderApplicationId}'");
+                }
+            }
+
+            if (Optional.IsDefined(ReceiverApplicationQualifier))
+            {
+                builder.Append("  receiverApplicationQualifier:");
+                if (ReceiverApplicationQualifier.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{ReceiverApplicationQualifier}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{ReceiverApplicationQualifier}'");
+                }
+            }
+
+            if (Optional.IsDefined(ReceiverApplicationId))
+            {
+                builder.Append("  receiverApplicationId:");
+                if (ReceiverApplicationId.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{ReceiverApplicationId}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{ReceiverApplicationId}'");
+                }
+            }
+
+            if (Optional.IsDefined(ControllingAgencyCode))
+            {
+                builder.Append("  controllingAgencyCode:");
+                if (ControllingAgencyCode.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{ControllingAgencyCode}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{ControllingAgencyCode}'");
+                }
+            }
+
+            if (Optional.IsDefined(GroupHeaderMessageVersion))
+            {
+                builder.Append("  groupHeaderMessageVersion:");
+                if (GroupHeaderMessageVersion.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{GroupHeaderMessageVersion}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{GroupHeaderMessageVersion}'");
+                }
+            }
+
+            if (Optional.IsDefined(GroupHeaderMessageRelease))
+            {
+                builder.Append("  groupHeaderMessageRelease:");
+                if (GroupHeaderMessageRelease.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{GroupHeaderMessageRelease}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{GroupHeaderMessageRelease}'");
+                }
+            }
+
+            if (Optional.IsDefined(AssociationAssignedCode))
+            {
+                builder.Append("  associationAssignedCode:");
+                if (AssociationAssignedCode.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{AssociationAssignedCode}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{AssociationAssignedCode}'");
+                }
+            }
+
+            if (Optional.IsDefined(ApplicationPassword))
+            {
+                builder.Append("  applicationPassword:");
+                if (ApplicationPassword.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{ApplicationPassword}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{ApplicationPassword}'");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            bool inMultilineString = false;
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (inMultilineString)
+                {
+                    if (line.Contains("'''"))
+                    {
+                        inMultilineString = false;
+                    }
+                    stringBuilder.AppendLine(line);
+                    continue;
+                }
+                if (line.Contains("'''"))
+                {
+                    inMultilineString = true;
+                    stringBuilder.AppendLine($"{indent}{line}");
+                    continue;
+                }
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<EdifactEnvelopeOverride>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<EdifactEnvelopeOverride>)this).GetFormatFromOptions(options) : options.Format;
@@ -250,6 +505,8 @@ namespace Azure.ResourceManager.Logic.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(EdifactEnvelopeOverride)} does not support '{options.Format}' format.");
             }
@@ -266,6 +523,8 @@ namespace Azure.ResourceManager.Logic.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeEdifactEnvelopeOverride(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(EdifactEnvelopeOverride)} does not support '{options.Format}' format.");
             }

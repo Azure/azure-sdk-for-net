@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Kubernetes.Models;
@@ -363,6 +365,261 @@ namespace Azure.ResourceManager.Kubernetes
             return new ConnectedClusterData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, identity, agentPublicKeyCertificate, kubernetesVersion.Value, Optional.ToNullable(totalNodeCount), Optional.ToNullable(totalCoreCount), agentVersion.Value, Optional.ToNullable(provisioningState), distribution.Value, infrastructure.Value, offering.Value, Optional.ToNullable(managedIdentityCertificateExpirationTime), Optional.ToNullable(lastConnectivityTime), Optional.ToNullable(connectivityStatus), Optional.ToNullable(privateLinkState), privateLinkScopeResourceId.Value, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                if (Name.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{Name}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{Name}'");
+                }
+            }
+
+            if (Optional.IsDefined(Location))
+            {
+                builder.Append("  location:");
+                builder.AppendLine($" '{Location.ToString()}'");
+            }
+
+            if (Optional.IsCollectionDefined(Tags))
+            {
+                if (Tags.Any())
+                {
+                    builder.Append("  tags:");
+                    builder.AppendLine(" {");
+                    foreach (var item in Tags)
+                    {
+                        builder.Append($"    {item.Key}:");
+                        if (item.Value == null)
+                        {
+                            builder.Append("null");
+                            continue;
+                        }
+                        if (item.Value.Contains(Environment.NewLine))
+                        {
+                            builder.AppendLine(" '''");
+                            builder.AppendLine($"{item.Value}'''");
+                        }
+                        else
+                        {
+                            builder.AppendLine($" '{item.Value}'");
+                        }
+                    }
+                    builder.AppendLine("  }");
+                }
+            }
+
+            if (Optional.IsDefined(Identity))
+            {
+                builder.Append("  identity:");
+                AppendChildObject(builder, Identity, options, 2, false);
+            }
+
+            if (Optional.IsDefined(Id))
+            {
+                builder.Append("  id:");
+                builder.AppendLine($" '{Id.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SystemData))
+            {
+                builder.Append("  systemData:");
+                builder.AppendLine($" '{SystemData.ToString()}'");
+            }
+
+            builder.Append("  properties:");
+            builder.AppendLine(" {");
+            if (Optional.IsDefined(AgentPublicKeyCertificate))
+            {
+                builder.Append("    agentPublicKeyCertificate:");
+                if (AgentPublicKeyCertificate.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{AgentPublicKeyCertificate}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{AgentPublicKeyCertificate}'");
+                }
+            }
+
+            if (Optional.IsDefined(KubernetesVersion))
+            {
+                builder.Append("    kubernetesVersion:");
+                if (KubernetesVersion.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{KubernetesVersion}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{KubernetesVersion}'");
+                }
+            }
+
+            if (Optional.IsDefined(TotalNodeCount))
+            {
+                builder.Append("    totalNodeCount:");
+                builder.AppendLine($" {TotalNodeCount.Value}");
+            }
+
+            if (Optional.IsDefined(TotalCoreCount))
+            {
+                builder.Append("    totalCoreCount:");
+                builder.AppendLine($" {TotalCoreCount.Value}");
+            }
+
+            if (Optional.IsDefined(AgentVersion))
+            {
+                builder.Append("    agentVersion:");
+                if (AgentVersion.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{AgentVersion}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{AgentVersion}'");
+                }
+            }
+
+            if (Optional.IsDefined(ProvisioningState))
+            {
+                builder.Append("    provisioningState:");
+                builder.AppendLine($" '{ProvisioningState.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Distribution))
+            {
+                builder.Append("    distribution:");
+                if (Distribution.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{Distribution}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{Distribution}'");
+                }
+            }
+
+            if (Optional.IsDefined(Infrastructure))
+            {
+                builder.Append("    infrastructure:");
+                if (Infrastructure.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{Infrastructure}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{Infrastructure}'");
+                }
+            }
+
+            if (Optional.IsDefined(Offering))
+            {
+                builder.Append("    offering:");
+                if (Offering.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{Offering}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{Offering}'");
+                }
+            }
+
+            if (Optional.IsDefined(ManagedIdentityCertificateExpirationOn))
+            {
+                builder.Append("    managedIdentityCertificateExpirationTime:");
+                var formattedDateTimeString = TypeFormatters.ToString(ManagedIdentityCertificateExpirationOn.Value, "o");
+                builder.AppendLine($" '{formattedDateTimeString}'");
+            }
+
+            if (Optional.IsDefined(LastConnectivityOn))
+            {
+                builder.Append("    lastConnectivityTime:");
+                var formattedDateTimeString = TypeFormatters.ToString(LastConnectivityOn.Value, "o");
+                builder.AppendLine($" '{formattedDateTimeString}'");
+            }
+
+            if (Optional.IsDefined(ConnectivityStatus))
+            {
+                builder.Append("    connectivityStatus:");
+                builder.AppendLine($" '{ConnectivityStatus.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(PrivateLinkState))
+            {
+                builder.Append("    privateLinkState:");
+                builder.AppendLine($" '{PrivateLinkState.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(PrivateLinkScopeResourceId))
+            {
+                builder.Append("    privateLinkScopeResourceId:");
+                if (PrivateLinkScopeResourceId.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{PrivateLinkScopeResourceId}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{PrivateLinkScopeResourceId}'");
+                }
+            }
+
+            builder.AppendLine("  }");
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            bool inMultilineString = false;
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (inMultilineString)
+                {
+                    if (line.Contains("'''"))
+                    {
+                        inMultilineString = false;
+                    }
+                    stringBuilder.AppendLine(line);
+                    continue;
+                }
+                if (line.Contains("'''"))
+                {
+                    inMultilineString = true;
+                    stringBuilder.AppendLine($"{indent}{line}");
+                    continue;
+                }
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<ConnectedClusterData>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ConnectedClusterData>)this).GetFormatFromOptions(options) : options.Format;
@@ -371,6 +628,8 @@ namespace Azure.ResourceManager.Kubernetes
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(ConnectedClusterData)} does not support '{options.Format}' format.");
             }
@@ -387,6 +646,8 @@ namespace Azure.ResourceManager.Kubernetes
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeConnectedClusterData(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(ConnectedClusterData)} does not support '{options.Format}' format.");
             }

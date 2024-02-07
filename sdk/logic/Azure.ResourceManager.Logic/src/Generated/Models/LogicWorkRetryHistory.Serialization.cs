@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -155,6 +156,112 @@ namespace Azure.ResourceManager.Logic.Models
             return new LogicWorkRetryHistory(Optional.ToNullable(startTime), Optional.ToNullable(endTime), code.Value, clientRequestId.Value, serviceRequestId.Value, error.Value, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(StartOn))
+            {
+                builder.Append("  startTime:");
+                var formattedDateTimeString = TypeFormatters.ToString(StartOn.Value, "o");
+                builder.AppendLine($" '{formattedDateTimeString}'");
+            }
+
+            if (Optional.IsDefined(EndOn))
+            {
+                builder.Append("  endTime:");
+                var formattedDateTimeString = TypeFormatters.ToString(EndOn.Value, "o");
+                builder.AppendLine($" '{formattedDateTimeString}'");
+            }
+
+            if (Optional.IsDefined(Code))
+            {
+                builder.Append("  code:");
+                if (Code.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{Code}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{Code}'");
+                }
+            }
+
+            if (Optional.IsDefined(ClientRequestId))
+            {
+                builder.Append("  clientRequestId:");
+                if (ClientRequestId.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{ClientRequestId}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{ClientRequestId}'");
+                }
+            }
+
+            if (Optional.IsDefined(ServiceRequestId))
+            {
+                builder.Append("  serviceRequestId:");
+                if (ServiceRequestId.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{ServiceRequestId}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{ServiceRequestId}'");
+                }
+            }
+
+            if (Optional.IsDefined(Error))
+            {
+                builder.Append("  error:");
+                AppendChildObject(builder, Error, options, 2, false);
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            bool inMultilineString = false;
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (inMultilineString)
+                {
+                    if (line.Contains("'''"))
+                    {
+                        inMultilineString = false;
+                    }
+                    stringBuilder.AppendLine(line);
+                    continue;
+                }
+                if (line.Contains("'''"))
+                {
+                    inMultilineString = true;
+                    stringBuilder.AppendLine($"{indent}{line}");
+                    continue;
+                }
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<LogicWorkRetryHistory>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<LogicWorkRetryHistory>)this).GetFormatFromOptions(options) : options.Format;
@@ -163,6 +270,8 @@ namespace Azure.ResourceManager.Logic.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(LogicWorkRetryHistory)} does not support '{options.Format}' format.");
             }
@@ -179,6 +288,8 @@ namespace Azure.ResourceManager.Logic.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeLogicWorkRetryHistory(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(LogicWorkRetryHistory)} does not support '{options.Format}' format.");
             }

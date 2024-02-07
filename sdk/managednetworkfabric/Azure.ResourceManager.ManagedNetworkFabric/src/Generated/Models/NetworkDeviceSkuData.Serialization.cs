@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.ManagedNetworkFabric.Models;
@@ -251,6 +253,155 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             return new NetworkDeviceSkuData(id, name, type, systemData.Value, model, manufacturer.Value, Optional.ToList(supportedVersions), Optional.ToList(supportedRoleTypes), Optional.ToList(interfaces), Optional.ToNullable(provisioningState), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                if (Name.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{Name}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{Name}'");
+                }
+            }
+
+            if (Optional.IsDefined(Id))
+            {
+                builder.Append("  id:");
+                builder.AppendLine($" '{Id.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SystemData))
+            {
+                builder.Append("  systemData:");
+                builder.AppendLine($" '{SystemData.ToString()}'");
+            }
+
+            builder.Append("  properties:");
+            builder.AppendLine(" {");
+            if (Optional.IsDefined(Model))
+            {
+                builder.Append("    model:");
+                if (Model.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{Model}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{Model}'");
+                }
+            }
+
+            if (Optional.IsDefined(Manufacturer))
+            {
+                builder.Append("    manufacturer:");
+                if (Manufacturer.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{Manufacturer}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{Manufacturer}'");
+                }
+            }
+
+            if (Optional.IsCollectionDefined(SupportedVersions))
+            {
+                if (SupportedVersions.Any())
+                {
+                    builder.Append("    supportedVersions:");
+                    builder.AppendLine(" [");
+                    foreach (var item in SupportedVersions)
+                    {
+                        AppendChildObject(builder, item, options, 6, true);
+                    }
+                    builder.AppendLine("    ]");
+                }
+            }
+
+            if (Optional.IsCollectionDefined(SupportedRoleTypes))
+            {
+                if (SupportedRoleTypes.Any())
+                {
+                    builder.Append("    supportedRoleTypes:");
+                    builder.AppendLine(" [");
+                    foreach (var item in SupportedRoleTypes)
+                    {
+                        builder.AppendLine($"      '{item.ToString()}'");
+                    }
+                    builder.AppendLine("    ]");
+                }
+            }
+
+            if (Optional.IsCollectionDefined(Interfaces))
+            {
+                if (Interfaces.Any())
+                {
+                    builder.Append("    interfaces:");
+                    builder.AppendLine(" [");
+                    foreach (var item in Interfaces)
+                    {
+                        AppendChildObject(builder, item, options, 6, true);
+                    }
+                    builder.AppendLine("    ]");
+                }
+            }
+
+            if (Optional.IsDefined(ProvisioningState))
+            {
+                builder.Append("    provisioningState:");
+                builder.AppendLine($" '{ProvisioningState.Value.ToString()}'");
+            }
+
+            builder.AppendLine("  }");
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            bool inMultilineString = false;
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (inMultilineString)
+                {
+                    if (line.Contains("'''"))
+                    {
+                        inMultilineString = false;
+                    }
+                    stringBuilder.AppendLine(line);
+                    continue;
+                }
+                if (line.Contains("'''"))
+                {
+                    inMultilineString = true;
+                    stringBuilder.AppendLine($"{indent}{line}");
+                    continue;
+                }
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<NetworkDeviceSkuData>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<NetworkDeviceSkuData>)this).GetFormatFromOptions(options) : options.Format;
@@ -259,6 +410,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(NetworkDeviceSkuData)} does not support '{options.Format}' format.");
             }
@@ -275,6 +428,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeNetworkDeviceSkuData(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(NetworkDeviceSkuData)} does not support '{options.Format}' format.");
             }

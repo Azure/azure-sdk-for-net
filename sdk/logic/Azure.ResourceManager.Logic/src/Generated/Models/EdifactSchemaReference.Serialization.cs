@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -142,6 +143,148 @@ namespace Azure.ResourceManager.Logic.Models
             return new EdifactSchemaReference(messageId, messageVersion, messageRelease, senderApplicationId.Value, senderApplicationQualifier.Value, associationAssignedCode.Value, schemaName, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(MessageId))
+            {
+                builder.Append("  messageId:");
+                if (MessageId.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{MessageId}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{MessageId}'");
+                }
+            }
+
+            if (Optional.IsDefined(MessageVersion))
+            {
+                builder.Append("  messageVersion:");
+                if (MessageVersion.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{MessageVersion}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{MessageVersion}'");
+                }
+            }
+
+            if (Optional.IsDefined(MessageRelease))
+            {
+                builder.Append("  messageRelease:");
+                if (MessageRelease.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{MessageRelease}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{MessageRelease}'");
+                }
+            }
+
+            if (Optional.IsDefined(SenderApplicationId))
+            {
+                builder.Append("  senderApplicationId:");
+                if (SenderApplicationId.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{SenderApplicationId}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{SenderApplicationId}'");
+                }
+            }
+
+            if (Optional.IsDefined(SenderApplicationQualifier))
+            {
+                builder.Append("  senderApplicationQualifier:");
+                if (SenderApplicationQualifier.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{SenderApplicationQualifier}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{SenderApplicationQualifier}'");
+                }
+            }
+
+            if (Optional.IsDefined(AssociationAssignedCode))
+            {
+                builder.Append("  associationAssignedCode:");
+                if (AssociationAssignedCode.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{AssociationAssignedCode}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{AssociationAssignedCode}'");
+                }
+            }
+
+            if (Optional.IsDefined(SchemaName))
+            {
+                builder.Append("  schemaName:");
+                if (SchemaName.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{SchemaName}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{SchemaName}'");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            bool inMultilineString = false;
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (inMultilineString)
+                {
+                    if (line.Contains("'''"))
+                    {
+                        inMultilineString = false;
+                    }
+                    stringBuilder.AppendLine(line);
+                    continue;
+                }
+                if (line.Contains("'''"))
+                {
+                    inMultilineString = true;
+                    stringBuilder.AppendLine($"{indent}{line}");
+                    continue;
+                }
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<EdifactSchemaReference>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<EdifactSchemaReference>)this).GetFormatFromOptions(options) : options.Format;
@@ -150,6 +293,8 @@ namespace Azure.ResourceManager.Logic.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(EdifactSchemaReference)} does not support '{options.Format}' format.");
             }
@@ -166,6 +311,8 @@ namespace Azure.ResourceManager.Logic.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeEdifactSchemaReference(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(EdifactSchemaReference)} does not support '{options.Format}' format.");
             }

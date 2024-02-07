@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -430,6 +432,228 @@ namespace Azure.ResourceManager.MachineLearning.Models
             return new MachineLearningBatchDeploymentProperties(codeConfiguration.Value, description.Value, environmentId.Value, Optional.ToDictionary(environmentVariables), Optional.ToDictionary(properties), serializedAdditionalRawData, compute.Value, deploymentConfiguration.Value, Optional.ToNullable(errorThreshold), Optional.ToNullable(loggingLevel), Optional.ToNullable(maxConcurrencyPerInstance), Optional.ToNullable(miniBatchSize), model.Value, Optional.ToNullable(outputAction), outputFileName.Value, Optional.ToNullable(provisioningState), resources.Value, retrySettings.Value);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(Compute))
+            {
+                builder.Append("  compute:");
+                if (Compute.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{Compute}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{Compute}'");
+                }
+            }
+
+            if (Optional.IsDefined(DeploymentConfiguration))
+            {
+                builder.Append("  deploymentConfiguration:");
+                AppendChildObject(builder, DeploymentConfiguration, options, 2, false);
+            }
+
+            if (Optional.IsDefined(ErrorThreshold))
+            {
+                builder.Append("  errorThreshold:");
+                builder.AppendLine($" {ErrorThreshold.Value}");
+            }
+
+            if (Optional.IsDefined(LoggingLevel))
+            {
+                builder.Append("  loggingLevel:");
+                builder.AppendLine($" '{LoggingLevel.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(MaxConcurrencyPerInstance))
+            {
+                builder.Append("  maxConcurrencyPerInstance:");
+                builder.AppendLine($" {MaxConcurrencyPerInstance.Value}");
+            }
+
+            if (Optional.IsDefined(MiniBatchSize))
+            {
+                builder.Append("  miniBatchSize:");
+                builder.AppendLine($" '{MiniBatchSize.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Model))
+            {
+                builder.Append("  model:");
+                AppendChildObject(builder, Model, options, 2, false);
+            }
+
+            if (Optional.IsDefined(OutputAction))
+            {
+                builder.Append("  outputAction:");
+                builder.AppendLine($" '{OutputAction.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(OutputFileName))
+            {
+                builder.Append("  outputFileName:");
+                if (OutputFileName.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{OutputFileName}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{OutputFileName}'");
+                }
+            }
+
+            if (Optional.IsDefined(ProvisioningState))
+            {
+                builder.Append("  provisioningState:");
+                builder.AppendLine($" '{ProvisioningState.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Resources))
+            {
+                builder.Append("  resources:");
+                AppendChildObject(builder, Resources, options, 2, false);
+            }
+
+            if (Optional.IsDefined(RetrySettings))
+            {
+                builder.Append("  retrySettings:");
+                AppendChildObject(builder, RetrySettings, options, 2, false);
+            }
+
+            if (Optional.IsDefined(CodeConfiguration))
+            {
+                builder.Append("  codeConfiguration:");
+                AppendChildObject(builder, CodeConfiguration, options, 2, false);
+            }
+
+            if (Optional.IsDefined(Description))
+            {
+                builder.Append("  description:");
+                if (Description.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{Description}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{Description}'");
+                }
+            }
+
+            if (Optional.IsDefined(EnvironmentId))
+            {
+                builder.Append("  environmentId:");
+                if (EnvironmentId.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{EnvironmentId}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{EnvironmentId}'");
+                }
+            }
+
+            if (Optional.IsCollectionDefined(EnvironmentVariables))
+            {
+                if (EnvironmentVariables.Any())
+                {
+                    builder.Append("  environmentVariables:");
+                    builder.AppendLine(" {");
+                    foreach (var item in EnvironmentVariables)
+                    {
+                        builder.Append($"    {item.Key}:");
+                        if (item.Value == null)
+                        {
+                            builder.Append("null");
+                            continue;
+                        }
+                        if (item.Value.Contains(Environment.NewLine))
+                        {
+                            builder.AppendLine(" '''");
+                            builder.AppendLine($"{item.Value}'''");
+                        }
+                        else
+                        {
+                            builder.AppendLine($" '{item.Value}'");
+                        }
+                    }
+                    builder.AppendLine("  }");
+                }
+            }
+
+            if (Optional.IsCollectionDefined(Properties))
+            {
+                if (Properties.Any())
+                {
+                    builder.Append("  properties:");
+                    builder.AppendLine(" {");
+                    foreach (var item in Properties)
+                    {
+                        builder.Append($"    {item.Key}:");
+                        if (item.Value == null)
+                        {
+                            builder.Append("null");
+                            continue;
+                        }
+                        if (item.Value.Contains(Environment.NewLine))
+                        {
+                            builder.AppendLine(" '''");
+                            builder.AppendLine($"{item.Value}'''");
+                        }
+                        else
+                        {
+                            builder.AppendLine($" '{item.Value}'");
+                        }
+                    }
+                    builder.AppendLine("  }");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            bool inMultilineString = false;
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (inMultilineString)
+                {
+                    if (line.Contains("'''"))
+                    {
+                        inMultilineString = false;
+                    }
+                    stringBuilder.AppendLine(line);
+                    continue;
+                }
+                if (line.Contains("'''"))
+                {
+                    inMultilineString = true;
+                    stringBuilder.AppendLine($"{indent}{line}");
+                    continue;
+                }
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<MachineLearningBatchDeploymentProperties>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<MachineLearningBatchDeploymentProperties>)this).GetFormatFromOptions(options) : options.Format;
@@ -438,6 +662,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(MachineLearningBatchDeploymentProperties)} does not support '{options.Format}' format.");
             }
@@ -454,6 +680,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeMachineLearningBatchDeploymentProperties(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(MachineLearningBatchDeploymentProperties)} does not support '{options.Format}' format.");
             }

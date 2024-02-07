@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.IotHub;
@@ -501,6 +503,320 @@ namespace Azure.ResourceManager.IotHub.Models
             return new IotHubProperties(Optional.ToList(authorizationPolicies), Optional.ToNullable(disableLocalAuth), Optional.ToNullable(disableDeviceSas), Optional.ToNullable(disableModuleSas), Optional.ToNullable(restrictOutboundNetworkAccess), Optional.ToList(allowedFqdnList), Optional.ToNullable(publicNetworkAccess), Optional.ToList(ipFilterRules), networkRuleSets.Value, minTlsVersion.Value, Optional.ToList(privateEndpointConnections), provisioningState.Value, state.Value, hostName.Value, Optional.ToDictionary(eventHubEndpoints), routing.Value, Optional.ToDictionary(storageEndpoints), Optional.ToDictionary(messagingEndpoints), Optional.ToNullable(enableFileUploadNotifications), cloudToDevice.Value, comments.Value, Optional.ToNullable(features), Optional.ToList(locations), Optional.ToNullable(enableDataResidency), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsCollectionDefined(AuthorizationPolicies))
+            {
+                if (AuthorizationPolicies.Any())
+                {
+                    builder.Append("  authorizationPolicies:");
+                    builder.AppendLine(" [");
+                    foreach (var item in AuthorizationPolicies)
+                    {
+                        AppendChildObject(builder, item, options, 4, true);
+                    }
+                    builder.AppendLine("  ]");
+                }
+            }
+
+            if (Optional.IsDefined(DisableLocalAuth))
+            {
+                builder.Append("  disableLocalAuth:");
+                var boolValue = DisableLocalAuth.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(DisableDeviceSas))
+            {
+                builder.Append("  disableDeviceSAS:");
+                var boolValue = DisableDeviceSas.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(DisableModuleSas))
+            {
+                builder.Append("  disableModuleSAS:");
+                var boolValue = DisableModuleSas.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(RestrictOutboundNetworkAccess))
+            {
+                builder.Append("  restrictOutboundNetworkAccess:");
+                var boolValue = RestrictOutboundNetworkAccess.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsCollectionDefined(AllowedFqdns))
+            {
+                if (AllowedFqdns.Any())
+                {
+                    builder.Append("  allowedFqdnList:");
+                    builder.AppendLine(" [");
+                    foreach (var item in AllowedFqdns)
+                    {
+                        if (item == null)
+                        {
+                            builder.Append("null");
+                            continue;
+                        }
+                        if (item.Contains(Environment.NewLine))
+                        {
+                            builder.AppendLine("    '''");
+                            builder.AppendLine($"{item}'''");
+                        }
+                        else
+                        {
+                            builder.AppendLine($"    '{item}'");
+                        }
+                    }
+                    builder.AppendLine("  ]");
+                }
+            }
+
+            if (Optional.IsDefined(PublicNetworkAccess))
+            {
+                builder.Append("  publicNetworkAccess:");
+                builder.AppendLine($" '{PublicNetworkAccess.Value.ToString()}'");
+            }
+
+            if (Optional.IsCollectionDefined(IPFilterRules))
+            {
+                if (IPFilterRules.Any())
+                {
+                    builder.Append("  ipFilterRules:");
+                    builder.AppendLine(" [");
+                    foreach (var item in IPFilterRules)
+                    {
+                        AppendChildObject(builder, item, options, 4, true);
+                    }
+                    builder.AppendLine("  ]");
+                }
+            }
+
+            if (Optional.IsDefined(NetworkRuleSets))
+            {
+                builder.Append("  networkRuleSets:");
+                AppendChildObject(builder, NetworkRuleSets, options, 2, false);
+            }
+
+            if (Optional.IsDefined(MinTlsVersion))
+            {
+                builder.Append("  minTlsVersion:");
+                if (MinTlsVersion.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{MinTlsVersion}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{MinTlsVersion}'");
+                }
+            }
+
+            if (Optional.IsCollectionDefined(PrivateEndpointConnections))
+            {
+                if (PrivateEndpointConnections.Any())
+                {
+                    builder.Append("  privateEndpointConnections:");
+                    builder.AppendLine(" [");
+                    foreach (var item in PrivateEndpointConnections)
+                    {
+                        AppendChildObject(builder, item, options, 4, true);
+                    }
+                    builder.AppendLine("  ]");
+                }
+            }
+
+            if (Optional.IsDefined(ProvisioningState))
+            {
+                builder.Append("  provisioningState:");
+                if (ProvisioningState.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{ProvisioningState}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{ProvisioningState}'");
+                }
+            }
+
+            if (Optional.IsDefined(State))
+            {
+                builder.Append("  state:");
+                if (State.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{State}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{State}'");
+                }
+            }
+
+            if (Optional.IsDefined(HostName))
+            {
+                builder.Append("  hostName:");
+                if (HostName.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{HostName}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{HostName}'");
+                }
+            }
+
+            if (Optional.IsCollectionDefined(EventHubEndpoints))
+            {
+                if (EventHubEndpoints.Any())
+                {
+                    builder.Append("  eventHubEndpoints:");
+                    builder.AppendLine(" {");
+                    foreach (var item in EventHubEndpoints)
+                    {
+                        builder.Append($"    {item.Key}:");
+                        AppendChildObject(builder, item.Value, options, 4, false);
+                    }
+                    builder.AppendLine("  }");
+                }
+            }
+
+            if (Optional.IsDefined(Routing))
+            {
+                builder.Append("  routing:");
+                AppendChildObject(builder, Routing, options, 2, false);
+            }
+
+            if (Optional.IsCollectionDefined(StorageEndpoints))
+            {
+                if (StorageEndpoints.Any())
+                {
+                    builder.Append("  storageEndpoints:");
+                    builder.AppendLine(" {");
+                    foreach (var item in StorageEndpoints)
+                    {
+                        builder.Append($"    {item.Key}:");
+                        AppendChildObject(builder, item.Value, options, 4, false);
+                    }
+                    builder.AppendLine("  }");
+                }
+            }
+
+            if (Optional.IsCollectionDefined(MessagingEndpoints))
+            {
+                if (MessagingEndpoints.Any())
+                {
+                    builder.Append("  messagingEndpoints:");
+                    builder.AppendLine(" {");
+                    foreach (var item in MessagingEndpoints)
+                    {
+                        builder.Append($"    {item.Key}:");
+                        AppendChildObject(builder, item.Value, options, 4, false);
+                    }
+                    builder.AppendLine("  }");
+                }
+            }
+
+            if (Optional.IsDefined(EnableFileUploadNotifications))
+            {
+                builder.Append("  enableFileUploadNotifications:");
+                var boolValue = EnableFileUploadNotifications.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(CloudToDevice))
+            {
+                builder.Append("  cloudToDevice:");
+                AppendChildObject(builder, CloudToDevice, options, 2, false);
+            }
+
+            if (Optional.IsDefined(Comments))
+            {
+                builder.Append("  comments:");
+                if (Comments.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{Comments}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{Comments}'");
+                }
+            }
+
+            if (Optional.IsDefined(Features))
+            {
+                builder.Append("  features:");
+                builder.AppendLine($" '{Features.Value.ToString()}'");
+            }
+
+            if (Optional.IsCollectionDefined(Locations))
+            {
+                if (Locations.Any())
+                {
+                    builder.Append("  locations:");
+                    builder.AppendLine(" [");
+                    foreach (var item in Locations)
+                    {
+                        AppendChildObject(builder, item, options, 4, true);
+                    }
+                    builder.AppendLine("  ]");
+                }
+            }
+
+            if (Optional.IsDefined(EnableDataResidency))
+            {
+                builder.Append("  enableDataResidency:");
+                var boolValue = EnableDataResidency.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            bool inMultilineString = false;
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (inMultilineString)
+                {
+                    if (line.Contains("'''"))
+                    {
+                        inMultilineString = false;
+                    }
+                    stringBuilder.AppendLine(line);
+                    continue;
+                }
+                if (line.Contains("'''"))
+                {
+                    inMultilineString = true;
+                    stringBuilder.AppendLine($"{indent}{line}");
+                    continue;
+                }
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<IotHubProperties>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<IotHubProperties>)this).GetFormatFromOptions(options) : options.Format;
@@ -509,6 +825,8 @@ namespace Azure.ResourceManager.IotHub.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(IotHubProperties)} does not support '{options.Format}' format.");
             }
@@ -525,6 +843,8 @@ namespace Azure.ResourceManager.IotHub.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeIotHubProperties(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(IotHubProperties)} does not support '{options.Format}' format.");
             }
