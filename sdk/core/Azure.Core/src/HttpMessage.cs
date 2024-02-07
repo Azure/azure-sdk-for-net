@@ -184,7 +184,7 @@ namespace Azure.Core
         /// null and the caller will be responsible for disposing the returned
         /// value, which may hold a live network stream.
         /// </summary>
-        public new Response ExtractResponse() => (Response)base.ExtractResponse();
+        public new Response? ExtractResponse() => (Response?)base.ExtractResponse();
 
         private class ResponseShouldNotBeUsedStream : Stream
         {

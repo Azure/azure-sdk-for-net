@@ -405,6 +405,8 @@ namespace Azure.Core.Tests
                 await pipeline.SendAsync(message, default).ConfigureAwait(false);
 
                 response = message.ExtractResponse();
+
+                Assert.IsFalse(message.HasResponse);
             }
 
             Assert.NotNull(response.ContentStream);

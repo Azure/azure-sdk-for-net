@@ -32,11 +32,9 @@ public class PipelineMessage : IDisposable
         protected internal set;
     }
 
-    public PipelineResponse ExtractResponse()
+    public PipelineResponse? ExtractResponse()
     {
-        AssertResponse();
-
-        PipelineResponse response = Response!;
+        PipelineResponse? response = Response;
         Response = null;
         return response;
     }
