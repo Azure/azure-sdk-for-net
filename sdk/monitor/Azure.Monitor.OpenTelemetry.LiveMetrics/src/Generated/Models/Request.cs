@@ -24,7 +24,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Models
         /// <param name="properties"> Collection of custom properties. </param>
         /// <param name="name"> Name of the request, e.g., 'GET /values/{id}'. </param>
         /// <param name="url"> Request URL with all query string parameters. </param>
-        /// <param name="responseCode"> Result of a request execution. For http requestss, it could be some HTTP status code. </param>
+        /// <param name="responseCode"> Result of a request execution. For http requests, it could be some HTTP status code. </param>
         /// <param name="duration"> Request duration in ISO 8601 duration format, i.e., P[n]Y[n]M[n]DT[n]H[n]M[n]S or P[n]W. </param>
         internal Request(DocumentIngressDocumentType documentType, IList<string> documentStreamIds, IList<KeyValuePairString> properties, string name, string url, string responseCode, string duration) : base(documentType, documentStreamIds, properties)
         {
