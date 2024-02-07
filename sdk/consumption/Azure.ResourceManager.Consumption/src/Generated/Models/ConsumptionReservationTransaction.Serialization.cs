@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -447,6 +449,373 @@ namespace Azure.ResourceManager.Consumption.Models
             return new ConsumptionReservationTransaction(id, name, type, systemData.Value, Optional.ToNullable(eventDate), reservationOrderId.Value, description.Value, eventType.Value, Optional.ToNullable(quantity), Optional.ToNullable(amount), currency.Value, reservationOrderName.Value, purchasingEnrollment.Value, Optional.ToNullable(purchasingSubscriptionGuid), purchasingSubscriptionName.Value, armSkuName.Value, term.Value, region.Value, accountName.Value, accountOwnerEmail.Value, departmentName.Value, costCenter.Value, currentEnrollment.Value, billingFrequency.Value, Optional.ToNullable(billingMonth), Optional.ToNullable(monetaryCommitment), Optional.ToNullable(overage), Optional.ToList(tags), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                if (Name.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{Name}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{Name}'");
+                }
+            }
+
+            if (Optional.IsCollectionDefined(Tags))
+            {
+                if (Tags.Any())
+                {
+                    builder.Append("  tags:");
+                    builder.AppendLine(" [");
+                    foreach (var item in Tags)
+                    {
+                        if (item == null)
+                        {
+                            builder.Append("null");
+                            continue;
+                        }
+                        if (item.Contains(Environment.NewLine))
+                        {
+                            builder.AppendLine("    '''");
+                            builder.AppendLine($"{item}'''");
+                        }
+                        else
+                        {
+                            builder.AppendLine($"    '{item}'");
+                        }
+                    }
+                    builder.AppendLine("  ]");
+                }
+            }
+
+            if (Optional.IsDefined(Id))
+            {
+                builder.Append("  id:");
+                builder.AppendLine($" '{Id.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SystemData))
+            {
+                builder.Append("  systemData:");
+                builder.AppendLine($" '{SystemData.ToString()}'");
+            }
+
+            builder.Append("  properties:");
+            builder.AppendLine(" {");
+            if (Optional.IsDefined(TransactOn))
+            {
+                builder.Append("    eventDate:");
+                var formattedDateTimeString = TypeFormatters.ToString(TransactOn.Value, "o");
+                builder.AppendLine($" '{formattedDateTimeString}'");
+            }
+
+            if (Optional.IsDefined(ReservationOrderId))
+            {
+                builder.Append("    reservationOrderId:");
+                if (ReservationOrderId.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{ReservationOrderId}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{ReservationOrderId}'");
+                }
+            }
+
+            if (Optional.IsDefined(Description))
+            {
+                builder.Append("    description:");
+                if (Description.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{Description}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{Description}'");
+                }
+            }
+
+            if (Optional.IsDefined(EventType))
+            {
+                builder.Append("    eventType:");
+                if (EventType.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{EventType}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{EventType}'");
+                }
+            }
+
+            if (Optional.IsDefined(Quantity))
+            {
+                builder.Append("    quantity:");
+                builder.AppendLine($" '{Quantity.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Amount))
+            {
+                builder.Append("    amount:");
+                builder.AppendLine($" '{Amount.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Currency))
+            {
+                builder.Append("    currency:");
+                if (Currency.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{Currency}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{Currency}'");
+                }
+            }
+
+            if (Optional.IsDefined(ReservationOrderName))
+            {
+                builder.Append("    reservationOrderName:");
+                if (ReservationOrderName.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{ReservationOrderName}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{ReservationOrderName}'");
+                }
+            }
+
+            if (Optional.IsDefined(PurchasingEnrollment))
+            {
+                builder.Append("    purchasingEnrollment:");
+                if (PurchasingEnrollment.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{PurchasingEnrollment}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{PurchasingEnrollment}'");
+                }
+            }
+
+            if (Optional.IsDefined(PurchasingSubscriptionGuid))
+            {
+                builder.Append("    purchasingSubscriptionGuid:");
+                builder.AppendLine($" '{PurchasingSubscriptionGuid.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(PurchasingSubscriptionName))
+            {
+                builder.Append("    purchasingSubscriptionName:");
+                if (PurchasingSubscriptionName.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{PurchasingSubscriptionName}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{PurchasingSubscriptionName}'");
+                }
+            }
+
+            if (Optional.IsDefined(ArmSkuName))
+            {
+                builder.Append("    armSkuName:");
+                if (ArmSkuName.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{ArmSkuName}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{ArmSkuName}'");
+                }
+            }
+
+            if (Optional.IsDefined(Term))
+            {
+                builder.Append("    term:");
+                if (Term.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{Term}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{Term}'");
+                }
+            }
+
+            if (Optional.IsDefined(Region))
+            {
+                builder.Append("    region:");
+                if (Region.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{Region}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{Region}'");
+                }
+            }
+
+            if (Optional.IsDefined(AccountName))
+            {
+                builder.Append("    accountName:");
+                if (AccountName.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{AccountName}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{AccountName}'");
+                }
+            }
+
+            if (Optional.IsDefined(AccountOwnerEmail))
+            {
+                builder.Append("    accountOwnerEmail:");
+                if (AccountOwnerEmail.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{AccountOwnerEmail}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{AccountOwnerEmail}'");
+                }
+            }
+
+            if (Optional.IsDefined(DepartmentName))
+            {
+                builder.Append("    departmentName:");
+                if (DepartmentName.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{DepartmentName}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{DepartmentName}'");
+                }
+            }
+
+            if (Optional.IsDefined(CostCenter))
+            {
+                builder.Append("    costCenter:");
+                if (CostCenter.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{CostCenter}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{CostCenter}'");
+                }
+            }
+
+            if (Optional.IsDefined(CurrentEnrollment))
+            {
+                builder.Append("    currentEnrollment:");
+                if (CurrentEnrollment.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{CurrentEnrollment}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{CurrentEnrollment}'");
+                }
+            }
+
+            if (Optional.IsDefined(BillingFrequency))
+            {
+                builder.Append("    billingFrequency:");
+                if (BillingFrequency.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{BillingFrequency}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{BillingFrequency}'");
+                }
+            }
+
+            if (Optional.IsDefined(BillingMonth))
+            {
+                builder.Append("    billingMonth:");
+                builder.AppendLine($" {BillingMonth.Value}");
+            }
+
+            if (Optional.IsDefined(MonetaryCommitment))
+            {
+                builder.Append("    monetaryCommitment:");
+                builder.AppendLine($" '{MonetaryCommitment.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Overage))
+            {
+                builder.Append("    overage:");
+                builder.AppendLine($" '{Overage.Value.ToString()}'");
+            }
+
+            builder.AppendLine("  }");
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            bool inMultilineString = false;
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (inMultilineString)
+                {
+                    if (line.Contains("'''"))
+                    {
+                        inMultilineString = false;
+                    }
+                    stringBuilder.AppendLine(line);
+                    continue;
+                }
+                if (line.Contains("'''"))
+                {
+                    inMultilineString = true;
+                    stringBuilder.AppendLine($"{indent}{line}");
+                    continue;
+                }
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<ConsumptionReservationTransaction>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ConsumptionReservationTransaction>)this).GetFormatFromOptions(options) : options.Format;
@@ -455,6 +824,8 @@ namespace Azure.ResourceManager.Consumption.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(ConsumptionReservationTransaction)} does not support '{options.Format}' format.");
             }
@@ -471,6 +842,8 @@ namespace Azure.ResourceManager.Consumption.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeConsumptionReservationTransaction(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(ConsumptionReservationTransaction)} does not support '{options.Format}' format.");
             }

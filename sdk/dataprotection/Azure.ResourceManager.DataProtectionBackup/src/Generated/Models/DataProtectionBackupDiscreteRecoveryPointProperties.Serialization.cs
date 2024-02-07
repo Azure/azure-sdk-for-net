@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -225,6 +227,196 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             return new DataProtectionBackupDiscreteRecoveryPointProperties(objectType, serializedAdditionalRawData, friendlyName.Value, Optional.ToList(recoveryPointDataStoresDetails), recoveryPointTime, policyName.Value, policyVersion.Value, recoveryPointId.Value, recoveryPointType.Value, retentionTagName.Value, retentionTagVersion.Value, Optional.ToNullable(expiryTime), Optional.ToNullable(recoveryPointState));
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(FriendlyName))
+            {
+                builder.Append("  friendlyName:");
+                if (FriendlyName.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{FriendlyName}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{FriendlyName}'");
+                }
+            }
+
+            if (Optional.IsCollectionDefined(RecoveryPointDataStoresDetails))
+            {
+                if (RecoveryPointDataStoresDetails.Any())
+                {
+                    builder.Append("  recoveryPointDataStoresDetails:");
+                    builder.AppendLine(" [");
+                    foreach (var item in RecoveryPointDataStoresDetails)
+                    {
+                        AppendChildObject(builder, item, options, 4, true);
+                    }
+                    builder.AppendLine("  ]");
+                }
+            }
+
+            if (Optional.IsDefined(RecoverOn))
+            {
+                builder.Append("  recoveryPointTime:");
+                var formattedDateTimeString = TypeFormatters.ToString(RecoverOn, "o");
+                builder.AppendLine($" '{formattedDateTimeString}'");
+            }
+
+            if (Optional.IsDefined(PolicyName))
+            {
+                builder.Append("  policyName:");
+                if (PolicyName.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{PolicyName}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{PolicyName}'");
+                }
+            }
+
+            if (Optional.IsDefined(PolicyVersion))
+            {
+                builder.Append("  policyVersion:");
+                if (PolicyVersion.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{PolicyVersion}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{PolicyVersion}'");
+                }
+            }
+
+            if (Optional.IsDefined(RecoveryPointId))
+            {
+                builder.Append("  recoveryPointId:");
+                if (RecoveryPointId.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{RecoveryPointId}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{RecoveryPointId}'");
+                }
+            }
+
+            if (Optional.IsDefined(RecoveryPointType))
+            {
+                builder.Append("  recoveryPointType:");
+                if (RecoveryPointType.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{RecoveryPointType}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{RecoveryPointType}'");
+                }
+            }
+
+            if (Optional.IsDefined(RetentionTagName))
+            {
+                builder.Append("  retentionTagName:");
+                if (RetentionTagName.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{RetentionTagName}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{RetentionTagName}'");
+                }
+            }
+
+            if (Optional.IsDefined(RetentionTagVersion))
+            {
+                builder.Append("  retentionTagVersion:");
+                if (RetentionTagVersion.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{RetentionTagVersion}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{RetentionTagVersion}'");
+                }
+            }
+
+            if (Optional.IsDefined(ExpireOn))
+            {
+                builder.Append("  expiryTime:");
+                var formattedDateTimeString = TypeFormatters.ToString(ExpireOn.Value, "o");
+                builder.AppendLine($" '{formattedDateTimeString}'");
+            }
+
+            if (Optional.IsDefined(RecoveryPointState))
+            {
+                builder.Append("  recoveryPointState:");
+                builder.AppendLine($" '{RecoveryPointState.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ObjectType))
+            {
+                builder.Append("  objectType:");
+                if (ObjectType.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{ObjectType}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{ObjectType}'");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            bool inMultilineString = false;
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (inMultilineString)
+                {
+                    if (line.Contains("'''"))
+                    {
+                        inMultilineString = false;
+                    }
+                    stringBuilder.AppendLine(line);
+                    continue;
+                }
+                if (line.Contains("'''"))
+                {
+                    inMultilineString = true;
+                    stringBuilder.AppendLine($"{indent}{line}");
+                    continue;
+                }
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<DataProtectionBackupDiscreteRecoveryPointProperties>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<DataProtectionBackupDiscreteRecoveryPointProperties>)this).GetFormatFromOptions(options) : options.Format;
@@ -233,6 +425,8 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(DataProtectionBackupDiscreteRecoveryPointProperties)} does not support '{options.Format}' format.");
             }
@@ -249,6 +443,8 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeDataProtectionBackupDiscreteRecoveryPointProperties(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(DataProtectionBackupDiscreteRecoveryPointProperties)} does not support '{options.Format}' format.");
             }

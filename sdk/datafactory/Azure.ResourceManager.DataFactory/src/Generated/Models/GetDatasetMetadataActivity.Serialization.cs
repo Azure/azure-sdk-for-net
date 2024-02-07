@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
@@ -306,6 +308,170 @@ namespace Azure.ResourceManager.DataFactory.Models
             return new GetDatasetMetadataActivity(name, type, description.Value, Optional.ToNullable(state), Optional.ToNullable(onInactiveMarkAs), Optional.ToList(dependsOn), Optional.ToList(userProperties), additionalProperties, linkedServiceName, policy.Value, dataset, Optional.ToList(fieldList), storeSettings.Value, formatSettings.Value);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                if (Name.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{Name}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{Name}'");
+                }
+            }
+
+            if (Optional.IsDefined(LinkedServiceName))
+            {
+                builder.Append("  linkedServiceName:");
+                AppendChildObject(builder, LinkedServiceName, options, 2, false);
+            }
+
+            if (Optional.IsDefined(Policy))
+            {
+                builder.Append("  policy:");
+                AppendChildObject(builder, Policy, options, 2, false);
+            }
+
+            if (Optional.IsDefined(Description))
+            {
+                builder.Append("  description:");
+                if (Description.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{Description}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{Description}'");
+                }
+            }
+
+            if (Optional.IsDefined(State))
+            {
+                builder.Append("  state:");
+                builder.AppendLine($" '{State.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(OnInactiveMarkAs))
+            {
+                builder.Append("  onInactiveMarkAs:");
+                builder.AppendLine($" '{OnInactiveMarkAs.Value.ToString()}'");
+            }
+
+            if (Optional.IsCollectionDefined(DependsOn))
+            {
+                if (DependsOn.Any())
+                {
+                    builder.Append("  dependsOn:");
+                    builder.AppendLine(" [");
+                    foreach (var item in DependsOn)
+                    {
+                        AppendChildObject(builder, item, options, 4, true);
+                    }
+                    builder.AppendLine("  ]");
+                }
+            }
+
+            if (Optional.IsCollectionDefined(UserProperties))
+            {
+                if (UserProperties.Any())
+                {
+                    builder.Append("  userProperties:");
+                    builder.AppendLine(" [");
+                    foreach (var item in UserProperties)
+                    {
+                        AppendChildObject(builder, item, options, 4, true);
+                    }
+                    builder.AppendLine("  ]");
+                }
+            }
+
+            builder.Append("  typeProperties:");
+            builder.AppendLine(" {");
+            if (Optional.IsDefined(Dataset))
+            {
+                builder.Append("    dataset:");
+                AppendChildObject(builder, Dataset, options, 4, false);
+            }
+
+            if (Optional.IsCollectionDefined(FieldList))
+            {
+                if (FieldList.Any())
+                {
+                    builder.Append("    fieldList:");
+                    builder.AppendLine(" [");
+                    foreach (var item in FieldList)
+                    {
+                        if (item == null)
+                        {
+                            builder.Append("null");
+                            continue;
+                        }
+                        builder.AppendLine($"      '{item.ToString()}'");
+                    }
+                    builder.AppendLine("    ]");
+                }
+            }
+
+            if (Optional.IsDefined(StoreSettings))
+            {
+                builder.Append("    storeSettings:");
+                AppendChildObject(builder, StoreSettings, options, 4, false);
+            }
+
+            if (Optional.IsDefined(FormatSettings))
+            {
+                builder.Append("    formatSettings:");
+                AppendChildObject(builder, FormatSettings, options, 4, false);
+            }
+
+            builder.AppendLine("  }");
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            bool inMultilineString = false;
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (inMultilineString)
+                {
+                    if (line.Contains("'''"))
+                    {
+                        inMultilineString = false;
+                    }
+                    stringBuilder.AppendLine(line);
+                    continue;
+                }
+                if (line.Contains("'''"))
+                {
+                    inMultilineString = true;
+                    stringBuilder.AppendLine($"{indent}{line}");
+                    continue;
+                }
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<GetDatasetMetadataActivity>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<GetDatasetMetadataActivity>)this).GetFormatFromOptions(options) : options.Format;
@@ -314,6 +480,8 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(GetDatasetMetadataActivity)} does not support '{options.Format}' format.");
             }
@@ -330,6 +498,8 @@ namespace Azure.ResourceManager.DataFactory.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeGetDatasetMetadataActivity(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(GetDatasetMetadataActivity)} does not support '{options.Format}' format.");
             }

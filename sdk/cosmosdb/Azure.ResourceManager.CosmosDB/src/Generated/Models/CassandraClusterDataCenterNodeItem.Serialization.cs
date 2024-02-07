@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -333,6 +335,228 @@ namespace Azure.ResourceManager.CosmosDB.Models
             return new CassandraClusterDataCenterNodeItem(address.Value, Optional.ToNullable(state), status.Value, cassandraProcessStatus.Value, load.Value, Optional.ToList(tokens), Optional.ToNullable(size), Optional.ToNullable(hostId), rack.Value, timestamp.Value, Optional.ToNullable(diskUsedKB), Optional.ToNullable(diskFreeKB), Optional.ToNullable(memoryUsedKB), Optional.ToNullable(memoryBuffersAndCachedKB), Optional.ToNullable(memoryFreeKB), Optional.ToNullable(memoryTotalKB), Optional.ToNullable(cpuUsage), Optional.ToNullable(isLatestModel), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(Address))
+            {
+                builder.Append("  address:");
+                if (Address.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{Address}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{Address}'");
+                }
+            }
+
+            if (Optional.IsDefined(State))
+            {
+                builder.Append("  state:");
+                builder.AppendLine($" '{State.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Status))
+            {
+                builder.Append("  status:");
+                if (Status.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{Status}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{Status}'");
+                }
+            }
+
+            if (Optional.IsDefined(CassandraProcessStatus))
+            {
+                builder.Append("  cassandraProcessStatus:");
+                if (CassandraProcessStatus.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{CassandraProcessStatus}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{CassandraProcessStatus}'");
+                }
+            }
+
+            if (Optional.IsDefined(Load))
+            {
+                builder.Append("  load:");
+                if (Load.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{Load}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{Load}'");
+                }
+            }
+
+            if (Optional.IsCollectionDefined(Tokens))
+            {
+                if (Tokens.Any())
+                {
+                    builder.Append("  tokens:");
+                    builder.AppendLine(" [");
+                    foreach (var item in Tokens)
+                    {
+                        if (item == null)
+                        {
+                            builder.Append("null");
+                            continue;
+                        }
+                        if (item.Contains(Environment.NewLine))
+                        {
+                            builder.AppendLine("    '''");
+                            builder.AppendLine($"{item}'''");
+                        }
+                        else
+                        {
+                            builder.AppendLine($"    '{item}'");
+                        }
+                    }
+                    builder.AppendLine("  ]");
+                }
+            }
+
+            if (Optional.IsDefined(Size))
+            {
+                builder.Append("  size:");
+                builder.AppendLine($" {Size.Value}");
+            }
+
+            if (Optional.IsDefined(HostId))
+            {
+                builder.Append("  hostID:");
+                builder.AppendLine($" '{HostId.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Rack))
+            {
+                builder.Append("  rack:");
+                if (Rack.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{Rack}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{Rack}'");
+                }
+            }
+
+            if (Optional.IsDefined(Timestamp))
+            {
+                builder.Append("  timestamp:");
+                if (Timestamp.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{Timestamp}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{Timestamp}'");
+                }
+            }
+
+            if (Optional.IsDefined(DiskUsedKB))
+            {
+                builder.Append("  diskUsedKB:");
+                builder.AppendLine($" '{DiskUsedKB.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(DiskFreeKB))
+            {
+                builder.Append("  diskFreeKB:");
+                builder.AppendLine($" '{DiskFreeKB.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(MemoryUsedKB))
+            {
+                builder.Append("  memoryUsedKB:");
+                builder.AppendLine($" '{MemoryUsedKB.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(MemoryBuffersAndCachedKB))
+            {
+                builder.Append("  memoryBuffersAndCachedKB:");
+                builder.AppendLine($" '{MemoryBuffersAndCachedKB.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(MemoryFreeKB))
+            {
+                builder.Append("  memoryFreeKB:");
+                builder.AppendLine($" '{MemoryFreeKB.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(MemoryTotalKB))
+            {
+                builder.Append("  memoryTotalKB:");
+                builder.AppendLine($" '{MemoryTotalKB.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(CpuUsage))
+            {
+                builder.Append("  cpuUsage:");
+                builder.AppendLine($" '{CpuUsage.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(IsLatestModel))
+            {
+                builder.Append("  isLatestModel:");
+                var boolValue = IsLatestModel.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            bool inMultilineString = false;
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (inMultilineString)
+                {
+                    if (line.Contains("'''"))
+                    {
+                        inMultilineString = false;
+                    }
+                    stringBuilder.AppendLine(line);
+                    continue;
+                }
+                if (line.Contains("'''"))
+                {
+                    inMultilineString = true;
+                    stringBuilder.AppendLine($"{indent}{line}");
+                    continue;
+                }
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<CassandraClusterDataCenterNodeItem>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<CassandraClusterDataCenterNodeItem>)this).GetFormatFromOptions(options) : options.Format;
@@ -341,6 +565,8 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(CassandraClusterDataCenterNodeItem)} does not support '{options.Format}' format.");
             }
@@ -357,6 +583,8 @@ namespace Azure.ResourceManager.CosmosDB.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeCassandraClusterDataCenterNodeItem(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(CassandraClusterDataCenterNodeItem)} does not support '{options.Format}' format.");
             }

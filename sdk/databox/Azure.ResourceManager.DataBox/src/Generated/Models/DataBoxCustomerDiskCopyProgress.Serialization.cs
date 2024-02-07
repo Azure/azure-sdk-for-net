@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
@@ -365,6 +367,189 @@ namespace Azure.ResourceManager.DataBox.Models
             return new DataBoxCustomerDiskCopyProgress(storageAccountName.Value, Optional.ToNullable(transferType), Optional.ToNullable(dataAccountType), accountId.Value, Optional.ToNullable(bytesProcessed), Optional.ToNullable(totalBytesToProcess), Optional.ToNullable(filesProcessed), Optional.ToNullable(totalFilesToProcess), Optional.ToNullable(invalidFilesProcessed), Optional.ToNullable(invalidFileBytesUploaded), Optional.ToNullable(renamedContainerCount), Optional.ToNullable(filesErroredOut), Optional.ToNullable(directoriesErroredOut), Optional.ToNullable(invalidDirectoriesProcessed), Optional.ToNullable(isEnumerationInProgress), error.Value, Optional.ToList(actions), serializedAdditionalRawData, serialNumber.Value, Optional.ToNullable(copyStatus));
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(SerialNumber))
+            {
+                builder.Append("  serialNumber:");
+                if (SerialNumber.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{SerialNumber}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{SerialNumber}'");
+                }
+            }
+
+            if (Optional.IsDefined(CopyStatus))
+            {
+                builder.Append("  copyStatus:");
+                builder.AppendLine($" '{CopyStatus.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(StorageAccountName))
+            {
+                builder.Append("  storageAccountName:");
+                if (StorageAccountName.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{StorageAccountName}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{StorageAccountName}'");
+                }
+            }
+
+            if (Optional.IsDefined(TransferType))
+            {
+                builder.Append("  transferType:");
+                builder.AppendLine($" '{TransferType.Value.ToSerialString()}'");
+            }
+
+            if (Optional.IsDefined(DataAccountType))
+            {
+                builder.Append("  dataAccountType:");
+                builder.AppendLine($" '{DataAccountType.Value.ToSerialString()}'");
+            }
+
+            if (Optional.IsDefined(AccountId))
+            {
+                builder.Append("  accountId:");
+                builder.AppendLine($" '{AccountId.ToString()}'");
+            }
+
+            if (Optional.IsDefined(BytesProcessed))
+            {
+                builder.Append("  bytesProcessed:");
+                builder.AppendLine($" '{BytesProcessed.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(TotalBytesToProcess))
+            {
+                builder.Append("  totalBytesToProcess:");
+                builder.AppendLine($" '{TotalBytesToProcess.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(FilesProcessed))
+            {
+                builder.Append("  filesProcessed:");
+                builder.AppendLine($" '{FilesProcessed.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(TotalFilesToProcess))
+            {
+                builder.Append("  totalFilesToProcess:");
+                builder.AppendLine($" '{TotalFilesToProcess.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(InvalidFilesProcessed))
+            {
+                builder.Append("  invalidFilesProcessed:");
+                builder.AppendLine($" '{InvalidFilesProcessed.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(InvalidFileBytesUploaded))
+            {
+                builder.Append("  invalidFileBytesUploaded:");
+                builder.AppendLine($" '{InvalidFileBytesUploaded.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(RenamedContainerCount))
+            {
+                builder.Append("  renamedContainerCount:");
+                builder.AppendLine($" '{RenamedContainerCount.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(FilesErroredOut))
+            {
+                builder.Append("  filesErroredOut:");
+                builder.AppendLine($" '{FilesErroredOut.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(DirectoriesErroredOut))
+            {
+                builder.Append("  directoriesErroredOut:");
+                builder.AppendLine($" '{DirectoriesErroredOut.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(InvalidDirectoriesProcessed))
+            {
+                builder.Append("  invalidDirectoriesProcessed:");
+                builder.AppendLine($" '{InvalidDirectoriesProcessed.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(IsEnumerationInProgress))
+            {
+                builder.Append("  isEnumerationInProgress:");
+                var boolValue = IsEnumerationInProgress.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(Error))
+            {
+                builder.Append("  error:");
+                AppendChildObject(builder, Error, options, 2, false);
+            }
+
+            if (Optional.IsCollectionDefined(Actions))
+            {
+                if (Actions.Any())
+                {
+                    builder.Append("  actions:");
+                    builder.AppendLine(" [");
+                    foreach (var item in Actions)
+                    {
+                        builder.AppendLine($"    '{item.ToSerialString()}'");
+                    }
+                    builder.AppendLine("  ]");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            bool inMultilineString = false;
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (inMultilineString)
+                {
+                    if (line.Contains("'''"))
+                    {
+                        inMultilineString = false;
+                    }
+                    stringBuilder.AppendLine(line);
+                    continue;
+                }
+                if (line.Contains("'''"))
+                {
+                    inMultilineString = true;
+                    stringBuilder.AppendLine($"{indent}{line}");
+                    continue;
+                }
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<DataBoxCustomerDiskCopyProgress>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<DataBoxCustomerDiskCopyProgress>)this).GetFormatFromOptions(options) : options.Format;
@@ -373,6 +558,8 @@ namespace Azure.ResourceManager.DataBox.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(DataBoxCustomerDiskCopyProgress)} does not support '{options.Format}' format.");
             }
@@ -389,6 +576,8 @@ namespace Azure.ResourceManager.DataBox.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeDataBoxCustomerDiskCopyProgress(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(DataBoxCustomerDiskCopyProgress)} does not support '{options.Format}' format.");
             }

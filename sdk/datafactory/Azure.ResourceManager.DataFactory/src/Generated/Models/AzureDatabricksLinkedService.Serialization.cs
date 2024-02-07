@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
@@ -555,6 +557,271 @@ namespace Azure.ResourceManager.DataFactory.Models
             return new AzureDatabricksLinkedService(type, connectVia.Value, description.Value, Optional.ToDictionary(parameters), Optional.ToList(annotations), additionalProperties, domain, accessToken, authentication.Value, workspaceResourceId.Value, existingClusterId.Value, instancePoolId.Value, newClusterVersion.Value, newClusterNumOfWorker.Value, newClusterNodeType.Value, Optional.ToDictionary(newClusterSparkConf), Optional.ToDictionary(newClusterSparkEnvVars), Optional.ToDictionary(newClusterCustomTags), newClusterLogDestination.Value, newClusterDriverNodeType.Value, newClusterInitScripts.Value, newClusterEnableElasticDisk.Value, encryptedCredential.Value, policyId.Value, credential.Value);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(ConnectVia))
+            {
+                builder.Append("  connectVia:");
+                AppendChildObject(builder, ConnectVia, options, 2, false);
+            }
+
+            if (Optional.IsDefined(Description))
+            {
+                builder.Append("  description:");
+                if (Description.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{Description}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{Description}'");
+                }
+            }
+
+            if (Optional.IsCollectionDefined(Parameters))
+            {
+                if (Parameters.Any())
+                {
+                    builder.Append("  parameters:");
+                    builder.AppendLine(" {");
+                    foreach (var item in Parameters)
+                    {
+                        builder.Append($"    {item.Key}:");
+                        AppendChildObject(builder, item.Value, options, 4, false);
+                    }
+                    builder.AppendLine("  }");
+                }
+            }
+
+            if (Optional.IsCollectionDefined(Annotations))
+            {
+                if (Annotations.Any())
+                {
+                    builder.Append("  annotations:");
+                    builder.AppendLine(" [");
+                    foreach (var item in Annotations)
+                    {
+                        if (item == null)
+                        {
+                            builder.Append("null");
+                            continue;
+                        }
+                        builder.AppendLine($"    '{item.ToString()}'");
+                    }
+                    builder.AppendLine("  ]");
+                }
+            }
+
+            builder.Append("  typeProperties:");
+            builder.AppendLine(" {");
+            if (Optional.IsDefined(Domain))
+            {
+                builder.Append("    domain:");
+                builder.AppendLine($" '{Domain.ToString()}'");
+            }
+
+            if (Optional.IsDefined(AccessToken))
+            {
+                builder.Append("    accessToken:");
+                AppendChildObject(builder, AccessToken, options, 4, false);
+            }
+
+            if (Optional.IsDefined(Authentication))
+            {
+                builder.Append("    authentication:");
+                builder.AppendLine($" '{Authentication.ToString()}'");
+            }
+
+            if (Optional.IsDefined(WorkspaceResourceId))
+            {
+                builder.Append("    workspaceResourceId:");
+                builder.AppendLine($" '{WorkspaceResourceId.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ExistingClusterId))
+            {
+                builder.Append("    existingClusterId:");
+                builder.AppendLine($" '{ExistingClusterId.ToString()}'");
+            }
+
+            if (Optional.IsDefined(InstancePoolId))
+            {
+                builder.Append("    instancePoolId:");
+                builder.AppendLine($" '{InstancePoolId.ToString()}'");
+            }
+
+            if (Optional.IsDefined(NewClusterVersion))
+            {
+                builder.Append("    newClusterVersion:");
+                builder.AppendLine($" '{NewClusterVersion.ToString()}'");
+            }
+
+            if (Optional.IsDefined(NewClusterNumOfWorker))
+            {
+                builder.Append("    newClusterNumOfWorker:");
+                builder.AppendLine($" '{NewClusterNumOfWorker.ToString()}'");
+            }
+
+            if (Optional.IsDefined(NewClusterNodeType))
+            {
+                builder.Append("    newClusterNodeType:");
+                builder.AppendLine($" '{NewClusterNodeType.ToString()}'");
+            }
+
+            if (Optional.IsCollectionDefined(NewClusterSparkConf))
+            {
+                if (NewClusterSparkConf.Any())
+                {
+                    builder.Append("    newClusterSparkConf:");
+                    builder.AppendLine(" {");
+                    foreach (var item in NewClusterSparkConf)
+                    {
+                        builder.Append($"        {item.Key}:");
+                        if (item.Value == null)
+                        {
+                            builder.Append("null");
+                            continue;
+                        }
+                        builder.AppendLine($" '{item.Value.ToString()}'");
+                    }
+                    builder.AppendLine("    }");
+                }
+            }
+
+            if (Optional.IsCollectionDefined(NewClusterSparkEnvVars))
+            {
+                if (NewClusterSparkEnvVars.Any())
+                {
+                    builder.Append("    newClusterSparkEnvVars:");
+                    builder.AppendLine(" {");
+                    foreach (var item in NewClusterSparkEnvVars)
+                    {
+                        builder.Append($"        {item.Key}:");
+                        if (item.Value == null)
+                        {
+                            builder.Append("null");
+                            continue;
+                        }
+                        builder.AppendLine($" '{item.Value.ToString()}'");
+                    }
+                    builder.AppendLine("    }");
+                }
+            }
+
+            if (Optional.IsCollectionDefined(NewClusterCustomTags))
+            {
+                if (NewClusterCustomTags.Any())
+                {
+                    builder.Append("    newClusterCustomTags:");
+                    builder.AppendLine(" {");
+                    foreach (var item in NewClusterCustomTags)
+                    {
+                        builder.Append($"        {item.Key}:");
+                        if (item.Value == null)
+                        {
+                            builder.Append("null");
+                            continue;
+                        }
+                        builder.AppendLine($" '{item.Value.ToString()}'");
+                    }
+                    builder.AppendLine("    }");
+                }
+            }
+
+            if (Optional.IsDefined(NewClusterLogDestination))
+            {
+                builder.Append("    newClusterLogDestination:");
+                builder.AppendLine($" '{NewClusterLogDestination.ToString()}'");
+            }
+
+            if (Optional.IsDefined(NewClusterDriverNodeType))
+            {
+                builder.Append("    newClusterDriverNodeType:");
+                builder.AppendLine($" '{NewClusterDriverNodeType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(NewClusterInitScripts))
+            {
+                builder.Append("    newClusterInitScripts:");
+                builder.AppendLine($" '{NewClusterInitScripts.ToString()}'");
+            }
+
+            if (Optional.IsDefined(NewClusterEnableElasticDisk))
+            {
+                builder.Append("    newClusterEnableElasticDisk:");
+                builder.AppendLine($" '{NewClusterEnableElasticDisk.ToString()}'");
+            }
+
+            if (Optional.IsDefined(EncryptedCredential))
+            {
+                builder.Append("    encryptedCredential:");
+                if (EncryptedCredential.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{EncryptedCredential}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{EncryptedCredential}'");
+                }
+            }
+
+            if (Optional.IsDefined(PolicyId))
+            {
+                builder.Append("    policyId:");
+                builder.AppendLine($" '{PolicyId.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Credential))
+            {
+                builder.Append("    credential:");
+                AppendChildObject(builder, Credential, options, 4, false);
+            }
+
+            builder.AppendLine("  }");
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            bool inMultilineString = false;
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (inMultilineString)
+                {
+                    if (line.Contains("'''"))
+                    {
+                        inMultilineString = false;
+                    }
+                    stringBuilder.AppendLine(line);
+                    continue;
+                }
+                if (line.Contains("'''"))
+                {
+                    inMultilineString = true;
+                    stringBuilder.AppendLine($"{indent}{line}");
+                    continue;
+                }
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<AzureDatabricksLinkedService>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<AzureDatabricksLinkedService>)this).GetFormatFromOptions(options) : options.Format;
@@ -563,6 +830,8 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(AzureDatabricksLinkedService)} does not support '{options.Format}' format.");
             }
@@ -579,6 +848,8 @@ namespace Azure.ResourceManager.DataFactory.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeAzureDatabricksLinkedService(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(AzureDatabricksLinkedService)} does not support '{options.Format}' format.");
             }

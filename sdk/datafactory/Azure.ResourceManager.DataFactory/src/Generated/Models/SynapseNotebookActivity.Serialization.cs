@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
@@ -415,6 +417,216 @@ namespace Azure.ResourceManager.DataFactory.Models
             return new SynapseNotebookActivity(name, type, description.Value, Optional.ToNullable(state), Optional.ToNullable(onInactiveMarkAs), Optional.ToList(dependsOn), Optional.ToList(userProperties), additionalProperties, linkedServiceName, policy.Value, notebook, sparkPool.Value, Optional.ToDictionary(parameters), executorSize.Value, conf.Value, driverSize.Value, numExecutors.Value, Optional.ToNullable(configurationType), targetSparkConfiguration.Value, Optional.ToDictionary(sparkConfig));
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                if (Name.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{Name}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{Name}'");
+                }
+            }
+
+            if (Optional.IsDefined(LinkedServiceName))
+            {
+                builder.Append("  linkedServiceName:");
+                AppendChildObject(builder, LinkedServiceName, options, 2, false);
+            }
+
+            if (Optional.IsDefined(Policy))
+            {
+                builder.Append("  policy:");
+                AppendChildObject(builder, Policy, options, 2, false);
+            }
+
+            if (Optional.IsDefined(Description))
+            {
+                builder.Append("  description:");
+                if (Description.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{Description}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{Description}'");
+                }
+            }
+
+            if (Optional.IsDefined(State))
+            {
+                builder.Append("  state:");
+                builder.AppendLine($" '{State.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(OnInactiveMarkAs))
+            {
+                builder.Append("  onInactiveMarkAs:");
+                builder.AppendLine($" '{OnInactiveMarkAs.Value.ToString()}'");
+            }
+
+            if (Optional.IsCollectionDefined(DependsOn))
+            {
+                if (DependsOn.Any())
+                {
+                    builder.Append("  dependsOn:");
+                    builder.AppendLine(" [");
+                    foreach (var item in DependsOn)
+                    {
+                        AppendChildObject(builder, item, options, 4, true);
+                    }
+                    builder.AppendLine("  ]");
+                }
+            }
+
+            if (Optional.IsCollectionDefined(UserProperties))
+            {
+                if (UserProperties.Any())
+                {
+                    builder.Append("  userProperties:");
+                    builder.AppendLine(" [");
+                    foreach (var item in UserProperties)
+                    {
+                        AppendChildObject(builder, item, options, 4, true);
+                    }
+                    builder.AppendLine("  ]");
+                }
+            }
+
+            builder.Append("  typeProperties:");
+            builder.AppendLine(" {");
+            if (Optional.IsDefined(Notebook))
+            {
+                builder.Append("    notebook:");
+                AppendChildObject(builder, Notebook, options, 4, false);
+            }
+
+            if (Optional.IsDefined(SparkPool))
+            {
+                builder.Append("    sparkPool:");
+                AppendChildObject(builder, SparkPool, options, 4, false);
+            }
+
+            if (Optional.IsCollectionDefined(Parameters))
+            {
+                if (Parameters.Any())
+                {
+                    builder.Append("    parameters:");
+                    builder.AppendLine(" {");
+                    foreach (var item in Parameters)
+                    {
+                        builder.Append($"        {item.Key}:");
+                        AppendChildObject(builder, item.Value, options, 6, false);
+                    }
+                    builder.AppendLine("    }");
+                }
+            }
+
+            if (Optional.IsDefined(ExecutorSize))
+            {
+                builder.Append("    executorSize:");
+                builder.AppendLine($" '{ExecutorSize.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Conf))
+            {
+                builder.Append("    conf:");
+                builder.AppendLine($" '{Conf.ToString()}'");
+            }
+
+            if (Optional.IsDefined(DriverSize))
+            {
+                builder.Append("    driverSize:");
+                builder.AppendLine($" '{DriverSize.ToString()}'");
+            }
+
+            if (Optional.IsDefined(NumExecutors))
+            {
+                builder.Append("    numExecutors:");
+                builder.AppendLine($" '{NumExecutors.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ConfigurationType))
+            {
+                builder.Append("    configurationType:");
+                builder.AppendLine($" '{ConfigurationType.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(TargetSparkConfiguration))
+            {
+                builder.Append("    targetSparkConfiguration:");
+                AppendChildObject(builder, TargetSparkConfiguration, options, 4, false);
+            }
+
+            if (Optional.IsCollectionDefined(SparkConfig))
+            {
+                if (SparkConfig.Any())
+                {
+                    builder.Append("    sparkConfig:");
+                    builder.AppendLine(" {");
+                    foreach (var item in SparkConfig)
+                    {
+                        builder.Append($"        {item.Key}:");
+                        if (item.Value == null)
+                        {
+                            builder.Append("null");
+                            continue;
+                        }
+                        builder.AppendLine($" '{item.Value.ToString()}'");
+                    }
+                    builder.AppendLine("    }");
+                }
+            }
+
+            builder.AppendLine("  }");
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            bool inMultilineString = false;
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (inMultilineString)
+                {
+                    if (line.Contains("'''"))
+                    {
+                        inMultilineString = false;
+                    }
+                    stringBuilder.AppendLine(line);
+                    continue;
+                }
+                if (line.Contains("'''"))
+                {
+                    inMultilineString = true;
+                    stringBuilder.AppendLine($"{indent}{line}");
+                    continue;
+                }
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<SynapseNotebookActivity>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<SynapseNotebookActivity>)this).GetFormatFromOptions(options) : options.Format;
@@ -423,6 +635,8 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(SynapseNotebookActivity)} does not support '{options.Format}' format.");
             }
@@ -439,6 +653,8 @@ namespace Azure.ResourceManager.DataFactory.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeSynapseNotebookActivity(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(SynapseNotebookActivity)} does not support '{options.Format}' format.");
             }

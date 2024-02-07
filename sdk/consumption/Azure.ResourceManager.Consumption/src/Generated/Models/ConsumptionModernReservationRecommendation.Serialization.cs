@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
@@ -443,6 +445,292 @@ namespace Azure.ResourceManager.Consumption.Models
             return new ConsumptionModernReservationRecommendation(id, name, type, systemData.Value, kind, Optional.ToNullable(etag), Optional.ToDictionary(tags), Optional.ToNullable(location), sku.Value, serializedAdditionalRawData, location0.Value, Optional.ToNullable(lookBackPeriod), Optional.ToNullable(instanceFlexibilityRatio), instanceFlexibilityGroup.Value, normalizedSize.Value, Optional.ToNullable(recommendedQuantityNormalized), Optional.ToNullable(meterId), term.Value, costWithNoReservedInstances.Value, Optional.ToNullable(recommendedQuantity), totalCostWithReservedInstances.Value, netSavings.Value, Optional.ToNullable(firstUsageDate), scope.Value, Optional.ToList(skuProperties), skuName.Value);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                if (Name.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{Name}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{Name}'");
+                }
+            }
+
+            if (Optional.IsDefined(Location))
+            {
+                builder.Append("  location:");
+                builder.AppendLine($" '{Location.Value.ToString()}'");
+            }
+
+            if (Optional.IsCollectionDefined(Tags))
+            {
+                if (Tags.Any())
+                {
+                    builder.Append("  tags:");
+                    builder.AppendLine(" {");
+                    foreach (var item in Tags)
+                    {
+                        builder.Append($"    {item.Key}:");
+                        if (item.Value == null)
+                        {
+                            builder.Append("null");
+                            continue;
+                        }
+                        if (item.Value.Contains(Environment.NewLine))
+                        {
+                            builder.AppendLine(" '''");
+                            builder.AppendLine($"{item.Value}'''");
+                        }
+                        else
+                        {
+                            builder.AppendLine($" '{item.Value}'");
+                        }
+                    }
+                    builder.AppendLine("  }");
+                }
+            }
+
+            if (Optional.IsDefined(Kind))
+            {
+                builder.Append("  kind:");
+                builder.AppendLine($" '{Kind.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ETag))
+            {
+                builder.Append("  etag:");
+                builder.AppendLine($" '{ETag.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Sku))
+            {
+                builder.Append("  sku:");
+                if (Sku.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{Sku}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{Sku}'");
+                }
+            }
+
+            if (Optional.IsDefined(Id))
+            {
+                builder.Append("  id:");
+                builder.AppendLine($" '{Id.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SystemData))
+            {
+                builder.Append("  systemData:");
+                builder.AppendLine($" '{SystemData.ToString()}'");
+            }
+
+            builder.Append("  properties:");
+            builder.AppendLine(" {");
+            if (Optional.IsDefined(LocationPropertiesLocation))
+            {
+                builder.Append("    location:");
+                if (LocationPropertiesLocation.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{LocationPropertiesLocation}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{LocationPropertiesLocation}'");
+                }
+            }
+
+            if (Optional.IsDefined(LookBackPeriod))
+            {
+                builder.Append("    lookBackPeriod:");
+                builder.AppendLine($" {LookBackPeriod.Value}");
+            }
+
+            if (Optional.IsDefined(InstanceFlexibilityRatio))
+            {
+                builder.Append("    instanceFlexibilityRatio:");
+                builder.AppendLine($" '{InstanceFlexibilityRatio.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(InstanceFlexibilityGroup))
+            {
+                builder.Append("    instanceFlexibilityGroup:");
+                if (InstanceFlexibilityGroup.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{InstanceFlexibilityGroup}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{InstanceFlexibilityGroup}'");
+                }
+            }
+
+            if (Optional.IsDefined(NormalizedSize))
+            {
+                builder.Append("    normalizedSize:");
+                if (NormalizedSize.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{NormalizedSize}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{NormalizedSize}'");
+                }
+            }
+
+            if (Optional.IsDefined(RecommendedQuantityNormalized))
+            {
+                builder.Append("    recommendedQuantityNormalized:");
+                builder.AppendLine($" '{RecommendedQuantityNormalized.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(MeterId))
+            {
+                builder.Append("    meterId:");
+                builder.AppendLine($" '{MeterId.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Term))
+            {
+                builder.Append("    term:");
+                if (Term.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{Term}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{Term}'");
+                }
+            }
+
+            if (Optional.IsDefined(CostWithNoReservedInstances))
+            {
+                builder.Append("    costWithNoReservedInstances:");
+                AppendChildObject(builder, CostWithNoReservedInstances, options, 4, false);
+            }
+
+            if (Optional.IsDefined(RecommendedQuantity))
+            {
+                builder.Append("    recommendedQuantity:");
+                builder.AppendLine($" '{RecommendedQuantity.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(TotalCostWithReservedInstances))
+            {
+                builder.Append("    totalCostWithReservedInstances:");
+                AppendChildObject(builder, TotalCostWithReservedInstances, options, 4, false);
+            }
+
+            if (Optional.IsDefined(NetSavings))
+            {
+                builder.Append("    netSavings:");
+                AppendChildObject(builder, NetSavings, options, 4, false);
+            }
+
+            if (Optional.IsDefined(FirstUsageOn))
+            {
+                builder.Append("    firstUsageDate:");
+                var formattedDateTimeString = TypeFormatters.ToString(FirstUsageOn.Value, "o");
+                builder.AppendLine($" '{formattedDateTimeString}'");
+            }
+
+            if (Optional.IsDefined(Scope))
+            {
+                builder.Append("    scope:");
+                if (Scope.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{Scope}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{Scope}'");
+                }
+            }
+
+            if (Optional.IsCollectionDefined(SkuProperties))
+            {
+                if (SkuProperties.Any())
+                {
+                    builder.Append("    skuProperties:");
+                    builder.AppendLine(" [");
+                    foreach (var item in SkuProperties)
+                    {
+                        AppendChildObject(builder, item, options, 6, true);
+                    }
+                    builder.AppendLine("    ]");
+                }
+            }
+
+            if (Optional.IsDefined(SkuName))
+            {
+                builder.Append("    skuName:");
+                if (SkuName.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{SkuName}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{SkuName}'");
+                }
+            }
+
+            builder.AppendLine("  }");
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            bool inMultilineString = false;
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (inMultilineString)
+                {
+                    if (line.Contains("'''"))
+                    {
+                        inMultilineString = false;
+                    }
+                    stringBuilder.AppendLine(line);
+                    continue;
+                }
+                if (line.Contains("'''"))
+                {
+                    inMultilineString = true;
+                    stringBuilder.AppendLine($"{indent}{line}");
+                    continue;
+                }
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<ConsumptionModernReservationRecommendation>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ConsumptionModernReservationRecommendation>)this).GetFormatFromOptions(options) : options.Format;
@@ -451,6 +739,8 @@ namespace Azure.ResourceManager.Consumption.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(ConsumptionModernReservationRecommendation)} does not support '{options.Format}' format.");
             }
@@ -467,6 +757,8 @@ namespace Azure.ResourceManager.Consumption.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeConsumptionModernReservationRecommendation(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(ConsumptionModernReservationRecommendation)} does not support '{options.Format}' format.");
             }

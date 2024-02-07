@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.CosmosDB.Models;
@@ -269,6 +270,150 @@ namespace Azure.ResourceManager.CosmosDB
             return new DataTransferJobGetResultData(id, name, type, systemData.Value, jobName.Value, source.Value, destination.Value, status.Value, Optional.ToNullable(processedCount), Optional.ToNullable(totalCount), Optional.ToNullable(lastUpdatedUtcTime), Optional.ToNullable(workerCount), error.Value, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                if (Name.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{Name}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{Name}'");
+                }
+            }
+
+            if (Optional.IsDefined(Id))
+            {
+                builder.Append("  id:");
+                builder.AppendLine($" '{Id.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SystemData))
+            {
+                builder.Append("  systemData:");
+                builder.AppendLine($" '{SystemData.ToString()}'");
+            }
+
+            builder.Append("  properties:");
+            builder.AppendLine(" {");
+            if (Optional.IsDefined(JobName))
+            {
+                builder.Append("    jobName:");
+                if (JobName.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{JobName}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{JobName}'");
+                }
+            }
+
+            if (Optional.IsDefined(Source))
+            {
+                builder.Append("    source:");
+                AppendChildObject(builder, Source, options, 4, false);
+            }
+
+            if (Optional.IsDefined(Destination))
+            {
+                builder.Append("    destination:");
+                AppendChildObject(builder, Destination, options, 4, false);
+            }
+
+            if (Optional.IsDefined(Status))
+            {
+                builder.Append("    status:");
+                if (Status.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{Status}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{Status}'");
+                }
+            }
+
+            if (Optional.IsDefined(ProcessedCount))
+            {
+                builder.Append("    processedCount:");
+                builder.AppendLine($" '{ProcessedCount.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(TotalCount))
+            {
+                builder.Append("    totalCount:");
+                builder.AppendLine($" '{TotalCount.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(LastUpdatedUtcOn))
+            {
+                builder.Append("    lastUpdatedUtcTime:");
+                var formattedDateTimeString = TypeFormatters.ToString(LastUpdatedUtcOn.Value, "o");
+                builder.AppendLine($" '{formattedDateTimeString}'");
+            }
+
+            if (Optional.IsDefined(WorkerCount))
+            {
+                builder.Append("    workerCount:");
+                builder.AppendLine($" {WorkerCount.Value}");
+            }
+
+            if (Optional.IsDefined(Error))
+            {
+                builder.Append("    error:");
+                AppendChildObject(builder, Error, options, 4, false);
+            }
+
+            builder.AppendLine("  }");
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            bool inMultilineString = false;
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (inMultilineString)
+                {
+                    if (line.Contains("'''"))
+                    {
+                        inMultilineString = false;
+                    }
+                    stringBuilder.AppendLine(line);
+                    continue;
+                }
+                if (line.Contains("'''"))
+                {
+                    inMultilineString = true;
+                    stringBuilder.AppendLine($"{indent}{line}");
+                    continue;
+                }
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<DataTransferJobGetResultData>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<DataTransferJobGetResultData>)this).GetFormatFromOptions(options) : options.Format;
@@ -277,6 +422,8 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(DataTransferJobGetResultData)} does not support '{options.Format}' format.");
             }
@@ -293,6 +440,8 @@ namespace Azure.ResourceManager.CosmosDB
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeDataTransferJobGetResultData(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(DataTransferJobGetResultData)} does not support '{options.Format}' format.");
             }

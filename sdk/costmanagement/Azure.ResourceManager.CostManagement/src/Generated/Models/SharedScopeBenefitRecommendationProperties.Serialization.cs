@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -257,6 +258,146 @@ namespace Azure.ResourceManager.CostManagement.Models
             return new SharedScopeBenefitRecommendationProperties(Optional.ToNullable(firstConsumptionDate), Optional.ToNullable(lastConsumptionDate), Optional.ToNullable(lookBackPeriod), Optional.ToNullable(totalHours), usage.Value, armSkuName.Value, Optional.ToNullable(term), Optional.ToNullable(commitmentGranularity), currencyCode.Value, Optional.ToNullable(costWithoutBenefit), recommendationDetails.Value, allRecommendationDetails.Value, scope, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(FirstConsumptionOn))
+            {
+                builder.Append("  firstConsumptionDate:");
+                var formattedDateTimeString = TypeFormatters.ToString(FirstConsumptionOn.Value, "o");
+                builder.AppendLine($" '{formattedDateTimeString}'");
+            }
+
+            if (Optional.IsDefined(LastConsumptionOn))
+            {
+                builder.Append("  lastConsumptionDate:");
+                var formattedDateTimeString = TypeFormatters.ToString(LastConsumptionOn.Value, "o");
+                builder.AppendLine($" '{formattedDateTimeString}'");
+            }
+
+            if (Optional.IsDefined(LookBackPeriod))
+            {
+                builder.Append("  lookBackPeriod:");
+                builder.AppendLine($" '{LookBackPeriod.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(TotalHours))
+            {
+                builder.Append("  totalHours:");
+                builder.AppendLine($" {TotalHours.Value}");
+            }
+
+            if (Optional.IsDefined(Usage))
+            {
+                builder.Append("  usage:");
+                AppendChildObject(builder, Usage, options, 2, false);
+            }
+
+            if (Optional.IsDefined(ArmSkuName))
+            {
+                builder.Append("  armSkuName:");
+                if (ArmSkuName.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{ArmSkuName}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{ArmSkuName}'");
+                }
+            }
+
+            if (Optional.IsDefined(Term))
+            {
+                builder.Append("  term:");
+                builder.AppendLine($" '{Term.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(CommitmentGranularity))
+            {
+                builder.Append("  commitmentGranularity:");
+                builder.AppendLine($" '{CommitmentGranularity.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(CurrencyCode))
+            {
+                builder.Append("  currencyCode:");
+                if (CurrencyCode.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{CurrencyCode}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{CurrencyCode}'");
+                }
+            }
+
+            if (Optional.IsDefined(CostWithoutBenefit))
+            {
+                builder.Append("  costWithoutBenefit:");
+                builder.AppendLine($" '{CostWithoutBenefit.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(RecommendationDetails))
+            {
+                builder.Append("  recommendationDetails:");
+                AppendChildObject(builder, RecommendationDetails, options, 2, false);
+            }
+
+            if (Optional.IsDefined(AllRecommendationDetails))
+            {
+                builder.Append("  allRecommendationDetails:");
+                AppendChildObject(builder, AllRecommendationDetails, options, 2, false);
+            }
+
+            if (Optional.IsDefined(Scope))
+            {
+                builder.Append("  scope:");
+                builder.AppendLine($" '{Scope.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            bool inMultilineString = false;
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (inMultilineString)
+                {
+                    if (line.Contains("'''"))
+                    {
+                        inMultilineString = false;
+                    }
+                    stringBuilder.AppendLine(line);
+                    continue;
+                }
+                if (line.Contains("'''"))
+                {
+                    inMultilineString = true;
+                    stringBuilder.AppendLine($"{indent}{line}");
+                    continue;
+                }
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<SharedScopeBenefitRecommendationProperties>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<SharedScopeBenefitRecommendationProperties>)this).GetFormatFromOptions(options) : options.Format;
@@ -265,6 +406,8 @@ namespace Azure.ResourceManager.CostManagement.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(SharedScopeBenefitRecommendationProperties)} does not support '{options.Format}' format.");
             }
@@ -281,6 +424,8 @@ namespace Azure.ResourceManager.CostManagement.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeSharedScopeBenefitRecommendationProperties(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(SharedScopeBenefitRecommendationProperties)} does not support '{options.Format}' format.");
             }

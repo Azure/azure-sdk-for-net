@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.CustomerInsights.Models;
@@ -343,6 +345,245 @@ namespace Azure.ResourceManager.CustomerInsights
             return new RelationshipLinkResourceFormatData(id, name, type, systemData.Value, Optional.ToDictionary(displayName), Optional.ToDictionary(description), interactionType.Value, linkName.Value, Optional.ToList(mappings), Optional.ToList(profilePropertyReferences), Optional.ToNullable(provisioningState), Optional.ToList(relatedProfilePropertyReferences), relationshipName.Value, relationshipGuidId.Value, Optional.ToNullable(tenantId), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                if (Name.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{Name}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{Name}'");
+                }
+            }
+
+            if (Optional.IsDefined(Id))
+            {
+                builder.Append("  id:");
+                builder.AppendLine($" '{Id.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SystemData))
+            {
+                builder.Append("  systemData:");
+                builder.AppendLine($" '{SystemData.ToString()}'");
+            }
+
+            builder.Append("  properties:");
+            builder.AppendLine(" {");
+            if (Optional.IsCollectionDefined(DisplayName))
+            {
+                if (DisplayName.Any())
+                {
+                    builder.Append("    displayName:");
+                    builder.AppendLine(" {");
+                    foreach (var item in DisplayName)
+                    {
+                        builder.Append($"        {item.Key}:");
+                        if (item.Value == null)
+                        {
+                            builder.Append("null");
+                            continue;
+                        }
+                        if (item.Value.Contains(Environment.NewLine))
+                        {
+                            builder.AppendLine(" '''");
+                            builder.AppendLine($"{item.Value}'''");
+                        }
+                        else
+                        {
+                            builder.AppendLine($" '{item.Value}'");
+                        }
+                    }
+                    builder.AppendLine("    }");
+                }
+            }
+
+            if (Optional.IsCollectionDefined(Description))
+            {
+                if (Description.Any())
+                {
+                    builder.Append("    description:");
+                    builder.AppendLine(" {");
+                    foreach (var item in Description)
+                    {
+                        builder.Append($"        {item.Key}:");
+                        if (item.Value == null)
+                        {
+                            builder.Append("null");
+                            continue;
+                        }
+                        if (item.Value.Contains(Environment.NewLine))
+                        {
+                            builder.AppendLine(" '''");
+                            builder.AppendLine($"{item.Value}'''");
+                        }
+                        else
+                        {
+                            builder.AppendLine($" '{item.Value}'");
+                        }
+                    }
+                    builder.AppendLine("    }");
+                }
+            }
+
+            if (Optional.IsDefined(InteractionType))
+            {
+                builder.Append("    interactionType:");
+                if (InteractionType.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{InteractionType}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{InteractionType}'");
+                }
+            }
+
+            if (Optional.IsDefined(LinkName))
+            {
+                builder.Append("    linkName:");
+                if (LinkName.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{LinkName}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{LinkName}'");
+                }
+            }
+
+            if (Optional.IsCollectionDefined(Mappings))
+            {
+                if (Mappings.Any())
+                {
+                    builder.Append("    mappings:");
+                    builder.AppendLine(" [");
+                    foreach (var item in Mappings)
+                    {
+                        AppendChildObject(builder, item, options, 6, true);
+                    }
+                    builder.AppendLine("    ]");
+                }
+            }
+
+            if (Optional.IsCollectionDefined(ProfilePropertyReferences))
+            {
+                if (ProfilePropertyReferences.Any())
+                {
+                    builder.Append("    profilePropertyReferences:");
+                    builder.AppendLine(" [");
+                    foreach (var item in ProfilePropertyReferences)
+                    {
+                        AppendChildObject(builder, item, options, 6, true);
+                    }
+                    builder.AppendLine("    ]");
+                }
+            }
+
+            if (Optional.IsDefined(ProvisioningState))
+            {
+                builder.Append("    provisioningState:");
+                builder.AppendLine($" '{ProvisioningState.Value.ToString()}'");
+            }
+
+            if (Optional.IsCollectionDefined(RelatedProfilePropertyReferences))
+            {
+                if (RelatedProfilePropertyReferences.Any())
+                {
+                    builder.Append("    relatedProfilePropertyReferences:");
+                    builder.AppendLine(" [");
+                    foreach (var item in RelatedProfilePropertyReferences)
+                    {
+                        AppendChildObject(builder, item, options, 6, true);
+                    }
+                    builder.AppendLine("    ]");
+                }
+            }
+
+            if (Optional.IsDefined(RelationshipName))
+            {
+                builder.Append("    relationshipName:");
+                if (RelationshipName.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{RelationshipName}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{RelationshipName}'");
+                }
+            }
+
+            if (Optional.IsDefined(RelationshipGuidId))
+            {
+                builder.Append("    relationshipGuidId:");
+                if (RelationshipGuidId.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{RelationshipGuidId}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{RelationshipGuidId}'");
+                }
+            }
+
+            if (Optional.IsDefined(TenantId))
+            {
+                builder.Append("    tenantId:");
+                builder.AppendLine($" '{TenantId.Value.ToString()}'");
+            }
+
+            builder.AppendLine("  }");
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            bool inMultilineString = false;
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (inMultilineString)
+                {
+                    if (line.Contains("'''"))
+                    {
+                        inMultilineString = false;
+                    }
+                    stringBuilder.AppendLine(line);
+                    continue;
+                }
+                if (line.Contains("'''"))
+                {
+                    inMultilineString = true;
+                    stringBuilder.AppendLine($"{indent}{line}");
+                    continue;
+                }
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<RelationshipLinkResourceFormatData>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<RelationshipLinkResourceFormatData>)this).GetFormatFromOptions(options) : options.Format;
@@ -351,6 +592,8 @@ namespace Azure.ResourceManager.CustomerInsights
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(RelationshipLinkResourceFormatData)} does not support '{options.Format}' format.");
             }
@@ -367,6 +610,8 @@ namespace Azure.ResourceManager.CustomerInsights
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeRelationshipLinkResourceFormatData(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(RelationshipLinkResourceFormatData)} does not support '{options.Format}' format.");
             }

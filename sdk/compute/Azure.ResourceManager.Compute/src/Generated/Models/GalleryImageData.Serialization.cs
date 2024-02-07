@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Compute.Models;
@@ -403,6 +405,228 @@ namespace Azure.ResourceManager.Compute
             return new GalleryImageData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, description.Value, eula.Value, privacyStatementUri.Value, releaseNoteUri.Value, Optional.ToNullable(osType), Optional.ToNullable(osState), Optional.ToNullable(hyperVGeneration), Optional.ToNullable(endOfLifeDate), identifier.Value, recommended.Value, disallowed.Value, purchasePlan.Value, Optional.ToNullable(provisioningState), Optional.ToList(features), Optional.ToNullable(architecture), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                if (Name.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{Name}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{Name}'");
+                }
+            }
+
+            if (Optional.IsDefined(Location))
+            {
+                builder.Append("  location:");
+                builder.AppendLine($" '{Location.ToString()}'");
+            }
+
+            if (Optional.IsCollectionDefined(Tags))
+            {
+                if (Tags.Any())
+                {
+                    builder.Append("  tags:");
+                    builder.AppendLine(" {");
+                    foreach (var item in Tags)
+                    {
+                        builder.Append($"    {item.Key}:");
+                        if (item.Value == null)
+                        {
+                            builder.Append("null");
+                            continue;
+                        }
+                        if (item.Value.Contains(Environment.NewLine))
+                        {
+                            builder.AppendLine(" '''");
+                            builder.AppendLine($"{item.Value}'''");
+                        }
+                        else
+                        {
+                            builder.AppendLine($" '{item.Value}'");
+                        }
+                    }
+                    builder.AppendLine("  }");
+                }
+            }
+
+            if (Optional.IsDefined(Id))
+            {
+                builder.Append("  id:");
+                builder.AppendLine($" '{Id.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SystemData))
+            {
+                builder.Append("  systemData:");
+                builder.AppendLine($" '{SystemData.ToString()}'");
+            }
+
+            builder.Append("  properties:");
+            builder.AppendLine(" {");
+            if (Optional.IsDefined(Description))
+            {
+                builder.Append("    description:");
+                if (Description.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{Description}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{Description}'");
+                }
+            }
+
+            if (Optional.IsDefined(Eula))
+            {
+                builder.Append("    eula:");
+                if (Eula.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{Eula}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{Eula}'");
+                }
+            }
+
+            if (Optional.IsDefined(PrivacyStatementUri))
+            {
+                builder.Append("    privacyStatementUri:");
+                builder.AppendLine($" '{PrivacyStatementUri.AbsoluteUri}'");
+            }
+
+            if (Optional.IsDefined(ReleaseNoteUri))
+            {
+                builder.Append("    releaseNoteUri:");
+                builder.AppendLine($" '{ReleaseNoteUri.AbsoluteUri}'");
+            }
+
+            if (Optional.IsDefined(OSType))
+            {
+                builder.Append("    osType:");
+                builder.AppendLine($" '{OSType.Value.ToSerialString()}'");
+            }
+
+            if (Optional.IsDefined(OSState))
+            {
+                builder.Append("    osState:");
+                builder.AppendLine($" '{OSState.Value.ToSerialString()}'");
+            }
+
+            if (Optional.IsDefined(HyperVGeneration))
+            {
+                builder.Append("    hyperVGeneration:");
+                builder.AppendLine($" '{HyperVGeneration.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(EndOfLifeOn))
+            {
+                builder.Append("    endOfLifeDate:");
+                var formattedDateTimeString = TypeFormatters.ToString(EndOfLifeOn.Value, "o");
+                builder.AppendLine($" '{formattedDateTimeString}'");
+            }
+
+            if (Optional.IsDefined(Identifier))
+            {
+                builder.Append("    identifier:");
+                AppendChildObject(builder, Identifier, options, 4, false);
+            }
+
+            if (Optional.IsDefined(Recommended))
+            {
+                builder.Append("    recommended:");
+                AppendChildObject(builder, Recommended, options, 4, false);
+            }
+
+            if (Optional.IsDefined(Disallowed))
+            {
+                builder.Append("    disallowed:");
+                AppendChildObject(builder, Disallowed, options, 4, false);
+            }
+
+            if (Optional.IsDefined(PurchasePlan))
+            {
+                builder.Append("    purchasePlan:");
+                AppendChildObject(builder, PurchasePlan, options, 4, false);
+            }
+
+            if (Optional.IsDefined(ProvisioningState))
+            {
+                builder.Append("    provisioningState:");
+                builder.AppendLine($" '{ProvisioningState.Value.ToString()}'");
+            }
+
+            if (Optional.IsCollectionDefined(Features))
+            {
+                if (Features.Any())
+                {
+                    builder.Append("    features:");
+                    builder.AppendLine(" [");
+                    foreach (var item in Features)
+                    {
+                        AppendChildObject(builder, item, options, 6, true);
+                    }
+                    builder.AppendLine("    ]");
+                }
+            }
+
+            if (Optional.IsDefined(Architecture))
+            {
+                builder.Append("    architecture:");
+                builder.AppendLine($" '{Architecture.Value.ToString()}'");
+            }
+
+            builder.AppendLine("  }");
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            bool inMultilineString = false;
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (inMultilineString)
+                {
+                    if (line.Contains("'''"))
+                    {
+                        inMultilineString = false;
+                    }
+                    stringBuilder.AppendLine(line);
+                    continue;
+                }
+                if (line.Contains("'''"))
+                {
+                    inMultilineString = true;
+                    stringBuilder.AppendLine($"{indent}{line}");
+                    continue;
+                }
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<GalleryImageData>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<GalleryImageData>)this).GetFormatFromOptions(options) : options.Format;
@@ -411,6 +635,8 @@ namespace Azure.ResourceManager.Compute
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(GalleryImageData)} does not support '{options.Format}' format.");
             }
@@ -427,6 +653,8 @@ namespace Azure.ResourceManager.Compute
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeGalleryImageData(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(GalleryImageData)} does not support '{options.Format}' format.");
             }

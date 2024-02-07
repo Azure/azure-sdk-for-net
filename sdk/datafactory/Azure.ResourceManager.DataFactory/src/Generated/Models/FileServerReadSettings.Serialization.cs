@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
@@ -260,6 +261,122 @@ namespace Azure.ResourceManager.DataFactory.Models
             return new FileServerReadSettings(type, maxConcurrentConnections.Value, disableMetricsCollection.Value, additionalProperties, recursive.Value, wildcardFolderPath.Value, wildcardFileName.Value, fileListPath.Value, enablePartitionDiscovery.Value, partitionRootPath.Value, deleteFilesAfterCompletion.Value, modifiedDatetimeStart.Value, modifiedDatetimeEnd.Value, fileFilter.Value);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(Recursive))
+            {
+                builder.Append("  recursive:");
+                builder.AppendLine($" '{Recursive.ToString()}'");
+            }
+
+            if (Optional.IsDefined(WildcardFolderPath))
+            {
+                builder.Append("  wildcardFolderPath:");
+                builder.AppendLine($" '{WildcardFolderPath.ToString()}'");
+            }
+
+            if (Optional.IsDefined(WildcardFileName))
+            {
+                builder.Append("  wildcardFileName:");
+                builder.AppendLine($" '{WildcardFileName.ToString()}'");
+            }
+
+            if (Optional.IsDefined(FileListPath))
+            {
+                builder.Append("  fileListPath:");
+                builder.AppendLine($" '{FileListPath.ToString()}'");
+            }
+
+            if (Optional.IsDefined(EnablePartitionDiscovery))
+            {
+                builder.Append("  enablePartitionDiscovery:");
+                builder.AppendLine($" '{EnablePartitionDiscovery.ToString()}'");
+            }
+
+            if (Optional.IsDefined(PartitionRootPath))
+            {
+                builder.Append("  partitionRootPath:");
+                builder.AppendLine($" '{PartitionRootPath.ToString()}'");
+            }
+
+            if (Optional.IsDefined(DeleteFilesAfterCompletion))
+            {
+                builder.Append("  deleteFilesAfterCompletion:");
+                builder.AppendLine($" '{DeleteFilesAfterCompletion.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ModifiedDatetimeStart))
+            {
+                builder.Append("  modifiedDatetimeStart:");
+                builder.AppendLine($" '{ModifiedDatetimeStart.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ModifiedDatetimeEnd))
+            {
+                builder.Append("  modifiedDatetimeEnd:");
+                builder.AppendLine($" '{ModifiedDatetimeEnd.ToString()}'");
+            }
+
+            if (Optional.IsDefined(FileFilter))
+            {
+                builder.Append("  fileFilter:");
+                builder.AppendLine($" '{FileFilter.ToString()}'");
+            }
+
+            if (Optional.IsDefined(MaxConcurrentConnections))
+            {
+                builder.Append("  maxConcurrentConnections:");
+                builder.AppendLine($" '{MaxConcurrentConnections.ToString()}'");
+            }
+
+            if (Optional.IsDefined(DisableMetricsCollection))
+            {
+                builder.Append("  disableMetricsCollection:");
+                builder.AppendLine($" '{DisableMetricsCollection.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            bool inMultilineString = false;
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (inMultilineString)
+                {
+                    if (line.Contains("'''"))
+                    {
+                        inMultilineString = false;
+                    }
+                    stringBuilder.AppendLine(line);
+                    continue;
+                }
+                if (line.Contains("'''"))
+                {
+                    inMultilineString = true;
+                    stringBuilder.AppendLine($"{indent}{line}");
+                    continue;
+                }
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<FileServerReadSettings>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<FileServerReadSettings>)this).GetFormatFromOptions(options) : options.Format;
@@ -268,6 +385,8 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(FileServerReadSettings)} does not support '{options.Format}' format.");
             }
@@ -284,6 +403,8 @@ namespace Azure.ResourceManager.DataFactory.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeFileServerReadSettings(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(FileServerReadSettings)} does not support '{options.Format}' format.");
             }

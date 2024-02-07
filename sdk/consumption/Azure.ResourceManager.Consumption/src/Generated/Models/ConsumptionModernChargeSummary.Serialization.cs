@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
@@ -302,6 +303,214 @@ namespace Azure.ResourceManager.Consumption.Models
             return new ConsumptionModernChargeSummary(id, name, type, systemData.Value, kind, Optional.ToNullable(eTag), serializedAdditionalRawData, billingPeriodId.Value, usageStart.Value, usageEnd.Value, azureCharges.Value, chargesBilledSeparately.Value, marketplaceCharges.Value, billingAccountId.Value, billingProfileId.Value, invoiceSectionId.Value, customerId.Value, Optional.ToNullable(isInvoiced));
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                if (Name.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{Name}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{Name}'");
+                }
+            }
+
+            if (Optional.IsDefined(Kind))
+            {
+                builder.Append("  kind:");
+                builder.AppendLine($" '{Kind.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ETag))
+            {
+                builder.Append("  eTag:");
+                builder.AppendLine($" '{ETag.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Id))
+            {
+                builder.Append("  id:");
+                builder.AppendLine($" '{Id.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SystemData))
+            {
+                builder.Append("  systemData:");
+                builder.AppendLine($" '{SystemData.ToString()}'");
+            }
+
+            builder.Append("  properties:");
+            builder.AppendLine(" {");
+            if (Optional.IsDefined(BillingPeriodId))
+            {
+                builder.Append("    billingPeriodId:");
+                if (BillingPeriodId.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{BillingPeriodId}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{BillingPeriodId}'");
+                }
+            }
+
+            if (Optional.IsDefined(UsageStart))
+            {
+                builder.Append("    usageStart:");
+                if (UsageStart.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{UsageStart}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{UsageStart}'");
+                }
+            }
+
+            if (Optional.IsDefined(UsageEnd))
+            {
+                builder.Append("    usageEnd:");
+                if (UsageEnd.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{UsageEnd}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{UsageEnd}'");
+                }
+            }
+
+            if (Optional.IsDefined(AzureCharges))
+            {
+                builder.Append("    azureCharges:");
+                AppendChildObject(builder, AzureCharges, options, 4, false);
+            }
+
+            if (Optional.IsDefined(ChargesBilledSeparately))
+            {
+                builder.Append("    chargesBilledSeparately:");
+                AppendChildObject(builder, ChargesBilledSeparately, options, 4, false);
+            }
+
+            if (Optional.IsDefined(MarketplaceCharges))
+            {
+                builder.Append("    marketplaceCharges:");
+                AppendChildObject(builder, MarketplaceCharges, options, 4, false);
+            }
+
+            if (Optional.IsDefined(BillingAccountId))
+            {
+                builder.Append("    billingAccountId:");
+                if (BillingAccountId.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{BillingAccountId}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{BillingAccountId}'");
+                }
+            }
+
+            if (Optional.IsDefined(BillingProfileId))
+            {
+                builder.Append("    billingProfileId:");
+                if (BillingProfileId.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{BillingProfileId}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{BillingProfileId}'");
+                }
+            }
+
+            if (Optional.IsDefined(InvoiceSectionId))
+            {
+                builder.Append("    invoiceSectionId:");
+                if (InvoiceSectionId.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{InvoiceSectionId}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{InvoiceSectionId}'");
+                }
+            }
+
+            if (Optional.IsDefined(CustomerId))
+            {
+                builder.Append("    customerId:");
+                if (CustomerId.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{CustomerId}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{CustomerId}'");
+                }
+            }
+
+            if (Optional.IsDefined(IsInvoiced))
+            {
+                builder.Append("    isInvoiced:");
+                var boolValue = IsInvoiced.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            builder.AppendLine("  }");
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            bool inMultilineString = false;
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (inMultilineString)
+                {
+                    if (line.Contains("'''"))
+                    {
+                        inMultilineString = false;
+                    }
+                    stringBuilder.AppendLine(line);
+                    continue;
+                }
+                if (line.Contains("'''"))
+                {
+                    inMultilineString = true;
+                    stringBuilder.AppendLine($"{indent}{line}");
+                    continue;
+                }
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<ConsumptionModernChargeSummary>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ConsumptionModernChargeSummary>)this).GetFormatFromOptions(options) : options.Format;
@@ -310,6 +519,8 @@ namespace Azure.ResourceManager.Consumption.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(ConsumptionModernChargeSummary)} does not support '{options.Format}' format.");
             }
@@ -326,6 +537,8 @@ namespace Azure.ResourceManager.Consumption.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeConsumptionModernChargeSummary(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(ConsumptionModernChargeSummary)} does not support '{options.Format}' format.");
             }

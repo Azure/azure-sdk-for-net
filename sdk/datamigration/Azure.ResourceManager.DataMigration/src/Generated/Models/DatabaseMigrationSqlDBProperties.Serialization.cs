@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -314,6 +316,253 @@ namespace Azure.ResourceManager.DataMigration.Models
             return new DatabaseMigrationSqlDBProperties(kind, scope.Value, provisioningState.Value, migrationStatus.Value, Optional.ToNullable(startedOn), Optional.ToNullable(endedOn), sourceSqlConnection.Value, sourceDatabaseName.Value, sourceServerName.Value, migrationService.Value, migrationOperationId.Value, migrationFailureError.Value, targetDatabaseCollation.Value, provisioningError.Value, serializedAdditionalRawData, migrationStatusDetails.Value, targetSqlConnection.Value, offlineConfiguration.Value, Optional.ToList(tableList));
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(MigrationStatusDetails))
+            {
+                builder.Append("  migrationStatusDetails:");
+                AppendChildObject(builder, MigrationStatusDetails, options, 2, false);
+            }
+
+            if (Optional.IsDefined(TargetSqlConnection))
+            {
+                builder.Append("  targetSqlConnection:");
+                AppendChildObject(builder, TargetSqlConnection, options, 2, false);
+            }
+
+            if (Optional.IsDefined(OfflineConfiguration))
+            {
+                builder.Append("  offlineConfiguration:");
+                AppendChildObject(builder, OfflineConfiguration, options, 2, false);
+            }
+
+            if (Optional.IsCollectionDefined(TableList))
+            {
+                if (TableList.Any())
+                {
+                    builder.Append("  tableList:");
+                    builder.AppendLine(" [");
+                    foreach (var item in TableList)
+                    {
+                        if (item == null)
+                        {
+                            builder.Append("null");
+                            continue;
+                        }
+                        if (item.Contains(Environment.NewLine))
+                        {
+                            builder.AppendLine("    '''");
+                            builder.AppendLine($"{item}'''");
+                        }
+                        else
+                        {
+                            builder.AppendLine($"    '{item}'");
+                        }
+                    }
+                    builder.AppendLine("  ]");
+                }
+            }
+
+            if (Optional.IsDefined(Kind))
+            {
+                builder.Append("  kind:");
+                builder.AppendLine($" '{Kind.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Scope))
+            {
+                builder.Append("  scope:");
+                if (Scope.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{Scope}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{Scope}'");
+                }
+            }
+
+            if (Optional.IsDefined(ProvisioningState))
+            {
+                builder.Append("  provisioningState:");
+                if (ProvisioningState.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{ProvisioningState}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{ProvisioningState}'");
+                }
+            }
+
+            if (Optional.IsDefined(MigrationStatus))
+            {
+                builder.Append("  migrationStatus:");
+                if (MigrationStatus.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{MigrationStatus}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{MigrationStatus}'");
+                }
+            }
+
+            if (Optional.IsDefined(StartedOn))
+            {
+                builder.Append("  startedOn:");
+                var formattedDateTimeString = TypeFormatters.ToString(StartedOn.Value, "o");
+                builder.AppendLine($" '{formattedDateTimeString}'");
+            }
+
+            if (Optional.IsDefined(EndedOn))
+            {
+                builder.Append("  endedOn:");
+                var formattedDateTimeString = TypeFormatters.ToString(EndedOn.Value, "o");
+                builder.AppendLine($" '{formattedDateTimeString}'");
+            }
+
+            if (Optional.IsDefined(SourceSqlConnection))
+            {
+                builder.Append("  sourceSqlConnection:");
+                AppendChildObject(builder, SourceSqlConnection, options, 2, false);
+            }
+
+            if (Optional.IsDefined(SourceDatabaseName))
+            {
+                builder.Append("  sourceDatabaseName:");
+                if (SourceDatabaseName.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{SourceDatabaseName}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{SourceDatabaseName}'");
+                }
+            }
+
+            if (Optional.IsDefined(SourceServerName))
+            {
+                builder.Append("  sourceServerName:");
+                if (SourceServerName.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{SourceServerName}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{SourceServerName}'");
+                }
+            }
+
+            if (Optional.IsDefined(MigrationService))
+            {
+                builder.Append("  migrationService:");
+                if (MigrationService.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{MigrationService}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{MigrationService}'");
+                }
+            }
+
+            if (Optional.IsDefined(MigrationOperationId))
+            {
+                builder.Append("  migrationOperationId:");
+                if (MigrationOperationId.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{MigrationOperationId}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{MigrationOperationId}'");
+                }
+            }
+
+            if (Optional.IsDefined(MigrationFailureError))
+            {
+                builder.Append("  migrationFailureError:");
+                AppendChildObject(builder, MigrationFailureError, options, 2, false);
+            }
+
+            if (Optional.IsDefined(TargetDatabaseCollation))
+            {
+                builder.Append("  targetDatabaseCollation:");
+                if (TargetDatabaseCollation.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{TargetDatabaseCollation}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{TargetDatabaseCollation}'");
+                }
+            }
+
+            if (Optional.IsDefined(ProvisioningError))
+            {
+                builder.Append("  provisioningError:");
+                if (ProvisioningError.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{ProvisioningError}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{ProvisioningError}'");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            bool inMultilineString = false;
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (inMultilineString)
+                {
+                    if (line.Contains("'''"))
+                    {
+                        inMultilineString = false;
+                    }
+                    stringBuilder.AppendLine(line);
+                    continue;
+                }
+                if (line.Contains("'''"))
+                {
+                    inMultilineString = true;
+                    stringBuilder.AppendLine($"{indent}{line}");
+                    continue;
+                }
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<DatabaseMigrationSqlDBProperties>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<DatabaseMigrationSqlDBProperties>)this).GetFormatFromOptions(options) : options.Format;
@@ -322,6 +571,8 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(DatabaseMigrationSqlDBProperties)} does not support '{options.Format}' format.");
             }
@@ -338,6 +589,8 @@ namespace Azure.ResourceManager.DataMigration.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeDatabaseMigrationSqlDBProperties(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(DatabaseMigrationSqlDBProperties)} does not support '{options.Format}' format.");
             }

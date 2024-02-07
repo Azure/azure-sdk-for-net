@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.DataShare.Models;
@@ -272,6 +273,182 @@ namespace Azure.ResourceManager.DataShare
             return new DataShareInvitationData(id, name, type, systemData.Value, Optional.ToNullable(expirationDate), Optional.ToNullable(invitationId), Optional.ToNullable(invitationStatus), Optional.ToNullable(respondedAt), Optional.ToNullable(sentAt), targetActiveDirectoryId.Value, targetEmail.Value, targetObjectId.Value, userEmail.Value, userName.Value, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                if (Name.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{Name}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{Name}'");
+                }
+            }
+
+            if (Optional.IsDefined(Id))
+            {
+                builder.Append("  id:");
+                builder.AppendLine($" '{Id.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SystemData))
+            {
+                builder.Append("  systemData:");
+                builder.AppendLine($" '{SystemData.ToString()}'");
+            }
+
+            builder.Append("  properties:");
+            builder.AppendLine(" {");
+            if (Optional.IsDefined(ExpireOn))
+            {
+                builder.Append("    expirationDate:");
+                var formattedDateTimeString = TypeFormatters.ToString(ExpireOn.Value, "o");
+                builder.AppendLine($" '{formattedDateTimeString}'");
+            }
+
+            if (Optional.IsDefined(InvitationId))
+            {
+                builder.Append("    invitationId:");
+                builder.AppendLine($" '{InvitationId.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(InvitationStatus))
+            {
+                builder.Append("    invitationStatus:");
+                builder.AppendLine($" '{InvitationStatus.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(RespondedOn))
+            {
+                builder.Append("    respondedAt:");
+                var formattedDateTimeString = TypeFormatters.ToString(RespondedOn.Value, "o");
+                builder.AppendLine($" '{formattedDateTimeString}'");
+            }
+
+            if (Optional.IsDefined(SentOn))
+            {
+                builder.Append("    sentAt:");
+                var formattedDateTimeString = TypeFormatters.ToString(SentOn.Value, "o");
+                builder.AppendLine($" '{formattedDateTimeString}'");
+            }
+
+            if (Optional.IsDefined(TargetActiveDirectoryId))
+            {
+                builder.Append("    targetActiveDirectoryId:");
+                if (TargetActiveDirectoryId.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{TargetActiveDirectoryId}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{TargetActiveDirectoryId}'");
+                }
+            }
+
+            if (Optional.IsDefined(TargetEmail))
+            {
+                builder.Append("    targetEmail:");
+                if (TargetEmail.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{TargetEmail}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{TargetEmail}'");
+                }
+            }
+
+            if (Optional.IsDefined(TargetObjectId))
+            {
+                builder.Append("    targetObjectId:");
+                if (TargetObjectId.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{TargetObjectId}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{TargetObjectId}'");
+                }
+            }
+
+            if (Optional.IsDefined(UserEmail))
+            {
+                builder.Append("    userEmail:");
+                if (UserEmail.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{UserEmail}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{UserEmail}'");
+                }
+            }
+
+            if (Optional.IsDefined(UserName))
+            {
+                builder.Append("    userName:");
+                if (UserName.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{UserName}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{UserName}'");
+                }
+            }
+
+            builder.AppendLine("  }");
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            bool inMultilineString = false;
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (inMultilineString)
+                {
+                    if (line.Contains("'''"))
+                    {
+                        inMultilineString = false;
+                    }
+                    stringBuilder.AppendLine(line);
+                    continue;
+                }
+                if (line.Contains("'''"))
+                {
+                    inMultilineString = true;
+                    stringBuilder.AppendLine($"{indent}{line}");
+                    continue;
+                }
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<DataShareInvitationData>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<DataShareInvitationData>)this).GetFormatFromOptions(options) : options.Format;
@@ -280,6 +457,8 @@ namespace Azure.ResourceManager.DataShare
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(DataShareInvitationData)} does not support '{options.Format}' format.");
             }
@@ -296,6 +475,8 @@ namespace Azure.ResourceManager.DataShare
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeDataShareInvitationData(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(DataShareInvitationData)} does not support '{options.Format}' format.");
             }

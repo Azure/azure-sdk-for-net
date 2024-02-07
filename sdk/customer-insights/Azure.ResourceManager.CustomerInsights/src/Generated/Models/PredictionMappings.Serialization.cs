@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -101,6 +102,92 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             return new PredictionMappings(score, grade, reason, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(Score))
+            {
+                builder.Append("  score:");
+                if (Score.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{Score}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{Score}'");
+                }
+            }
+
+            if (Optional.IsDefined(Grade))
+            {
+                builder.Append("  grade:");
+                if (Grade.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{Grade}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{Grade}'");
+                }
+            }
+
+            if (Optional.IsDefined(Reason))
+            {
+                builder.Append("  reason:");
+                if (Reason.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{Reason}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{Reason}'");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            bool inMultilineString = false;
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (inMultilineString)
+                {
+                    if (line.Contains("'''"))
+                    {
+                        inMultilineString = false;
+                    }
+                    stringBuilder.AppendLine(line);
+                    continue;
+                }
+                if (line.Contains("'''"))
+                {
+                    inMultilineString = true;
+                    stringBuilder.AppendLine($"{indent}{line}");
+                    continue;
+                }
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<PredictionMappings>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<PredictionMappings>)this).GetFormatFromOptions(options) : options.Format;
@@ -109,6 +196,8 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(PredictionMappings)} does not support '{options.Format}' format.");
             }
@@ -125,6 +214,8 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializePredictionMappings(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(PredictionMappings)} does not support '{options.Format}' format.");
             }

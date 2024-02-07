@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -121,6 +122,106 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
             return new PlacementProfile(resourcePoolId.Value, clusterId.Value, hostId.Value, datastoreId.Value, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(ResourcePoolId))
+            {
+                builder.Append("  resourcePoolId:");
+                if (ResourcePoolId.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{ResourcePoolId}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{ResourcePoolId}'");
+                }
+            }
+
+            if (Optional.IsDefined(ClusterId))
+            {
+                builder.Append("  clusterId:");
+                if (ClusterId.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{ClusterId}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{ClusterId}'");
+                }
+            }
+
+            if (Optional.IsDefined(HostId))
+            {
+                builder.Append("  hostId:");
+                if (HostId.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{HostId}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{HostId}'");
+                }
+            }
+
+            if (Optional.IsDefined(DatastoreId))
+            {
+                builder.Append("  datastoreId:");
+                if (DatastoreId.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{DatastoreId}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{DatastoreId}'");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            bool inMultilineString = false;
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (inMultilineString)
+                {
+                    if (line.Contains("'''"))
+                    {
+                        inMultilineString = false;
+                    }
+                    stringBuilder.AppendLine(line);
+                    continue;
+                }
+                if (line.Contains("'''"))
+                {
+                    inMultilineString = true;
+                    stringBuilder.AppendLine($"{indent}{line}");
+                    continue;
+                }
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<PlacementProfile>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<PlacementProfile>)this).GetFormatFromOptions(options) : options.Format;
@@ -129,6 +230,8 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(PlacementProfile)} does not support '{options.Format}' format.");
             }
@@ -145,6 +248,8 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializePlacementProfile(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(PlacementProfile)} does not support '{options.Format}' format.");
             }

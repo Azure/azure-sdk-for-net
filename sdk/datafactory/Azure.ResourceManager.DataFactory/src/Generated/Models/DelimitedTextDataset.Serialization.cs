@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
@@ -379,6 +381,185 @@ namespace Azure.ResourceManager.DataFactory.Models
             return new DelimitedTextDataset(type, description.Value, structure.Value, schema.Value, linkedServiceName, Optional.ToDictionary(parameters), Optional.ToList(annotations), folder.Value, additionalProperties, location.Value, columnDelimiter.Value, rowDelimiter.Value, encodingName.Value, compressionCodec.Value, compressionLevel.Value, quoteChar.Value, escapeChar.Value, firstRowAsHeader.Value, nullValue.Value);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(Description))
+            {
+                builder.Append("  description:");
+                if (Description.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{Description}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{Description}'");
+                }
+            }
+
+            if (Optional.IsDefined(Structure))
+            {
+                builder.Append("  structure:");
+                builder.AppendLine($" '{Structure.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Schema))
+            {
+                builder.Append("  schema:");
+                builder.AppendLine($" '{Schema.ToString()}'");
+            }
+
+            if (Optional.IsDefined(LinkedServiceName))
+            {
+                builder.Append("  linkedServiceName:");
+                AppendChildObject(builder, LinkedServiceName, options, 2, false);
+            }
+
+            if (Optional.IsCollectionDefined(Parameters))
+            {
+                if (Parameters.Any())
+                {
+                    builder.Append("  parameters:");
+                    builder.AppendLine(" {");
+                    foreach (var item in Parameters)
+                    {
+                        builder.Append($"    {item.Key}:");
+                        AppendChildObject(builder, item.Value, options, 4, false);
+                    }
+                    builder.AppendLine("  }");
+                }
+            }
+
+            if (Optional.IsCollectionDefined(Annotations))
+            {
+                if (Annotations.Any())
+                {
+                    builder.Append("  annotations:");
+                    builder.AppendLine(" [");
+                    foreach (var item in Annotations)
+                    {
+                        if (item == null)
+                        {
+                            builder.Append("null");
+                            continue;
+                        }
+                        builder.AppendLine($"    '{item.ToString()}'");
+                    }
+                    builder.AppendLine("  ]");
+                }
+            }
+
+            if (Optional.IsDefined(Folder))
+            {
+                builder.Append("  folder:");
+                AppendChildObject(builder, Folder, options, 2, false);
+            }
+
+            builder.Append("  typeProperties:");
+            builder.AppendLine(" {");
+            if (Optional.IsDefined(DataLocation))
+            {
+                builder.Append("    location:");
+                AppendChildObject(builder, DataLocation, options, 4, false);
+            }
+
+            if (Optional.IsDefined(ColumnDelimiter))
+            {
+                builder.Append("    columnDelimiter:");
+                builder.AppendLine($" '{ColumnDelimiter.ToString()}'");
+            }
+
+            if (Optional.IsDefined(RowDelimiter))
+            {
+                builder.Append("    rowDelimiter:");
+                builder.AppendLine($" '{RowDelimiter.ToString()}'");
+            }
+
+            if (Optional.IsDefined(EncodingName))
+            {
+                builder.Append("    encodingName:");
+                builder.AppendLine($" '{EncodingName.ToString()}'");
+            }
+
+            if (Optional.IsDefined(CompressionCodec))
+            {
+                builder.Append("    compressionCodec:");
+                builder.AppendLine($" '{CompressionCodec.ToString()}'");
+            }
+
+            if (Optional.IsDefined(CompressionLevel))
+            {
+                builder.Append("    compressionLevel:");
+                builder.AppendLine($" '{CompressionLevel.ToString()}'");
+            }
+
+            if (Optional.IsDefined(QuoteChar))
+            {
+                builder.Append("    quoteChar:");
+                builder.AppendLine($" '{QuoteChar.ToString()}'");
+            }
+
+            if (Optional.IsDefined(EscapeChar))
+            {
+                builder.Append("    escapeChar:");
+                builder.AppendLine($" '{EscapeChar.ToString()}'");
+            }
+
+            if (Optional.IsDefined(FirstRowAsHeader))
+            {
+                builder.Append("    firstRowAsHeader:");
+                builder.AppendLine($" '{FirstRowAsHeader.ToString()}'");
+            }
+
+            if (Optional.IsDefined(NullValue))
+            {
+                builder.Append("    nullValue:");
+                builder.AppendLine($" '{NullValue.ToString()}'");
+            }
+
+            builder.AppendLine("  }");
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            bool inMultilineString = false;
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (inMultilineString)
+                {
+                    if (line.Contains("'''"))
+                    {
+                        inMultilineString = false;
+                    }
+                    stringBuilder.AppendLine(line);
+                    continue;
+                }
+                if (line.Contains("'''"))
+                {
+                    inMultilineString = true;
+                    stringBuilder.AppendLine($"{indent}{line}");
+                    continue;
+                }
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<DelimitedTextDataset>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<DelimitedTextDataset>)this).GetFormatFromOptions(options) : options.Format;
@@ -387,6 +568,8 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(DelimitedTextDataset)} does not support '{options.Format}' format.");
             }
@@ -403,6 +586,8 @@ namespace Azure.ResourceManager.DataFactory.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeDelimitedTextDataset(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(DelimitedTextDataset)} does not support '{options.Format}' format.");
             }

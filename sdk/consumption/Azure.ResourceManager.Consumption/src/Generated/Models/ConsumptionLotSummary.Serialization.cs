@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
@@ -340,6 +341,190 @@ namespace Azure.ResourceManager.Consumption.Models
             return new ConsumptionLotSummary(id, name, type, systemData.Value, originalAmount.Value, closedBalance.Value, Optional.ToNullable(source), Optional.ToNullable(startDate), Optional.ToNullable(expirationDate), poNumber.Value, Optional.ToNullable(purchasedDate), Optional.ToNullable(status), creditCurrency.Value, billingCurrency.Value, originalAmountInBillingCurrency.Value, closedBalanceInBillingCurrency.Value, reseller.Value, Optional.ToNullable(eTag), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                if (Name.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{Name}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{Name}'");
+                }
+            }
+
+            if (Optional.IsDefined(ETag))
+            {
+                builder.Append("  eTag:");
+                builder.AppendLine($" '{ETag.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Id))
+            {
+                builder.Append("  id:");
+                builder.AppendLine($" '{Id.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SystemData))
+            {
+                builder.Append("  systemData:");
+                builder.AppendLine($" '{SystemData.ToString()}'");
+            }
+
+            builder.Append("  properties:");
+            builder.AppendLine(" {");
+            if (Optional.IsDefined(OriginalAmount))
+            {
+                builder.Append("    originalAmount:");
+                AppendChildObject(builder, OriginalAmount, options, 4, false);
+            }
+
+            if (Optional.IsDefined(ClosedBalance))
+            {
+                builder.Append("    closedBalance:");
+                AppendChildObject(builder, ClosedBalance, options, 4, false);
+            }
+
+            if (Optional.IsDefined(Source))
+            {
+                builder.Append("    source:");
+                builder.AppendLine($" '{Source.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(StartOn))
+            {
+                builder.Append("    startDate:");
+                var formattedDateTimeString = TypeFormatters.ToString(StartOn.Value, "o");
+                builder.AppendLine($" '{formattedDateTimeString}'");
+            }
+
+            if (Optional.IsDefined(ExpireOn))
+            {
+                builder.Append("    expirationDate:");
+                var formattedDateTimeString = TypeFormatters.ToString(ExpireOn.Value, "o");
+                builder.AppendLine($" '{formattedDateTimeString}'");
+            }
+
+            if (Optional.IsDefined(PoNumber))
+            {
+                builder.Append("    poNumber:");
+                if (PoNumber.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{PoNumber}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{PoNumber}'");
+                }
+            }
+
+            if (Optional.IsDefined(PurchasedOn))
+            {
+                builder.Append("    purchasedDate:");
+                var formattedDateTimeString = TypeFormatters.ToString(PurchasedOn.Value, "o");
+                builder.AppendLine($" '{formattedDateTimeString}'");
+            }
+
+            if (Optional.IsDefined(Status))
+            {
+                builder.Append("    status:");
+                builder.AppendLine($" '{Status.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(CreditCurrency))
+            {
+                builder.Append("    creditCurrency:");
+                if (CreditCurrency.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{CreditCurrency}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{CreditCurrency}'");
+                }
+            }
+
+            if (Optional.IsDefined(BillingCurrency))
+            {
+                builder.Append("    billingCurrency:");
+                if (BillingCurrency.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{BillingCurrency}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{BillingCurrency}'");
+                }
+            }
+
+            if (Optional.IsDefined(OriginalAmountInBillingCurrency))
+            {
+                builder.Append("    originalAmountInBillingCurrency:");
+                AppendChildObject(builder, OriginalAmountInBillingCurrency, options, 4, false);
+            }
+
+            if (Optional.IsDefined(ClosedBalanceInBillingCurrency))
+            {
+                builder.Append("    closedBalanceInBillingCurrency:");
+                AppendChildObject(builder, ClosedBalanceInBillingCurrency, options, 4, false);
+            }
+
+            if (Optional.IsDefined(Reseller))
+            {
+                builder.Append("    reseller:");
+                AppendChildObject(builder, Reseller, options, 4, false);
+            }
+
+            builder.AppendLine("  }");
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            bool inMultilineString = false;
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (inMultilineString)
+                {
+                    if (line.Contains("'''"))
+                    {
+                        inMultilineString = false;
+                    }
+                    stringBuilder.AppendLine(line);
+                    continue;
+                }
+                if (line.Contains("'''"))
+                {
+                    inMultilineString = true;
+                    stringBuilder.AppendLine($"{indent}{line}");
+                    continue;
+                }
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<ConsumptionLotSummary>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ConsumptionLotSummary>)this).GetFormatFromOptions(options) : options.Format;
@@ -348,6 +533,8 @@ namespace Azure.ResourceManager.Consumption.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(ConsumptionLotSummary)} does not support '{options.Format}' format.");
             }
@@ -364,6 +551,8 @@ namespace Azure.ResourceManager.Consumption.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeConsumptionLotSummary(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(ConsumptionLotSummary)} does not support '{options.Format}' format.");
             }
