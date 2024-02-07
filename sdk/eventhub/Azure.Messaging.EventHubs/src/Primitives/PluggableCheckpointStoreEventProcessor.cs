@@ -227,7 +227,7 @@ namespace Azure.Messaging.EventHubs.Primitives
         protected override Task UpdateCheckpointAsync(string partitionId,
                                                       long offset,
                                                       long? sequenceNumber,
-                                                      CancellationToken cancellationToken) =>
+                                                      CancellationToken cancellationToken = default) =>
             _checkpointStore.UpdateCheckpointAsync(FullyQualifiedNamespace, EventHubName, ConsumerGroup, partitionId, offset, sequenceNumber, cancellationToken);
 
         /// <summary>
@@ -240,7 +240,7 @@ namespace Azure.Messaging.EventHubs.Primitives
         /// <returns></returns>
         protected override Task UpdateCheckpointAsync(string partitionId,
                                                       CheckpointPosition startingPosition,
-                                                      CancellationToken cancellationToken) =>
+                                                      CancellationToken cancellationToken = default) =>
             _checkpointStore.UpdateCheckpointAsync(FullyQualifiedNamespace, EventHubName, ConsumerGroup, partitionId, Identifier, startingPosition, cancellationToken);
 
         /// <summary>

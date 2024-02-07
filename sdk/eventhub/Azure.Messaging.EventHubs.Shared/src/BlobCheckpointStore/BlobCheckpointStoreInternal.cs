@@ -372,7 +372,7 @@ namespace Azure.Messaging.EventHubs.Primitives
                                                          string partitionId,
                                                          long offset,
                                                          long? sequenceNumber,
-                                                         CancellationToken cancellationToken)
+                                                         CancellationToken cancellationToken = default)
             => await UpdateCheckpointInternalAsync(fullyQualifiedNamespace, eventHubName, consumerGroup, partitionId, string.Empty, offset, sequenceNumber ?? long.MinValue, cancellationToken).ConfigureAwait(false);
 
         /// <summary>
@@ -394,7 +394,7 @@ namespace Azure.Messaging.EventHubs.Primitives
                                                          string partitionId,
                                                          string clientIdentifier,
                                                          CheckpointPosition startingPosition,
-                                                         CancellationToken cancellationToken)
+                                                         CancellationToken cancellationToken = default)
             => await UpdateCheckpointInternalAsync(fullyQualifiedNamespace, eventHubName, consumerGroup, partitionId, clientIdentifier, long.MinValue, startingPosition.SequenceNumber, cancellationToken).ConfigureAwait(false);
 
         private async Task UpdateCheckpointInternalAsync(string fullyQualifiedNamespace, string eventHubName, string consumerGroup, string partitionId, string clientIdentifier, long offset, long sequenceNumber, CancellationToken cancellationToken)
