@@ -332,7 +332,7 @@ namespace Azure.Communication.Messages.Tests
         }
 
         [Test]
-        public Task SendSuperLongTextMessage_ShouldSucceed()
+        public Task SendSuperLongTextMessage_ShouldFail()
         {
             // Arrange
             NotificationMessagesClient notificationMessagesClient = CreateInstrumentedNotificationMessagesClient();
