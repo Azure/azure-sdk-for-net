@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -232,6 +234,207 @@ namespace Azure.ResourceManager.Workloads.Models
             return new SapNetWeaverProviderInstanceProperties(providerType, serializedAdditionalRawData, sapSid.Value, sapHostname.Value, sapInstanceNr.Value, Optional.ToList(sapHostFileEntries), sapUsername.Value, sapPassword.Value, sapPasswordUri.Value, sapClientId.Value, sapPortNumber.Value, sslCertificateUri.Value, Optional.ToNullable(sslPreference));
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(SapSid))
+            {
+                builder.Append("  sapSid:");
+                if (SapSid.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{SapSid}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{SapSid}'");
+                }
+            }
+
+            if (Optional.IsDefined(SapHostname))
+            {
+                builder.Append("  sapHostname:");
+                if (SapHostname.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{SapHostname}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{SapHostname}'");
+                }
+            }
+
+            if (Optional.IsDefined(SapInstanceNr))
+            {
+                builder.Append("  sapInstanceNr:");
+                if (SapInstanceNr.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{SapInstanceNr}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{SapInstanceNr}'");
+                }
+            }
+
+            if (Optional.IsCollectionDefined(SapHostFileEntries))
+            {
+                if (SapHostFileEntries.Any())
+                {
+                    builder.Append("  sapHostFileEntries:");
+                    builder.AppendLine(" [");
+                    foreach (var item in SapHostFileEntries)
+                    {
+                        if (item == null)
+                        {
+                            builder.Append("null");
+                            continue;
+                        }
+                        if (item.Contains(Environment.NewLine))
+                        {
+                            builder.AppendLine("    '''");
+                            builder.AppendLine($"{item}'''");
+                        }
+                        else
+                        {
+                            builder.AppendLine($"    '{item}'");
+                        }
+                    }
+                    builder.AppendLine("  ]");
+                }
+            }
+
+            if (Optional.IsDefined(SapUsername))
+            {
+                builder.Append("  sapUsername:");
+                if (SapUsername.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{SapUsername}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{SapUsername}'");
+                }
+            }
+
+            if (Optional.IsDefined(SapPassword))
+            {
+                builder.Append("  sapPassword:");
+                if (SapPassword.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{SapPassword}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{SapPassword}'");
+                }
+            }
+
+            if (Optional.IsDefined(SapPasswordUri))
+            {
+                builder.Append("  sapPasswordUri:");
+                builder.AppendLine($" '{SapPasswordUri.AbsoluteUri}'");
+            }
+
+            if (Optional.IsDefined(SapClientId))
+            {
+                builder.Append("  sapClientId:");
+                if (SapClientId.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{SapClientId}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{SapClientId}'");
+                }
+            }
+
+            if (Optional.IsDefined(SapPortNumber))
+            {
+                builder.Append("  sapPortNumber:");
+                if (SapPortNumber.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{SapPortNumber}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{SapPortNumber}'");
+                }
+            }
+
+            if (Optional.IsDefined(SslCertificateUri))
+            {
+                builder.Append("  sslCertificateUri:");
+                builder.AppendLine($" '{SslCertificateUri.AbsoluteUri}'");
+            }
+
+            if (Optional.IsDefined(SslPreference))
+            {
+                builder.Append("  sslPreference:");
+                builder.AppendLine($" '{SslPreference.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ProviderType))
+            {
+                builder.Append("  providerType:");
+                if (ProviderType.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{ProviderType}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{ProviderType}'");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            bool inMultilineString = false;
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (inMultilineString)
+                {
+                    if (line.Contains("'''"))
+                    {
+                        inMultilineString = false;
+                    }
+                    stringBuilder.AppendLine(line);
+                    continue;
+                }
+                if (line.Contains("'''"))
+                {
+                    inMultilineString = true;
+                    stringBuilder.AppendLine($"{indent}{line}");
+                    continue;
+                }
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<SapNetWeaverProviderInstanceProperties>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<SapNetWeaverProviderInstanceProperties>)this).GetFormatFromOptions(options) : options.Format;
@@ -240,6 +443,8 @@ namespace Azure.ResourceManager.Workloads.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(SapNetWeaverProviderInstanceProperties)} does not support '{options.Format}' format.");
             }
@@ -256,6 +461,8 @@ namespace Azure.ResourceManager.Workloads.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeSapNetWeaverProviderInstanceProperties(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(SapNetWeaverProviderInstanceProperties)} does not support '{options.Format}' format.");
             }

@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -142,6 +143,110 @@ namespace Azure.ResourceManager.StorageMover.Models
             return new SmbMountEndpointProperties(endpointType, description.Value, Optional.ToNullable(provisioningState), serializedAdditionalRawData, host, shareName, credentials.Value);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(Host))
+            {
+                builder.Append("  host:");
+                if (Host.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{Host}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{Host}'");
+                }
+            }
+
+            if (Optional.IsDefined(ShareName))
+            {
+                builder.Append("  shareName:");
+                if (ShareName.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{ShareName}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{ShareName}'");
+                }
+            }
+
+            if (Optional.IsDefined(Credentials))
+            {
+                builder.Append("  credentials:");
+                AppendChildObject(builder, Credentials, options, 2, false);
+            }
+
+            if (Optional.IsDefined(EndpointType))
+            {
+                builder.Append("  endpointType:");
+                builder.AppendLine($" '{EndpointType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Description))
+            {
+                builder.Append("  description:");
+                if (Description.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{Description}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{Description}'");
+                }
+            }
+
+            if (Optional.IsDefined(ProvisioningState))
+            {
+                builder.Append("  provisioningState:");
+                builder.AppendLine($" '{ProvisioningState.Value.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            bool inMultilineString = false;
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (inMultilineString)
+                {
+                    if (line.Contains("'''"))
+                    {
+                        inMultilineString = false;
+                    }
+                    stringBuilder.AppendLine(line);
+                    continue;
+                }
+                if (line.Contains("'''"))
+                {
+                    inMultilineString = true;
+                    stringBuilder.AppendLine($"{indent}{line}");
+                    continue;
+                }
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<SmbMountEndpointProperties>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<SmbMountEndpointProperties>)this).GetFormatFromOptions(options) : options.Format;
@@ -150,6 +255,8 @@ namespace Azure.ResourceManager.StorageMover.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(SmbMountEndpointProperties)} does not support '{options.Format}' format.");
             }
@@ -166,6 +273,8 @@ namespace Azure.ResourceManager.StorageMover.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeSmbMountEndpointProperties(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(SmbMountEndpointProperties)} does not support '{options.Format}' format.");
             }

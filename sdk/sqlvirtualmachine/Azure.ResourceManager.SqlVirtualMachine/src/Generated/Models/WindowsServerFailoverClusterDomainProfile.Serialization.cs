@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -184,6 +185,160 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
             return new WindowsServerFailoverClusterDomainProfile(domainFqdn.Value, ouPath.Value, clusterBootstrapAccount.Value, clusterOperatorAccount.Value, sqlServiceAccount.Value, fileShareWitnessPath.Value, storageAccountUrl.Value, storageAccountPrimaryKey.Value, Optional.ToNullable(clusterSubnetType), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(DomainFqdn))
+            {
+                builder.Append("  domainFqdn:");
+                if (DomainFqdn.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{DomainFqdn}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{DomainFqdn}'");
+                }
+            }
+
+            if (Optional.IsDefined(OrganizationalUnitPath))
+            {
+                builder.Append("  ouPath:");
+                if (OrganizationalUnitPath.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{OrganizationalUnitPath}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{OrganizationalUnitPath}'");
+                }
+            }
+
+            if (Optional.IsDefined(ClusterBootstrapAccount))
+            {
+                builder.Append("  clusterBootstrapAccount:");
+                if (ClusterBootstrapAccount.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{ClusterBootstrapAccount}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{ClusterBootstrapAccount}'");
+                }
+            }
+
+            if (Optional.IsDefined(ClusterOperatorAccount))
+            {
+                builder.Append("  clusterOperatorAccount:");
+                if (ClusterOperatorAccount.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{ClusterOperatorAccount}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{ClusterOperatorAccount}'");
+                }
+            }
+
+            if (Optional.IsDefined(SqlServiceAccount))
+            {
+                builder.Append("  sqlServiceAccount:");
+                if (SqlServiceAccount.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{SqlServiceAccount}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{SqlServiceAccount}'");
+                }
+            }
+
+            if (Optional.IsDefined(FileShareWitnessPath))
+            {
+                builder.Append("  fileShareWitnessPath:");
+                if (FileShareWitnessPath.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{FileShareWitnessPath}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{FileShareWitnessPath}'");
+                }
+            }
+
+            if (Optional.IsDefined(StorageAccountUri))
+            {
+                builder.Append("  storageAccountUrl:");
+                builder.AppendLine($" '{StorageAccountUri.AbsoluteUri}'");
+            }
+
+            if (Optional.IsDefined(StorageAccountPrimaryKey))
+            {
+                builder.Append("  storageAccountPrimaryKey:");
+                if (StorageAccountPrimaryKey.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{StorageAccountPrimaryKey}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{StorageAccountPrimaryKey}'");
+                }
+            }
+
+            if (Optional.IsDefined(ClusterSubnetType))
+            {
+                builder.Append("  clusterSubnetType:");
+                builder.AppendLine($" '{ClusterSubnetType.Value.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            bool inMultilineString = false;
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (inMultilineString)
+                {
+                    if (line.Contains("'''"))
+                    {
+                        inMultilineString = false;
+                    }
+                    stringBuilder.AppendLine(line);
+                    continue;
+                }
+                if (line.Contains("'''"))
+                {
+                    inMultilineString = true;
+                    stringBuilder.AppendLine($"{indent}{line}");
+                    continue;
+                }
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<WindowsServerFailoverClusterDomainProfile>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<WindowsServerFailoverClusterDomainProfile>)this).GetFormatFromOptions(options) : options.Format;
@@ -192,6 +347,8 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(WindowsServerFailoverClusterDomainProfile)} does not support '{options.Format}' format.");
             }
@@ -208,6 +365,8 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeWindowsServerFailoverClusterDomainProfile(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(WindowsServerFailoverClusterDomainProfile)} does not support '{options.Format}' format.");
             }

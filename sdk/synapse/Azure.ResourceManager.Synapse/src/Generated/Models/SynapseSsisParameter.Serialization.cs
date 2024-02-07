@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -225,6 +226,189 @@ namespace Azure.ResourceManager.Synapse.Models
             return new SynapseSsisParameter(Optional.ToNullable(id), name.Value, description.Value, dataType.Value, Optional.ToNullable(required), Optional.ToNullable(sensitive), designDefaultValue.Value, defaultValue.Value, sensitiveDefaultValue.Value, valueType.Value, Optional.ToNullable(valueSet), variable.Value, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                if (Name.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{Name}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{Name}'");
+                }
+            }
+
+            if (Optional.IsDefined(Id))
+            {
+                builder.Append("  id:");
+                builder.AppendLine($" '{Id.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Description))
+            {
+                builder.Append("  description:");
+                if (Description.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{Description}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{Description}'");
+                }
+            }
+
+            if (Optional.IsDefined(DataType))
+            {
+                builder.Append("  dataType:");
+                if (DataType.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{DataType}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{DataType}'");
+                }
+            }
+
+            if (Optional.IsDefined(IsRequired))
+            {
+                builder.Append("  required:");
+                var boolValue = IsRequired.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(IsSensitive))
+            {
+                builder.Append("  sensitive:");
+                var boolValue = IsSensitive.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(DesignDefaultValue))
+            {
+                builder.Append("  designDefaultValue:");
+                if (DesignDefaultValue.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{DesignDefaultValue}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{DesignDefaultValue}'");
+                }
+            }
+
+            if (Optional.IsDefined(DefaultValue))
+            {
+                builder.Append("  defaultValue:");
+                if (DefaultValue.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{DefaultValue}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{DefaultValue}'");
+                }
+            }
+
+            if (Optional.IsDefined(SensitiveDefaultValue))
+            {
+                builder.Append("  sensitiveDefaultValue:");
+                if (SensitiveDefaultValue.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{SensitiveDefaultValue}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{SensitiveDefaultValue}'");
+                }
+            }
+
+            if (Optional.IsDefined(ValueType))
+            {
+                builder.Append("  valueType:");
+                if (ValueType.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{ValueType}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{ValueType}'");
+                }
+            }
+
+            if (Optional.IsDefined(ValueSet))
+            {
+                builder.Append("  valueSet:");
+                var boolValue = ValueSet.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(Variable))
+            {
+                builder.Append("  variable:");
+                if (Variable.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{Variable}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{Variable}'");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            bool inMultilineString = false;
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (inMultilineString)
+                {
+                    if (line.Contains("'''"))
+                    {
+                        inMultilineString = false;
+                    }
+                    stringBuilder.AppendLine(line);
+                    continue;
+                }
+                if (line.Contains("'''"))
+                {
+                    inMultilineString = true;
+                    stringBuilder.AppendLine($"{indent}{line}");
+                    continue;
+                }
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<SynapseSsisParameter>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<SynapseSsisParameter>)this).GetFormatFromOptions(options) : options.Format;
@@ -233,6 +417,8 @@ namespace Azure.ResourceManager.Synapse.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(SynapseSsisParameter)} does not support '{options.Format}' format.");
             }
@@ -249,6 +435,8 @@ namespace Azure.ResourceManager.Synapse.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeSynapseSsisParameter(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(SynapseSsisParameter)} does not support '{options.Format}' format.");
             }

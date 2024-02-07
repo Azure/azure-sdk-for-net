@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -248,6 +249,189 @@ namespace Azure.ResourceManager.AppService
             return new HybridConnectionData(id, name, type, systemData.Value, serviceBusNamespace.Value, relayName.Value, relayArmUri.Value, hostname.Value, Optional.ToNullable(port), sendKeyName.Value, sendKeyValue.Value, serviceBusSuffix.Value, kind.Value, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                if (Name.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{Name}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{Name}'");
+                }
+            }
+
+            if (Optional.IsDefined(Kind))
+            {
+                builder.Append("  kind:");
+                if (Kind.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{Kind}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{Kind}'");
+                }
+            }
+
+            if (Optional.IsDefined(Id))
+            {
+                builder.Append("  id:");
+                builder.AppendLine($" '{Id.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SystemData))
+            {
+                builder.Append("  systemData:");
+                builder.AppendLine($" '{SystemData.ToString()}'");
+            }
+
+            builder.Append("  properties:");
+            builder.AppendLine(" {");
+            if (Optional.IsDefined(ServiceBusNamespace))
+            {
+                builder.Append("    serviceBusNamespace:");
+                if (ServiceBusNamespace.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{ServiceBusNamespace}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{ServiceBusNamespace}'");
+                }
+            }
+
+            if (Optional.IsDefined(RelayName))
+            {
+                builder.Append("    relayName:");
+                if (RelayName.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{RelayName}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{RelayName}'");
+                }
+            }
+
+            if (Optional.IsDefined(RelayArmId))
+            {
+                builder.Append("    relayArmUri:");
+                builder.AppendLine($" '{RelayArmId.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Hostname))
+            {
+                builder.Append("    hostname:");
+                if (Hostname.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{Hostname}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{Hostname}'");
+                }
+            }
+
+            if (Optional.IsDefined(Port))
+            {
+                builder.Append("    port:");
+                builder.AppendLine($" {Port.Value}");
+            }
+
+            if (Optional.IsDefined(SendKeyName))
+            {
+                builder.Append("    sendKeyName:");
+                if (SendKeyName.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{SendKeyName}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{SendKeyName}'");
+                }
+            }
+
+            if (Optional.IsDefined(SendKeyValue))
+            {
+                builder.Append("    sendKeyValue:");
+                if (SendKeyValue.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{SendKeyValue}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{SendKeyValue}'");
+                }
+            }
+
+            if (Optional.IsDefined(ServiceBusSuffix))
+            {
+                builder.Append("    serviceBusSuffix:");
+                if (ServiceBusSuffix.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{ServiceBusSuffix}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{ServiceBusSuffix}'");
+                }
+            }
+
+            builder.AppendLine("  }");
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            bool inMultilineString = false;
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (inMultilineString)
+                {
+                    if (line.Contains("'''"))
+                    {
+                        inMultilineString = false;
+                    }
+                    stringBuilder.AppendLine(line);
+                    continue;
+                }
+                if (line.Contains("'''"))
+                {
+                    inMultilineString = true;
+                    stringBuilder.AppendLine($"{indent}{line}");
+                    continue;
+                }
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<HybridConnectionData>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<HybridConnectionData>)this).GetFormatFromOptions(options) : options.Format;
@@ -256,6 +440,8 @@ namespace Azure.ResourceManager.AppService
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(HybridConnectionData)} does not support '{options.Format}' format.");
             }
@@ -272,6 +458,8 @@ namespace Azure.ResourceManager.AppService
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeHybridConnectionData(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(HybridConnectionData)} does not support '{options.Format}' format.");
             }

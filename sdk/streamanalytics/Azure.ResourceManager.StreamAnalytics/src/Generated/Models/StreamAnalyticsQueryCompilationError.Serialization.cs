@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -163,6 +164,95 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             return new StreamAnalyticsQueryCompilationError(message.Value, Optional.ToNullable(startLine), Optional.ToNullable(startColumn), Optional.ToNullable(endLine), Optional.ToNullable(endColumn), Optional.ToNullable(isGlobal), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(Message))
+            {
+                builder.Append("  message:");
+                if (Message.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{Message}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{Message}'");
+                }
+            }
+
+            if (Optional.IsDefined(StartLine))
+            {
+                builder.Append("  startLine:");
+                builder.AppendLine($" {StartLine.Value}");
+            }
+
+            if (Optional.IsDefined(StartColumn))
+            {
+                builder.Append("  startColumn:");
+                builder.AppendLine($" {StartColumn.Value}");
+            }
+
+            if (Optional.IsDefined(EndLine))
+            {
+                builder.Append("  endLine:");
+                builder.AppendLine($" {EndLine.Value}");
+            }
+
+            if (Optional.IsDefined(EndColumn))
+            {
+                builder.Append("  endColumn:");
+                builder.AppendLine($" {EndColumn.Value}");
+            }
+
+            if (Optional.IsDefined(IsGlobal))
+            {
+                builder.Append("  isGlobal:");
+                var boolValue = IsGlobal.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            bool inMultilineString = false;
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (inMultilineString)
+                {
+                    if (line.Contains("'''"))
+                    {
+                        inMultilineString = false;
+                    }
+                    stringBuilder.AppendLine(line);
+                    continue;
+                }
+                if (line.Contains("'''"))
+                {
+                    inMultilineString = true;
+                    stringBuilder.AppendLine($"{indent}{line}");
+                    continue;
+                }
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<StreamAnalyticsQueryCompilationError>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<StreamAnalyticsQueryCompilationError>)this).GetFormatFromOptions(options) : options.Format;
@@ -171,6 +261,8 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(StreamAnalyticsQueryCompilationError)} does not support '{options.Format}' format.");
             }
@@ -187,6 +279,8 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeStreamAnalyticsQueryCompilationError(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(StreamAnalyticsQueryCompilationError)} does not support '{options.Format}' format.");
             }

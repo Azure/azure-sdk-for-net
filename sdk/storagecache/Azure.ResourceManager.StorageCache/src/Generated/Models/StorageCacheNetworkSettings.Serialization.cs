@@ -8,7 +8,9 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -189,6 +191,122 @@ namespace Azure.ResourceManager.StorageCache.Models
             return new StorageCacheNetworkSettings(Optional.ToNullable(mtu), Optional.ToList(utilityAddresses), Optional.ToList(dnsServers), dnsSearchDomain.Value, ntpServer.Value, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(Mtu))
+            {
+                builder.Append("  mtu:");
+                builder.AppendLine($" {Mtu.Value}");
+            }
+
+            if (Optional.IsCollectionDefined(UtilityAddresses))
+            {
+                if (UtilityAddresses.Any())
+                {
+                    builder.Append("  utilityAddresses:");
+                    builder.AppendLine(" [");
+                    foreach (var item in UtilityAddresses)
+                    {
+                        if (item == null)
+                        {
+                            builder.Append("null");
+                            continue;
+                        }
+                        builder.AppendLine($"    '{item.ToString()}'");
+                    }
+                    builder.AppendLine("  ]");
+                }
+            }
+
+            if (Optional.IsCollectionDefined(DnsServers))
+            {
+                if (DnsServers.Any())
+                {
+                    builder.Append("  dnsServers:");
+                    builder.AppendLine(" [");
+                    foreach (var item in DnsServers)
+                    {
+                        if (item == null)
+                        {
+                            builder.Append("null");
+                            continue;
+                        }
+                        builder.AppendLine($"    '{item.ToString()}'");
+                    }
+                    builder.AppendLine("  ]");
+                }
+            }
+
+            if (Optional.IsDefined(DnsSearchDomain))
+            {
+                builder.Append("  dnsSearchDomain:");
+                if (DnsSearchDomain.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{DnsSearchDomain}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{DnsSearchDomain}'");
+                }
+            }
+
+            if (Optional.IsDefined(NtpServer))
+            {
+                builder.Append("  ntpServer:");
+                if (NtpServer.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{NtpServer}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{NtpServer}'");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            bool inMultilineString = false;
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (inMultilineString)
+                {
+                    if (line.Contains("'''"))
+                    {
+                        inMultilineString = false;
+                    }
+                    stringBuilder.AppendLine(line);
+                    continue;
+                }
+                if (line.Contains("'''"))
+                {
+                    inMultilineString = true;
+                    stringBuilder.AppendLine($"{indent}{line}");
+                    continue;
+                }
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<StorageCacheNetworkSettings>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<StorageCacheNetworkSettings>)this).GetFormatFromOptions(options) : options.Format;
@@ -197,6 +315,8 @@ namespace Azure.ResourceManager.StorageCache.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(StorageCacheNetworkSettings)} does not support '{options.Format}' format.");
             }
@@ -213,6 +333,8 @@ namespace Azure.ResourceManager.StorageCache.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeStorageCacheNetworkSettings(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(StorageCacheNetworkSettings)} does not support '{options.Format}' format.");
             }
