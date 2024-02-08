@@ -60,6 +60,8 @@ public abstract class PipelineResponse : IDisposable
         }
     }
 
+    public bool IsBuffered { get; private set; } = false;
+
     /// <summary>
     /// Indicates whether the status code of the returned response is considered
     /// an error code.
@@ -95,35 +97,36 @@ public abstract class PipelineResponse : IDisposable
     }
 
     internal void BufferContent(TimeSpan? timeout = default, CancellationTokenSource? cts = default)
-    {
-        Stream? responseContentStream = ContentStream;
-        if (responseContentStream == null || TryGetBufferedContent(out _))
-        {
-            // No need to buffer content.
-            return;
-        }
-
-        MemoryStream bufferStream = new();
-        CopyTo(responseContentStream, bufferStream, timeout ?? NetworkTimeout, cts ?? new CancellationTokenSource());
-        responseContentStream.Dispose();
-        bufferStream.Position = 0;
-        ContentStream = bufferStream;
-    }
+        => BufferContentSyncOrAsync(timeout, cts, async: false).EnsureCompleted();
 
     internal async Task BufferContentAsync(TimeSpan? timeout = default, CancellationTokenSource? cts = default)
+        => await BufferContentSyncOrAsync(timeout, cts, async: true).ConfigureAwait(false);
+
+    private async Task BufferContentSyncOrAsync(TimeSpan? timeout, CancellationTokenSource? cts, bool async)
     {
         Stream? responseContentStream = ContentStream;
-        if (responseContentStream == null || TryGetBufferedContent(out _))
+        if (responseContentStream == null || IsBuffered)
         {
             // No need to buffer content.
             return;
         }
 
         MemoryStream bufferStream = new();
-        await CopyToAsync(responseContentStream, bufferStream, timeout ?? NetworkTimeout, cts ?? new CancellationTokenSource()).ConfigureAwait(false);
+
+        if (async)
+        {
+            await CopyToAsync(responseContentStream, bufferStream, timeout ?? NetworkTimeout, cts ?? new CancellationTokenSource()).ConfigureAwait(false);
+        }
+        else
+        {
+            CopyTo(responseContentStream, bufferStream, timeout ?? NetworkTimeout, cts ?? new CancellationTokenSource());
+        }
+
         responseContentStream.Dispose();
         bufferStream.Position = 0;
         ContentStream = bufferStream;
+
+        IsBuffered = true;
     }
 
     private static async Task CopyToAsync(Stream source, Stream destination, TimeSpan timeout, CancellationTokenSource cancellationTokenSource)
