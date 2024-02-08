@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -13,10 +14,18 @@ using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class DatasetTextFormat : IUtf8JsonSerializable
+    public partial class DatasetTextFormat : IUtf8JsonSerializable, IJsonModel<DatasetTextFormat>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DatasetTextFormat>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<DatasetTextFormat>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<DatasetTextFormat>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DatasetTextFormat)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(ColumnDelimiter))
             {
@@ -90,8 +99,22 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteEndObject();
         }
 
-        internal static DatasetTextFormat DeserializeDatasetTextFormat(JsonElement element)
+        DatasetTextFormat IJsonModel<DatasetTextFormat>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<DatasetTextFormat>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DatasetTextFormat)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeDatasetTextFormat(document.RootElement, options);
+        }
+
+        internal static DatasetTextFormat DeserializeDatasetTextFormat(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -221,5 +244,36 @@ namespace Azure.ResourceManager.DataFactory.Models
             additionalProperties = additionalPropertiesDictionary;
             return new DatasetTextFormat(type, serializer.Value, deserializer.Value, additionalProperties, columnDelimiter.Value, rowDelimiter.Value, escapeChar.Value, quoteChar.Value, nullValue.Value, encodingName.Value, treatEmptyAsNull.Value, skipLineCount.Value, firstRowAsHeader.Value);
         }
+
+        BinaryData IPersistableModel<DatasetTextFormat>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DatasetTextFormat>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(DatasetTextFormat)} does not support '{options.Format}' format.");
+            }
+        }
+
+        DatasetTextFormat IPersistableModel<DatasetTextFormat>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DatasetTextFormat>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeDatasetTextFormat(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(DatasetTextFormat)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<DatasetTextFormat>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

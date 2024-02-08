@@ -25,5 +25,10 @@ namespace Azure.ResourceManager.DataFactory.Models
         {
             CopySourceType = copySourceType ?? "Unknown";
         }
+
+        /// <summary> Initializes a new instance of <see cref="UnknownCopySource"/> for deserialization. </summary>
+        internal UnknownCopySource()
+        {
+        }
     }
 }

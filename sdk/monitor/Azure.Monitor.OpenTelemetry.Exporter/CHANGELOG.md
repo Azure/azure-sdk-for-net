@@ -1,21 +1,32 @@
 # Release History
 
-## 1.3.0-beta.1 (Unreleased)
-
-### Features Added
-
-### Breaking Changes
+## 1.3.0-beta.1 (2024-02-08)
 
 ### Bugs Fixed
 
+* Fixed an issue where `_OTELRESOURCE_` metrics were emitted with duplicated
+  timestamps. This fix ensures accurate and distinct timestamping for all
+  `_OTELRESOURCE_` metrics.
+  ([#41761](https://github.com/Azure/azure-sdk-for-net/pull/41761))
+
+* Fixed an issue where tags associated with Exceptions, specifically those logged using
+  [Activity.RecordException()](https://github.com/open-telemetry/opentelemetry-dotnet/blob/f69c025178216d1879e5884f0a74ab15ca759a23/src/OpenTelemetry.Api/Trace/ActivityExtensions.cs#L81),
+  were not being included.
+  Now, tags linked to an `ActivityEvent` of type exception are correctly exported as Custom Properties.
+  ([#41767](https://github.com/Azure/azure-sdk-for-net/pull/41767))
+
 ### Other Changes
+
+* Changed `AzureMonitorLogExporter` to be public.
+  This will allow users to write custom processors for filtering logs.
+  ([#41553](https://github.com/Azure/azure-sdk-for-net/pull/41553))
 
 ## 1.2.0 (2024-01-24)
 
 ### Other Changes
 
 * Update OpenTelemetry dependencies
-  ([41398](https://github.com/Azure/azure-sdk-for-net/pull/41398))
+  ([#41398](https://github.com/Azure/azure-sdk-for-net/pull/41398))
   - OpenTelemetry 1.7.0
 
 ## 1.1.0 (2023-11-29)

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -13,10 +14,18 @@ using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    internal partial class UnknownCopySource : IUtf8JsonSerializable
+    internal partial class UnknownCopySource : IUtf8JsonSerializable, IJsonModel<CopyActivitySource>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CopyActivitySource>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<CopyActivitySource>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<CopyActivitySource>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(CopyActivitySource)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(CopySourceType);
@@ -55,8 +64,22 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteEndObject();
         }
 
-        internal static UnknownCopySource DeserializeUnknownCopySource(JsonElement element)
+        CopyActivitySource IJsonModel<CopyActivitySource>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<CopyActivitySource>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(CopyActivitySource)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeUnknownCopySource(document.RootElement, options);
+        }
+
+        internal static UnknownCopySource DeserializeUnknownCopySource(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -116,5 +139,36 @@ namespace Azure.ResourceManager.DataFactory.Models
             additionalProperties = additionalPropertiesDictionary;
             return new UnknownCopySource(type, sourceRetryCount.Value, sourceRetryWait.Value, maxConcurrentConnections.Value, disableMetricsCollection.Value, additionalProperties);
         }
+
+        BinaryData IPersistableModel<CopyActivitySource>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<CopyActivitySource>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(CopyActivitySource)} does not support '{options.Format}' format.");
+            }
+        }
+
+        CopyActivitySource IPersistableModel<CopyActivitySource>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<CopyActivitySource>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeUnknownCopySource(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(CopyActivitySource)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<CopyActivitySource>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

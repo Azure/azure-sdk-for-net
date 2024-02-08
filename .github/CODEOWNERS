@@ -465,7 +465,7 @@
 /sdk/eventhub/Microsoft.Azure.EventHubs.Processor/                 @serkantkaraca @sjkwak @kasun04
 
 # ServiceLabel: %Event Hubs %Service Attention
-/sdk/eventhub/Microsoft.Azure.EventHubs.ServiceFabricProcessor/    @JamesBirdsall @serkantkaraca @sjkwak
+/sdk/eventhub/Microsoft.Azure.EventHubs.ServiceFabricProcessor/    @serkantkaraca @sjkwak
 
 # ServiceLabel: %Functions %Service Attention
 #/<NotInRepo>/                                                     @ahmedelnably @fabiocav

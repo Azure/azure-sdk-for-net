@@ -603,30 +603,6 @@ foreach (MetricResult metric in result.Value.Metrics)
 }
 ```
 
-#### Metrics batch query
-
-A user can also query metrics from multiple resources at once using the `QueryBatch` method of `MetricsBatchQueryClient`. This uses a different API than the `MetricsQueryClient` and requires that a user pass in a regional endpoint when instantiating the client (for example, "https://westus3.metrics.monitor.azure.com").
-
-Note, each resource must be in the same region as the endpoint passed in when instantiating the client, and each resource must be in the same Azure subscription. Furthermore, the metric namespace that contains the metrics to be queried must also be passed. A list of metric namespaces can be found [here][metric_namespaces].
-
-```C# Snippet:QueryBatchMetrics
-string resourceId =
-    "/subscriptions/<id>/resourceGroups/<rg-name>/providers/<source>/storageAccounts/<resource-name-1>";
-MetricsBatchQueryClient client = new MetricsBatchQueryClient(new Uri("https://metrics.monitor.azure.com/.default"), new DefaultAzureCredential());
-Response<MetricsBatchResult> metricsResultsResponse = await client.QueryBatchAsync(
-    resourceIds: new List<string> { resourceId },
-    metricNames: new List<string> { "Ingress" },
-    metricNamespace: "Microsoft.Storage/storageAccounts").ConfigureAwait(false);
-
-MetricsBatchResult metricsQueryResults = metricsResultsResponse.Value;
-foreach (var value in metricsQueryResults.Values)
-{
-    Console.WriteLine(value.Interval);
-}
-```
-
-For an inventory of metrics and dimensions available for each Azure resource type, see [Supported metrics with Azure Monitor](https://learn.microsoft.com/azure/azure-monitor/essentials/metrics-supported).
-
 #### Register the client with dependency injection
 
 To register `LogsQueryClient` with the dependency injection (DI) container, invoke the `AddLogsQueryClient` method. To register `MetricsQueryClient` with the dependency injection (DI) container, invoke the `AddMetricsQueryClient` method. For more information, see [Register client](https://learn.microsoft.com/dotnet/azure/sdk/dependency-injection#register-client).

@@ -5,16 +5,27 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class CmdkeySetup : IUtf8JsonSerializable
+    public partial class CmdkeySetup : IUtf8JsonSerializable, IJsonModel<CmdkeySetup>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CmdkeySetup>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<CmdkeySetup>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<CmdkeySetup>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(CmdkeySetup)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(CustomSetupBaseType);
@@ -27,11 +38,40 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WritePropertyName("password"u8);
             JsonSerializer.Serialize(writer, Password);
             writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static CmdkeySetup DeserializeCmdkeySetup(JsonElement element)
+        CmdkeySetup IJsonModel<CmdkeySetup>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<CmdkeySetup>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(CmdkeySetup)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeCmdkeySetup(document.RootElement, options);
+        }
+
+        internal static CmdkeySetup DeserializeCmdkeySetup(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -40,6 +80,8 @@ namespace Azure.ResourceManager.DataFactory.Models
             DataFactoryElement<string> targetName = default;
             DataFactoryElement<string> userName = default;
             DataFactorySecretBaseDefinition password = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"u8))
@@ -74,8 +116,44 @@ namespace Azure.ResourceManager.DataFactory.Models
                     }
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new CmdkeySetup(type, targetName, userName, password);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new CmdkeySetup(type, serializedAdditionalRawData, targetName, userName, password);
         }
+
+        BinaryData IPersistableModel<CmdkeySetup>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<CmdkeySetup>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(CmdkeySetup)} does not support '{options.Format}' format.");
+            }
+        }
+
+        CmdkeySetup IPersistableModel<CmdkeySetup>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<CmdkeySetup>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeCmdkeySetup(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(CmdkeySetup)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<CmdkeySetup>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

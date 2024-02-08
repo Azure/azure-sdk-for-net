@@ -44,6 +44,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             LinkedServiceType = linkedServiceType ?? "AzureMySql";
         }
 
+        /// <summary> Initializes a new instance of <see cref="AzureMySqlLinkedService"/> for deserialization. </summary>
+        internal AzureMySqlLinkedService()
+        {
+        }
+
         /// <summary> The connection string. Type: string, SecureString or AzureKeyVaultSecretReference. </summary>
         public DataFactoryElement<string> ConnectionString { get; set; }
         /// <summary> The Azure key vault secret reference of password in connection string. </summary>
