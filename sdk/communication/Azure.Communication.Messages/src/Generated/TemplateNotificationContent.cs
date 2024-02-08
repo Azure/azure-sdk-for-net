@@ -32,10 +32,16 @@ namespace Azure.Communication.Messages
         /// <param name="channelRegistrationId"> The Channel Registration ID for the Business Identifier. </param>
         /// <param name="to"> The native external platform user identifiers of the recipient. </param>
         /// <param name="kind"> The type discriminator describing a notification type. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="template"> The template object used to create templates. </param>
-        internal TemplateNotificationContent(Guid channelRegistrationId, IList<string> to, CommunicationMessageKind kind, MessageTemplate template) : base(channelRegistrationId, to, kind)
+        internal TemplateNotificationContent(Guid channelRegistrationId, IList<string> to, CommunicationMessageKind kind, IDictionary<string, BinaryData> serializedAdditionalRawData, MessageTemplate template) : base(channelRegistrationId, to, kind, serializedAdditionalRawData)
         {
             Template = template;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="TemplateNotificationContent"/> for deserialization. </summary>
+        internal TemplateNotificationContent()
+        {
         }
 
         /// <summary> The template object used to create templates. </summary>

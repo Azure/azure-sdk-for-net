@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Communication.Messages;
 using Azure.Core;
 
@@ -30,10 +31,16 @@ namespace Azure.Communication.Messages.Models.Channels
         /// <param name="language"> The template's language, in the ISO 639 format, consist of a two-letter language code followed by an optional two-letter country code, e.g., 'en' or 'en_US'. </param>
         /// <param name="status"> The aggregated template status. </param>
         /// <param name="kind"> The type discriminator describing a template type. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="content"> WhatsApp platform's template content. This is the payload returned from WhatsApp API. </param>
-        internal WhatsAppMessageTemplateItem(string name, string language, MessageTemplateStatus status, CommunicationMessagesChannel kind, BinaryData content) : base(name, language, status, kind)
+        internal WhatsAppMessageTemplateItem(string name, string language, MessageTemplateStatus status, CommunicationMessagesChannel kind, IDictionary<string, BinaryData> serializedAdditionalRawData, BinaryData content) : base(name, language, status, kind, serializedAdditionalRawData)
         {
             Content = content;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="WhatsAppMessageTemplateItem"/> for deserialization. </summary>
+        internal WhatsAppMessageTemplateItem()
+        {
         }
 
         /// <summary>

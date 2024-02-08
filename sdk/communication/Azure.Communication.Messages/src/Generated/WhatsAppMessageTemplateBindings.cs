@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Communication.Messages;
 using Azure.Core;
@@ -26,11 +27,12 @@ namespace Azure.Communication.Messages.Models.Channels
 
         /// <summary> Initializes a new instance of <see cref="WhatsAppMessageTemplateBindings"/>. </summary>
         /// <param name="kind"> The type discriminator describing a template bindings type. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="header"> The header template bindings. </param>
         /// <param name="body"> The body template bindings. </param>
         /// <param name="footer"> The footer template bindings. </param>
         /// <param name="buttons"> The button template bindings. </param>
-        internal WhatsAppMessageTemplateBindings(string kind, IList<WhatsAppMessageTemplateBindingsComponent> header, IList<WhatsAppMessageTemplateBindingsComponent> body, IList<WhatsAppMessageTemplateBindingsComponent> footer, IList<WhatsAppMessageTemplateBindingsButton> buttons) : base(kind)
+        internal WhatsAppMessageTemplateBindings(string kind, IDictionary<string, BinaryData> serializedAdditionalRawData, IList<WhatsAppMessageTemplateBindingsComponent> header, IList<WhatsAppMessageTemplateBindingsComponent> body, IList<WhatsAppMessageTemplateBindingsComponent> footer, IList<WhatsAppMessageTemplateBindingsButton> buttons) : base(kind, serializedAdditionalRawData)
         {
             Header = header;
             Body = body;

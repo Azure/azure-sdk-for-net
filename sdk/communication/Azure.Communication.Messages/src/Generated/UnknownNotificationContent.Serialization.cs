@@ -14,26 +14,19 @@ using Azure.Core;
 
 namespace Azure.Communication.Messages
 {
-    public partial class MediaNotificationContent : IUtf8JsonSerializable, IJsonModel<MediaNotificationContent>
+    internal partial class UnknownNotificationContent : IUtf8JsonSerializable, IJsonModel<NotificationContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MediaNotificationContent>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NotificationContent>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
-        void IJsonModel<MediaNotificationContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<NotificationContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<MediaNotificationContent>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<NotificationContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MediaNotificationContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NotificationContent)} does not support '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Content))
-            {
-                writer.WritePropertyName("content"u8);
-                writer.WriteStringValue(Content);
-            }
-            writer.WritePropertyName("mediaUri"u8);
-            writer.WriteStringValue(MediaUri.AbsoluteUri);
             writer.WritePropertyName("channelRegistrationId"u8);
             writer.WriteStringValue(ChannelRegistrationId);
             writer.WritePropertyName("to"u8);
@@ -63,19 +56,19 @@ namespace Azure.Communication.Messages
             writer.WriteEndObject();
         }
 
-        MediaNotificationContent IJsonModel<MediaNotificationContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        NotificationContent IJsonModel<NotificationContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<MediaNotificationContent>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<NotificationContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MediaNotificationContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NotificationContent)} does not support '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeMediaNotificationContent(document.RootElement, options);
+            return DeserializeUnknownNotificationContent(document.RootElement, options);
         }
 
-        internal static MediaNotificationContent DeserializeMediaNotificationContent(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static UnknownNotificationContent DeserializeUnknownNotificationContent(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= new ModelReaderWriterOptions("W");
 
@@ -83,25 +76,13 @@ namespace Azure.Communication.Messages
             {
                 return null;
             }
-            Optional<string> content = default;
-            Uri mediaUri = default;
             Guid channelRegistrationId = default;
             IList<string> to = default;
-            CommunicationMessageKind kind = default;
+            CommunicationMessageKind kind = "Unknown";
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("content"u8))
-                {
-                    content = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("mediaUri"u8))
-                {
-                    mediaUri = new Uri(property.Value.GetString());
-                    continue;
-                }
                 if (property.NameEquals("channelRegistrationId"u8))
                 {
                     channelRegistrationId = property.Value.GetGuid();
@@ -128,46 +109,46 @@ namespace Azure.Communication.Messages
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MediaNotificationContent(channelRegistrationId, to, kind, serializedAdditionalRawData, content.Value, mediaUri);
+            return new UnknownNotificationContent(channelRegistrationId, to, kind, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<MediaNotificationContent>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<NotificationContent>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<MediaNotificationContent>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<NotificationContent>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MediaNotificationContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NotificationContent)} does not support '{options.Format}' format.");
             }
         }
 
-        MediaNotificationContent IPersistableModel<MediaNotificationContent>.Create(BinaryData data, ModelReaderWriterOptions options)
+        NotificationContent IPersistableModel<NotificationContent>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<MediaNotificationContent>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<NotificationContent>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeMediaNotificationContent(document.RootElement, options);
+                        return DeserializeUnknownNotificationContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MediaNotificationContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NotificationContent)} does not support '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<MediaNotificationContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<NotificationContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static new MediaNotificationContent FromResponse(Response response)
+        internal static new UnknownNotificationContent FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content);
-            return DeserializeMediaNotificationContent(document.RootElement);
+            return DeserializeUnknownNotificationContent(document.RootElement);
         }
 
         /// <summary> Convert into a Utf8JsonRequestContent. </summary>

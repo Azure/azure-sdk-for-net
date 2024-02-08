@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.Communication.Messages
@@ -29,14 +30,20 @@ namespace Azure.Communication.Messages
         /// <summary> Initializes a new instance of <see cref="MessageTemplateVideo"/>. </summary>
         /// <param name="name"> Name of the Template value. </param>
         /// <param name="kind"> The type discriminator describing a template parameter type. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="uri"> The (public) URL of the media. </param>
         /// <param name="caption"> The [optional] caption of the media object. </param>
         /// <param name="fileName"> The [optional] filename of the media file. </param>
-        internal MessageTemplateVideo(string name, string kind, Uri uri, string caption, string fileName) : base(name, kind)
+        internal MessageTemplateVideo(string name, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData, Uri uri, string caption, string fileName) : base(name, kind, serializedAdditionalRawData)
         {
             Uri = uri;
             Caption = caption;
             FileName = fileName;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MessageTemplateVideo"/> for deserialization. </summary>
+        internal MessageTemplateVideo()
+        {
         }
 
         /// <summary> The (public) URL of the media. </summary>

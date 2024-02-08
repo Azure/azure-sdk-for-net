@@ -6,5 +6,6 @@
     "../../TempTypeSpecFiles/Communication.Messages/node_modules/@autorest/csharp/Generator.Shared",
     "../../TempTypeSpecFiles/Communication.Messages/node_modules/@autorest/csharp/Azure.Core.Shared"
   ],
-  "model-namespace": false
+  "model-namespace": false,
+  "use-model-reader-writer": true
 }

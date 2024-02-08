@@ -14,23 +14,21 @@ using Azure.Core;
 
 namespace Azure.Communication.Messages
 {
-    public partial class MessageReceipt : IUtf8JsonSerializable, IJsonModel<MessageReceipt>
+    internal partial class UnknownMessageTemplateBindings : IUtf8JsonSerializable, IJsonModel<MessageTemplateBindings>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MessageReceipt>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MessageTemplateBindings>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
-        void IJsonModel<MessageReceipt>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<MessageTemplateBindings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<MessageReceipt>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<MessageTemplateBindings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MessageReceipt)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MessageTemplateBindings)} does not support '{format}' format.");
             }
 
             writer.WriteStartObject();
-            writer.WritePropertyName("messageId"u8);
-            writer.WriteStringValue(MessageId);
-            writer.WritePropertyName("to"u8);
-            writer.WriteStringValue(To);
+            writer.WritePropertyName("kind"u8);
+            writer.WriteStringValue(Kind);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -49,19 +47,19 @@ namespace Azure.Communication.Messages
             writer.WriteEndObject();
         }
 
-        MessageReceipt IJsonModel<MessageReceipt>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        MessageTemplateBindings IJsonModel<MessageTemplateBindings>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<MessageReceipt>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<MessageTemplateBindings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MessageReceipt)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MessageTemplateBindings)} does not support '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeMessageReceipt(document.RootElement, options);
+            return DeserializeUnknownMessageTemplateBindings(document.RootElement, options);
         }
 
-        internal static MessageReceipt DeserializeMessageReceipt(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static UnknownMessageTemplateBindings DeserializeUnknownMessageTemplateBindings(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= new ModelReaderWriterOptions("W");
 
@@ -69,20 +67,14 @@ namespace Azure.Communication.Messages
             {
                 return null;
             }
-            string messageId = default;
-            string to = default;
+            string kind = "Unknown";
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("messageId"u8))
+                if (property.NameEquals("kind"u8))
                 {
-                    messageId = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("to"u8))
-                {
-                    to = property.Value.GetString();
+                    kind = property.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
@@ -91,50 +83,50 @@ namespace Azure.Communication.Messages
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MessageReceipt(messageId, to, serializedAdditionalRawData);
+            return new UnknownMessageTemplateBindings(kind, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<MessageReceipt>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<MessageTemplateBindings>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<MessageReceipt>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<MessageTemplateBindings>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MessageReceipt)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MessageTemplateBindings)} does not support '{options.Format}' format.");
             }
         }
 
-        MessageReceipt IPersistableModel<MessageReceipt>.Create(BinaryData data, ModelReaderWriterOptions options)
+        MessageTemplateBindings IPersistableModel<MessageTemplateBindings>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<MessageReceipt>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<MessageTemplateBindings>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeMessageReceipt(document.RootElement, options);
+                        return DeserializeUnknownMessageTemplateBindings(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MessageReceipt)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MessageTemplateBindings)} does not support '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<MessageReceipt>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<MessageTemplateBindings>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static MessageReceipt FromResponse(Response response)
+        internal static new UnknownMessageTemplateBindings FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content);
-            return DeserializeMessageReceipt(document.RootElement);
+            return DeserializeUnknownMessageTemplateBindings(document.RootElement);
         }
 
         /// <summary> Convert into a Utf8JsonRequestContent. </summary>
-        internal virtual RequestContent ToRequestContent()
+        internal override RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(this);

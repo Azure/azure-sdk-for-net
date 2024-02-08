@@ -32,12 +32,18 @@ namespace Azure.Communication.Messages
         /// <param name="channelRegistrationId"> The Channel Registration ID for the Business Identifier. </param>
         /// <param name="to"> The native external platform user identifiers of the recipient. </param>
         /// <param name="kind"> The type discriminator describing a notification type. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="content"> Optional text content. </param>
         /// <param name="mediaUri"> A media url for the file. Required if the type is one of the supported media types, e.g. image. </param>
-        internal MediaNotificationContent(Guid channelRegistrationId, IList<string> to, CommunicationMessageKind kind, string content, Uri mediaUri) : base(channelRegistrationId, to, kind)
+        internal MediaNotificationContent(Guid channelRegistrationId, IList<string> to, CommunicationMessageKind kind, IDictionary<string, BinaryData> serializedAdditionalRawData, string content, Uri mediaUri) : base(channelRegistrationId, to, kind, serializedAdditionalRawData)
         {
             Content = content;
             MediaUri = mediaUri;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MediaNotificationContent"/> for deserialization. </summary>
+        internal MediaNotificationContent()
+        {
         }
 
         /// <summary> Optional text content. </summary>

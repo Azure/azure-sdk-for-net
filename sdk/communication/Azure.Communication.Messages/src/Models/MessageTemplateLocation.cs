@@ -4,6 +4,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.Core.GeoJson;
 
@@ -60,11 +61,12 @@ namespace Azure.Communication.Messages
         /// <summary> Initializes a new instance of <see cref="MessageTemplateLocation"/>. </summary>
         /// <param name="name"> Name of the Template value. </param>
         /// <param name="kind"> The type discriminator describing a template parameter type. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="locationName"> The [Optional] name of the location. </param>
         /// <param name="address"> The [Optional] address of the location. </param>
         /// <param name="latitudeInternal"> The latitude of the location. </param>
         /// <param name="longitudeInternal"> The longitude of the location. </param>
-        internal MessageTemplateLocation(string name, string kind, string locationName, string address, double latitudeInternal, double longitudeInternal) : base(name, kind)
+        internal MessageTemplateLocation(string name, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData, string locationName, string address, double latitudeInternal, double longitudeInternal) : base(name, kind, serializedAdditionalRawData)
         {
             LocationName = locationName;
             Address = address;

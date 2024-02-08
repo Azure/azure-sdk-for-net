@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.Communication.Messages
@@ -29,10 +30,16 @@ namespace Azure.Communication.Messages
         /// <summary> Initializes a new instance of <see cref="MessageTemplateText"/>. </summary>
         /// <param name="name"> Name of the Template value. </param>
         /// <param name="kind"> The type discriminator describing a template parameter type. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="text"> The text value. </param>
-        internal MessageTemplateText(string name, string kind, string text) : base(name, kind)
+        internal MessageTemplateText(string name, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData, string text) : base(name, kind, serializedAdditionalRawData)
         {
             Text = text;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MessageTemplateText"/> for deserialization. </summary>
+        internal MessageTemplateText()
+        {
         }
 
         /// <summary> The text value. </summary>

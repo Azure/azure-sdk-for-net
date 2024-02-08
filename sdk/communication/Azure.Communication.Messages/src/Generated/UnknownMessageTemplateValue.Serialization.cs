@@ -7,14 +7,14 @@
 
 using System;
 using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
 
 namespace Azure.Communication.Messages
 {
-    [PersistableModelProxy(typeof(UnknownMessageTemplateValue))]
-    public partial class MessageTemplateValue : IUtf8JsonSerializable, IJsonModel<MessageTemplateValue>
+    internal partial class UnknownMessageTemplateValue : IUtf8JsonSerializable, IJsonModel<MessageTemplateValue>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MessageTemplateValue>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -58,10 +58,10 @@ namespace Azure.Communication.Messages
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeMessageTemplateValue(document.RootElement, options);
+            return DeserializeUnknownMessageTemplateValue(document.RootElement, options);
         }
 
-        internal static MessageTemplateValue DeserializeMessageTemplateValue(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static UnknownMessageTemplateValue DeserializeUnknownMessageTemplateValue(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= new ModelReaderWriterOptions("W");
 
@@ -69,19 +69,29 @@ namespace Azure.Communication.Messages
             {
                 return null;
             }
-            if (element.TryGetProperty("kind", out JsonElement discriminator))
+            string name = default;
+            string kind = "Unknown";
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
             {
-                switch (discriminator.GetString())
+                if (property.NameEquals("name"u8))
                 {
-                    case "text": return MessageTemplateText.DeserializeMessageTemplateText(element);
-                    case "image": return MessageTemplateImage.DeserializeMessageTemplateImage(element);
-                    case "document": return MessageTemplateDocument.DeserializeMessageTemplateDocument(element);
-                    case "video": return MessageTemplateVideo.DeserializeMessageTemplateVideo(element);
-                    case "location": return MessageTemplateLocation.DeserializeMessageTemplateLocation(element);
-                    case "quickAction": return MessageTemplateQuickAction.DeserializeMessageTemplateQuickAction(element);
+                    name = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("kind"u8))
+                {
+                    kind = property.Value.GetString();
+                    continue;
+                }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            return UnknownMessageTemplateValue.DeserializeUnknownMessageTemplateValue(element);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new UnknownMessageTemplateValue(name, kind, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MessageTemplateValue>.Write(ModelReaderWriterOptions options)
@@ -106,7 +116,7 @@ namespace Azure.Communication.Messages
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeMessageTemplateValue(document.RootElement, options);
+                        return DeserializeUnknownMessageTemplateValue(document.RootElement, options);
                     }
                 default:
                     throw new FormatException($"The model {nameof(MessageTemplateValue)} does not support '{options.Format}' format.");
@@ -117,14 +127,14 @@ namespace Azure.Communication.Messages
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static MessageTemplateValue FromResponse(Response response)
+        internal static new UnknownMessageTemplateValue FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content);
-            return DeserializeMessageTemplateValue(document.RootElement);
+            return DeserializeUnknownMessageTemplateValue(document.RootElement);
         }
 
         /// <summary> Convert into a Utf8JsonRequestContent. </summary>
-        internal virtual RequestContent ToRequestContent()
+        internal override RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(this);

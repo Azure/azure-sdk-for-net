@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.Communication.Messages
@@ -13,6 +14,11 @@ namespace Azure.Communication.Messages
     /// <summary> The message template's location value information. </summary>
     public partial class MessageTemplateLocation : MessageTemplateValue
     {
+        /// <summary> Initializes a new instance of <see cref="MessageTemplateLocation"/> for deserialization. </summary>
+        internal MessageTemplateLocation()
+        {
+        }
+
         /// <summary> The [Optional] name of the location. </summary>
         public string LocationName { get; set; }
         /// <summary> The [Optional] address of the location. </summary>
