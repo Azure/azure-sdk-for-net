@@ -37,9 +37,6 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics
                 throw new ArgumentNullException(nameof(ikey));
             }
 
-            // Prevents the http operations from being instrumented.
-            using var scope = SuppressInstrumentationScope.Begin();
-
             using var message = CreatePingRequest(ikey, apikey, xMsQpsTransmissionTime, xMsQpsMachineName, xMsQpsInstanceName, xMsQpsStreamId, xMsQpsRoleName, xMsQpsInvariantVersion, xMsQpsConfigurationEtag, monitoringDataPoint);
             _pipeline.Send(message, cancellationToken);
             var headers = new QuickPulseSDKClientAPIsPingHeaders(message.Response);
@@ -93,9 +90,6 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics
             {
                 throw new ArgumentNullException(nameof(ikey));
             }
-
-            // Prevents the http operations from being instrumented.
-            using var scope = SuppressInstrumentationScope.Begin();
 
             using var message = CreatePostRequest(ikey, apikey, xMsQpsConfigurationEtag, xMsQpsTransmissionTime, monitoringDataPoints);
             _pipeline.Send(message, cancellationToken);
