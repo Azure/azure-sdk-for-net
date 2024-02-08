@@ -15,6 +15,38 @@ namespace Azure.Communication.JobRouter
     /// <summary> A unit of work to be routed. </summary>
     public partial class RouterJob
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="RouterJob"/>. </summary>
         internal RouterJob()
         {
@@ -45,7 +77,8 @@ namespace Azure.Communication.JobRouter
         /// <param name="notes"> Notes attached to a job, sorted by timestamp. </param>
         /// <param name="scheduledAt"> If set, job will be scheduled to be enqueued at a given time. </param>
         /// <param name="matchingMode"> If provided, will determine how job matching will be carried out. Default mode: QueueAndMatchMode. </param>
-        internal RouterJob(ETag eTag, string id, string channelReference, RouterJobStatus? status, DateTimeOffset? enqueuedAt, string channelId, string classificationPolicyId, string queueId, int? priority, string dispositionCode, IList<RouterWorkerSelector> requestedWorkerSelectors, IReadOnlyList<RouterWorkerSelector> attachedWorkerSelectors, IDictionary<string, BinaryData> labels, IReadOnlyDictionary<string, RouterJobAssignment> assignments, IDictionary<string, BinaryData> tags, IList<RouterJobNote> notes, DateTimeOffset? scheduledAt, JobMatchingMode matchingMode)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal RouterJob(ETag eTag, string id, string channelReference, RouterJobStatus? status, DateTimeOffset? enqueuedAt, string channelId, string classificationPolicyId, string queueId, int? priority, string dispositionCode, IList<RouterWorkerSelector> requestedWorkerSelectors, IReadOnlyList<RouterWorkerSelector> attachedWorkerSelectors, IDictionary<string, BinaryData> labels, IReadOnlyDictionary<string, RouterJobAssignment> assignments, IDictionary<string, BinaryData> tags, IList<RouterJobNote> notes, DateTimeOffset? scheduledAt, JobMatchingMode matchingMode, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ETag = eTag;
             Id = id;
@@ -65,6 +98,7 @@ namespace Azure.Communication.JobRouter
             Notes = notes;
             ScheduledAt = scheduledAt;
             MatchingMode = matchingMode;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
         /// <summary> Id of a job. </summary>
         public string Id { get; }
