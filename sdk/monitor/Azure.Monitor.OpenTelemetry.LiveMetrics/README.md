@@ -11,8 +11,6 @@ The [OpenTelemetry .NET](https://github.com/open-telemetry/opentelemetry-dotnet)
 
 ### Install the package
 
-#### Latest Version: [![Nuget](https://img.shields.io/nuget/vpre/Azure.Monitor.OpenTelemetry.LiveMetrics.svg)](https://www.nuget.org/packages/Azure.Monitor.OpenTelemetry.LiveMetrics/)  
-
 Install the Azure Monitor Live Metrics client for OpenTelemetry .NET with [NuGet](https://www.nuget.org/):
 ```dotnetcli
 dotnet add package Azure.Monitor.OpenTelemetry.LiveMetrics --prerelease
