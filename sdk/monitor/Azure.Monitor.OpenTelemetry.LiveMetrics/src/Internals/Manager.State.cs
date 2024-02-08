@@ -111,7 +111,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals
         {
             try
             {
-                // Prevents the http operations from being instrumented.
+                // Suppress the outbound Live Metrics service calls from being collected as dependency telemetry.
                 using var scope = SuppressInstrumentationScope.Begin();
 
                 while (true)
