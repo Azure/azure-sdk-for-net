@@ -152,7 +152,7 @@ namespace Azure.Core
         /// <summary>
         /// Returns the response content stream and releases its ownership to the caller.
         /// After this method has been called, any use of the
-        /// <see cref="PipelineResponse.ContentStream"/> or <see cref="Response.Content"/>
+        /// <see cref="PipelineResponse.ContentStream"/> or <see cref="PipelineResponse.Content"/>
         /// properties on this message will result in an <see cref="InvalidOperationException"/>
         /// being thrown.
         /// </summary>

@@ -15,6 +15,7 @@ public abstract class PipelineResponse : IDisposable
     private static readonly BinaryData s_emptyBinaryData = new(Array.Empty<byte>());
 
     private bool _isError = false;
+    private BinaryData? _bufferedContent;
 
     /// <summary>
     /// Gets the HTTP status code.
@@ -35,6 +36,13 @@ public abstract class PipelineResponse : IDisposable
     /// </summary>
     public abstract Stream? ContentStream { get; set; }
 
+    /// <summary>
+    /// Gets the content of the HTTP response, if it is available.
+    /// </summary>
+    /// <remarks>
+    /// Throws <see cref="InvalidOperationException"/> when the response has not
+    /// been buffered by the pipeline.
+    /// </remarks>
     public virtual BinaryData Content
     {
         get
@@ -44,23 +52,16 @@ public abstract class PipelineResponse : IDisposable
                 return s_emptyBinaryData;
             }
 
-            if (!TryGetBufferedContent(out MemoryStream bufferedContent))
+            if (!IsBuffered)
             {
                 throw new InvalidOperationException($"The response is not buffered.");
             }
 
-            if (bufferedContent.TryGetBuffer(out ArraySegment<byte> segment))
-            {
-                return new BinaryData(segment.AsMemory());
-            }
-            else
-            {
-                return new BinaryData(bufferedContent.ToArray());
-            }
+            return _bufferedContent!;
         }
     }
 
-    public bool IsBuffered { get; private set; } = false;
+    public bool IsBuffered => _bufferedContent is not null;
 
     /// <summary>
     /// Indicates whether the status code of the returned response is considered
@@ -126,7 +127,14 @@ public abstract class PipelineResponse : IDisposable
         bufferStream.Position = 0;
         ContentStream = bufferStream;
 
-        IsBuffered = true;
+        if (bufferStream.TryGetBuffer(out ArraySegment<byte> segment))
+        {
+            _bufferedContent = new BinaryData(segment.AsMemory());
+        }
+        else
+        {
+            _bufferedContent = new BinaryData(bufferStream.ToArray());
+        }
     }
 
     private static async Task CopyToAsync(Stream source, Stream destination, TimeSpan timeout, CancellationTokenSource cancellationTokenSource)
