@@ -21,9 +21,9 @@ dotnet add package Azure.Monitor.OpenTelemetry.LiveMetrics --prerelease
 Nightly builds are available from this repo's [dev feed](https://github.com/Azure/azure-sdk-for-net/blob/main/CONTRIBUTING.md#nuget-package-dev-feed).
 These are provided without support and are not intended for production workloads.
 
-### Add the Live Metrics processor
+### Add the Live Metrics client
 
-The following examples demonstrate how to add the `LiveMetricsExtractionProcessor` to your OpenTelemetry configuration.
+The following examples demonstrate how to add the Live Metrics client to your OpenTelemetry configuration.
 
 ```csharp
 Sdk.CreateTracerProviderBuilder()
