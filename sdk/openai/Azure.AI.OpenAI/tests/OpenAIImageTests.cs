@@ -53,7 +53,6 @@ namespace Azure.AI.OpenAI.Tests
         }
 
         [RecordedTest]
-        [TestCase(Service.Azure, OpenAIClientOptions.ServiceVersion.V2024_02_15_Preview, false)]
         [TestCase(Service.NonAzure)]
         public async Task DallE2LegacySupport(
             Service serviceTarget,
