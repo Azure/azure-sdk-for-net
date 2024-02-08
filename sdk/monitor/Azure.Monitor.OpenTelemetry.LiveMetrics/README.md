@@ -49,7 +49,7 @@ Refer to [`Program.cs`](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk
 
 ## Troubleshooting
 
-The Live Metrics client uses EventSource for its own internal logging. The logs are available to any EventListener by opting into the source named "OpenTelemetry-AzureMonitor-LiveMetricsr".
+The Live Metrics client uses EventSource for its own internal logging. The logs are available to any EventListener by opting into the source named "OpenTelemetry-AzureMonitor-LiveMetrics".
 
 OpenTelemetry also provides it's own [self-diagnostics feature](https://github.com/open-telemetry/opentelemetry-dotnet/blob/main/src/OpenTelemetry/README.md#troubleshooting) to collect internal logs.
 
