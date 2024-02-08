@@ -39,7 +39,7 @@ namespace System.ClientModel.Primitives
         /// </summary>
         /// <param name="boundary">The boundary string for the multipart form data content.</param>
         /// <param name="nestedContent">The list of content parts.</param>
-        public MultipartFormData(string boundary, IReadOnlyList<MultipartContentPart> nestedContent) : base(FormData, boundary, nestedContent)
+        public MultipartFormData(string boundary, IReadOnlyList<MultipartBodyPart> nestedContent) : base(FormData, boundary, nestedContent)
         { }
         #endregion Construction
         /// <summary>
@@ -87,7 +87,7 @@ namespace System.ClientModel.Primitives
             {
                 throw new InvalidOperationException("The specified format is not supported.");
             }
-            return ToContent();
+            return ToBinaryData();
         }
         MultipartFormData IPersistableModel<MultipartFormData>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
@@ -118,36 +118,8 @@ namespace System.ClientModel.Primitives
         }
         public RequestBody ToRequestBody()
         {
-            return RequestBody.CreateFromStream(ToContent().ToStream());//TODO: need to combine all the parts to a stream
+            return RequestBody.CreateFromStream(ToBinaryData().ToStream());//TODO: need to combine all the parts to a stream
         }
-        /*
-        public IReadOnlyList<FormDataItem> ParseToFormData()
-        {
-            List<FormDataItem> results = new List<FormDataItem>();
-            foreach (var part in this.ContentParts)
-            {
-                var contentDisposition = part.Headers["Content-Disposition"];
-                var name = contentDisposition.Substring(contentDisposition.IndexOf("name=") + 5);
-                name = name.Substring(0, name.IndexOf(";"));
-                var fileName = contentDisposition.IndexOf("filename=") > 0 ? contentDisposition.Substring(contentDisposition.IndexOf("filename=") + 9) : null;
-                if (fileName != null)
-                {
-                    fileName = fileName.Substring(0, fileName.IndexOf(";"));
-                }
-                var contentType = part.Headers.ContainsKey("Content-Type") ? part.Headers["Content-Type"] : null;
-                var content = part.Content;
-                var item = new FormDataItem
-                {
-                    Name = name,
-                    FileName = fileName,
-                    ContentType = contentType,
-                    Content = content
-                };
-                results.Add(item);
-            }
-            return results;
-        }
-        */
         private void AddInternal(BinaryData content, Dictionary<string, string> headers, string name, string fileName)
         {
             if (headers == null)
@@ -191,7 +163,7 @@ namespace System.ClientModel.Primitives
             currentLength += s_dashDashLength + boundaryLength + s_crlfLength;
 
             bool first = true;
-            foreach (MultipartContentPart content in _nestedContent)
+            foreach (MultipartBodyPart content in _nestedContent)
             {
                 if (first)
                 {
