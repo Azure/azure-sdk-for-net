@@ -57,7 +57,7 @@ namespace Azure.Communication.JobRouter
 
         /// <summary> The entity tag for this resource. </summary>
         [CodeGenMember("Etag")]
-        public ETag ETag { get; set; }
+        public ETag ETag { get; }
 
         /// <summary> Initializes a new instance of a queue. </summary>
         internal RouterQueue()
