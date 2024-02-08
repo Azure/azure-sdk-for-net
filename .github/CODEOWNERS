@@ -49,7 +49,7 @@
 # ######## Core Libraries ########
 
 # Repository configuration
-/*.*                                                               @JoshLove-msft @christothes @annelo-msft @KrzysztofCwalina @jsquire @pallavit
+/*                                                                 @JoshLove-msft @christothes @annelo-msft @KrzysztofCwalina @jsquire @pallavit
 
 # PRLabel: %Azure.Core
 /sdk/core/                                                         @JoshLove-msft @christothes @annelo-msft @KrzysztofCwalina @jsquire
