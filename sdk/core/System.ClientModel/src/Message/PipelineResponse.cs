@@ -62,6 +62,8 @@ public abstract class PipelineResponse : IDisposable
 
     protected abstract void SetContent(BinaryData? content);
 
+    public abstract bool IsBuffered { get; }
+
     /// <summary>
     /// Indicates whether the status code of the returned response is considered
     /// an error code.

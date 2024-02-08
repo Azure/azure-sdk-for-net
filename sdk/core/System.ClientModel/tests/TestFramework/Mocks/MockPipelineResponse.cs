@@ -45,6 +45,8 @@ public class MockPipelineResponse : PipelineResponse
         throw new NotImplementedException();
     }
 
+    public override bool IsBuffered => throw new NotImplementedException();
+
     public MockPipelineResponse SetContent(string content)
     {
         SetContent(Encoding.UTF8.GetBytes(content));

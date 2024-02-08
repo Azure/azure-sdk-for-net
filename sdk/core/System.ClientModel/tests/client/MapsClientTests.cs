@@ -376,10 +376,13 @@ public class MapsClientTests
             }
 
             public override BinaryData Content => throw new NotImplementedException();
+
             protected override void SetContent(BinaryData content)
             {
                 throw new NotImplementedException();
             }
+
+            public override bool IsBuffered => throw new NotImplementedException();
 
             public override void Dispose()
             {

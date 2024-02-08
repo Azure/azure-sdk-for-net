@@ -62,6 +62,11 @@ namespace Azure
         /// <summary>
         /// TBD.
         /// </summary>
+        public override bool IsBuffered => _content != null;
+
+        /// <summary>
+        /// TBD.
+        /// </summary>
         /// <returns></returns>
         /// <exception cref="NotImplementedException"></exception>
         [EditorBrowsable(EditorBrowsableState.Never)]

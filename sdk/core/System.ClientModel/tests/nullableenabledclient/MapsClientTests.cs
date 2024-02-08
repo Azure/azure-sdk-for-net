@@ -414,6 +414,8 @@ public class MapsClientTests
                 throw new NotImplementedException();
             }
 
+            public override bool IsBuffered => throw new NotImplementedException();
+
             public override void Dispose()
             {
                 _stream?.Dispose();

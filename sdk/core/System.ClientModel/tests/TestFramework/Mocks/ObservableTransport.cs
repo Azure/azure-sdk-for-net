@@ -144,6 +144,8 @@ public class ObservableTransport : PipelineTransport
             throw new NotImplementedException();
         }
 
+        public override bool IsBuffered => throw new NotImplementedException();
+
         protected override PipelineResponseHeaders GetHeadersCore()
         {
             throw new NotImplementedException();

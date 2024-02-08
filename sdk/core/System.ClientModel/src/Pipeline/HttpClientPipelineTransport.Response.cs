@@ -77,6 +77,8 @@ public partial class HttpClientPipelineTransport
             }
         }
 
+        public override bool IsBuffered { get => _content != null; }
+
         #region IDisposable
 
         public override void Dispose()
