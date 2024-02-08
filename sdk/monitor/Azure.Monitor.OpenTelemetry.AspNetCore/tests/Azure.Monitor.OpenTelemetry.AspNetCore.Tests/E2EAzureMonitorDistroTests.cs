@@ -96,20 +96,19 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests
                 var sp = sv.BuildServiceProvider();
                 var loggerProvider = sp.GetRequiredService<ILoggerProvider>();
                 var sdkProvider = typeof(OpenTelemetryLoggerProvider).GetField("Provider", BindingFlags.Instance | BindingFlags.NonPublic)?.GetValue(loggerProvider);
-                var processor =  sdkProvider?.GetType().GetProperty("Processor", BindingFlags.Instance | BindingFlags.Public)?.GetMethod?.Invoke(sdkProvider, null);
+                var processor = sdkProvider?.GetType().GetProperty("Processor", BindingFlags.Instance | BindingFlags.Public)?.GetMethod?.Invoke(sdkProvider, null);
 
-                if (processor != null)
+                Assert.NotNull(processor);
+
+                if (enableLogSampling == "true")
                 {
-                    if (enableLogSampling == "true")
-                    {
-                        Assert.True(processor is LogFilteringProcessor);
-                        Assert.True(processor is BatchLogRecordExportProcessor);
-                    }
-                    else
-                    {
-                        Assert.True(processor is not LogFilteringProcessor);
-                        Assert.True(processor is BatchLogRecordExportProcessor);
-                    }
+                    Assert.True(processor is LogFilteringProcessor);
+                    Assert.True(processor is BatchLogRecordExportProcessor);
+                }
+                else
+                {
+                    Assert.True(processor is not LogFilteringProcessor);
+                    Assert.True(processor is BatchLogRecordExportProcessor);
                 }
             }
             finally
