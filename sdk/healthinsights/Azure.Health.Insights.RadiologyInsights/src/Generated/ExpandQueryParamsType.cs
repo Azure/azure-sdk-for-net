@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.Health.Insights.RadiologyInsights
 {
-    /// <summary> a list of the related resources to be included in line with each resource. </summary>
+    /// <summary> Supported properties to be included in line with the job. </summary>
     public readonly partial struct ExpandQueryParamsType : IEquatable<ExpandQueryParamsType>
     {
         private readonly string _value;
@@ -24,7 +24,7 @@ namespace Azure.Health.Insights.RadiologyInsights
 
         private const string JobDataValue = "jobData";
 
-        /// <summary> Use this value to expand responses with jobData property. </summary>
+        /// <summary> Use this value to expand the job with jobData property. </summary>
         public static ExpandQueryParamsType JobData { get; } = new ExpandQueryParamsType(JobDataValue);
         /// <summary> Determines if two <see cref="ExpandQueryParamsType"/> values are the same. </summary>
         public static bool operator ==(ExpandQueryParamsType left, ExpandQueryParamsType right) => left.Equals(right);
