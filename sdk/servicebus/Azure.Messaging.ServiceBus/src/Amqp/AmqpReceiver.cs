@@ -375,9 +375,9 @@ namespace Azure.Messaging.ServiceBus.Amqp
                     var drainTask = link.DrainAsyc(cancellationToken);
                     try
                     {
-                        if (!drainTask.IsCompleted)
+                        while (!drainTask.IsCompleted)
                         {
-                            var additionalMessage = await link.ReceiveMessageAsync(cancellationToken).ConfigureAwait(false);
+                            var additionalMessage = await link.ReceiveMessageAsync(TimeSpan.FromMilliseconds(0), cancellationToken).ConfigureAwait(false);
                             if (additionalMessage != null)
                             {
                                 link.ReleaseMessage(additionalMessage);
