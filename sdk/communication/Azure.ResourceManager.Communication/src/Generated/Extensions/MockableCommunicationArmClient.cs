@@ -83,29 +83,5 @@ namespace Azure.ResourceManager.Communication.Mocking
             SenderUsernameResource.ValidateResourceId(id);
             return new SenderUsernameResource(Client, id);
         }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="SuppressionListResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SuppressionListResource.CreateResourceIdentifier" /> to create a <see cref="SuppressionListResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SuppressionListResource"/> object. </returns>
-        public virtual SuppressionListResource GetSuppressionListResource(ResourceIdentifier id)
-        {
-            SuppressionListResource.ValidateResourceId(id);
-            return new SuppressionListResource(Client, id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="SuppressionListAddressResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SuppressionListAddressResource.CreateResourceIdentifier" /> to create a <see cref="SuppressionListAddressResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SuppressionListAddressResource"/> object. </returns>
-        public virtual SuppressionListAddressResource GetSuppressionListAddressResource(ResourceIdentifier id)
-        {
-            SuppressionListAddressResource.ValidateResourceId(id);
-            return new SuppressionListAddressResource(Client, id);
-        }
     }
 }
