@@ -3,8 +3,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Diagnostics.Contracts;
 using System.IO;
 using System.Linq;
 using Azure.Core;
@@ -336,9 +334,9 @@ namespace Azure.AI.OpenAI.Tests
                 {
                     AzureResourceName = "openai-sdk-test-automation-account-eastus",
                     AzureResourceLocation = AzureLocation.EastUS,
-                    AzureDeploymentName = "text-davinci-002",
-                    AzureModelName = "text-davinci-002",
-                    NonAzureModelName = "text-davinci-002",
+                    AzureDeploymentName = "gpt-35-turbo-instruct",
+                    AzureModelName = "gpt-35-turbo-instruct",
+                    NonAzureModelName = "gpt-3.5-turbo-instruct",
                     EnvironmentVariableName = "COMPLETIONS_DEPLOYMENT_NAME",
                     IsLegacyAzureModel = true,
                 },
@@ -353,7 +351,7 @@ namespace Azure.AI.OpenAI.Tests
                     AzureResourceLocation = AzureLocation.EastUS,
                     AzureDeploymentName = "gpt-35-turbo",
                     AzureModelName = "gpt-35-turbo",
-                    NonAzureModelName = "text-davinci-002",
+                    NonAzureModelName = "gpt-3.5-turbo-instruct",
                 },
 
                 [Scenario.ChatCompletions] = new()
@@ -437,6 +435,7 @@ namespace Azure.AI.OpenAI.Tests
             TestAuthType authenticationType = TestAuthType.ApiKey,
             OpenAIClientOptions.ServiceVersion? azureServiceVersionOverride = null)
         {
+            RecordScenarioVariables(serviceTarget, scenario);
             return (serviceTarget, authenticationType) switch
             {
                 (Service.Azure, TestAuthType.ApiKey) => GetAzureClientWithKey(scenario, azureServiceVersionOverride),
@@ -501,12 +500,8 @@ namespace Azure.AI.OpenAI.Tests
 
         protected string GetDeploymentOrModelName(Service serviceTarget, Scenario scenario)
         {
+            RecordScenarioVariables(serviceTarget, scenario);
             ModelDeploymentEntry entry = DeploymentEntriesByScenario[scenario];
-            if (serviceTarget == Service.Azure && Mode == RecordedTestMode.Record)
-            {
-                string variableName = GetAzureEndpointVariableNameForScenario(scenario);
-                Recording.SetVariable(variableName, entry.AzureResourceUri.AbsoluteUri);
-            }
             return (serviceTarget == Service.Azure) ? entry.AzureDeploymentName : entry.NonAzureModelName;
         }
 
@@ -570,6 +565,15 @@ namespace Azure.AI.OpenAI.Tests
                 Assert.That(contentFilterResults.Hate, Is.Not.Null);
                 Assert.That(contentFilterResults.Hate.Filtered, Is.False);
                 Assert.That(contentFilterResults.Hate.Severity, Is.EqualTo(ContentFilterSeverity.Safe));
+            }
+        }
+
+        private void RecordScenarioVariables(Service service, Scenario scenario)
+        {
+            if (service == Service.Azure && Mode == RecordedTestMode.Record)
+            {
+                string variableName = GetAzureEndpointVariableNameForScenario(scenario);
+                Recording.SetVariable(variableName, DeploymentEntriesByScenario[scenario].AzureResourceUri.AbsoluteUri);
             }
         }
     }
