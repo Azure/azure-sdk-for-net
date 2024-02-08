@@ -39,7 +39,6 @@
 /sdk/entra/                                                        @pallavit @jsquire
 /sdk/graphrbac/                                                    @pallavit @jsquire
 /sdk/machinelearningservices/                                      @pallavit @jsquire
-/sdk/maps/                                                         @dubiety @khmic5 @andykao1213
 # Note there are some sub-rules for this directory, defined below
 /sdk/operationalinsights/                                          @pallavit @jsquire
 /sdk/purview/                                                      @pallavit @jsquire
@@ -48,6 +47,9 @@
 /sdk/remoterendering/                                              @pallavit @jsquire
 
 # ######## Core Libraries ########
+
+# Repository configuration
+/*.*                                                               @JoshLove-msft @christothes @annelo-msft @KrzysztofCwalina @jsquire @pallavit
 
 # PRLabel: %Azure.Core
 /sdk/core/                                                         @JoshLove-msft @christothes @annelo-msft @KrzysztofCwalina @jsquire
@@ -546,6 +548,10 @@
 
 # ServiceLabel: %Managed Services %Service Attention
 /sdk/managedservices/Microsoft.Azure.Management.ManagedServices/   @Lighthouse-Azure
+
+# PRLabel: %Maps
+# ServiceLabel: %Maps %Service Attention
+/sdk/maps/                                                         @dubiety @khmic5 @andykao1213
 
 # ServiceLabel: %MariaDB %Service Attention
 #/<NotInRepo>/                                                     @ajlam @ambhatna @kummanish
