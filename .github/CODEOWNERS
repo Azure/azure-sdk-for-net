@@ -16,6 +16,14 @@
 # /samples/
 # /tools/
 
+##################
+# Repository root
+##################
+
+# Catch all for loose files in the root, which are mostly global configuration and
+# should not be changed without team discussion.
+/*                                                                 @jsquire @pallavit @JoshLove-msft @christothes @annelo-msft @KrzysztofCwalina
+
 ################
 # Automation
 ################
@@ -47,9 +55,6 @@
 /sdk/remoterendering/                                              @pallavit @jsquire
 
 # ######## Core Libraries ########
-
-# Repository configuration
-/*                                                                 @JoshLove-msft @christothes @annelo-msft @KrzysztofCwalina @jsquire @pallavit
 
 # PRLabel: %Azure.Core
 /sdk/core/                                                         @JoshLove-msft @christothes @annelo-msft @KrzysztofCwalina @jsquire
