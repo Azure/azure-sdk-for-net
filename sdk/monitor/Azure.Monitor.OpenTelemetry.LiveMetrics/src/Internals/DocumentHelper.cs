@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
 using System.Runtime.CompilerServices;
@@ -99,54 +98,50 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals
             {
                 if (tag.Value == null)
                 {
+                    // do nothing.
                     continue;
                 }
                 else if (tag.Key == SemanticConventions.AttributeUrlScheme)
                 {
                     urlScheme = tag.Value.ToString();
-                    continue;
                 }
                 else if (tag.Key == SemanticConventions.AttributeServerAddress)
                 {
                     serverAddress = tag.Value.ToString();
-                    continue;
                 }
                 else if (tag.Key == SemanticConventions.AttributeServerPort)
                 {
                     serverPort = tag.Value.ToString();
-                    continue;
                 }
                 else if (tag.Key == SemanticConventions.AttributeUrlPath)
                 {
                     urlPath = tag.Value.ToString();
-                    continue;
                 }
                 else if (tag.Key == SemanticConventions.AttributeUrlQuery)
                 {
                     urlQuery = tag.Value.ToString();
-                    continue;
                 }
                 else if (tag.Key == SemanticConventions.AttributeHttpResponseStatusCode)
                 {
                     httpResponseStatusCode = tag.Value.ToString();
-                    continue;
                 }
             }
 
             var length = urlScheme.Length + Uri.SchemeDelimiter.Length + serverAddress.Length + serverPort.Length + urlPath.Length + urlQuery.Length;
-            var urlStringBuilder = new System.Text.StringBuilder(length)
+            var url = new StringBuilder(length)
                 .Append(urlScheme)
                 .Append(Uri.SchemeDelimiter)
                 .Append(serverAddress)
                 .Append($":{serverPort}")
                 .Append(urlPath)
-                .Append(urlQuery);
+                .Append(urlQuery)
+                .ToString();
 
             Request requestDocumentIngress = new()
             {
                 DocumentType = DocumentIngressDocumentType.Request,
                 Name = activity.DisplayName,
-                Url = urlStringBuilder.ToString(),
+                Url = url,
                 ResponseCode = httpResponseStatusCode,
                 Duration = activity.Duration < SchemaConstants.RequestData_Duration_LessThanDays
                                                 ? activity.Duration.ToString("c", CultureInfo.InvariantCulture)
@@ -161,9 +156,9 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals
             return requestDocumentIngress;
         }
 
-        internal static Models.Exception CreateException(string exceptionType, string exceptionMessage)
+        internal static ExceptionDocument CreateException(string exceptionType, string exceptionMessage)
         {
-            Models.Exception exceptionDocumentIngress = new()
+            ExceptionDocument exceptionDocumentIngress = new()
             {
                 DocumentType = DocumentIngressDocumentType.Exception,
                 ExceptionType = exceptionType,
