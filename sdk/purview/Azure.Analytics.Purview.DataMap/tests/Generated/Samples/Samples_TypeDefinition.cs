@@ -25,7 +25,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
+            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
             Response response = client.GetBusinessMetadataById("<guid>", null);
 
@@ -39,7 +39,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
+            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
             Response response = await client.GetBusinessMetadataByIdAsync("<guid>", null);
 
@@ -53,7 +53,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
+            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
             Response<AtlasBusinessMetadataDef> response = client.GetBusinessMetadataById("<guid>");
         }
@@ -64,7 +64,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
+            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
             Response<AtlasBusinessMetadataDef> response = await client.GetBusinessMetadataByIdAsync("<guid>");
         }
@@ -75,7 +75,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
+            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
             Response response = client.GetBusinessMetadataById("<guid>", null);
 
@@ -132,7 +132,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
+            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
             Response response = await client.GetBusinessMetadataByIdAsync("<guid>", null);
 
@@ -189,7 +189,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
+            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
             Response<AtlasBusinessMetadataDef> response = client.GetBusinessMetadataById("<guid>");
         }
@@ -200,7 +200,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
+            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
             Response<AtlasBusinessMetadataDef> response = await client.GetBusinessMetadataByIdAsync("<guid>");
         }
@@ -211,7 +211,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
+            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
             Response response = client.GetBusinessMetadataByName("<name>", null);
 
@@ -225,7 +225,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
+            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
             Response response = await client.GetBusinessMetadataByNameAsync("<name>", null);
 
@@ -239,7 +239,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
+            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
             Response<AtlasBusinessMetadataDef> response = client.GetBusinessMetadataByName("<name>");
         }
@@ -250,7 +250,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
+            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
             Response<AtlasBusinessMetadataDef> response = await client.GetBusinessMetadataByNameAsync("<name>");
         }
@@ -261,7 +261,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
+            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
             Response response = client.GetBusinessMetadataByName("<name>", null);
 
@@ -318,7 +318,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
+            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
             Response response = await client.GetBusinessMetadataByNameAsync("<name>", null);
 
@@ -375,7 +375,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
+            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
             Response<AtlasBusinessMetadataDef> response = client.GetBusinessMetadataByName("<name>");
         }
@@ -386,7 +386,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
+            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
             Response<AtlasBusinessMetadataDef> response = await client.GetBusinessMetadataByNameAsync("<name>");
         }
@@ -397,7 +397,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
+            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
             Response response = client.GetClassificationById("<guid>", null);
 
@@ -411,7 +411,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
+            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
             Response response = await client.GetClassificationByIdAsync("<guid>", null);
 
@@ -425,7 +425,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
+            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
             Response<AtlasClassificationDef> response = client.GetClassificationById("<guid>");
         }
@@ -436,7 +436,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
+            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
             Response<AtlasClassificationDef> response = await client.GetClassificationByIdAsync("<guid>");
         }
@@ -447,7 +447,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
+            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
             Response response = client.GetClassificationById("<guid>", null);
 
@@ -507,7 +507,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
+            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
             Response response = await client.GetClassificationByIdAsync("<guid>", null);
 
@@ -567,7 +567,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
+            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
             Response<AtlasClassificationDef> response = client.GetClassificationById("<guid>");
         }
@@ -578,7 +578,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
+            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
             Response<AtlasClassificationDef> response = await client.GetClassificationByIdAsync("<guid>");
         }
@@ -589,7 +589,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
+            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
             Response response = client.GetClassificationByName("<name>", null);
 
@@ -603,7 +603,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
+            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
             Response response = await client.GetClassificationByNameAsync("<name>", null);
 
@@ -617,7 +617,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
+            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
             Response<AtlasClassificationDef> response = client.GetClassificationByName("<name>");
         }
@@ -628,7 +628,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
+            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
             Response<AtlasClassificationDef> response = await client.GetClassificationByNameAsync("<name>");
         }
@@ -639,7 +639,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
+            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
             Response response = client.GetClassificationByName("<name>", null);
 
@@ -699,7 +699,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
+            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
             Response response = await client.GetClassificationByNameAsync("<name>", null);
 
@@ -759,7 +759,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
+            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
             Response<AtlasClassificationDef> response = client.GetClassificationByName("<name>");
         }
@@ -770,7 +770,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
+            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
             Response<AtlasClassificationDef> response = await client.GetClassificationByNameAsync("<name>");
         }
@@ -781,7 +781,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
+            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
             Response response = client.GetEntityById("<guid>", null);
 
@@ -795,7 +795,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
+            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
             Response response = await client.GetEntityByIdAsync("<guid>", null);
 
@@ -809,7 +809,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
+            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
             Response<AtlasEntityDef> response = client.GetEntityById("<guid>");
         }
@@ -820,7 +820,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
+            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
             Response<AtlasEntityDef> response = await client.GetEntityByIdAsync("<guid>");
         }
@@ -831,7 +831,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
+            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
             Response response = client.GetEntityById("<guid>", null);
 
@@ -906,7 +906,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
+            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
             Response response = await client.GetEntityByIdAsync("<guid>", null);
 
@@ -981,7 +981,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
+            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
             Response<AtlasEntityDef> response = client.GetEntityById("<guid>");
         }
@@ -992,7 +992,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
+            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
             Response<AtlasEntityDef> response = await client.GetEntityByIdAsync("<guid>");
         }
@@ -1003,7 +1003,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
+            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
             Response response = client.GetEntityByName("<name>", null);
 
@@ -1017,7 +1017,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
+            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
             Response response = await client.GetEntityByNameAsync("<name>", null);
 
@@ -1031,7 +1031,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
+            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
             Response<AtlasEntityDef> response = client.GetEntityByName("<name>");
         }
@@ -1042,7 +1042,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
+            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
             Response<AtlasEntityDef> response = await client.GetEntityByNameAsync("<name>");
         }
@@ -1053,7 +1053,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
+            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
             Response response = client.GetEntityByName("<name>", null);
 
@@ -1128,7 +1128,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
+            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
             Response response = await client.GetEntityByNameAsync("<name>", null);
 
@@ -1203,7 +1203,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
+            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
             Response<AtlasEntityDef> response = client.GetEntityByName("<name>");
         }
@@ -1214,7 +1214,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
+            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
             Response<AtlasEntityDef> response = await client.GetEntityByNameAsync("<name>");
         }
@@ -1225,7 +1225,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
+            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
             Response response = client.GetEnumById("<guid>", null);
 
@@ -1239,7 +1239,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
+            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
             Response response = await client.GetEnumByIdAsync("<guid>", null);
 
@@ -1253,7 +1253,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
+            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
             Response<AtlasEnumDef> response = client.GetEnumById("<guid>");
         }
@@ -1264,7 +1264,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
+            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
             Response<AtlasEnumDef> response = await client.GetEnumByIdAsync("<guid>");
         }
@@ -1275,7 +1275,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
+            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
             Response response = client.GetEnumById("<guid>", null);
 
@@ -1322,7 +1322,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
+            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
             Response response = await client.GetEnumByIdAsync("<guid>", null);
 
@@ -1369,7 +1369,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
+            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
             Response<AtlasEnumDef> response = client.GetEnumById("<guid>");
         }
@@ -1380,7 +1380,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
+            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
             Response<AtlasEnumDef> response = await client.GetEnumByIdAsync("<guid>");
         }
@@ -1391,7 +1391,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
+            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
             Response response = client.GetEnumByName("<name>", null);
 
@@ -1405,7 +1405,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
+            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
             Response response = await client.GetEnumByNameAsync("<name>", null);
 
@@ -1419,7 +1419,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
+            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
             Response<AtlasEnumDef> response = client.GetEnumByName("<name>");
         }
@@ -1430,7 +1430,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
+            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
             Response<AtlasEnumDef> response = await client.GetEnumByNameAsync("<name>");
         }
@@ -1441,7 +1441,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
+            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
             Response response = client.GetEnumByName("<name>", null);
 
@@ -1488,7 +1488,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
+            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
             Response response = await client.GetEnumByNameAsync("<name>", null);
 
@@ -1535,7 +1535,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
+            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
             Response<AtlasEnumDef> response = client.GetEnumByName("<name>");
         }
@@ -1546,7 +1546,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
+            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
             Response<AtlasEnumDef> response = await client.GetEnumByNameAsync("<name>");
         }
@@ -1557,7 +1557,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
+            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
             Response response = client.GetRelationshipById("<guid>", null);
 
@@ -1571,7 +1571,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
+            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
             Response response = await client.GetRelationshipByIdAsync("<guid>", null);
 
@@ -1585,7 +1585,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
+            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
             Response<AtlasRelationshipDef> response = client.GetRelationshipById("<guid>");
         }
@@ -1596,7 +1596,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
+            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
             Response<AtlasRelationshipDef> response = await client.GetRelationshipByIdAsync("<guid>");
         }
@@ -1607,7 +1607,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
+            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
             Response response = client.GetRelationshipById("<guid>", null);
 
@@ -1678,7 +1678,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
+            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
             Response response = await client.GetRelationshipByIdAsync("<guid>", null);
 
@@ -1749,7 +1749,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
+            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
             Response<AtlasRelationshipDef> response = client.GetRelationshipById("<guid>");
         }
@@ -1760,7 +1760,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
+            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
             Response<AtlasRelationshipDef> response = await client.GetRelationshipByIdAsync("<guid>");
         }
@@ -1771,7 +1771,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
+            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
             Response response = client.GetRelationshipByName("<name>", null);
 
@@ -1785,7 +1785,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
+            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
             Response response = await client.GetRelationshipByNameAsync("<name>", null);
 
@@ -1799,7 +1799,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
+            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
             Response<AtlasRelationshipDef> response = client.GetRelationshipByName("<name>");
         }
@@ -1810,7 +1810,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
+            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
             Response<AtlasRelationshipDef> response = await client.GetRelationshipByNameAsync("<name>");
         }
@@ -1821,7 +1821,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
+            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
             Response response = client.GetRelationshipByName("<name>", null);
 
@@ -1892,7 +1892,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
+            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
             Response response = await client.GetRelationshipByNameAsync("<name>", null);
 
@@ -1963,7 +1963,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
+            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
             Response<AtlasRelationshipDef> response = client.GetRelationshipByName("<name>");
         }
@@ -1974,7 +1974,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
+            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
             Response<AtlasRelationshipDef> response = await client.GetRelationshipByNameAsync("<name>");
         }
@@ -1985,7 +1985,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
+            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
             Response response = client.GetStructById("<guid>", null);
 
@@ -1999,7 +1999,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
+            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
             Response response = await client.GetStructByIdAsync("<guid>", null);
 
@@ -2013,7 +2013,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
+            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
             Response<AtlasStructDef> response = client.GetStructById("<guid>");
         }
@@ -2024,7 +2024,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
+            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
             Response<AtlasStructDef> response = await client.GetStructByIdAsync("<guid>");
         }
@@ -2035,7 +2035,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
+            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
             Response response = client.GetStructById("<guid>", null);
 
@@ -2092,7 +2092,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
+            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
             Response response = await client.GetStructByIdAsync("<guid>", null);
 
@@ -2149,7 +2149,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
+            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
             Response<AtlasStructDef> response = client.GetStructById("<guid>");
         }
@@ -2160,7 +2160,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
+            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
             Response<AtlasStructDef> response = await client.GetStructByIdAsync("<guid>");
         }
@@ -2171,7 +2171,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
+            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
             Response response = client.GetStructByName("<name>", null);
 
@@ -2185,7 +2185,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
+            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
             Response response = await client.GetStructByNameAsync("<name>", null);
 
@@ -2199,7 +2199,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
+            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
             Response<AtlasStructDef> response = client.GetStructByName("<name>");
         }
@@ -2210,7 +2210,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
+            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
             Response<AtlasStructDef> response = await client.GetStructByNameAsync("<name>");
         }
@@ -2221,7 +2221,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
+            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
             Response response = client.GetStructByName("<name>", null);
 
@@ -2278,7 +2278,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
+            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
             Response response = await client.GetStructByNameAsync("<name>", null);
 
@@ -2335,7 +2335,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
+            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
             Response<AtlasStructDef> response = client.GetStructByName("<name>");
         }
@@ -2346,7 +2346,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
+            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
             Response<AtlasStructDef> response = await client.GetStructByNameAsync("<name>");
         }
@@ -2357,7 +2357,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
+            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
             Response response = client.GetById("<guid>", null);
 
@@ -2371,7 +2371,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
+            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
             Response response = await client.GetByIdAsync("<guid>", null);
 
@@ -2385,7 +2385,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
+            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
             Response<AtlasTypeDef> response = client.GetById("<guid>");
         }
@@ -2396,7 +2396,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
+            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
             Response<AtlasTypeDef> response = await client.GetByIdAsync("<guid>");
         }
@@ -2407,7 +2407,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
+            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
             Response response = client.GetById("<guid>", null);
 
@@ -2501,7 +2501,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
+            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
             Response response = await client.GetByIdAsync("<guid>", null);
 
@@ -2595,7 +2595,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
+            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
             Response<AtlasTypeDef> response = client.GetById("<guid>");
         }
@@ -2606,7 +2606,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
+            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
             Response<AtlasTypeDef> response = await client.GetByIdAsync("<guid>");
         }
@@ -2617,7 +2617,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
+            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
             Response response = client.GetByName("<name>", null);
 
@@ -2631,7 +2631,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
+            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
             Response response = await client.GetByNameAsync("<name>", null);
 
@@ -2645,7 +2645,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
+            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
             Response<AtlasTypeDef> response = client.GetByName("<name>");
         }
@@ -2656,7 +2656,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
+            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
             Response<AtlasTypeDef> response = await client.GetByNameAsync("<name>");
         }
@@ -2667,7 +2667,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
+            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
             Response response = client.GetByName("<name>", null);
 
@@ -2761,7 +2761,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
+            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
             Response response = await client.GetByNameAsync("<name>", null);
 
@@ -2855,7 +2855,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
+            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
             Response<AtlasTypeDef> response = client.GetByName("<name>");
         }
@@ -2866,7 +2866,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
+            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
             Response<AtlasTypeDef> response = await client.GetByNameAsync("<name>");
         }
@@ -2877,7 +2877,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
+            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
             Response response = client.Delete("<name>");
 
@@ -2890,7 +2890,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
+            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
             Response response = await client.DeleteAsync("<name>");
 
@@ -2903,7 +2903,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
+            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
             Response response = client.Delete("<name>");
 
@@ -2916,7 +2916,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
+            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
             Response response = await client.DeleteAsync("<name>");
 
@@ -2929,7 +2929,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
+            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
             Response response = client.GetTypeDefinition(null, null, null);
 
@@ -2943,7 +2943,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
+            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
             Response response = await client.GetTypeDefinitionAsync(null, null, null);
 
@@ -2957,7 +2957,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
+            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
             Response<AtlasTypesDef> response = client.GetTypeDefinition();
         }
@@ -2968,7 +2968,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
+            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
             Response<AtlasTypesDef> response = await client.GetTypeDefinitionAsync();
         }
@@ -3693,7 +3693,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
+            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
             using RequestContent content = RequestContent.Create(new object());
             Response response = client.BatchCreate(content);
@@ -3708,7 +3708,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
+            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
             using RequestContent content = RequestContent.Create(new object());
             Response response = await client.BatchCreateAsync(content);
@@ -3723,10 +3723,10 @@ namespace Azure.Analytics.Purview.DataMap.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
+            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
-            AtlasTypesDef body = new AtlasTypesDef();
-            Response<AtlasTypesDef> response = client.BatchCreate(body);
+            AtlasTypesDef atlasTypesDef = new AtlasTypesDef();
+            Response<AtlasTypesDef> response = client.BatchCreate(atlasTypesDef);
         }
 
         [Test]
@@ -3735,10 +3735,10 @@ namespace Azure.Analytics.Purview.DataMap.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
+            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
-            AtlasTypesDef body = new AtlasTypesDef();
-            Response<AtlasTypesDef> response = await client.BatchCreateAsync(body);
+            AtlasTypesDef atlasTypesDef = new AtlasTypesDef();
+            Response<AtlasTypesDef> response = await client.BatchCreateAsync(atlasTypesDef);
         }
 
         [Test]
@@ -3747,7 +3747,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
+            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -3756,7 +3756,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
 new
 {
 category = "PRIMITIVE",
-createTime = 1652209051,
+createTime = 1234L,
 createdBy = "<createdBy>",
 dateFormatter = new
 {
@@ -3803,7 +3803,7 @@ key = "<options>",
 },
 serviceType = "<serviceType>",
 typeVersion = "<typeVersion>",
-updateTime = 1652209051,
+updateTime = 1234L,
 updatedBy = "<updatedBy>",
 version = 1234L,
 lastModifiedTS = "<lastModifiedTS>",
@@ -3846,7 +3846,7 @@ valuesMinCount = 1234,
 new
 {
 category = "PRIMITIVE",
-createTime = 1652209051,
+createTime = 1234L,
 createdBy = "<createdBy>",
 description = "<description>",
 guid = "<guid>",
@@ -3857,7 +3857,7 @@ key = "<options>",
 },
 serviceType = "<serviceType>",
 typeVersion = "<typeVersion>",
-updateTime = 1652209051,
+updateTime = 1234L,
 updatedBy = "<updatedBy>",
 version = 1234L,
 lastModifiedTS = "<lastModifiedTS>",
@@ -3884,7 +3884,7 @@ superTypes = new object[]
 new
 {
 category = "PRIMITIVE",
-createTime = 1652209051,
+createTime = 1234L,
 createdBy = "<createdBy>",
 description = "<description>",
 guid = "<guid>",
@@ -3895,7 +3895,7 @@ key = "<options>",
 },
 serviceType = "<serviceType>",
 typeVersion = "<typeVersion>",
-updateTime = 1652209051,
+updateTime = 1234L,
 updatedBy = "<updatedBy>",
 version = 1234L,
 lastModifiedTS = "<lastModifiedTS>",
@@ -3945,7 +3945,7 @@ relationshipTypeName = "<relationshipTypeName>",
 new
 {
 category = "PRIMITIVE",
-createTime = 1652209051,
+createTime = 1234L,
 createdBy = "<createdBy>",
 description = "<description>",
 guid = "<guid>",
@@ -3956,7 +3956,7 @@ key = "<options>",
 },
 serviceType = "<serviceType>",
 typeVersion = "<typeVersion>",
-updateTime = 1652209051,
+updateTime = 1234L,
 updatedBy = "<updatedBy>",
 version = 1234L,
 lastModifiedTS = "<lastModifiedTS>",
@@ -3977,7 +3977,7 @@ value = "<value>",
 new
 {
 category = "PRIMITIVE",
-createTime = 1652209051,
+createTime = 1234L,
 createdBy = "<createdBy>",
 description = "<description>",
 guid = "<guid>",
@@ -3988,7 +3988,7 @@ key = "<options>",
 },
 serviceType = "<serviceType>",
 typeVersion = "<typeVersion>",
-updateTime = 1652209051,
+updateTime = 1234L,
 updatedBy = "<updatedBy>",
 version = 1234L,
 lastModifiedTS = "<lastModifiedTS>",
@@ -4014,7 +4014,7 @@ relationshipLabel = "<relationshipLabel>",
 new
 {
 category = "PRIMITIVE",
-createTime = 1652209051,
+createTime = 1234L,
 createdBy = "<createdBy>",
 description = "<description>",
 guid = "<guid>",
@@ -4025,7 +4025,7 @@ key = "<options>",
 },
 serviceType = "<serviceType>",
 typeVersion = "<typeVersion>",
-updateTime = 1652209051,
+updateTime = 1234L,
 updatedBy = "<updatedBy>",
 version = 1234L,
 lastModifiedTS = "<lastModifiedTS>",
@@ -4040,7 +4040,7 @@ null
 new
 {
 category = "PRIMITIVE",
-createTime = 1652209051,
+createTime = 1234L,
 createdBy = "<createdBy>",
 description = "<description>",
 guid = "<guid>",
@@ -4051,7 +4051,7 @@ key = "<options>",
 },
 serviceType = "<serviceType>",
 typeVersion = "<typeVersion>",
-updateTime = 1652209051,
+updateTime = 1234L,
 updatedBy = "<updatedBy>",
 version = 1234L,
 lastModifiedTS = "<lastModifiedTS>",
@@ -4406,7 +4406,7 @@ null
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
+            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -4415,7 +4415,7 @@ null
 new
 {
 category = "PRIMITIVE",
-createTime = 1652209051,
+createTime = 1234L,
 createdBy = "<createdBy>",
 dateFormatter = new
 {
@@ -4462,7 +4462,7 @@ key = "<options>",
 },
 serviceType = "<serviceType>",
 typeVersion = "<typeVersion>",
-updateTime = 1652209051,
+updateTime = 1234L,
 updatedBy = "<updatedBy>",
 version = 1234L,
 lastModifiedTS = "<lastModifiedTS>",
@@ -4505,7 +4505,7 @@ valuesMinCount = 1234,
 new
 {
 category = "PRIMITIVE",
-createTime = 1652209051,
+createTime = 1234L,
 createdBy = "<createdBy>",
 description = "<description>",
 guid = "<guid>",
@@ -4516,7 +4516,7 @@ key = "<options>",
 },
 serviceType = "<serviceType>",
 typeVersion = "<typeVersion>",
-updateTime = 1652209051,
+updateTime = 1234L,
 updatedBy = "<updatedBy>",
 version = 1234L,
 lastModifiedTS = "<lastModifiedTS>",
@@ -4543,7 +4543,7 @@ superTypes = new object[]
 new
 {
 category = "PRIMITIVE",
-createTime = 1652209051,
+createTime = 1234L,
 createdBy = "<createdBy>",
 description = "<description>",
 guid = "<guid>",
@@ -4554,7 +4554,7 @@ key = "<options>",
 },
 serviceType = "<serviceType>",
 typeVersion = "<typeVersion>",
-updateTime = 1652209051,
+updateTime = 1234L,
 updatedBy = "<updatedBy>",
 version = 1234L,
 lastModifiedTS = "<lastModifiedTS>",
@@ -4604,7 +4604,7 @@ relationshipTypeName = "<relationshipTypeName>",
 new
 {
 category = "PRIMITIVE",
-createTime = 1652209051,
+createTime = 1234L,
 createdBy = "<createdBy>",
 description = "<description>",
 guid = "<guid>",
@@ -4615,7 +4615,7 @@ key = "<options>",
 },
 serviceType = "<serviceType>",
 typeVersion = "<typeVersion>",
-updateTime = 1652209051,
+updateTime = 1234L,
 updatedBy = "<updatedBy>",
 version = 1234L,
 lastModifiedTS = "<lastModifiedTS>",
@@ -4636,7 +4636,7 @@ value = "<value>",
 new
 {
 category = "PRIMITIVE",
-createTime = 1652209051,
+createTime = 1234L,
 createdBy = "<createdBy>",
 description = "<description>",
 guid = "<guid>",
@@ -4647,7 +4647,7 @@ key = "<options>",
 },
 serviceType = "<serviceType>",
 typeVersion = "<typeVersion>",
-updateTime = 1652209051,
+updateTime = 1234L,
 updatedBy = "<updatedBy>",
 version = 1234L,
 lastModifiedTS = "<lastModifiedTS>",
@@ -4673,7 +4673,7 @@ relationshipLabel = "<relationshipLabel>",
 new
 {
 category = "PRIMITIVE",
-createTime = 1652209051,
+createTime = 1234L,
 createdBy = "<createdBy>",
 description = "<description>",
 guid = "<guid>",
@@ -4684,7 +4684,7 @@ key = "<options>",
 },
 serviceType = "<serviceType>",
 typeVersion = "<typeVersion>",
-updateTime = 1652209051,
+updateTime = 1234L,
 updatedBy = "<updatedBy>",
 version = 1234L,
 lastModifiedTS = "<lastModifiedTS>",
@@ -4699,7 +4699,7 @@ null
 new
 {
 category = "PRIMITIVE",
-createTime = 1652209051,
+createTime = 1234L,
 createdBy = "<createdBy>",
 description = "<description>",
 guid = "<guid>",
@@ -4710,7 +4710,7 @@ key = "<options>",
 },
 serviceType = "<serviceType>",
 typeVersion = "<typeVersion>",
-updateTime = 1652209051,
+updateTime = 1234L,
 updatedBy = "<updatedBy>",
 version = 1234L,
 lastModifiedTS = "<lastModifiedTS>",
@@ -5065,14 +5065,14 @@ null
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
+            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
-            AtlasTypesDef body = new AtlasTypesDef
+            AtlasTypesDef atlasTypesDef = new AtlasTypesDef
             {
                 BusinessMetadataDefs = {new AtlasBusinessMetadataDef
 {
 Category = TypeCategory.Primitive,
-CreateTime = DateTimeOffset.FromUnixTimeSeconds(1652209051L),
+CreateTime = 1234L,
 CreatedBy = "<createdBy>",
 DateFormatter = new AtlasDateFormat
 {
@@ -5119,7 +5119,7 @@ Options =
 },
 ServiceType = "<serviceType>",
 TypeVersion = "<typeVersion>",
-UpdateTime = DateTimeOffset.FromUnixTimeSeconds(1652209051L),
+UpdateTime = 1234L,
 UpdatedBy = "<updatedBy>",
 Version = 1234L,
 LastModifiedTS = "<lastModifiedTS>",
@@ -5153,7 +5153,7 @@ ValuesMinCount = 1234,
                 ClassificationDefs = {new AtlasClassificationDef
 {
 Category = TypeCategory.Primitive,
-CreateTime = DateTimeOffset.FromUnixTimeSeconds(1652209051L),
+CreateTime = 1234L,
 CreatedBy = "<createdBy>",
 DateFormatter = default,
 Description = "<description>",
@@ -5165,7 +5165,7 @@ Options =
 },
 ServiceType = "<serviceType>",
 TypeVersion = "<typeVersion>",
-UpdateTime = DateTimeOffset.FromUnixTimeSeconds(1652209051L),
+UpdateTime = 1234L,
 UpdatedBy = "<updatedBy>",
 Version = 1234L,
 LastModifiedTS = "<lastModifiedTS>",
@@ -5177,7 +5177,7 @@ SuperTypes = {"<superTypes>"},
                 EntityDefs = {new AtlasEntityDef
 {
 Category = TypeCategory.Primitive,
-CreateTime = DateTimeOffset.FromUnixTimeSeconds(1652209051L),
+CreateTime = 1234L,
 CreatedBy = "<createdBy>",
 DateFormatter = default,
 Description = "<description>",
@@ -5189,7 +5189,7 @@ Options =
 },
 ServiceType = "<serviceType>",
 TypeVersion = "<typeVersion>",
-UpdateTime = DateTimeOffset.FromUnixTimeSeconds(1652209051L),
+UpdateTime = 1234L,
 UpdatedBy = "<updatedBy>",
 Version = 1234L,
 LastModifiedTS = "<lastModifiedTS>",
@@ -5221,7 +5221,7 @@ RelationshipTypeName = "<relationshipTypeName>",
                 EnumDefs = {new AtlasEnumDef
 {
 Category = TypeCategory.Primitive,
-CreateTime = DateTimeOffset.FromUnixTimeSeconds(1652209051L),
+CreateTime = 1234L,
 CreatedBy = "<createdBy>",
 DateFormatter = default,
 Description = "<description>",
@@ -5233,7 +5233,7 @@ Options =
 },
 ServiceType = "<serviceType>",
 TypeVersion = "<typeVersion>",
-UpdateTime = DateTimeOffset.FromUnixTimeSeconds(1652209051L),
+UpdateTime = 1234L,
 UpdatedBy = "<updatedBy>",
 Version = 1234L,
 LastModifiedTS = "<lastModifiedTS>",
@@ -5248,7 +5248,7 @@ Value = "<value>",
                 RelationshipDefs = {new AtlasRelationshipDef
 {
 Category = TypeCategory.Primitive,
-CreateTime = DateTimeOffset.FromUnixTimeSeconds(1652209051L),
+CreateTime = 1234L,
 CreatedBy = "<createdBy>",
 DateFormatter = default,
 Description = "<description>",
@@ -5260,7 +5260,7 @@ Options =
 },
 ServiceType = "<serviceType>",
 TypeVersion = "<typeVersion>",
-UpdateTime = DateTimeOffset.FromUnixTimeSeconds(1652209051L),
+UpdateTime = 1234L,
 UpdatedBy = "<updatedBy>",
 Version = 1234L,
 LastModifiedTS = "<lastModifiedTS>",
@@ -5281,7 +5281,7 @@ RelationshipLabel = "<relationshipLabel>",
                 StructDefs = {new AtlasStructDef
 {
 Category = TypeCategory.Primitive,
-CreateTime = DateTimeOffset.FromUnixTimeSeconds(1652209051L),
+CreateTime = 1234L,
 CreatedBy = "<createdBy>",
 DateFormatter = default,
 Description = "<description>",
@@ -5293,7 +5293,7 @@ Options =
 },
 ServiceType = "<serviceType>",
 TypeVersion = "<typeVersion>",
-UpdateTime = DateTimeOffset.FromUnixTimeSeconds(1652209051L),
+UpdateTime = 1234L,
 UpdatedBy = "<updatedBy>",
 Version = 1234L,
 LastModifiedTS = "<lastModifiedTS>",
@@ -5302,7 +5302,7 @@ AttributeDefs = {default},
                 TermTemplateDefs = {new TermTemplateDef
 {
 Category = TypeCategory.Primitive,
-CreateTime = DateTimeOffset.FromUnixTimeSeconds(1652209051L),
+CreateTime = 1234L,
 CreatedBy = "<createdBy>",
 DateFormatter = default,
 Description = "<description>",
@@ -5314,14 +5314,14 @@ Options =
 },
 ServiceType = "<serviceType>",
 TypeVersion = "<typeVersion>",
-UpdateTime = DateTimeOffset.FromUnixTimeSeconds(1652209051L),
+UpdateTime = 1234L,
 UpdatedBy = "<updatedBy>",
 Version = 1234L,
 LastModifiedTS = "<lastModifiedTS>",
 AttributeDefs = {default},
 }},
             };
-            Response<AtlasTypesDef> response = client.BatchCreate(body);
+            Response<AtlasTypesDef> response = client.BatchCreate(atlasTypesDef);
         }
 
         [Test]
@@ -5330,14 +5330,14 @@ AttributeDefs = {default},
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
+            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
-            AtlasTypesDef body = new AtlasTypesDef
+            AtlasTypesDef atlasTypesDef = new AtlasTypesDef
             {
                 BusinessMetadataDefs = {new AtlasBusinessMetadataDef
 {
 Category = TypeCategory.Primitive,
-CreateTime = DateTimeOffset.FromUnixTimeSeconds(1652209051L),
+CreateTime = 1234L,
 CreatedBy = "<createdBy>",
 DateFormatter = new AtlasDateFormat
 {
@@ -5384,7 +5384,7 @@ Options =
 },
 ServiceType = "<serviceType>",
 TypeVersion = "<typeVersion>",
-UpdateTime = DateTimeOffset.FromUnixTimeSeconds(1652209051L),
+UpdateTime = 1234L,
 UpdatedBy = "<updatedBy>",
 Version = 1234L,
 LastModifiedTS = "<lastModifiedTS>",
@@ -5418,7 +5418,7 @@ ValuesMinCount = 1234,
                 ClassificationDefs = {new AtlasClassificationDef
 {
 Category = TypeCategory.Primitive,
-CreateTime = DateTimeOffset.FromUnixTimeSeconds(1652209051L),
+CreateTime = 1234L,
 CreatedBy = "<createdBy>",
 DateFormatter = default,
 Description = "<description>",
@@ -5430,7 +5430,7 @@ Options =
 },
 ServiceType = "<serviceType>",
 TypeVersion = "<typeVersion>",
-UpdateTime = DateTimeOffset.FromUnixTimeSeconds(1652209051L),
+UpdateTime = 1234L,
 UpdatedBy = "<updatedBy>",
 Version = 1234L,
 LastModifiedTS = "<lastModifiedTS>",
@@ -5442,7 +5442,7 @@ SuperTypes = {"<superTypes>"},
                 EntityDefs = {new AtlasEntityDef
 {
 Category = TypeCategory.Primitive,
-CreateTime = DateTimeOffset.FromUnixTimeSeconds(1652209051L),
+CreateTime = 1234L,
 CreatedBy = "<createdBy>",
 DateFormatter = default,
 Description = "<description>",
@@ -5454,7 +5454,7 @@ Options =
 },
 ServiceType = "<serviceType>",
 TypeVersion = "<typeVersion>",
-UpdateTime = DateTimeOffset.FromUnixTimeSeconds(1652209051L),
+UpdateTime = 1234L,
 UpdatedBy = "<updatedBy>",
 Version = 1234L,
 LastModifiedTS = "<lastModifiedTS>",
@@ -5486,7 +5486,7 @@ RelationshipTypeName = "<relationshipTypeName>",
                 EnumDefs = {new AtlasEnumDef
 {
 Category = TypeCategory.Primitive,
-CreateTime = DateTimeOffset.FromUnixTimeSeconds(1652209051L),
+CreateTime = 1234L,
 CreatedBy = "<createdBy>",
 DateFormatter = default,
 Description = "<description>",
@@ -5498,7 +5498,7 @@ Options =
 },
 ServiceType = "<serviceType>",
 TypeVersion = "<typeVersion>",
-UpdateTime = DateTimeOffset.FromUnixTimeSeconds(1652209051L),
+UpdateTime = 1234L,
 UpdatedBy = "<updatedBy>",
 Version = 1234L,
 LastModifiedTS = "<lastModifiedTS>",
@@ -5513,7 +5513,7 @@ Value = "<value>",
                 RelationshipDefs = {new AtlasRelationshipDef
 {
 Category = TypeCategory.Primitive,
-CreateTime = DateTimeOffset.FromUnixTimeSeconds(1652209051L),
+CreateTime = 1234L,
 CreatedBy = "<createdBy>",
 DateFormatter = default,
 Description = "<description>",
@@ -5525,7 +5525,7 @@ Options =
 },
 ServiceType = "<serviceType>",
 TypeVersion = "<typeVersion>",
-UpdateTime = DateTimeOffset.FromUnixTimeSeconds(1652209051L),
+UpdateTime = 1234L,
 UpdatedBy = "<updatedBy>",
 Version = 1234L,
 LastModifiedTS = "<lastModifiedTS>",
@@ -5546,7 +5546,7 @@ RelationshipLabel = "<relationshipLabel>",
                 StructDefs = {new AtlasStructDef
 {
 Category = TypeCategory.Primitive,
-CreateTime = DateTimeOffset.FromUnixTimeSeconds(1652209051L),
+CreateTime = 1234L,
 CreatedBy = "<createdBy>",
 DateFormatter = default,
 Description = "<description>",
@@ -5558,7 +5558,7 @@ Options =
 },
 ServiceType = "<serviceType>",
 TypeVersion = "<typeVersion>",
-UpdateTime = DateTimeOffset.FromUnixTimeSeconds(1652209051L),
+UpdateTime = 1234L,
 UpdatedBy = "<updatedBy>",
 Version = 1234L,
 LastModifiedTS = "<lastModifiedTS>",
@@ -5567,7 +5567,7 @@ AttributeDefs = {default},
                 TermTemplateDefs = {new TermTemplateDef
 {
 Category = TypeCategory.Primitive,
-CreateTime = DateTimeOffset.FromUnixTimeSeconds(1652209051L),
+CreateTime = 1234L,
 CreatedBy = "<createdBy>",
 DateFormatter = default,
 Description = "<description>",
@@ -5579,14 +5579,14 @@ Options =
 },
 ServiceType = "<serviceType>",
 TypeVersion = "<typeVersion>",
-UpdateTime = DateTimeOffset.FromUnixTimeSeconds(1652209051L),
+UpdateTime = 1234L,
 UpdatedBy = "<updatedBy>",
 Version = 1234L,
 LastModifiedTS = "<lastModifiedTS>",
 AttributeDefs = {default},
 }},
             };
-            Response<AtlasTypesDef> response = await client.BatchCreateAsync(body);
+            Response<AtlasTypesDef> response = await client.BatchCreateAsync(atlasTypesDef);
         }
 
         [Test]
@@ -5595,7 +5595,7 @@ AttributeDefs = {default},
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
+            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
             using RequestContent content = RequestContent.Create(new object());
             Response response = client.BatchUpdate(content);
@@ -5610,7 +5610,7 @@ AttributeDefs = {default},
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
+            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
             using RequestContent content = RequestContent.Create(new object());
             Response response = await client.BatchUpdateAsync(content);
@@ -5625,10 +5625,10 @@ AttributeDefs = {default},
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
+            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
-            AtlasTypesDef body = new AtlasTypesDef();
-            Response<AtlasTypesDef> response = client.BatchUpdate(body);
+            AtlasTypesDef atlasTypesDef = new AtlasTypesDef();
+            Response<AtlasTypesDef> response = client.BatchUpdate(atlasTypesDef);
         }
 
         [Test]
@@ -5637,10 +5637,10 @@ AttributeDefs = {default},
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
+            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
-            AtlasTypesDef body = new AtlasTypesDef();
-            Response<AtlasTypesDef> response = await client.BatchUpdateAsync(body);
+            AtlasTypesDef atlasTypesDef = new AtlasTypesDef();
+            Response<AtlasTypesDef> response = await client.BatchUpdateAsync(atlasTypesDef);
         }
 
         [Test]
@@ -5649,7 +5649,7 @@ AttributeDefs = {default},
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
+            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -5658,7 +5658,7 @@ AttributeDefs = {default},
 new
 {
 category = "PRIMITIVE",
-createTime = 1652209051,
+createTime = 1234L,
 createdBy = "<createdBy>",
 dateFormatter = new
 {
@@ -5705,7 +5705,7 @@ key = "<options>",
 },
 serviceType = "<serviceType>",
 typeVersion = "<typeVersion>",
-updateTime = 1652209051,
+updateTime = 1234L,
 updatedBy = "<updatedBy>",
 version = 1234L,
 lastModifiedTS = "<lastModifiedTS>",
@@ -5748,7 +5748,7 @@ valuesMinCount = 1234,
 new
 {
 category = "PRIMITIVE",
-createTime = 1652209051,
+createTime = 1234L,
 createdBy = "<createdBy>",
 description = "<description>",
 guid = "<guid>",
@@ -5759,7 +5759,7 @@ key = "<options>",
 },
 serviceType = "<serviceType>",
 typeVersion = "<typeVersion>",
-updateTime = 1652209051,
+updateTime = 1234L,
 updatedBy = "<updatedBy>",
 version = 1234L,
 lastModifiedTS = "<lastModifiedTS>",
@@ -5786,7 +5786,7 @@ superTypes = new object[]
 new
 {
 category = "PRIMITIVE",
-createTime = 1652209051,
+createTime = 1234L,
 createdBy = "<createdBy>",
 description = "<description>",
 guid = "<guid>",
@@ -5797,7 +5797,7 @@ key = "<options>",
 },
 serviceType = "<serviceType>",
 typeVersion = "<typeVersion>",
-updateTime = 1652209051,
+updateTime = 1234L,
 updatedBy = "<updatedBy>",
 version = 1234L,
 lastModifiedTS = "<lastModifiedTS>",
@@ -5847,7 +5847,7 @@ relationshipTypeName = "<relationshipTypeName>",
 new
 {
 category = "PRIMITIVE",
-createTime = 1652209051,
+createTime = 1234L,
 createdBy = "<createdBy>",
 description = "<description>",
 guid = "<guid>",
@@ -5858,7 +5858,7 @@ key = "<options>",
 },
 serviceType = "<serviceType>",
 typeVersion = "<typeVersion>",
-updateTime = 1652209051,
+updateTime = 1234L,
 updatedBy = "<updatedBy>",
 version = 1234L,
 lastModifiedTS = "<lastModifiedTS>",
@@ -5879,7 +5879,7 @@ value = "<value>",
 new
 {
 category = "PRIMITIVE",
-createTime = 1652209051,
+createTime = 1234L,
 createdBy = "<createdBy>",
 description = "<description>",
 guid = "<guid>",
@@ -5890,7 +5890,7 @@ key = "<options>",
 },
 serviceType = "<serviceType>",
 typeVersion = "<typeVersion>",
-updateTime = 1652209051,
+updateTime = 1234L,
 updatedBy = "<updatedBy>",
 version = 1234L,
 lastModifiedTS = "<lastModifiedTS>",
@@ -5916,7 +5916,7 @@ relationshipLabel = "<relationshipLabel>",
 new
 {
 category = "PRIMITIVE",
-createTime = 1652209051,
+createTime = 1234L,
 createdBy = "<createdBy>",
 description = "<description>",
 guid = "<guid>",
@@ -5927,7 +5927,7 @@ key = "<options>",
 },
 serviceType = "<serviceType>",
 typeVersion = "<typeVersion>",
-updateTime = 1652209051,
+updateTime = 1234L,
 updatedBy = "<updatedBy>",
 version = 1234L,
 lastModifiedTS = "<lastModifiedTS>",
@@ -5942,7 +5942,7 @@ null
 new
 {
 category = "PRIMITIVE",
-createTime = 1652209051,
+createTime = 1234L,
 createdBy = "<createdBy>",
 description = "<description>",
 guid = "<guid>",
@@ -5953,7 +5953,7 @@ key = "<options>",
 },
 serviceType = "<serviceType>",
 typeVersion = "<typeVersion>",
-updateTime = 1652209051,
+updateTime = 1234L,
 updatedBy = "<updatedBy>",
 version = 1234L,
 lastModifiedTS = "<lastModifiedTS>",
@@ -6308,7 +6308,7 @@ null
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
+            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -6317,7 +6317,7 @@ null
 new
 {
 category = "PRIMITIVE",
-createTime = 1652209051,
+createTime = 1234L,
 createdBy = "<createdBy>",
 dateFormatter = new
 {
@@ -6364,7 +6364,7 @@ key = "<options>",
 },
 serviceType = "<serviceType>",
 typeVersion = "<typeVersion>",
-updateTime = 1652209051,
+updateTime = 1234L,
 updatedBy = "<updatedBy>",
 version = 1234L,
 lastModifiedTS = "<lastModifiedTS>",
@@ -6407,7 +6407,7 @@ valuesMinCount = 1234,
 new
 {
 category = "PRIMITIVE",
-createTime = 1652209051,
+createTime = 1234L,
 createdBy = "<createdBy>",
 description = "<description>",
 guid = "<guid>",
@@ -6418,7 +6418,7 @@ key = "<options>",
 },
 serviceType = "<serviceType>",
 typeVersion = "<typeVersion>",
-updateTime = 1652209051,
+updateTime = 1234L,
 updatedBy = "<updatedBy>",
 version = 1234L,
 lastModifiedTS = "<lastModifiedTS>",
@@ -6445,7 +6445,7 @@ superTypes = new object[]
 new
 {
 category = "PRIMITIVE",
-createTime = 1652209051,
+createTime = 1234L,
 createdBy = "<createdBy>",
 description = "<description>",
 guid = "<guid>",
@@ -6456,7 +6456,7 @@ key = "<options>",
 },
 serviceType = "<serviceType>",
 typeVersion = "<typeVersion>",
-updateTime = 1652209051,
+updateTime = 1234L,
 updatedBy = "<updatedBy>",
 version = 1234L,
 lastModifiedTS = "<lastModifiedTS>",
@@ -6506,7 +6506,7 @@ relationshipTypeName = "<relationshipTypeName>",
 new
 {
 category = "PRIMITIVE",
-createTime = 1652209051,
+createTime = 1234L,
 createdBy = "<createdBy>",
 description = "<description>",
 guid = "<guid>",
@@ -6517,7 +6517,7 @@ key = "<options>",
 },
 serviceType = "<serviceType>",
 typeVersion = "<typeVersion>",
-updateTime = 1652209051,
+updateTime = 1234L,
 updatedBy = "<updatedBy>",
 version = 1234L,
 lastModifiedTS = "<lastModifiedTS>",
@@ -6538,7 +6538,7 @@ value = "<value>",
 new
 {
 category = "PRIMITIVE",
-createTime = 1652209051,
+createTime = 1234L,
 createdBy = "<createdBy>",
 description = "<description>",
 guid = "<guid>",
@@ -6549,7 +6549,7 @@ key = "<options>",
 },
 serviceType = "<serviceType>",
 typeVersion = "<typeVersion>",
-updateTime = 1652209051,
+updateTime = 1234L,
 updatedBy = "<updatedBy>",
 version = 1234L,
 lastModifiedTS = "<lastModifiedTS>",
@@ -6575,7 +6575,7 @@ relationshipLabel = "<relationshipLabel>",
 new
 {
 category = "PRIMITIVE",
-createTime = 1652209051,
+createTime = 1234L,
 createdBy = "<createdBy>",
 description = "<description>",
 guid = "<guid>",
@@ -6586,7 +6586,7 @@ key = "<options>",
 },
 serviceType = "<serviceType>",
 typeVersion = "<typeVersion>",
-updateTime = 1652209051,
+updateTime = 1234L,
 updatedBy = "<updatedBy>",
 version = 1234L,
 lastModifiedTS = "<lastModifiedTS>",
@@ -6601,7 +6601,7 @@ null
 new
 {
 category = "PRIMITIVE",
-createTime = 1652209051,
+createTime = 1234L,
 createdBy = "<createdBy>",
 description = "<description>",
 guid = "<guid>",
@@ -6612,7 +6612,7 @@ key = "<options>",
 },
 serviceType = "<serviceType>",
 typeVersion = "<typeVersion>",
-updateTime = 1652209051,
+updateTime = 1234L,
 updatedBy = "<updatedBy>",
 version = 1234L,
 lastModifiedTS = "<lastModifiedTS>",
@@ -6967,14 +6967,14 @@ null
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
+            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
-            AtlasTypesDef body = new AtlasTypesDef
+            AtlasTypesDef atlasTypesDef = new AtlasTypesDef
             {
                 BusinessMetadataDefs = {new AtlasBusinessMetadataDef
 {
 Category = TypeCategory.Primitive,
-CreateTime = DateTimeOffset.FromUnixTimeSeconds(1652209051L),
+CreateTime = 1234L,
 CreatedBy = "<createdBy>",
 DateFormatter = new AtlasDateFormat
 {
@@ -7021,7 +7021,7 @@ Options =
 },
 ServiceType = "<serviceType>",
 TypeVersion = "<typeVersion>",
-UpdateTime = DateTimeOffset.FromUnixTimeSeconds(1652209051L),
+UpdateTime = 1234L,
 UpdatedBy = "<updatedBy>",
 Version = 1234L,
 LastModifiedTS = "<lastModifiedTS>",
@@ -7055,7 +7055,7 @@ ValuesMinCount = 1234,
                 ClassificationDefs = {new AtlasClassificationDef
 {
 Category = TypeCategory.Primitive,
-CreateTime = DateTimeOffset.FromUnixTimeSeconds(1652209051L),
+CreateTime = 1234L,
 CreatedBy = "<createdBy>",
 DateFormatter = default,
 Description = "<description>",
@@ -7067,7 +7067,7 @@ Options =
 },
 ServiceType = "<serviceType>",
 TypeVersion = "<typeVersion>",
-UpdateTime = DateTimeOffset.FromUnixTimeSeconds(1652209051L),
+UpdateTime = 1234L,
 UpdatedBy = "<updatedBy>",
 Version = 1234L,
 LastModifiedTS = "<lastModifiedTS>",
@@ -7079,7 +7079,7 @@ SuperTypes = {"<superTypes>"},
                 EntityDefs = {new AtlasEntityDef
 {
 Category = TypeCategory.Primitive,
-CreateTime = DateTimeOffset.FromUnixTimeSeconds(1652209051L),
+CreateTime = 1234L,
 CreatedBy = "<createdBy>",
 DateFormatter = default,
 Description = "<description>",
@@ -7091,7 +7091,7 @@ Options =
 },
 ServiceType = "<serviceType>",
 TypeVersion = "<typeVersion>",
-UpdateTime = DateTimeOffset.FromUnixTimeSeconds(1652209051L),
+UpdateTime = 1234L,
 UpdatedBy = "<updatedBy>",
 Version = 1234L,
 LastModifiedTS = "<lastModifiedTS>",
@@ -7123,7 +7123,7 @@ RelationshipTypeName = "<relationshipTypeName>",
                 EnumDefs = {new AtlasEnumDef
 {
 Category = TypeCategory.Primitive,
-CreateTime = DateTimeOffset.FromUnixTimeSeconds(1652209051L),
+CreateTime = 1234L,
 CreatedBy = "<createdBy>",
 DateFormatter = default,
 Description = "<description>",
@@ -7135,7 +7135,7 @@ Options =
 },
 ServiceType = "<serviceType>",
 TypeVersion = "<typeVersion>",
-UpdateTime = DateTimeOffset.FromUnixTimeSeconds(1652209051L),
+UpdateTime = 1234L,
 UpdatedBy = "<updatedBy>",
 Version = 1234L,
 LastModifiedTS = "<lastModifiedTS>",
@@ -7150,7 +7150,7 @@ Value = "<value>",
                 RelationshipDefs = {new AtlasRelationshipDef
 {
 Category = TypeCategory.Primitive,
-CreateTime = DateTimeOffset.FromUnixTimeSeconds(1652209051L),
+CreateTime = 1234L,
 CreatedBy = "<createdBy>",
 DateFormatter = default,
 Description = "<description>",
@@ -7162,7 +7162,7 @@ Options =
 },
 ServiceType = "<serviceType>",
 TypeVersion = "<typeVersion>",
-UpdateTime = DateTimeOffset.FromUnixTimeSeconds(1652209051L),
+UpdateTime = 1234L,
 UpdatedBy = "<updatedBy>",
 Version = 1234L,
 LastModifiedTS = "<lastModifiedTS>",
@@ -7183,7 +7183,7 @@ RelationshipLabel = "<relationshipLabel>",
                 StructDefs = {new AtlasStructDef
 {
 Category = TypeCategory.Primitive,
-CreateTime = DateTimeOffset.FromUnixTimeSeconds(1652209051L),
+CreateTime = 1234L,
 CreatedBy = "<createdBy>",
 DateFormatter = default,
 Description = "<description>",
@@ -7195,7 +7195,7 @@ Options =
 },
 ServiceType = "<serviceType>",
 TypeVersion = "<typeVersion>",
-UpdateTime = DateTimeOffset.FromUnixTimeSeconds(1652209051L),
+UpdateTime = 1234L,
 UpdatedBy = "<updatedBy>",
 Version = 1234L,
 LastModifiedTS = "<lastModifiedTS>",
@@ -7204,7 +7204,7 @@ AttributeDefs = {default},
                 TermTemplateDefs = {new TermTemplateDef
 {
 Category = TypeCategory.Primitive,
-CreateTime = DateTimeOffset.FromUnixTimeSeconds(1652209051L),
+CreateTime = 1234L,
 CreatedBy = "<createdBy>",
 DateFormatter = default,
 Description = "<description>",
@@ -7216,14 +7216,14 @@ Options =
 },
 ServiceType = "<serviceType>",
 TypeVersion = "<typeVersion>",
-UpdateTime = DateTimeOffset.FromUnixTimeSeconds(1652209051L),
+UpdateTime = 1234L,
 UpdatedBy = "<updatedBy>",
 Version = 1234L,
 LastModifiedTS = "<lastModifiedTS>",
 AttributeDefs = {default},
 }},
             };
-            Response<AtlasTypesDef> response = client.BatchUpdate(body);
+            Response<AtlasTypesDef> response = client.BatchUpdate(atlasTypesDef);
         }
 
         [Test]
@@ -7232,14 +7232,14 @@ AttributeDefs = {default},
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
+            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
-            AtlasTypesDef body = new AtlasTypesDef
+            AtlasTypesDef atlasTypesDef = new AtlasTypesDef
             {
                 BusinessMetadataDefs = {new AtlasBusinessMetadataDef
 {
 Category = TypeCategory.Primitive,
-CreateTime = DateTimeOffset.FromUnixTimeSeconds(1652209051L),
+CreateTime = 1234L,
 CreatedBy = "<createdBy>",
 DateFormatter = new AtlasDateFormat
 {
@@ -7286,7 +7286,7 @@ Options =
 },
 ServiceType = "<serviceType>",
 TypeVersion = "<typeVersion>",
-UpdateTime = DateTimeOffset.FromUnixTimeSeconds(1652209051L),
+UpdateTime = 1234L,
 UpdatedBy = "<updatedBy>",
 Version = 1234L,
 LastModifiedTS = "<lastModifiedTS>",
@@ -7320,7 +7320,7 @@ ValuesMinCount = 1234,
                 ClassificationDefs = {new AtlasClassificationDef
 {
 Category = TypeCategory.Primitive,
-CreateTime = DateTimeOffset.FromUnixTimeSeconds(1652209051L),
+CreateTime = 1234L,
 CreatedBy = "<createdBy>",
 DateFormatter = default,
 Description = "<description>",
@@ -7332,7 +7332,7 @@ Options =
 },
 ServiceType = "<serviceType>",
 TypeVersion = "<typeVersion>",
-UpdateTime = DateTimeOffset.FromUnixTimeSeconds(1652209051L),
+UpdateTime = 1234L,
 UpdatedBy = "<updatedBy>",
 Version = 1234L,
 LastModifiedTS = "<lastModifiedTS>",
@@ -7344,7 +7344,7 @@ SuperTypes = {"<superTypes>"},
                 EntityDefs = {new AtlasEntityDef
 {
 Category = TypeCategory.Primitive,
-CreateTime = DateTimeOffset.FromUnixTimeSeconds(1652209051L),
+CreateTime = 1234L,
 CreatedBy = "<createdBy>",
 DateFormatter = default,
 Description = "<description>",
@@ -7356,7 +7356,7 @@ Options =
 },
 ServiceType = "<serviceType>",
 TypeVersion = "<typeVersion>",
-UpdateTime = DateTimeOffset.FromUnixTimeSeconds(1652209051L),
+UpdateTime = 1234L,
 UpdatedBy = "<updatedBy>",
 Version = 1234L,
 LastModifiedTS = "<lastModifiedTS>",
@@ -7388,7 +7388,7 @@ RelationshipTypeName = "<relationshipTypeName>",
                 EnumDefs = {new AtlasEnumDef
 {
 Category = TypeCategory.Primitive,
-CreateTime = DateTimeOffset.FromUnixTimeSeconds(1652209051L),
+CreateTime = 1234L,
 CreatedBy = "<createdBy>",
 DateFormatter = default,
 Description = "<description>",
@@ -7400,7 +7400,7 @@ Options =
 },
 ServiceType = "<serviceType>",
 TypeVersion = "<typeVersion>",
-UpdateTime = DateTimeOffset.FromUnixTimeSeconds(1652209051L),
+UpdateTime = 1234L,
 UpdatedBy = "<updatedBy>",
 Version = 1234L,
 LastModifiedTS = "<lastModifiedTS>",
@@ -7415,7 +7415,7 @@ Value = "<value>",
                 RelationshipDefs = {new AtlasRelationshipDef
 {
 Category = TypeCategory.Primitive,
-CreateTime = DateTimeOffset.FromUnixTimeSeconds(1652209051L),
+CreateTime = 1234L,
 CreatedBy = "<createdBy>",
 DateFormatter = default,
 Description = "<description>",
@@ -7427,7 +7427,7 @@ Options =
 },
 ServiceType = "<serviceType>",
 TypeVersion = "<typeVersion>",
-UpdateTime = DateTimeOffset.FromUnixTimeSeconds(1652209051L),
+UpdateTime = 1234L,
 UpdatedBy = "<updatedBy>",
 Version = 1234L,
 LastModifiedTS = "<lastModifiedTS>",
@@ -7448,7 +7448,7 @@ RelationshipLabel = "<relationshipLabel>",
                 StructDefs = {new AtlasStructDef
 {
 Category = TypeCategory.Primitive,
-CreateTime = DateTimeOffset.FromUnixTimeSeconds(1652209051L),
+CreateTime = 1234L,
 CreatedBy = "<createdBy>",
 DateFormatter = default,
 Description = "<description>",
@@ -7460,7 +7460,7 @@ Options =
 },
 ServiceType = "<serviceType>",
 TypeVersion = "<typeVersion>",
-UpdateTime = DateTimeOffset.FromUnixTimeSeconds(1652209051L),
+UpdateTime = 1234L,
 UpdatedBy = "<updatedBy>",
 Version = 1234L,
 LastModifiedTS = "<lastModifiedTS>",
@@ -7469,7 +7469,7 @@ AttributeDefs = {default},
                 TermTemplateDefs = {new TermTemplateDef
 {
 Category = TypeCategory.Primitive,
-CreateTime = DateTimeOffset.FromUnixTimeSeconds(1652209051L),
+CreateTime = 1234L,
 CreatedBy = "<createdBy>",
 DateFormatter = default,
 Description = "<description>",
@@ -7481,14 +7481,14 @@ Options =
 },
 ServiceType = "<serviceType>",
 TypeVersion = "<typeVersion>",
-UpdateTime = DateTimeOffset.FromUnixTimeSeconds(1652209051L),
+UpdateTime = 1234L,
 UpdatedBy = "<updatedBy>",
 Version = 1234L,
 LastModifiedTS = "<lastModifiedTS>",
 AttributeDefs = {default},
 }},
             };
-            Response<AtlasTypesDef> response = await client.BatchUpdateAsync(body);
+            Response<AtlasTypesDef> response = await client.BatchUpdateAsync(atlasTypesDef);
         }
 
         [Test]
@@ -7497,7 +7497,7 @@ AttributeDefs = {default},
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
+            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
             using RequestContent content = RequestContent.Create(new object());
             Response response = client.BatchDelete(content);
@@ -7511,7 +7511,7 @@ AttributeDefs = {default},
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
+            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
             using RequestContent content = RequestContent.Create(new object());
             Response response = await client.BatchDeleteAsync(content);
@@ -7525,10 +7525,10 @@ AttributeDefs = {default},
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
+            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
-            AtlasTypesDef body = new AtlasTypesDef();
-            Response response = client.BatchDelete(body);
+            AtlasTypesDef atlasTypesDef = new AtlasTypesDef();
+            Response response = client.BatchDelete(atlasTypesDef);
         }
 
         [Test]
@@ -7537,10 +7537,10 @@ AttributeDefs = {default},
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
+            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
-            AtlasTypesDef body = new AtlasTypesDef();
-            Response response = await client.BatchDeleteAsync(body);
+            AtlasTypesDef atlasTypesDef = new AtlasTypesDef();
+            Response response = await client.BatchDeleteAsync(atlasTypesDef);
         }
 
         [Test]
@@ -7549,7 +7549,7 @@ AttributeDefs = {default},
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
+            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -7558,7 +7558,7 @@ AttributeDefs = {default},
 new
 {
 category = "PRIMITIVE",
-createTime = 1652209051,
+createTime = 1234L,
 createdBy = "<createdBy>",
 dateFormatter = new
 {
@@ -7605,7 +7605,7 @@ key = "<options>",
 },
 serviceType = "<serviceType>",
 typeVersion = "<typeVersion>",
-updateTime = 1652209051,
+updateTime = 1234L,
 updatedBy = "<updatedBy>",
 version = 1234L,
 lastModifiedTS = "<lastModifiedTS>",
@@ -7648,7 +7648,7 @@ valuesMinCount = 1234,
 new
 {
 category = "PRIMITIVE",
-createTime = 1652209051,
+createTime = 1234L,
 createdBy = "<createdBy>",
 description = "<description>",
 guid = "<guid>",
@@ -7659,7 +7659,7 @@ key = "<options>",
 },
 serviceType = "<serviceType>",
 typeVersion = "<typeVersion>",
-updateTime = 1652209051,
+updateTime = 1234L,
 updatedBy = "<updatedBy>",
 version = 1234L,
 lastModifiedTS = "<lastModifiedTS>",
@@ -7686,7 +7686,7 @@ superTypes = new object[]
 new
 {
 category = "PRIMITIVE",
-createTime = 1652209051,
+createTime = 1234L,
 createdBy = "<createdBy>",
 description = "<description>",
 guid = "<guid>",
@@ -7697,7 +7697,7 @@ key = "<options>",
 },
 serviceType = "<serviceType>",
 typeVersion = "<typeVersion>",
-updateTime = 1652209051,
+updateTime = 1234L,
 updatedBy = "<updatedBy>",
 version = 1234L,
 lastModifiedTS = "<lastModifiedTS>",
@@ -7747,7 +7747,7 @@ relationshipTypeName = "<relationshipTypeName>",
 new
 {
 category = "PRIMITIVE",
-createTime = 1652209051,
+createTime = 1234L,
 createdBy = "<createdBy>",
 description = "<description>",
 guid = "<guid>",
@@ -7758,7 +7758,7 @@ key = "<options>",
 },
 serviceType = "<serviceType>",
 typeVersion = "<typeVersion>",
-updateTime = 1652209051,
+updateTime = 1234L,
 updatedBy = "<updatedBy>",
 version = 1234L,
 lastModifiedTS = "<lastModifiedTS>",
@@ -7779,7 +7779,7 @@ value = "<value>",
 new
 {
 category = "PRIMITIVE",
-createTime = 1652209051,
+createTime = 1234L,
 createdBy = "<createdBy>",
 description = "<description>",
 guid = "<guid>",
@@ -7790,7 +7790,7 @@ key = "<options>",
 },
 serviceType = "<serviceType>",
 typeVersion = "<typeVersion>",
-updateTime = 1652209051,
+updateTime = 1234L,
 updatedBy = "<updatedBy>",
 version = 1234L,
 lastModifiedTS = "<lastModifiedTS>",
@@ -7816,7 +7816,7 @@ relationshipLabel = "<relationshipLabel>",
 new
 {
 category = "PRIMITIVE",
-createTime = 1652209051,
+createTime = 1234L,
 createdBy = "<createdBy>",
 description = "<description>",
 guid = "<guid>",
@@ -7827,7 +7827,7 @@ key = "<options>",
 },
 serviceType = "<serviceType>",
 typeVersion = "<typeVersion>",
-updateTime = 1652209051,
+updateTime = 1234L,
 updatedBy = "<updatedBy>",
 version = 1234L,
 lastModifiedTS = "<lastModifiedTS>",
@@ -7842,7 +7842,7 @@ null
 new
 {
 category = "PRIMITIVE",
-createTime = 1652209051,
+createTime = 1234L,
 createdBy = "<createdBy>",
 description = "<description>",
 guid = "<guid>",
@@ -7853,7 +7853,7 @@ key = "<options>",
 },
 serviceType = "<serviceType>",
 typeVersion = "<typeVersion>",
-updateTime = 1652209051,
+updateTime = 1234L,
 updatedBy = "<updatedBy>",
 version = 1234L,
 lastModifiedTS = "<lastModifiedTS>",
@@ -7875,7 +7875,7 @@ null
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
+            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -7884,7 +7884,7 @@ null
 new
 {
 category = "PRIMITIVE",
-createTime = 1652209051,
+createTime = 1234L,
 createdBy = "<createdBy>",
 dateFormatter = new
 {
@@ -7931,7 +7931,7 @@ key = "<options>",
 },
 serviceType = "<serviceType>",
 typeVersion = "<typeVersion>",
-updateTime = 1652209051,
+updateTime = 1234L,
 updatedBy = "<updatedBy>",
 version = 1234L,
 lastModifiedTS = "<lastModifiedTS>",
@@ -7974,7 +7974,7 @@ valuesMinCount = 1234,
 new
 {
 category = "PRIMITIVE",
-createTime = 1652209051,
+createTime = 1234L,
 createdBy = "<createdBy>",
 description = "<description>",
 guid = "<guid>",
@@ -7985,7 +7985,7 @@ key = "<options>",
 },
 serviceType = "<serviceType>",
 typeVersion = "<typeVersion>",
-updateTime = 1652209051,
+updateTime = 1234L,
 updatedBy = "<updatedBy>",
 version = 1234L,
 lastModifiedTS = "<lastModifiedTS>",
@@ -8012,7 +8012,7 @@ superTypes = new object[]
 new
 {
 category = "PRIMITIVE",
-createTime = 1652209051,
+createTime = 1234L,
 createdBy = "<createdBy>",
 description = "<description>",
 guid = "<guid>",
@@ -8023,7 +8023,7 @@ key = "<options>",
 },
 serviceType = "<serviceType>",
 typeVersion = "<typeVersion>",
-updateTime = 1652209051,
+updateTime = 1234L,
 updatedBy = "<updatedBy>",
 version = 1234L,
 lastModifiedTS = "<lastModifiedTS>",
@@ -8073,7 +8073,7 @@ relationshipTypeName = "<relationshipTypeName>",
 new
 {
 category = "PRIMITIVE",
-createTime = 1652209051,
+createTime = 1234L,
 createdBy = "<createdBy>",
 description = "<description>",
 guid = "<guid>",
@@ -8084,7 +8084,7 @@ key = "<options>",
 },
 serviceType = "<serviceType>",
 typeVersion = "<typeVersion>",
-updateTime = 1652209051,
+updateTime = 1234L,
 updatedBy = "<updatedBy>",
 version = 1234L,
 lastModifiedTS = "<lastModifiedTS>",
@@ -8105,7 +8105,7 @@ value = "<value>",
 new
 {
 category = "PRIMITIVE",
-createTime = 1652209051,
+createTime = 1234L,
 createdBy = "<createdBy>",
 description = "<description>",
 guid = "<guid>",
@@ -8116,7 +8116,7 @@ key = "<options>",
 },
 serviceType = "<serviceType>",
 typeVersion = "<typeVersion>",
-updateTime = 1652209051,
+updateTime = 1234L,
 updatedBy = "<updatedBy>",
 version = 1234L,
 lastModifiedTS = "<lastModifiedTS>",
@@ -8142,7 +8142,7 @@ relationshipLabel = "<relationshipLabel>",
 new
 {
 category = "PRIMITIVE",
-createTime = 1652209051,
+createTime = 1234L,
 createdBy = "<createdBy>",
 description = "<description>",
 guid = "<guid>",
@@ -8153,7 +8153,7 @@ key = "<options>",
 },
 serviceType = "<serviceType>",
 typeVersion = "<typeVersion>",
-updateTime = 1652209051,
+updateTime = 1234L,
 updatedBy = "<updatedBy>",
 version = 1234L,
 lastModifiedTS = "<lastModifiedTS>",
@@ -8168,7 +8168,7 @@ null
 new
 {
 category = "PRIMITIVE",
-createTime = 1652209051,
+createTime = 1234L,
 createdBy = "<createdBy>",
 description = "<description>",
 guid = "<guid>",
@@ -8179,7 +8179,7 @@ key = "<options>",
 },
 serviceType = "<serviceType>",
 typeVersion = "<typeVersion>",
-updateTime = 1652209051,
+updateTime = 1234L,
 updatedBy = "<updatedBy>",
 version = 1234L,
 lastModifiedTS = "<lastModifiedTS>",
@@ -8201,14 +8201,14 @@ null
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
+            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
-            AtlasTypesDef body = new AtlasTypesDef
+            AtlasTypesDef atlasTypesDef = new AtlasTypesDef
             {
                 BusinessMetadataDefs = {new AtlasBusinessMetadataDef
 {
 Category = TypeCategory.Primitive,
-CreateTime = DateTimeOffset.FromUnixTimeSeconds(1652209051L),
+CreateTime = 1234L,
 CreatedBy = "<createdBy>",
 DateFormatter = new AtlasDateFormat
 {
@@ -8255,7 +8255,7 @@ Options =
 },
 ServiceType = "<serviceType>",
 TypeVersion = "<typeVersion>",
-UpdateTime = DateTimeOffset.FromUnixTimeSeconds(1652209051L),
+UpdateTime = 1234L,
 UpdatedBy = "<updatedBy>",
 Version = 1234L,
 LastModifiedTS = "<lastModifiedTS>",
@@ -8289,7 +8289,7 @@ ValuesMinCount = 1234,
                 ClassificationDefs = {new AtlasClassificationDef
 {
 Category = TypeCategory.Primitive,
-CreateTime = DateTimeOffset.FromUnixTimeSeconds(1652209051L),
+CreateTime = 1234L,
 CreatedBy = "<createdBy>",
 DateFormatter = default,
 Description = "<description>",
@@ -8301,7 +8301,7 @@ Options =
 },
 ServiceType = "<serviceType>",
 TypeVersion = "<typeVersion>",
-UpdateTime = DateTimeOffset.FromUnixTimeSeconds(1652209051L),
+UpdateTime = 1234L,
 UpdatedBy = "<updatedBy>",
 Version = 1234L,
 LastModifiedTS = "<lastModifiedTS>",
@@ -8313,7 +8313,7 @@ SuperTypes = {"<superTypes>"},
                 EntityDefs = {new AtlasEntityDef
 {
 Category = TypeCategory.Primitive,
-CreateTime = DateTimeOffset.FromUnixTimeSeconds(1652209051L),
+CreateTime = 1234L,
 CreatedBy = "<createdBy>",
 DateFormatter = default,
 Description = "<description>",
@@ -8325,7 +8325,7 @@ Options =
 },
 ServiceType = "<serviceType>",
 TypeVersion = "<typeVersion>",
-UpdateTime = DateTimeOffset.FromUnixTimeSeconds(1652209051L),
+UpdateTime = 1234L,
 UpdatedBy = "<updatedBy>",
 Version = 1234L,
 LastModifiedTS = "<lastModifiedTS>",
@@ -8357,7 +8357,7 @@ RelationshipTypeName = "<relationshipTypeName>",
                 EnumDefs = {new AtlasEnumDef
 {
 Category = TypeCategory.Primitive,
-CreateTime = DateTimeOffset.FromUnixTimeSeconds(1652209051L),
+CreateTime = 1234L,
 CreatedBy = "<createdBy>",
 DateFormatter = default,
 Description = "<description>",
@@ -8369,7 +8369,7 @@ Options =
 },
 ServiceType = "<serviceType>",
 TypeVersion = "<typeVersion>",
-UpdateTime = DateTimeOffset.FromUnixTimeSeconds(1652209051L),
+UpdateTime = 1234L,
 UpdatedBy = "<updatedBy>",
 Version = 1234L,
 LastModifiedTS = "<lastModifiedTS>",
@@ -8384,7 +8384,7 @@ Value = "<value>",
                 RelationshipDefs = {new AtlasRelationshipDef
 {
 Category = TypeCategory.Primitive,
-CreateTime = DateTimeOffset.FromUnixTimeSeconds(1652209051L),
+CreateTime = 1234L,
 CreatedBy = "<createdBy>",
 DateFormatter = default,
 Description = "<description>",
@@ -8396,7 +8396,7 @@ Options =
 },
 ServiceType = "<serviceType>",
 TypeVersion = "<typeVersion>",
-UpdateTime = DateTimeOffset.FromUnixTimeSeconds(1652209051L),
+UpdateTime = 1234L,
 UpdatedBy = "<updatedBy>",
 Version = 1234L,
 LastModifiedTS = "<lastModifiedTS>",
@@ -8417,7 +8417,7 @@ RelationshipLabel = "<relationshipLabel>",
                 StructDefs = {new AtlasStructDef
 {
 Category = TypeCategory.Primitive,
-CreateTime = DateTimeOffset.FromUnixTimeSeconds(1652209051L),
+CreateTime = 1234L,
 CreatedBy = "<createdBy>",
 DateFormatter = default,
 Description = "<description>",
@@ -8429,7 +8429,7 @@ Options =
 },
 ServiceType = "<serviceType>",
 TypeVersion = "<typeVersion>",
-UpdateTime = DateTimeOffset.FromUnixTimeSeconds(1652209051L),
+UpdateTime = 1234L,
 UpdatedBy = "<updatedBy>",
 Version = 1234L,
 LastModifiedTS = "<lastModifiedTS>",
@@ -8438,7 +8438,7 @@ AttributeDefs = {default},
                 TermTemplateDefs = {new TermTemplateDef
 {
 Category = TypeCategory.Primitive,
-CreateTime = DateTimeOffset.FromUnixTimeSeconds(1652209051L),
+CreateTime = 1234L,
 CreatedBy = "<createdBy>",
 DateFormatter = default,
 Description = "<description>",
@@ -8450,14 +8450,14 @@ Options =
 },
 ServiceType = "<serviceType>",
 TypeVersion = "<typeVersion>",
-UpdateTime = DateTimeOffset.FromUnixTimeSeconds(1652209051L),
+UpdateTime = 1234L,
 UpdatedBy = "<updatedBy>",
 Version = 1234L,
 LastModifiedTS = "<lastModifiedTS>",
 AttributeDefs = {default},
 }},
             };
-            Response response = client.BatchDelete(body);
+            Response response = client.BatchDelete(atlasTypesDef);
         }
 
         [Test]
@@ -8466,14 +8466,14 @@ AttributeDefs = {default},
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
+            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
-            AtlasTypesDef body = new AtlasTypesDef
+            AtlasTypesDef atlasTypesDef = new AtlasTypesDef
             {
                 BusinessMetadataDefs = {new AtlasBusinessMetadataDef
 {
 Category = TypeCategory.Primitive,
-CreateTime = DateTimeOffset.FromUnixTimeSeconds(1652209051L),
+CreateTime = 1234L,
 CreatedBy = "<createdBy>",
 DateFormatter = new AtlasDateFormat
 {
@@ -8520,7 +8520,7 @@ Options =
 },
 ServiceType = "<serviceType>",
 TypeVersion = "<typeVersion>",
-UpdateTime = DateTimeOffset.FromUnixTimeSeconds(1652209051L),
+UpdateTime = 1234L,
 UpdatedBy = "<updatedBy>",
 Version = 1234L,
 LastModifiedTS = "<lastModifiedTS>",
@@ -8554,7 +8554,7 @@ ValuesMinCount = 1234,
                 ClassificationDefs = {new AtlasClassificationDef
 {
 Category = TypeCategory.Primitive,
-CreateTime = DateTimeOffset.FromUnixTimeSeconds(1652209051L),
+CreateTime = 1234L,
 CreatedBy = "<createdBy>",
 DateFormatter = default,
 Description = "<description>",
@@ -8566,7 +8566,7 @@ Options =
 },
 ServiceType = "<serviceType>",
 TypeVersion = "<typeVersion>",
-UpdateTime = DateTimeOffset.FromUnixTimeSeconds(1652209051L),
+UpdateTime = 1234L,
 UpdatedBy = "<updatedBy>",
 Version = 1234L,
 LastModifiedTS = "<lastModifiedTS>",
@@ -8578,7 +8578,7 @@ SuperTypes = {"<superTypes>"},
                 EntityDefs = {new AtlasEntityDef
 {
 Category = TypeCategory.Primitive,
-CreateTime = DateTimeOffset.FromUnixTimeSeconds(1652209051L),
+CreateTime = 1234L,
 CreatedBy = "<createdBy>",
 DateFormatter = default,
 Description = "<description>",
@@ -8590,7 +8590,7 @@ Options =
 },
 ServiceType = "<serviceType>",
 TypeVersion = "<typeVersion>",
-UpdateTime = DateTimeOffset.FromUnixTimeSeconds(1652209051L),
+UpdateTime = 1234L,
 UpdatedBy = "<updatedBy>",
 Version = 1234L,
 LastModifiedTS = "<lastModifiedTS>",
@@ -8622,7 +8622,7 @@ RelationshipTypeName = "<relationshipTypeName>",
                 EnumDefs = {new AtlasEnumDef
 {
 Category = TypeCategory.Primitive,
-CreateTime = DateTimeOffset.FromUnixTimeSeconds(1652209051L),
+CreateTime = 1234L,
 CreatedBy = "<createdBy>",
 DateFormatter = default,
 Description = "<description>",
@@ -8634,7 +8634,7 @@ Options =
 },
 ServiceType = "<serviceType>",
 TypeVersion = "<typeVersion>",
-UpdateTime = DateTimeOffset.FromUnixTimeSeconds(1652209051L),
+UpdateTime = 1234L,
 UpdatedBy = "<updatedBy>",
 Version = 1234L,
 LastModifiedTS = "<lastModifiedTS>",
@@ -8649,7 +8649,7 @@ Value = "<value>",
                 RelationshipDefs = {new AtlasRelationshipDef
 {
 Category = TypeCategory.Primitive,
-CreateTime = DateTimeOffset.FromUnixTimeSeconds(1652209051L),
+CreateTime = 1234L,
 CreatedBy = "<createdBy>",
 DateFormatter = default,
 Description = "<description>",
@@ -8661,7 +8661,7 @@ Options =
 },
 ServiceType = "<serviceType>",
 TypeVersion = "<typeVersion>",
-UpdateTime = DateTimeOffset.FromUnixTimeSeconds(1652209051L),
+UpdateTime = 1234L,
 UpdatedBy = "<updatedBy>",
 Version = 1234L,
 LastModifiedTS = "<lastModifiedTS>",
@@ -8682,7 +8682,7 @@ RelationshipLabel = "<relationshipLabel>",
                 StructDefs = {new AtlasStructDef
 {
 Category = TypeCategory.Primitive,
-CreateTime = DateTimeOffset.FromUnixTimeSeconds(1652209051L),
+CreateTime = 1234L,
 CreatedBy = "<createdBy>",
 DateFormatter = default,
 Description = "<description>",
@@ -8694,7 +8694,7 @@ Options =
 },
 ServiceType = "<serviceType>",
 TypeVersion = "<typeVersion>",
-UpdateTime = DateTimeOffset.FromUnixTimeSeconds(1652209051L),
+UpdateTime = 1234L,
 UpdatedBy = "<updatedBy>",
 Version = 1234L,
 LastModifiedTS = "<lastModifiedTS>",
@@ -8703,7 +8703,7 @@ AttributeDefs = {default},
                 TermTemplateDefs = {new TermTemplateDef
 {
 Category = TypeCategory.Primitive,
-CreateTime = DateTimeOffset.FromUnixTimeSeconds(1652209051L),
+CreateTime = 1234L,
 CreatedBy = "<createdBy>",
 DateFormatter = default,
 Description = "<description>",
@@ -8715,14 +8715,14 @@ Options =
 },
 ServiceType = "<serviceType>",
 TypeVersion = "<typeVersion>",
-UpdateTime = DateTimeOffset.FromUnixTimeSeconds(1652209051L),
+UpdateTime = 1234L,
 UpdatedBy = "<updatedBy>",
 Version = 1234L,
 LastModifiedTS = "<lastModifiedTS>",
 AttributeDefs = {default},
 }},
             };
-            Response response = await client.BatchDeleteAsync(body);
+            Response response = await client.BatchDeleteAsync(atlasTypesDef);
         }
 
         [Test]
@@ -8731,7 +8731,7 @@ AttributeDefs = {default},
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
+            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
             Response response = client.GetHeaders(null, null, null);
 
@@ -8745,7 +8745,7 @@ AttributeDefs = {default},
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
+            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
             Response response = await client.GetHeadersAsync(null, null, null);
 
@@ -8759,7 +8759,7 @@ AttributeDefs = {default},
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
+            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
             Response<IReadOnlyList<AtlasTypeDefHeader>> response = client.GetHeaders();
         }
@@ -8770,7 +8770,7 @@ AttributeDefs = {default},
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
+            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
             Response<IReadOnlyList<AtlasTypeDefHeader>> response = await client.GetHeadersAsync();
         }

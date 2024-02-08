@@ -22,7 +22,6 @@ namespace Azure.Analytics.Purview.DataMap
         private readonly TokenCredential _tokenCredential;
         private readonly HttpPipeline _pipeline;
         private readonly Uri _endpoint;
-        private readonly string _apiVersion;
 
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal ClientDiagnostics ClientDiagnostics { get; }
@@ -40,48 +39,40 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="tokenCredential"> The token credential to copy. </param>
         /// <param name="endpoint"> The <see cref="Uri"/> to use. </param>
-        /// <param name="apiVersion"> The API version to use for this operation. </param>
-        internal Relationship(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, TokenCredential tokenCredential, Uri endpoint, string apiVersion)
+        internal Relationship(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, TokenCredential tokenCredential, Uri endpoint)
         {
             ClientDiagnostics = clientDiagnostics;
             _pipeline = pipeline;
             _tokenCredential = tokenCredential;
             _endpoint = endpoint;
-            _apiVersion = apiVersion;
         }
 
         /// <summary> Create a new relationship between entities. </summary>
-        /// <param name="body">
-        /// The AtlasRelationship object containing the information for the relationship to
-        /// be created.
-        /// </param>
+        /// <param name="atlasRelationship"> Atlas relationship instance. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="atlasRelationship"/> is null. </exception>
         /// <include file="Docs/Relationship.xml" path="doc/members/member[@name='CreateAsync(AtlasRelationship,CancellationToken)']/*" />
-        public virtual async Task<Response<AtlasRelationship>> CreateAsync(AtlasRelationship body, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AtlasRelationship>> CreateAsync(AtlasRelationship atlasRelationship, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(body, nameof(body));
+            Argument.AssertNotNull(atlasRelationship, nameof(atlasRelationship));
 
             RequestContext context = FromCancellationToken(cancellationToken);
-            using RequestContent content = body.ToRequestContent();
+            using RequestContent content = atlasRelationship.ToRequestContent();
             Response response = await CreateAsync(content, context).ConfigureAwait(false);
             return Response.FromValue(AtlasRelationship.FromResponse(response), response);
         }
 
         /// <summary> Create a new relationship between entities. </summary>
-        /// <param name="body">
-        /// The AtlasRelationship object containing the information for the relationship to
-        /// be created.
-        /// </param>
+        /// <param name="atlasRelationship"> Atlas relationship instance. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="atlasRelationship"/> is null. </exception>
         /// <include file="Docs/Relationship.xml" path="doc/members/member[@name='Create(AtlasRelationship,CancellationToken)']/*" />
-        public virtual Response<AtlasRelationship> Create(AtlasRelationship body, CancellationToken cancellationToken = default)
+        public virtual Response<AtlasRelationship> Create(AtlasRelationship atlasRelationship, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(body, nameof(body));
+            Argument.AssertNotNull(atlasRelationship, nameof(atlasRelationship));
 
             RequestContext context = FromCancellationToken(cancellationToken);
-            using RequestContent content = body.ToRequestContent();
+            using RequestContent content = atlasRelationship.ToRequestContent();
             Response response = Create(content, context);
             return Response.FromValue(AtlasRelationship.FromResponse(response), response);
         }
@@ -165,37 +156,31 @@ namespace Azure.Analytics.Purview.DataMap
         }
 
         /// <summary> Update an existing relationship between entities. </summary>
-        /// <param name="body">
-        /// The AtlasRelationship object containing the information for the relationship to
-        /// be created.
-        /// </param>
+        /// <param name="atlasRelationship"> Atlas relationship instance. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="atlasRelationship"/> is null. </exception>
         /// <include file="Docs/Relationship.xml" path="doc/members/member[@name='UpdateAsync(AtlasRelationship,CancellationToken)']/*" />
-        public virtual async Task<Response<AtlasRelationship>> UpdateAsync(AtlasRelationship body, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AtlasRelationship>> UpdateAsync(AtlasRelationship atlasRelationship, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(body, nameof(body));
+            Argument.AssertNotNull(atlasRelationship, nameof(atlasRelationship));
 
             RequestContext context = FromCancellationToken(cancellationToken);
-            using RequestContent content = body.ToRequestContent();
+            using RequestContent content = atlasRelationship.ToRequestContent();
             Response response = await UpdateAsync(content, context).ConfigureAwait(false);
             return Response.FromValue(AtlasRelationship.FromResponse(response), response);
         }
 
         /// <summary> Update an existing relationship between entities. </summary>
-        /// <param name="body">
-        /// The AtlasRelationship object containing the information for the relationship to
-        /// be created.
-        /// </param>
+        /// <param name="atlasRelationship"> Atlas relationship instance. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="atlasRelationship"/> is null. </exception>
         /// <include file="Docs/Relationship.xml" path="doc/members/member[@name='Update(AtlasRelationship,CancellationToken)']/*" />
-        public virtual Response<AtlasRelationship> Update(AtlasRelationship body, CancellationToken cancellationToken = default)
+        public virtual Response<AtlasRelationship> Update(AtlasRelationship atlasRelationship, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(body, nameof(body));
+            Argument.AssertNotNull(atlasRelationship, nameof(atlasRelationship));
 
             RequestContext context = FromCancellationToken(cancellationToken);
-            using RequestContent content = body.ToRequestContent();
+            using RequestContent content = atlasRelationship.ToRequestContent();
             Response response = Update(content, context);
             return Response.FromValue(AtlasRelationship.FromResponse(response), response);
         }
@@ -473,7 +458,6 @@ namespace Azure.Analytics.Purview.DataMap
             uri.Reset(_endpoint);
             uri.AppendRaw("/datamap/api", false);
             uri.AppendPath("/atlas/v2/relationship", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
@@ -490,7 +474,6 @@ namespace Azure.Analytics.Purview.DataMap
             uri.Reset(_endpoint);
             uri.AppendRaw("/datamap/api", false);
             uri.AppendPath("/atlas/v2/relationship", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
@@ -508,7 +491,6 @@ namespace Azure.Analytics.Purview.DataMap
             uri.AppendRaw("/datamap/api", false);
             uri.AppendPath("/atlas/v2/relationship/guid/", false);
             uri.AppendPath(guid, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
             if (extendedInfo != null)
             {
                 uri.AppendQuery("extendedInfo", extendedInfo.Value, true);
@@ -528,7 +510,6 @@ namespace Azure.Analytics.Purview.DataMap
             uri.AppendRaw("/datamap/api", false);
             uri.AppendPath("/atlas/v2/relationship/guid/", false);
             uri.AppendPath(guid, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;

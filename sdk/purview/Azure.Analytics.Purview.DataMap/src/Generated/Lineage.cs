@@ -505,7 +505,6 @@ namespace Azure.Analytics.Purview.DataMap
             uri.AppendPath("/atlas/v2/lineage/", false);
             uri.AppendPath(guid, true);
             uri.AppendQuery("direction", direction, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
             if (depth != null)
             {
                 uri.AppendQuery("depth", depth.Value, true);
@@ -552,7 +551,6 @@ namespace Azure.Analytics.Purview.DataMap
             uri.AppendPath("/atlas/v2/lineage/uniqueAttribute/type/", false);
             uri.AppendPath(typeName, true);
             uri.AppendQuery("direction", direction, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
             if (depth != null)
             {
                 uri.AppendQuery("depth", depth.Value, true);

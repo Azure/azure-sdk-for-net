@@ -5,11 +5,14 @@
     <Version>1.0.0-beta.1</Version>
     <PackageTags>Azure.Analytics.Purview.DataMap</PackageTags>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
+    <NoWarn>$(NoWarn);AZC0012</NoWarn>
     <IncludeOperationsSharedSource>true</IncludeOperationsSharedSource>
   </PropertyGroup>
 
   <ItemGroup>
     <Compile Include="$(AzureCoreSharedSources)AzureResourceProviderNamespaceAttribute.cs" LinkBase="Shared/Core" />
+    <Compile Include="$(AzureCoreSharedSources)Multipart\MultipartContent.cs" LinkBase="Shared" />
+    <Compile Include="$(AzureCoreSharedSources)Multipart\MultipartFormDataContent.cs" LinkBase="Shared" />
   </ItemGroup>
 
   <ItemGroup>

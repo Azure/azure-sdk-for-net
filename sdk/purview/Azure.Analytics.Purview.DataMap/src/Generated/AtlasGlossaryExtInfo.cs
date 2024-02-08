@@ -75,7 +75,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="categoryInfo"> The glossary category information. </param>
         /// <param name="termInfo"> The glossary term information. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AtlasGlossaryExtInfo(string guid, IReadOnlyList<AtlasClassification> classifications, string longDescription, string name, string qualifiedName, string shortDescription, string lastModifiedTS, DateTimeOffset? createTime, string createdBy, DateTimeOffset? updateTime, string updatedBy, IReadOnlyList<AtlasRelatedCategoryHeader> categories, string language, IReadOnlyList<AtlasRelatedTermHeader> terms, string usage, IReadOnlyDictionary<string, AtlasGlossaryCategory> categoryInfo, IReadOnlyDictionary<string, AtlasGlossaryTerm> termInfo, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal AtlasGlossaryExtInfo(string guid, IReadOnlyList<AtlasClassification> classifications, string longDescription, string name, string qualifiedName, string shortDescription, string lastModifiedTS, long? createTime, string createdBy, long? updateTime, string updatedBy, IReadOnlyList<AtlasRelatedCategoryHeader> categories, string language, IReadOnlyList<AtlasRelatedTermHeader> terms, string usage, IReadOnlyDictionary<string, AtlasGlossaryCategory> categoryInfo, IReadOnlyDictionary<string, AtlasGlossaryTerm> termInfo, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Guid = guid;
             Classifications = classifications;
@@ -112,11 +112,11 @@ namespace Azure.Analytics.Purview.DataMap
         /// <summary> ETag for concurrency control. </summary>
         public string LastModifiedTS { get; }
         /// <summary> The created time of the record. </summary>
-        public DateTimeOffset? CreateTime { get; }
+        public long? CreateTime { get; }
         /// <summary> The user who created the record. </summary>
         public string CreatedBy { get; }
         /// <summary> The update time of the record. </summary>
-        public DateTimeOffset? UpdateTime { get; }
+        public long? UpdateTime { get; }
         /// <summary> The user who updated the record. </summary>
         public string UpdatedBy { get; }
         /// <summary> An array of categories. </summary>

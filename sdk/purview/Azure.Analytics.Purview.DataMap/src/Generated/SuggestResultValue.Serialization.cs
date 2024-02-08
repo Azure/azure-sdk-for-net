@@ -45,12 +45,12 @@ namespace Azure.Analytics.Purview.DataMap
             if (Optional.IsDefined(CreateTime))
             {
                 writer.WritePropertyName("createTime"u8);
-                writer.WriteNumberValue(CreateTime.Value, "U");
+                writer.WriteNumberValue(CreateTime.Value);
             }
             if (Optional.IsDefined(UpdateTime))
             {
                 writer.WritePropertyName("updateTime"u8);
-                writer.WriteNumberValue(UpdateTime.Value, "U");
+                writer.WriteNumberValue(UpdateTime.Value);
             }
             if (Optional.IsDefined(Id))
             {
@@ -208,8 +208,8 @@ namespace Azure.Analytics.Purview.DataMap
             Optional<float> searchScore = default;
             Optional<string> searchText = default;
             Optional<string> objectType = default;
-            Optional<DateTimeOffset> createTime = default;
-            Optional<DateTimeOffset> updateTime = default;
+            Optional<long> createTime = default;
+            Optional<long> updateTime = default;
             Optional<string> id = default;
             Optional<string> name = default;
             Optional<string> qualifiedName = default;
@@ -256,7 +256,7 @@ namespace Azure.Analytics.Purview.DataMap
                     {
                         continue;
                     }
-                    createTime = DateTimeOffset.FromUnixTimeSeconds(property.Value.GetInt64());
+                    createTime = property.Value.GetInt64();
                     continue;
                 }
                 if (property.NameEquals("updateTime"u8))
@@ -265,7 +265,7 @@ namespace Azure.Analytics.Purview.DataMap
                     {
                         continue;
                     }
-                    updateTime = DateTimeOffset.FromUnixTimeSeconds(property.Value.GetInt64());
+                    updateTime = property.Value.GetInt64();
                     continue;
                 }
                 if (property.NameEquals("id"u8))

@@ -70,7 +70,7 @@ namespace Azure.Analytics.Purview.DataMap
             if (Optional.IsDefined(CreateTime))
             {
                 writer.WritePropertyName("createTime"u8);
-                writer.WriteNumberValue(CreateTime.Value, "U");
+                writer.WriteNumberValue(CreateTime.Value);
             }
             if (Optional.IsDefined(CreatedBy))
             {
@@ -80,7 +80,7 @@ namespace Azure.Analytics.Purview.DataMap
             if (Optional.IsDefined(UpdateTime))
             {
                 writer.WritePropertyName("updateTime"u8);
-                writer.WriteNumberValue(UpdateTime.Value, "U");
+                writer.WriteNumberValue(UpdateTime.Value);
             }
             if (Optional.IsDefined(UpdatedBy))
             {
@@ -184,9 +184,9 @@ namespace Azure.Analytics.Purview.DataMap
             Optional<string> qualifiedName = default;
             Optional<string> shortDescription = default;
             Optional<string> lastModifiedTS = default;
-            Optional<DateTimeOffset> createTime = default;
+            Optional<long> createTime = default;
             Optional<string> createdBy = default;
-            Optional<DateTimeOffset> updateTime = default;
+            Optional<long> updateTime = default;
             Optional<string> updatedBy = default;
             Optional<IReadOnlyList<AtlasRelatedCategoryHeader>> categories = default;
             Optional<string> language = default;
@@ -248,7 +248,7 @@ namespace Azure.Analytics.Purview.DataMap
                     {
                         continue;
                     }
-                    createTime = DateTimeOffset.FromUnixTimeSeconds(property.Value.GetInt64());
+                    createTime = property.Value.GetInt64();
                     continue;
                 }
                 if (property.NameEquals("createdBy"u8))
@@ -262,7 +262,7 @@ namespace Azure.Analytics.Purview.DataMap
                     {
                         continue;
                     }
-                    updateTime = DateTimeOffset.FromUnixTimeSeconds(property.Value.GetInt64());
+                    updateTime = property.Value.GetInt64();
                     continue;
                 }
                 if (property.NameEquals("updatedBy"u8))

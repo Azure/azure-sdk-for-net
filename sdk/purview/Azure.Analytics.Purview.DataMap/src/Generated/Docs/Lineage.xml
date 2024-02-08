@@ -7,7 +7,7 @@ This sample shows how to call GetLineageAsync.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Lineage client = new DataMapClient(endpoint, credential).GetLineageClient(apiVersion: "2023-09-01");
+Lineage client = new DataMapClient(endpoint, credential).GetLineageClient();
 
 Response<AtlasLineageInfo> response = await client.GetLineageAsync("<guid>", LineageDirection.Input);
 ]]></code>
@@ -15,7 +15,7 @@ This sample shows how to call GetLineageAsync with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Lineage client = new DataMapClient(endpoint, credential).GetLineageClient(apiVersion: "2023-09-01");
+Lineage client = new DataMapClient(endpoint, credential).GetLineageClient();
 
 Response<AtlasLineageInfo> response = await client.GetLineageAsync("<guid>", LineageDirection.Input, depth: 1234);
 ]]></code></example>
@@ -26,7 +26,7 @@ This sample shows how to call GetLineage.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Lineage client = new DataMapClient(endpoint, credential).GetLineageClient(apiVersion: "2023-09-01");
+Lineage client = new DataMapClient(endpoint, credential).GetLineageClient();
 
 Response<AtlasLineageInfo> response = client.GetLineage("<guid>", LineageDirection.Input);
 ]]></code>
@@ -34,7 +34,7 @@ This sample shows how to call GetLineage with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Lineage client = new DataMapClient(endpoint, credential).GetLineageClient(apiVersion: "2023-09-01");
+Lineage client = new DataMapClient(endpoint, credential).GetLineageClient();
 
 Response<AtlasLineageInfo> response = client.GetLineage("<guid>", LineageDirection.Input, depth: 1234);
 ]]></code></example>
@@ -45,7 +45,7 @@ This sample shows how to call GetLineageAsync and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Lineage client = new DataMapClient(endpoint, credential).GetLineageClient(apiVersion: "2023-09-01");
+Lineage client = new DataMapClient(endpoint, credential).GetLineageClient();
 
 Response response = await client.GetLineageAsync("<guid>", "INPUT");
 
@@ -56,7 +56,7 @@ This sample shows how to call GetLineageAsync with all parameters and parse the 
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Lineage client = new DataMapClient(endpoint, credential).GetLineageClient(apiVersion: "2023-09-01");
+Lineage client = new DataMapClient(endpoint, credential).GetLineageClient();
 
 Response response = await client.GetLineageAsync("<guid>", "INPUT", depth: 1234);
 
@@ -109,7 +109,7 @@ This sample shows how to call GetLineage and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Lineage client = new DataMapClient(endpoint, credential).GetLineageClient(apiVersion: "2023-09-01");
+Lineage client = new DataMapClient(endpoint, credential).GetLineageClient();
 
 Response response = client.GetLineage("<guid>", "INPUT");
 
@@ -120,7 +120,7 @@ This sample shows how to call GetLineage with all parameters and parse the resul
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Lineage client = new DataMapClient(endpoint, credential).GetLineageClient(apiVersion: "2023-09-01");
+Lineage client = new DataMapClient(endpoint, credential).GetLineageClient();
 
 Response response = client.GetLineage("<guid>", "INPUT", depth: 1234);
 
@@ -339,7 +339,7 @@ This sample shows how to call GetByUniqueAttributeAsync.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Lineage client = new DataMapClient(endpoint, credential).GetLineageClient(apiVersion: "2023-09-01");
+Lineage client = new DataMapClient(endpoint, credential).GetLineageClient();
 
 Response<AtlasLineageInfo> response = await client.GetByUniqueAttributeAsync("<typeName>", LineageDirection.Input);
 ]]></code>
@@ -347,7 +347,7 @@ This sample shows how to call GetByUniqueAttributeAsync with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Lineage client = new DataMapClient(endpoint, credential).GetLineageClient(apiVersion: "2023-09-01");
+Lineage client = new DataMapClient(endpoint, credential).GetLineageClient();
 
 Response<AtlasLineageInfo> response = await client.GetByUniqueAttributeAsync("<typeName>", LineageDirection.Input, depth: 1234, attribute: "<attribute>");
 ]]></code></example>
@@ -358,7 +358,7 @@ This sample shows how to call GetByUniqueAttribute.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Lineage client = new DataMapClient(endpoint, credential).GetLineageClient(apiVersion: "2023-09-01");
+Lineage client = new DataMapClient(endpoint, credential).GetLineageClient();
 
 Response<AtlasLineageInfo> response = client.GetByUniqueAttribute("<typeName>", LineageDirection.Input);
 ]]></code>
@@ -366,7 +366,7 @@ This sample shows how to call GetByUniqueAttribute with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Lineage client = new DataMapClient(endpoint, credential).GetLineageClient(apiVersion: "2023-09-01");
+Lineage client = new DataMapClient(endpoint, credential).GetLineageClient();
 
 Response<AtlasLineageInfo> response = client.GetByUniqueAttribute("<typeName>", LineageDirection.Input, depth: 1234, attribute: "<attribute>");
 ]]></code></example>
@@ -377,7 +377,7 @@ This sample shows how to call GetByUniqueAttributeAsync and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Lineage client = new DataMapClient(endpoint, credential).GetLineageClient(apiVersion: "2023-09-01");
+Lineage client = new DataMapClient(endpoint, credential).GetLineageClient();
 
 Response response = await client.GetByUniqueAttributeAsync("<typeName>", "INPUT");
 
@@ -388,7 +388,7 @@ This sample shows how to call GetByUniqueAttributeAsync with all parameters and 
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Lineage client = new DataMapClient(endpoint, credential).GetLineageClient(apiVersion: "2023-09-01");
+Lineage client = new DataMapClient(endpoint, credential).GetLineageClient();
 
 Response response = await client.GetByUniqueAttributeAsync("<typeName>", "INPUT", depth: 1234, attribute: "<attribute>");
 
@@ -441,7 +441,7 @@ This sample shows how to call GetByUniqueAttribute and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Lineage client = new DataMapClient(endpoint, credential).GetLineageClient(apiVersion: "2023-09-01");
+Lineage client = new DataMapClient(endpoint, credential).GetLineageClient();
 
 Response response = client.GetByUniqueAttribute("<typeName>", "INPUT");
 
@@ -452,7 +452,7 @@ This sample shows how to call GetByUniqueAttribute with all parameters and parse
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Lineage client = new DataMapClient(endpoint, credential).GetLineageClient(apiVersion: "2023-09-01");
+Lineage client = new DataMapClient(endpoint, credential).GetLineageClient();
 
 Response response = client.GetByUniqueAttribute("<typeName>", "INPUT", depth: 1234, attribute: "<attribute>");
 

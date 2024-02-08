@@ -1783,16 +1783,16 @@ namespace Azure.Analytics.Purview.DataMap
         /// created.
         /// Any changes to the existing definitions will be discarded.
         /// </summary>
-        /// <param name="body"> A composite wrapper object with corresponding lists of the type definition. </param>
+        /// <param name="atlasTypesDef"> The definitions of types. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="atlasTypesDef"/> is null. </exception>
         /// <include file="Docs/TypeDefinition.xml" path="doc/members/member[@name='BatchCreateAsync(AtlasTypesDef,CancellationToken)']/*" />
-        public virtual async Task<Response<AtlasTypesDef>> BatchCreateAsync(AtlasTypesDef body, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AtlasTypesDef>> BatchCreateAsync(AtlasTypesDef atlasTypesDef, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(body, nameof(body));
+            Argument.AssertNotNull(atlasTypesDef, nameof(atlasTypesDef));
 
             RequestContext context = FromCancellationToken(cancellationToken);
-            using RequestContent content = body.ToRequestContent();
+            using RequestContent content = atlasTypesDef.ToRequestContent();
             Response response = await BatchCreateAsync(content, context).ConfigureAwait(false);
             return Response.FromValue(AtlasTypesDef.FromResponse(response), response);
         }
@@ -1802,16 +1802,16 @@ namespace Azure.Analytics.Purview.DataMap
         /// created.
         /// Any changes to the existing definitions will be discarded.
         /// </summary>
-        /// <param name="body"> A composite wrapper object with corresponding lists of the type definition. </param>
+        /// <param name="atlasTypesDef"> The definitions of types. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="atlasTypesDef"/> is null. </exception>
         /// <include file="Docs/TypeDefinition.xml" path="doc/members/member[@name='BatchCreate(AtlasTypesDef,CancellationToken)']/*" />
-        public virtual Response<AtlasTypesDef> BatchCreate(AtlasTypesDef body, CancellationToken cancellationToken = default)
+        public virtual Response<AtlasTypesDef> BatchCreate(AtlasTypesDef atlasTypesDef, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(body, nameof(body));
+            Argument.AssertNotNull(atlasTypesDef, nameof(atlasTypesDef));
 
             RequestContext context = FromCancellationToken(cancellationToken);
-            using RequestContent content = body.ToRequestContent();
+            using RequestContent content = atlasTypesDef.ToRequestContent();
             Response response = BatchCreate(content, context);
             return Response.FromValue(AtlasTypesDef.FromResponse(response), response);
         }
@@ -1902,16 +1902,16 @@ namespace Azure.Analytics.Purview.DataMap
         /// Update all types in bulk, changes detected in the type definitions would be
         /// persisted.
         /// </summary>
-        /// <param name="body"> A composite object that captures all type definition changes. </param>
+        /// <param name="atlasTypesDef"> The definitions of types. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="atlasTypesDef"/> is null. </exception>
         /// <include file="Docs/TypeDefinition.xml" path="doc/members/member[@name='BatchUpdateAsync(AtlasTypesDef,CancellationToken)']/*" />
-        public virtual async Task<Response<AtlasTypesDef>> BatchUpdateAsync(AtlasTypesDef body, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AtlasTypesDef>> BatchUpdateAsync(AtlasTypesDef atlasTypesDef, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(body, nameof(body));
+            Argument.AssertNotNull(atlasTypesDef, nameof(atlasTypesDef));
 
             RequestContext context = FromCancellationToken(cancellationToken);
-            using RequestContent content = body.ToRequestContent();
+            using RequestContent content = atlasTypesDef.ToRequestContent();
             Response response = await BatchUpdateAsync(content, context).ConfigureAwait(false);
             return Response.FromValue(AtlasTypesDef.FromResponse(response), response);
         }
@@ -1920,16 +1920,16 @@ namespace Azure.Analytics.Purview.DataMap
         /// Update all types in bulk, changes detected in the type definitions would be
         /// persisted.
         /// </summary>
-        /// <param name="body"> A composite object that captures all type definition changes. </param>
+        /// <param name="atlasTypesDef"> The definitions of types. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="atlasTypesDef"/> is null. </exception>
         /// <include file="Docs/TypeDefinition.xml" path="doc/members/member[@name='BatchUpdate(AtlasTypesDef,CancellationToken)']/*" />
-        public virtual Response<AtlasTypesDef> BatchUpdate(AtlasTypesDef body, CancellationToken cancellationToken = default)
+        public virtual Response<AtlasTypesDef> BatchUpdate(AtlasTypesDef atlasTypesDef, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(body, nameof(body));
+            Argument.AssertNotNull(atlasTypesDef, nameof(atlasTypesDef));
 
             RequestContext context = FromCancellationToken(cancellationToken);
-            using RequestContent content = body.ToRequestContent();
+            using RequestContent content = atlasTypesDef.ToRequestContent();
             Response response = BatchUpdate(content, context);
             return Response.FromValue(AtlasTypesDef.FromResponse(response), response);
         }
@@ -2015,31 +2015,31 @@ namespace Azure.Analytics.Purview.DataMap
         }
 
         /// <summary> Delete API for all types in bulk. </summary>
-        /// <param name="body"> A composite object that captures all types to be deleted. </param>
+        /// <param name="atlasTypesDef"> The definitions of types. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="atlasTypesDef"/> is null. </exception>
         /// <include file="Docs/TypeDefinition.xml" path="doc/members/member[@name='BatchDeleteAsync(AtlasTypesDef,CancellationToken)']/*" />
-        public virtual async Task<Response> BatchDeleteAsync(AtlasTypesDef body, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> BatchDeleteAsync(AtlasTypesDef atlasTypesDef, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(body, nameof(body));
+            Argument.AssertNotNull(atlasTypesDef, nameof(atlasTypesDef));
 
             RequestContext context = FromCancellationToken(cancellationToken);
-            using RequestContent content = body.ToRequestContent();
+            using RequestContent content = atlasTypesDef.ToRequestContent();
             Response response = await BatchDeleteAsync(content, context).ConfigureAwait(false);
             return response;
         }
 
         /// <summary> Delete API for all types in bulk. </summary>
-        /// <param name="body"> A composite object that captures all types to be deleted. </param>
+        /// <param name="atlasTypesDef"> The definitions of types. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="atlasTypesDef"/> is null. </exception>
         /// <include file="Docs/TypeDefinition.xml" path="doc/members/member[@name='BatchDelete(AtlasTypesDef,CancellationToken)']/*" />
-        public virtual Response BatchDelete(AtlasTypesDef body, CancellationToken cancellationToken = default)
+        public virtual Response BatchDelete(AtlasTypesDef atlasTypesDef, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(body, nameof(body));
+            Argument.AssertNotNull(atlasTypesDef, nameof(atlasTypesDef));
 
             RequestContext context = FromCancellationToken(cancellationToken);
-            using RequestContent content = body.ToRequestContent();
+            using RequestContent content = atlasTypesDef.ToRequestContent();
             Response response = BatchDelete(content, context);
             return response;
         }
@@ -2482,7 +2482,6 @@ namespace Azure.Analytics.Purview.DataMap
             uri.AppendRaw("/datamap/api", false);
             uri.AppendPath("/atlas/v2/types/businessmetadatadef/guid/", false);
             uri.AppendPath(guid, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
@@ -2498,7 +2497,6 @@ namespace Azure.Analytics.Purview.DataMap
             uri.AppendRaw("/datamap/api", false);
             uri.AppendPath("/atlas/v2/types/businessmetadatadef/name/", false);
             uri.AppendPath(name, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
@@ -2514,7 +2512,6 @@ namespace Azure.Analytics.Purview.DataMap
             uri.AppendRaw("/datamap/api", false);
             uri.AppendPath("/atlas/v2/types/classificationdef/guid/", false);
             uri.AppendPath(guid, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
@@ -2530,7 +2527,6 @@ namespace Azure.Analytics.Purview.DataMap
             uri.AppendRaw("/datamap/api", false);
             uri.AppendPath("/atlas/v2/types/classificationdef/name/", false);
             uri.AppendPath(name, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
@@ -2546,7 +2542,6 @@ namespace Azure.Analytics.Purview.DataMap
             uri.AppendRaw("/datamap/api", false);
             uri.AppendPath("/atlas/v2/types/entitydef/guid/", false);
             uri.AppendPath(guid, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
@@ -2562,7 +2557,6 @@ namespace Azure.Analytics.Purview.DataMap
             uri.AppendRaw("/datamap/api", false);
             uri.AppendPath("/atlas/v2/types/entitydef/name/", false);
             uri.AppendPath(name, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
@@ -2578,7 +2572,6 @@ namespace Azure.Analytics.Purview.DataMap
             uri.AppendRaw("/datamap/api", false);
             uri.AppendPath("/atlas/v2/types/enumdef/guid/", false);
             uri.AppendPath(guid, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
@@ -2594,7 +2587,6 @@ namespace Azure.Analytics.Purview.DataMap
             uri.AppendRaw("/datamap/api", false);
             uri.AppendPath("/atlas/v2/types/enumdef/name/", false);
             uri.AppendPath(name, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
@@ -2610,7 +2602,6 @@ namespace Azure.Analytics.Purview.DataMap
             uri.AppendRaw("/datamap/api", false);
             uri.AppendPath("/atlas/v2/types/relationshipdef/guid/", false);
             uri.AppendPath(guid, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
@@ -2626,7 +2617,6 @@ namespace Azure.Analytics.Purview.DataMap
             uri.AppendRaw("/datamap/api", false);
             uri.AppendPath("/atlas/v2/types/relationshipdef/name/", false);
             uri.AppendPath(name, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
@@ -2642,7 +2632,6 @@ namespace Azure.Analytics.Purview.DataMap
             uri.AppendRaw("/datamap/api", false);
             uri.AppendPath("/atlas/v2/types/structdef/guid/", false);
             uri.AppendPath(guid, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
@@ -2658,7 +2647,6 @@ namespace Azure.Analytics.Purview.DataMap
             uri.AppendRaw("/datamap/api", false);
             uri.AppendPath("/atlas/v2/types/structdef/name/", false);
             uri.AppendPath(name, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
@@ -2674,7 +2662,6 @@ namespace Azure.Analytics.Purview.DataMap
             uri.AppendRaw("/datamap/api", false);
             uri.AppendPath("/atlas/v2/types/typedef/guid/", false);
             uri.AppendPath(guid, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
@@ -2690,7 +2677,6 @@ namespace Azure.Analytics.Purview.DataMap
             uri.AppendRaw("/datamap/api", false);
             uri.AppendPath("/atlas/v2/types/typedef/name/", false);
             uri.AppendPath(name, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
@@ -2706,7 +2692,6 @@ namespace Azure.Analytics.Purview.DataMap
             uri.AppendRaw("/datamap/api", false);
             uri.AppendPath("/atlas/v2/types/typedef/name/", false);
             uri.AppendPath(name, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
@@ -2744,7 +2729,6 @@ namespace Azure.Analytics.Purview.DataMap
             uri.Reset(_endpoint);
             uri.AppendRaw("/datamap/api", false);
             uri.AppendPath("/atlas/v2/types/typedefs", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
@@ -2761,7 +2745,6 @@ namespace Azure.Analytics.Purview.DataMap
             uri.Reset(_endpoint);
             uri.AppendRaw("/datamap/api", false);
             uri.AppendPath("/atlas/v2/types/typedefs", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
@@ -2778,7 +2761,6 @@ namespace Azure.Analytics.Purview.DataMap
             uri.Reset(_endpoint);
             uri.AppendRaw("/datamap/api", false);
             uri.AppendPath("/atlas/v2/types/typedefs", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");

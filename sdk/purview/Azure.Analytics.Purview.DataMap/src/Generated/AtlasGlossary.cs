@@ -71,7 +71,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="terms"> An array of related term headers. </param>
         /// <param name="usage"> The usage of the glossary. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AtlasGlossary(string guid, IList<AtlasClassification> classifications, string longDescription, string name, string qualifiedName, string shortDescription, string lastModifiedTS, DateTimeOffset? createTime, string createdBy, DateTimeOffset? updateTime, string updatedBy, IList<AtlasRelatedCategoryHeader> categories, string language, IList<AtlasRelatedTermHeader> terms, string usage, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal AtlasGlossary(string guid, IList<AtlasClassification> classifications, string longDescription, string name, string qualifiedName, string shortDescription, string lastModifiedTS, long? createTime, string createdBy, long? updateTime, string updatedBy, IList<AtlasRelatedCategoryHeader> categories, string language, IList<AtlasRelatedTermHeader> terms, string usage, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Guid = guid;
             Classifications = classifications;
@@ -106,11 +106,11 @@ namespace Azure.Analytics.Purview.DataMap
         /// <summary> ETag for concurrency control. </summary>
         public string LastModifiedTS { get; set; }
         /// <summary> The created time of the record. </summary>
-        public DateTimeOffset? CreateTime { get; set; }
+        public long? CreateTime { get; set; }
         /// <summary> The user who created the record. </summary>
         public string CreatedBy { get; set; }
         /// <summary> The update time of the record. </summary>
-        public DateTimeOffset? UpdateTime { get; set; }
+        public long? UpdateTime { get; set; }
         /// <summary> The user who updated the record. </summary>
         public string UpdatedBy { get; set; }
         /// <summary> An array of categories. </summary>

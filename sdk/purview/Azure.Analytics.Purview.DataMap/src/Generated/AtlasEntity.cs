@@ -86,7 +86,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="version"> The version of the entity. </param>
         /// <param name="contacts"> The dictionary of contacts for entities. Key could be Expert or Owner. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AtlasEntity(IDictionary<string, BinaryData> attributes, string typeName, string lastModifiedTS, IDictionary<string, BinaryData> businessAttributes, IList<AtlasClassification> classifications, DateTimeOffset? createTime, string createdBy, IDictionary<string, string> customAttributes, string guid, string homeId, string collectionId, bool? isIncomplete, IList<string> labels, IList<AtlasTermAssignmentHeader> meanings, int? provenanceType, bool? proxy, IDictionary<string, BinaryData> relationshipAttributes, EntityStatus? status, DateTimeOffset? updateTime, string updatedBy, long? version, IDictionary<string, IList<ContactInfo>> contacts, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal AtlasEntity(IDictionary<string, BinaryData> attributes, string typeName, string lastModifiedTS, IDictionary<string, BinaryData> businessAttributes, IList<AtlasClassification> classifications, long? createTime, string createdBy, IDictionary<string, string> customAttributes, string guid, string homeId, string collectionId, bool? isIncomplete, IList<string> labels, IList<AtlasTermAssignmentHeader> meanings, int? provenanceType, bool? proxy, IDictionary<string, BinaryData> relationshipAttributes, EntityStatus? status, long? updateTime, string updatedBy, long? version, IDictionary<string, IList<ContactInfo>> contacts, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Attributes = attributes;
             TypeName = typeName;
@@ -182,7 +182,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// <summary> An array of classifications. </summary>
         public IList<AtlasClassification> Classifications { get; }
         /// <summary> The created time of the record. </summary>
-        public DateTimeOffset? CreateTime { get; set; }
+        public long? CreateTime { get; set; }
         /// <summary> The user who created the record. </summary>
         public string CreatedBy { get; set; }
         /// <summary> Custom Attribute. </summary>
@@ -240,7 +240,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// </summary>
         public EntityStatus? Status { get; set; }
         /// <summary> The update time of the record. </summary>
-        public DateTimeOffset? UpdateTime { get; set; }
+        public long? UpdateTime { get; set; }
         /// <summary> The user who updated the record. </summary>
         public string UpdatedBy { get; set; }
         /// <summary> The version of the entity. </summary>

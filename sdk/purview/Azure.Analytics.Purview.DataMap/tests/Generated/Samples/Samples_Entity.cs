@@ -25,7 +25,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
+            Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
             using RequestContent content = RequestContent.Create(new object());
             Response response = client.CreateOrUpdate(content);
@@ -40,7 +40,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
+            Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
             using RequestContent content = RequestContent.Create(new object());
             Response response = await client.CreateOrUpdateAsync(content);
@@ -55,10 +55,10 @@ namespace Azure.Analytics.Purview.DataMap.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
+            Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
-            AtlasEntityWithExtInfo body = new AtlasEntityWithExtInfo();
-            Response<EntityMutationResult> response = client.CreateOrUpdate(body);
+            AtlasEntityWithExtInfo atlasEntityWithExtInfo = new AtlasEntityWithExtInfo();
+            Response<EntityMutationResult> response = client.CreateOrUpdate(atlasEntityWithExtInfo);
         }
 
         [Test]
@@ -67,10 +67,10 @@ namespace Azure.Analytics.Purview.DataMap.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
+            Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
-            AtlasEntityWithExtInfo body = new AtlasEntityWithExtInfo();
-            Response<EntityMutationResult> response = await client.CreateOrUpdateAsync(body);
+            AtlasEntityWithExtInfo atlasEntityWithExtInfo = new AtlasEntityWithExtInfo();
+            Response<EntityMutationResult> response = await client.CreateOrUpdateAsync(atlasEntityWithExtInfo);
         }
 
         [Test]
@@ -121,7 +121,7 @@ timeZone = "<timeZone>",
 },
 }
             },
-                        createTime = 1652209051,
+                        createTime = 1234L,
                         createdBy = "<createdBy>",
                         customAttributes = new
                         {
@@ -156,7 +156,7 @@ termGuid = "73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a",
                             key = new object(),
                         },
                         status = "ACTIVE",
-                        updateTime = 1652209051,
+                        updateTime = 1234L,
                         updatedBy = "<updatedBy>",
                         version = 1234L,
                         contacts = new
@@ -283,7 +283,7 @@ timeZone = "<timeZone>",
 },
 }
             },
-                        createTime = 1652209051,
+                        createTime = 1234L,
                         createdBy = "<createdBy>",
                         customAttributes = new
                         {
@@ -318,7 +318,7 @@ termGuid = "73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a",
                             key = new object(),
                         },
                         status = "ACTIVE",
-                        updateTime = 1652209051,
+                        updateTime = 1234L,
                         updatedBy = "<updatedBy>",
                         version = 1234L,
                         contacts = new
@@ -405,7 +405,7 @@ info = "<info>",
             TokenCredential credential = new DefaultAzureCredential();
             Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
 
-            AtlasEntityWithExtInfo body = new AtlasEntityWithExtInfo
+            AtlasEntityWithExtInfo atlasEntityWithExtInfo = new AtlasEntityWithExtInfo
             {
                 ReferredEntities =
 {
@@ -439,7 +439,7 @@ StartTime = "<startTime>",
 TimeZone = "<timeZone>",
 }},
 }},
-CreateTime = DateTimeOffset.FromUnixTimeSeconds(1652209051L),
+CreateTime = 1234L,
 CreatedBy = "<createdBy>",
 CustomAttributes =
 {
@@ -468,7 +468,7 @@ RelationshipAttributes =
 ["key"] = BinaryData.FromObjectAsJson(new object())
 },
 Status = EntityStatus.Active,
-UpdateTime = DateTimeOffset.FromUnixTimeSeconds(1652209051L),
+UpdateTime = 1234L,
 UpdatedBy = "<updatedBy>",
 Version = 1234L,
 Contacts =
@@ -483,7 +483,7 @@ Info = "<info>",
 },
                 Entity = default,
             };
-            Response<EntityMutationResult> response = client.CreateOrUpdate(body, businessAttributeUpdateBehavior: BusinessAttributeUpdateBehavior.Ignore, collectionId: "<collectionId>");
+            Response<EntityMutationResult> response = client.CreateOrUpdate(atlasEntityWithExtInfo, businessAttributeUpdateBehavior: BusinessAttributeUpdateBehavior.Ignore, collectionId: "<collectionId>");
         }
 
         [Test]
@@ -494,7 +494,7 @@ Info = "<info>",
             TokenCredential credential = new DefaultAzureCredential();
             Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
 
-            AtlasEntityWithExtInfo body = new AtlasEntityWithExtInfo
+            AtlasEntityWithExtInfo atlasEntityWithExtInfo = new AtlasEntityWithExtInfo
             {
                 ReferredEntities =
 {
@@ -528,7 +528,7 @@ StartTime = "<startTime>",
 TimeZone = "<timeZone>",
 }},
 }},
-CreateTime = DateTimeOffset.FromUnixTimeSeconds(1652209051L),
+CreateTime = 1234L,
 CreatedBy = "<createdBy>",
 CustomAttributes =
 {
@@ -557,7 +557,7 @@ RelationshipAttributes =
 ["key"] = BinaryData.FromObjectAsJson(new object())
 },
 Status = EntityStatus.Active,
-UpdateTime = DateTimeOffset.FromUnixTimeSeconds(1652209051L),
+UpdateTime = 1234L,
 UpdatedBy = "<updatedBy>",
 Version = 1234L,
 Contacts =
@@ -572,7 +572,7 @@ Info = "<info>",
 },
                 Entity = default,
             };
-            Response<EntityMutationResult> response = await client.CreateOrUpdateAsync(body, businessAttributeUpdateBehavior: BusinessAttributeUpdateBehavior.Ignore, collectionId: "<collectionId>");
+            Response<EntityMutationResult> response = await client.CreateOrUpdateAsync(atlasEntityWithExtInfo, businessAttributeUpdateBehavior: BusinessAttributeUpdateBehavior.Ignore, collectionId: "<collectionId>");
         }
 
         [Test]
@@ -581,7 +581,7 @@ Info = "<info>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
+            Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
             Response response = client.GetByIds(new string[] { "<guid>" }, null, null, null);
 
@@ -595,7 +595,7 @@ Info = "<info>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
+            Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
             Response response = await client.GetByIdsAsync(new string[] { "<guid>" }, null, null, null);
 
@@ -609,7 +609,7 @@ Info = "<info>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
+            Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
             Response<AtlasEntitiesWithExtInfo> response = client.GetByIds(new string[] { "<guid>" });
         }
@@ -620,7 +620,7 @@ Info = "<info>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
+            Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
             Response<AtlasEntitiesWithExtInfo> response = await client.GetByIdsAsync(new string[] { "<guid>" });
         }
@@ -835,7 +835,7 @@ Info = "<info>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
+            Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
             using RequestContent content = RequestContent.Create(new object());
             Response response = client.BatchCreateOrUpdate(content);
@@ -850,7 +850,7 @@ Info = "<info>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
+            Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
             using RequestContent content = RequestContent.Create(new object());
             Response response = await client.BatchCreateOrUpdateAsync(content);
@@ -865,10 +865,10 @@ Info = "<info>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
+            Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
-            AtlasEntitiesWithExtInfo body = new AtlasEntitiesWithExtInfo();
-            Response<EntityMutationResult> response = client.BatchCreateOrUpdate(body);
+            AtlasEntitiesWithExtInfo atlasEntitiesWithExtInfo = new AtlasEntitiesWithExtInfo();
+            Response<EntityMutationResult> response = client.BatchCreateOrUpdate(atlasEntitiesWithExtInfo);
         }
 
         [Test]
@@ -877,10 +877,10 @@ Info = "<info>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
+            Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
-            AtlasEntitiesWithExtInfo body = new AtlasEntitiesWithExtInfo();
-            Response<EntityMutationResult> response = await client.BatchCreateOrUpdateAsync(body);
+            AtlasEntitiesWithExtInfo atlasEntitiesWithExtInfo = new AtlasEntitiesWithExtInfo();
+            Response<EntityMutationResult> response = await client.BatchCreateOrUpdateAsync(atlasEntitiesWithExtInfo);
         }
 
         [Test]
@@ -931,7 +931,7 @@ timeZone = "<timeZone>",
 },
 }
             },
-                        createTime = 1652209051,
+                        createTime = 1234L,
                         createdBy = "<createdBy>",
                         customAttributes = new
                         {
@@ -966,7 +966,7 @@ termGuid = "73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a",
                             key = new object(),
                         },
                         status = "ACTIVE",
-                        updateTime = 1652209051,
+                        updateTime = 1234L,
                         updatedBy = "<updatedBy>",
                         version = 1234L,
                         contacts = new
@@ -1097,7 +1097,7 @@ timeZone = "<timeZone>",
 },
 }
             },
-                        createTime = 1652209051,
+                        createTime = 1234L,
                         createdBy = "<createdBy>",
                         customAttributes = new
                         {
@@ -1132,7 +1132,7 @@ termGuid = "73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a",
                             key = new object(),
                         },
                         status = "ACTIVE",
-                        updateTime = 1652209051,
+                        updateTime = 1234L,
                         updatedBy = "<updatedBy>",
                         version = 1234L,
                         contacts = new
@@ -1223,7 +1223,7 @@ null
             TokenCredential credential = new DefaultAzureCredential();
             Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
 
-            AtlasEntitiesWithExtInfo body = new AtlasEntitiesWithExtInfo
+            AtlasEntitiesWithExtInfo atlasEntitiesWithExtInfo = new AtlasEntitiesWithExtInfo
             {
                 ReferredEntities =
 {
@@ -1257,7 +1257,7 @@ StartTime = "<startTime>",
 TimeZone = "<timeZone>",
 }},
 }},
-CreateTime = DateTimeOffset.FromUnixTimeSeconds(1652209051L),
+CreateTime = 1234L,
 CreatedBy = "<createdBy>",
 CustomAttributes =
 {
@@ -1286,7 +1286,7 @@ RelationshipAttributes =
 ["key"] = BinaryData.FromObjectAsJson(new object())
 },
 Status = EntityStatus.Active,
-UpdateTime = DateTimeOffset.FromUnixTimeSeconds(1652209051L),
+UpdateTime = 1234L,
 UpdatedBy = "<updatedBy>",
 Version = 1234L,
 Contacts =
@@ -1301,7 +1301,7 @@ Info = "<info>",
 },
                 Entities = { default },
             };
-            Response<EntityMutationResult> response = client.BatchCreateOrUpdate(body, collectionId: "<collectionId>", businessAttributeUpdateBehavior: BusinessAttributeUpdateBehavior.Ignore);
+            Response<EntityMutationResult> response = client.BatchCreateOrUpdate(atlasEntitiesWithExtInfo, collectionId: "<collectionId>", businessAttributeUpdateBehavior: BusinessAttributeUpdateBehavior.Ignore);
         }
 
         [Test]
@@ -1312,7 +1312,7 @@ Info = "<info>",
             TokenCredential credential = new DefaultAzureCredential();
             Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
 
-            AtlasEntitiesWithExtInfo body = new AtlasEntitiesWithExtInfo
+            AtlasEntitiesWithExtInfo atlasEntitiesWithExtInfo = new AtlasEntitiesWithExtInfo
             {
                 ReferredEntities =
 {
@@ -1346,7 +1346,7 @@ StartTime = "<startTime>",
 TimeZone = "<timeZone>",
 }},
 }},
-CreateTime = DateTimeOffset.FromUnixTimeSeconds(1652209051L),
+CreateTime = 1234L,
 CreatedBy = "<createdBy>",
 CustomAttributes =
 {
@@ -1375,7 +1375,7 @@ RelationshipAttributes =
 ["key"] = BinaryData.FromObjectAsJson(new object())
 },
 Status = EntityStatus.Active,
-UpdateTime = DateTimeOffset.FromUnixTimeSeconds(1652209051L),
+UpdateTime = 1234L,
 UpdatedBy = "<updatedBy>",
 Version = 1234L,
 Contacts =
@@ -1390,7 +1390,7 @@ Info = "<info>",
 },
                 Entities = { default },
             };
-            Response<EntityMutationResult> response = await client.BatchCreateOrUpdateAsync(body, collectionId: "<collectionId>", businessAttributeUpdateBehavior: BusinessAttributeUpdateBehavior.Ignore);
+            Response<EntityMutationResult> response = await client.BatchCreateOrUpdateAsync(atlasEntitiesWithExtInfo, collectionId: "<collectionId>", businessAttributeUpdateBehavior: BusinessAttributeUpdateBehavior.Ignore);
         }
 
         [Test]
@@ -1399,7 +1399,7 @@ Info = "<info>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
+            Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
             Response response = client.BatchDelete(new string[] { "<guid>" }, null);
 
@@ -1413,7 +1413,7 @@ Info = "<info>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
+            Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
             Response response = await client.BatchDeleteAsync(new string[] { "<guid>" }, null);
 
@@ -1427,7 +1427,7 @@ Info = "<info>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
+            Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
             Response<EntityMutationResult> response = client.BatchDelete(new string[] { "<guid>" });
         }
@@ -1438,7 +1438,7 @@ Info = "<info>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
+            Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
             Response<EntityMutationResult> response = await client.BatchDeleteAsync(new string[] { "<guid>" });
         }
@@ -1449,7 +1449,7 @@ Info = "<info>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
+            Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
             Response response = client.BatchDelete(new string[] { "<guid>" }, null);
 
@@ -1519,7 +1519,7 @@ Info = "<info>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
+            Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
             Response response = await client.BatchDeleteAsync(new string[] { "<guid>" }, null);
 
@@ -1589,7 +1589,7 @@ Info = "<info>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
+            Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
             Response<EntityMutationResult> response = client.BatchDelete(new string[] { "<guid>" });
         }
@@ -1600,7 +1600,7 @@ Info = "<info>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
+            Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
             Response<EntityMutationResult> response = await client.BatchDeleteAsync(new string[] { "<guid>" });
         }
@@ -1611,7 +1611,7 @@ Info = "<info>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
+            Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
             using RequestContent content = RequestContent.Create(new object());
             Response response = client.AddClassification(content);
@@ -1625,7 +1625,7 @@ Info = "<info>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
+            Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
             using RequestContent content = RequestContent.Create(new object());
             Response response = await client.AddClassificationAsync(content);
@@ -1639,10 +1639,10 @@ Info = "<info>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
+            Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
-            ClassificationAssociateConfig body = new ClassificationAssociateConfig();
-            Response response = client.AddClassification(body);
+            ClassificationAssociateConfig classificationAssociateConfig = new ClassificationAssociateConfig();
+            Response response = client.AddClassification(classificationAssociateConfig);
         }
 
         [Test]
@@ -1651,10 +1651,10 @@ Info = "<info>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
+            Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
-            ClassificationAssociateConfig body = new ClassificationAssociateConfig();
-            Response response = await client.AddClassificationAsync(body);
+            ClassificationAssociateConfig classificationAssociateConfig = new ClassificationAssociateConfig();
+            Response response = await client.AddClassificationAsync(classificationAssociateConfig);
         }
 
         [Test]
@@ -1663,7 +1663,7 @@ Info = "<info>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
+            Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -1704,7 +1704,7 @@ timeZone = "<timeZone>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
+            Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -1745,9 +1745,9 @@ timeZone = "<timeZone>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
+            Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
-            ClassificationAssociateConfig body = new ClassificationAssociateConfig
+            ClassificationAssociateConfig classificationAssociateConfig = new ClassificationAssociateConfig
             {
                 Classification = new AtlasClassification
                 {
@@ -1769,7 +1769,7 @@ TimeZone = "<timeZone>",
                 },
                 EntityGuids = { "<entityGuids>" },
             };
-            Response response = client.AddClassification(body);
+            Response response = client.AddClassification(classificationAssociateConfig);
         }
 
         [Test]
@@ -1778,9 +1778,9 @@ TimeZone = "<timeZone>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
+            Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
-            ClassificationAssociateConfig body = new ClassificationAssociateConfig
+            ClassificationAssociateConfig classificationAssociateConfig = new ClassificationAssociateConfig
             {
                 Classification = new AtlasClassification
                 {
@@ -1802,7 +1802,7 @@ TimeZone = "<timeZone>",
                 },
                 EntityGuids = { "<entityGuids>" },
             };
-            Response response = await client.AddClassificationAsync(body);
+            Response response = await client.AddClassificationAsync(classificationAssociateConfig);
         }
 
         [Test]
@@ -1811,7 +1811,7 @@ TimeZone = "<timeZone>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
+            Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
             Response response = client.GetEntity("<guid>", null, null, null);
 
@@ -1825,7 +1825,7 @@ TimeZone = "<timeZone>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
+            Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
             Response response = await client.GetEntityAsync("<guid>", null, null, null);
 
@@ -1839,7 +1839,7 @@ TimeZone = "<timeZone>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
+            Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
             Response<AtlasEntityWithExtInfo> response = client.GetEntity("<guid>");
         }
@@ -1850,7 +1850,7 @@ TimeZone = "<timeZone>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
+            Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
             Response<AtlasEntityWithExtInfo> response = await client.GetEntityAsync("<guid>");
         }
@@ -1861,7 +1861,7 @@ TimeZone = "<timeZone>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
+            Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
             Response response = client.GetEntity("<guid>", true, true, null);
 
@@ -1952,7 +1952,7 @@ TimeZone = "<timeZone>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
+            Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
             Response response = await client.GetEntityAsync("<guid>", true, true, null);
 
@@ -2043,7 +2043,7 @@ TimeZone = "<timeZone>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
+            Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
             Response<AtlasEntityWithExtInfo> response = client.GetEntity("<guid>", minExtInfo: true, ignoreRelationships: true);
         }
@@ -2054,7 +2054,7 @@ TimeZone = "<timeZone>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
+            Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
             Response<AtlasEntityWithExtInfo> response = await client.GetEntityAsync("<guid>", minExtInfo: true, ignoreRelationships: true);
         }
@@ -2065,7 +2065,7 @@ TimeZone = "<timeZone>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
+            Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
             using RequestContent content = RequestContent.Create(new object());
             Response response = client.UpdateAttributeById("<guid>", "<name>", content);
@@ -2080,7 +2080,7 @@ TimeZone = "<timeZone>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
+            Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
             using RequestContent content = RequestContent.Create(new object());
             Response response = await client.UpdateAttributeByIdAsync("<guid>", "<name>", content);
@@ -2095,7 +2095,7 @@ TimeZone = "<timeZone>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
+            Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
             Response<EntityMutationResult> response = client.UpdateAttributeById("<guid>", "<name>", BinaryData.FromObjectAsJson(new object()));
         }
@@ -2106,7 +2106,7 @@ TimeZone = "<timeZone>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
+            Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
             Response<EntityMutationResult> response = await client.UpdateAttributeByIdAsync("<guid>", "<name>", BinaryData.FromObjectAsJson(new object()));
         }
@@ -2117,7 +2117,7 @@ TimeZone = "<timeZone>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
+            Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
             using RequestContent content = RequestContent.Create(new object());
             Response response = client.UpdateAttributeById("<guid>", "<name>", content);
@@ -2188,7 +2188,7 @@ TimeZone = "<timeZone>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
+            Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
             using RequestContent content = RequestContent.Create(new object());
             Response response = await client.UpdateAttributeByIdAsync("<guid>", "<name>", content);
@@ -2259,7 +2259,7 @@ TimeZone = "<timeZone>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
+            Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
             Response<EntityMutationResult> response = client.UpdateAttributeById("<guid>", "<name>", BinaryData.FromObjectAsJson(new object()));
         }
@@ -2270,7 +2270,7 @@ TimeZone = "<timeZone>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
+            Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
             Response<EntityMutationResult> response = await client.UpdateAttributeByIdAsync("<guid>", "<name>", BinaryData.FromObjectAsJson(new object()));
         }
@@ -2281,7 +2281,7 @@ TimeZone = "<timeZone>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
+            Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
             Response response = client.Delete("<guid>", null);
 
@@ -2295,7 +2295,7 @@ TimeZone = "<timeZone>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
+            Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
             Response response = await client.DeleteAsync("<guid>", null);
 
@@ -2309,7 +2309,7 @@ TimeZone = "<timeZone>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
+            Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
             Response<EntityMutationResult> response = client.Delete("<guid>");
         }
@@ -2320,7 +2320,7 @@ TimeZone = "<timeZone>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
+            Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
             Response<EntityMutationResult> response = await client.DeleteAsync("<guid>");
         }
@@ -2331,7 +2331,7 @@ TimeZone = "<timeZone>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
+            Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
             Response response = client.Delete("<guid>", null);
 
@@ -2401,7 +2401,7 @@ TimeZone = "<timeZone>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
+            Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
             Response response = await client.DeleteAsync("<guid>", null);
 
@@ -2471,7 +2471,7 @@ TimeZone = "<timeZone>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
+            Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
             Response<EntityMutationResult> response = client.Delete("<guid>");
         }
@@ -2482,7 +2482,7 @@ TimeZone = "<timeZone>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
+            Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
             Response<EntityMutationResult> response = await client.DeleteAsync("<guid>");
         }
@@ -2493,7 +2493,7 @@ TimeZone = "<timeZone>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
+            Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
             Response response = client.GetClassification("<guid>", "<classificationName>", null);
 
@@ -2507,7 +2507,7 @@ TimeZone = "<timeZone>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
+            Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
             Response response = await client.GetClassificationAsync("<guid>", "<classificationName>", null);
 
@@ -2521,7 +2521,7 @@ TimeZone = "<timeZone>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
+            Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
             Response<AtlasClassification> response = client.GetClassification("<guid>", "<classificationName>");
         }
@@ -2532,7 +2532,7 @@ TimeZone = "<timeZone>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
+            Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
             Response<AtlasClassification> response = await client.GetClassificationAsync("<guid>", "<classificationName>");
         }
@@ -2543,7 +2543,7 @@ TimeZone = "<timeZone>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
+            Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
             Response response = client.GetClassification("<guid>", "<classificationName>", null);
 
@@ -2565,7 +2565,7 @@ TimeZone = "<timeZone>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
+            Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
             Response response = await client.GetClassificationAsync("<guid>", "<classificationName>", null);
 
@@ -2587,7 +2587,7 @@ TimeZone = "<timeZone>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
+            Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
             Response<AtlasClassification> response = client.GetClassification("<guid>", "<classificationName>");
         }
@@ -2598,7 +2598,7 @@ TimeZone = "<timeZone>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
+            Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
             Response<AtlasClassification> response = await client.GetClassificationAsync("<guid>", "<classificationName>");
         }
@@ -2609,7 +2609,7 @@ TimeZone = "<timeZone>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
+            Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
             Response response = client.RemoveClassification("<guid>", "<classificationName>");
 
@@ -2622,7 +2622,7 @@ TimeZone = "<timeZone>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
+            Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
             Response response = await client.RemoveClassificationAsync("<guid>", "<classificationName>");
 
@@ -2635,7 +2635,7 @@ TimeZone = "<timeZone>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
+            Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
             Response response = client.RemoveClassification("<guid>", "<classificationName>");
 
@@ -2648,7 +2648,7 @@ TimeZone = "<timeZone>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
+            Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
             Response response = await client.RemoveClassificationAsync("<guid>", "<classificationName>");
 
@@ -2661,7 +2661,7 @@ TimeZone = "<timeZone>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
+            Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
             Response response = client.GetClassifications("<guid>", null);
 
@@ -2675,7 +2675,7 @@ TimeZone = "<timeZone>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
+            Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
             Response response = await client.GetClassificationsAsync("<guid>", null);
 
@@ -2689,7 +2689,7 @@ TimeZone = "<timeZone>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
+            Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
             Response<AtlasClassifications> response = client.GetClassifications("<guid>");
         }
@@ -2700,7 +2700,7 @@ TimeZone = "<timeZone>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
+            Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
             Response<AtlasClassifications> response = await client.GetClassificationsAsync("<guid>");
         }
@@ -2711,7 +2711,7 @@ TimeZone = "<timeZone>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
+            Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
             Response response = client.GetClassifications("<guid>", null);
 
@@ -2730,7 +2730,7 @@ TimeZone = "<timeZone>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
+            Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
             Response response = await client.GetClassificationsAsync("<guid>", null);
 
@@ -2749,7 +2749,7 @@ TimeZone = "<timeZone>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
+            Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
             Response<AtlasClassifications> response = client.GetClassifications("<guid>");
         }
@@ -2760,7 +2760,7 @@ TimeZone = "<timeZone>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
+            Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
             Response<AtlasClassifications> response = await client.GetClassificationsAsync("<guid>");
         }
@@ -2771,7 +2771,7 @@ TimeZone = "<timeZone>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
+            Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
             using RequestContent content = RequestContent.Create(new object[]
             {
@@ -2788,7 +2788,7 @@ new object()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
+            Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
             using RequestContent content = RequestContent.Create(new object[]
             {
@@ -2805,7 +2805,7 @@ new object()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
+            Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
             Response response = client.AddClassifications("<guid>", new AtlasClassification[]
             {
@@ -2819,7 +2819,7 @@ new AtlasClassification()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
+            Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
             Response response = await client.AddClassificationsAsync("<guid>", new AtlasClassification[]
             {
@@ -2833,7 +2833,7 @@ new AtlasClassification()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
+            Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
             using RequestContent content = RequestContent.Create(new object[]
             {
@@ -2870,7 +2870,7 @@ timeZone = "<timeZone>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
+            Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
             using RequestContent content = RequestContent.Create(new object[]
             {
@@ -2907,7 +2907,7 @@ timeZone = "<timeZone>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
+            Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
             Response response = client.AddClassifications("<guid>", new AtlasClassification[]
             {
@@ -2938,7 +2938,7 @@ TimeZone = "<timeZone>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
+            Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
             Response response = await client.AddClassificationsAsync("<guid>", new AtlasClassification[]
             {
@@ -2969,7 +2969,7 @@ TimeZone = "<timeZone>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
+            Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
             using RequestContent content = RequestContent.Create(new object[]
             {
@@ -2986,7 +2986,7 @@ new object()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
+            Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
             using RequestContent content = RequestContent.Create(new object[]
             {
@@ -3003,7 +3003,7 @@ new object()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
+            Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
             Response response = client.UpdateClassifications("<guid>", new AtlasClassification[]
             {
@@ -3017,7 +3017,7 @@ new AtlasClassification()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
+            Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
             Response response = await client.UpdateClassificationsAsync("<guid>", new AtlasClassification[]
             {
@@ -3031,7 +3031,7 @@ new AtlasClassification()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
+            Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
             using RequestContent content = RequestContent.Create(new object[]
             {
@@ -3068,7 +3068,7 @@ timeZone = "<timeZone>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
+            Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
             using RequestContent content = RequestContent.Create(new object[]
             {
@@ -3105,7 +3105,7 @@ timeZone = "<timeZone>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
+            Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
             Response response = client.UpdateClassifications("<guid>", new AtlasClassification[]
             {
@@ -3136,7 +3136,7 @@ TimeZone = "<timeZone>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
+            Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
             Response response = await client.UpdateClassificationsAsync("<guid>", new AtlasClassification[]
             {
@@ -3167,7 +3167,7 @@ TimeZone = "<timeZone>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
+            Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
             Response response = client.GetByUniqueAttribute("<typeName>", null, null, null, null);
 
@@ -3181,7 +3181,7 @@ TimeZone = "<timeZone>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
+            Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
             Response response = await client.GetByUniqueAttributeAsync("<typeName>", null, null, null, null);
 
@@ -3195,7 +3195,7 @@ TimeZone = "<timeZone>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
+            Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
             Response<AtlasEntityWithExtInfo> response = client.GetByUniqueAttribute("<typeName>");
         }
@@ -3206,7 +3206,7 @@ TimeZone = "<timeZone>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
+            Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
             Response<AtlasEntityWithExtInfo> response = await client.GetByUniqueAttributeAsync("<typeName>");
         }
@@ -3217,7 +3217,7 @@ TimeZone = "<timeZone>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
+            Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
             Response response = client.GetByUniqueAttribute("<typeName>", true, true, "<attribute>", null);
 
@@ -3308,7 +3308,7 @@ TimeZone = "<timeZone>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
+            Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
             Response response = await client.GetByUniqueAttributeAsync("<typeName>", true, true, "<attribute>", null);
 
@@ -3399,7 +3399,7 @@ TimeZone = "<timeZone>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
+            Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
             Response<AtlasEntityWithExtInfo> response = client.GetByUniqueAttribute("<typeName>", minExtInfo: true, ignoreRelationships: true, attribute: "<attribute>");
         }
@@ -3410,7 +3410,7 @@ TimeZone = "<timeZone>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
+            Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
             Response<AtlasEntityWithExtInfo> response = await client.GetByUniqueAttributeAsync("<typeName>", minExtInfo: true, ignoreRelationships: true, attribute: "<attribute>");
         }
@@ -3421,7 +3421,7 @@ TimeZone = "<timeZone>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
+            Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
             using RequestContent content = RequestContent.Create(new object());
             Response response = client.UpdateByUniqueAttribute("<typeName>", content);
@@ -3436,7 +3436,7 @@ TimeZone = "<timeZone>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
+            Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
             using RequestContent content = RequestContent.Create(new object());
             Response response = await client.UpdateByUniqueAttributeAsync("<typeName>", content);
@@ -3451,10 +3451,10 @@ TimeZone = "<timeZone>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
+            Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
-            AtlasEntityWithExtInfo body = new AtlasEntityWithExtInfo();
-            Response<EntityMutationResult> response = client.UpdateByUniqueAttribute("<typeName>", body);
+            AtlasEntityWithExtInfo atlasEntityWithExtInfo = new AtlasEntityWithExtInfo();
+            Response<EntityMutationResult> response = client.UpdateByUniqueAttribute("<typeName>", atlasEntityWithExtInfo);
         }
 
         [Test]
@@ -3463,10 +3463,10 @@ TimeZone = "<timeZone>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
+            Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
-            AtlasEntityWithExtInfo body = new AtlasEntityWithExtInfo();
-            Response<EntityMutationResult> response = await client.UpdateByUniqueAttributeAsync("<typeName>", body);
+            AtlasEntityWithExtInfo atlasEntityWithExtInfo = new AtlasEntityWithExtInfo();
+            Response<EntityMutationResult> response = await client.UpdateByUniqueAttributeAsync("<typeName>", atlasEntityWithExtInfo);
         }
 
         [Test]
@@ -3475,7 +3475,7 @@ TimeZone = "<timeZone>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
+            Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -3517,7 +3517,7 @@ timeZone = "<timeZone>",
 },
 }
             },
-                        createTime = 1652209051,
+                        createTime = 1234L,
                         createdBy = "<createdBy>",
                         customAttributes = new
                         {
@@ -3552,7 +3552,7 @@ termGuid = "73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a",
                             key = new object(),
                         },
                         status = "ACTIVE",
-                        updateTime = 1652209051,
+                        updateTime = 1234L,
                         updatedBy = "<updatedBy>",
                         version = 1234L,
                         contacts = new
@@ -3637,7 +3637,7 @@ info = "<info>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
+            Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -3679,7 +3679,7 @@ timeZone = "<timeZone>",
 },
 }
             },
-                        createTime = 1652209051,
+                        createTime = 1234L,
                         createdBy = "<createdBy>",
                         customAttributes = new
                         {
@@ -3714,7 +3714,7 @@ termGuid = "73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a",
                             key = new object(),
                         },
                         status = "ACTIVE",
-                        updateTime = 1652209051,
+                        updateTime = 1234L,
                         updatedBy = "<updatedBy>",
                         version = 1234L,
                         contacts = new
@@ -3799,9 +3799,9 @@ info = "<info>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
+            Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
-            AtlasEntityWithExtInfo body = new AtlasEntityWithExtInfo
+            AtlasEntityWithExtInfo atlasEntityWithExtInfo = new AtlasEntityWithExtInfo
             {
                 ReferredEntities =
 {
@@ -3835,7 +3835,7 @@ StartTime = "<startTime>",
 TimeZone = "<timeZone>",
 }},
 }},
-CreateTime = DateTimeOffset.FromUnixTimeSeconds(1652209051L),
+CreateTime = 1234L,
 CreatedBy = "<createdBy>",
 CustomAttributes =
 {
@@ -3864,7 +3864,7 @@ RelationshipAttributes =
 ["key"] = BinaryData.FromObjectAsJson(new object())
 },
 Status = EntityStatus.Active,
-UpdateTime = DateTimeOffset.FromUnixTimeSeconds(1652209051L),
+UpdateTime = 1234L,
 UpdatedBy = "<updatedBy>",
 Version = 1234L,
 Contacts =
@@ -3879,7 +3879,7 @@ Info = "<info>",
 },
                 Entity = default,
             };
-            Response<EntityMutationResult> response = client.UpdateByUniqueAttribute("<typeName>", body, attribute: "<attribute>");
+            Response<EntityMutationResult> response = client.UpdateByUniqueAttribute("<typeName>", atlasEntityWithExtInfo, attribute: "<attribute>");
         }
 
         [Test]
@@ -3888,9 +3888,9 @@ Info = "<info>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
+            Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
-            AtlasEntityWithExtInfo body = new AtlasEntityWithExtInfo
+            AtlasEntityWithExtInfo atlasEntityWithExtInfo = new AtlasEntityWithExtInfo
             {
                 ReferredEntities =
 {
@@ -3924,7 +3924,7 @@ StartTime = "<startTime>",
 TimeZone = "<timeZone>",
 }},
 }},
-CreateTime = DateTimeOffset.FromUnixTimeSeconds(1652209051L),
+CreateTime = 1234L,
 CreatedBy = "<createdBy>",
 CustomAttributes =
 {
@@ -3953,7 +3953,7 @@ RelationshipAttributes =
 ["key"] = BinaryData.FromObjectAsJson(new object())
 },
 Status = EntityStatus.Active,
-UpdateTime = DateTimeOffset.FromUnixTimeSeconds(1652209051L),
+UpdateTime = 1234L,
 UpdatedBy = "<updatedBy>",
 Version = 1234L,
 Contacts =
@@ -3968,7 +3968,7 @@ Info = "<info>",
 },
                 Entity = default,
             };
-            Response<EntityMutationResult> response = await client.UpdateByUniqueAttributeAsync("<typeName>", body, attribute: "<attribute>");
+            Response<EntityMutationResult> response = await client.UpdateByUniqueAttributeAsync("<typeName>", atlasEntityWithExtInfo, attribute: "<attribute>");
         }
 
         [Test]
@@ -3977,7 +3977,7 @@ Info = "<info>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
+            Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
             Response response = client.DeleteByUniqueAttribute("<typeName>", null, null);
 
@@ -3991,7 +3991,7 @@ Info = "<info>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
+            Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
             Response response = await client.DeleteByUniqueAttributeAsync("<typeName>", null, null);
 
@@ -4005,7 +4005,7 @@ Info = "<info>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
+            Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
             Response<EntityMutationResult> response = client.DeleteByUniqueAttribute("<typeName>");
         }
@@ -4016,7 +4016,7 @@ Info = "<info>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
+            Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
             Response<EntityMutationResult> response = await client.DeleteByUniqueAttributeAsync("<typeName>");
         }
@@ -4027,7 +4027,7 @@ Info = "<info>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
+            Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
             Response response = client.DeleteByUniqueAttribute("<typeName>", "<attribute>", null);
 
@@ -4097,7 +4097,7 @@ Info = "<info>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
+            Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
             Response response = await client.DeleteByUniqueAttributeAsync("<typeName>", "<attribute>", null);
 
@@ -4167,7 +4167,7 @@ Info = "<info>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
+            Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
             Response<EntityMutationResult> response = client.DeleteByUniqueAttribute("<typeName>", attribute: "<attribute>");
         }
@@ -4178,7 +4178,7 @@ Info = "<info>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
+            Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
             Response<EntityMutationResult> response = await client.DeleteByUniqueAttributeAsync("<typeName>", attribute: "<attribute>");
         }
@@ -4189,7 +4189,7 @@ Info = "<info>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
+            Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
             Response response = client.RemoveClassificationByUniqueAttribute("<typeName>", "<classificationName>");
 
@@ -4202,7 +4202,7 @@ Info = "<info>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
+            Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
             Response response = await client.RemoveClassificationByUniqueAttributeAsync("<typeName>", "<classificationName>");
 
@@ -4215,7 +4215,7 @@ Info = "<info>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
+            Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
             Response response = client.RemoveClassificationByUniqueAttribute("<typeName>", "<classificationName>", attribute: "<attribute>");
 
@@ -4228,7 +4228,7 @@ Info = "<info>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
+            Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
             Response response = await client.RemoveClassificationByUniqueAttributeAsync("<typeName>", "<classificationName>", attribute: "<attribute>");
 
@@ -4241,7 +4241,7 @@ Info = "<info>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
+            Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
             using RequestContent content = RequestContent.Create(new object[]
             {
@@ -4258,7 +4258,7 @@ new object()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
+            Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
             using RequestContent content = RequestContent.Create(new object[]
             {
@@ -4275,7 +4275,7 @@ new object()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
+            Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
             Response response = client.AddClassificationsByUniqueAttribute("<typeName>", new AtlasClassification[]
             {
@@ -4289,7 +4289,7 @@ new AtlasClassification()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
+            Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
             Response response = await client.AddClassificationsByUniqueAttributeAsync("<typeName>", new AtlasClassification[]
             {
@@ -4303,7 +4303,7 @@ new AtlasClassification()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
+            Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
             using RequestContent content = RequestContent.Create(new object[]
             {
@@ -4340,7 +4340,7 @@ timeZone = "<timeZone>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
+            Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
             using RequestContent content = RequestContent.Create(new object[]
             {
@@ -4377,7 +4377,7 @@ timeZone = "<timeZone>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
+            Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
             Response response = client.AddClassificationsByUniqueAttribute("<typeName>", new AtlasClassification[]
             {
@@ -4408,7 +4408,7 @@ TimeZone = "<timeZone>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
+            Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
             Response response = await client.AddClassificationsByUniqueAttributeAsync("<typeName>", new AtlasClassification[]
             {
@@ -4439,7 +4439,7 @@ TimeZone = "<timeZone>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
+            Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
             using RequestContent content = RequestContent.Create(new object[]
             {
@@ -4456,7 +4456,7 @@ new object()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
+            Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
             using RequestContent content = RequestContent.Create(new object[]
             {
@@ -4473,7 +4473,7 @@ new object()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
+            Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
             Response response = client.UpdateClassificationsUniqueByAttribute("<typeName>", new AtlasClassification[]
             {
@@ -4487,7 +4487,7 @@ new AtlasClassification()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
+            Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
             Response response = await client.UpdateClassificationsUniqueByAttributeAsync("<typeName>", new AtlasClassification[]
             {
@@ -4501,7 +4501,7 @@ new AtlasClassification()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
+            Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
             using RequestContent content = RequestContent.Create(new object[]
             {
@@ -4538,7 +4538,7 @@ timeZone = "<timeZone>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
+            Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
             using RequestContent content = RequestContent.Create(new object[]
             {
@@ -4575,7 +4575,7 @@ timeZone = "<timeZone>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
+            Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
             Response response = client.UpdateClassificationsUniqueByAttribute("<typeName>", new AtlasClassification[]
             {
@@ -4606,7 +4606,7 @@ TimeZone = "<timeZone>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
+            Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
             Response response = await client.UpdateClassificationsUniqueByAttributeAsync("<typeName>", new AtlasClassification[]
             {
@@ -4637,7 +4637,7 @@ TimeZone = "<timeZone>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
+            Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
             using RequestContent content = RequestContent.Create(new object());
             Response response = client.BatchSetClassifications(content);
@@ -4652,7 +4652,7 @@ TimeZone = "<timeZone>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
+            Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
             using RequestContent content = RequestContent.Create(new object());
             Response response = await client.BatchSetClassificationsAsync(content);
@@ -4667,10 +4667,10 @@ TimeZone = "<timeZone>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
+            Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
-            AtlasEntityHeaders body = new AtlasEntityHeaders();
-            Response<IReadOnlyList<string>> response = client.BatchSetClassifications(body);
+            AtlasEntityHeaders atlasEntityHeaders = new AtlasEntityHeaders();
+            Response<IReadOnlyList<string>> response = client.BatchSetClassifications(atlasEntityHeaders);
         }
 
         [Test]
@@ -4679,10 +4679,10 @@ TimeZone = "<timeZone>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
+            Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
-            AtlasEntityHeaders body = new AtlasEntityHeaders();
-            Response<IReadOnlyList<string>> response = await client.BatchSetClassificationsAsync(body);
+            AtlasEntityHeaders atlasEntityHeaders = new AtlasEntityHeaders();
+            Response<IReadOnlyList<string>> response = await client.BatchSetClassificationsAsync(atlasEntityHeaders);
         }
 
         [Test]
@@ -4691,7 +4691,7 @@ TimeZone = "<timeZone>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
+            Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -4775,7 +4775,7 @@ termGuid = "73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
+            Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -4859,9 +4859,9 @@ termGuid = "73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
+            Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
-            AtlasEntityHeaders body = new AtlasEntityHeaders
+            AtlasEntityHeaders atlasEntityHeaders = new AtlasEntityHeaders
             {
                 GuidHeaderMap =
 {
@@ -4913,7 +4913,7 @@ Status = EntityStatus.Active,
 }
 },
             };
-            Response<IReadOnlyList<string>> response = client.BatchSetClassifications(body);
+            Response<IReadOnlyList<string>> response = client.BatchSetClassifications(atlasEntityHeaders);
         }
 
         [Test]
@@ -4922,9 +4922,9 @@ Status = EntityStatus.Active,
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
+            Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
-            AtlasEntityHeaders body = new AtlasEntityHeaders
+            AtlasEntityHeaders atlasEntityHeaders = new AtlasEntityHeaders
             {
                 GuidHeaderMap =
 {
@@ -4976,7 +4976,7 @@ Status = EntityStatus.Active,
 }
 },
             };
-            Response<IReadOnlyList<string>> response = await client.BatchSetClassificationsAsync(body);
+            Response<IReadOnlyList<string>> response = await client.BatchSetClassificationsAsync(atlasEntityHeaders);
         }
 
         [Test]
@@ -4985,7 +4985,7 @@ Status = EntityStatus.Active,
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
+            Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
             Response response = client.BatchGetByUniqueAttributes("<typeName>", null, null, null, null);
 
@@ -4999,7 +4999,7 @@ Status = EntityStatus.Active,
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
+            Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
             Response response = await client.BatchGetByUniqueAttributesAsync("<typeName>", null, null, null, null);
 
@@ -5013,7 +5013,7 @@ Status = EntityStatus.Active,
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
+            Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
             Response<AtlasEntitiesWithExtInfo> response = client.BatchGetByUniqueAttributes("<typeName>");
         }
@@ -5024,7 +5024,7 @@ Status = EntityStatus.Active,
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
+            Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
             Response<AtlasEntitiesWithExtInfo> response = await client.BatchGetByUniqueAttributesAsync("<typeName>");
         }
@@ -5035,7 +5035,7 @@ Status = EntityStatus.Active,
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
+            Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
             Response response = client.BatchGetByUniqueAttributes("<typeName>", true, true, "<attr_N:qualifiedName>", null);
 
@@ -5126,7 +5126,7 @@ Status = EntityStatus.Active,
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
+            Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
             Response response = await client.BatchGetByUniqueAttributesAsync("<typeName>", true, true, "<attr_N:qualifiedName>", null);
 
@@ -5217,7 +5217,7 @@ Status = EntityStatus.Active,
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
+            Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
             Response<AtlasEntitiesWithExtInfo> response = client.BatchGetByUniqueAttributes("<typeName>", minExtInfo: true, ignoreRelationships: true, attrNQualifiedName: "<attr_N:qualifiedName>");
         }
@@ -5228,7 +5228,7 @@ Status = EntityStatus.Active,
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
+            Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
             Response<AtlasEntitiesWithExtInfo> response = await client.BatchGetByUniqueAttributesAsync("<typeName>", minExtInfo: true, ignoreRelationships: true, attrNQualifiedName: "<attr_N:qualifiedName>");
         }
@@ -5239,7 +5239,7 @@ Status = EntityStatus.Active,
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
+            Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
             Response response = client.GetHeader("<guid>", null);
 
@@ -5253,7 +5253,7 @@ Status = EntityStatus.Active,
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
+            Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
             Response response = await client.GetHeaderAsync("<guid>", null);
 
@@ -5267,7 +5267,7 @@ Status = EntityStatus.Active,
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
+            Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
             Response<AtlasEntityHeader> response = client.GetHeader("<guid>");
         }
@@ -5278,7 +5278,7 @@ Status = EntityStatus.Active,
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
+            Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
             Response<AtlasEntityHeader> response = await client.GetHeaderAsync("<guid>");
         }
@@ -5289,7 +5289,7 @@ Status = EntityStatus.Active,
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
+            Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
             Response response = client.GetHeader("<guid>", null);
 
@@ -5330,7 +5330,7 @@ Status = EntityStatus.Active,
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
+            Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
             Response response = await client.GetHeaderAsync("<guid>", null);
 
@@ -5371,7 +5371,7 @@ Status = EntityStatus.Active,
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
+            Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
             Response<AtlasEntityHeader> response = client.GetHeader("<guid>");
         }
@@ -5382,7 +5382,7 @@ Status = EntityStatus.Active,
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
+            Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
             Response<AtlasEntityHeader> response = await client.GetHeaderAsync("<guid>");
         }
@@ -5393,7 +5393,7 @@ Status = EntityStatus.Active,
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
+            Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -5413,7 +5413,7 @@ Status = EntityStatus.Active,
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
+            Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -5433,7 +5433,7 @@ Status = EntityStatus.Active,
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
+            Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
             Response response = client.RemoveBusinessMetadata("<guid>", new Dictionary<string, IDictionary<string, BinaryData>>
             {
@@ -5450,7 +5450,7 @@ Status = EntityStatus.Active,
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
+            Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
             Response response = await client.RemoveBusinessMetadataAsync("<guid>", new Dictionary<string, IDictionary<string, BinaryData>>
             {
@@ -5467,7 +5467,7 @@ Status = EntityStatus.Active,
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
+            Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -5487,7 +5487,7 @@ Status = EntityStatus.Active,
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
+            Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -5507,7 +5507,7 @@ Status = EntityStatus.Active,
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
+            Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
             Response response = client.RemoveBusinessMetadata("<guid>", new Dictionary<string, IDictionary<string, BinaryData>>
             {
@@ -5524,7 +5524,7 @@ Status = EntityStatus.Active,
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
+            Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
             Response response = await client.RemoveBusinessMetadataAsync("<guid>", new Dictionary<string, IDictionary<string, BinaryData>>
             {
@@ -5541,7 +5541,7 @@ Status = EntityStatus.Active,
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
+            Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -5561,7 +5561,7 @@ Status = EntityStatus.Active,
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
+            Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -5581,7 +5581,7 @@ Status = EntityStatus.Active,
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
+            Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
             Response response = client.AddOrUpdateBusinessMetadata("<guid>", new Dictionary<string, IDictionary<string, BinaryData>>
             {
@@ -5598,7 +5598,7 @@ Status = EntityStatus.Active,
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
+            Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
             Response response = await client.AddOrUpdateBusinessMetadataAsync("<guid>", new Dictionary<string, IDictionary<string, BinaryData>>
             {
@@ -5615,7 +5615,7 @@ Status = EntityStatus.Active,
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
+            Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -5635,7 +5635,7 @@ Status = EntityStatus.Active,
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
+            Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -5655,7 +5655,7 @@ Status = EntityStatus.Active,
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
+            Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
             Response response = client.AddOrUpdateBusinessMetadata("<guid>", new Dictionary<string, IDictionary<string, BinaryData>>
             {
@@ -5672,7 +5672,7 @@ Status = EntityStatus.Active,
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
+            Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
             Response response = await client.AddOrUpdateBusinessMetadataAsync("<guid>", new Dictionary<string, IDictionary<string, BinaryData>>
             {
@@ -5689,7 +5689,7 @@ Status = EntityStatus.Active,
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
+            Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -5706,7 +5706,7 @@ Status = EntityStatus.Active,
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
+            Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -5723,7 +5723,7 @@ Status = EntityStatus.Active,
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
+            Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
             Response response = client.RemoveBusinessMetadataAttributes("<guid>", "<businessMetadataName>", new Dictionary<string, BinaryData>
             {
@@ -5737,7 +5737,7 @@ Status = EntityStatus.Active,
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
+            Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
             Response response = await client.RemoveBusinessMetadataAttributesAsync("<guid>", "<businessMetadataName>", new Dictionary<string, BinaryData>
             {
@@ -5751,7 +5751,7 @@ Status = EntityStatus.Active,
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
+            Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -5768,7 +5768,7 @@ Status = EntityStatus.Active,
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
+            Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -5785,7 +5785,7 @@ Status = EntityStatus.Active,
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
+            Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
             Response response = client.RemoveBusinessMetadataAttributes("<guid>", "<businessMetadataName>", new Dictionary<string, BinaryData>
             {
@@ -5799,7 +5799,7 @@ Status = EntityStatus.Active,
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
+            Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
             Response response = await client.RemoveBusinessMetadataAttributesAsync("<guid>", "<businessMetadataName>", new Dictionary<string, BinaryData>
             {
@@ -5813,7 +5813,7 @@ Status = EntityStatus.Active,
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
+            Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -5830,7 +5830,7 @@ Status = EntityStatus.Active,
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
+            Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -5847,7 +5847,7 @@ Status = EntityStatus.Active,
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
+            Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
             Response response = client.AddOrUpdateBusinessMetadataAttributes("<guid>", "<businessMetadataName>", new Dictionary<string, BinaryData>
             {
@@ -5861,7 +5861,7 @@ Status = EntityStatus.Active,
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
+            Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
             Response response = await client.AddOrUpdateBusinessMetadataAttributesAsync("<guid>", "<businessMetadataName>", new Dictionary<string, BinaryData>
             {
@@ -5875,7 +5875,7 @@ Status = EntityStatus.Active,
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
+            Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -5892,7 +5892,7 @@ Status = EntityStatus.Active,
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
+            Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -5909,7 +5909,7 @@ Status = EntityStatus.Active,
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
+            Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
             Response response = client.AddOrUpdateBusinessMetadataAttributes("<guid>", "<businessMetadataName>", new Dictionary<string, BinaryData>
             {
@@ -5923,7 +5923,7 @@ Status = EntityStatus.Active,
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
+            Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
             Response response = await client.AddOrUpdateBusinessMetadataAttributesAsync("<guid>", "<businessMetadataName>", new Dictionary<string, BinaryData>
             {
@@ -5937,7 +5937,7 @@ Status = EntityStatus.Active,
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
+            Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
             Response response = client.GetBusinessMetadataTemplate(null);
 
@@ -5951,7 +5951,7 @@ Status = EntityStatus.Active,
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
+            Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
             Response response = await client.GetBusinessMetadataTemplateAsync(null);
 
@@ -5965,7 +5965,7 @@ Status = EntityStatus.Active,
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
+            Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
             Response<BinaryData> response = client.GetBusinessMetadataTemplate();
         }
@@ -5976,7 +5976,7 @@ Status = EntityStatus.Active,
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
+            Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
             Response<BinaryData> response = await client.GetBusinessMetadataTemplateAsync();
         }
@@ -5987,7 +5987,7 @@ Status = EntityStatus.Active,
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
+            Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
             Response response = client.GetBusinessMetadataTemplate(null);
 
@@ -6001,7 +6001,7 @@ Status = EntityStatus.Active,
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
+            Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
             Response response = await client.GetBusinessMetadataTemplateAsync(null);
 
@@ -6015,7 +6015,7 @@ Status = EntityStatus.Active,
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
+            Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
             Response<BinaryData> response = client.GetBusinessMetadataTemplate();
         }
@@ -6026,7 +6026,7 @@ Status = EntityStatus.Active,
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
+            Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
             Response<BinaryData> response = await client.GetBusinessMetadataTemplateAsync();
         }
@@ -6037,7 +6037,7 @@ Status = EntityStatus.Active,
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
+            Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -6055,7 +6055,7 @@ Status = EntityStatus.Active,
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
+            Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -6073,7 +6073,7 @@ Status = EntityStatus.Active,
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
+            Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
             Response<BulkImportResult> response = client.ImportBusinessMetadata(BinaryData.FromObjectAsJson(new object()));
         }
@@ -6084,7 +6084,7 @@ Status = EntityStatus.Active,
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
+            Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
             Response<BulkImportResult> response = await client.ImportBusinessMetadataAsync(BinaryData.FromObjectAsJson(new object()));
         }
@@ -6095,7 +6095,7 @@ Status = EntityStatus.Active,
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
+            Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -6120,7 +6120,7 @@ Status = EntityStatus.Active,
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
+            Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -6145,7 +6145,7 @@ Status = EntityStatus.Active,
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
+            Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
             Response<BulkImportResult> response = client.ImportBusinessMetadata(BinaryData.FromObjectAsJson(new object()));
         }
@@ -6156,7 +6156,7 @@ Status = EntityStatus.Active,
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
+            Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
             Response<BulkImportResult> response = await client.ImportBusinessMetadataAsync(BinaryData.FromObjectAsJson(new object()));
         }
@@ -6167,12 +6167,9 @@ Status = EntityStatus.Active,
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
+            Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
-            using RequestContent content = RequestContent.Create(new object[]
-            {
-"<body>"
-            });
+            using RequestContent content = null;
             Response response = client.RemoveLabels("<guid>", content);
 
             Console.WriteLine(response.Status);
@@ -6184,12 +6181,9 @@ Status = EntityStatus.Active,
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
+            Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
-            using RequestContent content = RequestContent.Create(new object[]
-            {
-"<body>"
-            });
+            using RequestContent content = null;
             Response response = await client.RemoveLabelsAsync("<guid>", content);
 
             Console.WriteLine(response.Status);
@@ -6201,9 +6195,9 @@ Status = EntityStatus.Active,
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
+            Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
-            Response response = client.RemoveLabels("<guid>", new string[] { "<body>" });
+            Response response = client.RemoveLabels("<guid>");
         }
 
         [Test]
@@ -6212,9 +6206,9 @@ Status = EntityStatus.Active,
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
+            Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
-            Response response = await client.RemoveLabelsAsync("<guid>", new string[] { "<body>" });
+            Response response = await client.RemoveLabelsAsync("<guid>");
         }
 
         [Test]
@@ -6223,7 +6217,7 @@ Status = EntityStatus.Active,
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
+            Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
             using RequestContent content = RequestContent.Create(new object[]
             {
@@ -6240,7 +6234,7 @@ Status = EntityStatus.Active,
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
+            Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
             using RequestContent content = RequestContent.Create(new object[]
             {
@@ -6257,9 +6251,9 @@ Status = EntityStatus.Active,
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
+            Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
-            Response response = client.RemoveLabels("<guid>", new string[] { "<body>" });
+            Response response = client.RemoveLabels("<guid>", body: new string[] { "<body>" });
         }
 
         [Test]
@@ -6268,9 +6262,9 @@ Status = EntityStatus.Active,
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
+            Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
-            Response response = await client.RemoveLabelsAsync("<guid>", new string[] { "<body>" });
+            Response response = await client.RemoveLabelsAsync("<guid>", body: new string[] { "<body>" });
         }
 
         [Test]
@@ -6279,12 +6273,9 @@ Status = EntityStatus.Active,
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
+            Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
-            using RequestContent content = RequestContent.Create(new object[]
-            {
-"<body>"
-            });
+            using RequestContent content = null;
             Response response = client.SetLabels("<guid>", content);
 
             Console.WriteLine(response.Status);
@@ -6296,12 +6287,9 @@ Status = EntityStatus.Active,
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
+            Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
-            using RequestContent content = RequestContent.Create(new object[]
-            {
-"<body>"
-            });
+            using RequestContent content = null;
             Response response = await client.SetLabelsAsync("<guid>", content);
 
             Console.WriteLine(response.Status);
@@ -6313,9 +6301,9 @@ Status = EntityStatus.Active,
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
+            Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
-            Response response = client.SetLabels("<guid>", new string[] { "<body>" });
+            Response response = client.SetLabels("<guid>");
         }
 
         [Test]
@@ -6324,9 +6312,9 @@ Status = EntityStatus.Active,
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
+            Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
-            Response response = await client.SetLabelsAsync("<guid>", new string[] { "<body>" });
+            Response response = await client.SetLabelsAsync("<guid>");
         }
 
         [Test]
@@ -6335,7 +6323,7 @@ Status = EntityStatus.Active,
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
+            Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
             using RequestContent content = RequestContent.Create(new object[]
             {
@@ -6352,7 +6340,7 @@ Status = EntityStatus.Active,
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
+            Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
             using RequestContent content = RequestContent.Create(new object[]
             {
@@ -6369,9 +6357,9 @@ Status = EntityStatus.Active,
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
+            Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
-            Response response = client.SetLabels("<guid>", new string[] { "<body>" });
+            Response response = client.SetLabels("<guid>", body: new string[] { "<body>" });
         }
 
         [Test]
@@ -6380,9 +6368,9 @@ Status = EntityStatus.Active,
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
+            Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
-            Response response = await client.SetLabelsAsync("<guid>", new string[] { "<body>" });
+            Response response = await client.SetLabelsAsync("<guid>", body: new string[] { "<body>" });
         }
 
         [Test]
@@ -6391,12 +6379,9 @@ Status = EntityStatus.Active,
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
+            Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
-            using RequestContent content = RequestContent.Create(new object[]
-            {
-"<body>"
-            });
+            using RequestContent content = null;
             Response response = client.AddLabel("<guid>", content);
 
             Console.WriteLine(response.Status);
@@ -6408,12 +6393,9 @@ Status = EntityStatus.Active,
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
+            Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
-            using RequestContent content = RequestContent.Create(new object[]
-            {
-"<body>"
-            });
+            using RequestContent content = null;
             Response response = await client.AddLabelAsync("<guid>", content);
 
             Console.WriteLine(response.Status);
@@ -6425,9 +6407,9 @@ Status = EntityStatus.Active,
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
+            Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
-            Response response = client.AddLabel("<guid>", new string[] { "<body>" });
+            Response response = client.AddLabel("<guid>");
         }
 
         [Test]
@@ -6436,9 +6418,9 @@ Status = EntityStatus.Active,
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
+            Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
-            Response response = await client.AddLabelAsync("<guid>", new string[] { "<body>" });
+            Response response = await client.AddLabelAsync("<guid>");
         }
 
         [Test]
@@ -6447,7 +6429,7 @@ Status = EntityStatus.Active,
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
+            Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
             using RequestContent content = RequestContent.Create(new object[]
             {
@@ -6464,7 +6446,7 @@ Status = EntityStatus.Active,
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
+            Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
             using RequestContent content = RequestContent.Create(new object[]
             {
@@ -6481,9 +6463,9 @@ Status = EntityStatus.Active,
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
+            Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
-            Response response = client.AddLabel("<guid>", new string[] { "<body>" });
+            Response response = client.AddLabel("<guid>", body: new string[] { "<body>" });
         }
 
         [Test]
@@ -6492,9 +6474,9 @@ Status = EntityStatus.Active,
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
+            Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
-            Response response = await client.AddLabelAsync("<guid>", new string[] { "<body>" });
+            Response response = await client.AddLabelAsync("<guid>", body: new string[] { "<body>" });
         }
 
         [Test]
@@ -6503,12 +6485,9 @@ Status = EntityStatus.Active,
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
+            Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
-            using RequestContent content = RequestContent.Create(new object[]
-            {
-"<body>"
-            });
+            using RequestContent content = null;
             Response response = client.RemoveLabelsByUniqueAttribute("<typeName>", content);
 
             Console.WriteLine(response.Status);
@@ -6520,12 +6499,9 @@ Status = EntityStatus.Active,
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
+            Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
-            using RequestContent content = RequestContent.Create(new object[]
-            {
-"<body>"
-            });
+            using RequestContent content = null;
             Response response = await client.RemoveLabelsByUniqueAttributeAsync("<typeName>", content);
 
             Console.WriteLine(response.Status);
@@ -6537,9 +6513,9 @@ Status = EntityStatus.Active,
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
+            Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
-            Response response = client.RemoveLabelsByUniqueAttribute("<typeName>", new string[] { "<body>" });
+            Response response = client.RemoveLabelsByUniqueAttribute("<typeName>");
         }
 
         [Test]
@@ -6548,9 +6524,9 @@ Status = EntityStatus.Active,
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
+            Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
-            Response response = await client.RemoveLabelsByUniqueAttributeAsync("<typeName>", new string[] { "<body>" });
+            Response response = await client.RemoveLabelsByUniqueAttributeAsync("<typeName>");
         }
 
         [Test]
@@ -6559,7 +6535,7 @@ Status = EntityStatus.Active,
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
+            Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
             using RequestContent content = RequestContent.Create(new object[]
             {
@@ -6576,7 +6552,7 @@ Status = EntityStatus.Active,
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
+            Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
             using RequestContent content = RequestContent.Create(new object[]
             {
@@ -6593,9 +6569,9 @@ Status = EntityStatus.Active,
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
+            Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
-            Response response = client.RemoveLabelsByUniqueAttribute("<typeName>", new string[] { "<body>" }, attribute: "<attribute>");
+            Response response = client.RemoveLabelsByUniqueAttribute("<typeName>", body: new string[] { "<body>" }, attribute: "<attribute>");
         }
 
         [Test]
@@ -6604,9 +6580,9 @@ Status = EntityStatus.Active,
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
+            Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
-            Response response = await client.RemoveLabelsByUniqueAttributeAsync("<typeName>", new string[] { "<body>" }, attribute: "<attribute>");
+            Response response = await client.RemoveLabelsByUniqueAttributeAsync("<typeName>", body: new string[] { "<body>" }, attribute: "<attribute>");
         }
 
         [Test]
@@ -6615,12 +6591,9 @@ Status = EntityStatus.Active,
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
+            Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
-            using RequestContent content = RequestContent.Create(new object[]
-            {
-"<body>"
-            });
+            using RequestContent content = null;
             Response response = client.SetLabelsByUniqueAttribute("<typeName>", content);
 
             Console.WriteLine(response.Status);
@@ -6632,12 +6605,9 @@ Status = EntityStatus.Active,
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
+            Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
-            using RequestContent content = RequestContent.Create(new object[]
-            {
-"<body>"
-            });
+            using RequestContent content = null;
             Response response = await client.SetLabelsByUniqueAttributeAsync("<typeName>", content);
 
             Console.WriteLine(response.Status);
@@ -6649,9 +6619,9 @@ Status = EntityStatus.Active,
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
+            Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
-            Response response = client.SetLabelsByUniqueAttribute("<typeName>", new string[] { "<body>" });
+            Response response = client.SetLabelsByUniqueAttribute("<typeName>");
         }
 
         [Test]
@@ -6660,9 +6630,9 @@ Status = EntityStatus.Active,
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
+            Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
-            Response response = await client.SetLabelsByUniqueAttributeAsync("<typeName>", new string[] { "<body>" });
+            Response response = await client.SetLabelsByUniqueAttributeAsync("<typeName>");
         }
 
         [Test]
@@ -6671,7 +6641,7 @@ Status = EntityStatus.Active,
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
+            Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
             using RequestContent content = RequestContent.Create(new object[]
             {
@@ -6688,7 +6658,7 @@ Status = EntityStatus.Active,
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
+            Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
             using RequestContent content = RequestContent.Create(new object[]
             {
@@ -6705,9 +6675,9 @@ Status = EntityStatus.Active,
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
+            Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
-            Response response = client.SetLabelsByUniqueAttribute("<typeName>", new string[] { "<body>" }, attribute: "<attribute>");
+            Response response = client.SetLabelsByUniqueAttribute("<typeName>", body: new string[] { "<body>" }, attribute: "<attribute>");
         }
 
         [Test]
@@ -6716,9 +6686,9 @@ Status = EntityStatus.Active,
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
+            Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
-            Response response = await client.SetLabelsByUniqueAttributeAsync("<typeName>", new string[] { "<body>" }, attribute: "<attribute>");
+            Response response = await client.SetLabelsByUniqueAttributeAsync("<typeName>", body: new string[] { "<body>" }, attribute: "<attribute>");
         }
 
         [Test]
@@ -6727,12 +6697,9 @@ Status = EntityStatus.Active,
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
+            Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
-            using RequestContent content = RequestContent.Create(new object[]
-            {
-"<body>"
-            });
+            using RequestContent content = null;
             Response response = client.AddLabelsByUniqueAttribute("<typeName>", content);
 
             Console.WriteLine(response.Status);
@@ -6744,12 +6711,9 @@ Status = EntityStatus.Active,
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
+            Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
-            using RequestContent content = RequestContent.Create(new object[]
-            {
-"<body>"
-            });
+            using RequestContent content = null;
             Response response = await client.AddLabelsByUniqueAttributeAsync("<typeName>", content);
 
             Console.WriteLine(response.Status);
@@ -6761,9 +6725,9 @@ Status = EntityStatus.Active,
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
+            Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
-            Response response = client.AddLabelsByUniqueAttribute("<typeName>", new string[] { "<body>" });
+            Response response = client.AddLabelsByUniqueAttribute("<typeName>");
         }
 
         [Test]
@@ -6772,9 +6736,9 @@ Status = EntityStatus.Active,
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
+            Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
-            Response response = await client.AddLabelsByUniqueAttributeAsync("<typeName>", new string[] { "<body>" });
+            Response response = await client.AddLabelsByUniqueAttributeAsync("<typeName>");
         }
 
         [Test]
@@ -6783,7 +6747,7 @@ Status = EntityStatus.Active,
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
+            Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
             using RequestContent content = RequestContent.Create(new object[]
             {
@@ -6800,7 +6764,7 @@ Status = EntityStatus.Active,
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
+            Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
             using RequestContent content = RequestContent.Create(new object[]
             {
@@ -6817,9 +6781,9 @@ Status = EntityStatus.Active,
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
+            Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
-            Response response = client.AddLabelsByUniqueAttribute("<typeName>", new string[] { "<body>" }, attribute: "<attribute>");
+            Response response = client.AddLabelsByUniqueAttribute("<typeName>", body: new string[] { "<body>" }, attribute: "<attribute>");
         }
 
         [Test]
@@ -6828,9 +6792,9 @@ Status = EntityStatus.Active,
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
+            Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
-            Response response = await client.AddLabelsByUniqueAttributeAsync("<typeName>", new string[] { "<body>" }, attribute: "<attribute>");
+            Response response = await client.AddLabelsByUniqueAttributeAsync("<typeName>", body: new string[] { "<body>" }, attribute: "<attribute>");
         }
 
         [Test]
@@ -6871,8 +6835,8 @@ Status = EntityStatus.Active,
             TokenCredential credential = new DefaultAzureCredential();
             Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
 
-            MoveEntitiesConfig body = new MoveEntitiesConfig();
-            Response<EntityMutationResult> response = client.MoveEntitiesToCollection("<collectionId>", body);
+            MoveEntitiesConfig moveEntitiesConfig = new MoveEntitiesConfig();
+            Response<EntityMutationResult> response = client.MoveEntitiesToCollection("<collectionId>", moveEntitiesConfig);
         }
 
         [Test]
@@ -6883,8 +6847,8 @@ Status = EntityStatus.Active,
             TokenCredential credential = new DefaultAzureCredential();
             Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
 
-            MoveEntitiesConfig body = new MoveEntitiesConfig();
-            Response<EntityMutationResult> response = await client.MoveEntitiesToCollectionAsync("<collectionId>", body);
+            MoveEntitiesConfig moveEntitiesConfig = new MoveEntitiesConfig();
+            Response<EntityMutationResult> response = await client.MoveEntitiesToCollectionAsync("<collectionId>", moveEntitiesConfig);
         }
 
         [Test]
@@ -7049,11 +7013,11 @@ Status = EntityStatus.Active,
             TokenCredential credential = new DefaultAzureCredential();
             Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
 
-            MoveEntitiesConfig body = new MoveEntitiesConfig
+            MoveEntitiesConfig moveEntitiesConfig = new MoveEntitiesConfig
             {
                 EntityGuids = { "<entityGuids>" },
             };
-            Response<EntityMutationResult> response = client.MoveEntitiesToCollection("<collectionId>", body);
+            Response<EntityMutationResult> response = client.MoveEntitiesToCollection("<collectionId>", moveEntitiesConfig);
         }
 
         [Test]
@@ -7064,11 +7028,11 @@ Status = EntityStatus.Active,
             TokenCredential credential = new DefaultAzureCredential();
             Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
 
-            MoveEntitiesConfig body = new MoveEntitiesConfig
+            MoveEntitiesConfig moveEntitiesConfig = new MoveEntitiesConfig
             {
                 EntityGuids = { "<entityGuids>" },
             };
-            Response<EntityMutationResult> response = await client.MoveEntitiesToCollectionAsync("<collectionId>", body);
+            Response<EntityMutationResult> response = await client.MoveEntitiesToCollectionAsync("<collectionId>", moveEntitiesConfig);
         }
     }
 }

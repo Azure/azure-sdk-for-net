@@ -116,7 +116,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="validValues"> An array of related term headers as valid values. </param>
         /// <param name="validValuesFor"> An array of related term headers as valid values for other records. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AtlasGlossaryTerm(string guid, IList<AtlasClassification> classifications, string longDescription, string name, string qualifiedName, string shortDescription, string lastModifiedTS, DateTimeOffset? createTime, string createdBy, DateTimeOffset? updateTime, string updatedBy, string abbreviation, IList<BinaryData> templateName, AtlasGlossaryHeader anchor, IList<AtlasRelatedTermHeader> antonyms, TermStatus? status, string nickName, IList<PurviewObjectId> hierarchyInfo, IList<ResourceLink> resources, IDictionary<string, IList<ContactInfo>> contacts, IDictionary<string, IDictionary<string, BinaryData>> attributes, IList<AtlasRelatedObjectId> assignedEntities, IList<AtlasTermCategorizationHeader> categories, IList<AtlasRelatedTermHeader> classifies, IList<string> examples, IList<AtlasRelatedTermHeader> isA, IList<AtlasRelatedTermHeader> preferredTerms, IList<AtlasRelatedTermHeader> preferredToTerms, IList<AtlasRelatedTermHeader> replacedBy, IList<AtlasRelatedTermHeader> replacementTerms, IList<AtlasRelatedTermHeader> seeAlso, IList<AtlasRelatedTermHeader> synonyms, IList<AtlasRelatedTermHeader> translatedTerms, IList<AtlasRelatedTermHeader> translationTerms, string usage, IList<AtlasRelatedTermHeader> validValues, IList<AtlasRelatedTermHeader> validValuesFor, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal AtlasGlossaryTerm(string guid, IList<AtlasClassification> classifications, string longDescription, string name, string qualifiedName, string shortDescription, string lastModifiedTS, long? createTime, string createdBy, long? updateTime, string updatedBy, string abbreviation, IList<BinaryData> templateName, AtlasGlossaryHeader anchor, IList<AtlasRelatedTermHeader> antonyms, TermStatus? status, string nickName, IList<PurviewObjectId> hierarchyInfo, IList<ResourceLink> resources, IDictionary<string, IList<ContactInfo>> contacts, IDictionary<string, IDictionary<string, BinaryData>> attributes, IList<AtlasRelatedObjectId> assignedEntities, IList<AtlasTermCategorizationHeader> categories, IList<AtlasRelatedTermHeader> classifies, IList<string> examples, IList<AtlasRelatedTermHeader> isA, IList<AtlasRelatedTermHeader> preferredTerms, IList<AtlasRelatedTermHeader> preferredToTerms, IList<AtlasRelatedTermHeader> replacedBy, IList<AtlasRelatedTermHeader> replacementTerms, IList<AtlasRelatedTermHeader> seeAlso, IList<AtlasRelatedTermHeader> synonyms, IList<AtlasRelatedTermHeader> translatedTerms, IList<AtlasRelatedTermHeader> translationTerms, string usage, IList<AtlasRelatedTermHeader> validValues, IList<AtlasRelatedTermHeader> validValuesFor, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Guid = guid;
             Classifications = classifications;
@@ -173,11 +173,11 @@ namespace Azure.Analytics.Purview.DataMap
         /// <summary> ETag for concurrency control. </summary>
         public string LastModifiedTS { get; set; }
         /// <summary> The created time of the record. </summary>
-        public DateTimeOffset? CreateTime { get; set; }
+        public long? CreateTime { get; set; }
         /// <summary> The user who created the record. </summary>
         public string CreatedBy { get; set; }
         /// <summary> The update time of the record. </summary>
-        public DateTimeOffset? UpdateTime { get; set; }
+        public long? UpdateTime { get; set; }
         /// <summary> The user who updated the record. </summary>
         public string UpdatedBy { get; set; }
         /// <summary> The abbreviation of the term. </summary>

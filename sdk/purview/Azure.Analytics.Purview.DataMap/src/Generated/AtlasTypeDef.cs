@@ -129,7 +129,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="relationshipLabel"> The label of the relationship. </param>
         /// <param name="attributeDefs"> An array of attribute definitions. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AtlasTypeDef(TypeCategory? category, DateTimeOffset? createTime, string createdBy, AtlasDateFormat dateFormatter, string description, string guid, string name, IReadOnlyDictionary<string, string> options, string serviceType, string typeVersion, DateTimeOffset? updateTime, string updatedBy, long? version, string lastModifiedTS, IReadOnlyList<string> entityTypes, IReadOnlyList<string> subTypes, IReadOnlyList<string> superTypes, IReadOnlyList<AtlasRelationshipAttributeDef> relationshipAttributeDefs, string defaultValue, IReadOnlyList<AtlasEnumElementDef> elementDefs, AtlasRelationshipEndDef endDef1, AtlasRelationshipEndDef endDef2, RelationshipCategory? relationshipCategory, string relationshipLabel, IReadOnlyList<AtlasAttributeDef> attributeDefs, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal AtlasTypeDef(TypeCategory? category, long? createTime, string createdBy, AtlasDateFormat dateFormatter, string description, string guid, string name, IReadOnlyDictionary<string, string> options, string serviceType, string typeVersion, long? updateTime, string updatedBy, long? version, string lastModifiedTS, IReadOnlyList<string> entityTypes, IReadOnlyList<string> subTypes, IReadOnlyList<string> superTypes, IReadOnlyList<AtlasRelationshipAttributeDef> relationshipAttributeDefs, string defaultValue, IReadOnlyList<AtlasEnumElementDef> elementDefs, AtlasRelationshipEndDef endDef1, AtlasRelationshipEndDef endDef2, RelationshipCategory? relationshipCategory, string relationshipLabel, IReadOnlyList<AtlasAttributeDef> attributeDefs, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Category = category;
             CreateTime = createTime;
@@ -162,7 +162,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// <summary> The enum of type category. </summary>
         public TypeCategory? Category { get; }
         /// <summary> The created time of the record. </summary>
-        public DateTimeOffset? CreateTime { get; }
+        public long? CreateTime { get; }
         /// <summary> The user who created the record. </summary>
         public string CreatedBy { get; }
         /// <summary> The date format. </summary>
@@ -180,7 +180,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// <summary> The version of the type. </summary>
         public string TypeVersion { get; }
         /// <summary> The update time of the record. </summary>
-        public DateTimeOffset? UpdateTime { get; }
+        public long? UpdateTime { get; }
         /// <summary> The user who updated the record. </summary>
         public string UpdatedBy { get; }
         /// <summary> The version of the record. </summary>

@@ -7,7 +7,7 @@ This sample shows how to call GetBusinessMetadataByIdAsync.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
+TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
 Response<AtlasBusinessMetadataDef> response = await client.GetBusinessMetadataByIdAsync("<guid>");
 ]]></code>
@@ -15,7 +15,7 @@ This sample shows how to call GetBusinessMetadataByIdAsync with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
+TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
 Response<AtlasBusinessMetadataDef> response = await client.GetBusinessMetadataByIdAsync("<guid>");
 ]]></code></example>
@@ -26,7 +26,7 @@ This sample shows how to call GetBusinessMetadataById.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
+TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
 Response<AtlasBusinessMetadataDef> response = client.GetBusinessMetadataById("<guid>");
 ]]></code>
@@ -34,7 +34,7 @@ This sample shows how to call GetBusinessMetadataById with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
+TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
 Response<AtlasBusinessMetadataDef> response = client.GetBusinessMetadataById("<guid>");
 ]]></code></example>
@@ -45,7 +45,7 @@ This sample shows how to call GetBusinessMetadataByIdAsync and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
+TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
 Response response = await client.GetBusinessMetadataByIdAsync("<guid>", null);
 
@@ -56,7 +56,7 @@ This sample shows how to call GetBusinessMetadataByIdAsync with all parameters a
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
+TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
 Response response = await client.GetBusinessMetadataByIdAsync("<guid>", null);
 
@@ -113,7 +113,7 @@ This sample shows how to call GetBusinessMetadataById and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
+TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
 Response response = client.GetBusinessMetadataById("<guid>", null);
 
@@ -124,7 +124,7 @@ This sample shows how to call GetBusinessMetadataById with all parameters and pa
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
+TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
 Response response = client.GetBusinessMetadataById("<guid>", null);
 
@@ -181,7 +181,7 @@ This sample shows how to call GetBusinessMetadataByNameAsync.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
+TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
 Response<AtlasBusinessMetadataDef> response = await client.GetBusinessMetadataByNameAsync("<name>");
 ]]></code>
@@ -189,7 +189,7 @@ This sample shows how to call GetBusinessMetadataByNameAsync with all parameters
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
+TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
 Response<AtlasBusinessMetadataDef> response = await client.GetBusinessMetadataByNameAsync("<name>");
 ]]></code></example>
@@ -200,7 +200,7 @@ This sample shows how to call GetBusinessMetadataByName.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
+TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
 Response<AtlasBusinessMetadataDef> response = client.GetBusinessMetadataByName("<name>");
 ]]></code>
@@ -208,7 +208,7 @@ This sample shows how to call GetBusinessMetadataByName with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
+TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
 Response<AtlasBusinessMetadataDef> response = client.GetBusinessMetadataByName("<name>");
 ]]></code></example>
@@ -219,7 +219,7 @@ This sample shows how to call GetBusinessMetadataByNameAsync and parse the resul
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
+TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
 Response response = await client.GetBusinessMetadataByNameAsync("<name>", null);
 
@@ -230,7 +230,7 @@ This sample shows how to call GetBusinessMetadataByNameAsync with all parameters
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
+TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
 Response response = await client.GetBusinessMetadataByNameAsync("<name>", null);
 
@@ -287,7 +287,7 @@ This sample shows how to call GetBusinessMetadataByName and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
+TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
 Response response = client.GetBusinessMetadataByName("<name>", null);
 
@@ -298,7 +298,7 @@ This sample shows how to call GetBusinessMetadataByName with all parameters and 
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
+TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
 Response response = client.GetBusinessMetadataByName("<name>", null);
 
@@ -355,7 +355,7 @@ This sample shows how to call GetClassificationByIdAsync.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
+TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
 Response<AtlasClassificationDef> response = await client.GetClassificationByIdAsync("<guid>");
 ]]></code>
@@ -363,7 +363,7 @@ This sample shows how to call GetClassificationByIdAsync with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
+TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
 Response<AtlasClassificationDef> response = await client.GetClassificationByIdAsync("<guid>");
 ]]></code></example>
@@ -374,7 +374,7 @@ This sample shows how to call GetClassificationById.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
+TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
 Response<AtlasClassificationDef> response = client.GetClassificationById("<guid>");
 ]]></code>
@@ -382,7 +382,7 @@ This sample shows how to call GetClassificationById with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
+TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
 Response<AtlasClassificationDef> response = client.GetClassificationById("<guid>");
 ]]></code></example>
@@ -393,7 +393,7 @@ This sample shows how to call GetClassificationByIdAsync and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
+TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
 Response response = await client.GetClassificationByIdAsync("<guid>", null);
 
@@ -404,7 +404,7 @@ This sample shows how to call GetClassificationByIdAsync with all parameters and
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
+TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
 Response response = await client.GetClassificationByIdAsync("<guid>", null);
 
@@ -464,7 +464,7 @@ This sample shows how to call GetClassificationById and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
+TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
 Response response = client.GetClassificationById("<guid>", null);
 
@@ -475,7 +475,7 @@ This sample shows how to call GetClassificationById with all parameters and pars
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
+TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
 Response response = client.GetClassificationById("<guid>", null);
 
@@ -535,7 +535,7 @@ This sample shows how to call GetClassificationByNameAsync.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
+TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
 Response<AtlasClassificationDef> response = await client.GetClassificationByNameAsync("<name>");
 ]]></code>
@@ -543,7 +543,7 @@ This sample shows how to call GetClassificationByNameAsync with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
+TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
 Response<AtlasClassificationDef> response = await client.GetClassificationByNameAsync("<name>");
 ]]></code></example>
@@ -554,7 +554,7 @@ This sample shows how to call GetClassificationByName.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
+TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
 Response<AtlasClassificationDef> response = client.GetClassificationByName("<name>");
 ]]></code>
@@ -562,7 +562,7 @@ This sample shows how to call GetClassificationByName with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
+TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
 Response<AtlasClassificationDef> response = client.GetClassificationByName("<name>");
 ]]></code></example>
@@ -573,7 +573,7 @@ This sample shows how to call GetClassificationByNameAsync and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
+TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
 Response response = await client.GetClassificationByNameAsync("<name>", null);
 
@@ -584,7 +584,7 @@ This sample shows how to call GetClassificationByNameAsync with all parameters a
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
+TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
 Response response = await client.GetClassificationByNameAsync("<name>", null);
 
@@ -644,7 +644,7 @@ This sample shows how to call GetClassificationByName and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
+TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
 Response response = client.GetClassificationByName("<name>", null);
 
@@ -655,7 +655,7 @@ This sample shows how to call GetClassificationByName with all parameters and pa
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
+TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
 Response response = client.GetClassificationByName("<name>", null);
 
@@ -715,7 +715,7 @@ This sample shows how to call GetEntityByIdAsync.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
+TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
 Response<AtlasEntityDef> response = await client.GetEntityByIdAsync("<guid>");
 ]]></code>
@@ -723,7 +723,7 @@ This sample shows how to call GetEntityByIdAsync with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
+TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
 Response<AtlasEntityDef> response = await client.GetEntityByIdAsync("<guid>");
 ]]></code></example>
@@ -734,7 +734,7 @@ This sample shows how to call GetEntityById.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
+TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
 Response<AtlasEntityDef> response = client.GetEntityById("<guid>");
 ]]></code>
@@ -742,7 +742,7 @@ This sample shows how to call GetEntityById with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
+TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
 Response<AtlasEntityDef> response = client.GetEntityById("<guid>");
 ]]></code></example>
@@ -753,7 +753,7 @@ This sample shows how to call GetEntityByIdAsync and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
+TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
 Response response = await client.GetEntityByIdAsync("<guid>", null);
 
@@ -764,7 +764,7 @@ This sample shows how to call GetEntityByIdAsync with all parameters and parse t
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
+TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
 Response response = await client.GetEntityByIdAsync("<guid>", null);
 
@@ -839,7 +839,7 @@ This sample shows how to call GetEntityById and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
+TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
 Response response = client.GetEntityById("<guid>", null);
 
@@ -850,7 +850,7 @@ This sample shows how to call GetEntityById with all parameters and parse the re
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
+TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
 Response response = client.GetEntityById("<guid>", null);
 
@@ -925,7 +925,7 @@ This sample shows how to call GetEntityByNameAsync.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
+TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
 Response<AtlasEntityDef> response = await client.GetEntityByNameAsync("<name>");
 ]]></code>
@@ -933,7 +933,7 @@ This sample shows how to call GetEntityByNameAsync with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
+TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
 Response<AtlasEntityDef> response = await client.GetEntityByNameAsync("<name>");
 ]]></code></example>
@@ -944,7 +944,7 @@ This sample shows how to call GetEntityByName.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
+TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
 Response<AtlasEntityDef> response = client.GetEntityByName("<name>");
 ]]></code>
@@ -952,7 +952,7 @@ This sample shows how to call GetEntityByName with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
+TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
 Response<AtlasEntityDef> response = client.GetEntityByName("<name>");
 ]]></code></example>
@@ -963,7 +963,7 @@ This sample shows how to call GetEntityByNameAsync and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
+TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
 Response response = await client.GetEntityByNameAsync("<name>", null);
 
@@ -974,7 +974,7 @@ This sample shows how to call GetEntityByNameAsync with all parameters and parse
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
+TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
 Response response = await client.GetEntityByNameAsync("<name>", null);
 
@@ -1049,7 +1049,7 @@ This sample shows how to call GetEntityByName and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
+TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
 Response response = client.GetEntityByName("<name>", null);
 
@@ -1060,7 +1060,7 @@ This sample shows how to call GetEntityByName with all parameters and parse the 
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
+TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
 Response response = client.GetEntityByName("<name>", null);
 
@@ -1135,7 +1135,7 @@ This sample shows how to call GetEnumByIdAsync.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
+TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
 Response<AtlasEnumDef> response = await client.GetEnumByIdAsync("<guid>");
 ]]></code>
@@ -1143,7 +1143,7 @@ This sample shows how to call GetEnumByIdAsync with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
+TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
 Response<AtlasEnumDef> response = await client.GetEnumByIdAsync("<guid>");
 ]]></code></example>
@@ -1154,7 +1154,7 @@ This sample shows how to call GetEnumById.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
+TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
 Response<AtlasEnumDef> response = client.GetEnumById("<guid>");
 ]]></code>
@@ -1162,7 +1162,7 @@ This sample shows how to call GetEnumById with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
+TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
 Response<AtlasEnumDef> response = client.GetEnumById("<guid>");
 ]]></code></example>
@@ -1173,7 +1173,7 @@ This sample shows how to call GetEnumByIdAsync and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
+TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
 Response response = await client.GetEnumByIdAsync("<guid>", null);
 
@@ -1184,7 +1184,7 @@ This sample shows how to call GetEnumByIdAsync with all parameters and parse the
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
+TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
 Response response = await client.GetEnumByIdAsync("<guid>", null);
 
@@ -1231,7 +1231,7 @@ This sample shows how to call GetEnumById and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
+TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
 Response response = client.GetEnumById("<guid>", null);
 
@@ -1242,7 +1242,7 @@ This sample shows how to call GetEnumById with all parameters and parse the resu
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
+TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
 Response response = client.GetEnumById("<guid>", null);
 
@@ -1289,7 +1289,7 @@ This sample shows how to call GetEnumByNameAsync.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
+TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
 Response<AtlasEnumDef> response = await client.GetEnumByNameAsync("<name>");
 ]]></code>
@@ -1297,7 +1297,7 @@ This sample shows how to call GetEnumByNameAsync with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
+TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
 Response<AtlasEnumDef> response = await client.GetEnumByNameAsync("<name>");
 ]]></code></example>
@@ -1308,7 +1308,7 @@ This sample shows how to call GetEnumByName.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
+TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
 Response<AtlasEnumDef> response = client.GetEnumByName("<name>");
 ]]></code>
@@ -1316,7 +1316,7 @@ This sample shows how to call GetEnumByName with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
+TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
 Response<AtlasEnumDef> response = client.GetEnumByName("<name>");
 ]]></code></example>
@@ -1327,7 +1327,7 @@ This sample shows how to call GetEnumByNameAsync and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
+TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
 Response response = await client.GetEnumByNameAsync("<name>", null);
 
@@ -1338,7 +1338,7 @@ This sample shows how to call GetEnumByNameAsync with all parameters and parse t
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
+TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
 Response response = await client.GetEnumByNameAsync("<name>", null);
 
@@ -1385,7 +1385,7 @@ This sample shows how to call GetEnumByName and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
+TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
 Response response = client.GetEnumByName("<name>", null);
 
@@ -1396,7 +1396,7 @@ This sample shows how to call GetEnumByName with all parameters and parse the re
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
+TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
 Response response = client.GetEnumByName("<name>", null);
 
@@ -1443,7 +1443,7 @@ This sample shows how to call GetRelationshipByIdAsync.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
+TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
 Response<AtlasRelationshipDef> response = await client.GetRelationshipByIdAsync("<guid>");
 ]]></code>
@@ -1451,7 +1451,7 @@ This sample shows how to call GetRelationshipByIdAsync with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
+TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
 Response<AtlasRelationshipDef> response = await client.GetRelationshipByIdAsync("<guid>");
 ]]></code></example>
@@ -1462,7 +1462,7 @@ This sample shows how to call GetRelationshipById.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
+TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
 Response<AtlasRelationshipDef> response = client.GetRelationshipById("<guid>");
 ]]></code>
@@ -1470,7 +1470,7 @@ This sample shows how to call GetRelationshipById with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
+TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
 Response<AtlasRelationshipDef> response = client.GetRelationshipById("<guid>");
 ]]></code></example>
@@ -1481,7 +1481,7 @@ This sample shows how to call GetRelationshipByIdAsync and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
+TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
 Response response = await client.GetRelationshipByIdAsync("<guid>", null);
 
@@ -1492,7 +1492,7 @@ This sample shows how to call GetRelationshipByIdAsync with all parameters and p
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
+TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
 Response response = await client.GetRelationshipByIdAsync("<guid>", null);
 
@@ -1563,7 +1563,7 @@ This sample shows how to call GetRelationshipById and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
+TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
 Response response = client.GetRelationshipById("<guid>", null);
 
@@ -1574,7 +1574,7 @@ This sample shows how to call GetRelationshipById with all parameters and parse 
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
+TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
 Response response = client.GetRelationshipById("<guid>", null);
 
@@ -1645,7 +1645,7 @@ This sample shows how to call GetRelationshipByNameAsync.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
+TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
 Response<AtlasRelationshipDef> response = await client.GetRelationshipByNameAsync("<name>");
 ]]></code>
@@ -1653,7 +1653,7 @@ This sample shows how to call GetRelationshipByNameAsync with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
+TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
 Response<AtlasRelationshipDef> response = await client.GetRelationshipByNameAsync("<name>");
 ]]></code></example>
@@ -1664,7 +1664,7 @@ This sample shows how to call GetRelationshipByName.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
+TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
 Response<AtlasRelationshipDef> response = client.GetRelationshipByName("<name>");
 ]]></code>
@@ -1672,7 +1672,7 @@ This sample shows how to call GetRelationshipByName with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
+TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
 Response<AtlasRelationshipDef> response = client.GetRelationshipByName("<name>");
 ]]></code></example>
@@ -1683,7 +1683,7 @@ This sample shows how to call GetRelationshipByNameAsync and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
+TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
 Response response = await client.GetRelationshipByNameAsync("<name>", null);
 
@@ -1694,7 +1694,7 @@ This sample shows how to call GetRelationshipByNameAsync with all parameters and
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
+TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
 Response response = await client.GetRelationshipByNameAsync("<name>", null);
 
@@ -1765,7 +1765,7 @@ This sample shows how to call GetRelationshipByName and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
+TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
 Response response = client.GetRelationshipByName("<name>", null);
 
@@ -1776,7 +1776,7 @@ This sample shows how to call GetRelationshipByName with all parameters and pars
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
+TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
 Response response = client.GetRelationshipByName("<name>", null);
 
@@ -1847,7 +1847,7 @@ This sample shows how to call GetStructByIdAsync.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
+TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
 Response<AtlasStructDef> response = await client.GetStructByIdAsync("<guid>");
 ]]></code>
@@ -1855,7 +1855,7 @@ This sample shows how to call GetStructByIdAsync with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
+TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
 Response<AtlasStructDef> response = await client.GetStructByIdAsync("<guid>");
 ]]></code></example>
@@ -1866,7 +1866,7 @@ This sample shows how to call GetStructById.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
+TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
 Response<AtlasStructDef> response = client.GetStructById("<guid>");
 ]]></code>
@@ -1874,7 +1874,7 @@ This sample shows how to call GetStructById with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
+TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
 Response<AtlasStructDef> response = client.GetStructById("<guid>");
 ]]></code></example>
@@ -1885,7 +1885,7 @@ This sample shows how to call GetStructByIdAsync and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
+TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
 Response response = await client.GetStructByIdAsync("<guid>", null);
 
@@ -1896,7 +1896,7 @@ This sample shows how to call GetStructByIdAsync with all parameters and parse t
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
+TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
 Response response = await client.GetStructByIdAsync("<guid>", null);
 
@@ -1953,7 +1953,7 @@ This sample shows how to call GetStructById and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
+TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
 Response response = client.GetStructById("<guid>", null);
 
@@ -1964,7 +1964,7 @@ This sample shows how to call GetStructById with all parameters and parse the re
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
+TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
 Response response = client.GetStructById("<guid>", null);
 
@@ -2021,7 +2021,7 @@ This sample shows how to call GetStructByNameAsync.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
+TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
 Response<AtlasStructDef> response = await client.GetStructByNameAsync("<name>");
 ]]></code>
@@ -2029,7 +2029,7 @@ This sample shows how to call GetStructByNameAsync with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
+TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
 Response<AtlasStructDef> response = await client.GetStructByNameAsync("<name>");
 ]]></code></example>
@@ -2040,7 +2040,7 @@ This sample shows how to call GetStructByName.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
+TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
 Response<AtlasStructDef> response = client.GetStructByName("<name>");
 ]]></code>
@@ -2048,7 +2048,7 @@ This sample shows how to call GetStructByName with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
+TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
 Response<AtlasStructDef> response = client.GetStructByName("<name>");
 ]]></code></example>
@@ -2059,7 +2059,7 @@ This sample shows how to call GetStructByNameAsync and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
+TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
 Response response = await client.GetStructByNameAsync("<name>", null);
 
@@ -2070,7 +2070,7 @@ This sample shows how to call GetStructByNameAsync with all parameters and parse
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
+TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
 Response response = await client.GetStructByNameAsync("<name>", null);
 
@@ -2127,7 +2127,7 @@ This sample shows how to call GetStructByName and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
+TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
 Response response = client.GetStructByName("<name>", null);
 
@@ -2138,7 +2138,7 @@ This sample shows how to call GetStructByName with all parameters and parse the 
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
+TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
 Response response = client.GetStructByName("<name>", null);
 
@@ -2195,7 +2195,7 @@ This sample shows how to call GetByIdAsync.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
+TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
 Response<AtlasTypeDef> response = await client.GetByIdAsync("<guid>");
 ]]></code>
@@ -2203,7 +2203,7 @@ This sample shows how to call GetByIdAsync with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
+TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
 Response<AtlasTypeDef> response = await client.GetByIdAsync("<guid>");
 ]]></code></example>
@@ -2214,7 +2214,7 @@ This sample shows how to call GetById.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
+TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
 Response<AtlasTypeDef> response = client.GetById("<guid>");
 ]]></code>
@@ -2222,7 +2222,7 @@ This sample shows how to call GetById with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
+TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
 Response<AtlasTypeDef> response = client.GetById("<guid>");
 ]]></code></example>
@@ -2233,7 +2233,7 @@ This sample shows how to call GetByIdAsync and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
+TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
 Response response = await client.GetByIdAsync("<guid>", null);
 
@@ -2244,7 +2244,7 @@ This sample shows how to call GetByIdAsync with all parameters and parse the res
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
+TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
 Response response = await client.GetByIdAsync("<guid>", null);
 
@@ -2338,7 +2338,7 @@ This sample shows how to call GetById and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
+TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
 Response response = client.GetById("<guid>", null);
 
@@ -2349,7 +2349,7 @@ This sample shows how to call GetById with all parameters and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
+TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
 Response response = client.GetById("<guid>", null);
 
@@ -2443,7 +2443,7 @@ This sample shows how to call GetByNameAsync.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
+TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
 Response<AtlasTypeDef> response = await client.GetByNameAsync("<name>");
 ]]></code>
@@ -2451,7 +2451,7 @@ This sample shows how to call GetByNameAsync with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
+TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
 Response<AtlasTypeDef> response = await client.GetByNameAsync("<name>");
 ]]></code></example>
@@ -2462,7 +2462,7 @@ This sample shows how to call GetByName.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
+TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
 Response<AtlasTypeDef> response = client.GetByName("<name>");
 ]]></code>
@@ -2470,7 +2470,7 @@ This sample shows how to call GetByName with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
+TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
 Response<AtlasTypeDef> response = client.GetByName("<name>");
 ]]></code></example>
@@ -2481,7 +2481,7 @@ This sample shows how to call GetByNameAsync and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
+TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
 Response response = await client.GetByNameAsync("<name>", null);
 
@@ -2492,7 +2492,7 @@ This sample shows how to call GetByNameAsync with all parameters and parse the r
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
+TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
 Response response = await client.GetByNameAsync("<name>", null);
 
@@ -2586,7 +2586,7 @@ This sample shows how to call GetByName and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
+TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
 Response response = client.GetByName("<name>", null);
 
@@ -2597,7 +2597,7 @@ This sample shows how to call GetByName with all parameters and parse the result
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
+TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
 Response response = client.GetByName("<name>", null);
 
@@ -2691,7 +2691,7 @@ This sample shows how to call DeleteAsync.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
+TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
 Response response = await client.DeleteAsync("<name>");
 
@@ -2701,7 +2701,7 @@ This sample shows how to call DeleteAsync with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
+TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
 Response response = await client.DeleteAsync("<name>");
 
@@ -2714,7 +2714,7 @@ This sample shows how to call Delete.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
+TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
 Response response = client.Delete("<name>");
 
@@ -2724,7 +2724,7 @@ This sample shows how to call Delete with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
+TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
 Response response = client.Delete("<name>");
 
@@ -2737,7 +2737,7 @@ This sample shows how to call GetTypeDefinitionAsync.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
+TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
 Response<AtlasTypesDef> response = await client.GetTypeDefinitionAsync();
 ]]></code>
@@ -2756,7 +2756,7 @@ This sample shows how to call GetTypeDefinition.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
+TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
 Response<AtlasTypesDef> response = client.GetTypeDefinition();
 ]]></code>
@@ -2775,7 +2775,7 @@ This sample shows how to call GetTypeDefinitionAsync and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
+TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
 Response response = await client.GetTypeDefinitionAsync(null, null, null);
 
@@ -3132,7 +3132,7 @@ This sample shows how to call GetTypeDefinition and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
+TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
 Response response = client.GetTypeDefinition(null, null, null);
 
@@ -3489,23 +3489,23 @@ This sample shows how to call BatchCreateAsync.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
+TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
-AtlasTypesDef body = new AtlasTypesDef();
-Response<AtlasTypesDef> response = await client.BatchCreateAsync(body);
+AtlasTypesDef atlasTypesDef = new AtlasTypesDef();
+Response<AtlasTypesDef> response = await client.BatchCreateAsync(atlasTypesDef);
 ]]></code>
 This sample shows how to call BatchCreateAsync with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
+TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
-AtlasTypesDef body = new AtlasTypesDef
+AtlasTypesDef atlasTypesDef = new AtlasTypesDef
 {
     BusinessMetadataDefs = {new AtlasBusinessMetadataDef
     {
         Category = TypeCategory.Primitive,
-        CreateTime = DateTimeOffset.FromUnixTimeSeconds(1652209051L),
+        CreateTime = 1234L,
         CreatedBy = "<createdBy>",
         DateFormatter = new AtlasDateFormat
         {
@@ -3552,7 +3552,7 @@ AtlasTypesDef body = new AtlasTypesDef
         },
         ServiceType = "<serviceType>",
         TypeVersion = "<typeVersion>",
-        UpdateTime = DateTimeOffset.FromUnixTimeSeconds(1652209051L),
+        UpdateTime = 1234L,
         UpdatedBy = "<updatedBy>",
         Version = 1234L,
         LastModifiedTS = "<lastModifiedTS>",
@@ -3586,7 +3586,7 @@ AtlasTypesDef body = new AtlasTypesDef
     ClassificationDefs = {new AtlasClassificationDef
     {
         Category = TypeCategory.Primitive,
-        CreateTime = DateTimeOffset.FromUnixTimeSeconds(1652209051L),
+        CreateTime = 1234L,
         CreatedBy = "<createdBy>",
         DateFormatter = default,
         Description = "<description>",
@@ -3598,7 +3598,7 @@ AtlasTypesDef body = new AtlasTypesDef
         },
         ServiceType = "<serviceType>",
         TypeVersion = "<typeVersion>",
-        UpdateTime = DateTimeOffset.FromUnixTimeSeconds(1652209051L),
+        UpdateTime = 1234L,
         UpdatedBy = "<updatedBy>",
         Version = 1234L,
         LastModifiedTS = "<lastModifiedTS>",
@@ -3610,7 +3610,7 @@ AtlasTypesDef body = new AtlasTypesDef
     EntityDefs = {new AtlasEntityDef
     {
         Category = TypeCategory.Primitive,
-        CreateTime = DateTimeOffset.FromUnixTimeSeconds(1652209051L),
+        CreateTime = 1234L,
         CreatedBy = "<createdBy>",
         DateFormatter = default,
         Description = "<description>",
@@ -3622,7 +3622,7 @@ AtlasTypesDef body = new AtlasTypesDef
         },
         ServiceType = "<serviceType>",
         TypeVersion = "<typeVersion>",
-        UpdateTime = DateTimeOffset.FromUnixTimeSeconds(1652209051L),
+        UpdateTime = 1234L,
         UpdatedBy = "<updatedBy>",
         Version = 1234L,
         LastModifiedTS = "<lastModifiedTS>",
@@ -3654,7 +3654,7 @@ AtlasTypesDef body = new AtlasTypesDef
     EnumDefs = {new AtlasEnumDef
     {
         Category = TypeCategory.Primitive,
-        CreateTime = DateTimeOffset.FromUnixTimeSeconds(1652209051L),
+        CreateTime = 1234L,
         CreatedBy = "<createdBy>",
         DateFormatter = default,
         Description = "<description>",
@@ -3666,7 +3666,7 @@ AtlasTypesDef body = new AtlasTypesDef
         },
         ServiceType = "<serviceType>",
         TypeVersion = "<typeVersion>",
-        UpdateTime = DateTimeOffset.FromUnixTimeSeconds(1652209051L),
+        UpdateTime = 1234L,
         UpdatedBy = "<updatedBy>",
         Version = 1234L,
         LastModifiedTS = "<lastModifiedTS>",
@@ -3681,7 +3681,7 @@ AtlasTypesDef body = new AtlasTypesDef
     RelationshipDefs = {new AtlasRelationshipDef
     {
         Category = TypeCategory.Primitive,
-        CreateTime = DateTimeOffset.FromUnixTimeSeconds(1652209051L),
+        CreateTime = 1234L,
         CreatedBy = "<createdBy>",
         DateFormatter = default,
         Description = "<description>",
@@ -3693,7 +3693,7 @@ AtlasTypesDef body = new AtlasTypesDef
         },
         ServiceType = "<serviceType>",
         TypeVersion = "<typeVersion>",
-        UpdateTime = DateTimeOffset.FromUnixTimeSeconds(1652209051L),
+        UpdateTime = 1234L,
         UpdatedBy = "<updatedBy>",
         Version = 1234L,
         LastModifiedTS = "<lastModifiedTS>",
@@ -3714,7 +3714,7 @@ AtlasTypesDef body = new AtlasTypesDef
     StructDefs = {new AtlasStructDef
     {
         Category = TypeCategory.Primitive,
-        CreateTime = DateTimeOffset.FromUnixTimeSeconds(1652209051L),
+        CreateTime = 1234L,
         CreatedBy = "<createdBy>",
         DateFormatter = default,
         Description = "<description>",
@@ -3726,7 +3726,7 @@ AtlasTypesDef body = new AtlasTypesDef
         },
         ServiceType = "<serviceType>",
         TypeVersion = "<typeVersion>",
-        UpdateTime = DateTimeOffset.FromUnixTimeSeconds(1652209051L),
+        UpdateTime = 1234L,
         UpdatedBy = "<updatedBy>",
         Version = 1234L,
         LastModifiedTS = "<lastModifiedTS>",
@@ -3735,7 +3735,7 @@ AtlasTypesDef body = new AtlasTypesDef
     TermTemplateDefs = {new TermTemplateDef
     {
         Category = TypeCategory.Primitive,
-        CreateTime = DateTimeOffset.FromUnixTimeSeconds(1652209051L),
+        CreateTime = 1234L,
         CreatedBy = "<createdBy>",
         DateFormatter = default,
         Description = "<description>",
@@ -3747,14 +3747,14 @@ AtlasTypesDef body = new AtlasTypesDef
         },
         ServiceType = "<serviceType>",
         TypeVersion = "<typeVersion>",
-        UpdateTime = DateTimeOffset.FromUnixTimeSeconds(1652209051L),
+        UpdateTime = 1234L,
         UpdatedBy = "<updatedBy>",
         Version = 1234L,
         LastModifiedTS = "<lastModifiedTS>",
         AttributeDefs = {default},
     }},
 };
-Response<AtlasTypesDef> response = await client.BatchCreateAsync(body);
+Response<AtlasTypesDef> response = await client.BatchCreateAsync(atlasTypesDef);
 ]]></code></example>
     </member>
     <member name="BatchCreate(AtlasTypesDef,CancellationToken)">
@@ -3763,23 +3763,23 @@ This sample shows how to call BatchCreate.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
+TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
-AtlasTypesDef body = new AtlasTypesDef();
-Response<AtlasTypesDef> response = client.BatchCreate(body);
+AtlasTypesDef atlasTypesDef = new AtlasTypesDef();
+Response<AtlasTypesDef> response = client.BatchCreate(atlasTypesDef);
 ]]></code>
 This sample shows how to call BatchCreate with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
+TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
-AtlasTypesDef body = new AtlasTypesDef
+AtlasTypesDef atlasTypesDef = new AtlasTypesDef
 {
     BusinessMetadataDefs = {new AtlasBusinessMetadataDef
     {
         Category = TypeCategory.Primitive,
-        CreateTime = DateTimeOffset.FromUnixTimeSeconds(1652209051L),
+        CreateTime = 1234L,
         CreatedBy = "<createdBy>",
         DateFormatter = new AtlasDateFormat
         {
@@ -3826,7 +3826,7 @@ AtlasTypesDef body = new AtlasTypesDef
         },
         ServiceType = "<serviceType>",
         TypeVersion = "<typeVersion>",
-        UpdateTime = DateTimeOffset.FromUnixTimeSeconds(1652209051L),
+        UpdateTime = 1234L,
         UpdatedBy = "<updatedBy>",
         Version = 1234L,
         LastModifiedTS = "<lastModifiedTS>",
@@ -3860,7 +3860,7 @@ AtlasTypesDef body = new AtlasTypesDef
     ClassificationDefs = {new AtlasClassificationDef
     {
         Category = TypeCategory.Primitive,
-        CreateTime = DateTimeOffset.FromUnixTimeSeconds(1652209051L),
+        CreateTime = 1234L,
         CreatedBy = "<createdBy>",
         DateFormatter = default,
         Description = "<description>",
@@ -3872,7 +3872,7 @@ AtlasTypesDef body = new AtlasTypesDef
         },
         ServiceType = "<serviceType>",
         TypeVersion = "<typeVersion>",
-        UpdateTime = DateTimeOffset.FromUnixTimeSeconds(1652209051L),
+        UpdateTime = 1234L,
         UpdatedBy = "<updatedBy>",
         Version = 1234L,
         LastModifiedTS = "<lastModifiedTS>",
@@ -3884,7 +3884,7 @@ AtlasTypesDef body = new AtlasTypesDef
     EntityDefs = {new AtlasEntityDef
     {
         Category = TypeCategory.Primitive,
-        CreateTime = DateTimeOffset.FromUnixTimeSeconds(1652209051L),
+        CreateTime = 1234L,
         CreatedBy = "<createdBy>",
         DateFormatter = default,
         Description = "<description>",
@@ -3896,7 +3896,7 @@ AtlasTypesDef body = new AtlasTypesDef
         },
         ServiceType = "<serviceType>",
         TypeVersion = "<typeVersion>",
-        UpdateTime = DateTimeOffset.FromUnixTimeSeconds(1652209051L),
+        UpdateTime = 1234L,
         UpdatedBy = "<updatedBy>",
         Version = 1234L,
         LastModifiedTS = "<lastModifiedTS>",
@@ -3928,7 +3928,7 @@ AtlasTypesDef body = new AtlasTypesDef
     EnumDefs = {new AtlasEnumDef
     {
         Category = TypeCategory.Primitive,
-        CreateTime = DateTimeOffset.FromUnixTimeSeconds(1652209051L),
+        CreateTime = 1234L,
         CreatedBy = "<createdBy>",
         DateFormatter = default,
         Description = "<description>",
@@ -3940,7 +3940,7 @@ AtlasTypesDef body = new AtlasTypesDef
         },
         ServiceType = "<serviceType>",
         TypeVersion = "<typeVersion>",
-        UpdateTime = DateTimeOffset.FromUnixTimeSeconds(1652209051L),
+        UpdateTime = 1234L,
         UpdatedBy = "<updatedBy>",
         Version = 1234L,
         LastModifiedTS = "<lastModifiedTS>",
@@ -3955,7 +3955,7 @@ AtlasTypesDef body = new AtlasTypesDef
     RelationshipDefs = {new AtlasRelationshipDef
     {
         Category = TypeCategory.Primitive,
-        CreateTime = DateTimeOffset.FromUnixTimeSeconds(1652209051L),
+        CreateTime = 1234L,
         CreatedBy = "<createdBy>",
         DateFormatter = default,
         Description = "<description>",
@@ -3967,7 +3967,7 @@ AtlasTypesDef body = new AtlasTypesDef
         },
         ServiceType = "<serviceType>",
         TypeVersion = "<typeVersion>",
-        UpdateTime = DateTimeOffset.FromUnixTimeSeconds(1652209051L),
+        UpdateTime = 1234L,
         UpdatedBy = "<updatedBy>",
         Version = 1234L,
         LastModifiedTS = "<lastModifiedTS>",
@@ -3988,7 +3988,7 @@ AtlasTypesDef body = new AtlasTypesDef
     StructDefs = {new AtlasStructDef
     {
         Category = TypeCategory.Primitive,
-        CreateTime = DateTimeOffset.FromUnixTimeSeconds(1652209051L),
+        CreateTime = 1234L,
         CreatedBy = "<createdBy>",
         DateFormatter = default,
         Description = "<description>",
@@ -4000,7 +4000,7 @@ AtlasTypesDef body = new AtlasTypesDef
         },
         ServiceType = "<serviceType>",
         TypeVersion = "<typeVersion>",
-        UpdateTime = DateTimeOffset.FromUnixTimeSeconds(1652209051L),
+        UpdateTime = 1234L,
         UpdatedBy = "<updatedBy>",
         Version = 1234L,
         LastModifiedTS = "<lastModifiedTS>",
@@ -4009,7 +4009,7 @@ AtlasTypesDef body = new AtlasTypesDef
     TermTemplateDefs = {new TermTemplateDef
     {
         Category = TypeCategory.Primitive,
-        CreateTime = DateTimeOffset.FromUnixTimeSeconds(1652209051L),
+        CreateTime = 1234L,
         CreatedBy = "<createdBy>",
         DateFormatter = default,
         Description = "<description>",
@@ -4021,14 +4021,14 @@ AtlasTypesDef body = new AtlasTypesDef
         },
         ServiceType = "<serviceType>",
         TypeVersion = "<typeVersion>",
-        UpdateTime = DateTimeOffset.FromUnixTimeSeconds(1652209051L),
+        UpdateTime = 1234L,
         UpdatedBy = "<updatedBy>",
         Version = 1234L,
         LastModifiedTS = "<lastModifiedTS>",
         AttributeDefs = {default},
     }},
 };
-Response<AtlasTypesDef> response = client.BatchCreate(body);
+Response<AtlasTypesDef> response = client.BatchCreate(atlasTypesDef);
 ]]></code></example>
     </member>
     <member name="BatchCreateAsync(RequestContent,RequestContext)">
@@ -4037,7 +4037,7 @@ This sample shows how to call BatchCreateAsync and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
+TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
 using RequestContent content = RequestContent.Create(new object());
 Response response = await client.BatchCreateAsync(content);
@@ -4049,7 +4049,7 @@ This sample shows how to call BatchCreateAsync with all request content and pars
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
+TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
 using RequestContent content = RequestContent.Create(new
 {
@@ -4058,7 +4058,7 @@ using RequestContent content = RequestContent.Create(new
         new
         {
             category = "PRIMITIVE",
-            createTime = 1652209051,
+            createTime = 1234L,
             createdBy = "<createdBy>",
             dateFormatter = new
             {
@@ -4105,7 +4105,7 @@ using RequestContent content = RequestContent.Create(new
             },
             serviceType = "<serviceType>",
             typeVersion = "<typeVersion>",
-            updateTime = 1652209051,
+            updateTime = 1234L,
             updatedBy = "<updatedBy>",
             version = 1234L,
             lastModifiedTS = "<lastModifiedTS>",
@@ -4148,7 +4148,7 @@ using RequestContent content = RequestContent.Create(new
         new
         {
             category = "PRIMITIVE",
-            createTime = 1652209051,
+            createTime = 1234L,
             createdBy = "<createdBy>",
             description = "<description>",
             guid = "<guid>",
@@ -4159,7 +4159,7 @@ using RequestContent content = RequestContent.Create(new
             },
             serviceType = "<serviceType>",
             typeVersion = "<typeVersion>",
-            updateTime = 1652209051,
+            updateTime = 1234L,
             updatedBy = "<updatedBy>",
             version = 1234L,
             lastModifiedTS = "<lastModifiedTS>",
@@ -4186,7 +4186,7 @@ using RequestContent content = RequestContent.Create(new
         new
         {
             category = "PRIMITIVE",
-            createTime = 1652209051,
+            createTime = 1234L,
             createdBy = "<createdBy>",
             description = "<description>",
             guid = "<guid>",
@@ -4197,7 +4197,7 @@ using RequestContent content = RequestContent.Create(new
             },
             serviceType = "<serviceType>",
             typeVersion = "<typeVersion>",
-            updateTime = 1652209051,
+            updateTime = 1234L,
             updatedBy = "<updatedBy>",
             version = 1234L,
             lastModifiedTS = "<lastModifiedTS>",
@@ -4247,7 +4247,7 @@ using RequestContent content = RequestContent.Create(new
         new
         {
             category = "PRIMITIVE",
-            createTime = 1652209051,
+            createTime = 1234L,
             createdBy = "<createdBy>",
             description = "<description>",
             guid = "<guid>",
@@ -4258,7 +4258,7 @@ using RequestContent content = RequestContent.Create(new
             },
             serviceType = "<serviceType>",
             typeVersion = "<typeVersion>",
-            updateTime = 1652209051,
+            updateTime = 1234L,
             updatedBy = "<updatedBy>",
             version = 1234L,
             lastModifiedTS = "<lastModifiedTS>",
@@ -4279,7 +4279,7 @@ using RequestContent content = RequestContent.Create(new
         new
         {
             category = "PRIMITIVE",
-            createTime = 1652209051,
+            createTime = 1234L,
             createdBy = "<createdBy>",
             description = "<description>",
             guid = "<guid>",
@@ -4290,7 +4290,7 @@ using RequestContent content = RequestContent.Create(new
             },
             serviceType = "<serviceType>",
             typeVersion = "<typeVersion>",
-            updateTime = 1652209051,
+            updateTime = 1234L,
             updatedBy = "<updatedBy>",
             version = 1234L,
             lastModifiedTS = "<lastModifiedTS>",
@@ -4316,7 +4316,7 @@ using RequestContent content = RequestContent.Create(new
         new
         {
             category = "PRIMITIVE",
-            createTime = 1652209051,
+            createTime = 1234L,
             createdBy = "<createdBy>",
             description = "<description>",
             guid = "<guid>",
@@ -4327,7 +4327,7 @@ using RequestContent content = RequestContent.Create(new
             },
             serviceType = "<serviceType>",
             typeVersion = "<typeVersion>",
-            updateTime = 1652209051,
+            updateTime = 1234L,
             updatedBy = "<updatedBy>",
             version = 1234L,
             lastModifiedTS = "<lastModifiedTS>",
@@ -4342,7 +4342,7 @@ using RequestContent content = RequestContent.Create(new
         new
         {
             category = "PRIMITIVE",
-            createTime = 1652209051,
+            createTime = 1234L,
             createdBy = "<createdBy>",
             description = "<description>",
             guid = "<guid>",
@@ -4353,7 +4353,7 @@ using RequestContent content = RequestContent.Create(new
             },
             serviceType = "<serviceType>",
             typeVersion = "<typeVersion>",
-            updateTime = 1652209051,
+            updateTime = 1234L,
             updatedBy = "<updatedBy>",
             version = 1234L,
             lastModifiedTS = "<lastModifiedTS>",
@@ -4708,7 +4708,7 @@ This sample shows how to call BatchCreate and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
+TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
 using RequestContent content = RequestContent.Create(new object());
 Response response = client.BatchCreate(content);
@@ -4720,7 +4720,7 @@ This sample shows how to call BatchCreate with all request content and parse the
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
+TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
 using RequestContent content = RequestContent.Create(new
 {
@@ -4729,7 +4729,7 @@ using RequestContent content = RequestContent.Create(new
         new
         {
             category = "PRIMITIVE",
-            createTime = 1652209051,
+            createTime = 1234L,
             createdBy = "<createdBy>",
             dateFormatter = new
             {
@@ -4776,7 +4776,7 @@ using RequestContent content = RequestContent.Create(new
             },
             serviceType = "<serviceType>",
             typeVersion = "<typeVersion>",
-            updateTime = 1652209051,
+            updateTime = 1234L,
             updatedBy = "<updatedBy>",
             version = 1234L,
             lastModifiedTS = "<lastModifiedTS>",
@@ -4819,7 +4819,7 @@ using RequestContent content = RequestContent.Create(new
         new
         {
             category = "PRIMITIVE",
-            createTime = 1652209051,
+            createTime = 1234L,
             createdBy = "<createdBy>",
             description = "<description>",
             guid = "<guid>",
@@ -4830,7 +4830,7 @@ using RequestContent content = RequestContent.Create(new
             },
             serviceType = "<serviceType>",
             typeVersion = "<typeVersion>",
-            updateTime = 1652209051,
+            updateTime = 1234L,
             updatedBy = "<updatedBy>",
             version = 1234L,
             lastModifiedTS = "<lastModifiedTS>",
@@ -4857,7 +4857,7 @@ using RequestContent content = RequestContent.Create(new
         new
         {
             category = "PRIMITIVE",
-            createTime = 1652209051,
+            createTime = 1234L,
             createdBy = "<createdBy>",
             description = "<description>",
             guid = "<guid>",
@@ -4868,7 +4868,7 @@ using RequestContent content = RequestContent.Create(new
             },
             serviceType = "<serviceType>",
             typeVersion = "<typeVersion>",
-            updateTime = 1652209051,
+            updateTime = 1234L,
             updatedBy = "<updatedBy>",
             version = 1234L,
             lastModifiedTS = "<lastModifiedTS>",
@@ -4918,7 +4918,7 @@ using RequestContent content = RequestContent.Create(new
         new
         {
             category = "PRIMITIVE",
-            createTime = 1652209051,
+            createTime = 1234L,
             createdBy = "<createdBy>",
             description = "<description>",
             guid = "<guid>",
@@ -4929,7 +4929,7 @@ using RequestContent content = RequestContent.Create(new
             },
             serviceType = "<serviceType>",
             typeVersion = "<typeVersion>",
-            updateTime = 1652209051,
+            updateTime = 1234L,
             updatedBy = "<updatedBy>",
             version = 1234L,
             lastModifiedTS = "<lastModifiedTS>",
@@ -4950,7 +4950,7 @@ using RequestContent content = RequestContent.Create(new
         new
         {
             category = "PRIMITIVE",
-            createTime = 1652209051,
+            createTime = 1234L,
             createdBy = "<createdBy>",
             description = "<description>",
             guid = "<guid>",
@@ -4961,7 +4961,7 @@ using RequestContent content = RequestContent.Create(new
             },
             serviceType = "<serviceType>",
             typeVersion = "<typeVersion>",
-            updateTime = 1652209051,
+            updateTime = 1234L,
             updatedBy = "<updatedBy>",
             version = 1234L,
             lastModifiedTS = "<lastModifiedTS>",
@@ -4987,7 +4987,7 @@ using RequestContent content = RequestContent.Create(new
         new
         {
             category = "PRIMITIVE",
-            createTime = 1652209051,
+            createTime = 1234L,
             createdBy = "<createdBy>",
             description = "<description>",
             guid = "<guid>",
@@ -4998,7 +4998,7 @@ using RequestContent content = RequestContent.Create(new
             },
             serviceType = "<serviceType>",
             typeVersion = "<typeVersion>",
-            updateTime = 1652209051,
+            updateTime = 1234L,
             updatedBy = "<updatedBy>",
             version = 1234L,
             lastModifiedTS = "<lastModifiedTS>",
@@ -5013,7 +5013,7 @@ using RequestContent content = RequestContent.Create(new
         new
         {
             category = "PRIMITIVE",
-            createTime = 1652209051,
+            createTime = 1234L,
             createdBy = "<createdBy>",
             description = "<description>",
             guid = "<guid>",
@@ -5024,7 +5024,7 @@ using RequestContent content = RequestContent.Create(new
             },
             serviceType = "<serviceType>",
             typeVersion = "<typeVersion>",
-            updateTime = 1652209051,
+            updateTime = 1234L,
             updatedBy = "<updatedBy>",
             version = 1234L,
             lastModifiedTS = "<lastModifiedTS>",
@@ -5379,23 +5379,23 @@ This sample shows how to call BatchUpdateAsync.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
+TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
-AtlasTypesDef body = new AtlasTypesDef();
-Response<AtlasTypesDef> response = await client.BatchUpdateAsync(body);
+AtlasTypesDef atlasTypesDef = new AtlasTypesDef();
+Response<AtlasTypesDef> response = await client.BatchUpdateAsync(atlasTypesDef);
 ]]></code>
 This sample shows how to call BatchUpdateAsync with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
+TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
-AtlasTypesDef body = new AtlasTypesDef
+AtlasTypesDef atlasTypesDef = new AtlasTypesDef
 {
     BusinessMetadataDefs = {new AtlasBusinessMetadataDef
     {
         Category = TypeCategory.Primitive,
-        CreateTime = DateTimeOffset.FromUnixTimeSeconds(1652209051L),
+        CreateTime = 1234L,
         CreatedBy = "<createdBy>",
         DateFormatter = new AtlasDateFormat
         {
@@ -5442,7 +5442,7 @@ AtlasTypesDef body = new AtlasTypesDef
         },
         ServiceType = "<serviceType>",
         TypeVersion = "<typeVersion>",
-        UpdateTime = DateTimeOffset.FromUnixTimeSeconds(1652209051L),
+        UpdateTime = 1234L,
         UpdatedBy = "<updatedBy>",
         Version = 1234L,
         LastModifiedTS = "<lastModifiedTS>",
@@ -5476,7 +5476,7 @@ AtlasTypesDef body = new AtlasTypesDef
     ClassificationDefs = {new AtlasClassificationDef
     {
         Category = TypeCategory.Primitive,
-        CreateTime = DateTimeOffset.FromUnixTimeSeconds(1652209051L),
+        CreateTime = 1234L,
         CreatedBy = "<createdBy>",
         DateFormatter = default,
         Description = "<description>",
@@ -5488,7 +5488,7 @@ AtlasTypesDef body = new AtlasTypesDef
         },
         ServiceType = "<serviceType>",
         TypeVersion = "<typeVersion>",
-        UpdateTime = DateTimeOffset.FromUnixTimeSeconds(1652209051L),
+        UpdateTime = 1234L,
         UpdatedBy = "<updatedBy>",
         Version = 1234L,
         LastModifiedTS = "<lastModifiedTS>",
@@ -5500,7 +5500,7 @@ AtlasTypesDef body = new AtlasTypesDef
     EntityDefs = {new AtlasEntityDef
     {
         Category = TypeCategory.Primitive,
-        CreateTime = DateTimeOffset.FromUnixTimeSeconds(1652209051L),
+        CreateTime = 1234L,
         CreatedBy = "<createdBy>",
         DateFormatter = default,
         Description = "<description>",
@@ -5512,7 +5512,7 @@ AtlasTypesDef body = new AtlasTypesDef
         },
         ServiceType = "<serviceType>",
         TypeVersion = "<typeVersion>",
-        UpdateTime = DateTimeOffset.FromUnixTimeSeconds(1652209051L),
+        UpdateTime = 1234L,
         UpdatedBy = "<updatedBy>",
         Version = 1234L,
         LastModifiedTS = "<lastModifiedTS>",
@@ -5544,7 +5544,7 @@ AtlasTypesDef body = new AtlasTypesDef
     EnumDefs = {new AtlasEnumDef
     {
         Category = TypeCategory.Primitive,
-        CreateTime = DateTimeOffset.FromUnixTimeSeconds(1652209051L),
+        CreateTime = 1234L,
         CreatedBy = "<createdBy>",
         DateFormatter = default,
         Description = "<description>",
@@ -5556,7 +5556,7 @@ AtlasTypesDef body = new AtlasTypesDef
         },
         ServiceType = "<serviceType>",
         TypeVersion = "<typeVersion>",
-        UpdateTime = DateTimeOffset.FromUnixTimeSeconds(1652209051L),
+        UpdateTime = 1234L,
         UpdatedBy = "<updatedBy>",
         Version = 1234L,
         LastModifiedTS = "<lastModifiedTS>",
@@ -5571,7 +5571,7 @@ AtlasTypesDef body = new AtlasTypesDef
     RelationshipDefs = {new AtlasRelationshipDef
     {
         Category = TypeCategory.Primitive,
-        CreateTime = DateTimeOffset.FromUnixTimeSeconds(1652209051L),
+        CreateTime = 1234L,
         CreatedBy = "<createdBy>",
         DateFormatter = default,
         Description = "<description>",
@@ -5583,7 +5583,7 @@ AtlasTypesDef body = new AtlasTypesDef
         },
         ServiceType = "<serviceType>",
         TypeVersion = "<typeVersion>",
-        UpdateTime = DateTimeOffset.FromUnixTimeSeconds(1652209051L),
+        UpdateTime = 1234L,
         UpdatedBy = "<updatedBy>",
         Version = 1234L,
         LastModifiedTS = "<lastModifiedTS>",
@@ -5604,7 +5604,7 @@ AtlasTypesDef body = new AtlasTypesDef
     StructDefs = {new AtlasStructDef
     {
         Category = TypeCategory.Primitive,
-        CreateTime = DateTimeOffset.FromUnixTimeSeconds(1652209051L),
+        CreateTime = 1234L,
         CreatedBy = "<createdBy>",
         DateFormatter = default,
         Description = "<description>",
@@ -5616,7 +5616,7 @@ AtlasTypesDef body = new AtlasTypesDef
         },
         ServiceType = "<serviceType>",
         TypeVersion = "<typeVersion>",
-        UpdateTime = DateTimeOffset.FromUnixTimeSeconds(1652209051L),
+        UpdateTime = 1234L,
         UpdatedBy = "<updatedBy>",
         Version = 1234L,
         LastModifiedTS = "<lastModifiedTS>",
@@ -5625,7 +5625,7 @@ AtlasTypesDef body = new AtlasTypesDef
     TermTemplateDefs = {new TermTemplateDef
     {
         Category = TypeCategory.Primitive,
-        CreateTime = DateTimeOffset.FromUnixTimeSeconds(1652209051L),
+        CreateTime = 1234L,
         CreatedBy = "<createdBy>",
         DateFormatter = default,
         Description = "<description>",
@@ -5637,14 +5637,14 @@ AtlasTypesDef body = new AtlasTypesDef
         },
         ServiceType = "<serviceType>",
         TypeVersion = "<typeVersion>",
-        UpdateTime = DateTimeOffset.FromUnixTimeSeconds(1652209051L),
+        UpdateTime = 1234L,
         UpdatedBy = "<updatedBy>",
         Version = 1234L,
         LastModifiedTS = "<lastModifiedTS>",
         AttributeDefs = {default},
     }},
 };
-Response<AtlasTypesDef> response = await client.BatchUpdateAsync(body);
+Response<AtlasTypesDef> response = await client.BatchUpdateAsync(atlasTypesDef);
 ]]></code></example>
     </member>
     <member name="BatchUpdate(AtlasTypesDef,CancellationToken)">
@@ -5653,23 +5653,23 @@ This sample shows how to call BatchUpdate.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
+TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
-AtlasTypesDef body = new AtlasTypesDef();
-Response<AtlasTypesDef> response = client.BatchUpdate(body);
+AtlasTypesDef atlasTypesDef = new AtlasTypesDef();
+Response<AtlasTypesDef> response = client.BatchUpdate(atlasTypesDef);
 ]]></code>
 This sample shows how to call BatchUpdate with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
+TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
-AtlasTypesDef body = new AtlasTypesDef
+AtlasTypesDef atlasTypesDef = new AtlasTypesDef
 {
     BusinessMetadataDefs = {new AtlasBusinessMetadataDef
     {
         Category = TypeCategory.Primitive,
-        CreateTime = DateTimeOffset.FromUnixTimeSeconds(1652209051L),
+        CreateTime = 1234L,
         CreatedBy = "<createdBy>",
         DateFormatter = new AtlasDateFormat
         {
@@ -5716,7 +5716,7 @@ AtlasTypesDef body = new AtlasTypesDef
         },
         ServiceType = "<serviceType>",
         TypeVersion = "<typeVersion>",
-        UpdateTime = DateTimeOffset.FromUnixTimeSeconds(1652209051L),
+        UpdateTime = 1234L,
         UpdatedBy = "<updatedBy>",
         Version = 1234L,
         LastModifiedTS = "<lastModifiedTS>",
@@ -5750,7 +5750,7 @@ AtlasTypesDef body = new AtlasTypesDef
     ClassificationDefs = {new AtlasClassificationDef
     {
         Category = TypeCategory.Primitive,
-        CreateTime = DateTimeOffset.FromUnixTimeSeconds(1652209051L),
+        CreateTime = 1234L,
         CreatedBy = "<createdBy>",
         DateFormatter = default,
         Description = "<description>",
@@ -5762,7 +5762,7 @@ AtlasTypesDef body = new AtlasTypesDef
         },
         ServiceType = "<serviceType>",
         TypeVersion = "<typeVersion>",
-        UpdateTime = DateTimeOffset.FromUnixTimeSeconds(1652209051L),
+        UpdateTime = 1234L,
         UpdatedBy = "<updatedBy>",
         Version = 1234L,
         LastModifiedTS = "<lastModifiedTS>",
@@ -5774,7 +5774,7 @@ AtlasTypesDef body = new AtlasTypesDef
     EntityDefs = {new AtlasEntityDef
     {
         Category = TypeCategory.Primitive,
-        CreateTime = DateTimeOffset.FromUnixTimeSeconds(1652209051L),
+        CreateTime = 1234L,
         CreatedBy = "<createdBy>",
         DateFormatter = default,
         Description = "<description>",
@@ -5786,7 +5786,7 @@ AtlasTypesDef body = new AtlasTypesDef
         },
         ServiceType = "<serviceType>",
         TypeVersion = "<typeVersion>",
-        UpdateTime = DateTimeOffset.FromUnixTimeSeconds(1652209051L),
+        UpdateTime = 1234L,
         UpdatedBy = "<updatedBy>",
         Version = 1234L,
         LastModifiedTS = "<lastModifiedTS>",
@@ -5818,7 +5818,7 @@ AtlasTypesDef body = new AtlasTypesDef
     EnumDefs = {new AtlasEnumDef
     {
         Category = TypeCategory.Primitive,
-        CreateTime = DateTimeOffset.FromUnixTimeSeconds(1652209051L),
+        CreateTime = 1234L,
         CreatedBy = "<createdBy>",
         DateFormatter = default,
         Description = "<description>",
@@ -5830,7 +5830,7 @@ AtlasTypesDef body = new AtlasTypesDef
         },
         ServiceType = "<serviceType>",
         TypeVersion = "<typeVersion>",
-        UpdateTime = DateTimeOffset.FromUnixTimeSeconds(1652209051L),
+        UpdateTime = 1234L,
         UpdatedBy = "<updatedBy>",
         Version = 1234L,
         LastModifiedTS = "<lastModifiedTS>",
@@ -5845,7 +5845,7 @@ AtlasTypesDef body = new AtlasTypesDef
     RelationshipDefs = {new AtlasRelationshipDef
     {
         Category = TypeCategory.Primitive,
-        CreateTime = DateTimeOffset.FromUnixTimeSeconds(1652209051L),
+        CreateTime = 1234L,
         CreatedBy = "<createdBy>",
         DateFormatter = default,
         Description = "<description>",
@@ -5857,7 +5857,7 @@ AtlasTypesDef body = new AtlasTypesDef
         },
         ServiceType = "<serviceType>",
         TypeVersion = "<typeVersion>",
-        UpdateTime = DateTimeOffset.FromUnixTimeSeconds(1652209051L),
+        UpdateTime = 1234L,
         UpdatedBy = "<updatedBy>",
         Version = 1234L,
         LastModifiedTS = "<lastModifiedTS>",
@@ -5878,7 +5878,7 @@ AtlasTypesDef body = new AtlasTypesDef
     StructDefs = {new AtlasStructDef
     {
         Category = TypeCategory.Primitive,
-        CreateTime = DateTimeOffset.FromUnixTimeSeconds(1652209051L),
+        CreateTime = 1234L,
         CreatedBy = "<createdBy>",
         DateFormatter = default,
         Description = "<description>",
@@ -5890,7 +5890,7 @@ AtlasTypesDef body = new AtlasTypesDef
         },
         ServiceType = "<serviceType>",
         TypeVersion = "<typeVersion>",
-        UpdateTime = DateTimeOffset.FromUnixTimeSeconds(1652209051L),
+        UpdateTime = 1234L,
         UpdatedBy = "<updatedBy>",
         Version = 1234L,
         LastModifiedTS = "<lastModifiedTS>",
@@ -5899,7 +5899,7 @@ AtlasTypesDef body = new AtlasTypesDef
     TermTemplateDefs = {new TermTemplateDef
     {
         Category = TypeCategory.Primitive,
-        CreateTime = DateTimeOffset.FromUnixTimeSeconds(1652209051L),
+        CreateTime = 1234L,
         CreatedBy = "<createdBy>",
         DateFormatter = default,
         Description = "<description>",
@@ -5911,14 +5911,14 @@ AtlasTypesDef body = new AtlasTypesDef
         },
         ServiceType = "<serviceType>",
         TypeVersion = "<typeVersion>",
-        UpdateTime = DateTimeOffset.FromUnixTimeSeconds(1652209051L),
+        UpdateTime = 1234L,
         UpdatedBy = "<updatedBy>",
         Version = 1234L,
         LastModifiedTS = "<lastModifiedTS>",
         AttributeDefs = {default},
     }},
 };
-Response<AtlasTypesDef> response = client.BatchUpdate(body);
+Response<AtlasTypesDef> response = client.BatchUpdate(atlasTypesDef);
 ]]></code></example>
     </member>
     <member name="BatchUpdateAsync(RequestContent,RequestContext)">
@@ -5927,7 +5927,7 @@ This sample shows how to call BatchUpdateAsync and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
+TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
 using RequestContent content = RequestContent.Create(new object());
 Response response = await client.BatchUpdateAsync(content);
@@ -5939,7 +5939,7 @@ This sample shows how to call BatchUpdateAsync with all request content and pars
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
+TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
 using RequestContent content = RequestContent.Create(new
 {
@@ -5948,7 +5948,7 @@ using RequestContent content = RequestContent.Create(new
         new
         {
             category = "PRIMITIVE",
-            createTime = 1652209051,
+            createTime = 1234L,
             createdBy = "<createdBy>",
             dateFormatter = new
             {
@@ -5995,7 +5995,7 @@ using RequestContent content = RequestContent.Create(new
             },
             serviceType = "<serviceType>",
             typeVersion = "<typeVersion>",
-            updateTime = 1652209051,
+            updateTime = 1234L,
             updatedBy = "<updatedBy>",
             version = 1234L,
             lastModifiedTS = "<lastModifiedTS>",
@@ -6038,7 +6038,7 @@ using RequestContent content = RequestContent.Create(new
         new
         {
             category = "PRIMITIVE",
-            createTime = 1652209051,
+            createTime = 1234L,
             createdBy = "<createdBy>",
             description = "<description>",
             guid = "<guid>",
@@ -6049,7 +6049,7 @@ using RequestContent content = RequestContent.Create(new
             },
             serviceType = "<serviceType>",
             typeVersion = "<typeVersion>",
-            updateTime = 1652209051,
+            updateTime = 1234L,
             updatedBy = "<updatedBy>",
             version = 1234L,
             lastModifiedTS = "<lastModifiedTS>",
@@ -6076,7 +6076,7 @@ using RequestContent content = RequestContent.Create(new
         new
         {
             category = "PRIMITIVE",
-            createTime = 1652209051,
+            createTime = 1234L,
             createdBy = "<createdBy>",
             description = "<description>",
             guid = "<guid>",
@@ -6087,7 +6087,7 @@ using RequestContent content = RequestContent.Create(new
             },
             serviceType = "<serviceType>",
             typeVersion = "<typeVersion>",
-            updateTime = 1652209051,
+            updateTime = 1234L,
             updatedBy = "<updatedBy>",
             version = 1234L,
             lastModifiedTS = "<lastModifiedTS>",
@@ -6137,7 +6137,7 @@ using RequestContent content = RequestContent.Create(new
         new
         {
             category = "PRIMITIVE",
-            createTime = 1652209051,
+            createTime = 1234L,
             createdBy = "<createdBy>",
             description = "<description>",
             guid = "<guid>",
@@ -6148,7 +6148,7 @@ using RequestContent content = RequestContent.Create(new
             },
             serviceType = "<serviceType>",
             typeVersion = "<typeVersion>",
-            updateTime = 1652209051,
+            updateTime = 1234L,
             updatedBy = "<updatedBy>",
             version = 1234L,
             lastModifiedTS = "<lastModifiedTS>",
@@ -6169,7 +6169,7 @@ using RequestContent content = RequestContent.Create(new
         new
         {
             category = "PRIMITIVE",
-            createTime = 1652209051,
+            createTime = 1234L,
             createdBy = "<createdBy>",
             description = "<description>",
             guid = "<guid>",
@@ -6180,7 +6180,7 @@ using RequestContent content = RequestContent.Create(new
             },
             serviceType = "<serviceType>",
             typeVersion = "<typeVersion>",
-            updateTime = 1652209051,
+            updateTime = 1234L,
             updatedBy = "<updatedBy>",
             version = 1234L,
             lastModifiedTS = "<lastModifiedTS>",
@@ -6206,7 +6206,7 @@ using RequestContent content = RequestContent.Create(new
         new
         {
             category = "PRIMITIVE",
-            createTime = 1652209051,
+            createTime = 1234L,
             createdBy = "<createdBy>",
             description = "<description>",
             guid = "<guid>",
@@ -6217,7 +6217,7 @@ using RequestContent content = RequestContent.Create(new
             },
             serviceType = "<serviceType>",
             typeVersion = "<typeVersion>",
-            updateTime = 1652209051,
+            updateTime = 1234L,
             updatedBy = "<updatedBy>",
             version = 1234L,
             lastModifiedTS = "<lastModifiedTS>",
@@ -6232,7 +6232,7 @@ using RequestContent content = RequestContent.Create(new
         new
         {
             category = "PRIMITIVE",
-            createTime = 1652209051,
+            createTime = 1234L,
             createdBy = "<createdBy>",
             description = "<description>",
             guid = "<guid>",
@@ -6243,7 +6243,7 @@ using RequestContent content = RequestContent.Create(new
             },
             serviceType = "<serviceType>",
             typeVersion = "<typeVersion>",
-            updateTime = 1652209051,
+            updateTime = 1234L,
             updatedBy = "<updatedBy>",
             version = 1234L,
             lastModifiedTS = "<lastModifiedTS>",
@@ -6598,7 +6598,7 @@ This sample shows how to call BatchUpdate and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
+TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
 using RequestContent content = RequestContent.Create(new object());
 Response response = client.BatchUpdate(content);
@@ -6610,7 +6610,7 @@ This sample shows how to call BatchUpdate with all request content and parse the
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
+TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
 using RequestContent content = RequestContent.Create(new
 {
@@ -6619,7 +6619,7 @@ using RequestContent content = RequestContent.Create(new
         new
         {
             category = "PRIMITIVE",
-            createTime = 1652209051,
+            createTime = 1234L,
             createdBy = "<createdBy>",
             dateFormatter = new
             {
@@ -6666,7 +6666,7 @@ using RequestContent content = RequestContent.Create(new
             },
             serviceType = "<serviceType>",
             typeVersion = "<typeVersion>",
-            updateTime = 1652209051,
+            updateTime = 1234L,
             updatedBy = "<updatedBy>",
             version = 1234L,
             lastModifiedTS = "<lastModifiedTS>",
@@ -6709,7 +6709,7 @@ using RequestContent content = RequestContent.Create(new
         new
         {
             category = "PRIMITIVE",
-            createTime = 1652209051,
+            createTime = 1234L,
             createdBy = "<createdBy>",
             description = "<description>",
             guid = "<guid>",
@@ -6720,7 +6720,7 @@ using RequestContent content = RequestContent.Create(new
             },
             serviceType = "<serviceType>",
             typeVersion = "<typeVersion>",
-            updateTime = 1652209051,
+            updateTime = 1234L,
             updatedBy = "<updatedBy>",
             version = 1234L,
             lastModifiedTS = "<lastModifiedTS>",
@@ -6747,7 +6747,7 @@ using RequestContent content = RequestContent.Create(new
         new
         {
             category = "PRIMITIVE",
-            createTime = 1652209051,
+            createTime = 1234L,
             createdBy = "<createdBy>",
             description = "<description>",
             guid = "<guid>",
@@ -6758,7 +6758,7 @@ using RequestContent content = RequestContent.Create(new
             },
             serviceType = "<serviceType>",
             typeVersion = "<typeVersion>",
-            updateTime = 1652209051,
+            updateTime = 1234L,
             updatedBy = "<updatedBy>",
             version = 1234L,
             lastModifiedTS = "<lastModifiedTS>",
@@ -6808,7 +6808,7 @@ using RequestContent content = RequestContent.Create(new
         new
         {
             category = "PRIMITIVE",
-            createTime = 1652209051,
+            createTime = 1234L,
             createdBy = "<createdBy>",
             description = "<description>",
             guid = "<guid>",
@@ -6819,7 +6819,7 @@ using RequestContent content = RequestContent.Create(new
             },
             serviceType = "<serviceType>",
             typeVersion = "<typeVersion>",
-            updateTime = 1652209051,
+            updateTime = 1234L,
             updatedBy = "<updatedBy>",
             version = 1234L,
             lastModifiedTS = "<lastModifiedTS>",
@@ -6840,7 +6840,7 @@ using RequestContent content = RequestContent.Create(new
         new
         {
             category = "PRIMITIVE",
-            createTime = 1652209051,
+            createTime = 1234L,
             createdBy = "<createdBy>",
             description = "<description>",
             guid = "<guid>",
@@ -6851,7 +6851,7 @@ using RequestContent content = RequestContent.Create(new
             },
             serviceType = "<serviceType>",
             typeVersion = "<typeVersion>",
-            updateTime = 1652209051,
+            updateTime = 1234L,
             updatedBy = "<updatedBy>",
             version = 1234L,
             lastModifiedTS = "<lastModifiedTS>",
@@ -6877,7 +6877,7 @@ using RequestContent content = RequestContent.Create(new
         new
         {
             category = "PRIMITIVE",
-            createTime = 1652209051,
+            createTime = 1234L,
             createdBy = "<createdBy>",
             description = "<description>",
             guid = "<guid>",
@@ -6888,7 +6888,7 @@ using RequestContent content = RequestContent.Create(new
             },
             serviceType = "<serviceType>",
             typeVersion = "<typeVersion>",
-            updateTime = 1652209051,
+            updateTime = 1234L,
             updatedBy = "<updatedBy>",
             version = 1234L,
             lastModifiedTS = "<lastModifiedTS>",
@@ -6903,7 +6903,7 @@ using RequestContent content = RequestContent.Create(new
         new
         {
             category = "PRIMITIVE",
-            createTime = 1652209051,
+            createTime = 1234L,
             createdBy = "<createdBy>",
             description = "<description>",
             guid = "<guid>",
@@ -6914,7 +6914,7 @@ using RequestContent content = RequestContent.Create(new
             },
             serviceType = "<serviceType>",
             typeVersion = "<typeVersion>",
-            updateTime = 1652209051,
+            updateTime = 1234L,
             updatedBy = "<updatedBy>",
             version = 1234L,
             lastModifiedTS = "<lastModifiedTS>",
@@ -7269,23 +7269,23 @@ This sample shows how to call BatchDeleteAsync.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
+TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
-AtlasTypesDef body = new AtlasTypesDef();
-Response response = await client.BatchDeleteAsync(body);
+AtlasTypesDef atlasTypesDef = new AtlasTypesDef();
+Response response = await client.BatchDeleteAsync(atlasTypesDef);
 ]]></code>
 This sample shows how to call BatchDeleteAsync with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
+TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
-AtlasTypesDef body = new AtlasTypesDef
+AtlasTypesDef atlasTypesDef = new AtlasTypesDef
 {
     BusinessMetadataDefs = {new AtlasBusinessMetadataDef
     {
         Category = TypeCategory.Primitive,
-        CreateTime = DateTimeOffset.FromUnixTimeSeconds(1652209051L),
+        CreateTime = 1234L,
         CreatedBy = "<createdBy>",
         DateFormatter = new AtlasDateFormat
         {
@@ -7332,7 +7332,7 @@ AtlasTypesDef body = new AtlasTypesDef
         },
         ServiceType = "<serviceType>",
         TypeVersion = "<typeVersion>",
-        UpdateTime = DateTimeOffset.FromUnixTimeSeconds(1652209051L),
+        UpdateTime = 1234L,
         UpdatedBy = "<updatedBy>",
         Version = 1234L,
         LastModifiedTS = "<lastModifiedTS>",
@@ -7366,7 +7366,7 @@ AtlasTypesDef body = new AtlasTypesDef
     ClassificationDefs = {new AtlasClassificationDef
     {
         Category = TypeCategory.Primitive,
-        CreateTime = DateTimeOffset.FromUnixTimeSeconds(1652209051L),
+        CreateTime = 1234L,
         CreatedBy = "<createdBy>",
         DateFormatter = default,
         Description = "<description>",
@@ -7378,7 +7378,7 @@ AtlasTypesDef body = new AtlasTypesDef
         },
         ServiceType = "<serviceType>",
         TypeVersion = "<typeVersion>",
-        UpdateTime = DateTimeOffset.FromUnixTimeSeconds(1652209051L),
+        UpdateTime = 1234L,
         UpdatedBy = "<updatedBy>",
         Version = 1234L,
         LastModifiedTS = "<lastModifiedTS>",
@@ -7390,7 +7390,7 @@ AtlasTypesDef body = new AtlasTypesDef
     EntityDefs = {new AtlasEntityDef
     {
         Category = TypeCategory.Primitive,
-        CreateTime = DateTimeOffset.FromUnixTimeSeconds(1652209051L),
+        CreateTime = 1234L,
         CreatedBy = "<createdBy>",
         DateFormatter = default,
         Description = "<description>",
@@ -7402,7 +7402,7 @@ AtlasTypesDef body = new AtlasTypesDef
         },
         ServiceType = "<serviceType>",
         TypeVersion = "<typeVersion>",
-        UpdateTime = DateTimeOffset.FromUnixTimeSeconds(1652209051L),
+        UpdateTime = 1234L,
         UpdatedBy = "<updatedBy>",
         Version = 1234L,
         LastModifiedTS = "<lastModifiedTS>",
@@ -7434,7 +7434,7 @@ AtlasTypesDef body = new AtlasTypesDef
     EnumDefs = {new AtlasEnumDef
     {
         Category = TypeCategory.Primitive,
-        CreateTime = DateTimeOffset.FromUnixTimeSeconds(1652209051L),
+        CreateTime = 1234L,
         CreatedBy = "<createdBy>",
         DateFormatter = default,
         Description = "<description>",
@@ -7446,7 +7446,7 @@ AtlasTypesDef body = new AtlasTypesDef
         },
         ServiceType = "<serviceType>",
         TypeVersion = "<typeVersion>",
-        UpdateTime = DateTimeOffset.FromUnixTimeSeconds(1652209051L),
+        UpdateTime = 1234L,
         UpdatedBy = "<updatedBy>",
         Version = 1234L,
         LastModifiedTS = "<lastModifiedTS>",
@@ -7461,7 +7461,7 @@ AtlasTypesDef body = new AtlasTypesDef
     RelationshipDefs = {new AtlasRelationshipDef
     {
         Category = TypeCategory.Primitive,
-        CreateTime = DateTimeOffset.FromUnixTimeSeconds(1652209051L),
+        CreateTime = 1234L,
         CreatedBy = "<createdBy>",
         DateFormatter = default,
         Description = "<description>",
@@ -7473,7 +7473,7 @@ AtlasTypesDef body = new AtlasTypesDef
         },
         ServiceType = "<serviceType>",
         TypeVersion = "<typeVersion>",
-        UpdateTime = DateTimeOffset.FromUnixTimeSeconds(1652209051L),
+        UpdateTime = 1234L,
         UpdatedBy = "<updatedBy>",
         Version = 1234L,
         LastModifiedTS = "<lastModifiedTS>",
@@ -7494,7 +7494,7 @@ AtlasTypesDef body = new AtlasTypesDef
     StructDefs = {new AtlasStructDef
     {
         Category = TypeCategory.Primitive,
-        CreateTime = DateTimeOffset.FromUnixTimeSeconds(1652209051L),
+        CreateTime = 1234L,
         CreatedBy = "<createdBy>",
         DateFormatter = default,
         Description = "<description>",
@@ -7506,7 +7506,7 @@ AtlasTypesDef body = new AtlasTypesDef
         },
         ServiceType = "<serviceType>",
         TypeVersion = "<typeVersion>",
-        UpdateTime = DateTimeOffset.FromUnixTimeSeconds(1652209051L),
+        UpdateTime = 1234L,
         UpdatedBy = "<updatedBy>",
         Version = 1234L,
         LastModifiedTS = "<lastModifiedTS>",
@@ -7515,7 +7515,7 @@ AtlasTypesDef body = new AtlasTypesDef
     TermTemplateDefs = {new TermTemplateDef
     {
         Category = TypeCategory.Primitive,
-        CreateTime = DateTimeOffset.FromUnixTimeSeconds(1652209051L),
+        CreateTime = 1234L,
         CreatedBy = "<createdBy>",
         DateFormatter = default,
         Description = "<description>",
@@ -7527,14 +7527,14 @@ AtlasTypesDef body = new AtlasTypesDef
         },
         ServiceType = "<serviceType>",
         TypeVersion = "<typeVersion>",
-        UpdateTime = DateTimeOffset.FromUnixTimeSeconds(1652209051L),
+        UpdateTime = 1234L,
         UpdatedBy = "<updatedBy>",
         Version = 1234L,
         LastModifiedTS = "<lastModifiedTS>",
         AttributeDefs = {default},
     }},
 };
-Response response = await client.BatchDeleteAsync(body);
+Response response = await client.BatchDeleteAsync(atlasTypesDef);
 ]]></code></example>
     </member>
     <member name="BatchDelete(AtlasTypesDef,CancellationToken)">
@@ -7543,23 +7543,23 @@ This sample shows how to call BatchDelete.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
+TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
-AtlasTypesDef body = new AtlasTypesDef();
-Response response = client.BatchDelete(body);
+AtlasTypesDef atlasTypesDef = new AtlasTypesDef();
+Response response = client.BatchDelete(atlasTypesDef);
 ]]></code>
 This sample shows how to call BatchDelete with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
+TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
-AtlasTypesDef body = new AtlasTypesDef
+AtlasTypesDef atlasTypesDef = new AtlasTypesDef
 {
     BusinessMetadataDefs = {new AtlasBusinessMetadataDef
     {
         Category = TypeCategory.Primitive,
-        CreateTime = DateTimeOffset.FromUnixTimeSeconds(1652209051L),
+        CreateTime = 1234L,
         CreatedBy = "<createdBy>",
         DateFormatter = new AtlasDateFormat
         {
@@ -7606,7 +7606,7 @@ AtlasTypesDef body = new AtlasTypesDef
         },
         ServiceType = "<serviceType>",
         TypeVersion = "<typeVersion>",
-        UpdateTime = DateTimeOffset.FromUnixTimeSeconds(1652209051L),
+        UpdateTime = 1234L,
         UpdatedBy = "<updatedBy>",
         Version = 1234L,
         LastModifiedTS = "<lastModifiedTS>",
@@ -7640,7 +7640,7 @@ AtlasTypesDef body = new AtlasTypesDef
     ClassificationDefs = {new AtlasClassificationDef
     {
         Category = TypeCategory.Primitive,
-        CreateTime = DateTimeOffset.FromUnixTimeSeconds(1652209051L),
+        CreateTime = 1234L,
         CreatedBy = "<createdBy>",
         DateFormatter = default,
         Description = "<description>",
@@ -7652,7 +7652,7 @@ AtlasTypesDef body = new AtlasTypesDef
         },
         ServiceType = "<serviceType>",
         TypeVersion = "<typeVersion>",
-        UpdateTime = DateTimeOffset.FromUnixTimeSeconds(1652209051L),
+        UpdateTime = 1234L,
         UpdatedBy = "<updatedBy>",
         Version = 1234L,
         LastModifiedTS = "<lastModifiedTS>",
@@ -7664,7 +7664,7 @@ AtlasTypesDef body = new AtlasTypesDef
     EntityDefs = {new AtlasEntityDef
     {
         Category = TypeCategory.Primitive,
-        CreateTime = DateTimeOffset.FromUnixTimeSeconds(1652209051L),
+        CreateTime = 1234L,
         CreatedBy = "<createdBy>",
         DateFormatter = default,
         Description = "<description>",
@@ -7676,7 +7676,7 @@ AtlasTypesDef body = new AtlasTypesDef
         },
         ServiceType = "<serviceType>",
         TypeVersion = "<typeVersion>",
-        UpdateTime = DateTimeOffset.FromUnixTimeSeconds(1652209051L),
+        UpdateTime = 1234L,
         UpdatedBy = "<updatedBy>",
         Version = 1234L,
         LastModifiedTS = "<lastModifiedTS>",
@@ -7708,7 +7708,7 @@ AtlasTypesDef body = new AtlasTypesDef
     EnumDefs = {new AtlasEnumDef
     {
         Category = TypeCategory.Primitive,
-        CreateTime = DateTimeOffset.FromUnixTimeSeconds(1652209051L),
+        CreateTime = 1234L,
         CreatedBy = "<createdBy>",
         DateFormatter = default,
         Description = "<description>",
@@ -7720,7 +7720,7 @@ AtlasTypesDef body = new AtlasTypesDef
         },
         ServiceType = "<serviceType>",
         TypeVersion = "<typeVersion>",
-        UpdateTime = DateTimeOffset.FromUnixTimeSeconds(1652209051L),
+        UpdateTime = 1234L,
         UpdatedBy = "<updatedBy>",
         Version = 1234L,
         LastModifiedTS = "<lastModifiedTS>",
@@ -7735,7 +7735,7 @@ AtlasTypesDef body = new AtlasTypesDef
     RelationshipDefs = {new AtlasRelationshipDef
     {
         Category = TypeCategory.Primitive,
-        CreateTime = DateTimeOffset.FromUnixTimeSeconds(1652209051L),
+        CreateTime = 1234L,
         CreatedBy = "<createdBy>",
         DateFormatter = default,
         Description = "<description>",
@@ -7747,7 +7747,7 @@ AtlasTypesDef body = new AtlasTypesDef
         },
         ServiceType = "<serviceType>",
         TypeVersion = "<typeVersion>",
-        UpdateTime = DateTimeOffset.FromUnixTimeSeconds(1652209051L),
+        UpdateTime = 1234L,
         UpdatedBy = "<updatedBy>",
         Version = 1234L,
         LastModifiedTS = "<lastModifiedTS>",
@@ -7768,7 +7768,7 @@ AtlasTypesDef body = new AtlasTypesDef
     StructDefs = {new AtlasStructDef
     {
         Category = TypeCategory.Primitive,
-        CreateTime = DateTimeOffset.FromUnixTimeSeconds(1652209051L),
+        CreateTime = 1234L,
         CreatedBy = "<createdBy>",
         DateFormatter = default,
         Description = "<description>",
@@ -7780,7 +7780,7 @@ AtlasTypesDef body = new AtlasTypesDef
         },
         ServiceType = "<serviceType>",
         TypeVersion = "<typeVersion>",
-        UpdateTime = DateTimeOffset.FromUnixTimeSeconds(1652209051L),
+        UpdateTime = 1234L,
         UpdatedBy = "<updatedBy>",
         Version = 1234L,
         LastModifiedTS = "<lastModifiedTS>",
@@ -7789,7 +7789,7 @@ AtlasTypesDef body = new AtlasTypesDef
     TermTemplateDefs = {new TermTemplateDef
     {
         Category = TypeCategory.Primitive,
-        CreateTime = DateTimeOffset.FromUnixTimeSeconds(1652209051L),
+        CreateTime = 1234L,
         CreatedBy = "<createdBy>",
         DateFormatter = default,
         Description = "<description>",
@@ -7801,14 +7801,14 @@ AtlasTypesDef body = new AtlasTypesDef
         },
         ServiceType = "<serviceType>",
         TypeVersion = "<typeVersion>",
-        UpdateTime = DateTimeOffset.FromUnixTimeSeconds(1652209051L),
+        UpdateTime = 1234L,
         UpdatedBy = "<updatedBy>",
         Version = 1234L,
         LastModifiedTS = "<lastModifiedTS>",
         AttributeDefs = {default},
     }},
 };
-Response response = client.BatchDelete(body);
+Response response = client.BatchDelete(atlasTypesDef);
 ]]></code></example>
     </member>
     <member name="BatchDeleteAsync(RequestContent,RequestContext)">
@@ -7817,7 +7817,7 @@ This sample shows how to call BatchDeleteAsync.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
+TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
 using RequestContent content = RequestContent.Create(new object());
 Response response = await client.BatchDeleteAsync(content);
@@ -7828,7 +7828,7 @@ This sample shows how to call BatchDeleteAsync with all request content.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
+TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
 using RequestContent content = RequestContent.Create(new
 {
@@ -7837,7 +7837,7 @@ using RequestContent content = RequestContent.Create(new
         new
         {
             category = "PRIMITIVE",
-            createTime = 1652209051,
+            createTime = 1234L,
             createdBy = "<createdBy>",
             dateFormatter = new
             {
@@ -7884,7 +7884,7 @@ using RequestContent content = RequestContent.Create(new
             },
             serviceType = "<serviceType>",
             typeVersion = "<typeVersion>",
-            updateTime = 1652209051,
+            updateTime = 1234L,
             updatedBy = "<updatedBy>",
             version = 1234L,
             lastModifiedTS = "<lastModifiedTS>",
@@ -7927,7 +7927,7 @@ using RequestContent content = RequestContent.Create(new
         new
         {
             category = "PRIMITIVE",
-            createTime = 1652209051,
+            createTime = 1234L,
             createdBy = "<createdBy>",
             description = "<description>",
             guid = "<guid>",
@@ -7938,7 +7938,7 @@ using RequestContent content = RequestContent.Create(new
             },
             serviceType = "<serviceType>",
             typeVersion = "<typeVersion>",
-            updateTime = 1652209051,
+            updateTime = 1234L,
             updatedBy = "<updatedBy>",
             version = 1234L,
             lastModifiedTS = "<lastModifiedTS>",
@@ -7965,7 +7965,7 @@ using RequestContent content = RequestContent.Create(new
         new
         {
             category = "PRIMITIVE",
-            createTime = 1652209051,
+            createTime = 1234L,
             createdBy = "<createdBy>",
             description = "<description>",
             guid = "<guid>",
@@ -7976,7 +7976,7 @@ using RequestContent content = RequestContent.Create(new
             },
             serviceType = "<serviceType>",
             typeVersion = "<typeVersion>",
-            updateTime = 1652209051,
+            updateTime = 1234L,
             updatedBy = "<updatedBy>",
             version = 1234L,
             lastModifiedTS = "<lastModifiedTS>",
@@ -8026,7 +8026,7 @@ using RequestContent content = RequestContent.Create(new
         new
         {
             category = "PRIMITIVE",
-            createTime = 1652209051,
+            createTime = 1234L,
             createdBy = "<createdBy>",
             description = "<description>",
             guid = "<guid>",
@@ -8037,7 +8037,7 @@ using RequestContent content = RequestContent.Create(new
             },
             serviceType = "<serviceType>",
             typeVersion = "<typeVersion>",
-            updateTime = 1652209051,
+            updateTime = 1234L,
             updatedBy = "<updatedBy>",
             version = 1234L,
             lastModifiedTS = "<lastModifiedTS>",
@@ -8058,7 +8058,7 @@ using RequestContent content = RequestContent.Create(new
         new
         {
             category = "PRIMITIVE",
-            createTime = 1652209051,
+            createTime = 1234L,
             createdBy = "<createdBy>",
             description = "<description>",
             guid = "<guid>",
@@ -8069,7 +8069,7 @@ using RequestContent content = RequestContent.Create(new
             },
             serviceType = "<serviceType>",
             typeVersion = "<typeVersion>",
-            updateTime = 1652209051,
+            updateTime = 1234L,
             updatedBy = "<updatedBy>",
             version = 1234L,
             lastModifiedTS = "<lastModifiedTS>",
@@ -8095,7 +8095,7 @@ using RequestContent content = RequestContent.Create(new
         new
         {
             category = "PRIMITIVE",
-            createTime = 1652209051,
+            createTime = 1234L,
             createdBy = "<createdBy>",
             description = "<description>",
             guid = "<guid>",
@@ -8106,7 +8106,7 @@ using RequestContent content = RequestContent.Create(new
             },
             serviceType = "<serviceType>",
             typeVersion = "<typeVersion>",
-            updateTime = 1652209051,
+            updateTime = 1234L,
             updatedBy = "<updatedBy>",
             version = 1234L,
             lastModifiedTS = "<lastModifiedTS>",
@@ -8121,7 +8121,7 @@ using RequestContent content = RequestContent.Create(new
         new
         {
             category = "PRIMITIVE",
-            createTime = 1652209051,
+            createTime = 1234L,
             createdBy = "<createdBy>",
             description = "<description>",
             guid = "<guid>",
@@ -8132,7 +8132,7 @@ using RequestContent content = RequestContent.Create(new
             },
             serviceType = "<serviceType>",
             typeVersion = "<typeVersion>",
-            updateTime = 1652209051,
+            updateTime = 1234L,
             updatedBy = "<updatedBy>",
             version = 1234L,
             lastModifiedTS = "<lastModifiedTS>",
@@ -8154,7 +8154,7 @@ This sample shows how to call BatchDelete.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
+TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
 using RequestContent content = RequestContent.Create(new object());
 Response response = client.BatchDelete(content);
@@ -8165,7 +8165,7 @@ This sample shows how to call BatchDelete with all request content.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
+TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
 using RequestContent content = RequestContent.Create(new
 {
@@ -8174,7 +8174,7 @@ using RequestContent content = RequestContent.Create(new
         new
         {
             category = "PRIMITIVE",
-            createTime = 1652209051,
+            createTime = 1234L,
             createdBy = "<createdBy>",
             dateFormatter = new
             {
@@ -8221,7 +8221,7 @@ using RequestContent content = RequestContent.Create(new
             },
             serviceType = "<serviceType>",
             typeVersion = "<typeVersion>",
-            updateTime = 1652209051,
+            updateTime = 1234L,
             updatedBy = "<updatedBy>",
             version = 1234L,
             lastModifiedTS = "<lastModifiedTS>",
@@ -8264,7 +8264,7 @@ using RequestContent content = RequestContent.Create(new
         new
         {
             category = "PRIMITIVE",
-            createTime = 1652209051,
+            createTime = 1234L,
             createdBy = "<createdBy>",
             description = "<description>",
             guid = "<guid>",
@@ -8275,7 +8275,7 @@ using RequestContent content = RequestContent.Create(new
             },
             serviceType = "<serviceType>",
             typeVersion = "<typeVersion>",
-            updateTime = 1652209051,
+            updateTime = 1234L,
             updatedBy = "<updatedBy>",
             version = 1234L,
             lastModifiedTS = "<lastModifiedTS>",
@@ -8302,7 +8302,7 @@ using RequestContent content = RequestContent.Create(new
         new
         {
             category = "PRIMITIVE",
-            createTime = 1652209051,
+            createTime = 1234L,
             createdBy = "<createdBy>",
             description = "<description>",
             guid = "<guid>",
@@ -8313,7 +8313,7 @@ using RequestContent content = RequestContent.Create(new
             },
             serviceType = "<serviceType>",
             typeVersion = "<typeVersion>",
-            updateTime = 1652209051,
+            updateTime = 1234L,
             updatedBy = "<updatedBy>",
             version = 1234L,
             lastModifiedTS = "<lastModifiedTS>",
@@ -8363,7 +8363,7 @@ using RequestContent content = RequestContent.Create(new
         new
         {
             category = "PRIMITIVE",
-            createTime = 1652209051,
+            createTime = 1234L,
             createdBy = "<createdBy>",
             description = "<description>",
             guid = "<guid>",
@@ -8374,7 +8374,7 @@ using RequestContent content = RequestContent.Create(new
             },
             serviceType = "<serviceType>",
             typeVersion = "<typeVersion>",
-            updateTime = 1652209051,
+            updateTime = 1234L,
             updatedBy = "<updatedBy>",
             version = 1234L,
             lastModifiedTS = "<lastModifiedTS>",
@@ -8395,7 +8395,7 @@ using RequestContent content = RequestContent.Create(new
         new
         {
             category = "PRIMITIVE",
-            createTime = 1652209051,
+            createTime = 1234L,
             createdBy = "<createdBy>",
             description = "<description>",
             guid = "<guid>",
@@ -8406,7 +8406,7 @@ using RequestContent content = RequestContent.Create(new
             },
             serviceType = "<serviceType>",
             typeVersion = "<typeVersion>",
-            updateTime = 1652209051,
+            updateTime = 1234L,
             updatedBy = "<updatedBy>",
             version = 1234L,
             lastModifiedTS = "<lastModifiedTS>",
@@ -8432,7 +8432,7 @@ using RequestContent content = RequestContent.Create(new
         new
         {
             category = "PRIMITIVE",
-            createTime = 1652209051,
+            createTime = 1234L,
             createdBy = "<createdBy>",
             description = "<description>",
             guid = "<guid>",
@@ -8443,7 +8443,7 @@ using RequestContent content = RequestContent.Create(new
             },
             serviceType = "<serviceType>",
             typeVersion = "<typeVersion>",
-            updateTime = 1652209051,
+            updateTime = 1234L,
             updatedBy = "<updatedBy>",
             version = 1234L,
             lastModifiedTS = "<lastModifiedTS>",
@@ -8458,7 +8458,7 @@ using RequestContent content = RequestContent.Create(new
         new
         {
             category = "PRIMITIVE",
-            createTime = 1652209051,
+            createTime = 1234L,
             createdBy = "<createdBy>",
             description = "<description>",
             guid = "<guid>",
@@ -8469,7 +8469,7 @@ using RequestContent content = RequestContent.Create(new
             },
             serviceType = "<serviceType>",
             typeVersion = "<typeVersion>",
-            updateTime = 1652209051,
+            updateTime = 1234L,
             updatedBy = "<updatedBy>",
             version = 1234L,
             lastModifiedTS = "<lastModifiedTS>",
@@ -8491,7 +8491,7 @@ This sample shows how to call GetHeadersAsync.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
+TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
 Response<IReadOnlyList<AtlasTypeDefHeader>> response = await client.GetHeadersAsync();
 ]]></code>
@@ -8510,7 +8510,7 @@ This sample shows how to call GetHeaders.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
+TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
 Response<IReadOnlyList<AtlasTypeDefHeader>> response = client.GetHeaders();
 ]]></code>
@@ -8529,7 +8529,7 @@ This sample shows how to call GetHeadersAsync and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
+TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
 Response response = await client.GetHeadersAsync(null, null, null);
 
@@ -8556,7 +8556,7 @@ This sample shows how to call GetHeaders and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
+TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
 Response response = client.GetHeaders(null, null, null);
 

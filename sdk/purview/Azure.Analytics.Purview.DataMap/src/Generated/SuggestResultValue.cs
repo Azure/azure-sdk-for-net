@@ -93,7 +93,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="termTemplate"> The term template names used by the term. </param>
         /// <param name="longDescription"> The definition of the term. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SuggestResultValue(float? searchScore, string searchText, string objectType, DateTimeOffset? createTime, DateTimeOffset? updateTime, string id, string name, string qualifiedName, string entityType, string description, string endorsement, string owner, IReadOnlyList<string> classification, IReadOnlyList<string> label, IReadOnlyList<TermSearchResultValue> term, IReadOnlyList<ContactSearchResultValue> contact, IReadOnlyList<string> assetType, string glossaryType, string glossary, string termStatus, IReadOnlyList<string> termTemplate, string longDescription, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal SuggestResultValue(float? searchScore, string searchText, string objectType, long? createTime, long? updateTime, string id, string name, string qualifiedName, string entityType, string description, string endorsement, string owner, IReadOnlyList<string> classification, IReadOnlyList<string> label, IReadOnlyList<TermSearchResultValue> term, IReadOnlyList<ContactSearchResultValue> contact, IReadOnlyList<string> assetType, string glossaryType, string glossary, string termStatus, IReadOnlyList<string> termTemplate, string longDescription, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             SearchScore = searchScore;
             SearchText = searchText;
@@ -136,9 +136,9 @@ namespace Azure.Analytics.Purview.DataMap
         /// </summary>
         public string ObjectType { get; }
         /// <summary> The create time of the record. The Unix epoch format. </summary>
-        public DateTimeOffset? CreateTime { get; }
+        public long? CreateTime { get; }
         /// <summary> The last update time of the record. The Unix epoch format. </summary>
-        public DateTimeOffset? UpdateTime { get; }
+        public long? UpdateTime { get; }
         /// <summary> The GUID of the record. </summary>
         public string Id { get; }
         /// <summary> The name of the record. </summary>

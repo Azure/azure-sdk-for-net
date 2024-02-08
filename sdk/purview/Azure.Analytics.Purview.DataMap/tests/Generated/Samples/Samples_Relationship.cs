@@ -24,7 +24,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Relationship client = new DataMapClient(endpoint, credential).GetRelationshipClient(apiVersion: "2023-09-01");
+            Relationship client = new DataMapClient(endpoint, credential).GetRelationshipClient();
 
             using RequestContent content = RequestContent.Create(new object());
             Response response = client.Create(content);
@@ -39,7 +39,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Relationship client = new DataMapClient(endpoint, credential).GetRelationshipClient(apiVersion: "2023-09-01");
+            Relationship client = new DataMapClient(endpoint, credential).GetRelationshipClient();
 
             using RequestContent content = RequestContent.Create(new object());
             Response response = await client.CreateAsync(content);
@@ -54,10 +54,10 @@ namespace Azure.Analytics.Purview.DataMap.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Relationship client = new DataMapClient(endpoint, credential).GetRelationshipClient(apiVersion: "2023-09-01");
+            Relationship client = new DataMapClient(endpoint, credential).GetRelationshipClient();
 
-            AtlasRelationship body = new AtlasRelationship();
-            Response<AtlasRelationship> response = client.Create(body);
+            AtlasRelationship atlasRelationship = new AtlasRelationship();
+            Response<AtlasRelationship> response = client.Create(atlasRelationship);
         }
 
         [Test]
@@ -66,10 +66,10 @@ namespace Azure.Analytics.Purview.DataMap.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Relationship client = new DataMapClient(endpoint, credential).GetRelationshipClient(apiVersion: "2023-09-01");
+            Relationship client = new DataMapClient(endpoint, credential).GetRelationshipClient();
 
-            AtlasRelationship body = new AtlasRelationship();
-            Response<AtlasRelationship> response = await client.CreateAsync(body);
+            AtlasRelationship atlasRelationship = new AtlasRelationship();
+            Response<AtlasRelationship> response = await client.CreateAsync(atlasRelationship);
         }
 
         [Test]
@@ -78,7 +78,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Relationship client = new DataMapClient(endpoint, credential).GetRelationshipClient(apiVersion: "2023-09-01");
+            Relationship client = new DataMapClient(endpoint, credential).GetRelationshipClient();
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -88,7 +88,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
                 },
                 typeName = "<typeName>",
                 lastModifiedTS = "<lastModifiedTS>",
-                createTime = 1652209051,
+                createTime = 1234L,
                 createdBy = "<createdBy>",
                 end1 = new
                 {
@@ -104,7 +104,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
                 label = "<label>",
                 provenanceType = 1234,
                 status = "ACTIVE",
-                updateTime = 1652209051,
+                updateTime = 1234L,
                 updatedBy = "<updatedBy>",
                 version = 1234L,
             });
@@ -138,7 +138,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Relationship client = new DataMapClient(endpoint, credential).GetRelationshipClient(apiVersion: "2023-09-01");
+            Relationship client = new DataMapClient(endpoint, credential).GetRelationshipClient();
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -148,7 +148,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
                 },
                 typeName = "<typeName>",
                 lastModifiedTS = "<lastModifiedTS>",
-                createTime = 1652209051,
+                createTime = 1234L,
                 createdBy = "<createdBy>",
                 end1 = new
                 {
@@ -164,7 +164,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
                 label = "<label>",
                 provenanceType = 1234,
                 status = "ACTIVE",
-                updateTime = 1652209051,
+                updateTime = 1234L,
                 updatedBy = "<updatedBy>",
                 version = 1234L,
             });
@@ -198,9 +198,9 @@ namespace Azure.Analytics.Purview.DataMap.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Relationship client = new DataMapClient(endpoint, credential).GetRelationshipClient(apiVersion: "2023-09-01");
+            Relationship client = new DataMapClient(endpoint, credential).GetRelationshipClient();
 
-            AtlasRelationship body = new AtlasRelationship
+            AtlasRelationship atlasRelationship = new AtlasRelationship
             {
                 Attributes =
 {
@@ -208,7 +208,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
 },
                 TypeName = "<typeName>",
                 LastModifiedTS = "<lastModifiedTS>",
-                CreateTime = DateTimeOffset.FromUnixTimeSeconds(1652209051L),
+                CreateTime = 1234L,
                 CreatedBy = "<createdBy>",
                 End1 = new AtlasObjectId
                 {
@@ -225,11 +225,11 @@ namespace Azure.Analytics.Purview.DataMap.Samples
                 Label = "<label>",
                 ProvenanceType = 1234,
                 Status = StatusAtlasRelationship.Active,
-                UpdateTime = DateTimeOffset.FromUnixTimeSeconds(1652209051L),
+                UpdateTime = 1234L,
                 UpdatedBy = "<updatedBy>",
                 Version = 1234L,
             };
-            Response<AtlasRelationship> response = client.Create(body);
+            Response<AtlasRelationship> response = client.Create(atlasRelationship);
         }
 
         [Test]
@@ -238,9 +238,9 @@ namespace Azure.Analytics.Purview.DataMap.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Relationship client = new DataMapClient(endpoint, credential).GetRelationshipClient(apiVersion: "2023-09-01");
+            Relationship client = new DataMapClient(endpoint, credential).GetRelationshipClient();
 
-            AtlasRelationship body = new AtlasRelationship
+            AtlasRelationship atlasRelationship = new AtlasRelationship
             {
                 Attributes =
 {
@@ -248,7 +248,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
 },
                 TypeName = "<typeName>",
                 LastModifiedTS = "<lastModifiedTS>",
-                CreateTime = DateTimeOffset.FromUnixTimeSeconds(1652209051L),
+                CreateTime = 1234L,
                 CreatedBy = "<createdBy>",
                 End1 = new AtlasObjectId
                 {
@@ -265,11 +265,11 @@ namespace Azure.Analytics.Purview.DataMap.Samples
                 Label = "<label>",
                 ProvenanceType = 1234,
                 Status = StatusAtlasRelationship.Active,
-                UpdateTime = DateTimeOffset.FromUnixTimeSeconds(1652209051L),
+                UpdateTime = 1234L,
                 UpdatedBy = "<updatedBy>",
                 Version = 1234L,
             };
-            Response<AtlasRelationship> response = await client.CreateAsync(body);
+            Response<AtlasRelationship> response = await client.CreateAsync(atlasRelationship);
         }
 
         [Test]
@@ -278,7 +278,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Relationship client = new DataMapClient(endpoint, credential).GetRelationshipClient(apiVersion: "2023-09-01");
+            Relationship client = new DataMapClient(endpoint, credential).GetRelationshipClient();
 
             using RequestContent content = RequestContent.Create(new object());
             Response response = client.Update(content);
@@ -293,7 +293,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Relationship client = new DataMapClient(endpoint, credential).GetRelationshipClient(apiVersion: "2023-09-01");
+            Relationship client = new DataMapClient(endpoint, credential).GetRelationshipClient();
 
             using RequestContent content = RequestContent.Create(new object());
             Response response = await client.UpdateAsync(content);
@@ -308,10 +308,10 @@ namespace Azure.Analytics.Purview.DataMap.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Relationship client = new DataMapClient(endpoint, credential).GetRelationshipClient(apiVersion: "2023-09-01");
+            Relationship client = new DataMapClient(endpoint, credential).GetRelationshipClient();
 
-            AtlasRelationship body = new AtlasRelationship();
-            Response<AtlasRelationship> response = client.Update(body);
+            AtlasRelationship atlasRelationship = new AtlasRelationship();
+            Response<AtlasRelationship> response = client.Update(atlasRelationship);
         }
 
         [Test]
@@ -320,10 +320,10 @@ namespace Azure.Analytics.Purview.DataMap.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Relationship client = new DataMapClient(endpoint, credential).GetRelationshipClient(apiVersion: "2023-09-01");
+            Relationship client = new DataMapClient(endpoint, credential).GetRelationshipClient();
 
-            AtlasRelationship body = new AtlasRelationship();
-            Response<AtlasRelationship> response = await client.UpdateAsync(body);
+            AtlasRelationship atlasRelationship = new AtlasRelationship();
+            Response<AtlasRelationship> response = await client.UpdateAsync(atlasRelationship);
         }
 
         [Test]
@@ -332,7 +332,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Relationship client = new DataMapClient(endpoint, credential).GetRelationshipClient(apiVersion: "2023-09-01");
+            Relationship client = new DataMapClient(endpoint, credential).GetRelationshipClient();
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -342,7 +342,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
                 },
                 typeName = "<typeName>",
                 lastModifiedTS = "<lastModifiedTS>",
-                createTime = 1652209051,
+                createTime = 1234L,
                 createdBy = "<createdBy>",
                 end1 = new
                 {
@@ -358,7 +358,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
                 label = "<label>",
                 provenanceType = 1234,
                 status = "ACTIVE",
-                updateTime = 1652209051,
+                updateTime = 1234L,
                 updatedBy = "<updatedBy>",
                 version = 1234L,
             });
@@ -392,7 +392,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Relationship client = new DataMapClient(endpoint, credential).GetRelationshipClient(apiVersion: "2023-09-01");
+            Relationship client = new DataMapClient(endpoint, credential).GetRelationshipClient();
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -402,7 +402,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
                 },
                 typeName = "<typeName>",
                 lastModifiedTS = "<lastModifiedTS>",
-                createTime = 1652209051,
+                createTime = 1234L,
                 createdBy = "<createdBy>",
                 end1 = new
                 {
@@ -418,7 +418,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
                 label = "<label>",
                 provenanceType = 1234,
                 status = "ACTIVE",
-                updateTime = 1652209051,
+                updateTime = 1234L,
                 updatedBy = "<updatedBy>",
                 version = 1234L,
             });
@@ -452,9 +452,9 @@ namespace Azure.Analytics.Purview.DataMap.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Relationship client = new DataMapClient(endpoint, credential).GetRelationshipClient(apiVersion: "2023-09-01");
+            Relationship client = new DataMapClient(endpoint, credential).GetRelationshipClient();
 
-            AtlasRelationship body = new AtlasRelationship
+            AtlasRelationship atlasRelationship = new AtlasRelationship
             {
                 Attributes =
 {
@@ -462,7 +462,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
 },
                 TypeName = "<typeName>",
                 LastModifiedTS = "<lastModifiedTS>",
-                CreateTime = DateTimeOffset.FromUnixTimeSeconds(1652209051L),
+                CreateTime = 1234L,
                 CreatedBy = "<createdBy>",
                 End1 = new AtlasObjectId
                 {
@@ -479,11 +479,11 @@ namespace Azure.Analytics.Purview.DataMap.Samples
                 Label = "<label>",
                 ProvenanceType = 1234,
                 Status = StatusAtlasRelationship.Active,
-                UpdateTime = DateTimeOffset.FromUnixTimeSeconds(1652209051L),
+                UpdateTime = 1234L,
                 UpdatedBy = "<updatedBy>",
                 Version = 1234L,
             };
-            Response<AtlasRelationship> response = client.Update(body);
+            Response<AtlasRelationship> response = client.Update(atlasRelationship);
         }
 
         [Test]
@@ -492,9 +492,9 @@ namespace Azure.Analytics.Purview.DataMap.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Relationship client = new DataMapClient(endpoint, credential).GetRelationshipClient(apiVersion: "2023-09-01");
+            Relationship client = new DataMapClient(endpoint, credential).GetRelationshipClient();
 
-            AtlasRelationship body = new AtlasRelationship
+            AtlasRelationship atlasRelationship = new AtlasRelationship
             {
                 Attributes =
 {
@@ -502,7 +502,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
 },
                 TypeName = "<typeName>",
                 LastModifiedTS = "<lastModifiedTS>",
-                CreateTime = DateTimeOffset.FromUnixTimeSeconds(1652209051L),
+                CreateTime = 1234L,
                 CreatedBy = "<createdBy>",
                 End1 = new AtlasObjectId
                 {
@@ -519,11 +519,11 @@ namespace Azure.Analytics.Purview.DataMap.Samples
                 Label = "<label>",
                 ProvenanceType = 1234,
                 Status = StatusAtlasRelationship.Active,
-                UpdateTime = DateTimeOffset.FromUnixTimeSeconds(1652209051L),
+                UpdateTime = 1234L,
                 UpdatedBy = "<updatedBy>",
                 Version = 1234L,
             };
-            Response<AtlasRelationship> response = await client.UpdateAsync(body);
+            Response<AtlasRelationship> response = await client.UpdateAsync(atlasRelationship);
         }
 
         [Test]
@@ -532,7 +532,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Relationship client = new DataMapClient(endpoint, credential).GetRelationshipClient(apiVersion: "2023-09-01");
+            Relationship client = new DataMapClient(endpoint, credential).GetRelationshipClient();
 
             Response response = client.GetRelationship("<guid>", null, null);
 
@@ -546,7 +546,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Relationship client = new DataMapClient(endpoint, credential).GetRelationshipClient(apiVersion: "2023-09-01");
+            Relationship client = new DataMapClient(endpoint, credential).GetRelationshipClient();
 
             Response response = await client.GetRelationshipAsync("<guid>", null, null);
 
@@ -560,7 +560,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Relationship client = new DataMapClient(endpoint, credential).GetRelationshipClient(apiVersion: "2023-09-01");
+            Relationship client = new DataMapClient(endpoint, credential).GetRelationshipClient();
 
             Response<AtlasRelationshipWithExtInfo> response = client.GetRelationship("<guid>");
         }
@@ -571,7 +571,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Relationship client = new DataMapClient(endpoint, credential).GetRelationshipClient(apiVersion: "2023-09-01");
+            Relationship client = new DataMapClient(endpoint, credential).GetRelationshipClient();
 
             Response<AtlasRelationshipWithExtInfo> response = await client.GetRelationshipAsync("<guid>");
         }
@@ -582,7 +582,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Relationship client = new DataMapClient(endpoint, credential).GetRelationshipClient(apiVersion: "2023-09-01");
+            Relationship client = new DataMapClient(endpoint, credential).GetRelationshipClient();
 
             Response response = client.GetRelationship("<guid>", true, null);
 
@@ -642,7 +642,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Relationship client = new DataMapClient(endpoint, credential).GetRelationshipClient(apiVersion: "2023-09-01");
+            Relationship client = new DataMapClient(endpoint, credential).GetRelationshipClient();
 
             Response response = await client.GetRelationshipAsync("<guid>", true, null);
 
@@ -702,7 +702,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Relationship client = new DataMapClient(endpoint, credential).GetRelationshipClient(apiVersion: "2023-09-01");
+            Relationship client = new DataMapClient(endpoint, credential).GetRelationshipClient();
 
             Response<AtlasRelationshipWithExtInfo> response = client.GetRelationship("<guid>", extendedInfo: true);
         }
@@ -713,7 +713,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Relationship client = new DataMapClient(endpoint, credential).GetRelationshipClient(apiVersion: "2023-09-01");
+            Relationship client = new DataMapClient(endpoint, credential).GetRelationshipClient();
 
             Response<AtlasRelationshipWithExtInfo> response = await client.GetRelationshipAsync("<guid>", extendedInfo: true);
         }
@@ -724,7 +724,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Relationship client = new DataMapClient(endpoint, credential).GetRelationshipClient(apiVersion: "2023-09-01");
+            Relationship client = new DataMapClient(endpoint, credential).GetRelationshipClient();
 
             Response response = client.Delete("<guid>");
 
@@ -737,7 +737,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Relationship client = new DataMapClient(endpoint, credential).GetRelationshipClient(apiVersion: "2023-09-01");
+            Relationship client = new DataMapClient(endpoint, credential).GetRelationshipClient();
 
             Response response = await client.DeleteAsync("<guid>");
 
@@ -750,7 +750,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Relationship client = new DataMapClient(endpoint, credential).GetRelationshipClient(apiVersion: "2023-09-01");
+            Relationship client = new DataMapClient(endpoint, credential).GetRelationshipClient();
 
             Response response = client.Delete("<guid>");
 
@@ -763,7 +763,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Relationship client = new DataMapClient(endpoint, credential).GetRelationshipClient(apiVersion: "2023-09-01");
+            Relationship client = new DataMapClient(endpoint, credential).GetRelationshipClient();
 
             Response response = await client.DeleteAsync("<guid>");
 

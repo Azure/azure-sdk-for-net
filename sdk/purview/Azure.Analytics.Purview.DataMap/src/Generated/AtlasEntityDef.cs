@@ -76,7 +76,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="superTypes"> An array of super types. </param>
         /// <param name="relationshipAttributeDefs"> An array of relationship attributes. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AtlasEntityDef(TypeCategory? category, DateTimeOffset? createTime, string createdBy, AtlasDateFormat dateFormatter, string description, string guid, string name, IDictionary<string, string> options, string serviceType, string typeVersion, DateTimeOffset? updateTime, string updatedBy, long? version, string lastModifiedTS, IList<AtlasAttributeDef> attributeDefs, IList<string> subTypes, IList<string> superTypes, IList<AtlasRelationshipAttributeDef> relationshipAttributeDefs, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal AtlasEntityDef(TypeCategory? category, long? createTime, string createdBy, AtlasDateFormat dateFormatter, string description, string guid, string name, IDictionary<string, string> options, string serviceType, string typeVersion, long? updateTime, string updatedBy, long? version, string lastModifiedTS, IList<AtlasAttributeDef> attributeDefs, IList<string> subTypes, IList<string> superTypes, IList<AtlasRelationshipAttributeDef> relationshipAttributeDefs, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Category = category;
             CreateTime = createTime;
@@ -102,7 +102,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// <summary> The enum of type category. </summary>
         public TypeCategory? Category { get; set; }
         /// <summary> The created time of the record. </summary>
-        public DateTimeOffset? CreateTime { get; set; }
+        public long? CreateTime { get; set; }
         /// <summary> The user who created the record. </summary>
         public string CreatedBy { get; set; }
         /// <summary> The date format. </summary>
@@ -120,7 +120,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// <summary> The version of the type. </summary>
         public string TypeVersion { get; set; }
         /// <summary> The update time of the record. </summary>
-        public DateTimeOffset? UpdateTime { get; set; }
+        public long? UpdateTime { get; set; }
         /// <summary> The user who updated the record. </summary>
         public string UpdatedBy { get; set; }
         /// <summary> The version of the record. </summary>

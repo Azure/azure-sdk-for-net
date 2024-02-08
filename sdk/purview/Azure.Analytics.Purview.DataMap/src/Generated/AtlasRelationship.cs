@@ -69,7 +69,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="updatedBy"> The user who updated the record. </param>
         /// <param name="version"> The version of the relationship. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AtlasRelationship(IDictionary<string, BinaryData> attributes, string typeName, string lastModifiedTS, DateTimeOffset? createTime, string createdBy, AtlasObjectId end1, AtlasObjectId end2, string guid, string homeId, string label, int? provenanceType, StatusAtlasRelationship? status, DateTimeOffset? updateTime, string updatedBy, long? version, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal AtlasRelationship(IDictionary<string, BinaryData> attributes, string typeName, string lastModifiedTS, long? createTime, string createdBy, AtlasObjectId end1, AtlasObjectId end2, string guid, string homeId, string label, int? provenanceType, StatusAtlasRelationship? status, long? updateTime, string updatedBy, long? version, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Attributes = attributes;
             TypeName = typeName;
@@ -125,7 +125,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// <summary> ETag for concurrency control. </summary>
         public string LastModifiedTS { get; set; }
         /// <summary> The created time of the record. </summary>
-        public DateTimeOffset? CreateTime { get; set; }
+        public long? CreateTime { get; set; }
         /// <summary> The user who created the record. </summary>
         public string CreatedBy { get; set; }
         /// <summary> Reference to an object-instance of a type - like entity. </summary>
@@ -143,7 +143,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// <summary> The enum of relationship status. </summary>
         public StatusAtlasRelationship? Status { get; set; }
         /// <summary> The update time of the record. </summary>
-        public DateTimeOffset? UpdateTime { get; set; }
+        public long? UpdateTime { get; set; }
         /// <summary> The user who updated the record. </summary>
         public string UpdatedBy { get; set; }
         /// <summary> The version of the relationship. </summary>

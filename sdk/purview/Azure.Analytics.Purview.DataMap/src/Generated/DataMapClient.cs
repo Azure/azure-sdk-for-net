@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Threading;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
@@ -56,23 +57,19 @@ namespace Azure.Analytics.Purview.DataMap
             _endpoint = endpoint;
         }
 
+        private Relationship _cachedRelationship;
+
         /// <summary> Initializes a new instance of Entity. </summary>
         /// <param name="apiVersion"> The API version to use for this operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="apiVersion"/> is null. </exception>
         public virtual Entity GetEntityClient(string apiVersion = "2023-09-01")
         {
-            Argument.AssertNotNull(apiVersion, nameof(apiVersion));
-
             return new Entity(ClientDiagnostics, _pipeline, _tokenCredential, _endpoint, apiVersion);
         }
 
         /// <summary> Initializes a new instance of Glossary. </summary>
         /// <param name="apiVersion"> The API version to use for this operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="apiVersion"/> is null. </exception>
         public virtual Glossary GetGlossaryClient(string apiVersion = "2023-09-01")
         {
-            Argument.AssertNotNull(apiVersion, nameof(apiVersion));
-
             return new Glossary(ClientDiagnostics, _pipeline, _tokenCredential, _endpoint, apiVersion);
         }
 
@@ -97,22 +94,15 @@ namespace Azure.Analytics.Purview.DataMap
         }
 
         /// <summary> Initializes a new instance of Relationship. </summary>
-        /// <param name="apiVersion"> The API version to use for this operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="apiVersion"/> is null. </exception>
-        public virtual Relationship GetRelationshipClient(string apiVersion = "2023-09-01")
+        public virtual Relationship GetRelationshipClient()
         {
-            Argument.AssertNotNull(apiVersion, nameof(apiVersion));
-
-            return new Relationship(ClientDiagnostics, _pipeline, _tokenCredential, _endpoint, apiVersion);
+            return Volatile.Read(ref _cachedRelationship) ?? Interlocked.CompareExchange(ref _cachedRelationship, new Relationship(ClientDiagnostics, _pipeline, _tokenCredential, _endpoint), null) ?? _cachedRelationship;
         }
 
         /// <summary> Initializes a new instance of TypeDefinition. </summary>
         /// <param name="apiVersion"> The API version to use for this operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="apiVersion"/> is null. </exception>
         public virtual TypeDefinition GetTypeDefinitionClient(string apiVersion = "2023-09-01")
         {
-            Argument.AssertNotNull(apiVersion, nameof(apiVersion));
-
             return new TypeDefinition(ClientDiagnostics, _pipeline, _tokenCredential, _endpoint, apiVersion);
         }
     }

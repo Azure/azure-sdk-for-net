@@ -7,7 +7,7 @@ This sample shows how to call BatchGetAsync.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient(apiVersion: "2023-09-01");
+Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
 Response<IReadOnlyList<AtlasGlossary>> response = await client.BatchGetAsync();
 ]]></code>
@@ -26,7 +26,7 @@ This sample shows how to call BatchGet.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient(apiVersion: "2023-09-01");
+Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
 Response<IReadOnlyList<AtlasGlossary>> response = client.BatchGet();
 ]]></code>
@@ -45,7 +45,7 @@ This sample shows how to call BatchGetAsync and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient(apiVersion: "2023-09-01");
+Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
 Response response = await client.BatchGetAsync(null, null, null, null, null);
 
@@ -102,7 +102,7 @@ This sample shows how to call BatchGet and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient(apiVersion: "2023-09-01");
+Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
 Response response = client.BatchGet(null, null, null, null, null);
 
@@ -159,18 +159,18 @@ This sample shows how to call CreateAsync.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient(apiVersion: "2023-09-01");
+Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
-AtlasGlossary body = new AtlasGlossary();
-Response<AtlasGlossary> response = await client.CreateAsync(body);
+AtlasGlossary atlasGlossary = new AtlasGlossary();
+Response<AtlasGlossary> response = await client.CreateAsync(atlasGlossary);
 ]]></code>
 This sample shows how to call CreateAsync with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient(apiVersion: "2023-09-01");
+Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
-AtlasGlossary body = new AtlasGlossary
+AtlasGlossary atlasGlossary = new AtlasGlossary
 {
     Guid = "<guid>",
     Classifications = {new AtlasClassification
@@ -196,9 +196,9 @@ AtlasGlossary body = new AtlasGlossary
     QualifiedName = "<qualifiedName>",
     ShortDescription = "<shortDescription>",
     LastModifiedTS = "<lastModifiedTS>",
-    CreateTime = DateTimeOffset.FromUnixTimeSeconds(1652209051L),
+    CreateTime = 1234L,
     CreatedBy = "<createdBy>",
-    UpdateTime = DateTimeOffset.FromUnixTimeSeconds(1652209051L),
+    UpdateTime = 1234L,
     UpdatedBy = "<updatedBy>",
     Categories = {new AtlasRelatedCategoryHeader
     {
@@ -221,7 +221,7 @@ AtlasGlossary body = new AtlasGlossary
     }},
     Usage = "<usage>",
 };
-Response<AtlasGlossary> response = await client.CreateAsync(body);
+Response<AtlasGlossary> response = await client.CreateAsync(atlasGlossary);
 ]]></code></example>
     </member>
     <member name="Create(AtlasGlossary,CancellationToken)">
@@ -230,18 +230,18 @@ This sample shows how to call Create.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient(apiVersion: "2023-09-01");
+Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
-AtlasGlossary body = new AtlasGlossary();
-Response<AtlasGlossary> response = client.Create(body);
+AtlasGlossary atlasGlossary = new AtlasGlossary();
+Response<AtlasGlossary> response = client.Create(atlasGlossary);
 ]]></code>
 This sample shows how to call Create with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient(apiVersion: "2023-09-01");
+Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
-AtlasGlossary body = new AtlasGlossary
+AtlasGlossary atlasGlossary = new AtlasGlossary
 {
     Guid = "<guid>",
     Classifications = {new AtlasClassification
@@ -267,9 +267,9 @@ AtlasGlossary body = new AtlasGlossary
     QualifiedName = "<qualifiedName>",
     ShortDescription = "<shortDescription>",
     LastModifiedTS = "<lastModifiedTS>",
-    CreateTime = DateTimeOffset.FromUnixTimeSeconds(1652209051L),
+    CreateTime = 1234L,
     CreatedBy = "<createdBy>",
-    UpdateTime = DateTimeOffset.FromUnixTimeSeconds(1652209051L),
+    UpdateTime = 1234L,
     UpdatedBy = "<updatedBy>",
     Categories = {new AtlasRelatedCategoryHeader
     {
@@ -292,7 +292,7 @@ AtlasGlossary body = new AtlasGlossary
     }},
     Usage = "<usage>",
 };
-Response<AtlasGlossary> response = client.Create(body);
+Response<AtlasGlossary> response = client.Create(atlasGlossary);
 ]]></code></example>
     </member>
     <member name="CreateAsync(RequestContent,RequestContext)">
@@ -301,7 +301,7 @@ This sample shows how to call CreateAsync and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient(apiVersion: "2023-09-01");
+Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
 using RequestContent content = RequestContent.Create(new object());
 Response response = await client.CreateAsync(content);
@@ -313,7 +313,7 @@ This sample shows how to call CreateAsync with all request content and parse the
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient(apiVersion: "2023-09-01");
+Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
 using RequestContent content = RequestContent.Create(new
 {
@@ -347,9 +347,9 @@ using RequestContent content = RequestContent.Create(new
     qualifiedName = "<qualifiedName>",
     shortDescription = "<shortDescription>",
     lastModifiedTS = "<lastModifiedTS>",
-    createTime = 1652209051,
+    createTime = 1234L,
     createdBy = "<createdBy>",
-    updateTime = 1652209051,
+    updateTime = 1234L,
     updatedBy = "<updatedBy>",
     categories = new object[]
     {
@@ -422,7 +422,7 @@ This sample shows how to call Create and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient(apiVersion: "2023-09-01");
+Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
 using RequestContent content = RequestContent.Create(new object());
 Response response = client.Create(content);
@@ -434,7 +434,7 @@ This sample shows how to call Create with all request content and parse the resu
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient(apiVersion: "2023-09-01");
+Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
 using RequestContent content = RequestContent.Create(new
 {
@@ -468,9 +468,9 @@ using RequestContent content = RequestContent.Create(new
     qualifiedName = "<qualifiedName>",
     shortDescription = "<shortDescription>",
     lastModifiedTS = "<lastModifiedTS>",
-    createTime = 1652209051,
+    createTime = 1234L,
     createdBy = "<createdBy>",
-    updateTime = 1652209051,
+    updateTime = 1234L,
     updatedBy = "<updatedBy>",
     categories = new object[]
     {
@@ -543,7 +543,7 @@ This sample shows how to call CreateCategoriesAsync.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient(apiVersion: "2023-09-01");
+Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
 Response<IReadOnlyList<AtlasGlossaryCategory>> response = await client.CreateCategoriesAsync(new AtlasGlossaryCategory[]
 {
@@ -554,7 +554,7 @@ This sample shows how to call CreateCategoriesAsync with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient(apiVersion: "2023-09-01");
+Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
 Response<IReadOnlyList<AtlasGlossaryCategory>> response = await client.CreateCategoriesAsync(new AtlasGlossaryCategory[]
 {
@@ -584,9 +584,9 @@ Response<IReadOnlyList<AtlasGlossaryCategory>> response = await client.CreateCat
         QualifiedName = "<qualifiedName>",
         ShortDescription = "<shortDescription>",
         LastModifiedTS = "<lastModifiedTS>",
-        CreateTime = DateTimeOffset.FromUnixTimeSeconds(1652209051L),
+        CreateTime = 1234L,
         CreatedBy = "<createdBy>",
-        UpdateTime = DateTimeOffset.FromUnixTimeSeconds(1652209051L),
+        UpdateTime = 1234L,
         UpdatedBy = "<updatedBy>",
         Anchor = new AtlasGlossaryHeader
         {
@@ -623,7 +623,7 @@ This sample shows how to call CreateCategories.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient(apiVersion: "2023-09-01");
+Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
 Response<IReadOnlyList<AtlasGlossaryCategory>> response = client.CreateCategories(new AtlasGlossaryCategory[]
 {
@@ -634,7 +634,7 @@ This sample shows how to call CreateCategories with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient(apiVersion: "2023-09-01");
+Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
 Response<IReadOnlyList<AtlasGlossaryCategory>> response = client.CreateCategories(new AtlasGlossaryCategory[]
 {
@@ -664,9 +664,9 @@ Response<IReadOnlyList<AtlasGlossaryCategory>> response = client.CreateCategorie
         QualifiedName = "<qualifiedName>",
         ShortDescription = "<shortDescription>",
         LastModifiedTS = "<lastModifiedTS>",
-        CreateTime = DateTimeOffset.FromUnixTimeSeconds(1652209051L),
+        CreateTime = 1234L,
         CreatedBy = "<createdBy>",
-        UpdateTime = DateTimeOffset.FromUnixTimeSeconds(1652209051L),
+        UpdateTime = 1234L,
         UpdatedBy = "<updatedBy>",
         Anchor = new AtlasGlossaryHeader
         {
@@ -703,7 +703,7 @@ This sample shows how to call CreateCategoriesAsync and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient(apiVersion: "2023-09-01");
+Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
 using RequestContent content = RequestContent.Create(new object[]
 {
@@ -718,7 +718,7 @@ This sample shows how to call CreateCategoriesAsync with all request content and
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient(apiVersion: "2023-09-01");
+Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
 using RequestContent content = RequestContent.Create(new object[]
 {
@@ -754,9 +754,9 @@ using RequestContent content = RequestContent.Create(new object[]
         qualifiedName = "<qualifiedName>",
         shortDescription = "<shortDescription>",
         lastModifiedTS = "<lastModifiedTS>",
-        createTime = 1652209051,
+        createTime = 1234L,
         createdBy = "<createdBy>",
-        updateTime = 1652209051,
+        updateTime = 1234L,
         updatedBy = "<updatedBy>",
         anchor = new
         {
@@ -840,7 +840,7 @@ This sample shows how to call CreateCategories and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient(apiVersion: "2023-09-01");
+Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
 using RequestContent content = RequestContent.Create(new object[]
 {
@@ -855,7 +855,7 @@ This sample shows how to call CreateCategories with all request content and pars
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient(apiVersion: "2023-09-01");
+Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
 using RequestContent content = RequestContent.Create(new object[]
 {
@@ -891,9 +891,9 @@ using RequestContent content = RequestContent.Create(new object[]
         qualifiedName = "<qualifiedName>",
         shortDescription = "<shortDescription>",
         lastModifiedTS = "<lastModifiedTS>",
-        createTime = 1652209051,
+        createTime = 1234L,
         createdBy = "<createdBy>",
-        updateTime = 1652209051,
+        updateTime = 1234L,
         updatedBy = "<updatedBy>",
         anchor = new
         {
@@ -977,18 +977,18 @@ This sample shows how to call CreateCategoryAsync.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient(apiVersion: "2023-09-01");
+Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
-AtlasGlossaryCategory body = new AtlasGlossaryCategory();
-Response<AtlasGlossaryCategory> response = await client.CreateCategoryAsync(body);
+AtlasGlossaryCategory atlasGlossaryCategory = new AtlasGlossaryCategory();
+Response<AtlasGlossaryCategory> response = await client.CreateCategoryAsync(atlasGlossaryCategory);
 ]]></code>
 This sample shows how to call CreateCategoryAsync with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient(apiVersion: "2023-09-01");
+Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
-AtlasGlossaryCategory body = new AtlasGlossaryCategory
+AtlasGlossaryCategory atlasGlossaryCategory = new AtlasGlossaryCategory
 {
     Guid = "<guid>",
     Classifications = {new AtlasClassification
@@ -1014,9 +1014,9 @@ AtlasGlossaryCategory body = new AtlasGlossaryCategory
     QualifiedName = "<qualifiedName>",
     ShortDescription = "<shortDescription>",
     LastModifiedTS = "<lastModifiedTS>",
-    CreateTime = DateTimeOffset.FromUnixTimeSeconds(1652209051L),
+    CreateTime = 1234L,
     CreatedBy = "<createdBy>",
-    UpdateTime = DateTimeOffset.FromUnixTimeSeconds(1652209051L),
+    UpdateTime = 1234L,
     UpdatedBy = "<updatedBy>",
     Anchor = new AtlasGlossaryHeader
     {
@@ -1044,7 +1044,7 @@ AtlasGlossaryCategory body = new AtlasGlossaryCategory
         TermGuid = "<termGuid>",
     }},
 };
-Response<AtlasGlossaryCategory> response = await client.CreateCategoryAsync(body);
+Response<AtlasGlossaryCategory> response = await client.CreateCategoryAsync(atlasGlossaryCategory);
 ]]></code></example>
     </member>
     <member name="CreateCategory(AtlasGlossaryCategory,CancellationToken)">
@@ -1053,18 +1053,18 @@ This sample shows how to call CreateCategory.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient(apiVersion: "2023-09-01");
+Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
-AtlasGlossaryCategory body = new AtlasGlossaryCategory();
-Response<AtlasGlossaryCategory> response = client.CreateCategory(body);
+AtlasGlossaryCategory atlasGlossaryCategory = new AtlasGlossaryCategory();
+Response<AtlasGlossaryCategory> response = client.CreateCategory(atlasGlossaryCategory);
 ]]></code>
 This sample shows how to call CreateCategory with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient(apiVersion: "2023-09-01");
+Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
-AtlasGlossaryCategory body = new AtlasGlossaryCategory
+AtlasGlossaryCategory atlasGlossaryCategory = new AtlasGlossaryCategory
 {
     Guid = "<guid>",
     Classifications = {new AtlasClassification
@@ -1090,9 +1090,9 @@ AtlasGlossaryCategory body = new AtlasGlossaryCategory
     QualifiedName = "<qualifiedName>",
     ShortDescription = "<shortDescription>",
     LastModifiedTS = "<lastModifiedTS>",
-    CreateTime = DateTimeOffset.FromUnixTimeSeconds(1652209051L),
+    CreateTime = 1234L,
     CreatedBy = "<createdBy>",
-    UpdateTime = DateTimeOffset.FromUnixTimeSeconds(1652209051L),
+    UpdateTime = 1234L,
     UpdatedBy = "<updatedBy>",
     Anchor = new AtlasGlossaryHeader
     {
@@ -1120,7 +1120,7 @@ AtlasGlossaryCategory body = new AtlasGlossaryCategory
         TermGuid = "<termGuid>",
     }},
 };
-Response<AtlasGlossaryCategory> response = client.CreateCategory(body);
+Response<AtlasGlossaryCategory> response = client.CreateCategory(atlasGlossaryCategory);
 ]]></code></example>
     </member>
     <member name="CreateCategoryAsync(RequestContent,RequestContext)">
@@ -1129,7 +1129,7 @@ This sample shows how to call CreateCategoryAsync and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient(apiVersion: "2023-09-01");
+Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
 using RequestContent content = RequestContent.Create(new object());
 Response response = await client.CreateCategoryAsync(content);
@@ -1141,7 +1141,7 @@ This sample shows how to call CreateCategoryAsync with all request content and p
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient(apiVersion: "2023-09-01");
+Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
 using RequestContent content = RequestContent.Create(new
 {
@@ -1175,9 +1175,9 @@ using RequestContent content = RequestContent.Create(new
     qualifiedName = "<qualifiedName>",
     shortDescription = "<shortDescription>",
     lastModifiedTS = "<lastModifiedTS>",
-    createTime = 1652209051,
+    createTime = 1234L,
     createdBy = "<createdBy>",
-    updateTime = 1652209051,
+    updateTime = 1234L,
     updatedBy = "<updatedBy>",
     anchor = new
     {
@@ -1260,7 +1260,7 @@ This sample shows how to call CreateCategory and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient(apiVersion: "2023-09-01");
+Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
 using RequestContent content = RequestContent.Create(new object());
 Response response = client.CreateCategory(content);
@@ -1272,7 +1272,7 @@ This sample shows how to call CreateCategory with all request content and parse 
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient(apiVersion: "2023-09-01");
+Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
 using RequestContent content = RequestContent.Create(new
 {
@@ -1306,9 +1306,9 @@ using RequestContent content = RequestContent.Create(new
     qualifiedName = "<qualifiedName>",
     shortDescription = "<shortDescription>",
     lastModifiedTS = "<lastModifiedTS>",
-    createTime = 1652209051,
+    createTime = 1234L,
     createdBy = "<createdBy>",
-    updateTime = 1652209051,
+    updateTime = 1234L,
     updatedBy = "<updatedBy>",
     anchor = new
     {
@@ -1391,7 +1391,7 @@ This sample shows how to call GetCategoryAsync.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient(apiVersion: "2023-09-01");
+Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
 Response<AtlasGlossaryCategory> response = await client.GetCategoryAsync("<categoryId>");
 ]]></code>
@@ -1399,7 +1399,7 @@ This sample shows how to call GetCategoryAsync with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient(apiVersion: "2023-09-01");
+Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
 Response<AtlasGlossaryCategory> response = await client.GetCategoryAsync("<categoryId>");
 ]]></code></example>
@@ -1410,7 +1410,7 @@ This sample shows how to call GetCategory.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient(apiVersion: "2023-09-01");
+Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
 Response<AtlasGlossaryCategory> response = client.GetCategory("<categoryId>");
 ]]></code>
@@ -1418,7 +1418,7 @@ This sample shows how to call GetCategory with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient(apiVersion: "2023-09-01");
+Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
 Response<AtlasGlossaryCategory> response = client.GetCategory("<categoryId>");
 ]]></code></example>
@@ -1429,7 +1429,7 @@ This sample shows how to call GetCategoryAsync and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient(apiVersion: "2023-09-01");
+Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
 Response response = await client.GetCategoryAsync("<categoryId>", null);
 
@@ -1440,7 +1440,7 @@ This sample shows how to call GetCategoryAsync with all parameters and parse the
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient(apiVersion: "2023-09-01");
+Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
 Response response = await client.GetCategoryAsync("<categoryId>", null);
 
@@ -1492,7 +1492,7 @@ This sample shows how to call GetCategory and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient(apiVersion: "2023-09-01");
+Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
 Response response = client.GetCategory("<categoryId>", null);
 
@@ -1503,7 +1503,7 @@ This sample shows how to call GetCategory with all parameters and parse the resu
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient(apiVersion: "2023-09-01");
+Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
 Response response = client.GetCategory("<categoryId>", null);
 
@@ -1555,18 +1555,18 @@ This sample shows how to call UpdateCategoryAsync.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient(apiVersion: "2023-09-01");
+Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
-AtlasGlossaryCategory body = new AtlasGlossaryCategory();
-Response<AtlasGlossaryCategory> response = await client.UpdateCategoryAsync("<categoryId>", body);
+AtlasGlossaryCategory atlasGlossaryCategory = new AtlasGlossaryCategory();
+Response<AtlasGlossaryCategory> response = await client.UpdateCategoryAsync("<categoryId>", atlasGlossaryCategory);
 ]]></code>
 This sample shows how to call UpdateCategoryAsync with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient(apiVersion: "2023-09-01");
+Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
-AtlasGlossaryCategory body = new AtlasGlossaryCategory
+AtlasGlossaryCategory atlasGlossaryCategory = new AtlasGlossaryCategory
 {
     Guid = "<guid>",
     Classifications = {new AtlasClassification
@@ -1592,9 +1592,9 @@ AtlasGlossaryCategory body = new AtlasGlossaryCategory
     QualifiedName = "<qualifiedName>",
     ShortDescription = "<shortDescription>",
     LastModifiedTS = "<lastModifiedTS>",
-    CreateTime = DateTimeOffset.FromUnixTimeSeconds(1652209051L),
+    CreateTime = 1234L,
     CreatedBy = "<createdBy>",
-    UpdateTime = DateTimeOffset.FromUnixTimeSeconds(1652209051L),
+    UpdateTime = 1234L,
     UpdatedBy = "<updatedBy>",
     Anchor = new AtlasGlossaryHeader
     {
@@ -1622,7 +1622,7 @@ AtlasGlossaryCategory body = new AtlasGlossaryCategory
         TermGuid = "<termGuid>",
     }},
 };
-Response<AtlasGlossaryCategory> response = await client.UpdateCategoryAsync("<categoryId>", body);
+Response<AtlasGlossaryCategory> response = await client.UpdateCategoryAsync("<categoryId>", atlasGlossaryCategory);
 ]]></code></example>
     </member>
     <member name="UpdateCategory(string,AtlasGlossaryCategory,CancellationToken)">
@@ -1631,18 +1631,18 @@ This sample shows how to call UpdateCategory.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient(apiVersion: "2023-09-01");
+Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
-AtlasGlossaryCategory body = new AtlasGlossaryCategory();
-Response<AtlasGlossaryCategory> response = client.UpdateCategory("<categoryId>", body);
+AtlasGlossaryCategory atlasGlossaryCategory = new AtlasGlossaryCategory();
+Response<AtlasGlossaryCategory> response = client.UpdateCategory("<categoryId>", atlasGlossaryCategory);
 ]]></code>
 This sample shows how to call UpdateCategory with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient(apiVersion: "2023-09-01");
+Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
-AtlasGlossaryCategory body = new AtlasGlossaryCategory
+AtlasGlossaryCategory atlasGlossaryCategory = new AtlasGlossaryCategory
 {
     Guid = "<guid>",
     Classifications = {new AtlasClassification
@@ -1668,9 +1668,9 @@ AtlasGlossaryCategory body = new AtlasGlossaryCategory
     QualifiedName = "<qualifiedName>",
     ShortDescription = "<shortDescription>",
     LastModifiedTS = "<lastModifiedTS>",
-    CreateTime = DateTimeOffset.FromUnixTimeSeconds(1652209051L),
+    CreateTime = 1234L,
     CreatedBy = "<createdBy>",
-    UpdateTime = DateTimeOffset.FromUnixTimeSeconds(1652209051L),
+    UpdateTime = 1234L,
     UpdatedBy = "<updatedBy>",
     Anchor = new AtlasGlossaryHeader
     {
@@ -1698,7 +1698,7 @@ AtlasGlossaryCategory body = new AtlasGlossaryCategory
         TermGuid = "<termGuid>",
     }},
 };
-Response<AtlasGlossaryCategory> response = client.UpdateCategory("<categoryId>", body);
+Response<AtlasGlossaryCategory> response = client.UpdateCategory("<categoryId>", atlasGlossaryCategory);
 ]]></code></example>
     </member>
     <member name="UpdateCategoryAsync(string,RequestContent,RequestContext)">
@@ -1707,7 +1707,7 @@ This sample shows how to call UpdateCategoryAsync and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient(apiVersion: "2023-09-01");
+Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
 using RequestContent content = RequestContent.Create(new object());
 Response response = await client.UpdateCategoryAsync("<categoryId>", content);
@@ -1719,7 +1719,7 @@ This sample shows how to call UpdateCategoryAsync with all parameters and reques
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient(apiVersion: "2023-09-01");
+Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
 using RequestContent content = RequestContent.Create(new
 {
@@ -1753,9 +1753,9 @@ using RequestContent content = RequestContent.Create(new
     qualifiedName = "<qualifiedName>",
     shortDescription = "<shortDescription>",
     lastModifiedTS = "<lastModifiedTS>",
-    createTime = 1652209051,
+    createTime = 1234L,
     createdBy = "<createdBy>",
-    updateTime = 1652209051,
+    updateTime = 1234L,
     updatedBy = "<updatedBy>",
     anchor = new
     {
@@ -1838,7 +1838,7 @@ This sample shows how to call UpdateCategory and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient(apiVersion: "2023-09-01");
+Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
 using RequestContent content = RequestContent.Create(new object());
 Response response = client.UpdateCategory("<categoryId>", content);
@@ -1850,7 +1850,7 @@ This sample shows how to call UpdateCategory with all parameters and request con
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient(apiVersion: "2023-09-01");
+Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
 using RequestContent content = RequestContent.Create(new
 {
@@ -1884,9 +1884,9 @@ using RequestContent content = RequestContent.Create(new
     qualifiedName = "<qualifiedName>",
     shortDescription = "<shortDescription>",
     lastModifiedTS = "<lastModifiedTS>",
-    createTime = 1652209051,
+    createTime = 1234L,
     createdBy = "<createdBy>",
-    updateTime = 1652209051,
+    updateTime = 1234L,
     updatedBy = "<updatedBy>",
     anchor = new
     {
@@ -1969,7 +1969,7 @@ This sample shows how to call DeleteCategoryAsync.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient(apiVersion: "2023-09-01");
+Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
 Response response = await client.DeleteCategoryAsync("<categoryId>");
 
@@ -1979,7 +1979,7 @@ This sample shows how to call DeleteCategoryAsync with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient(apiVersion: "2023-09-01");
+Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
 Response response = await client.DeleteCategoryAsync("<categoryId>");
 
@@ -1992,7 +1992,7 @@ This sample shows how to call DeleteCategory.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient(apiVersion: "2023-09-01");
+Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
 Response response = client.DeleteCategory("<categoryId>");
 
@@ -2002,7 +2002,7 @@ This sample shows how to call DeleteCategory with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient(apiVersion: "2023-09-01");
+Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
 Response response = client.DeleteCategory("<categoryId>");
 
@@ -2015,7 +2015,7 @@ This sample shows how to call PartialUpdateCategoryAsync.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient(apiVersion: "2023-09-01");
+Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
 Response<AtlasGlossaryCategory> response = await client.PartialUpdateCategoryAsync("<categoryId>", new Dictionary<string, string>
 {
@@ -2026,7 +2026,7 @@ This sample shows how to call PartialUpdateCategoryAsync with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient(apiVersion: "2023-09-01");
+Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
 Response<AtlasGlossaryCategory> response = await client.PartialUpdateCategoryAsync("<categoryId>", new Dictionary<string, string>
 {
@@ -2040,7 +2040,7 @@ This sample shows how to call PartialUpdateCategory.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient(apiVersion: "2023-09-01");
+Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
 Response<AtlasGlossaryCategory> response = client.PartialUpdateCategory("<categoryId>", new Dictionary<string, string>
 {
@@ -2051,7 +2051,7 @@ This sample shows how to call PartialUpdateCategory with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient(apiVersion: "2023-09-01");
+Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
 Response<AtlasGlossaryCategory> response = client.PartialUpdateCategory("<categoryId>", new Dictionary<string, string>
 {
@@ -2065,7 +2065,7 @@ This sample shows how to call PartialUpdateCategoryAsync and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient(apiVersion: "2023-09-01");
+Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
 using RequestContent content = RequestContent.Create(new
 {
@@ -2080,7 +2080,7 @@ This sample shows how to call PartialUpdateCategoryAsync with all parameters and
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient(apiVersion: "2023-09-01");
+Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
 using RequestContent content = RequestContent.Create(new
 {
@@ -2136,7 +2136,7 @@ This sample shows how to call PartialUpdateCategory and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient(apiVersion: "2023-09-01");
+Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
 using RequestContent content = RequestContent.Create(new
 {
@@ -2151,7 +2151,7 @@ This sample shows how to call PartialUpdateCategory with all parameters and requ
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient(apiVersion: "2023-09-01");
+Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
 using RequestContent content = RequestContent.Create(new
 {
@@ -2207,7 +2207,7 @@ This sample shows how to call GetRelatedCategoriesAsync.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient(apiVersion: "2023-09-01");
+Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
 Response<IReadOnlyDictionary<string, IList<AtlasRelatedCategoryHeader>>> response = await client.GetRelatedCategoriesAsync("<categoryId>");
 ]]></code>
@@ -2215,7 +2215,7 @@ This sample shows how to call GetRelatedCategoriesAsync with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient(apiVersion: "2023-09-01");
+Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
 Response<IReadOnlyDictionary<string, IList<AtlasRelatedCategoryHeader>>> response = await client.GetRelatedCategoriesAsync("<categoryId>", limit: 1234, offset: 1234, sort: "<sort>");
 ]]></code></example>
@@ -2226,7 +2226,7 @@ This sample shows how to call GetRelatedCategories.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient(apiVersion: "2023-09-01");
+Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
 Response<IReadOnlyDictionary<string, IList<AtlasRelatedCategoryHeader>>> response = client.GetRelatedCategories("<categoryId>");
 ]]></code>
@@ -2234,7 +2234,7 @@ This sample shows how to call GetRelatedCategories with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient(apiVersion: "2023-09-01");
+Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
 Response<IReadOnlyDictionary<string, IList<AtlasRelatedCategoryHeader>>> response = client.GetRelatedCategories("<categoryId>", limit: 1234, offset: 1234, sort: "<sort>");
 ]]></code></example>
@@ -2245,7 +2245,7 @@ This sample shows how to call GetRelatedCategoriesAsync and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient(apiVersion: "2023-09-01");
+Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
 Response response = await client.GetRelatedCategoriesAsync("<categoryId>", null, null, null, null);
 
@@ -2256,7 +2256,7 @@ This sample shows how to call GetRelatedCategoriesAsync with all parameters and 
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient(apiVersion: "2023-09-01");
+Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
 Response response = await client.GetRelatedCategoriesAsync("<categoryId>", 1234, 1234, "<sort>", null);
 
@@ -2274,7 +2274,7 @@ This sample shows how to call GetRelatedCategories and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient(apiVersion: "2023-09-01");
+Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
 Response response = client.GetRelatedCategories("<categoryId>", null, null, null, null);
 
@@ -2285,7 +2285,7 @@ This sample shows how to call GetRelatedCategories with all parameters and parse
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient(apiVersion: "2023-09-01");
+Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
 Response response = client.GetRelatedCategories("<categoryId>", 1234, 1234, "<sort>", null);
 
@@ -2303,7 +2303,7 @@ This sample shows how to call GetCategoryTermsAsync.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient(apiVersion: "2023-09-01");
+Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
 Response<IReadOnlyList<AtlasRelatedTermHeader>> response = await client.GetCategoryTermsAsync("<categoryId>");
 ]]></code>
@@ -2311,7 +2311,7 @@ This sample shows how to call GetCategoryTermsAsync with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient(apiVersion: "2023-09-01");
+Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
 Response<IReadOnlyList<AtlasRelatedTermHeader>> response = await client.GetCategoryTermsAsync("<categoryId>", limit: 1234, offset: 1234, sort: "<sort>");
 ]]></code></example>
@@ -2322,7 +2322,7 @@ This sample shows how to call GetCategoryTerms.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient(apiVersion: "2023-09-01");
+Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
 Response<IReadOnlyList<AtlasRelatedTermHeader>> response = client.GetCategoryTerms("<categoryId>");
 ]]></code>
@@ -2330,7 +2330,7 @@ This sample shows how to call GetCategoryTerms with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient(apiVersion: "2023-09-01");
+Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
 Response<IReadOnlyList<AtlasRelatedTermHeader>> response = client.GetCategoryTerms("<categoryId>", limit: 1234, offset: 1234, sort: "<sort>");
 ]]></code></example>
@@ -2341,7 +2341,7 @@ This sample shows how to call GetCategoryTermsAsync and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient(apiVersion: "2023-09-01");
+Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
 Response response = await client.GetCategoryTermsAsync("<categoryId>", null, null, null, null);
 
@@ -2352,7 +2352,7 @@ This sample shows how to call GetCategoryTermsAsync with all parameters and pars
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient(apiVersion: "2023-09-01");
+Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
 Response response = await client.GetCategoryTermsAsync("<categoryId>", 1234, 1234, "<sort>", null);
 
@@ -2372,7 +2372,7 @@ This sample shows how to call GetCategoryTerms and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient(apiVersion: "2023-09-01");
+Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
 Response response = client.GetCategoryTerms("<categoryId>", null, null, null, null);
 
@@ -2383,7 +2383,7 @@ This sample shows how to call GetCategoryTerms with all parameters and parse the
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient(apiVersion: "2023-09-01");
+Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
 Response response = client.GetCategoryTerms("<categoryId>", 1234, 1234, "<sort>", null);
 
@@ -2403,18 +2403,18 @@ This sample shows how to call CreateTermAsync.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient(apiVersion: "2023-09-01");
+Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
-AtlasGlossaryTerm body = new AtlasGlossaryTerm();
-Response<AtlasGlossaryTerm> response = await client.CreateTermAsync(body);
+AtlasGlossaryTerm atlasGlossaryTerm = new AtlasGlossaryTerm();
+Response<AtlasGlossaryTerm> response = await client.CreateTermAsync(atlasGlossaryTerm);
 ]]></code>
 This sample shows how to call CreateTermAsync with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient(apiVersion: "2023-09-01");
+Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
-AtlasGlossaryTerm body = new AtlasGlossaryTerm
+AtlasGlossaryTerm atlasGlossaryTerm = new AtlasGlossaryTerm
 {
     Guid = "<guid>",
     Classifications = {new AtlasClassification
@@ -2440,9 +2440,9 @@ AtlasGlossaryTerm body = new AtlasGlossaryTerm
     QualifiedName = "<qualifiedName>",
     ShortDescription = "<shortDescription>",
     LastModifiedTS = "<lastModifiedTS>",
-    CreateTime = DateTimeOffset.FromUnixTimeSeconds(1652209051L),
+    CreateTime = 1234L,
     CreatedBy = "<createdBy>",
-    UpdateTime = DateTimeOffset.FromUnixTimeSeconds(1652209051L),
+    UpdateTime = 1234L,
     UpdatedBy = "<updatedBy>",
     Abbreviation = "<abbreviation>",
     TemplateName = { BinaryData.FromObjectAsJson(new object()) },
@@ -2547,7 +2547,7 @@ AtlasGlossaryTerm body = new AtlasGlossaryTerm
     ValidValues = { default },
     ValidValuesFor = { default },
 };
-Response<AtlasGlossaryTerm> response = await client.CreateTermAsync(body, includeTermHierarchy: true);
+Response<AtlasGlossaryTerm> response = await client.CreateTermAsync(atlasGlossaryTerm, includeTermHierarchy: true);
 ]]></code></example>
     </member>
     <member name="CreateTerm(AtlasGlossaryTerm,bool?,CancellationToken)">
@@ -2556,18 +2556,18 @@ This sample shows how to call CreateTerm.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient(apiVersion: "2023-09-01");
+Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
-AtlasGlossaryTerm body = new AtlasGlossaryTerm();
-Response<AtlasGlossaryTerm> response = client.CreateTerm(body);
+AtlasGlossaryTerm atlasGlossaryTerm = new AtlasGlossaryTerm();
+Response<AtlasGlossaryTerm> response = client.CreateTerm(atlasGlossaryTerm);
 ]]></code>
 This sample shows how to call CreateTerm with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient(apiVersion: "2023-09-01");
+Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
-AtlasGlossaryTerm body = new AtlasGlossaryTerm
+AtlasGlossaryTerm atlasGlossaryTerm = new AtlasGlossaryTerm
 {
     Guid = "<guid>",
     Classifications = {new AtlasClassification
@@ -2593,9 +2593,9 @@ AtlasGlossaryTerm body = new AtlasGlossaryTerm
     QualifiedName = "<qualifiedName>",
     ShortDescription = "<shortDescription>",
     LastModifiedTS = "<lastModifiedTS>",
-    CreateTime = DateTimeOffset.FromUnixTimeSeconds(1652209051L),
+    CreateTime = 1234L,
     CreatedBy = "<createdBy>",
-    UpdateTime = DateTimeOffset.FromUnixTimeSeconds(1652209051L),
+    UpdateTime = 1234L,
     UpdatedBy = "<updatedBy>",
     Abbreviation = "<abbreviation>",
     TemplateName = { BinaryData.FromObjectAsJson(new object()) },
@@ -2700,7 +2700,7 @@ AtlasGlossaryTerm body = new AtlasGlossaryTerm
     ValidValues = { default },
     ValidValuesFor = { default },
 };
-Response<AtlasGlossaryTerm> response = client.CreateTerm(body, includeTermHierarchy: true);
+Response<AtlasGlossaryTerm> response = client.CreateTerm(atlasGlossaryTerm, includeTermHierarchy: true);
 ]]></code></example>
     </member>
     <member name="CreateTermAsync(RequestContent,bool?,RequestContext)">
@@ -2709,7 +2709,7 @@ This sample shows how to call CreateTermAsync and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient(apiVersion: "2023-09-01");
+Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
 using RequestContent content = RequestContent.Create(new object());
 Response response = await client.CreateTermAsync(content);
@@ -2721,7 +2721,7 @@ This sample shows how to call CreateTermAsync with all parameters and request co
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient(apiVersion: "2023-09-01");
+Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
 using RequestContent content = RequestContent.Create(new
 {
@@ -2755,9 +2755,9 @@ using RequestContent content = RequestContent.Create(new
     qualifiedName = "<qualifiedName>",
     shortDescription = "<shortDescription>",
     lastModifiedTS = "<lastModifiedTS>",
-    createTime = 1652209051,
+    createTime = 1234L,
     createdBy = "<createdBy>",
-    updateTime = 1652209051,
+    updateTime = 1234L,
     updatedBy = "<updatedBy>",
     abbreviation = "<abbreviation>",
     templateName = new object[]
@@ -3081,7 +3081,7 @@ This sample shows how to call CreateTerm and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient(apiVersion: "2023-09-01");
+Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
 using RequestContent content = RequestContent.Create(new object());
 Response response = client.CreateTerm(content);
@@ -3093,7 +3093,7 @@ This sample shows how to call CreateTerm with all parameters and request content
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient(apiVersion: "2023-09-01");
+Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
 using RequestContent content = RequestContent.Create(new
 {
@@ -3127,9 +3127,9 @@ using RequestContent content = RequestContent.Create(new
     qualifiedName = "<qualifiedName>",
     shortDescription = "<shortDescription>",
     lastModifiedTS = "<lastModifiedTS>",
-    createTime = 1652209051,
+    createTime = 1234L,
     createdBy = "<createdBy>",
-    updateTime = 1652209051,
+    updateTime = 1234L,
     updatedBy = "<updatedBy>",
     abbreviation = "<abbreviation>",
     templateName = new object[]
@@ -3453,7 +3453,7 @@ This sample shows how to call GetTermAsync.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient(apiVersion: "2023-09-01");
+Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
 Response<AtlasGlossaryTerm> response = await client.GetTermAsync("<termId>");
 ]]></code>
@@ -3472,7 +3472,7 @@ This sample shows how to call GetTerm.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient(apiVersion: "2023-09-01");
+Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
 Response<AtlasGlossaryTerm> response = client.GetTerm("<termId>");
 ]]></code>
@@ -3491,7 +3491,7 @@ This sample shows how to call GetTermAsync and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient(apiVersion: "2023-09-01");
+Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
 Response response = await client.GetTermAsync("<termId>", null);
 
@@ -3663,7 +3663,7 @@ This sample shows how to call GetTerm and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient(apiVersion: "2023-09-01");
+Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
 Response response = client.GetTerm("<termId>", null);
 
@@ -3835,10 +3835,10 @@ This sample shows how to call UpdateTermAsync.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient(apiVersion: "2023-09-01");
+Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
-AtlasGlossaryTerm body = new AtlasGlossaryTerm();
-Response<AtlasGlossaryTerm> response = await client.UpdateTermAsync("<termId>", body);
+AtlasGlossaryTerm atlasGlossaryTerm = new AtlasGlossaryTerm();
+Response<AtlasGlossaryTerm> response = await client.UpdateTermAsync("<termId>", atlasGlossaryTerm);
 ]]></code>
 This sample shows how to call UpdateTermAsync with all parameters.
 <code><![CDATA[
@@ -3846,7 +3846,7 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient(apiVersion: "2023-09-01");
 
-AtlasGlossaryTerm body = new AtlasGlossaryTerm
+AtlasGlossaryTerm atlasGlossaryTerm = new AtlasGlossaryTerm
 {
     Guid = "<guid>",
     Classifications = {new AtlasClassification
@@ -3872,9 +3872,9 @@ AtlasGlossaryTerm body = new AtlasGlossaryTerm
     QualifiedName = "<qualifiedName>",
     ShortDescription = "<shortDescription>",
     LastModifiedTS = "<lastModifiedTS>",
-    CreateTime = DateTimeOffset.FromUnixTimeSeconds(1652209051L),
+    CreateTime = 1234L,
     CreatedBy = "<createdBy>",
-    UpdateTime = DateTimeOffset.FromUnixTimeSeconds(1652209051L),
+    UpdateTime = 1234L,
     UpdatedBy = "<updatedBy>",
     Abbreviation = "<abbreviation>",
     TemplateName = { BinaryData.FromObjectAsJson(new object()) },
@@ -3979,7 +3979,7 @@ AtlasGlossaryTerm body = new AtlasGlossaryTerm
     ValidValues = { default },
     ValidValuesFor = { default },
 };
-Response<AtlasGlossaryTerm> response = await client.UpdateTermAsync("<termId>", body, includeTermHierarchy: true);
+Response<AtlasGlossaryTerm> response = await client.UpdateTermAsync("<termId>", atlasGlossaryTerm, includeTermHierarchy: true);
 ]]></code></example>
     </member>
     <member name="UpdateTerm(string,AtlasGlossaryTerm,bool?,CancellationToken)">
@@ -3988,10 +3988,10 @@ This sample shows how to call UpdateTerm.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient(apiVersion: "2023-09-01");
+Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
-AtlasGlossaryTerm body = new AtlasGlossaryTerm();
-Response<AtlasGlossaryTerm> response = client.UpdateTerm("<termId>", body);
+AtlasGlossaryTerm atlasGlossaryTerm = new AtlasGlossaryTerm();
+Response<AtlasGlossaryTerm> response = client.UpdateTerm("<termId>", atlasGlossaryTerm);
 ]]></code>
 This sample shows how to call UpdateTerm with all parameters.
 <code><![CDATA[
@@ -3999,7 +3999,7 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient(apiVersion: "2023-09-01");
 
-AtlasGlossaryTerm body = new AtlasGlossaryTerm
+AtlasGlossaryTerm atlasGlossaryTerm = new AtlasGlossaryTerm
 {
     Guid = "<guid>",
     Classifications = {new AtlasClassification
@@ -4025,9 +4025,9 @@ AtlasGlossaryTerm body = new AtlasGlossaryTerm
     QualifiedName = "<qualifiedName>",
     ShortDescription = "<shortDescription>",
     LastModifiedTS = "<lastModifiedTS>",
-    CreateTime = DateTimeOffset.FromUnixTimeSeconds(1652209051L),
+    CreateTime = 1234L,
     CreatedBy = "<createdBy>",
-    UpdateTime = DateTimeOffset.FromUnixTimeSeconds(1652209051L),
+    UpdateTime = 1234L,
     UpdatedBy = "<updatedBy>",
     Abbreviation = "<abbreviation>",
     TemplateName = { BinaryData.FromObjectAsJson(new object()) },
@@ -4132,7 +4132,7 @@ AtlasGlossaryTerm body = new AtlasGlossaryTerm
     ValidValues = { default },
     ValidValuesFor = { default },
 };
-Response<AtlasGlossaryTerm> response = client.UpdateTerm("<termId>", body, includeTermHierarchy: true);
+Response<AtlasGlossaryTerm> response = client.UpdateTerm("<termId>", atlasGlossaryTerm, includeTermHierarchy: true);
 ]]></code></example>
     </member>
     <member name="UpdateTermAsync(string,RequestContent,bool?,RequestContext)">
@@ -4141,7 +4141,7 @@ This sample shows how to call UpdateTermAsync and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient(apiVersion: "2023-09-01");
+Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
 using RequestContent content = RequestContent.Create(new object());
 Response response = await client.UpdateTermAsync("<termId>", content);
@@ -4187,9 +4187,9 @@ using RequestContent content = RequestContent.Create(new
     qualifiedName = "<qualifiedName>",
     shortDescription = "<shortDescription>",
     lastModifiedTS = "<lastModifiedTS>",
-    createTime = 1652209051,
+    createTime = 1234L,
     createdBy = "<createdBy>",
-    updateTime = 1652209051,
+    updateTime = 1234L,
     updatedBy = "<updatedBy>",
     abbreviation = "<abbreviation>",
     templateName = new object[]
@@ -4513,7 +4513,7 @@ This sample shows how to call UpdateTerm and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient(apiVersion: "2023-09-01");
+Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
 using RequestContent content = RequestContent.Create(new object());
 Response response = client.UpdateTerm("<termId>", content);
@@ -4559,9 +4559,9 @@ using RequestContent content = RequestContent.Create(new
     qualifiedName = "<qualifiedName>",
     shortDescription = "<shortDescription>",
     lastModifiedTS = "<lastModifiedTS>",
-    createTime = 1652209051,
+    createTime = 1234L,
     createdBy = "<createdBy>",
-    updateTime = 1652209051,
+    updateTime = 1234L,
     updatedBy = "<updatedBy>",
     abbreviation = "<abbreviation>",
     templateName = new object[]
@@ -4885,7 +4885,7 @@ This sample shows how to call DeleteTermAsync.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient(apiVersion: "2023-09-01");
+Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
 Response response = await client.DeleteTermAsync("<termId>");
 
@@ -4895,7 +4895,7 @@ This sample shows how to call DeleteTermAsync with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient(apiVersion: "2023-09-01");
+Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
 Response response = await client.DeleteTermAsync("<termId>");
 
@@ -4908,7 +4908,7 @@ This sample shows how to call DeleteTerm.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient(apiVersion: "2023-09-01");
+Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
 Response response = client.DeleteTerm("<termId>");
 
@@ -4918,7 +4918,7 @@ This sample shows how to call DeleteTerm with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient(apiVersion: "2023-09-01");
+Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
 Response response = client.DeleteTerm("<termId>");
 
@@ -4931,7 +4931,7 @@ This sample shows how to call PartialUpdateTermAsync.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient(apiVersion: "2023-09-01");
+Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
 Response<AtlasGlossaryTerm> response = await client.PartialUpdateTermAsync("<termId>", new Dictionary<string, string>
 {
@@ -4956,7 +4956,7 @@ This sample shows how to call PartialUpdateTerm.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient(apiVersion: "2023-09-01");
+Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
 Response<AtlasGlossaryTerm> response = client.PartialUpdateTerm("<termId>", new Dictionary<string, string>
 {
@@ -4981,7 +4981,7 @@ This sample shows how to call PartialUpdateTermAsync and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient(apiVersion: "2023-09-01");
+Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
 using RequestContent content = RequestContent.Create(new
 {
@@ -5161,7 +5161,7 @@ This sample shows how to call PartialUpdateTerm and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient(apiVersion: "2023-09-01");
+Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
 using RequestContent content = RequestContent.Create(new
 {
@@ -5341,7 +5341,7 @@ This sample shows how to call CreateTermsAsync.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient(apiVersion: "2023-09-01");
+Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
 Response<IReadOnlyList<AtlasGlossaryTerm>> response = await client.CreateTermsAsync(new AtlasGlossaryTerm[]
 {
@@ -5382,9 +5382,9 @@ Response<IReadOnlyList<AtlasGlossaryTerm>> response = await client.CreateTermsAs
         QualifiedName = "<qualifiedName>",
         ShortDescription = "<shortDescription>",
         LastModifiedTS = "<lastModifiedTS>",
-        CreateTime = DateTimeOffset.FromUnixTimeSeconds(1652209051L),
+        CreateTime = 1234L,
         CreatedBy = "<createdBy>",
-        UpdateTime = DateTimeOffset.FromUnixTimeSeconds(1652209051L),
+        UpdateTime = 1234L,
         UpdatedBy = "<updatedBy>",
         Abbreviation = "<abbreviation>",
         TemplateName = {BinaryData.FromObjectAsJson(new object())},
@@ -5498,7 +5498,7 @@ This sample shows how to call CreateTerms.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient(apiVersion: "2023-09-01");
+Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
 Response<IReadOnlyList<AtlasGlossaryTerm>> response = client.CreateTerms(new AtlasGlossaryTerm[]
 {
@@ -5539,9 +5539,9 @@ Response<IReadOnlyList<AtlasGlossaryTerm>> response = client.CreateTerms(new Atl
         QualifiedName = "<qualifiedName>",
         ShortDescription = "<shortDescription>",
         LastModifiedTS = "<lastModifiedTS>",
-        CreateTime = DateTimeOffset.FromUnixTimeSeconds(1652209051L),
+        CreateTime = 1234L,
         CreatedBy = "<createdBy>",
-        UpdateTime = DateTimeOffset.FromUnixTimeSeconds(1652209051L),
+        UpdateTime = 1234L,
         UpdatedBy = "<updatedBy>",
         Abbreviation = "<abbreviation>",
         TemplateName = {BinaryData.FromObjectAsJson(new object())},
@@ -5655,7 +5655,7 @@ This sample shows how to call CreateTermsAsync and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient(apiVersion: "2023-09-01");
+Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
 using RequestContent content = RequestContent.Create(new object[]
 {
@@ -5706,9 +5706,9 @@ using RequestContent content = RequestContent.Create(new object[]
         qualifiedName = "<qualifiedName>",
         shortDescription = "<shortDescription>",
         lastModifiedTS = "<lastModifiedTS>",
-        createTime = 1652209051,
+        createTime = 1234L,
         createdBy = "<createdBy>",
-        updateTime = 1652209051,
+        updateTime = 1234L,
         updatedBy = "<updatedBy>",
         abbreviation = "<abbreviation>",
         templateName = new object[]
@@ -6033,7 +6033,7 @@ This sample shows how to call CreateTerms and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient(apiVersion: "2023-09-01");
+Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
 using RequestContent content = RequestContent.Create(new object[]
 {
@@ -6084,9 +6084,9 @@ using RequestContent content = RequestContent.Create(new object[]
         qualifiedName = "<qualifiedName>",
         shortDescription = "<shortDescription>",
         lastModifiedTS = "<lastModifiedTS>",
-        createTime = 1652209051,
+        createTime = 1234L,
         createdBy = "<createdBy>",
-        updateTime = 1652209051,
+        updateTime = 1234L,
         updatedBy = "<updatedBy>",
         abbreviation = "<abbreviation>",
         templateName = new object[]
@@ -6411,7 +6411,7 @@ This sample shows how to call GetEntitiesAssignedWithTermAsync.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient(apiVersion: "2023-09-01");
+Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
 Response<IReadOnlyList<AtlasRelatedObjectId>> response = await client.GetEntitiesAssignedWithTermAsync("<termId>");
 ]]></code>
@@ -6419,7 +6419,7 @@ This sample shows how to call GetEntitiesAssignedWithTermAsync with all paramete
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient(apiVersion: "2023-09-01");
+Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
 Response<IReadOnlyList<AtlasRelatedObjectId>> response = await client.GetEntitiesAssignedWithTermAsync("<termId>", limit: 1234, offset: 1234, sort: "<sort>");
 ]]></code></example>
@@ -6430,7 +6430,7 @@ This sample shows how to call GetEntitiesAssignedWithTerm.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient(apiVersion: "2023-09-01");
+Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
 Response<IReadOnlyList<AtlasRelatedObjectId>> response = client.GetEntitiesAssignedWithTerm("<termId>");
 ]]></code>
@@ -6438,7 +6438,7 @@ This sample shows how to call GetEntitiesAssignedWithTerm with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient(apiVersion: "2023-09-01");
+Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
 Response<IReadOnlyList<AtlasRelatedObjectId>> response = client.GetEntitiesAssignedWithTerm("<termId>", limit: 1234, offset: 1234, sort: "<sort>");
 ]]></code></example>
@@ -6449,7 +6449,7 @@ This sample shows how to call GetEntitiesAssignedWithTermAsync and parse the res
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient(apiVersion: "2023-09-01");
+Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
 Response response = await client.GetEntitiesAssignedWithTermAsync("<termId>", null, null, null, null);
 
@@ -6460,7 +6460,7 @@ This sample shows how to call GetEntitiesAssignedWithTermAsync with all paramete
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient(apiVersion: "2023-09-01");
+Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
 Response response = await client.GetEntitiesAssignedWithTermAsync("<termId>", 1234, 1234, "<sort>", null);
 
@@ -6484,7 +6484,7 @@ This sample shows how to call GetEntitiesAssignedWithTerm and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient(apiVersion: "2023-09-01");
+Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
 Response response = client.GetEntitiesAssignedWithTerm("<termId>", null, null, null, null);
 
@@ -6495,7 +6495,7 @@ This sample shows how to call GetEntitiesAssignedWithTerm with all parameters an
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient(apiVersion: "2023-09-01");
+Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
 Response response = client.GetEntitiesAssignedWithTerm("<termId>", 1234, 1234, "<sort>", null);
 
@@ -6519,7 +6519,7 @@ This sample shows how to call AssignTermToEntitiesAsync.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient(apiVersion: "2023-09-01");
+Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
 Response response = await client.AssignTermToEntitiesAsync("<termId>", new AtlasRelatedObjectId[]
 {
@@ -6530,7 +6530,7 @@ This sample shows how to call AssignTermToEntitiesAsync with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient(apiVersion: "2023-09-01");
+Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
 Response response = await client.AssignTermToEntitiesAsync("<termId>", new AtlasRelatedObjectId[]
 {
@@ -6566,7 +6566,7 @@ This sample shows how to call AssignTermToEntities.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient(apiVersion: "2023-09-01");
+Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
 Response response = client.AssignTermToEntities("<termId>", new AtlasRelatedObjectId[]
 {
@@ -6577,7 +6577,7 @@ This sample shows how to call AssignTermToEntities with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient(apiVersion: "2023-09-01");
+Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
 Response response = client.AssignTermToEntities("<termId>", new AtlasRelatedObjectId[]
 {
@@ -6613,7 +6613,7 @@ This sample shows how to call AssignTermToEntitiesAsync.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient(apiVersion: "2023-09-01");
+Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
 using RequestContent content = RequestContent.Create(new object[]
 {
@@ -6627,7 +6627,7 @@ This sample shows how to call AssignTermToEntitiesAsync with all parameters and 
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient(apiVersion: "2023-09-01");
+Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
 using RequestContent content = RequestContent.Create(new object[]
 {
@@ -6666,7 +6666,7 @@ This sample shows how to call AssignTermToEntities.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient(apiVersion: "2023-09-01");
+Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
 using RequestContent content = RequestContent.Create(new object[]
 {
@@ -6680,7 +6680,7 @@ This sample shows how to call AssignTermToEntities with all parameters and reque
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient(apiVersion: "2023-09-01");
+Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
 using RequestContent content = RequestContent.Create(new object[]
 {
@@ -6719,7 +6719,7 @@ This sample shows how to call DeleteTermAssignmentFromEntitiesAsync.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient(apiVersion: "2023-09-01");
+Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
 Response response = await client.DeleteTermAssignmentFromEntitiesAsync("<termId>", new AtlasRelatedObjectId[]
 {
@@ -6730,7 +6730,7 @@ This sample shows how to call DeleteTermAssignmentFromEntitiesAsync with all par
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient(apiVersion: "2023-09-01");
+Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
 Response response = await client.DeleteTermAssignmentFromEntitiesAsync("<termId>", new AtlasRelatedObjectId[]
 {
@@ -6766,7 +6766,7 @@ This sample shows how to call DeleteTermAssignmentFromEntities.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient(apiVersion: "2023-09-01");
+Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
 Response response = client.DeleteTermAssignmentFromEntities("<termId>", new AtlasRelatedObjectId[]
 {
@@ -6777,7 +6777,7 @@ This sample shows how to call DeleteTermAssignmentFromEntities with all paramete
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient(apiVersion: "2023-09-01");
+Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
 Response response = client.DeleteTermAssignmentFromEntities("<termId>", new AtlasRelatedObjectId[]
 {
@@ -6813,7 +6813,7 @@ This sample shows how to call DeleteTermAssignmentFromEntitiesAsync.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient(apiVersion: "2023-09-01");
+Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
 using RequestContent content = RequestContent.Create(new object[]
 {
@@ -6827,7 +6827,7 @@ This sample shows how to call DeleteTermAssignmentFromEntitiesAsync with all par
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient(apiVersion: "2023-09-01");
+Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
 using RequestContent content = RequestContent.Create(new object[]
 {
@@ -6866,7 +6866,7 @@ This sample shows how to call DeleteTermAssignmentFromEntities.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient(apiVersion: "2023-09-01");
+Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
 using RequestContent content = RequestContent.Create(new object[]
 {
@@ -6880,7 +6880,7 @@ This sample shows how to call DeleteTermAssignmentFromEntities with all paramete
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient(apiVersion: "2023-09-01");
+Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
 using RequestContent content = RequestContent.Create(new object[]
 {
@@ -6919,7 +6919,7 @@ This sample shows how to call GetRelatedTermsAsync.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient(apiVersion: "2023-09-01");
+Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
 Response<IReadOnlyDictionary<string, IList<AtlasRelatedTermHeader>>> response = await client.GetRelatedTermsAsync("<termId>");
 ]]></code>
@@ -6938,7 +6938,7 @@ This sample shows how to call GetRelatedTerms.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient(apiVersion: "2023-09-01");
+Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
 Response<IReadOnlyDictionary<string, IList<AtlasRelatedTermHeader>>> response = client.GetRelatedTerms("<termId>");
 ]]></code>
@@ -6957,7 +6957,7 @@ This sample shows how to call GetRelatedTermsAsync and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient(apiVersion: "2023-09-01");
+Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
 Response response = await client.GetRelatedTermsAsync("<termId>", null, null, null, null);
 
@@ -6988,7 +6988,7 @@ This sample shows how to call GetRelatedTerms and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient(apiVersion: "2023-09-01");
+Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
 Response response = client.GetRelatedTerms("<termId>", null, null, null, null);
 
@@ -7019,7 +7019,7 @@ This sample shows how to call GetGlossaryAsync.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient(apiVersion: "2023-09-01");
+Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
 Response<AtlasGlossary> response = await client.GetGlossaryAsync("<glossaryId>");
 ]]></code>
@@ -7027,7 +7027,7 @@ This sample shows how to call GetGlossaryAsync with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient(apiVersion: "2023-09-01");
+Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
 Response<AtlasGlossary> response = await client.GetGlossaryAsync("<glossaryId>");
 ]]></code></example>
@@ -7038,7 +7038,7 @@ This sample shows how to call GetGlossary.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient(apiVersion: "2023-09-01");
+Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
 Response<AtlasGlossary> response = client.GetGlossary("<glossaryId>");
 ]]></code>
@@ -7046,7 +7046,7 @@ This sample shows how to call GetGlossary with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient(apiVersion: "2023-09-01");
+Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
 Response<AtlasGlossary> response = client.GetGlossary("<glossaryId>");
 ]]></code></example>
@@ -7057,7 +7057,7 @@ This sample shows how to call GetGlossaryAsync and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient(apiVersion: "2023-09-01");
+Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
 Response response = await client.GetGlossaryAsync("<glossaryId>", null);
 
@@ -7068,7 +7068,7 @@ This sample shows how to call GetGlossaryAsync with all parameters and parse the
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient(apiVersion: "2023-09-01");
+Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
 Response response = await client.GetGlossaryAsync("<glossaryId>", null);
 
@@ -7114,7 +7114,7 @@ This sample shows how to call GetGlossary and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient(apiVersion: "2023-09-01");
+Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
 Response response = client.GetGlossary("<glossaryId>", null);
 
@@ -7125,7 +7125,7 @@ This sample shows how to call GetGlossary with all parameters and parse the resu
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient(apiVersion: "2023-09-01");
+Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
 Response response = client.GetGlossary("<glossaryId>", null);
 
@@ -7171,10 +7171,10 @@ This sample shows how to call UpdateAsync.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient(apiVersion: "2023-09-01");
+Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
-AtlasGlossary body = new AtlasGlossary();
-Response<AtlasGlossary> response = await client.UpdateAsync("<glossaryId>", body);
+AtlasGlossary atlasGlossary = new AtlasGlossary();
+Response<AtlasGlossary> response = await client.UpdateAsync("<glossaryId>", atlasGlossary);
 ]]></code>
 This sample shows how to call UpdateAsync with all parameters.
 <code><![CDATA[
@@ -7182,7 +7182,7 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient(apiVersion: "2023-09-01");
 
-AtlasGlossary body = new AtlasGlossary
+AtlasGlossary atlasGlossary = new AtlasGlossary
 {
     Guid = "<guid>",
     Classifications = {new AtlasClassification
@@ -7208,9 +7208,9 @@ AtlasGlossary body = new AtlasGlossary
     QualifiedName = "<qualifiedName>",
     ShortDescription = "<shortDescription>",
     LastModifiedTS = "<lastModifiedTS>",
-    CreateTime = DateTimeOffset.FromUnixTimeSeconds(1652209051L),
+    CreateTime = 1234L,
     CreatedBy = "<createdBy>",
-    UpdateTime = DateTimeOffset.FromUnixTimeSeconds(1652209051L),
+    UpdateTime = 1234L,
     UpdatedBy = "<updatedBy>",
     Categories = {new AtlasRelatedCategoryHeader
     {
@@ -7233,7 +7233,7 @@ AtlasGlossary body = new AtlasGlossary
     }},
     Usage = "<usage>",
 };
-Response<AtlasGlossary> response = await client.UpdateAsync("<glossaryId>", body, ignoreTermsAndCategories: true);
+Response<AtlasGlossary> response = await client.UpdateAsync("<glossaryId>", atlasGlossary, ignoreTermsAndCategories: true);
 ]]></code></example>
     </member>
     <member name="Update(string,AtlasGlossary,bool?,CancellationToken)">
@@ -7242,10 +7242,10 @@ This sample shows how to call Update.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient(apiVersion: "2023-09-01");
+Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
-AtlasGlossary body = new AtlasGlossary();
-Response<AtlasGlossary> response = client.Update("<glossaryId>", body);
+AtlasGlossary atlasGlossary = new AtlasGlossary();
+Response<AtlasGlossary> response = client.Update("<glossaryId>", atlasGlossary);
 ]]></code>
 This sample shows how to call Update with all parameters.
 <code><![CDATA[
@@ -7253,7 +7253,7 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient(apiVersion: "2023-09-01");
 
-AtlasGlossary body = new AtlasGlossary
+AtlasGlossary atlasGlossary = new AtlasGlossary
 {
     Guid = "<guid>",
     Classifications = {new AtlasClassification
@@ -7279,9 +7279,9 @@ AtlasGlossary body = new AtlasGlossary
     QualifiedName = "<qualifiedName>",
     ShortDescription = "<shortDescription>",
     LastModifiedTS = "<lastModifiedTS>",
-    CreateTime = DateTimeOffset.FromUnixTimeSeconds(1652209051L),
+    CreateTime = 1234L,
     CreatedBy = "<createdBy>",
-    UpdateTime = DateTimeOffset.FromUnixTimeSeconds(1652209051L),
+    UpdateTime = 1234L,
     UpdatedBy = "<updatedBy>",
     Categories = {new AtlasRelatedCategoryHeader
     {
@@ -7304,7 +7304,7 @@ AtlasGlossary body = new AtlasGlossary
     }},
     Usage = "<usage>",
 };
-Response<AtlasGlossary> response = client.Update("<glossaryId>", body, ignoreTermsAndCategories: true);
+Response<AtlasGlossary> response = client.Update("<glossaryId>", atlasGlossary, ignoreTermsAndCategories: true);
 ]]></code></example>
     </member>
     <member name="UpdateAsync(string,RequestContent,bool?,RequestContext)">
@@ -7313,7 +7313,7 @@ This sample shows how to call UpdateAsync and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient(apiVersion: "2023-09-01");
+Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
 using RequestContent content = RequestContent.Create(new object());
 Response response = await client.UpdateAsync("<glossaryId>", content);
@@ -7359,9 +7359,9 @@ using RequestContent content = RequestContent.Create(new
     qualifiedName = "<qualifiedName>",
     shortDescription = "<shortDescription>",
     lastModifiedTS = "<lastModifiedTS>",
-    createTime = 1652209051,
+    createTime = 1234L,
     createdBy = "<createdBy>",
-    updateTime = 1652209051,
+    updateTime = 1234L,
     updatedBy = "<updatedBy>",
     categories = new object[]
     {
@@ -7434,7 +7434,7 @@ This sample shows how to call Update and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient(apiVersion: "2023-09-01");
+Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
 using RequestContent content = RequestContent.Create(new object());
 Response response = client.Update("<glossaryId>", content);
@@ -7480,9 +7480,9 @@ using RequestContent content = RequestContent.Create(new
     qualifiedName = "<qualifiedName>",
     shortDescription = "<shortDescription>",
     lastModifiedTS = "<lastModifiedTS>",
-    createTime = 1652209051,
+    createTime = 1234L,
     createdBy = "<createdBy>",
-    updateTime = 1652209051,
+    updateTime = 1234L,
     updatedBy = "<updatedBy>",
     categories = new object[]
     {
@@ -7555,7 +7555,7 @@ This sample shows how to call DeleteAsync.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient(apiVersion: "2023-09-01");
+Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
 Response response = await client.DeleteAsync("<glossaryId>");
 
@@ -7565,7 +7565,7 @@ This sample shows how to call DeleteAsync with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient(apiVersion: "2023-09-01");
+Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
 Response response = await client.DeleteAsync("<glossaryId>");
 
@@ -7578,7 +7578,7 @@ This sample shows how to call Delete.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient(apiVersion: "2023-09-01");
+Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
 Response response = client.Delete("<glossaryId>");
 
@@ -7588,7 +7588,7 @@ This sample shows how to call Delete with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient(apiVersion: "2023-09-01");
+Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
 Response response = client.Delete("<glossaryId>");
 
@@ -7601,7 +7601,7 @@ This sample shows how to call GetCategoriesAsync.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient(apiVersion: "2023-09-01");
+Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
 Response<IReadOnlyList<AtlasGlossaryCategory>> response = await client.GetCategoriesAsync("<glossaryId>");
 ]]></code>
@@ -7609,7 +7609,7 @@ This sample shows how to call GetCategoriesAsync with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient(apiVersion: "2023-09-01");
+Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
 Response<IReadOnlyList<AtlasGlossaryCategory>> response = await client.GetCategoriesAsync("<glossaryId>", limit: 1234, offset: 1234, sort: "<sort>");
 ]]></code></example>
@@ -7620,7 +7620,7 @@ This sample shows how to call GetCategories.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient(apiVersion: "2023-09-01");
+Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
 Response<IReadOnlyList<AtlasGlossaryCategory>> response = client.GetCategories("<glossaryId>");
 ]]></code>
@@ -7628,7 +7628,7 @@ This sample shows how to call GetCategories with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient(apiVersion: "2023-09-01");
+Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
 Response<IReadOnlyList<AtlasGlossaryCategory>> response = client.GetCategories("<glossaryId>", limit: 1234, offset: 1234, sort: "<sort>");
 ]]></code></example>
@@ -7639,7 +7639,7 @@ This sample shows how to call GetCategoriesAsync and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient(apiVersion: "2023-09-01");
+Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
 Response response = await client.GetCategoriesAsync("<glossaryId>", null, null, null, null);
 
@@ -7650,7 +7650,7 @@ This sample shows how to call GetCategoriesAsync with all parameters and parse t
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient(apiVersion: "2023-09-01");
+Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
 Response response = await client.GetCategoriesAsync("<glossaryId>", 1234, 1234, "<sort>", null);
 
@@ -7702,7 +7702,7 @@ This sample shows how to call GetCategories and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient(apiVersion: "2023-09-01");
+Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
 Response response = client.GetCategories("<glossaryId>", null, null, null, null);
 
@@ -7713,7 +7713,7 @@ This sample shows how to call GetCategories with all parameters and parse the re
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient(apiVersion: "2023-09-01");
+Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
 Response response = client.GetCategories("<glossaryId>", 1234, 1234, "<sort>", null);
 
@@ -7765,7 +7765,7 @@ This sample shows how to call GetCategoriesHeadersAsync.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient(apiVersion: "2023-09-01");
+Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
 Response<IReadOnlyList<AtlasRelatedCategoryHeader>> response = await client.GetCategoriesHeadersAsync("<glossaryId>");
 ]]></code>
@@ -7773,7 +7773,7 @@ This sample shows how to call GetCategoriesHeadersAsync with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient(apiVersion: "2023-09-01");
+Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
 Response<IReadOnlyList<AtlasRelatedCategoryHeader>> response = await client.GetCategoriesHeadersAsync("<glossaryId>", limit: 1234, offset: 1234, sort: "<sort>");
 ]]></code></example>
@@ -7784,7 +7784,7 @@ This sample shows how to call GetCategoriesHeaders.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient(apiVersion: "2023-09-01");
+Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
 Response<IReadOnlyList<AtlasRelatedCategoryHeader>> response = client.GetCategoriesHeaders("<glossaryId>");
 ]]></code>
@@ -7792,7 +7792,7 @@ This sample shows how to call GetCategoriesHeaders with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient(apiVersion: "2023-09-01");
+Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
 Response<IReadOnlyList<AtlasRelatedCategoryHeader>> response = client.GetCategoriesHeaders("<glossaryId>", limit: 1234, offset: 1234, sort: "<sort>");
 ]]></code></example>
@@ -7803,7 +7803,7 @@ This sample shows how to call GetCategoriesHeadersAsync and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient(apiVersion: "2023-09-01");
+Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
 Response response = await client.GetCategoriesHeadersAsync("<glossaryId>", null, null, null, null);
 
@@ -7814,7 +7814,7 @@ This sample shows how to call GetCategoriesHeadersAsync with all parameters and 
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient(apiVersion: "2023-09-01");
+Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
 Response response = await client.GetCategoriesHeadersAsync("<glossaryId>", 1234, 1234, "<sort>", null);
 
@@ -7832,7 +7832,7 @@ This sample shows how to call GetCategoriesHeaders and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient(apiVersion: "2023-09-01");
+Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
 Response response = client.GetCategoriesHeaders("<glossaryId>", null, null, null, null);
 
@@ -7843,7 +7843,7 @@ This sample shows how to call GetCategoriesHeaders with all parameters and parse
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient(apiVersion: "2023-09-01");
+Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
 Response response = client.GetCategoriesHeaders("<glossaryId>", 1234, 1234, "<sort>", null);
 
@@ -7861,7 +7861,7 @@ This sample shows how to call GetDetailedAsync.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient(apiVersion: "2023-09-01");
+Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
 Response<AtlasGlossaryExtInfo> response = await client.GetDetailedAsync("<glossaryId>");
 ]]></code>
@@ -7880,7 +7880,7 @@ This sample shows how to call GetDetailed.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient(apiVersion: "2023-09-01");
+Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
 Response<AtlasGlossaryExtInfo> response = client.GetDetailed("<glossaryId>");
 ]]></code>
@@ -7899,7 +7899,7 @@ This sample shows how to call GetDetailedAsync and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient(apiVersion: "2023-09-01");
+Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
 Response response = await client.GetDetailedAsync("<glossaryId>", null);
 
@@ -8143,7 +8143,7 @@ This sample shows how to call GetDetailed and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient(apiVersion: "2023-09-01");
+Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
 Response response = client.GetDetailed("<glossaryId>", null);
 
@@ -8387,7 +8387,7 @@ This sample shows how to call PartialUpdateAsync.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient(apiVersion: "2023-09-01");
+Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
 Response<AtlasGlossary> response = await client.PartialUpdateAsync("<glossaryId>", new Dictionary<string, string>
 {
@@ -8412,7 +8412,7 @@ This sample shows how to call PartialUpdate.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient(apiVersion: "2023-09-01");
+Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
 Response<AtlasGlossary> response = client.PartialUpdate("<glossaryId>", new Dictionary<string, string>
 {
@@ -8437,7 +8437,7 @@ This sample shows how to call PartialUpdateAsync and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient(apiVersion: "2023-09-01");
+Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
 using RequestContent content = RequestContent.Create(new
 {
@@ -8502,7 +8502,7 @@ This sample shows how to call PartialUpdate and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient(apiVersion: "2023-09-01");
+Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
 using RequestContent content = RequestContent.Create(new
 {
@@ -8567,7 +8567,7 @@ This sample shows how to call GetTermsAsync.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient(apiVersion: "2023-09-01");
+Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
 Response<IReadOnlyList<AtlasGlossaryTerm>> response = await client.GetTermsAsync("<glossaryId>");
 ]]></code>
@@ -8586,7 +8586,7 @@ This sample shows how to call GetTerms.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient(apiVersion: "2023-09-01");
+Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
 Response<IReadOnlyList<AtlasGlossaryTerm>> response = client.GetTerms("<glossaryId>");
 ]]></code>
@@ -8605,7 +8605,7 @@ This sample shows how to call GetTermsAsync and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient(apiVersion: "2023-09-01");
+Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
 Response response = await client.GetTermsAsync("<glossaryId>", null, null, null, null);
 
@@ -8777,7 +8777,7 @@ This sample shows how to call GetTerms and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient(apiVersion: "2023-09-01");
+Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
 Response response = client.GetTerms("<glossaryId>", null, null, null, null);
 
@@ -8949,7 +8949,7 @@ This sample shows how to call GetTermHeadersAsync.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient(apiVersion: "2023-09-01");
+Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
 Response<IReadOnlyList<AtlasRelatedTermHeader>> response = await client.GetTermHeadersAsync("<glossaryId>");
 ]]></code>
@@ -8957,7 +8957,7 @@ This sample shows how to call GetTermHeadersAsync with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient(apiVersion: "2023-09-01");
+Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
 Response<IReadOnlyList<AtlasRelatedTermHeader>> response = await client.GetTermHeadersAsync("<glossaryId>", limit: 1234, offset: 1234, sort: "<sort>");
 ]]></code></example>
@@ -8968,7 +8968,7 @@ This sample shows how to call GetTermHeaders.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient(apiVersion: "2023-09-01");
+Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
 Response<IReadOnlyList<AtlasRelatedTermHeader>> response = client.GetTermHeaders("<glossaryId>");
 ]]></code>
@@ -8976,7 +8976,7 @@ This sample shows how to call GetTermHeaders with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient(apiVersion: "2023-09-01");
+Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
 Response<IReadOnlyList<AtlasRelatedTermHeader>> response = client.GetTermHeaders("<glossaryId>", limit: 1234, offset: 1234, sort: "<sort>");
 ]]></code></example>
@@ -8987,7 +8987,7 @@ This sample shows how to call GetTermHeadersAsync and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient(apiVersion: "2023-09-01");
+Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
 Response response = await client.GetTermHeadersAsync("<glossaryId>", null, null, null, null);
 
@@ -8998,7 +8998,7 @@ This sample shows how to call GetTermHeadersAsync with all parameters and parse 
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient(apiVersion: "2023-09-01");
+Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
 Response response = await client.GetTermHeadersAsync("<glossaryId>", 1234, 1234, "<sort>", null);
 
@@ -9018,7 +9018,7 @@ This sample shows how to call GetTermHeaders and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient(apiVersion: "2023-09-01");
+Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
 Response response = client.GetTermHeaders("<glossaryId>", null, null, null, null);
 
@@ -9029,7 +9029,7 @@ This sample shows how to call GetTermHeaders with all parameters and parse the r
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient(apiVersion: "2023-09-01");
+Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
 Response response = client.GetTermHeaders("<glossaryId>", 1234, 1234, "<sort>", null);
 

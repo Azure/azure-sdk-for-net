@@ -61,7 +61,10 @@ namespace Azure.Analytics.Purview.DataMap
         /// int&gt;&gt;.
         /// For each contact type, the maximum number of contacts is 20.
         /// </summary>
-        /// <param name="body"> Atlas entity with extended information. </param>
+        /// <param name="atlasEntityWithExtInfo">
+        /// An instance of an entity along with extended info - like hive_table,
+        /// hive_database.
+        /// </param>
         /// <param name="businessAttributeUpdateBehavior">
         /// Used to define the update behavior for business attributes when updating
         /// entities.
@@ -71,14 +74,14 @@ namespace Azure.Analytics.Purview.DataMap
         /// need to move an entity to another collection.
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="atlasEntityWithExtInfo"/> is null. </exception>
         /// <include file="Docs/Entity.xml" path="doc/members/member[@name='CreateOrUpdateAsync(AtlasEntityWithExtInfo,BusinessAttributeUpdateBehavior?,string,CancellationToken)']/*" />
-        public virtual async Task<Response<EntityMutationResult>> CreateOrUpdateAsync(AtlasEntityWithExtInfo body, BusinessAttributeUpdateBehavior? businessAttributeUpdateBehavior = null, string collectionId = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<EntityMutationResult>> CreateOrUpdateAsync(AtlasEntityWithExtInfo atlasEntityWithExtInfo, BusinessAttributeUpdateBehavior? businessAttributeUpdateBehavior = null, string collectionId = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(body, nameof(body));
+            Argument.AssertNotNull(atlasEntityWithExtInfo, nameof(atlasEntityWithExtInfo));
 
             RequestContext context = FromCancellationToken(cancellationToken);
-            using RequestContent content = body.ToRequestContent();
+            using RequestContent content = atlasEntityWithExtInfo.ToRequestContent();
             Response response = await CreateOrUpdateAsync(content, businessAttributeUpdateBehavior?.ToString(), collectionId, context).ConfigureAwait(false);
             return Response.FromValue(EntityMutationResult.FromResponse(response), response);
         }
@@ -92,7 +95,10 @@ namespace Azure.Analytics.Purview.DataMap
         /// int&gt;&gt;.
         /// For each contact type, the maximum number of contacts is 20.
         /// </summary>
-        /// <param name="body"> Atlas entity with extended information. </param>
+        /// <param name="atlasEntityWithExtInfo">
+        /// An instance of an entity along with extended info - like hive_table,
+        /// hive_database.
+        /// </param>
         /// <param name="businessAttributeUpdateBehavior">
         /// Used to define the update behavior for business attributes when updating
         /// entities.
@@ -102,14 +108,14 @@ namespace Azure.Analytics.Purview.DataMap
         /// need to move an entity to another collection.
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="atlasEntityWithExtInfo"/> is null. </exception>
         /// <include file="Docs/Entity.xml" path="doc/members/member[@name='CreateOrUpdate(AtlasEntityWithExtInfo,BusinessAttributeUpdateBehavior?,string,CancellationToken)']/*" />
-        public virtual Response<EntityMutationResult> CreateOrUpdate(AtlasEntityWithExtInfo body, BusinessAttributeUpdateBehavior? businessAttributeUpdateBehavior = null, string collectionId = null, CancellationToken cancellationToken = default)
+        public virtual Response<EntityMutationResult> CreateOrUpdate(AtlasEntityWithExtInfo atlasEntityWithExtInfo, BusinessAttributeUpdateBehavior? businessAttributeUpdateBehavior = null, string collectionId = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(body, nameof(body));
+            Argument.AssertNotNull(atlasEntityWithExtInfo, nameof(atlasEntityWithExtInfo));
 
             RequestContext context = FromCancellationToken(cancellationToken);
-            using RequestContent content = body.ToRequestContent();
+            using RequestContent content = atlasEntityWithExtInfo.ToRequestContent();
             Response response = CreateOrUpdate(content, businessAttributeUpdateBehavior?.ToString(), collectionId, context);
             return Response.FromValue(EntityMutationResult.FromResponse(response), response);
         }
@@ -344,7 +350,10 @@ namespace Azure.Analytics.Purview.DataMap
         /// For each contact type, the maximum number of contacts
         /// is 20.
         /// </summary>
-        /// <param name="body"> An array of entities to create or update. </param>
+        /// <param name="atlasEntitiesWithExtInfo">
+        /// An instance of an entity along with extended info - like hive_table,
+        /// hive_database.
+        /// </param>
         /// <param name="collectionId">
         /// The collection where entities will be moved to. Only specify a value if you
         /// need to move an entity to another collection.
@@ -354,14 +363,14 @@ namespace Azure.Analytics.Purview.DataMap
         /// entities.
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="atlasEntitiesWithExtInfo"/> is null. </exception>
         /// <include file="Docs/Entity.xml" path="doc/members/member[@name='BatchCreateOrUpdateAsync(AtlasEntitiesWithExtInfo,string,BusinessAttributeUpdateBehavior?,CancellationToken)']/*" />
-        public virtual async Task<Response<EntityMutationResult>> BatchCreateOrUpdateAsync(AtlasEntitiesWithExtInfo body, string collectionId = null, BusinessAttributeUpdateBehavior? businessAttributeUpdateBehavior = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<EntityMutationResult>> BatchCreateOrUpdateAsync(AtlasEntitiesWithExtInfo atlasEntitiesWithExtInfo, string collectionId = null, BusinessAttributeUpdateBehavior? businessAttributeUpdateBehavior = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(body, nameof(body));
+            Argument.AssertNotNull(atlasEntitiesWithExtInfo, nameof(atlasEntitiesWithExtInfo));
 
             RequestContext context = FromCancellationToken(cancellationToken);
-            using RequestContent content = body.ToRequestContent();
+            using RequestContent content = atlasEntitiesWithExtInfo.ToRequestContent();
             Response response = await BatchCreateOrUpdateAsync(content, collectionId, businessAttributeUpdateBehavior?.ToString(), context).ConfigureAwait(false);
             return Response.FromValue(EntityMutationResult.FromResponse(response), response);
         }
@@ -376,7 +385,10 @@ namespace Azure.Analytics.Purview.DataMap
         /// For each contact type, the maximum number of contacts
         /// is 20.
         /// </summary>
-        /// <param name="body"> An array of entities to create or update. </param>
+        /// <param name="atlasEntitiesWithExtInfo">
+        /// An instance of an entity along with extended info - like hive_table,
+        /// hive_database.
+        /// </param>
         /// <param name="collectionId">
         /// The collection where entities will be moved to. Only specify a value if you
         /// need to move an entity to another collection.
@@ -386,14 +398,14 @@ namespace Azure.Analytics.Purview.DataMap
         /// entities.
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="atlasEntitiesWithExtInfo"/> is null. </exception>
         /// <include file="Docs/Entity.xml" path="doc/members/member[@name='BatchCreateOrUpdate(AtlasEntitiesWithExtInfo,string,BusinessAttributeUpdateBehavior?,CancellationToken)']/*" />
-        public virtual Response<EntityMutationResult> BatchCreateOrUpdate(AtlasEntitiesWithExtInfo body, string collectionId = null, BusinessAttributeUpdateBehavior? businessAttributeUpdateBehavior = null, CancellationToken cancellationToken = default)
+        public virtual Response<EntityMutationResult> BatchCreateOrUpdate(AtlasEntitiesWithExtInfo atlasEntitiesWithExtInfo, string collectionId = null, BusinessAttributeUpdateBehavior? businessAttributeUpdateBehavior = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(body, nameof(body));
+            Argument.AssertNotNull(atlasEntitiesWithExtInfo, nameof(atlasEntitiesWithExtInfo));
 
             RequestContext context = FromCancellationToken(cancellationToken);
-            using RequestContent content = body.ToRequestContent();
+            using RequestContent content = atlasEntitiesWithExtInfo.ToRequestContent();
             Response response = BatchCreateOrUpdate(content, collectionId, businessAttributeUpdateBehavior?.ToString(), context);
             return Response.FromValue(EntityMutationResult.FromResponse(response), response);
         }
@@ -621,31 +633,31 @@ namespace Azure.Analytics.Purview.DataMap
         }
 
         /// <summary> Associate a classification to multiple entities in bulk. </summary>
-        /// <param name="body"> The request to associate a classification to multiple entities. </param>
+        /// <param name="classificationAssociateConfig"> The request payload for classification association. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="classificationAssociateConfig"/> is null. </exception>
         /// <include file="Docs/Entity.xml" path="doc/members/member[@name='AddClassificationAsync(ClassificationAssociateConfig,CancellationToken)']/*" />
-        public virtual async Task<Response> AddClassificationAsync(ClassificationAssociateConfig body, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> AddClassificationAsync(ClassificationAssociateConfig classificationAssociateConfig, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(body, nameof(body));
+            Argument.AssertNotNull(classificationAssociateConfig, nameof(classificationAssociateConfig));
 
             RequestContext context = FromCancellationToken(cancellationToken);
-            using RequestContent content = body.ToRequestContent();
+            using RequestContent content = classificationAssociateConfig.ToRequestContent();
             Response response = await AddClassificationAsync(content, context).ConfigureAwait(false);
             return response;
         }
 
         /// <summary> Associate a classification to multiple entities in bulk. </summary>
-        /// <param name="body"> The request to associate a classification to multiple entities. </param>
+        /// <param name="classificationAssociateConfig"> The request payload for classification association. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="classificationAssociateConfig"/> is null. </exception>
         /// <include file="Docs/Entity.xml" path="doc/members/member[@name='AddClassification(ClassificationAssociateConfig,CancellationToken)']/*" />
-        public virtual Response AddClassification(ClassificationAssociateConfig body, CancellationToken cancellationToken = default)
+        public virtual Response AddClassification(ClassificationAssociateConfig classificationAssociateConfig, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(body, nameof(body));
+            Argument.AssertNotNull(classificationAssociateConfig, nameof(classificationAssociateConfig));
 
             RequestContext context = FromCancellationToken(cancellationToken);
-            using RequestContent content = body.ToRequestContent();
+            using RequestContent content = classificationAssociateConfig.ToRequestContent();
             Response response = AddClassification(content, context);
             return response;
         }
@@ -1857,22 +1869,25 @@ namespace Azure.Analytics.Purview.DataMap
         /// /v2/entity/uniqueAttribute/type/aType?attr:aTypeAttribute=someValue.
         /// </summary>
         /// <param name="typeName"> The name of the type. </param>
-        /// <param name="body"> Atlas entity with extended information. </param>
+        /// <param name="atlasEntityWithExtInfo">
+        /// An instance of an entity along with extended info - like hive_table,
+        /// hive_database.
+        /// </param>
         /// <param name="attribute">
         /// The qualified name of the entity. (This is only an example. qualifiedName can
         /// be changed to other unique attributes)
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="typeName"/> or <paramref name="body"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="typeName"/> or <paramref name="atlasEntityWithExtInfo"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="typeName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <include file="Docs/Entity.xml" path="doc/members/member[@name='UpdateByUniqueAttributeAsync(string,AtlasEntityWithExtInfo,string,CancellationToken)']/*" />
-        public virtual async Task<Response<EntityMutationResult>> UpdateByUniqueAttributeAsync(string typeName, AtlasEntityWithExtInfo body, string attribute = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<EntityMutationResult>> UpdateByUniqueAttributeAsync(string typeName, AtlasEntityWithExtInfo atlasEntityWithExtInfo, string attribute = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(typeName, nameof(typeName));
-            Argument.AssertNotNull(body, nameof(body));
+            Argument.AssertNotNull(atlasEntityWithExtInfo, nameof(atlasEntityWithExtInfo));
 
             RequestContext context = FromCancellationToken(cancellationToken);
-            using RequestContent content = body.ToRequestContent();
+            using RequestContent content = atlasEntityWithExtInfo.ToRequestContent();
             Response response = await UpdateByUniqueAttributeAsync(typeName, content, attribute, context).ConfigureAwait(false);
             return Response.FromValue(EntityMutationResult.FromResponse(response), response);
         }
@@ -1896,22 +1911,25 @@ namespace Azure.Analytics.Purview.DataMap
         /// /v2/entity/uniqueAttribute/type/aType?attr:aTypeAttribute=someValue.
         /// </summary>
         /// <param name="typeName"> The name of the type. </param>
-        /// <param name="body"> Atlas entity with extended information. </param>
+        /// <param name="atlasEntityWithExtInfo">
+        /// An instance of an entity along with extended info - like hive_table,
+        /// hive_database.
+        /// </param>
         /// <param name="attribute">
         /// The qualified name of the entity. (This is only an example. qualifiedName can
         /// be changed to other unique attributes)
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="typeName"/> or <paramref name="body"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="typeName"/> or <paramref name="atlasEntityWithExtInfo"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="typeName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <include file="Docs/Entity.xml" path="doc/members/member[@name='UpdateByUniqueAttribute(string,AtlasEntityWithExtInfo,string,CancellationToken)']/*" />
-        public virtual Response<EntityMutationResult> UpdateByUniqueAttribute(string typeName, AtlasEntityWithExtInfo body, string attribute = null, CancellationToken cancellationToken = default)
+        public virtual Response<EntityMutationResult> UpdateByUniqueAttribute(string typeName, AtlasEntityWithExtInfo atlasEntityWithExtInfo, string attribute = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(typeName, nameof(typeName));
-            Argument.AssertNotNull(body, nameof(body));
+            Argument.AssertNotNull(atlasEntityWithExtInfo, nameof(atlasEntityWithExtInfo));
 
             RequestContext context = FromCancellationToken(cancellationToken);
-            using RequestContent content = body.ToRequestContent();
+            using RequestContent content = atlasEntityWithExtInfo.ToRequestContent();
             Response response = UpdateByUniqueAttribute(typeName, content, attribute, context);
             return Response.FromValue(EntityMutationResult.FromResponse(response), response);
         }
@@ -2571,16 +2589,16 @@ namespace Azure.Analytics.Purview.DataMap
         }
 
         /// <summary> Set classifications on entities in bulk. </summary>
-        /// <param name="body"> Atlas entity headers. </param>
+        /// <param name="atlasEntityHeaders"> An instance of an entity header map. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="atlasEntityHeaders"/> is null. </exception>
         /// <include file="Docs/Entity.xml" path="doc/members/member[@name='BatchSetClassificationsAsync(AtlasEntityHeaders,CancellationToken)']/*" />
-        public virtual async Task<Response<IReadOnlyList<string>>> BatchSetClassificationsAsync(AtlasEntityHeaders body, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<IReadOnlyList<string>>> BatchSetClassificationsAsync(AtlasEntityHeaders atlasEntityHeaders, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(body, nameof(body));
+            Argument.AssertNotNull(atlasEntityHeaders, nameof(atlasEntityHeaders));
 
             RequestContext context = FromCancellationToken(cancellationToken);
-            using RequestContent content = body.ToRequestContent();
+            using RequestContent content = atlasEntityHeaders.ToRequestContent();
             Response response = await BatchSetClassificationsAsync(content, context).ConfigureAwait(false);
             IReadOnlyList<string> value = default;
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
@@ -2594,16 +2612,16 @@ namespace Azure.Analytics.Purview.DataMap
         }
 
         /// <summary> Set classifications on entities in bulk. </summary>
-        /// <param name="body"> Atlas entity headers. </param>
+        /// <param name="atlasEntityHeaders"> An instance of an entity header map. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="atlasEntityHeaders"/> is null. </exception>
         /// <include file="Docs/Entity.xml" path="doc/members/member[@name='BatchSetClassifications(AtlasEntityHeaders,CancellationToken)']/*" />
-        public virtual Response<IReadOnlyList<string>> BatchSetClassifications(AtlasEntityHeaders body, CancellationToken cancellationToken = default)
+        public virtual Response<IReadOnlyList<string>> BatchSetClassifications(AtlasEntityHeaders atlasEntityHeaders, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(body, nameof(body));
+            Argument.AssertNotNull(atlasEntityHeaders, nameof(atlasEntityHeaders));
 
             RequestContext context = FromCancellationToken(cancellationToken);
-            using RequestContent content = body.ToRequestContent();
+            using RequestContent content = atlasEntityHeaders.ToRequestContent();
             Response response = BatchSetClassifications(content, context);
             IReadOnlyList<string> value = default;
             using var document = JsonDocument.Parse(response.ContentStream);
@@ -3616,17 +3634,124 @@ namespace Azure.Analytics.Purview.DataMap
             }
         }
 
+        /// <summary> Upload the file for creating Business Metadata in BULK. </summary>
+        /// <param name="file"> InputStream of file. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="file"/> is null. </exception>
+        /// <include file="Docs/Entity.xml" path="doc/members/member[@name='ImportBusinessMetadataAsync(BinaryData,CancellationToken)']/*" />
+        public virtual async Task<Response<BulkImportResult>> ImportBusinessMetadataAsync(BinaryData file, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(file, nameof(file));
+
+            RequestContext context = FromCancellationToken(cancellationToken);
+            ImportBusinessMetadataRequest importBusinessMetadataRequest = new ImportBusinessMetadataRequest(file);
+            Response response = await ImportBusinessMetadataAsync(importBusinessMetadataRequest.ToRequestContent(), context).ConfigureAwait(false);
+            return Response.FromValue(BulkImportResult.FromResponse(response), response);
+        }
+
+        /// <summary> Upload the file for creating Business Metadata in BULK. </summary>
+        /// <param name="file"> InputStream of file. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="file"/> is null. </exception>
+        /// <include file="Docs/Entity.xml" path="doc/members/member[@name='ImportBusinessMetadata(BinaryData,CancellationToken)']/*" />
+        public virtual Response<BulkImportResult> ImportBusinessMetadata(BinaryData file, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(file, nameof(file));
+
+            RequestContext context = FromCancellationToken(cancellationToken);
+            ImportBusinessMetadataRequest importBusinessMetadataRequest = new ImportBusinessMetadataRequest(file);
+            Response response = ImportBusinessMetadata(importBusinessMetadataRequest.ToRequestContent(), context);
+            return Response.FromValue(BulkImportResult.FromResponse(response), response);
+        }
+
+        /// <summary>
+        /// [Protocol Method] Upload the file for creating Business Metadata in BULK
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="ImportBusinessMetadataAsync(BinaryData,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/Entity.xml" path="doc/members/member[@name='ImportBusinessMetadataAsync(RequestContent,RequestContext)']/*" />
+        public virtual async Task<Response> ImportBusinessMetadataAsync(RequestContent content, RequestContext context = null)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = ClientDiagnostics.CreateScope("Entity.ImportBusinessMetadata");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateImportBusinessMetadataRequest(content, context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Upload the file for creating Business Metadata in BULK
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="ImportBusinessMetadata(BinaryData,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/Entity.xml" path="doc/members/member[@name='ImportBusinessMetadata(RequestContent,RequestContext)']/*" />
+        public virtual Response ImportBusinessMetadata(RequestContent content, RequestContext context = null)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = ClientDiagnostics.CreateScope("Entity.ImportBusinessMetadata");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateImportBusinessMetadataRequest(content, context);
+                return _pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         /// <summary> Delete given labels to a given entity. </summary>
         /// <param name="guid"> The globally unique identifier of the entity. </param>
         /// <param name="body"> set of labels to be deleted. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="guid"/> or <paramref name="body"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <include file="Docs/Entity.xml" path="doc/members/member[@name='RemoveLabelsAsync(string,IEnumerable{string},CancellationToken)']/*" />
-        public virtual async Task<Response> RemoveLabelsAsync(string guid, IEnumerable<string> body, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> RemoveLabelsAsync(string guid, IEnumerable<string> body = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(guid, nameof(guid));
-            Argument.AssertNotNull(body, nameof(body));
 
             RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = RequestContentHelper.FromEnumerable(body);
@@ -3638,13 +3763,12 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="guid"> The globally unique identifier of the entity. </param>
         /// <param name="body"> set of labels to be deleted. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="guid"/> or <paramref name="body"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <include file="Docs/Entity.xml" path="doc/members/member[@name='RemoveLabels(string,IEnumerable{string},CancellationToken)']/*" />
-        public virtual Response RemoveLabels(string guid, IEnumerable<string> body, CancellationToken cancellationToken = default)
+        public virtual Response RemoveLabels(string guid, IEnumerable<string> body = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(guid, nameof(guid));
-            Argument.AssertNotNull(body, nameof(body));
 
             RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = RequestContentHelper.FromEnumerable(body);
@@ -3670,7 +3794,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="guid"> The globally unique identifier of the entity. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="guid"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
@@ -3678,7 +3802,6 @@ namespace Azure.Analytics.Purview.DataMap
         public virtual async Task<Response> RemoveLabelsAsync(string guid, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(guid, nameof(guid));
-            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ClientDiagnostics.CreateScope("Entity.RemoveLabels");
             scope.Start();
@@ -3712,7 +3835,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="guid"> The globally unique identifier of the entity. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="guid"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
@@ -3720,7 +3843,6 @@ namespace Azure.Analytics.Purview.DataMap
         public virtual Response RemoveLabels(string guid, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(guid, nameof(guid));
-            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ClientDiagnostics.CreateScope("Entity.RemoveLabels");
             scope.Start();
@@ -3740,13 +3862,12 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="guid"> The globally unique identifier of the entity. </param>
         /// <param name="body"> set of labels to be set to the entity. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="guid"/> or <paramref name="body"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <include file="Docs/Entity.xml" path="doc/members/member[@name='SetLabelsAsync(string,IEnumerable{string},CancellationToken)']/*" />
-        public virtual async Task<Response> SetLabelsAsync(string guid, IEnumerable<string> body, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> SetLabelsAsync(string guid, IEnumerable<string> body = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(guid, nameof(guid));
-            Argument.AssertNotNull(body, nameof(body));
 
             RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = RequestContentHelper.FromEnumerable(body);
@@ -3758,13 +3879,12 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="guid"> The globally unique identifier of the entity. </param>
         /// <param name="body"> set of labels to be set to the entity. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="guid"/> or <paramref name="body"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <include file="Docs/Entity.xml" path="doc/members/member[@name='SetLabels(string,IEnumerable{string},CancellationToken)']/*" />
-        public virtual Response SetLabels(string guid, IEnumerable<string> body, CancellationToken cancellationToken = default)
+        public virtual Response SetLabels(string guid, IEnumerable<string> body = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(guid, nameof(guid));
-            Argument.AssertNotNull(body, nameof(body));
 
             RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = RequestContentHelper.FromEnumerable(body);
@@ -3790,7 +3910,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="guid"> The globally unique identifier of the entity. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="guid"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
@@ -3798,7 +3918,6 @@ namespace Azure.Analytics.Purview.DataMap
         public virtual async Task<Response> SetLabelsAsync(string guid, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(guid, nameof(guid));
-            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ClientDiagnostics.CreateScope("Entity.SetLabels");
             scope.Start();
@@ -3832,7 +3951,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="guid"> The globally unique identifier of the entity. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="guid"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
@@ -3840,7 +3959,6 @@ namespace Azure.Analytics.Purview.DataMap
         public virtual Response SetLabels(string guid, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(guid, nameof(guid));
-            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ClientDiagnostics.CreateScope("Entity.SetLabels");
             scope.Start();
@@ -3860,13 +3978,12 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="guid"> The globally unique identifier of the entity. </param>
         /// <param name="body"> set of labels to be added. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="guid"/> or <paramref name="body"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <include file="Docs/Entity.xml" path="doc/members/member[@name='AddLabelAsync(string,IEnumerable{string},CancellationToken)']/*" />
-        public virtual async Task<Response> AddLabelAsync(string guid, IEnumerable<string> body, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> AddLabelAsync(string guid, IEnumerable<string> body = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(guid, nameof(guid));
-            Argument.AssertNotNull(body, nameof(body));
 
             RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = RequestContentHelper.FromEnumerable(body);
@@ -3878,13 +3995,12 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="guid"> The globally unique identifier of the entity. </param>
         /// <param name="body"> set of labels to be added. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="guid"/> or <paramref name="body"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <include file="Docs/Entity.xml" path="doc/members/member[@name='AddLabel(string,IEnumerable{string},CancellationToken)']/*" />
-        public virtual Response AddLabel(string guid, IEnumerable<string> body, CancellationToken cancellationToken = default)
+        public virtual Response AddLabel(string guid, IEnumerable<string> body = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(guid, nameof(guid));
-            Argument.AssertNotNull(body, nameof(body));
 
             RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = RequestContentHelper.FromEnumerable(body);
@@ -3910,7 +4026,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="guid"> The globally unique identifier of the entity. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="guid"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
@@ -3918,7 +4034,6 @@ namespace Azure.Analytics.Purview.DataMap
         public virtual async Task<Response> AddLabelAsync(string guid, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(guid, nameof(guid));
-            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ClientDiagnostics.CreateScope("Entity.AddLabel");
             scope.Start();
@@ -3952,7 +4067,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="guid"> The globally unique identifier of the entity. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="guid"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
@@ -3960,7 +4075,6 @@ namespace Azure.Analytics.Purview.DataMap
         public virtual Response AddLabel(string guid, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(guid, nameof(guid));
-            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ClientDiagnostics.CreateScope("Entity.AddLabel");
             scope.Start();
@@ -3998,13 +4112,12 @@ namespace Azure.Analytics.Purview.DataMap
         /// be changed to other unique attributes)
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="typeName"/> or <paramref name="body"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="typeName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="typeName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <include file="Docs/Entity.xml" path="doc/members/member[@name='RemoveLabelsByUniqueAttributeAsync(string,IEnumerable{string},string,CancellationToken)']/*" />
-        public virtual async Task<Response> RemoveLabelsByUniqueAttributeAsync(string typeName, IEnumerable<string> body, string attribute = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> RemoveLabelsByUniqueAttributeAsync(string typeName, IEnumerable<string> body = null, string attribute = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(typeName, nameof(typeName));
-            Argument.AssertNotNull(body, nameof(body));
 
             RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = RequestContentHelper.FromEnumerable(body);
@@ -4034,13 +4147,12 @@ namespace Azure.Analytics.Purview.DataMap
         /// be changed to other unique attributes)
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="typeName"/> or <paramref name="body"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="typeName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="typeName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <include file="Docs/Entity.xml" path="doc/members/member[@name='RemoveLabelsByUniqueAttribute(string,IEnumerable{string},string,CancellationToken)']/*" />
-        public virtual Response RemoveLabelsByUniqueAttribute(string typeName, IEnumerable<string> body, string attribute = null, CancellationToken cancellationToken = default)
+        public virtual Response RemoveLabelsByUniqueAttribute(string typeName, IEnumerable<string> body = null, string attribute = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(typeName, nameof(typeName));
-            Argument.AssertNotNull(body, nameof(body));
 
             RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = RequestContentHelper.FromEnumerable(body);
@@ -4082,7 +4194,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// be changed to other unique attributes)
         /// </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="typeName"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="typeName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="typeName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
@@ -4090,7 +4202,6 @@ namespace Azure.Analytics.Purview.DataMap
         public virtual async Task<Response> RemoveLabelsByUniqueAttributeAsync(string typeName, RequestContent content, string attribute = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(typeName, nameof(typeName));
-            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ClientDiagnostics.CreateScope("Entity.RemoveLabelsByUniqueAttribute");
             scope.Start();
@@ -4140,7 +4251,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// be changed to other unique attributes)
         /// </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="typeName"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="typeName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="typeName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
@@ -4148,7 +4259,6 @@ namespace Azure.Analytics.Purview.DataMap
         public virtual Response RemoveLabelsByUniqueAttribute(string typeName, RequestContent content, string attribute = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(typeName, nameof(typeName));
-            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ClientDiagnostics.CreateScope("Entity.RemoveLabelsByUniqueAttribute");
             scope.Start();
@@ -4188,13 +4298,12 @@ namespace Azure.Analytics.Purview.DataMap
         /// be changed to other unique attributes)
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="typeName"/> or <paramref name="body"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="typeName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="typeName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <include file="Docs/Entity.xml" path="doc/members/member[@name='SetLabelsByUniqueAttributeAsync(string,IEnumerable{string},string,CancellationToken)']/*" />
-        public virtual async Task<Response> SetLabelsByUniqueAttributeAsync(string typeName, IEnumerable<string> body, string attribute = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> SetLabelsByUniqueAttributeAsync(string typeName, IEnumerable<string> body = null, string attribute = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(typeName, nameof(typeName));
-            Argument.AssertNotNull(body, nameof(body));
 
             RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = RequestContentHelper.FromEnumerable(body);
@@ -4226,13 +4335,12 @@ namespace Azure.Analytics.Purview.DataMap
         /// be changed to other unique attributes)
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="typeName"/> or <paramref name="body"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="typeName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="typeName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <include file="Docs/Entity.xml" path="doc/members/member[@name='SetLabelsByUniqueAttribute(string,IEnumerable{string},string,CancellationToken)']/*" />
-        public virtual Response SetLabelsByUniqueAttribute(string typeName, IEnumerable<string> body, string attribute = null, CancellationToken cancellationToken = default)
+        public virtual Response SetLabelsByUniqueAttribute(string typeName, IEnumerable<string> body = null, string attribute = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(typeName, nameof(typeName));
-            Argument.AssertNotNull(body, nameof(body));
 
             RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = RequestContentHelper.FromEnumerable(body);
@@ -4276,7 +4384,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// be changed to other unique attributes)
         /// </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="typeName"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="typeName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="typeName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
@@ -4284,7 +4392,6 @@ namespace Azure.Analytics.Purview.DataMap
         public virtual async Task<Response> SetLabelsByUniqueAttributeAsync(string typeName, RequestContent content, string attribute = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(typeName, nameof(typeName));
-            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ClientDiagnostics.CreateScope("Entity.SetLabelsByUniqueAttribute");
             scope.Start();
@@ -4336,7 +4443,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// be changed to other unique attributes)
         /// </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="typeName"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="typeName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="typeName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
@@ -4344,7 +4451,6 @@ namespace Azure.Analytics.Purview.DataMap
         public virtual Response SetLabelsByUniqueAttribute(string typeName, RequestContent content, string attribute = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(typeName, nameof(typeName));
-            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ClientDiagnostics.CreateScope("Entity.SetLabelsByUniqueAttribute");
             scope.Start();
@@ -4384,13 +4490,12 @@ namespace Azure.Analytics.Purview.DataMap
         /// be changed to other unique attributes)
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="typeName"/> or <paramref name="body"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="typeName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="typeName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <include file="Docs/Entity.xml" path="doc/members/member[@name='AddLabelsByUniqueAttributeAsync(string,IEnumerable{string},string,CancellationToken)']/*" />
-        public virtual async Task<Response> AddLabelsByUniqueAttributeAsync(string typeName, IEnumerable<string> body, string attribute = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> AddLabelsByUniqueAttributeAsync(string typeName, IEnumerable<string> body = null, string attribute = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(typeName, nameof(typeName));
-            Argument.AssertNotNull(body, nameof(body));
 
             RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = RequestContentHelper.FromEnumerable(body);
@@ -4422,13 +4527,12 @@ namespace Azure.Analytics.Purview.DataMap
         /// be changed to other unique attributes)
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="typeName"/> or <paramref name="body"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="typeName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="typeName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <include file="Docs/Entity.xml" path="doc/members/member[@name='AddLabelsByUniqueAttribute(string,IEnumerable{string},string,CancellationToken)']/*" />
-        public virtual Response AddLabelsByUniqueAttribute(string typeName, IEnumerable<string> body, string attribute = null, CancellationToken cancellationToken = default)
+        public virtual Response AddLabelsByUniqueAttribute(string typeName, IEnumerable<string> body = null, string attribute = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(typeName, nameof(typeName));
-            Argument.AssertNotNull(body, nameof(body));
 
             RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = RequestContentHelper.FromEnumerable(body);
@@ -4472,7 +4576,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// be changed to other unique attributes)
         /// </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="typeName"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="typeName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="typeName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
@@ -4480,7 +4584,6 @@ namespace Azure.Analytics.Purview.DataMap
         public virtual async Task<Response> AddLabelsByUniqueAttributeAsync(string typeName, RequestContent content, string attribute = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(typeName, nameof(typeName));
-            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ClientDiagnostics.CreateScope("Entity.AddLabelsByUniqueAttribute");
             scope.Start();
@@ -4532,7 +4635,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// be changed to other unique attributes)
         /// </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="typeName"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="typeName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="typeName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
@@ -4540,7 +4643,6 @@ namespace Azure.Analytics.Purview.DataMap
         public virtual Response AddLabelsByUniqueAttribute(string typeName, RequestContent content, string attribute = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(typeName, nameof(typeName));
-            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ClientDiagnostics.CreateScope("Entity.AddLabelsByUniqueAttribute");
             scope.Start();
@@ -4558,34 +4660,34 @@ namespace Azure.Analytics.Purview.DataMap
 
         /// <summary> Move existing entities to the target collection. </summary>
         /// <param name="collectionId"> The collection where entities will be moved to. </param>
-        /// <param name="body"> Entity guids to be moved to target collection. </param>
+        /// <param name="moveEntitiesConfig"> MoveEntitiesOptions. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="body"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="moveEntitiesConfig"/> is null. </exception>
         /// <include file="Docs/Entity.xml" path="doc/members/member[@name='MoveEntitiesToCollectionAsync(string,MoveEntitiesConfig,CancellationToken)']/*" />
-        public virtual async Task<Response<EntityMutationResult>> MoveEntitiesToCollectionAsync(string collectionId, MoveEntitiesConfig body, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<EntityMutationResult>> MoveEntitiesToCollectionAsync(string collectionId, MoveEntitiesConfig moveEntitiesConfig, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(collectionId, nameof(collectionId));
-            Argument.AssertNotNull(body, nameof(body));
+            Argument.AssertNotNull(moveEntitiesConfig, nameof(moveEntitiesConfig));
 
             RequestContext context = FromCancellationToken(cancellationToken);
-            using RequestContent content = body.ToRequestContent();
+            using RequestContent content = moveEntitiesConfig.ToRequestContent();
             Response response = await MoveEntitiesToCollectionAsync(collectionId, content, context).ConfigureAwait(false);
             return Response.FromValue(EntityMutationResult.FromResponse(response), response);
         }
 
         /// <summary> Move existing entities to the target collection. </summary>
         /// <param name="collectionId"> The collection where entities will be moved to. </param>
-        /// <param name="body"> Entity guids to be moved to target collection. </param>
+        /// <param name="moveEntitiesConfig"> MoveEntitiesOptions. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="body"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="moveEntitiesConfig"/> is null. </exception>
         /// <include file="Docs/Entity.xml" path="doc/members/member[@name='MoveEntitiesToCollection(string,MoveEntitiesConfig,CancellationToken)']/*" />
-        public virtual Response<EntityMutationResult> MoveEntitiesToCollection(string collectionId, MoveEntitiesConfig body, CancellationToken cancellationToken = default)
+        public virtual Response<EntityMutationResult> MoveEntitiesToCollection(string collectionId, MoveEntitiesConfig moveEntitiesConfig, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(collectionId, nameof(collectionId));
-            Argument.AssertNotNull(body, nameof(body));
+            Argument.AssertNotNull(moveEntitiesConfig, nameof(moveEntitiesConfig));
 
             RequestContext context = FromCancellationToken(cancellationToken);
-            using RequestContent content = body.ToRequestContent();
+            using RequestContent content = moveEntitiesConfig.ToRequestContent();
             Response response = MoveEntitiesToCollection(collectionId, content, context);
             return Response.FromValue(EntityMutationResult.FromResponse(response), response);
         }
@@ -4768,7 +4870,6 @@ namespace Azure.Analytics.Purview.DataMap
                     uri.AppendQuery("guid", param, true);
                 }
             }
-            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
@@ -4783,7 +4884,6 @@ namespace Azure.Analytics.Purview.DataMap
             uri.Reset(_endpoint);
             uri.AppendRaw("/datamap/api", false);
             uri.AppendPath("/atlas/v2/entity/bulk/classification", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
@@ -4801,7 +4901,6 @@ namespace Azure.Analytics.Purview.DataMap
             uri.AppendRaw("/datamap/api", false);
             uri.AppendPath("/atlas/v2/entity/guid/", false);
             uri.AppendPath(guid, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
             if (minExtInfo != null)
             {
                 uri.AppendQuery("minExtInfo", minExtInfo.Value, true);
@@ -4826,7 +4925,6 @@ namespace Azure.Analytics.Purview.DataMap
             uri.AppendPath("/atlas/v2/entity/guid/", false);
             uri.AppendPath(guid, true);
             uri.AppendQuery("name", name, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
@@ -4844,7 +4942,6 @@ namespace Azure.Analytics.Purview.DataMap
             uri.AppendRaw("/datamap/api", false);
             uri.AppendPath("/atlas/v2/entity/guid/", false);
             uri.AppendPath(guid, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
@@ -4862,7 +4959,6 @@ namespace Azure.Analytics.Purview.DataMap
             uri.AppendPath(guid, true);
             uri.AppendPath("/classification/", false);
             uri.AppendPath(classificationName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
@@ -4880,7 +4976,6 @@ namespace Azure.Analytics.Purview.DataMap
             uri.AppendPath(guid, true);
             uri.AppendPath("/classification/", false);
             uri.AppendPath(classificationName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
@@ -4897,7 +4992,6 @@ namespace Azure.Analytics.Purview.DataMap
             uri.AppendPath("/atlas/v2/entity/guid/", false);
             uri.AppendPath(guid, true);
             uri.AppendPath("/classifications", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
@@ -4914,7 +5008,6 @@ namespace Azure.Analytics.Purview.DataMap
             uri.AppendPath("/atlas/v2/entity/guid/", false);
             uri.AppendPath(guid, true);
             uri.AppendPath("/classifications", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
@@ -4933,7 +5026,6 @@ namespace Azure.Analytics.Purview.DataMap
             uri.AppendPath("/atlas/v2/entity/guid/", false);
             uri.AppendPath(guid, true);
             uri.AppendPath("/classifications", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
@@ -4951,7 +5043,6 @@ namespace Azure.Analytics.Purview.DataMap
             uri.AppendRaw("/datamap/api", false);
             uri.AppendPath("/atlas/v2/entity/uniqueAttribute/type/", false);
             uri.AppendPath(typeName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
             if (minExtInfo != null)
             {
                 uri.AppendQuery("minExtInfo", minExtInfo.Value, true);
@@ -4979,7 +5070,6 @@ namespace Azure.Analytics.Purview.DataMap
             uri.AppendRaw("/datamap/api", false);
             uri.AppendPath("/atlas/v2/entity/uniqueAttribute/type/", false);
             uri.AppendPath(typeName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
             if (attribute != null)
             {
                 uri.AppendQuery("attr:qualifiedName", attribute, true);
@@ -5001,7 +5091,6 @@ namespace Azure.Analytics.Purview.DataMap
             uri.AppendRaw("/datamap/api", false);
             uri.AppendPath("/atlas/v2/entity/uniqueAttribute/type/", false);
             uri.AppendPath(typeName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
             if (attribute != null)
             {
                 uri.AppendQuery("attr:qualifiedName", attribute, true);
@@ -5023,7 +5112,6 @@ namespace Azure.Analytics.Purview.DataMap
             uri.AppendPath(typeName, true);
             uri.AppendPath("/classification/", false);
             uri.AppendPath(classificationName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
             if (attribute != null)
             {
                 uri.AppendQuery("attr:qualifiedName", attribute, true);
@@ -5044,7 +5132,6 @@ namespace Azure.Analytics.Purview.DataMap
             uri.AppendPath("/atlas/v2/entity/uniqueAttribute/type/", false);
             uri.AppendPath(typeName, true);
             uri.AppendPath("/classifications", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
             if (attribute != null)
             {
                 uri.AppendQuery("attr:qualifiedName", attribute, true);
@@ -5067,7 +5154,6 @@ namespace Azure.Analytics.Purview.DataMap
             uri.AppendPath("/atlas/v2/entity/uniqueAttribute/type/", false);
             uri.AppendPath(typeName, true);
             uri.AppendPath("/classifications", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
             if (attribute != null)
             {
                 uri.AppendQuery("attr:qualifiedName", attribute, true);
@@ -5088,7 +5174,6 @@ namespace Azure.Analytics.Purview.DataMap
             uri.Reset(_endpoint);
             uri.AppendRaw("/datamap/api", false);
             uri.AppendPath("/atlas/v2/entity/bulk/setClassifications", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
@@ -5106,7 +5191,6 @@ namespace Azure.Analytics.Purview.DataMap
             uri.AppendRaw("/datamap/api", false);
             uri.AppendPath("/atlas/v2/entity/bulk/uniqueAttribute/type/", false);
             uri.AppendPath(typeName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
             if (minExtInfo != null)
             {
                 uri.AppendQuery("minExtInfo", minExtInfo.Value, true);
@@ -5135,7 +5219,6 @@ namespace Azure.Analytics.Purview.DataMap
             uri.AppendPath("/atlas/v2/entity/guid/", false);
             uri.AppendPath(guid, true);
             uri.AppendPath("/header", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
@@ -5152,7 +5235,6 @@ namespace Azure.Analytics.Purview.DataMap
             uri.AppendPath("/atlas/v2/entity/guid/", false);
             uri.AppendPath(guid, true);
             uri.AppendPath("/businessmetadata", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
@@ -5171,7 +5253,6 @@ namespace Azure.Analytics.Purview.DataMap
             uri.AppendPath("/atlas/v2/entity/guid/", false);
             uri.AppendPath(guid, true);
             uri.AppendPath("/businessmetadata", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
             if (overwrite != null)
             {
                 uri.AppendQuery("isOverwrite", overwrite.Value, true);
@@ -5195,7 +5276,6 @@ namespace Azure.Analytics.Purview.DataMap
             uri.AppendPath(guid, true);
             uri.AppendPath("/businessmetadata/", false);
             uri.AppendPath(businessMetadataName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
@@ -5215,7 +5295,6 @@ namespace Azure.Analytics.Purview.DataMap
             uri.AppendPath(guid, true);
             uri.AppendPath("/businessmetadata/", false);
             uri.AppendPath(businessMetadataName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
@@ -5232,7 +5311,6 @@ namespace Azure.Analytics.Purview.DataMap
             uri.Reset(_endpoint);
             uri.AppendRaw("/datamap/api", false);
             uri.AppendPath("/atlas/v2/entity/businessmetadata/import/template", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/octet-stream");
             return message;
@@ -5249,7 +5327,6 @@ namespace Azure.Analytics.Purview.DataMap
             uri.AppendPath("/atlas/v2/entity/guid/", false);
             uri.AppendPath(guid, true);
             uri.AppendPath("/labels", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
@@ -5268,7 +5345,6 @@ namespace Azure.Analytics.Purview.DataMap
             uri.AppendPath("/atlas/v2/entity/guid/", false);
             uri.AppendPath(guid, true);
             uri.AppendPath("/labels", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
@@ -5287,7 +5363,6 @@ namespace Azure.Analytics.Purview.DataMap
             uri.AppendPath("/atlas/v2/entity/guid/", false);
             uri.AppendPath(guid, true);
             uri.AppendPath("/labels", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
@@ -5306,7 +5381,6 @@ namespace Azure.Analytics.Purview.DataMap
             uri.AppendPath("/atlas/v2/entity/uniqueAttribute/type/", false);
             uri.AppendPath(typeName, true);
             uri.AppendPath("/labels", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
             if (attribute != null)
             {
                 uri.AppendQuery("attr:qualifiedName", attribute, true);
@@ -5329,7 +5403,6 @@ namespace Azure.Analytics.Purview.DataMap
             uri.AppendPath("/atlas/v2/entity/uniqueAttribute/type/", false);
             uri.AppendPath(typeName, true);
             uri.AppendPath("/labels", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
             if (attribute != null)
             {
                 uri.AppendQuery("attr:qualifiedName", attribute, true);
@@ -5352,7 +5425,6 @@ namespace Azure.Analytics.Purview.DataMap
             uri.AppendPath("/atlas/v2/entity/uniqueAttribute/type/", false);
             uri.AppendPath(typeName, true);
             uri.AppendPath("/labels", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
             if (attribute != null)
             {
                 uri.AppendQuery("attr:qualifiedName", attribute, true);

@@ -5,6 +5,8 @@
     <NoWarn>$(NoWarn);CS1591</NoWarn>
   </PropertyGroup>
 
+  <Import Project="..\..\Azure.Analytics.Purview.Shared\tests\Azure.Analytics.Purview.Shared.Tests.projitems" Label="Shared" />
+
   <ItemGroup>
     <ProjectReference Include="$(AzureCoreTestFramework)" />
     <ProjectReference Include="..\src\Azure.Analytics.Purview.DataMap.csproj" />

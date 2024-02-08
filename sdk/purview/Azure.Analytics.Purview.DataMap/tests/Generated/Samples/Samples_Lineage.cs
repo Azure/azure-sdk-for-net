@@ -24,7 +24,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Lineage client = new DataMapClient(endpoint, credential).GetLineageClient(apiVersion: "2023-09-01");
+            Lineage client = new DataMapClient(endpoint, credential).GetLineageClient();
 
             Response response = client.GetLineage("<guid>", "INPUT");
 
@@ -38,7 +38,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Lineage client = new DataMapClient(endpoint, credential).GetLineageClient(apiVersion: "2023-09-01");
+            Lineage client = new DataMapClient(endpoint, credential).GetLineageClient();
 
             Response response = await client.GetLineageAsync("<guid>", "INPUT");
 
@@ -52,7 +52,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Lineage client = new DataMapClient(endpoint, credential).GetLineageClient(apiVersion: "2023-09-01");
+            Lineage client = new DataMapClient(endpoint, credential).GetLineageClient();
 
             Response<AtlasLineageInfo> response = client.GetLineage("<guid>", LineageDirection.Input);
         }
@@ -63,7 +63,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Lineage client = new DataMapClient(endpoint, credential).GetLineageClient(apiVersion: "2023-09-01");
+            Lineage client = new DataMapClient(endpoint, credential).GetLineageClient();
 
             Response<AtlasLineageInfo> response = await client.GetLineageAsync("<guid>", LineageDirection.Input);
         }
@@ -74,7 +74,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Lineage client = new DataMapClient(endpoint, credential).GetLineageClient(apiVersion: "2023-09-01");
+            Lineage client = new DataMapClient(endpoint, credential).GetLineageClient();
 
             Response response = client.GetLineage("<guid>", "INPUT", depth: 1234);
 
@@ -127,7 +127,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Lineage client = new DataMapClient(endpoint, credential).GetLineageClient(apiVersion: "2023-09-01");
+            Lineage client = new DataMapClient(endpoint, credential).GetLineageClient();
 
             Response response = await client.GetLineageAsync("<guid>", "INPUT", depth: 1234);
 
@@ -180,7 +180,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Lineage client = new DataMapClient(endpoint, credential).GetLineageClient(apiVersion: "2023-09-01");
+            Lineage client = new DataMapClient(endpoint, credential).GetLineageClient();
 
             Response<AtlasLineageInfo> response = client.GetLineage("<guid>", LineageDirection.Input, depth: 1234);
         }
@@ -191,7 +191,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Lineage client = new DataMapClient(endpoint, credential).GetLineageClient(apiVersion: "2023-09-01");
+            Lineage client = new DataMapClient(endpoint, credential).GetLineageClient();
 
             Response<AtlasLineageInfo> response = await client.GetLineageAsync("<guid>", LineageDirection.Input, depth: 1234);
         }
@@ -380,7 +380,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Lineage client = new DataMapClient(endpoint, credential).GetLineageClient(apiVersion: "2023-09-01");
+            Lineage client = new DataMapClient(endpoint, credential).GetLineageClient();
 
             Response response = client.GetByUniqueAttribute("<typeName>", "INPUT");
 
@@ -394,7 +394,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Lineage client = new DataMapClient(endpoint, credential).GetLineageClient(apiVersion: "2023-09-01");
+            Lineage client = new DataMapClient(endpoint, credential).GetLineageClient();
 
             Response response = await client.GetByUniqueAttributeAsync("<typeName>", "INPUT");
 
@@ -408,7 +408,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Lineage client = new DataMapClient(endpoint, credential).GetLineageClient(apiVersion: "2023-09-01");
+            Lineage client = new DataMapClient(endpoint, credential).GetLineageClient();
 
             Response<AtlasLineageInfo> response = client.GetByUniqueAttribute("<typeName>", LineageDirection.Input);
         }
@@ -419,7 +419,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Lineage client = new DataMapClient(endpoint, credential).GetLineageClient(apiVersion: "2023-09-01");
+            Lineage client = new DataMapClient(endpoint, credential).GetLineageClient();
 
             Response<AtlasLineageInfo> response = await client.GetByUniqueAttributeAsync("<typeName>", LineageDirection.Input);
         }
@@ -430,7 +430,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Lineage client = new DataMapClient(endpoint, credential).GetLineageClient(apiVersion: "2023-09-01");
+            Lineage client = new DataMapClient(endpoint, credential).GetLineageClient();
 
             Response response = client.GetByUniqueAttribute("<typeName>", "INPUT", depth: 1234, attribute: "<attribute>");
 
@@ -483,7 +483,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Lineage client = new DataMapClient(endpoint, credential).GetLineageClient(apiVersion: "2023-09-01");
+            Lineage client = new DataMapClient(endpoint, credential).GetLineageClient();
 
             Response response = await client.GetByUniqueAttributeAsync("<typeName>", "INPUT", depth: 1234, attribute: "<attribute>");
 
@@ -536,7 +536,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Lineage client = new DataMapClient(endpoint, credential).GetLineageClient(apiVersion: "2023-09-01");
+            Lineage client = new DataMapClient(endpoint, credential).GetLineageClient();
 
             Response<AtlasLineageInfo> response = client.GetByUniqueAttribute("<typeName>", LineageDirection.Input, depth: 1234, attribute: "<attribute>");
         }
@@ -547,7 +547,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Lineage client = new DataMapClient(endpoint, credential).GetLineageClient(apiVersion: "2023-09-01");
+            Lineage client = new DataMapClient(endpoint, credential).GetLineageClient();
 
             Response<AtlasLineageInfo> response = await client.GetByUniqueAttributeAsync("<typeName>", LineageDirection.Input, depth: 1234, attribute: "<attribute>");
         }

@@ -7,18 +7,18 @@ This sample shows how to call CreateAsync.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Relationship client = new DataMapClient(endpoint, credential).GetRelationshipClient(apiVersion: "2023-09-01");
+Relationship client = new DataMapClient(endpoint, credential).GetRelationshipClient();
 
-AtlasRelationship body = new AtlasRelationship();
-Response<AtlasRelationship> response = await client.CreateAsync(body);
+AtlasRelationship atlasRelationship = new AtlasRelationship();
+Response<AtlasRelationship> response = await client.CreateAsync(atlasRelationship);
 ]]></code>
 This sample shows how to call CreateAsync with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Relationship client = new DataMapClient(endpoint, credential).GetRelationshipClient(apiVersion: "2023-09-01");
+Relationship client = new DataMapClient(endpoint, credential).GetRelationshipClient();
 
-AtlasRelationship body = new AtlasRelationship
+AtlasRelationship atlasRelationship = new AtlasRelationship
 {
     Attributes =
     {
@@ -26,7 +26,7 @@ AtlasRelationship body = new AtlasRelationship
     },
     TypeName = "<typeName>",
     LastModifiedTS = "<lastModifiedTS>",
-    CreateTime = DateTimeOffset.FromUnixTimeSeconds(1652209051L),
+    CreateTime = 1234L,
     CreatedBy = "<createdBy>",
     End1 = new AtlasObjectId
     {
@@ -43,11 +43,11 @@ AtlasRelationship body = new AtlasRelationship
     Label = "<label>",
     ProvenanceType = 1234,
     Status = StatusAtlasRelationship.Active,
-    UpdateTime = DateTimeOffset.FromUnixTimeSeconds(1652209051L),
+    UpdateTime = 1234L,
     UpdatedBy = "<updatedBy>",
     Version = 1234L,
 };
-Response<AtlasRelationship> response = await client.CreateAsync(body);
+Response<AtlasRelationship> response = await client.CreateAsync(atlasRelationship);
 ]]></code></example>
     </member>
     <member name="Create(AtlasRelationship,CancellationToken)">
@@ -56,18 +56,18 @@ This sample shows how to call Create.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Relationship client = new DataMapClient(endpoint, credential).GetRelationshipClient(apiVersion: "2023-09-01");
+Relationship client = new DataMapClient(endpoint, credential).GetRelationshipClient();
 
-AtlasRelationship body = new AtlasRelationship();
-Response<AtlasRelationship> response = client.Create(body);
+AtlasRelationship atlasRelationship = new AtlasRelationship();
+Response<AtlasRelationship> response = client.Create(atlasRelationship);
 ]]></code>
 This sample shows how to call Create with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Relationship client = new DataMapClient(endpoint, credential).GetRelationshipClient(apiVersion: "2023-09-01");
+Relationship client = new DataMapClient(endpoint, credential).GetRelationshipClient();
 
-AtlasRelationship body = new AtlasRelationship
+AtlasRelationship atlasRelationship = new AtlasRelationship
 {
     Attributes =
     {
@@ -75,7 +75,7 @@ AtlasRelationship body = new AtlasRelationship
     },
     TypeName = "<typeName>",
     LastModifiedTS = "<lastModifiedTS>",
-    CreateTime = DateTimeOffset.FromUnixTimeSeconds(1652209051L),
+    CreateTime = 1234L,
     CreatedBy = "<createdBy>",
     End1 = new AtlasObjectId
     {
@@ -92,11 +92,11 @@ AtlasRelationship body = new AtlasRelationship
     Label = "<label>",
     ProvenanceType = 1234,
     Status = StatusAtlasRelationship.Active,
-    UpdateTime = DateTimeOffset.FromUnixTimeSeconds(1652209051L),
+    UpdateTime = 1234L,
     UpdatedBy = "<updatedBy>",
     Version = 1234L,
 };
-Response<AtlasRelationship> response = client.Create(body);
+Response<AtlasRelationship> response = client.Create(atlasRelationship);
 ]]></code></example>
     </member>
     <member name="CreateAsync(RequestContent,RequestContext)">
@@ -105,7 +105,7 @@ This sample shows how to call CreateAsync and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Relationship client = new DataMapClient(endpoint, credential).GetRelationshipClient(apiVersion: "2023-09-01");
+Relationship client = new DataMapClient(endpoint, credential).GetRelationshipClient();
 
 using RequestContent content = RequestContent.Create(new object());
 Response response = await client.CreateAsync(content);
@@ -117,7 +117,7 @@ This sample shows how to call CreateAsync with all request content and parse the
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Relationship client = new DataMapClient(endpoint, credential).GetRelationshipClient(apiVersion: "2023-09-01");
+Relationship client = new DataMapClient(endpoint, credential).GetRelationshipClient();
 
 using RequestContent content = RequestContent.Create(new
 {
@@ -127,7 +127,7 @@ using RequestContent content = RequestContent.Create(new
     },
     typeName = "<typeName>",
     lastModifiedTS = "<lastModifiedTS>",
-    createTime = 1652209051,
+    createTime = 1234L,
     createdBy = "<createdBy>",
     end1 = new
     {
@@ -143,7 +143,7 @@ using RequestContent content = RequestContent.Create(new
     label = "<label>",
     provenanceType = 1234,
     status = "ACTIVE",
-    updateTime = 1652209051,
+    updateTime = 1234L,
     updatedBy = "<updatedBy>",
     version = 1234L,
 });
@@ -177,7 +177,7 @@ This sample shows how to call Create and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Relationship client = new DataMapClient(endpoint, credential).GetRelationshipClient(apiVersion: "2023-09-01");
+Relationship client = new DataMapClient(endpoint, credential).GetRelationshipClient();
 
 using RequestContent content = RequestContent.Create(new object());
 Response response = client.Create(content);
@@ -189,7 +189,7 @@ This sample shows how to call Create with all request content and parse the resu
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Relationship client = new DataMapClient(endpoint, credential).GetRelationshipClient(apiVersion: "2023-09-01");
+Relationship client = new DataMapClient(endpoint, credential).GetRelationshipClient();
 
 using RequestContent content = RequestContent.Create(new
 {
@@ -199,7 +199,7 @@ using RequestContent content = RequestContent.Create(new
     },
     typeName = "<typeName>",
     lastModifiedTS = "<lastModifiedTS>",
-    createTime = 1652209051,
+    createTime = 1234L,
     createdBy = "<createdBy>",
     end1 = new
     {
@@ -215,7 +215,7 @@ using RequestContent content = RequestContent.Create(new
     label = "<label>",
     provenanceType = 1234,
     status = "ACTIVE",
-    updateTime = 1652209051,
+    updateTime = 1234L,
     updatedBy = "<updatedBy>",
     version = 1234L,
 });
@@ -249,18 +249,18 @@ This sample shows how to call UpdateAsync.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Relationship client = new DataMapClient(endpoint, credential).GetRelationshipClient(apiVersion: "2023-09-01");
+Relationship client = new DataMapClient(endpoint, credential).GetRelationshipClient();
 
-AtlasRelationship body = new AtlasRelationship();
-Response<AtlasRelationship> response = await client.UpdateAsync(body);
+AtlasRelationship atlasRelationship = new AtlasRelationship();
+Response<AtlasRelationship> response = await client.UpdateAsync(atlasRelationship);
 ]]></code>
 This sample shows how to call UpdateAsync with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Relationship client = new DataMapClient(endpoint, credential).GetRelationshipClient(apiVersion: "2023-09-01");
+Relationship client = new DataMapClient(endpoint, credential).GetRelationshipClient();
 
-AtlasRelationship body = new AtlasRelationship
+AtlasRelationship atlasRelationship = new AtlasRelationship
 {
     Attributes =
     {
@@ -268,7 +268,7 @@ AtlasRelationship body = new AtlasRelationship
     },
     TypeName = "<typeName>",
     LastModifiedTS = "<lastModifiedTS>",
-    CreateTime = DateTimeOffset.FromUnixTimeSeconds(1652209051L),
+    CreateTime = 1234L,
     CreatedBy = "<createdBy>",
     End1 = new AtlasObjectId
     {
@@ -285,11 +285,11 @@ AtlasRelationship body = new AtlasRelationship
     Label = "<label>",
     ProvenanceType = 1234,
     Status = StatusAtlasRelationship.Active,
-    UpdateTime = DateTimeOffset.FromUnixTimeSeconds(1652209051L),
+    UpdateTime = 1234L,
     UpdatedBy = "<updatedBy>",
     Version = 1234L,
 };
-Response<AtlasRelationship> response = await client.UpdateAsync(body);
+Response<AtlasRelationship> response = await client.UpdateAsync(atlasRelationship);
 ]]></code></example>
     </member>
     <member name="Update(AtlasRelationship,CancellationToken)">
@@ -298,18 +298,18 @@ This sample shows how to call Update.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Relationship client = new DataMapClient(endpoint, credential).GetRelationshipClient(apiVersion: "2023-09-01");
+Relationship client = new DataMapClient(endpoint, credential).GetRelationshipClient();
 
-AtlasRelationship body = new AtlasRelationship();
-Response<AtlasRelationship> response = client.Update(body);
+AtlasRelationship atlasRelationship = new AtlasRelationship();
+Response<AtlasRelationship> response = client.Update(atlasRelationship);
 ]]></code>
 This sample shows how to call Update with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Relationship client = new DataMapClient(endpoint, credential).GetRelationshipClient(apiVersion: "2023-09-01");
+Relationship client = new DataMapClient(endpoint, credential).GetRelationshipClient();
 
-AtlasRelationship body = new AtlasRelationship
+AtlasRelationship atlasRelationship = new AtlasRelationship
 {
     Attributes =
     {
@@ -317,7 +317,7 @@ AtlasRelationship body = new AtlasRelationship
     },
     TypeName = "<typeName>",
     LastModifiedTS = "<lastModifiedTS>",
-    CreateTime = DateTimeOffset.FromUnixTimeSeconds(1652209051L),
+    CreateTime = 1234L,
     CreatedBy = "<createdBy>",
     End1 = new AtlasObjectId
     {
@@ -334,11 +334,11 @@ AtlasRelationship body = new AtlasRelationship
     Label = "<label>",
     ProvenanceType = 1234,
     Status = StatusAtlasRelationship.Active,
-    UpdateTime = DateTimeOffset.FromUnixTimeSeconds(1652209051L),
+    UpdateTime = 1234L,
     UpdatedBy = "<updatedBy>",
     Version = 1234L,
 };
-Response<AtlasRelationship> response = client.Update(body);
+Response<AtlasRelationship> response = client.Update(atlasRelationship);
 ]]></code></example>
     </member>
     <member name="UpdateAsync(RequestContent,RequestContext)">
@@ -347,7 +347,7 @@ This sample shows how to call UpdateAsync and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Relationship client = new DataMapClient(endpoint, credential).GetRelationshipClient(apiVersion: "2023-09-01");
+Relationship client = new DataMapClient(endpoint, credential).GetRelationshipClient();
 
 using RequestContent content = RequestContent.Create(new object());
 Response response = await client.UpdateAsync(content);
@@ -359,7 +359,7 @@ This sample shows how to call UpdateAsync with all request content and parse the
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Relationship client = new DataMapClient(endpoint, credential).GetRelationshipClient(apiVersion: "2023-09-01");
+Relationship client = new DataMapClient(endpoint, credential).GetRelationshipClient();
 
 using RequestContent content = RequestContent.Create(new
 {
@@ -369,7 +369,7 @@ using RequestContent content = RequestContent.Create(new
     },
     typeName = "<typeName>",
     lastModifiedTS = "<lastModifiedTS>",
-    createTime = 1652209051,
+    createTime = 1234L,
     createdBy = "<createdBy>",
     end1 = new
     {
@@ -385,7 +385,7 @@ using RequestContent content = RequestContent.Create(new
     label = "<label>",
     provenanceType = 1234,
     status = "ACTIVE",
-    updateTime = 1652209051,
+    updateTime = 1234L,
     updatedBy = "<updatedBy>",
     version = 1234L,
 });
@@ -419,7 +419,7 @@ This sample shows how to call Update and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Relationship client = new DataMapClient(endpoint, credential).GetRelationshipClient(apiVersion: "2023-09-01");
+Relationship client = new DataMapClient(endpoint, credential).GetRelationshipClient();
 
 using RequestContent content = RequestContent.Create(new object());
 Response response = client.Update(content);
@@ -431,7 +431,7 @@ This sample shows how to call Update with all request content and parse the resu
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Relationship client = new DataMapClient(endpoint, credential).GetRelationshipClient(apiVersion: "2023-09-01");
+Relationship client = new DataMapClient(endpoint, credential).GetRelationshipClient();
 
 using RequestContent content = RequestContent.Create(new
 {
@@ -441,7 +441,7 @@ using RequestContent content = RequestContent.Create(new
     },
     typeName = "<typeName>",
     lastModifiedTS = "<lastModifiedTS>",
-    createTime = 1652209051,
+    createTime = 1234L,
     createdBy = "<createdBy>",
     end1 = new
     {
@@ -457,7 +457,7 @@ using RequestContent content = RequestContent.Create(new
     label = "<label>",
     provenanceType = 1234,
     status = "ACTIVE",
-    updateTime = 1652209051,
+    updateTime = 1234L,
     updatedBy = "<updatedBy>",
     version = 1234L,
 });
@@ -491,7 +491,7 @@ This sample shows how to call GetRelationshipAsync.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Relationship client = new DataMapClient(endpoint, credential).GetRelationshipClient(apiVersion: "2023-09-01");
+Relationship client = new DataMapClient(endpoint, credential).GetRelationshipClient();
 
 Response<AtlasRelationshipWithExtInfo> response = await client.GetRelationshipAsync("<guid>");
 ]]></code>
@@ -499,7 +499,7 @@ This sample shows how to call GetRelationshipAsync with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Relationship client = new DataMapClient(endpoint, credential).GetRelationshipClient(apiVersion: "2023-09-01");
+Relationship client = new DataMapClient(endpoint, credential).GetRelationshipClient();
 
 Response<AtlasRelationshipWithExtInfo> response = await client.GetRelationshipAsync("<guid>", extendedInfo: true);
 ]]></code></example>
@@ -510,7 +510,7 @@ This sample shows how to call GetRelationship.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Relationship client = new DataMapClient(endpoint, credential).GetRelationshipClient(apiVersion: "2023-09-01");
+Relationship client = new DataMapClient(endpoint, credential).GetRelationshipClient();
 
 Response<AtlasRelationshipWithExtInfo> response = client.GetRelationship("<guid>");
 ]]></code>
@@ -518,7 +518,7 @@ This sample shows how to call GetRelationship with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Relationship client = new DataMapClient(endpoint, credential).GetRelationshipClient(apiVersion: "2023-09-01");
+Relationship client = new DataMapClient(endpoint, credential).GetRelationshipClient();
 
 Response<AtlasRelationshipWithExtInfo> response = client.GetRelationship("<guid>", extendedInfo: true);
 ]]></code></example>
@@ -529,7 +529,7 @@ This sample shows how to call GetRelationshipAsync and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Relationship client = new DataMapClient(endpoint, credential).GetRelationshipClient(apiVersion: "2023-09-01");
+Relationship client = new DataMapClient(endpoint, credential).GetRelationshipClient();
 
 Response response = await client.GetRelationshipAsync("<guid>", null, null);
 
@@ -540,7 +540,7 @@ This sample shows how to call GetRelationshipAsync with all parameters and parse
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Relationship client = new DataMapClient(endpoint, credential).GetRelationshipClient(apiVersion: "2023-09-01");
+Relationship client = new DataMapClient(endpoint, credential).GetRelationshipClient();
 
 Response response = await client.GetRelationshipAsync("<guid>", true, null);
 
@@ -600,7 +600,7 @@ This sample shows how to call GetRelationship and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Relationship client = new DataMapClient(endpoint, credential).GetRelationshipClient(apiVersion: "2023-09-01");
+Relationship client = new DataMapClient(endpoint, credential).GetRelationshipClient();
 
 Response response = client.GetRelationship("<guid>", null, null);
 
@@ -611,7 +611,7 @@ This sample shows how to call GetRelationship with all parameters and parse the 
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Relationship client = new DataMapClient(endpoint, credential).GetRelationshipClient(apiVersion: "2023-09-01");
+Relationship client = new DataMapClient(endpoint, credential).GetRelationshipClient();
 
 Response response = client.GetRelationship("<guid>", true, null);
 
@@ -671,7 +671,7 @@ This sample shows how to call DeleteAsync.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Relationship client = new DataMapClient(endpoint, credential).GetRelationshipClient(apiVersion: "2023-09-01");
+Relationship client = new DataMapClient(endpoint, credential).GetRelationshipClient();
 
 Response response = await client.DeleteAsync("<guid>");
 
@@ -681,7 +681,7 @@ This sample shows how to call DeleteAsync with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Relationship client = new DataMapClient(endpoint, credential).GetRelationshipClient(apiVersion: "2023-09-01");
+Relationship client = new DataMapClient(endpoint, credential).GetRelationshipClient();
 
 Response response = await client.DeleteAsync("<guid>");
 
@@ -694,7 +694,7 @@ This sample shows how to call Delete.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Relationship client = new DataMapClient(endpoint, credential).GetRelationshipClient(apiVersion: "2023-09-01");
+Relationship client = new DataMapClient(endpoint, credential).GetRelationshipClient();
 
 Response response = client.Delete("<guid>");
 
@@ -704,7 +704,7 @@ This sample shows how to call Delete with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Relationship client = new DataMapClient(endpoint, credential).GetRelationshipClient(apiVersion: "2023-09-01");
+Relationship client = new DataMapClient(endpoint, credential).GetRelationshipClient();
 
 Response response = client.Delete("<guid>");
 
