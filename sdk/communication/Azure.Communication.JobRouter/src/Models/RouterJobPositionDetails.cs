@@ -8,11 +8,11 @@ using Azure.Core;
 
 namespace Azure.Communication.JobRouter
 {
+    [CodeGenSerialization(nameof(EstimatedWaitTime), SerializationValueHook = nameof(WriteEstimatedWaitTime), DeserializationValueHook = nameof(ReadEstimatedWaitTime))]
     public partial class RouterJobPositionDetails
     {
         /// <summary> Estimated wait time of the job rounded up to the nearest minute. </summary>
         [CodeGenMember("EstimatedWaitTimeMinutes")]
-        [CodeGenMemberSerializationHooks(SerializationValueHook = nameof(WriteEstimatedWaitTime), DeserializationValueHook = nameof(ReadEstimatedWaitTime))]
         public TimeSpan EstimatedWaitTime { get; }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]

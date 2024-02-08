@@ -5,6 +5,7 @@
 ### Features Added
 
 - Enable the new model serialization by using the System.ClientModel, refer this [document](https://aka.ms/azsdk/net/mrw) for more details.
+- Added TLS 1.3 to list of valid TLS versions. Also created custom classes needed since the type of MinimalTlsVersion was changed from String to Enum.
 
 ### Breaking Changes
 

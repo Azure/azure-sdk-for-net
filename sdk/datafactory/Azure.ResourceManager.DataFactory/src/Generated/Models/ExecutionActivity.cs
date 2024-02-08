@@ -47,6 +47,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             ActivityType = activityType ?? "Execution";
         }
 
+        /// <summary> Initializes a new instance of <see cref="ExecutionActivity"/> for deserialization. </summary>
+        internal ExecutionActivity()
+        {
+        }
+
         /// <summary> Linked service reference. </summary>
         public DataFactoryLinkedServiceReference LinkedServiceName { get; set; }
         /// <summary> Activity policy. </summary>

@@ -68,7 +68,7 @@ namespace Azure.Search.Documents.Tests.Samples.VectorSearch
 #if !SNIPPET
                     CategoryVector = VectorSearchEmbeddings.BudgetVectorizeCategory
 #else
-                    CategoryVector = GetEmbeddings("Luxury")
+                    CategoryVector = GetEmbeddings("Budget")
 #endif
                 },
 #if !SNIPPET

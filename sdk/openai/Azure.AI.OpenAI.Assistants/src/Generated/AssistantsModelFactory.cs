@@ -110,48 +110,48 @@ namespace Azure.AI.OpenAI.Assistants
             return new UnknownRequiredToolCall(type, id, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Assistants.ToolCall"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Assistants.RunStepToolCall"/>. </summary>
         /// <param name="type"> The object type. </param>
         /// <param name="id"> The ID of the tool call. This ID must be referenced when you submit tool outputs. </param>
-        /// <returns> A new <see cref="Assistants.ToolCall"/> instance for mocking. </returns>
-        public static ToolCall ToolCall(string type = null, string id = null)
+        /// <returns> A new <see cref="Assistants.RunStepToolCall"/> instance for mocking. </returns>
+        public static RunStepToolCall RunStepToolCall(string type = null, string id = null)
         {
-            return new UnknownToolCall(type, id, serializedAdditionalRawData: null);
+            return new UnknownRunStepToolCall(type, id, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Assistants.RetrievalToolCall"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Assistants.RunStepRetrievalToolCall"/>. </summary>
         /// <param name="id"> The ID of the tool call. This ID must be referenced when you submit tool outputs. </param>
         /// <param name="retrieval"> The key/value pairs produced by the retrieval tool. </param>
-        /// <returns> A new <see cref="Assistants.RetrievalToolCall"/> instance for mocking. </returns>
-        public static RetrievalToolCall RetrievalToolCall(string id = null, IReadOnlyDictionary<string, string> retrieval = null)
+        /// <returns> A new <see cref="Assistants.RunStepRetrievalToolCall"/> instance for mocking. </returns>
+        public static RunStepRetrievalToolCall RunStepRetrievalToolCall(string id = null, IReadOnlyDictionary<string, string> retrieval = null)
         {
             retrieval ??= new Dictionary<string, string>();
 
-            return new RetrievalToolCall("retrieval", id, serializedAdditionalRawData: null, retrieval);
+            return new RunStepRetrievalToolCall("retrieval", id, serializedAdditionalRawData: null, retrieval);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Assistants.CodeInterpreterLogOutput"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Assistants.RunStepCodeInterpreterLogOutput"/>. </summary>
         /// <param name="logs"> The serialized log output emitted by the code interpreter. </param>
-        /// <returns> A new <see cref="Assistants.CodeInterpreterLogOutput"/> instance for mocking. </returns>
-        public static CodeInterpreterLogOutput CodeInterpreterLogOutput(string logs = null)
+        /// <returns> A new <see cref="Assistants.RunStepCodeInterpreterLogOutput"/> instance for mocking. </returns>
+        public static RunStepCodeInterpreterLogOutput RunStepCodeInterpreterLogOutput(string logs = null)
         {
-            return new CodeInterpreterLogOutput("logs", serializedAdditionalRawData: null, logs);
+            return new RunStepCodeInterpreterLogOutput("logs", serializedAdditionalRawData: null, logs);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Assistants.CodeInterpreterImageOutput"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Assistants.RunStepCodeInterpreterImageOutput"/>. </summary>
         /// <param name="image"> Referential information for the image associated with this output. </param>
-        /// <returns> A new <see cref="Assistants.CodeInterpreterImageOutput"/> instance for mocking. </returns>
-        public static CodeInterpreterImageOutput CodeInterpreterImageOutput(CodeInterpreterImageReference image = null)
+        /// <returns> A new <see cref="Assistants.RunStepCodeInterpreterImageOutput"/> instance for mocking. </returns>
+        public static RunStepCodeInterpreterImageOutput RunStepCodeInterpreterImageOutput(RunStepCodeInterpreterImageReference image = null)
         {
-            return new CodeInterpreterImageOutput("image", serializedAdditionalRawData: null, image);
+            return new RunStepCodeInterpreterImageOutput("image", serializedAdditionalRawData: null, image);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Assistants.CodeInterpreterImageReference"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Assistants.RunStepCodeInterpreterImageReference"/>. </summary>
         /// <param name="fileId"> The ID of the file associated with this image. </param>
-        /// <returns> A new <see cref="Assistants.CodeInterpreterImageReference"/> instance for mocking. </returns>
-        public static CodeInterpreterImageReference CodeInterpreterImageReference(string fileId = null)
+        /// <returns> A new <see cref="Assistants.RunStepCodeInterpreterImageReference"/> instance for mocking. </returns>
+        public static RunStepCodeInterpreterImageReference RunStepCodeInterpreterImageReference(string fileId = null)
         {
-            return new CodeInterpreterImageReference(fileId, serializedAdditionalRawData: null);
+            return new RunStepCodeInterpreterImageReference(fileId, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Assistants.MessageTextAnnotation"/>. </summary>
@@ -184,9 +184,9 @@ namespace Azure.AI.OpenAI.Assistants
         /// <summary> Initializes a new instance of <see cref="Assistants.RunStepToolCallDetails"/>. </summary>
         /// <param name="toolCalls"> A list of tool call details for this run step. </param>
         /// <returns> A new <see cref="Assistants.RunStepToolCallDetails"/> instance for mocking. </returns>
-        public static RunStepToolCallDetails RunStepToolCallDetails(IEnumerable<ToolCall> toolCalls = null)
+        public static RunStepToolCallDetails RunStepToolCallDetails(IEnumerable<RunStepToolCall> toolCalls = null)
         {
-            toolCalls ??= new List<ToolCall>();
+            toolCalls ??= new List<RunStepToolCall>();
 
             return new RunStepToolCallDetails(RunStepType.ToolCalls, serializedAdditionalRawData: null, toolCalls?.ToList());
         }

@@ -1058,7 +1058,13 @@ namespace Azure.Messaging.EventHubs
                                                                   EventProcessorPartition partition,
                                                                   CancellationToken cancellationToken)
         {
-            cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
+            // If cancellation was requested, then do not dispatch the events to be handled.  This
+            // is considered a normal exit condition, rather than an exceptional case.
+
+            if (cancellationToken.IsCancellationRequested)
+            {
+                return;
+            }
 
             var operation = Guid.NewGuid().ToString("D", CultureInfo.InvariantCulture);
             var context = default(PartitionContext);

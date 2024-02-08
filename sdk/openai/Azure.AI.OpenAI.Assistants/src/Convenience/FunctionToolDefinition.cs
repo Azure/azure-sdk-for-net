@@ -15,16 +15,28 @@ namespace Azure.AI.OpenAI.Assistants;
 
 public partial class FunctionToolDefinition
 {
-    public static bool operator ==(FunctionToolDefinition functionToolDefinition, FunctionToolCall functionToolCall)
+    public static bool operator ==(FunctionToolDefinition functionToolDefinition, RunStepFunctionToolCall functionToolCall)
         => functionToolDefinition.Name == functionToolDefinition.Name;
 
-    public static bool operator !=(FunctionToolDefinition functionToolDefinition, FunctionToolCall functionToolCall)
+    public static bool operator !=(FunctionToolDefinition functionToolDefinition, RunStepFunctionToolCall functionToolCall)
         => functionToolDefinition.Name != functionToolDefinition.Name;
 
-    public static bool operator ==(FunctionToolCall functionToolCall, FunctionToolDefinition functionToolDefinition)
+    public static bool operator ==(RunStepFunctionToolCall functionToolCall, FunctionToolDefinition functionToolDefinition)
     => functionToolCall.Name == functionToolDefinition.Name;
 
-    public static bool operator !=(FunctionToolCall functionToolCall, FunctionToolDefinition functionToolDefinition)
+    public static bool operator !=(RunStepFunctionToolCall functionToolCall, FunctionToolDefinition functionToolDefinition)
+        => functionToolCall.Name != functionToolDefinition.Name;
+
+    public static bool operator ==(FunctionToolDefinition functionToolDefinition, RequiredFunctionToolCall functionToolCall)
+    => functionToolDefinition.Name == functionToolDefinition.Name;
+
+    public static bool operator !=(FunctionToolDefinition functionToolDefinition, RequiredFunctionToolCall functionToolCall)
+        => functionToolDefinition.Name != functionToolDefinition.Name;
+
+    public static bool operator ==(RequiredFunctionToolCall functionToolCall, FunctionToolDefinition functionToolDefinition)
+    => functionToolCall.Name == functionToolDefinition.Name;
+
+    public static bool operator !=(RequiredFunctionToolCall functionToolCall, FunctionToolDefinition functionToolDefinition)
         => functionToolCall.Name != functionToolDefinition.Name;
 
     /// <inheritdoc/>
