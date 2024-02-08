@@ -915,7 +915,7 @@ namespace Azure.Communication.JobRouter
     {
         public RouterQueue(string queueId) { }
         public string DistributionPolicyId { get { throw null; } set { } }
-        public Azure.ETag ETag { get { throw null; } set { } }
+        public Azure.ETag ETag { get { throw null; } }
         public string ExceptionPolicyId { get { throw null; } set { } }
         public string Id { get { throw null; } }
         public System.Collections.Generic.IDictionary<string, Azure.Communication.JobRouter.RouterValue> Labels { get { throw null; } }
