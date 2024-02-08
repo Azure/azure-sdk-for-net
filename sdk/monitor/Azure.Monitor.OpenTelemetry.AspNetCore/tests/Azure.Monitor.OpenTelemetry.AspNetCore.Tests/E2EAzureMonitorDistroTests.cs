@@ -83,6 +83,8 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests
         [Theory]
         [InlineData(null)]
         [InlineData("true")]
+        [InlineData("True")]
+        [InlineData("False")]
         [InlineData("false")]
         public void ValidateLogFilteringProcessorIsAddedToLoggerProvider(string enableLogSampling)
         {
@@ -100,7 +102,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests
 
                 Assert.NotNull(processor);
 
-                if (enableLogSampling == "true")
+                if (enableLogSampling.Equals("true" , StringComparison.OrdinalIgnoreCase))
                 {
                     Assert.True(processor is LogFilteringProcessor);
                     Assert.True(processor is BatchLogRecordExportProcessor);
