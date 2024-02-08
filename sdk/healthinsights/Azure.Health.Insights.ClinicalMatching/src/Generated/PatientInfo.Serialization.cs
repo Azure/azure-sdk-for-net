@@ -35,7 +35,7 @@ namespace Azure.Health.Insights.ClinicalMatching
             if (Optional.IsDefined(BirthDate))
             {
                 writer.WritePropertyName("birthDate"u8);
-                writer.WriteStringValue(BirthDate.Value, "D");
+                writer.WriteObjectValue(BirthDate);
             }
             if (Optional.IsCollectionDefined(ClinicalInfo))
             {
@@ -86,7 +86,7 @@ namespace Azure.Health.Insights.ClinicalMatching
                 return null;
             }
             Optional<PatientInfoSex> sex = default;
-            Optional<DateTimeOffset> birthDate = default;
+            Optional<object> birthDate = default;
             Optional<IList<ClinicalCodedElement>> clinicalInfo = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -107,7 +107,7 @@ namespace Azure.Health.Insights.ClinicalMatching
                     {
                         continue;
                     }
-                    birthDate = property.Value.GetDateTimeOffset("D");
+                    birthDate = property.Value.GetObject();
                     continue;
                 }
                 if (property.NameEquals("clinicalInfo"u8))
@@ -130,7 +130,7 @@ namespace Azure.Health.Insights.ClinicalMatching
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PatientInfo(Optional.ToNullable(sex), Optional.ToNullable(birthDate), Optional.ToList(clinicalInfo), serializedAdditionalRawData);
+            return new PatientInfo(Optional.ToNullable(sex), birthDate.Value, Optional.ToList(clinicalInfo), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PatientInfo>.Write(ModelReaderWriterOptions options)

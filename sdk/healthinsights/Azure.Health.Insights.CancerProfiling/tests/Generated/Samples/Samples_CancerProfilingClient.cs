@@ -124,7 +124,7 @@ id = "<id>",
 info = new
 {
 sex = "female",
-birthDate = "2022-05-10",
+birthDate = new object(),
 clinicalInfo = new object[]
 {
 new
@@ -205,7 +205,7 @@ id = "<id>",
 info = new
 {
 sex = "female",
-birthDate = "2022-05-10",
+birthDate = new object(),
 clinicalInfo = new object[]
 {
 new
@@ -283,7 +283,7 @@ new PatientRecord("<id>")
 Info = new PatientInfo
 {
 Sex = PatientInfoSex.Female,
-BirthDate = DateTimeOffset.Parse("2022-05-10"),
+BirthDate = new object(),
 ClinicalInfo = {new ClinicalCodedElement("<system>", "<code>")
 {
 Name = "<name>",
@@ -326,7 +326,7 @@ new PatientRecord("<id>")
 Info = new PatientInfo
 {
 Sex = PatientInfoSex.Female,
-BirthDate = DateTimeOffset.Parse("2022-05-10"),
+BirthDate = new object(),
 ClinicalInfo = {new ClinicalCodedElement("<system>", "<code>")
 {
 Name = "<name>",
