@@ -4,6 +4,7 @@
 using System;
 using System.Diagnostics;
 using Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Diagnostics;
+using Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Filtering;
 using Azure.Monitor.OpenTelemetry.LiveMetrics.Models;
 
 namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals
@@ -18,7 +19,8 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals
         /// This is a unique identifier that comes from the LiveMetrics service and identifies our connected session.
         /// </summary>
         private string _etag = string.Empty;
-        private CollectionConfigurationInfo? _collectionConfigurationInfo = null;
+        private CollectionConfigurationInfo _collectionConfigurationInfo;
+        private CollectionConfiguration _collectionConfiguration;
 
         private DateTimeOffset _lastSuccessfulPing = DateTimeOffset.UtcNow;
         private DateTimeOffset _lastSuccessfulPost = DateTimeOffset.UtcNow;
@@ -129,6 +131,8 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals
                 if (response.CollectionConfigurationInfo != null)
                 {
                     _collectionConfigurationInfo = response.CollectionConfigurationInfo;
+                    CollectionConfigurationError[] error;
+                    _collectionConfiguration = new CollectionConfiguration(_collectionConfigurationInfo, out error);
                 }
             }
         }
