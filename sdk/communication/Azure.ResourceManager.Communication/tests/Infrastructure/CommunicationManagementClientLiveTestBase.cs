@@ -96,43 +96,43 @@ namespace Azure.ResourceManager.Communication.Tests
             return senderUsername;
         }
 
-        internal async Task<SuppressionListResource> CreateDefaultSuppressionListResource(CommunicationDomainResource domain, string listName)
-        {
-            var id = Recording.Random.NewGuid().ToString();
+        //internal async Task<SuppressionListResource> CreateDefaultSuppressionListResource(CommunicationDomainResource domain, string listName)
+        //{
+        //    var id = Recording.Random.NewGuid().ToString();
 
-            SuppressionListResourceData data = new SuppressionListResourceData
-            {
-                 ListName = listName
-            };
+        //    SuppressionListResourceData data = new SuppressionListResourceData
+        //    {
+        //         ListName = listName
+        //    };
 
-            ArmOperation<SuppressionListResource> suppressionListOp =
-                await domain.GetSuppressionListResources().CreateOrUpdateAsync(WaitUntil.Completed, id, data);
-            SuppressionListResource suppressionList = suppressionListOp.Value;
-            return suppressionList;
-        }
+        //    ArmOperation<SuppressionListResource> suppressionListOp =
+        //        await domain.GetSuppressionListResources().CreateOrUpdateAsync(WaitUntil.Completed, id, data);
+        //    SuppressionListResource suppressionList = suppressionListOp.Value;
+        //    return suppressionList;
+        //}
 
-        internal async Task<SuppressionListAddressResource> CreateDefaultSuppressionListAddressResource(
-            SuppressionListResource suppressionList,
-            string email,
-            string firstName = default,
-            string lastName = default,
-            string notes = default)
-        {
-            var id = Recording.Random.NewGuid().ToString();
+        //internal async Task<SuppressionListAddressResource> CreateDefaultSuppressionListAddressResource(
+        //    SuppressionListResource suppressionList,
+        //    string email,
+        //    string firstName = default,
+        //    string lastName = default,
+        //    string notes = default)
+        //{
+        //    var id = Recording.Random.NewGuid().ToString();
 
-            SuppressionListAddressResourceData data = new SuppressionListAddressResourceData
-            {
-                Email = email,
-                FirstName = firstName,
-                LastName = lastName,
-                Notes = notes
-            };
+        //    SuppressionListAddressResourceData data = new SuppressionListAddressResourceData
+        //    {
+        //        Email = email,
+        //        FirstName = firstName,
+        //        LastName = lastName,
+        //        Notes = notes
+        //    };
 
-            ArmOperation<SuppressionListAddressResource> suppressionListAddressOp =
-                await suppressionList.GetSuppressionListAddressResources().CreateOrUpdateAsync(WaitUntil.Completed, id, data);
-            SuppressionListAddressResource suppressionListAddress = suppressionListAddressOp.Value;
-            return suppressionListAddress;
-        }
+        //    ArmOperation<SuppressionListAddressResource> suppressionListAddressOp =
+        //        await suppressionList.GetSuppressionListAddressResources().CreateOrUpdateAsync(WaitUntil.Completed, id, data);
+        //    SuppressionListAddressResource suppressionListAddress = suppressionListAddressOp.Value;
+        //    return suppressionListAddress;
+        //}
 
         private void IgnoreTestInLiveMode()
         {
