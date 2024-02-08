@@ -12,7 +12,8 @@ namespace System.ClientModel.Primitives;
 
 public class ClientRetryPolicy : PipelinePolicy
 {
-    public static readonly ClientRetryPolicy Default = new();
+    private static readonly ClientRetryPolicy _default = new();
+    public static ClientRetryPolicy Default => _default;
 
     private const int DefaultMaxRetries = 3;
     private static readonly TimeSpan DefaultInitialDelay = TimeSpan.FromSeconds(0.8);
