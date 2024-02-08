@@ -27,8 +27,11 @@ namespace Azure.ResourceManager.Compute
                 writer.WriteStringValue(Id);
             }
             // this part is changed in this customization, remove the readonly tag on name because in some cases we need this in payload
-            writer.WritePropertyName("name"u8);
-            writer.WriteStringValue(Name);
+            if (Optional.IsDefined(Name))
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
             // end of customization
             if (options.Format != "W")
             {
