@@ -10,7 +10,7 @@
   ([#41761](https://github.com/Azure/azure-sdk-for-net/pull/41761))
 
 * Fixed an issue where tags associated with Exceptions were not being included.
-  Now, tags linked to an `ActivityEvent` following the otel convention for storing exception are correctly exported as Custom Properties.
+  Now, tags linked to an `ActivityEvent` following the [otel convention for storing exception](https://github.com/open-telemetry/semantic-conventions/blob/main/docs/exceptions/exceptions-spans.md) are correctly exported as Custom Properties.
   ([#41767](https://github.com/Azure/azure-sdk-for-net/pull/41767))
 
 ### Other Changes
