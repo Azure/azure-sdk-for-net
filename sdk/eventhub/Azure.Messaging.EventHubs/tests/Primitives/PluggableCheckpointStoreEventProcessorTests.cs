@@ -91,8 +91,7 @@ namespace Azure.Messaging.EventHubs.Tests
                     partitionId,
                     mockProcessor.Identifier,
                     It.Is<CheckpointPosition>(csp =>
-                        csp.Offset == offset
-                        && csp.SequenceNumber == sequence),
+                        csp.SequenceNumber == sequence),
                     cancellationSource.Token))
                 .ThrowsAsync(expectedException);
 
@@ -108,7 +107,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 .ThrowsAsync(expectedExceptionOld);
 
             Assert.That(async () => await mockProcessor.InvokeOldUpdateCheckpointAsync(partitionId, offset, sequence, cancellationSource.Token), Throws.Exception.EqualTo(expectedExceptionOld));
-            Assert.That(async () => await mockProcessor.InvokeUpdateCheckpointAsync(partitionId, new CheckpointPosition(sequence, offset), cancellationSource.Token), Throws.Exception.EqualTo(expectedException));
+            Assert.That(async () => await mockProcessor.InvokeUpdateCheckpointAsync(partitionId, new CheckpointPosition(sequence), cancellationSource.Token), Throws.Exception.EqualTo(expectedException));
         }
 
         /// <summary>

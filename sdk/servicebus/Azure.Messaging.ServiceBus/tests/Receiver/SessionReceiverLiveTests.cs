@@ -1184,11 +1184,10 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                         var messages = await receiver.ReceiveMessagesAsync(10);
                         foreach (var message in messages)
                         {
-                            if (message.SequenceNumber != lastSequenceNumber + 1)
-                            {
-                                Assert.Fail(
-                                    $"Last sequence number: {lastSequenceNumber}, current sequence number: {message.SequenceNumber}");
-                            }
+                            Assert.That(
+                                message.SequenceNumber,
+                                Is.EqualTo(lastSequenceNumber + 1),
+                                $"Last sequence number: {lastSequenceNumber}, current sequence number: {message.SequenceNumber}");
 
                             lastSequenceNumber = message.SequenceNumber;
 
