@@ -1,14 +1,13 @@
-﻿namespace Microsoft.ApplicationInsights.Tests
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Filtering.Tests
 {
-    using System;
+    using Xunit;
 
-    using Microsoft.ApplicationInsights.Extensibility.Filtering;
-    using Microsoft.VisualStudio.TestTools.UnitTesting;
-
-    [TestClass]
     public class AccumulatedValuesTest
     {
-        [TestMethod]
+        [Fact]
         public void AccumulatedValuesAggregatesCorrectly()
         {
             // ARRANGE
@@ -30,18 +29,18 @@
             double max = accumulatorMax.CalculateAggregation(out long maxCount);
 
             // ASSERT
-            Assert.AreEqual(2d, avg);
-            Assert.AreEqual(4d, sum);
-            Assert.AreEqual(1d, min);
-            Assert.AreEqual(3d, max);
+            Assert.Equal(2d, avg);
+            Assert.Equal(4d, sum);
+            Assert.Equal(1d, min);
+            Assert.Equal(3d, max);
 
-            Assert.AreEqual(2, avgCount);
-            Assert.AreEqual(2, sumCount);
-            Assert.AreEqual(2, minCount);
-            Assert.AreEqual(2, maxCount);
+            Assert.Equal(2, avgCount);
+            Assert.Equal(2, sumCount);
+            Assert.Equal(2, minCount);
+            Assert.Equal(2, maxCount);
         }
 
-        [TestMethod]
+        [Fact]
         public void AccumulatedValuesAggregatesCorrectlyForEmptyDataSet()
         {
             // ARRANGE
@@ -57,15 +56,15 @@
             double max = accumulatorMax.CalculateAggregation(out long maxCount);
 
             // ASSERT
-            Assert.AreEqual(0, avg);
-            Assert.AreEqual(0, sum);
-            Assert.AreEqual(0, min);
-            Assert.AreEqual(0, max);
+            Assert.Equal(0, avg);
+            Assert.Equal(0, sum);
+            Assert.Equal(0, min);
+            Assert.Equal(0, max);
 
-            Assert.AreEqual(0, avgCount);
-            Assert.AreEqual(0, sumCount);
-            Assert.AreEqual(0, minCount);
-            Assert.AreEqual(0, maxCount);
+            Assert.Equal(0, avgCount);
+            Assert.Equal(0, sumCount);
+            Assert.Equal(0, minCount);
+            Assert.Equal(0, maxCount);
         }
     }
 }
