@@ -43,7 +43,9 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
             JwtSecurityToken token = handler.ReadJwtToken(accessToken);
             SupportedTokenSchemaVersions tokenSchemaVersion = TokenValidatorHelper.ParseSupportedTokenVersion(token.Claims.First(x => x.Type.Equals("ver")).Value);
 
-            if (!ConfigurationManager.GetService(token.Payload[(tokenSchemaVersion == SupportedTokenSchemaVersions.V2_0 ? ConfigurationManager.TOKEN_V2_VERIFY : ConfigurationManager.TOKEN_V1_VERIFY)].ToString(), out ServiceInfo serviceInfo))
+            if (!ConfigurationManager.GetService(
+                serviceId: token.Payload[(tokenSchemaVersion == SupportedTokenSchemaVersions.V2_0 ? ConfigurationManager.TOKEN_V2_VERIFY : ConfigurationManager.TOKEN_V1_VERIFY)].ToString(),
+                serviceInfo: out ServiceInfo serviceInfo))
             {
                 return (false, null);
             }

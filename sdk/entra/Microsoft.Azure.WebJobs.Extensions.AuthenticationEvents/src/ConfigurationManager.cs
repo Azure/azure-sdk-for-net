@@ -10,18 +10,28 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
 {
     internal class ConfigurationManager
     {
-        public static Dictionary<string, ServiceInfo> SERVICES = new Dictionary<string, ServiceInfo>()
+        /// <summary>
+        /// Application Ids for the services we support.
+        /// </summary>
+        public static List<ServiceInfo> defaultServicesList = new()
         {
-            { "99045fe1-7639-4a75-9d4a-577b6ca3810f", new ServiceInfo("https://login.microsoftonline.com","https://sts.windows.net/{0}/","https://login.microsoftonline.com/{0}/v2.0"){DefaultService=true } } //Public cloud
+            new ServiceInfo()
+            {
+                OpenIdConnectionHost = "https://login.microsoftonline.com",
+                TokenIssuerV1 = "https://sts.windows.net/{0}/",
+                TokenIssuerV2 = "https://login.microsoftonline.com/{0}/v2.0",
+                ApplicationId = "99045fe1-7639-4a75-9d4a-577b6ca3810f"
+            }
         };
 
         private const string BYPASS_VALIDATION = "AuthenticationEvents__BypassTokenValidation";
         private const string CUSTOM_CALLER_APPID = "AuthenticationEvents__CustomCallerAppId";
+        private const string EZAUTH_ENABLED = "WEBSITE_AUTH_ENABLED";
+
         internal const string TENANT_ID = "AuthenticationEvents__TenantId";
         internal const string AUDIENCE_APPID = "AuthenticationEvents__AudienceAppId";
         internal const string TOKEN_V1_VERIFY = "appid";
         internal const string TOKEN_V2_VERIFY = "azp";
-        private const string EZAUTH_ENABLED = "WEBSITE_AUTH_ENABLED";
         internal const string HEADER_EZAUTH_ICP = "X-MS-CLIENT-PRINCIPAL-IDP";
         internal const string HEADER_EZAUTH_ICP_VERIFY = "aad";
         internal const string HEADER_EZAUTH_PRINCIPAL = "X-MS-CLIENT-PRINCIPAL";
