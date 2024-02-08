@@ -19,23 +19,23 @@ public partial class AudioSpeechOptions
     // default constructor.
 
     /// <summary>
-    ///     The text to generate audio for. The maximum length is 4096 characters.
+    /// The text to generate audio for. The maximum length is 4096 characters.
     /// </summary>
     public string Input { get; set; }
 
     /// <summary>
-    ///     The voice to use for text-to-speech.
+    /// The voice to use for text-to-speech.
     /// </summary>
     public AudioSpeechVoice Voice { get; set; }
 
     /// <summary>
-    ///     The audio output format for the spoken text. By default, the MP3 format will be used.
+    /// The audio output format for the spoken text. By default, the MP3 format will be used.
     /// </summary>
     public AudioSpeechOutputFormat? ResponseFormat { get; set; }
 
     /// <summary>
-    ///     The speed of speech for generated audio. Values are valid in the range from 0.25 to 4.0, with 1.0 the
-    ///     default and higher values corresponding to faster speech.
+    /// The speed of speech for generated audio. Values are valid in the range from 0.25 to 4.0, with 1.0 the
+    /// default and higher values corresponding to faster speech.
     /// </summary>
     public float? Speed { get; set; }
 
