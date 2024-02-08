@@ -108,7 +108,6 @@ namespace Azure.AI.OpenAI.Tests
                 GenerationSampleCount = 3,
                 Temperature = 0.75f,
                 User = "AzureSDKOpenAITests",
-                Echo = true,
                 LogProbabilityCount = 1,
                 MaxTokens = 512,
                 TokenSelectionBiases =
@@ -133,13 +132,46 @@ namespace Azure.AI.OpenAI.Tests
 
             string choiceText = choice.Text;
             Assert.That(choiceText, Is.Not.Null.Or.Empty);
-            Assert.That(choiceText.Length, Is.GreaterThan(promptText.Length));
-            Assert.That(choiceText.ToLower().StartsWith(promptText.ToLower()));
-            Assert.That(choiceText.Substring(promptText.Length).Contains(" banana"), Is.False);
+            Assert.That(choiceText.ToLower().StartsWith(promptText.ToLower()), Is.False);
 
             Assert.That(choice.LogProbabilityModel, Is.Not.Null.Or.Empty);
             Assert.That(choice.LogProbabilityModel.Tokens, Is.Not.Null.Or.Empty);
             Assert.That(response.Value.Usage.TotalTokens, Is.GreaterThan(response.Value.Choices[0].LogProbabilityModel.Tokens.Count));
+        }
+
+        [RecordedTest]
+        [TestCase(Service.Azure)]
+        [TestCase(Service.NonAzure)]
+        public async Task AdvancedCompletionsOptionsWithEcho(Service serviceTarget)
+        {
+            OpenAIClient client = GetTestClient(serviceTarget);
+            string deploymentOrModelName = GetDeploymentOrModelName(serviceTarget, Scenario.LegacyCompletions);
+            string promptText = "Are bananas especially radioactive?";
+            var requestOptions = new CompletionsOptions()
+            {
+                DeploymentName = deploymentOrModelName,
+                Prompts = { promptText },
+                Temperature = 0.75f,
+                User = "AzureSDKOpenAITests",
+                Echo = true,
+                MaxTokens = 512,
+            };
+            Response<Completions> response = await client.GetCompletionsAsync(requestOptions);
+
+            Assert.That(response, Is.Not.Null);
+            string rawResponse = response.GetRawResponse().Content.ToString();
+            Assert.That(rawResponse, Is.Not.Null.Or.Empty);
+
+            Assert.That(response.Value, Is.Not.Null);
+            Assert.That(response.Value.Choices, Is.Not.Null.Or.Empty);
+            Assert.That(response.Value.Choices.Count, Is.EqualTo(1));
+
+            Choice choice = response.Value.Choices[0];
+
+            string choiceText = choice.Text;
+            Assert.That(choiceText, Is.Not.Null.Or.Empty);
+            Assert.That(choiceText.Length, Is.GreaterThan(promptText.Length));
+            Assert.That(choiceText.ToLower().StartsWith(promptText.ToLower()));
         }
 
         [RecordedTest]

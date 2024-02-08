@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.AI.OpenAI
 {
-    /// <summary> Parameters for configuring Azure OpenAI Pinecone chat extensions. </summary>
+    /// <summary> Parameters for configuring Azure OpenAI Pinecone chat extensions. The supported authentication type is APIKey. </summary>
     internal partial class PineconeChatExtensionParameters
     {
         /// <summary>
@@ -84,7 +84,7 @@ namespace Azure.AI.OpenAI
         /// If not otherwise provided, On Your Data will attempt to use System Managed Identity (default credential)
         /// authentication.
         /// Please note <see cref="OnYourDataAuthenticationOptions"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="OnYourDataApiKeyAuthenticationOptions"/>, <see cref="OnYourDataConnectionStringAuthenticationOptions"/>, <see cref="OnYourDataKeyAndKeyIdAuthenticationOptions"/>, <see cref="OnYourDataSystemAssignedManagedIdentityAuthenticationOptions"/> and <see cref="OnYourDataUserAssignedManagedIdentityAuthenticationOptions"/>.
+        /// The available derived classes include <see cref="OnYourDataApiKeyAuthenticationOptions"/>, <see cref="OnYourDataConnectionStringAuthenticationOptions"/>, <see cref="OnYourDataKeyAndKeyIdAuthenticationOptions"/>, <see cref="OnYourDataEncodedApiKeyAuthenticationOptions"/>, <see cref="OnYourDataAccessTokenAuthenticationOptions"/>, <see cref="OnYourDataSystemAssignedManagedIdentityAuthenticationOptions"/> and <see cref="OnYourDataUserAssignedManagedIdentityAuthenticationOptions"/>.
         /// </summary>
         public OnYourDataAuthenticationOptions Authentication { get; set; }
         /// <summary> The configured top number of documents to feature for the configured query. </summary>
@@ -97,11 +97,5 @@ namespace Azure.AI.OpenAI
         public string RoleInformation { get; set; }
         /// <summary> The environment name of Pinecone. </summary>
         public string EnvironmentName { get; }
-        /// <summary>
-        /// The embedding dependency for vector search.
-        /// Please note <see cref="OnYourDataVectorizationSource"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="OnYourDataEndpointVectorizationSource"/>, <see cref="OnYourDataDeploymentNameVectorizationSource"/> and <see cref="OnYourDataModelIdVectorizationSource"/>.
-        /// </summary>
-        public OnYourDataVectorizationSource EmbeddingDependency { get; set; }
     }
 }

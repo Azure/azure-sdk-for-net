@@ -842,6 +842,88 @@ public partial class OpenAIClient
         return Response.FromValue(AudioTranslation.FromResponse(rawResponse), rawResponse);
     }
 
+    /// <summary> Generates text-to-speech audio from the input text. </summary>
+    /// <param name="audioSpeechOptions">
+    ///     A representation of the request options that control the behavior of a text-to-speech operation.
+    /// </param>
+    /// <param name="cancellationToken">
+    ///     An optional cancellation token that may be used to abort an ongoing request.
+    /// </param>
+    /// <exception cref="ArgumentNullException">
+    ///     <paramref name="audioSpeechOptions"/> or <paramref name="audioSpeechOptions.DeploymentName"/> is null.
+    /// </exception>
+    /// <exception cref="ArgumentException">
+    ///     <paramref name="audioSpeechOptions.DeploymentName"/> is an empty string.
+    /// </exception>
+    public virtual async Task<Response<BinaryData>> GetAudioSpeechAsync(
+        AudioSpeechOptions audioSpeechOptions,
+        CancellationToken cancellationToken = default)
+    {
+        Argument.AssertNotNull(audioSpeechOptions, nameof(audioSpeechOptions));
+        Argument.AssertNotNullOrEmpty(audioSpeechOptions.DeploymentName, nameof(audioSpeechOptions.DeploymentName));
+
+        using DiagnosticScope scope = ClientDiagnostics.CreateScope("OpenAIClient.GetAudioSpeech");
+        scope.Start();
+
+        try
+        {
+            RequestContext context = FromCancellationToken(cancellationToken);
+            HttpMessage message = CreatePostRequestMessage(
+                audioSpeechOptions.DeploymentName,
+                "audio/speech",
+                content: audioSpeechOptions.ToRequestContent(),
+                context);
+            Response rawResponse = await _pipeline.ProcessMessageAsync(message, context, cancellationToken).ConfigureAwait(false);
+            return Response.FromValue(rawResponse.Content, rawResponse);
+        }
+        catch (Exception e)
+        {
+            scope.Failed(e);
+            throw;
+        }
+    }
+
+    /// <summary> Generates text-to-speech audio from the input text. </summary>
+    /// <param name="audioSpeechOptions">
+    ///     A representation of the request options that control the behavior of a text-to-speech operation.
+    /// </param>
+    /// <param name="cancellationToken">
+    ///     An optional cancellation token that may be used to abort an ongoing request.
+    /// </param>
+    /// <exception cref="ArgumentNullException">
+    ///     <paramref name="audioSpeechOptions"/> or <paramref name="audioSpeechOptions.DeploymentName"/> is null.
+    /// </exception>
+    /// <exception cref="ArgumentException">
+    ///     <paramref name="audioSpeechOptions.DeploymentName"/> is an empty string.
+    /// </exception>
+    public virtual Response<BinaryData> GetAudioSpeech(
+        AudioSpeechOptions audioSpeechOptions,
+        CancellationToken cancellationToken = default)
+    {
+        Argument.AssertNotNull(audioSpeechOptions, nameof(audioSpeechOptions));
+        Argument.AssertNotNullOrEmpty(audioSpeechOptions.DeploymentName, nameof(audioSpeechOptions.DeploymentName));
+
+        using DiagnosticScope scope = ClientDiagnostics.CreateScope("OpenAIClient.GetAudioSpeech");
+        scope.Start();
+
+        try
+        {
+            RequestContext context = FromCancellationToken(cancellationToken);
+            HttpMessage message = CreatePostRequestMessage(
+                audioSpeechOptions.DeploymentName,
+                "audio/speech",
+                content: audioSpeechOptions.ToRequestContent(),
+                context);
+            Response rawResponse = _pipeline.ProcessMessage(message, context, cancellationToken);
+            return Response.FromValue(rawResponse.Content, rawResponse);
+        }
+        catch (Exception e)
+        {
+            scope.Failed(e);
+            throw;
+        }
+    }
+
     internal RequestUriBuilder GetUri(string deploymentOrModelName, string operationPath)
     {
         var uri = new RawRequestUriBuilder();
@@ -872,9 +954,7 @@ public partial class OpenAIClient
         RequestContent content,
         RequestContext context)
     {
-        string operationPath = chatCompletionsOptions.AzureExtensionsOptions != null
-            ? "extensions/chat/completions"
-            : "chat/completions";
+        string operationPath = "chat/completions";
         return CreatePostRequestMessage(chatCompletionsOptions.DeploymentName, operationPath, content, context);
     }
 

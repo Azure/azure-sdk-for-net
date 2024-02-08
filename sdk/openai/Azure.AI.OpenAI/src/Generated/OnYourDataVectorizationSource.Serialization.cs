@@ -71,9 +71,9 @@ namespace Azure.AI.OpenAI
             {
                 switch (discriminator.GetString())
                 {
-                    case "Endpoint": return OnYourDataEndpointVectorizationSource.DeserializeOnYourDataEndpointVectorizationSource(element);
-                    case "DeploymentName": return OnYourDataDeploymentNameVectorizationSource.DeserializeOnYourDataDeploymentNameVectorizationSource(element);
-                    case "ModelId": return OnYourDataModelIdVectorizationSource.DeserializeOnYourDataModelIdVectorizationSource(element);
+                    case "endpoint": return OnYourDataEndpointVectorizationSource.DeserializeOnYourDataEndpointVectorizationSource(element);
+                    case "deployment_name": return OnYourDataDeploymentNameVectorizationSource.DeserializeOnYourDataDeploymentNameVectorizationSource(element);
+                    case "model_id": return OnYourDataModelIdVectorizationSource.DeserializeOnYourDataModelIdVectorizationSource(element);
                 }
             }
             return UnknownOnYourDataVectorizationSource.DeserializeUnknownOnYourDataVectorizationSource(element);

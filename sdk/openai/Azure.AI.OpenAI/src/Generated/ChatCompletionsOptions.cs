@@ -127,11 +127,13 @@ namespace Azure.AI.OpenAI
         /// same seed and parameters should return the same result. Determinism is not guaranteed, and you should refer to the
         /// system_fingerprint response parameter to monitor changes in the backend."
         /// </param>
+        /// <param name="enableLogProbabilities"> Whether to return log probabilities of the output tokens or not. If true, returns the log probabilities of each output token returned in the `content` of `message`. This option is currently not available on the `gpt-4-vision-preview` model. </param>
+        /// <param name="logProbabilitiesPerToken"> An integer between 0 and 5 specifying the number of most likely tokens to return at each token position, each with an associated log probability. `logprobs` must be set to `true` if this parameter is used. </param>
         /// <param name="responseFormat"> An object specifying the format that the model must output. Used to enable JSON mode. </param>
         /// <param name="tools"> The available tool definitions that the chat completions request can use, including caller-defined functions. </param>
         /// <param name="internalSuppressedToolChoice"> If specified, the model will configure which of the provided tools it can use for the chat completions response. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ChatCompletionsOptions(IList<ChatRequestMessage> messages, IList<FunctionDefinition> functions, FunctionDefinition functionCall, int? maxTokens, float? temperature, float? nucleusSamplingFactor, IDictionary<int, int> tokenSelectionBiases, string user, int? choiceCount, IList<string> stopSequences, float? presencePenalty, float? frequencyPenalty, bool? internalShouldStreamResponse, string deploymentName, IList<AzureChatExtensionConfiguration> internalAzureExtensionsDataSources, AzureChatEnhancementConfiguration enhancements, long? seed, ChatCompletionsResponseFormat responseFormat, IList<ChatCompletionsToolDefinition> tools, BinaryData internalSuppressedToolChoice, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ChatCompletionsOptions(IList<ChatRequestMessage> messages, IList<FunctionDefinition> functions, FunctionDefinition functionCall, int? maxTokens, float? temperature, float? nucleusSamplingFactor, IDictionary<int, int> tokenSelectionBiases, string user, int? choiceCount, IList<string> stopSequences, float? presencePenalty, float? frequencyPenalty, bool? internalShouldStreamResponse, string deploymentName, IList<AzureChatExtensionConfiguration> internalAzureExtensionsDataSources, AzureChatEnhancementConfiguration enhancements, long? seed, bool? enableLogProbabilities, int? logProbabilitiesPerToken, ChatCompletionsResponseFormat responseFormat, IList<ChatCompletionsToolDefinition> tools, BinaryData internalSuppressedToolChoice, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Messages = messages;
             Functions = functions;
@@ -150,6 +152,8 @@ namespace Azure.AI.OpenAI
             InternalAzureExtensionsDataSources = internalAzureExtensionsDataSources;
             Enhancements = enhancements;
             Seed = seed;
+            EnableLogProbabilities = enableLogProbabilities;
+            LogProbabilitiesPerToken = logProbabilitiesPerToken;
             ResponseFormat = responseFormat;
             Tools = tools;
             InternalSuppressedToolChoice = internalSuppressedToolChoice;
@@ -176,6 +180,10 @@ namespace Azure.AI.OpenAI
         /// system_fingerprint response parameter to monitor changes in the backend."
         /// </summary>
         public long? Seed { get; set; }
+        /// <summary> Whether to return log probabilities of the output tokens or not. If true, returns the log probabilities of each output token returned in the `content` of `message`. This option is currently not available on the `gpt-4-vision-preview` model. </summary>
+        public bool? EnableLogProbabilities { get; set; }
+        /// <summary> An integer between 0 and 5 specifying the number of most likely tokens to return at each token position, each with an associated log probability. `logprobs` must be set to `true` if this parameter is used. </summary>
+        public int? LogProbabilitiesPerToken { get; set; }
         /// <summary>
         /// An object specifying the format that the model must output. Used to enable JSON mode.
         /// Please note <see cref="ChatCompletionsResponseFormat"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes..

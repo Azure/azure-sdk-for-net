@@ -22,11 +22,13 @@ namespace Azure.AI.OpenAI
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        private const string ApiKeyValue = "APIKey";
-        private const string ConnectionStringValue = "ConnectionString";
-        private const string KeyAndKeyIdValue = "KeyAndKeyId";
-        private const string SystemAssignedManagedIdentityValue = "SystemAssignedManagedIdentity";
-        private const string UserAssignedManagedIdentityValue = "UserAssignedManagedIdentity";
+        private const string ApiKeyValue = "api_key";
+        private const string ConnectionStringValue = "connection_string";
+        private const string KeyAndKeyIdValue = "key_and_key_id";
+        private const string EncodedApiKeyValue = "encoded_api_key";
+        private const string AccessTokenValue = "access_token";
+        private const string SystemAssignedManagedIdentityValue = "system_assigned_managed_identity";
+        private const string UserAssignedManagedIdentityValue = "user_assigned_managed_identity";
 
         /// <summary> Authentication via API key. </summary>
         public static OnYourDataAuthenticationType ApiKey { get; } = new OnYourDataAuthenticationType(ApiKeyValue);
@@ -34,6 +36,10 @@ namespace Azure.AI.OpenAI
         public static OnYourDataAuthenticationType ConnectionString { get; } = new OnYourDataAuthenticationType(ConnectionStringValue);
         /// <summary> Authentication via key and key ID pair. </summary>
         public static OnYourDataAuthenticationType KeyAndKeyId { get; } = new OnYourDataAuthenticationType(KeyAndKeyIdValue);
+        /// <summary> Authentication via encoded API key. </summary>
+        public static OnYourDataAuthenticationType EncodedApiKey { get; } = new OnYourDataAuthenticationType(EncodedApiKeyValue);
+        /// <summary> Authentication via access token. </summary>
+        public static OnYourDataAuthenticationType AccessToken { get; } = new OnYourDataAuthenticationType(AccessTokenValue);
         /// <summary> Authentication via system-assigned managed identity. </summary>
         public static OnYourDataAuthenticationType SystemAssignedManagedIdentity { get; } = new OnYourDataAuthenticationType(SystemAssignedManagedIdentityValue);
         /// <summary> Authentication via user-assigned managed identity. </summary>

@@ -31,7 +31,7 @@ public class ChatExtensionsTests : OpenAITestBase
         OpenAIClient client = GetTestClient(serviceTarget);
         string deploymentOrModelName = GetDeploymentOrModelName(serviceTarget);
 
-        AzureCognitiveSearchChatExtensionConfiguration searchExtension = new()
+        AzureSearchChatExtensionConfiguration searchExtension = new()
         {
             SearchEndpoint = new Uri("https://openaisdktestsearch.search.windows.net"),
             IndexName = "openai-test-index-carbon-wiki",
@@ -65,10 +65,14 @@ public class ChatExtensionsTests : OpenAITestBase
 
         AzureChatExtensionsMessageContext context = firstChoice.Message.AzureExtensionsContext;
         Assert.That(context, Is.Not.Null);
-        Assert.That(context.Messages, Is.Not.Null.Or.Empty);
-        Assert.That(context.Messages[0], Is.Not.Null);
-        Assert.That(context.Messages[0].Content, Is.Not.Null.Or.Empty);
-        Assert.That(context.Messages[0].Content.Contains("citations"));
+        Assert.That(context.Intent, Is.Not.Null.Or.Empty);
+        Assert.That(context.Citations, Is.Not.Null.Or.Empty);
+        Assert.That(context.Citations[0], Is.Not.Null);
+        Assert.That(context.Citations[0].Content, Is.Not.Null.Or.Empty);
+        Assert.That(context.Citations[0].Title, Is.Not.Null.Or.Empty);
+        Assert.That(context.Citations[0].Filepath, Is.Not.Null.Or.Empty);
+        Assert.That(context.Citations[0].Url, Is.Not.Null.Or.Empty);
+        Assert.That(context.Citations[0].ChunkId, Is.Not.Null.Or.Empty);
     }
 
     [RecordedTest]
@@ -78,7 +82,7 @@ public class ChatExtensionsTests : OpenAITestBase
         OpenAIClient client = GetTestClient(serviceTarget);
         string deploymentOrModelName = GetDeploymentOrModelName(serviceTarget);
 
-        AzureCognitiveSearchChatExtensionConfiguration searchConfig = new()
+        AzureSearchChatExtensionConfiguration searchConfig = new()
         {
             SearchEndpoint = new Uri("https://openaisdktestsearch.search.windows.net"),
             IndexName = "openai-test-index-carbon-wiki",
@@ -105,7 +109,8 @@ public class ChatExtensionsTests : OpenAITestBase
         Assert.That(response.GetRawResponse(), Is.Not.Null);
 
         ChatRole? streamedRole = null;
-        IEnumerable<ChatResponseMessage> azureContextMessages = null;
+        string intent = null;
+        IEnumerable<AzureChatExtensionDataSourceResponseCitation> citations = null;
         StringBuilder contentBuilder = new();
 
         await foreach (StreamingChatCompletionsUpdate chatUpdate in response)
@@ -115,18 +120,27 @@ public class ChatExtensionsTests : OpenAITestBase
                 Assert.That(streamedRole, Is.Null);
                 streamedRole = chatUpdate.Role.Value;
             }
-            if (chatUpdate.AzureExtensionsContext?.Messages?.Count > 0)
+            if (chatUpdate.AzureExtensionsContext?.Intent != null)
             {
-                Assert.That(azureContextMessages, Is.Null);
-                azureContextMessages = chatUpdate.AzureExtensionsContext.Messages;
+                Assert.That(intent, Is.Null);
+                intent = chatUpdate.AzureExtensionsContext.Intent;
+            }
+            if (chatUpdate.AzureExtensionsContext?.Citations?.Count > 0)
+            {
+                Assert.That(citations, Is.Null);
+                citations = chatUpdate.AzureExtensionsContext.Citations;
             }
             contentBuilder.Append(chatUpdate.ContentUpdate);
         }
 
         Assert.That(streamedRole, Is.EqualTo(ChatRole.Assistant));
         Assert.That(contentBuilder.ToString(), Is.Not.Null.Or.Empty);
-        Assert.That(azureContextMessages, Is.Not.Null.Or.Empty);
-        Assert.That(azureContextMessages.Any(contextMessage => contextMessage.Role == ChatRole.Tool));
-        Assert.That(azureContextMessages.Any(contextMessage => !string.IsNullOrEmpty(contextMessage.Content)));
+        Assert.That(intent, Is.Not.Null.Or.Empty);
+        Assert.That(citations, Is.Not.Null.Or.Empty);
+        Assert.That(citations.Any(citation => !string.IsNullOrEmpty(citation.Content)));
+        Assert.That(citations.Any(citation => !string.IsNullOrEmpty(citation.Title)));
+        Assert.That(citations.Any(citation => !string.IsNullOrEmpty(citation.Filepath)));
+        Assert.That(citations.Any(citation => !string.IsNullOrEmpty(citation.Url)));
+        Assert.That(citations.Any(citation => !string.IsNullOrEmpty(citation.ChunkId)));
     }
 }

@@ -71,10 +71,10 @@ namespace Azure.AI.OpenAI
             {
                 switch (discriminator.GetString())
                 {
-                    case "AzureCognitiveSearch": return AzureCognitiveSearchChatExtensionConfiguration.DeserializeAzureCognitiveSearchChatExtensionConfiguration(element);
-                    case "AzureMLIndex": return AzureMachineLearningIndexChatExtensionConfiguration.DeserializeAzureMachineLearningIndexChatExtensionConfiguration(element);
-                    case "AzureCosmosDB": return AzureCosmosDBChatExtensionConfiguration.DeserializeAzureCosmosDBChatExtensionConfiguration(element);
-                    case "Elasticsearch": return ElasticsearchChatExtensionConfiguration.DeserializeElasticsearchChatExtensionConfiguration(element);
+                    case "azure_search": return AzureSearchChatExtensionConfiguration.DeserializeAzureSearchChatExtensionConfiguration(element);
+                    case "azure_ml_index": return AzureMachineLearningIndexChatExtensionConfiguration.DeserializeAzureMachineLearningIndexChatExtensionConfiguration(element);
+                    case "azure_cosmos_db": return AzureCosmosDBChatExtensionConfiguration.DeserializeAzureCosmosDBChatExtensionConfiguration(element);
+                    case "elasticsearch": return ElasticsearchChatExtensionConfiguration.DeserializeElasticsearchChatExtensionConfiguration(element);
                     case "Pinecone": return PineconeChatExtensionConfiguration.DeserializePineconeChatExtensionConfiguration(element);
                 }
             }

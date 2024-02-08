@@ -14,16 +14,16 @@ using Azure.Core;
 
 namespace Azure.AI.OpenAI
 {
-    public partial class AzureCognitiveSearchChatExtensionConfiguration : IUtf8JsonSerializable, IJsonModel<AzureCognitiveSearchChatExtensionConfiguration>
+    public partial class AzureSearchChatExtensionConfiguration : IUtf8JsonSerializable, IJsonModel<AzureSearchChatExtensionConfiguration>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AzureCognitiveSearchChatExtensionConfiguration>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AzureSearchChatExtensionConfiguration>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
-        void IJsonModel<AzureCognitiveSearchChatExtensionConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<AzureSearchChatExtensionConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AzureCognitiveSearchChatExtensionConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<AzureSearchChatExtensionConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AzureCognitiveSearchChatExtensionConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AzureSearchChatExtensionConfiguration)} does not support '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -49,19 +49,19 @@ namespace Azure.AI.OpenAI
             writer.WriteEndObject();
         }
 
-        AzureCognitiveSearchChatExtensionConfiguration IJsonModel<AzureCognitiveSearchChatExtensionConfiguration>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        AzureSearchChatExtensionConfiguration IJsonModel<AzureSearchChatExtensionConfiguration>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AzureCognitiveSearchChatExtensionConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<AzureSearchChatExtensionConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AzureCognitiveSearchChatExtensionConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AzureSearchChatExtensionConfiguration)} does not support '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeAzureCognitiveSearchChatExtensionConfiguration(document.RootElement, options);
+            return DeserializeAzureSearchChatExtensionConfiguration(document.RootElement, options);
         }
 
-        internal static AzureCognitiveSearchChatExtensionConfiguration DeserializeAzureCognitiveSearchChatExtensionConfiguration(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static AzureSearchChatExtensionConfiguration DeserializeAzureSearchChatExtensionConfiguration(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= new ModelReaderWriterOptions("W");
 
@@ -69,7 +69,7 @@ namespace Azure.AI.OpenAI
             {
                 return null;
             }
-            AzureCognitiveSearchChatExtensionParameters parameters = default;
+            AzureSearchChatExtensionParameters parameters = default;
             AzureChatExtensionType type = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -77,7 +77,7 @@ namespace Azure.AI.OpenAI
             {
                 if (property.NameEquals("parameters"u8))
                 {
-                    parameters = AzureCognitiveSearchChatExtensionParameters.DeserializeAzureCognitiveSearchChatExtensionParameters(property.Value);
+                    parameters = AzureSearchChatExtensionParameters.DeserializeAzureSearchChatExtensionParameters(property.Value);
                     continue;
                 }
                 if (property.NameEquals("type"u8))
@@ -91,46 +91,46 @@ namespace Azure.AI.OpenAI
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AzureCognitiveSearchChatExtensionConfiguration(type, serializedAdditionalRawData, parameters);
+            return new AzureSearchChatExtensionConfiguration(type, serializedAdditionalRawData, parameters);
         }
 
-        BinaryData IPersistableModel<AzureCognitiveSearchChatExtensionConfiguration>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<AzureSearchChatExtensionConfiguration>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AzureCognitiveSearchChatExtensionConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<AzureSearchChatExtensionConfiguration>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AzureCognitiveSearchChatExtensionConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AzureSearchChatExtensionConfiguration)} does not support '{options.Format}' format.");
             }
         }
 
-        AzureCognitiveSearchChatExtensionConfiguration IPersistableModel<AzureCognitiveSearchChatExtensionConfiguration>.Create(BinaryData data, ModelReaderWriterOptions options)
+        AzureSearchChatExtensionConfiguration IPersistableModel<AzureSearchChatExtensionConfiguration>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AzureCognitiveSearchChatExtensionConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<AzureSearchChatExtensionConfiguration>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeAzureCognitiveSearchChatExtensionConfiguration(document.RootElement, options);
+                        return DeserializeAzureSearchChatExtensionConfiguration(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AzureCognitiveSearchChatExtensionConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AzureSearchChatExtensionConfiguration)} does not support '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<AzureCognitiveSearchChatExtensionConfiguration>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<AzureSearchChatExtensionConfiguration>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static new AzureCognitiveSearchChatExtensionConfiguration FromResponse(Response response)
+        internal static new AzureSearchChatExtensionConfiguration FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content);
-            return DeserializeAzureCognitiveSearchChatExtensionConfiguration(document.RootElement);
+            return DeserializeAzureSearchChatExtensionConfiguration(document.RootElement);
         }
 
         /// <summary> Convert into a Utf8JsonRequestContent. </summary>
