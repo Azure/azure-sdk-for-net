@@ -63,6 +63,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             DatasetType = datasetType ?? "AmazonS3Object";
         }
 
+        /// <summary> Initializes a new instance of <see cref="AmazonS3Dataset"/> for deserialization. </summary>
+        internal AmazonS3Dataset()
+        {
+        }
+
         /// <summary> The name of the Amazon S3 bucket. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> BucketName { get; set; }
         /// <summary> The key of the Amazon S3 object. Type: string (or Expression with resultType string). </summary>

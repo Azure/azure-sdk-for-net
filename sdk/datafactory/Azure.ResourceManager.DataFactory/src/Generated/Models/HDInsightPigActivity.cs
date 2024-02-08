@@ -55,6 +55,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             ActivityType = activityType ?? "HDInsightPig";
         }
 
+        /// <summary> Initializes a new instance of <see cref="HDInsightPigActivity"/> for deserialization. </summary>
+        internal HDInsightPigActivity()
+        {
+        }
+
         /// <summary> Storage linked service references. </summary>
         public IList<DataFactoryLinkedServiceReference> StorageLinkedServices { get; }
         /// <summary> User specified arguments to HDInsightActivity. Type: array (or Expression with resultType array). </summary>

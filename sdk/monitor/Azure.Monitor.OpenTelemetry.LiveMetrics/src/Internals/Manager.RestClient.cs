@@ -90,7 +90,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals
                     apikey: null,
                     xMsQpsConfigurationEtag: _etag,
                     xMsQpsTransmissionTime: null,
-                    monitoringDataPoints: new MonitoringDataPoint[] { dataPoint }, // TODO: CHECK WITH SERVICE TEAM. WHY DOES THIS NEED TO BE A COLLECITON?
+                    monitoringDataPoints: new MonitoringDataPoint[] { dataPoint }, // This collection is used to send multiple samples. For example, if a Post fails and we want to retry at the next Post.
                     cancellationToken: default);
 
                 if (response.Success)
@@ -102,6 +102,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals
                         Debug.WriteLine($"OnPost: Subscribed: {response.Subscribed}.");
                         _etag = string.Empty;
                         SetPingState();
+                        // TODO: double check if subscribedValue is false, we should stop collecting properly: (QuickPulseTelemetryModule.OnStopCollection).
                     }
                     else
                     {

@@ -20,5 +20,10 @@ namespace Azure.ResourceManager.DataFactory.Models
         {
             CompressionReadSettingsType = compressionReadSettingsType ?? "Unknown";
         }
+
+        /// <summary> Initializes a new instance of <see cref="UnknownCompressionReadSettings"/> for deserialization. </summary>
+        internal UnknownCompressionReadSettings()
+        {
+        }
     }
 }

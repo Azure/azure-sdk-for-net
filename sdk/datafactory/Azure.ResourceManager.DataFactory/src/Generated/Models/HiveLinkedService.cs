@@ -74,6 +74,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             LinkedServiceType = linkedServiceType ?? "Hive";
         }
 
+        /// <summary> Initializes a new instance of <see cref="HiveLinkedService"/> for deserialization. </summary>
+        internal HiveLinkedService()
+        {
+        }
+
         /// <summary> IP address or host name of the Hive server, separated by ';' for multiple hosts (only when serviceDiscoveryMode is enable). </summary>
         public DataFactoryElement<string> Host { get; set; }
         /// <summary> The TCP port that the Hive server uses to listen for client connections. </summary>

@@ -525,7 +525,7 @@ namespace Azure.Communication.CallAutomation.Tests.EventProcessors
             CallAutomationEventProcessor handler = callConnection.EventProcessor;
 
             var dialogContext = new Dictionary<string, object>();
-            var startDialogOptions = new StartDialog(new PowerVirtualAgentsDialog("botAppId", dialogContext))
+            var startDialogOptions = new StartDialogOptions(new PowerVirtualAgentsDialog("botAppId", dialogContext))
             {
                 OperationContext = OperationContext
             };
@@ -563,7 +563,7 @@ namespace Azure.Communication.CallAutomation.Tests.EventProcessors
             CallAutomationEventProcessor handler = callConnection.EventProcessor;
 
             var dialogContext = new Dictionary<string, object>();
-            var startDialogOptions = new StartDialog(new PowerVirtualAgentsDialog("botAppId", dialogContext))
+            var startDialogOptions = new StartDialogOptions(new PowerVirtualAgentsDialog("botAppId", dialogContext))
             {
                 OperationContext = OperationContext
             };
