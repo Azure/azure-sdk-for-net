@@ -8,7 +8,7 @@
 
 ### Breaking Changes
 
-- Change `HttpClientPipelineTransport.Shared` from a field to a property.
+- Changed `HttpClientPipelineTransport.Shared` and `ClientRetryPolicy.Default` from static readonly fields to static properties.
 
 ### Bugs Fixed
 
