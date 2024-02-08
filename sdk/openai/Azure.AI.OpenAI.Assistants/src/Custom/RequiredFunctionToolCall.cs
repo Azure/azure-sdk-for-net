@@ -16,11 +16,11 @@ namespace Azure.AI.OpenAI.Assistants;
 
 public partial class RequiredFunctionToolCall
 {
-    /// <inheritdoc cref="InternalFunctionDefinition.Name"/>
-    public string Name => InternalFunctionDefinition.Name;
+    /// <inheritdoc cref="InternalRequiredFunctionToolCallDetails.Name"/>
+    public string Name => InternalDetails.Name;
 
-    /// <inheritdoc cref="InternalFunctionDefinition.Parameters"/>
-    public BinaryData Parameters => InternalFunctionDefinition.Parameters;
+    /// <inheritdoc cref="InternalRequiredFunctionToolCallDetails.Arguments"/>
+    public string Arguments => InternalDetails.Arguments;
 
-    internal InternalFunctionDefinition InternalFunctionDefinition { get; }
+    internal InternalRequiredFunctionToolCallDetails InternalDetails { get; }
 }

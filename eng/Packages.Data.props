@@ -142,7 +142,6 @@
 
     <!-- TODO: Make sure this package is arch-board approved -->
     <PackageReference Update="System.IdentityModel.Tokens.Jwt" Version="6.5.0" />
-
   </ItemGroup>
 
   <ItemGroup Condition="$(MSBuildProjectName.StartsWith('Azure.Monitor.OpenTelemetry'))">
@@ -169,10 +168,10 @@
     <PackageReference Update="Grpc.Tools" Version="2.51.0" PrivateAssets="all" />
     <PackageReference Update="MessagePack" Version="1.9.11" />
     <PackageReference Update="Microsoft.AspNetCore.SignalR.Protocols.MessagePack" Version="1.1.5" />
-    <PackageReference Update="Microsoft.Azure.SignalR" Version="1.22.0" />
-    <PackageReference Update="Microsoft.Azure.SignalR.Management" Version="1.22.0" />
-    <PackageReference Update="Microsoft.Azure.SignalR.Protocols" Version="1.22.0" />
-    <PackageReference Update="Microsoft.Azure.SignalR.Serverless.Protocols" Version="1.9.0" />
+    <PackageReference Update="Microsoft.Azure.SignalR" Version="1.24.0" />
+    <PackageReference Update="Microsoft.Azure.SignalR.Management" Version="1.24.0" />
+    <PackageReference Update="Microsoft.Azure.SignalR.Protocols" Version="1.24.0" />
+    <PackageReference Update="Microsoft.Azure.SignalR.Serverless.Protocols" Version="1.10.0" />
     <PackageReference Update="Microsoft.Azure.WebJobs" Version="3.0.37" />
     <PackageReference Update="Microsoft.Azure.WebJobs.Sources" Version="3.0.37" PrivateAssets="All"/>
     <PackageReference Update="Microsoft.Azure.WebJobs.Extensions.Rpc" Version="3.0.37" />
@@ -202,7 +201,7 @@
     All should have PrivateAssets="All" set so they don't become package dependencies
   -->
   <ItemGroup>
-    <PackageReference Update="Microsoft.Azure.AutoRest.CSharp" Version="3.0.0-beta.20240129.1" PrivateAssets="All" />
+    <PackageReference Update="Microsoft.Azure.AutoRest.CSharp" Version="3.0.0-beta.20240205.1" PrivateAssets="All" />
     <PackageReference Update="Azure.ClientSdk.Analyzers" Version="0.1.1-dev.20240123.2" PrivateAssets="All" />
     <PackageReference Update="coverlet.collector" Version="3.2.0" PrivateAssets="All" />
     <PackageReference Update="Microsoft.CodeAnalysis.NetAnalyzers" Version="7.0.4" PrivateAssets="All" />
@@ -294,7 +293,7 @@
     <PackageReference Update="Microsoft.Extensions.Configuration.Binder" Version="2.1.10" />
     <PackageReference Update="Microsoft.Extensions.Configuration.Json" Version="5.0.0" />
     <PackageReference Update="Microsoft.Extensions.Configuration" Version="5.0.0" />
-    <PackageReference Update="Microsoft.Extensions.Hosting" Version="8.0.0" />	
+    <PackageReference Update="Microsoft.Extensions.Hosting" Version="8.0.0" />
     <PackageReference Update="Microsoft.Extensions.Logging.Configuration" Version="8.0.0-rc.1.23419.4" />
     <PackageReference Update="Microsoft.Extensions.DependencyInjection" Version="3.1.32" />
     <PackageReference Update="Microsoft.Extensions.PlatformAbstractions" Version="1.1.0" />

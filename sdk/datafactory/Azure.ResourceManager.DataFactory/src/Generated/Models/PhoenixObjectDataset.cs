@@ -46,6 +46,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             DatasetType = datasetType ?? "PhoenixObject";
         }
 
+        /// <summary> Initializes a new instance of <see cref="PhoenixObjectDataset"/> for deserialization. </summary>
+        internal PhoenixObjectDataset()
+        {
+        }
+
         /// <summary>
         /// This property will be retired. Please consider using schema + table properties instead.
         /// <para>

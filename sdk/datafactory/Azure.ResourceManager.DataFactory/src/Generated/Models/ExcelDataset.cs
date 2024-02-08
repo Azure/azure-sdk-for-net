@@ -58,6 +58,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             DatasetType = datasetType ?? "Excel";
         }
 
+        /// <summary> Initializes a new instance of <see cref="ExcelDataset"/> for deserialization. </summary>
+        internal ExcelDataset()
+        {
+        }
+
         /// <summary>
         /// The location of the excel storage.
         /// Please note <see cref="DatasetLocation"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.

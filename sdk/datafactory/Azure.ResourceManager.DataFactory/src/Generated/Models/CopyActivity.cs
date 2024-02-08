@@ -101,6 +101,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             ActivityType = activityType ?? "Copy";
         }
 
+        /// <summary> Initializes a new instance of <see cref="CopyActivity"/> for deserialization. </summary>
+        internal CopyActivity()
+        {
+        }
+
         /// <summary> List of inputs for the activity. </summary>
         public IList<DatasetReference> Inputs { get; }
         /// <summary> List of outputs for the activity. </summary>

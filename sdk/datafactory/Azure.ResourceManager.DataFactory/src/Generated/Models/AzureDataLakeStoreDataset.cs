@@ -52,6 +52,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             DatasetType = datasetType ?? "AzureDataLakeStoreFile";
         }
 
+        /// <summary> Initializes a new instance of <see cref="AzureDataLakeStoreDataset"/> for deserialization. </summary>
+        internal AzureDataLakeStoreDataset()
+        {
+        }
+
         /// <summary> Path to the folder in the Azure Data Lake Store. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> FolderPath { get; set; }
         /// <summary> The name of the file in the Azure Data Lake Store. Type: string (or Expression with resultType string). </summary>

@@ -57,6 +57,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             LinkedServiceType = linkedServiceType ?? "Office365";
         }
 
+        /// <summary> Initializes a new instance of <see cref="Office365LinkedService"/> for deserialization. </summary>
+        internal Office365LinkedService()
+        {
+        }
+
         /// <summary> Azure tenant ID to which the Office 365 account belongs. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> Office365TenantId { get; set; }
         /// <summary> Specify the tenant information under which your Azure AD web application resides. Type: string (or Expression with resultType string). </summary>

@@ -60,6 +60,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             LinkedServiceType = linkedServiceType ?? "AzureMLService";
         }
 
+        /// <summary> Initializes a new instance of <see cref="AzureMLServiceLinkedService"/> for deserialization. </summary>
+        internal AzureMLServiceLinkedService()
+        {
+        }
+
         /// <summary> Azure ML Service workspace subscription ID. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> SubscriptionId { get; set; }
         /// <summary> Azure ML Service workspace resource group name. Type: string (or Expression with resultType string). </summary>

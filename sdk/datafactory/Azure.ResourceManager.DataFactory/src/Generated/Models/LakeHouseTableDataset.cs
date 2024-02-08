@@ -42,6 +42,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             DatasetType = datasetType ?? "LakeHouseTable";
         }
 
+        /// <summary> Initializes a new instance of <see cref="LakeHouseTableDataset"/> for deserialization. </summary>
+        internal LakeHouseTableDataset()
+        {
+        }
+
         /// <summary> The name of Microsoft Fabric LakeHouse Table. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> Table { get; set; }
     }

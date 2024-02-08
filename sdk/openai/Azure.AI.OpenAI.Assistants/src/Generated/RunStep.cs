@@ -151,6 +151,14 @@ namespace Azure.AI.OpenAI.Assistants
         public RunStepError LastError { get; }
         /// <summary> The Unix timestamp, in seconds, representing when this object was created. </summary>
         public DateTimeOffset CreatedAt { get; }
+        /// <summary> The Unix timestamp, in seconds, representing when this item expired. </summary>
+        public DateTimeOffset? ExpiredAt { get; }
+        /// <summary> The Unix timestamp, in seconds, representing when this completed. </summary>
+        public DateTimeOffset? CompletedAt { get; }
+        /// <summary> The Unix timestamp, in seconds, representing when this was cancelled. </summary>
+        public DateTimeOffset? CancelledAt { get; }
+        /// <summary> The Unix timestamp, in seconds, representing when this failed. </summary>
+        public DateTimeOffset? FailedAt { get; }
         /// <summary> A set of up to 16 key/value pairs that can be attached to an object, used for storing additional information about that object in a structured format. Keys may be up to 64 characters in length and values may be up to 512 characters in length. </summary>
         public IReadOnlyDictionary<string, string> Metadata { get; }
     }
