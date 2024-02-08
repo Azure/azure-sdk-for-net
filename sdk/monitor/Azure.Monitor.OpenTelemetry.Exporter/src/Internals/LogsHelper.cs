@@ -62,7 +62,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                         telemetryItem.Data = new MonitorBase
                         {
                             BaseType = "ExceptionData",
-                            BaseData = new TelemetryExceptionData(Version, logRecord),
+                            BaseData = new TelemetryExceptionData(Version, logRecord, resource),
                         };
                     }
                     else
@@ -70,7 +70,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                         telemetryItem.Data = new MonitorBase
                         {
                             BaseType = "MessageData",
-                            BaseData = new MessageData(Version, logRecord),
+                            BaseData = new MessageData(Version, logRecord, resource),
                         };
                     }
 

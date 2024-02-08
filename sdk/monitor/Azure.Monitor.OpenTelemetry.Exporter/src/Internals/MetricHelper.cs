@@ -29,7 +29,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                             Data = new MonitorBase
                             {
                                 BaseType = "MetricData",
-                                BaseData = new MetricsData(Version, metric, metricPoint)
+                                BaseData = new MetricsData(Version, metric, metricPoint, resource)
                             }
                         });
                     }

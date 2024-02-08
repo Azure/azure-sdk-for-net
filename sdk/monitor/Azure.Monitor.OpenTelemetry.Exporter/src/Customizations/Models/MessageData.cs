@@ -12,9 +12,12 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
 {
     internal partial class MessageData
     {
-        public MessageData(int version, LogRecord logRecord) : base(version)
+        public MessageData(int version, LogRecord logRecord, AzureMonitorResource? azureMonitorResource = null) : base(version)
         {
             Properties = new ChangeTrackingDictionary<string, string>();
+
+            azureMonitorResource?.CopyUserDefinedAttributes(Properties);
+
             Measurements = new ChangeTrackingDictionary<string, double>();
             Message = LogsHelper.GetMessageAndSetProperties(logRecord, Properties).Truncate(SchemaConstants.MessageData_Message_MaxLength);
             SeverityLevel = LogsHelper.GetSeverityLevel(logRecord.LogLevel);

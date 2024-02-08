@@ -8,6 +8,7 @@ using System.Diagnostics.Metrics;
 using Azure.Core;
 using OpenTelemetry;
 using OpenTelemetry.Metrics;
+using OpenTelemetry.Resources;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter.Demo.Metrics
 {
@@ -20,8 +21,20 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Demo.Metrics
 
         public MetricDemo(string connectionString, TokenCredential? credential = null)
         {
+            var resourceAttributes = new Dictionary<string, object>
+            {
+                { "service.name", "my-service" },
+                { "service.namespace", "my-namespace" },
+                { "service.instance.id", "my-instance" },
+                { "foo", "bar" },
+                {"service.domain", "domain-here"}
+            };
+
+            var resourceBuilder = ResourceBuilder.CreateDefault().AddAttributes(resourceAttributes);
+
             this.meterProvider = Sdk.CreateMeterProviderBuilder()
                                 .AddMeter(meterName)
+                                .SetResourceBuilder(resourceBuilder)
                                 .AddAzureMonitorMetricExporter(o => o.ConnectionString = connectionString, credential)
                                 .Build();
         }

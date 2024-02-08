@@ -13,7 +13,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
     {
         private const string azureMonitorResourceKey = "_OTELRESOURCE_";
 
-        public MetricsData(int version, Metric metric, MetricPoint metricPoint) : base(version)
+        public MetricsData(int version, Metric metric, MetricPoint metricPoint, AzureMonitorResource? azureMonitorResource = null) : base(version)
         {
             if (metric == null)
             {
@@ -25,6 +25,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
             metricDataPoints.Add(metricDataPoint);
             Metrics = metricDataPoints;
             Properties = new ChangeTrackingDictionary<string, string>();
+
+            azureMonitorResource?.CopyUserDefinedAttributes(Properties);
+
             foreach (var tag in metricPoint.Tags)
             {
                 if (tag.Key.Length <= SchemaConstants.MetricsData_Properties_MaxKeyLength && tag.Value != null)

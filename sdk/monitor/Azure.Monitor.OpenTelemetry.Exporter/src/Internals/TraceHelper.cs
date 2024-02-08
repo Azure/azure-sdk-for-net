@@ -47,7 +47,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                     switch (activity.GetTelemetryType())
                     {
                         case TelemetryType.Request:
-                            var requestData = new RequestData(Version, activity, ref activityTagsProcessor);
+                            var requestData = new RequestData(Version, activity, ref activityTagsProcessor, azureMonitorResource);
                             requestData.Name = telemetryItem.Tags.TryGetValue(ContextTagKeys.AiOperationName.ToString(), out var operationName) ? operationName.Truncate(SchemaConstants.RequestData_Name_MaxLength) : activity.DisplayName.Truncate(SchemaConstants.RequestData_Name_MaxLength);
                             telemetryItem.Data = new MonitorBase
                             {
@@ -59,7 +59,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                             telemetryItem.Data = new MonitorBase
                             {
                                 BaseType = "RemoteDependencyData",
-                                BaseData = new RemoteDependencyData(Version, activity, ref activityTagsProcessor),
+                                BaseData = new RemoteDependencyData(Version, activity, ref activityTagsProcessor, azureMonitorResource),
                             };
                             break;
                     }
