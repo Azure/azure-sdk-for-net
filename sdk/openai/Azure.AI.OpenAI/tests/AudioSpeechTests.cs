@@ -30,8 +30,10 @@ public class AudioSpeechTests : OpenAITestBase
         };
 
         Response<BinaryData> response = await client.GetAudioSpeechAsync(requestOptions);
-        Assert.That(response, Is.Not.Null);
+
+        Assert.That(response?.Value, Is.Not.Null);
         Assert.That(response.Value, Is.InstanceOf<BinaryData>());
+
         byte[] byteArray = response.Value.ToArray();
         Assert.That(byteArray, Is.Not.Empty);
     }
