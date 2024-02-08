@@ -8,6 +8,7 @@ using Azure.Core;
 
 namespace Azure.Communication.JobRouter
 {
+    [CodeGenSerialization(nameof(ExpiresAfter), SerializationValueHook = nameof(WriteExpiresAfter), DeserializationValueHook = nameof(ReadExpiresAfter))]
     public partial class RouterWorkerSelector
     {
         /// <summary> Describes how long this label selector is valid for. </summary>

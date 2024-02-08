@@ -11,6 +11,7 @@ using Azure.Core;
 namespace Azure.Communication.JobRouter
 {
     /// <summary> Trigger for an exception action on exceeding wait time. </summary>
+    [CodeGenSerialization(nameof(Threshold), SerializationValueHook = nameof(WriteThresholdSeconds), DeserializationValueHook = nameof(ReadThresholdSeconds))]
     public partial class WaitTimeExceptionTrigger
     {
         /// <summary> Initializes a new instance of WaitTimeExceptionTrigger. </summary>

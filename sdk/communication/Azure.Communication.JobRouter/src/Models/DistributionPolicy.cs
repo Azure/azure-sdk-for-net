@@ -8,6 +8,7 @@ using Azure.Core;
 
 namespace Azure.Communication.JobRouter
 {
+    [CodeGenSerialization(nameof(OfferExpiresAfter), SerializationValueHook = nameof(WriteOfferExpiresAfter), DeserializationValueHook = nameof(ReadOfferExpiresAfter))]
     public partial class DistributionPolicy
     {
         /// <summary> Initializes a new instance of distribution policy. </summary>

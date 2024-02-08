@@ -8,6 +8,7 @@ using Azure.Core;
 
 namespace Azure.Communication.JobRouter
 {
+    [CodeGenSerialization(nameof(ExpiresAfter), SerializationValueHook = nameof(WriteExpiresAfter), DeserializationValueHook = nameof(ReadExpiresAfter))]
     public partial class PassThroughWorkerSelectorAttachment
     {
         /// <summary> Describes how the value of the label is compared to the value passed through. </summary>
