@@ -63,7 +63,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Tests.DocumentTests
         }
 
 #if !NET462
-        [Theory]
+        [Theory(Skip = "This test is leaky and needs to be rewritten using WebApplicationFactory (same as OTel repo).")
         [InlineData(true)]
         [InlineData(false)]
         public async Task VerifyHttpClientDependency(bool successfulRequest)

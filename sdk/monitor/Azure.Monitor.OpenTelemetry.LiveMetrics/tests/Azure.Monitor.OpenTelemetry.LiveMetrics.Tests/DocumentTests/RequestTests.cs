@@ -66,7 +66,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Tests.DocumentTests
         }
 
 #if !NET462
-        [Fact]
+        [Fact(Skip = "This test is leaky and needs to be rewritten using WebApplicationFactory (same as OTel repo).")]
         public async Task VerifyRequest()
         {
             var exportedActivities = new List<Activity>();
