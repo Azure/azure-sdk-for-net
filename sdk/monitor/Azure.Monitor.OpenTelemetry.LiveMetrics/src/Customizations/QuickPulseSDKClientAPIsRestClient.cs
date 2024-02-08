@@ -11,7 +11,6 @@ using System.Threading;
 using Azure.Monitor.OpenTelemetry.LiveMetrics.Internals;
 using Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Diagnostics;
 using Azure.Monitor.OpenTelemetry.LiveMetrics.Models;
-using OpenTelemetry;
 
 namespace Azure.Monitor.OpenTelemetry.LiveMetrics
 {
