@@ -176,6 +176,13 @@ public class MockPipelineTransport : PipelineTransport
             set => throw new NotImplementedException();
         }
 
+        public override BinaryData Content => throw new NotImplementedException();
+
+        protected override void SetContent(BinaryData? content)
+        {
+            throw new NotImplementedException();
+        }
+
         protected override PipelineResponseHeaders GetHeadersCore()
         {
             throw new NotImplementedException();

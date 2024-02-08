@@ -28,13 +28,36 @@ namespace Azure
         /// </summary>
         public new virtual ResponseHeaders Headers => new ResponseHeaders(this);
 
+        private BinaryData? _content;
+
         /// <summary>
-        /// Gets the contents of HTTP response, if it is available.
+        /// TBD.
         /// </summary>
-        /// <remarks>
-        /// Throws <see cref="InvalidOperationException"/> when <see cref="PipelineResponse.ContentStream"/> is not a <see cref="MemoryStream"/>.
-        /// </remarks>
-        public new virtual BinaryData Content => base.Content;
+        public override BinaryData Content
+        {
+            get
+            {
+                if (_content == null)
+                {
+                    throw new InvalidOperationException();
+                }
+                return _content;
+            }
+        }
+
+        /// <summary>
+        /// TBD.
+        /// </summary>
+        /// <param name="content"></param>
+        protected override void SetContent(BinaryData? content)
+        {
+            _content = content;
+            if (content != null)
+            {
+                ContentStream?.Dispose();
+                ContentStream = null;
+            }
+        }
 
         /// <summary>
         /// TBD.

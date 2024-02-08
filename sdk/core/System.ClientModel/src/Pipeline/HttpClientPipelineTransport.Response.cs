@@ -20,6 +20,7 @@ public partial class HttpClientPipelineTransport
         private readonly HttpContent _httpResponseContent;
 
         private Stream? _contentStream;
+        private BinaryData? _content;
 
         private bool _disposed;
 
@@ -46,6 +47,33 @@ public partial class HttpClientPipelineTransport
                 _httpResponse.Content = null;
 
                 _contentStream = value;
+            }
+        }
+
+        public override BinaryData Content
+        {
+            get
+            {
+                if (_content != null)
+                {
+                    return _content;
+                }
+                else
+                {
+                    // TODO add methods
+                    //throw new InvalidOperationException($"call {nameof(Buffer)} or {nameof(BufferAsync)}");
+                    throw new InvalidOperationException($"call Buffer or BufferAsync");
+                }
+            }
+        }
+
+        protected override void SetContent(BinaryData? content)
+        {
+            _content = content;
+            if (_contentStream != null)
+            {
+                _contentStream?.Dispose();
+                _contentStream = null;
             }
         }
 
@@ -97,6 +125,7 @@ public partial class HttpClientPipelineTransport
                 _disposed = true;
             }
         }
+
         #endregion
     }
 }

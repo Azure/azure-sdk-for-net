@@ -35,30 +35,32 @@ public abstract class PipelineResponse : IDisposable
     /// </summary>
     public abstract Stream? ContentStream { get; set; }
 
-    public virtual BinaryData Content
-    {
-        get
-        {
-            if (ContentStream == null)
-            {
-                return s_emptyBinaryData;
-            }
+    public abstract BinaryData Content { get; }
+    //{
+    //    get
+    //    {
+    //        if (ContentStream == null)
+    //        {
+    //            return s_emptyBinaryData;
+    //        }
 
-            if (!TryGetBufferedContent(out MemoryStream bufferedContent))
-            {
-                throw new InvalidOperationException($"The response is not buffered.");
-            }
+    //        if (!TryGetBufferedContent(out MemoryStream bufferedContent))
+    //        {
+    //            throw new InvalidOperationException($"The response is not buffered.");
+    //        }
 
-            if (bufferedContent.TryGetBuffer(out ArraySegment<byte> segment))
-            {
-                return new BinaryData(segment.AsMemory());
-            }
-            else
-            {
-                return new BinaryData(bufferedContent.ToArray());
-            }
-        }
-    }
+    //        if (bufferedContent.TryGetBuffer(out ArraySegment<byte> segment))
+    //        {
+    //            return new BinaryData(segment.AsMemory());
+    //        }
+    //        else
+    //        {
+    //            return new BinaryData(bufferedContent.ToArray());
+    //        }
+    //    }
+    //}
+
+    protected abstract void SetContent(BinaryData? content);
 
     /// <summary>
     /// Indicates whether the status code of the returned response is considered
@@ -105,9 +107,12 @@ public abstract class PipelineResponse : IDisposable
 
         MemoryStream bufferStream = new();
         CopyTo(responseContentStream, bufferStream, timeout ?? NetworkTimeout, cts ?? new CancellationTokenSource());
-        responseContentStream.Dispose();
         bufferStream.Position = 0;
-        ContentStream = bufferStream;
+
+        SetContent(BinaryData.FromStream(bufferStream));
+
+        responseContentStream.Dispose();
+        ContentStream = null;
     }
 
     internal async Task BufferContentAsync(TimeSpan? timeout = default, CancellationTokenSource? cts = default)
@@ -121,9 +126,12 @@ public abstract class PipelineResponse : IDisposable
 
         MemoryStream bufferStream = new();
         await CopyToAsync(responseContentStream, bufferStream, timeout ?? NetworkTimeout, cts ?? new CancellationTokenSource()).ConfigureAwait(false);
-        responseContentStream.Dispose();
         bufferStream.Position = 0;
-        ContentStream = bufferStream;
+
+        SetContent(await BinaryData.FromStreamAsync(bufferStream).ConfigureAwait(false));
+
+        responseContentStream.Dispose();
+        ContentStream = null;
     }
 
     private static async Task CopyToAsync(Stream source, Stream destination, TimeSpan timeout, CancellationTokenSource cancellationTokenSource)

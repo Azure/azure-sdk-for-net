@@ -204,7 +204,7 @@ namespace System.ClientModel.Primitives
     public abstract partial class PipelineResponse : System.IDisposable
     {
         protected PipelineResponse() { }
-        public virtual System.BinaryData Content { get { throw null; } }
+        public abstract System.BinaryData Content { get; }
         public abstract System.IO.Stream? ContentStream { get; set; }
         public System.ClientModel.Primitives.PipelineResponseHeaders Headers { get { throw null; } }
         public virtual bool IsError { get { throw null; } }
@@ -212,6 +212,7 @@ namespace System.ClientModel.Primitives
         public abstract int Status { get; }
         public abstract void Dispose();
         protected abstract System.ClientModel.Primitives.PipelineResponseHeaders GetHeadersCore();
+        protected abstract void SetContent(System.BinaryData? content);
         protected virtual void SetIsErrorCore(bool isError) { }
     }
     public abstract partial class PipelineResponseHeaders : System.Collections.Generic.IEnumerable<System.Collections.Generic.KeyValuePair<string, string>>, System.Collections.IEnumerable

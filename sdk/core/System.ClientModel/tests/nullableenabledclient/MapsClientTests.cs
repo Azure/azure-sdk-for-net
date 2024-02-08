@@ -407,6 +407,13 @@ public class MapsClientTests
                 set => _stream = value;
             }
 
+            public override BinaryData Content => throw new NotImplementedException();
+
+            protected override void SetContent(BinaryData? content)
+            {
+                throw new NotImplementedException();
+            }
+
             public override void Dispose()
             {
                 _stream?.Dispose();

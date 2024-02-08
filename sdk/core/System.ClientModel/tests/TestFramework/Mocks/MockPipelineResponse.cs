@@ -38,6 +38,13 @@ public class MockPipelineResponse : PipelineResponse
         ContentStream = new MemoryStream(content, 0, content.Length, false, true);
     }
 
+    public override BinaryData Content => throw new NotImplementedException();
+
+    protected override void SetContent(BinaryData? content)
+    {
+        throw new NotImplementedException();
+    }
+
     public MockPipelineResponse SetContent(string content)
     {
         SetContent(Encoding.UTF8.GetBytes(content));
