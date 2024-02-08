@@ -35,11 +35,11 @@ namespace Azure.Monitor.Query
         }
 
         /// <summary>
-        /// Initializes a new instance of <see cref="MetricsQueryClient"/>. Uses the default 'https://management.azure.com' endpoint.
+        /// Initializes a new instance of <see cref="MetricsQueryClient"/>. Uses the default 'https://management.azure.com' endpoint if Audience is not set in MetricsQueryClientOptions.
         /// </summary>
         /// <param name="credential">The <see cref="TokenCredential"/> instance to use for authentication.</param>
         /// <param name="options">The <see cref="MetricsQueryClientOptions"/> instance to as client configuration.</param>
-        public MetricsQueryClient(TokenCredential credential, MetricsQueryClientOptions options) : this(_defaultEndpoint, credential, options)
+        public MetricsQueryClient(TokenCredential credential, MetricsQueryClientOptions options) : this(string.IsNullOrEmpty(options.Audience?.ToString()) ? _defaultEndpoint : new Uri(options.Audience.ToString()), credential, options)
         {
         }
 
@@ -55,6 +55,7 @@ namespace Azure.Monitor.Query
 
             options ??= new MetricsQueryClientOptions();
             var authorizationScope = $"{(string.IsNullOrEmpty(options.Audience?.ToString()) ? MetricsQueryAudience.AzurePublicCloud : options.Audience)}";
+            authorizationScope += "//.default";
             var scopes = new List<string> { authorizationScope };
 
             _clientDiagnostics = new ClientDiagnostics(options);
