@@ -50,11 +50,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals
             DocumentBuffer filledBuffer = _documentBuffer.FlipDocumentBuffers();
             foreach (var item in filledBuffer.ReadAllAndClear())
             {
-                // TODO: Filtering would be taken into account here before adding a document to the dataPoint.
                 // TODO: item.DocumentStreamIds = new List<string> { "" }; - Will add the identifier for the specific filtering rules (if applicable). See also "matchingDocumentStreamIds" in AI SDK.
-                //TODO: Apply filters
-                //foreach (CalculatedMetric<TTelemetry> metric in metrics)
-                //    if (metric.CheckFilters(telemetry, out filteringErrors))
 
                 dataPoint.Documents.Add(item);
 
@@ -98,6 +94,11 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals
                 dataPoint.Metrics.Add(metricPoint);
             }
 
+            foreach (var metricPoint in CreateCalculatedMetrics(metricAccumulators))
+            {
+                dataPoint.Metrics.Add(metricPoint);
+            }
+
             foreach (var metricPoint in CollectPerfCounters())
             {
                 dataPoint.Metrics.Add(metricPoint);
@@ -122,6 +123,34 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals
                 Value = _performanceCounter_ProcessorTime.NextValue(),
                 Weight = 1
             };
+        }
+
+        private static IEnumerable<MetricPoint> CreateCalculatedMetrics(Dictionary<string, AccumulatedValues> metricAccumulators)
+        {
+            var metrics = new List<MetricPoint>();
+
+            foreach (AccumulatedValues metricAccumulatedValues in metricAccumulators.Values)
+            {
+                try
+                {
+                    MetricPoint metricPoint = new MetricPoint
+                    {
+                        Name = metricAccumulatedValues.MetricId,
+                        Value = (float)metricAccumulatedValues.CalculateAggregation(out long count),
+                        Weight = (int)count,
+                    };
+
+                    metrics.Add(metricPoint);
+                }
+                catch (System.Exception)
+                {
+                    // skip this metric
+                    // TODO: log unknown error
+                    // QuickPulseEventSource.Log.UnknownErrorEvent(e.ToString());
+                }
+            }
+
+            return metrics;
         }
 
         private void ApplyFilters<TTelemetry>(
