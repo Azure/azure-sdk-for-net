@@ -133,7 +133,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Tests.DocumentTests
             Assert.True(dependencyDocument.Extension_IsSuccess);
         }
 
-        [Theory(Skip = "This test is leaky and needs to be rewritten using WebApplicationFactory (same as OTel repo).")
+        [Theory(Skip = "This test is leaky and needs to be rewritten using WebApplicationFactory (same as OTel repo).")]
         [InlineData(SqlClientConstants.SqlDataBeforeExecuteCommand, SqlClientConstants.SqlDataWriteCommandError, CommandType.StoredProcedure, "SP_GetOrders")]
         [InlineData(SqlClientConstants.SqlDataBeforeExecuteCommand, SqlClientConstants.SqlDataWriteCommandError, CommandType.Text, "select * from sys.databases")]
         [InlineData(SqlClientConstants.SqlDataBeforeExecuteCommand, SqlClientConstants.SqlDataWriteCommandError, CommandType.StoredProcedure, "SP_GetOrders", true)]
