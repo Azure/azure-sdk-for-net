@@ -8,7 +8,7 @@ using System.Text.Json;
 
 namespace Azure.Core
 {
-    public partial struct RehydrationToken : IJsonModel<RehydrationToken>
+    public partial struct RehydrationToken : IJsonModel<RehydrationToken>, IJsonModel<object>
     {
         internal RehydrationToken DeserializeRehydrationToken(JsonElement element, ModelReaderWriterOptions options)
         {
@@ -121,19 +121,59 @@ namespace Azure.Core
 
         RehydrationToken IJsonModel<RehydrationToken>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            using var document = JsonDocument.ParseValue(ref reader);
+            var format = options.Format == "W" ? ((IPersistableModel<RehydrationToken>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(RehydrationToken)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeRehydrationToken(document.RootElement, options);
         }
 
         BinaryData IPersistableModel<RehydrationToken>.Write(ModelReaderWriterOptions options)
-            => ModelReaderWriter.Write(this, options);
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<RehydrationToken>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(RehydrationToken)} does not support '{options.Format}' format.");
+            }
+        }
 
         RehydrationToken IPersistableModel<RehydrationToken>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            using var document = JsonDocument.Parse(data);
-            return DeserializeRehydrationToken(document.RootElement, options);
+            var format = options.Format == "W" ? ((IPersistableModel<RehydrationToken>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeRehydrationToken(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(RehydrationToken)} does not support '{options.Format}' format.");
+            }
         }
 
         string IPersistableModel<RehydrationToken>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        BinaryData IPersistableModel<object>.Write(ModelReaderWriterOptions options)
+            => ((IPersistableModel<RehydrationToken>)this).Write(options);
+
+        object IPersistableModel<object>.Create(BinaryData data, ModelReaderWriterOptions options)
+            => ((IPersistableModel<RehydrationToken>)this).Create(data, options);
+
+        string IPersistableModel<object>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        void IJsonModel<object>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+            => ((IJsonModel<RehydrationToken>)this).Write(writer, options);
+
+        object IJsonModel<object>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+            => ((IJsonModel<RehydrationToken>)this).Create(ref reader, options);
     }
 }
