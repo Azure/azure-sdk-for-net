@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals;
 using Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Diagnostics;
+using Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Filtering;
 using Azure.Monitor.OpenTelemetry.LiveMetrics.Models;
 
 namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals
@@ -42,6 +43,9 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals
                 // CollectionConfigurationErrors = null,
             };
 
+            CollectionConfigurationError[] filteringErrors;
+            string projectionError = string.Empty;
+            Dictionary<string, AccumulatedValues> metricAccumulators = new();
             LiveMetricsBuffer liveMetricsBuffer = new();
             DocumentBuffer filledBuffer = _documentBuffer.FlipDocumentBuffers();
             foreach (var item in filledBuffer.ReadAllAndClear())
@@ -54,8 +58,9 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals
 
                 dataPoint.Documents.Add(item);
 
-                if (item.DocumentType == DocumentIngressDocumentType.Request)
+                if (item is Request request)
                 {
+                    ApplyFilters(metricAccumulators, _collectionConfiguration.RequestMetrics, request, out filteringErrors, ref projectionError);
                     if (item.Extension_IsSuccess)
                     {
                         liveMetricsBuffer.RecordRequestSucceeded(item.Extension_Duration);
@@ -65,8 +70,9 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals
                         liveMetricsBuffer.RecordRequestFailed(item.Extension_Duration);
                     }
                 }
-                else if (item.DocumentType == DocumentIngressDocumentType.RemoteDependency)
+                else if (item is RemoteDependency remoteDependency)
                 {
+                    ApplyFilters(metricAccumulators, _collectionConfiguration.DependencyMetrics, remoteDependency, out filteringErrors, ref projectionError);
                     if (item.Extension_IsSuccess)
                     {
                         liveMetricsBuffer.RecordDependencySucceeded(item.Extension_Duration);
@@ -76,8 +82,9 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals
                         liveMetricsBuffer.RecordDependencyFailed(item.Extension_Duration);
                     }
                 }
-                else if (item.DocumentType == DocumentIngressDocumentType.Exception)
+                else if (item is Models.Exception exception)
                 {
+                    ApplyFilters(metricAccumulators, _collectionConfiguration.ExceptionMetrics, exception, out filteringErrors, ref projectionError);
                     liveMetricsBuffer.RecordException();
                 }
                 else
@@ -115,6 +122,35 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals
                 Value = _performanceCounter_ProcessorTime.NextValue(),
                 Weight = 1
             };
+        }
+
+        private void ApplyFilters<TTelemetry>(
+            Dictionary<string, AccumulatedValues> metricAccumulators,
+            IEnumerable<DerivedMetric<TTelemetry>> metrics,
+            TTelemetry telemetry,
+            out CollectionConfigurationError[] filteringErrors,
+            ref string projectionError)
+        {
+            filteringErrors = Array.Empty<CollectionConfigurationError>();
+
+            foreach (DerivedMetric<TTelemetry> metric in metrics)
+            {
+                if (metric.CheckFilters(telemetry, out filteringErrors))
+                {
+                    // the telemetry document has passed the filters, count it in and project
+                    try
+                    {
+                        double projection = metric.Project(telemetry);
+
+                        metricAccumulators[metric.Id].AddValue(projection);
+                    }
+                    catch (System.Exception e)
+                    {
+                        // most likely the projection did not result in a value parsable by double.Parse()
+                        projectionError = e.ToString();
+                    }
+                }
+            }
         }
 
         /// <summary>
