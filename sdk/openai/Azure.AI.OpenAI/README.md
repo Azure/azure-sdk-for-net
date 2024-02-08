@@ -9,7 +9,7 @@ Use the client library for Azure OpenAI to:
 * [Create chat completions using models like gpt-4 and gpt-35-turbo][msdocs_openai_chat_quickstart]
 * [Generate images with dall-e-3][msdocs_openai_dalle_quickstart]
 * [Transcribe or translate audio into text with whisper][msdocs_openai_whisper_quickstart]
-* [Generate text-to-speech audio from text with tts model][msdocs_openai_whisper_quickstart]
+* [Generate text-to-speech audio from text using tts model][msdocs_openai_tts_quickstart]
 * [Create a text embedding for comparisons][msdocs_openai_embedding]
 * [Create a legacy completion for text using models like text-davinci-002][msdocs_openai_completion]
 
