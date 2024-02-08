@@ -10,24 +10,34 @@
 
 ### Other Changes
 
-## 1.0.0-beta.14 (TBA)
+## 1.0.0-beta.14 (2024-02-15)
 
 ### Features Added
 
-- Text to speech using OpenAI TTS models is now supported. See [OpenAI's API
-  reference](https://platform.openai.com/docs/api-reference/audio/createSpeech) or the [Azure OpenAI
-  quickstart](https://learn.microsoft.com/en-us/azure/ai-services/openai/text-to-speech-quickstart) for detailed overview and
-  background information.
-  - The new method `GetAudioSpeech` exposes this capability on `OpenAIClient`
-  - Text-to-speech converts text into lifelike spoken audio in a chosen voice, together with other optional configurations.
-  - This method works for both Azure OpenAI and non-Azure `api.openai.com` client configurations
+- Text to speech using OpenAI TTS models is now supported. See [OpenAI's API reference](https://platform.openai.com/docs/api-reference/audio/createSpeech) or the [Azure OpenAI quickstart](https://learn.microsoft.com/en-us/azure/ai-services/openai/text-to-speech-quickstart) for detailed overview and background information.
+- The new method `GetAudioSpeech` exposes this capability on `OpenAIClient`.
+- Text-to-speech converts text into lifelike spoken audio in a chosen voice, together with other optional configurations.
+- This method works for both Azure OpenAI and non-Azure `api.openai.com` client configurations
 
 ### Breaking Changes
 
-### Bugs Fixed
+"On Your Data" changes:
+
+- Introduced a new type `AzureChatExtensionDataSourceResponseCitation` for a more structured representation of citation data.
+- Correspondingly, updated `AzureChatExtensionsMessageContext`:
+  - Replaced `Messages` with `Citations` of type `AzureChatExtensionDataSourceResponseCitation`.
+  - Added `Intent` as a string type.
+- Renamed "AzureCognitiveSearch" to "AzureSearch":
+  - `AzureCognitiveSearchChatExtensionConfiguration` is now `AzureSearchChatExtensionConfiguration`.
+  - `AzureCognitiveSearchIndexFieldMappingOptions` is now `AzureSearchIndexFieldMappingOptions`.
+- Check the project README for updated code snippets.
 
 ### Other Changes
 
+- New properties in `ChatCompletionsOptions`:
+  - `EnableLogProbabilities`: Allows retrieval of log probabilities (REST: `logprobs`)
+  - `LogProbabilitiesPerToken`: The number of most likely tokens to return per token (REST: `top_logprobs`)
+  
 ## 1.0.0-beta.13 (2024-02-01)
 
 ### Breaking Changes
