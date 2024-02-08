@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.CosmosDB.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_CosmosDBSqlRoleDefinitionGet()
         {
-            // Generated from example definition: specification/cosmos-db/resource-manager/Microsoft.DocumentDB/preview/2023-09-15-preview/examples/CosmosDBSqlRoleDefinitionGet.json
+            // Generated from example definition: specification/cosmos-db/resource-manager/Microsoft.DocumentDB/preview/2024-02-15-preview/examples/CosmosDBSqlRoleDefinitionGet.json
             // this example is just showing the usage of "SqlResources_GetSqlRoleDefinition" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.CosmosDB.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Update_CosmosDBSqlRoleDefinitionCreateUpdate()
         {
-            // Generated from example definition: specification/cosmos-db/resource-manager/Microsoft.DocumentDB/preview/2023-09-15-preview/examples/CosmosDBSqlRoleDefinitionCreateUpdate.json
+            // Generated from example definition: specification/cosmos-db/resource-manager/Microsoft.DocumentDB/preview/2024-02-15-preview/examples/CosmosDBSqlRoleDefinitionCreateUpdate.json
             // this example is just showing the usage of "SqlResources_CreateUpdateSqlRoleDefinition" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -110,7 +110,7 @@ NotDataActions =
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Delete_CosmosDBSqlRoleDefinitionDelete()
         {
-            // Generated from example definition: specification/cosmos-db/resource-manager/Microsoft.DocumentDB/preview/2023-09-15-preview/examples/CosmosDBSqlRoleDefinitionDelete.json
+            // Generated from example definition: specification/cosmos-db/resource-manager/Microsoft.DocumentDB/preview/2024-02-15-preview/examples/CosmosDBSqlRoleDefinitionDelete.json
             // this example is just showing the usage of "SqlResources_DeleteSqlRoleDefinition" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

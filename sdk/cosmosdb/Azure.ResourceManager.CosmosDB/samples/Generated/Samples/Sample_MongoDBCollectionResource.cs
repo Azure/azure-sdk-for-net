@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.CosmosDB.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_CosmosDBMongoDBCollectionGet()
         {
-            // Generated from example definition: specification/cosmos-db/resource-manager/Microsoft.DocumentDB/preview/2023-09-15-preview/examples/CosmosDBMongoDBCollectionGet.json
+            // Generated from example definition: specification/cosmos-db/resource-manager/Microsoft.DocumentDB/preview/2024-02-15-preview/examples/CosmosDBMongoDBCollectionGet.json
             // this example is just showing the usage of "MongoDBResources_GetMongoDBCollection" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.CosmosDB.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Update_CosmosDBMongoDBCollectionCreateUpdate()
         {
-            // Generated from example definition: specification/cosmos-db/resource-manager/Microsoft.DocumentDB/preview/2023-09-15-preview/examples/CosmosDBMongoDBCollectionCreateUpdate.json
+            // Generated from example definition: specification/cosmos-db/resource-manager/Microsoft.DocumentDB/preview/2024-02-15-preview/examples/CosmosDBMongoDBCollectionCreateUpdate.json
             // this example is just showing the usage of "MongoDBResources_CreateUpdateMongoDBCollection" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -125,7 +125,7 @@ Keys =
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Update_CosmosDBMongoDBCollectionRestore()
         {
-            // Generated from example definition: specification/cosmos-db/resource-manager/Microsoft.DocumentDB/preview/2023-09-15-preview/examples/CosmosDBMongoDBCollectionRestore.json
+            // Generated from example definition: specification/cosmos-db/resource-manager/Microsoft.DocumentDB/preview/2024-02-15-preview/examples/CosmosDBMongoDBCollectionRestore.json
             // this example is just showing the usage of "MongoDBResources_CreateUpdateMongoDBCollection" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -150,6 +150,7 @@ Keys =
                 {
                     RestoreSource = "/subscriptions/subid/providers/Microsoft.DocumentDB/locations/WestUS/restorableDatabaseAccounts/restorableDatabaseAccountId",
                     RestoreTimestampInUtc = DateTimeOffset.Parse("2022-07-20T18:28:00Z"),
+                    RestoreWithTtlDisabled = false,
                 },
                 CreateMode = CosmosDBAccountCreateMode.Restore,
             })
@@ -174,7 +175,7 @@ Keys =
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Delete_CosmosDBMongoDBCollectionDelete()
         {
-            // Generated from example definition: specification/cosmos-db/resource-manager/Microsoft.DocumentDB/preview/2023-09-15-preview/examples/CosmosDBMongoDBCollectionDelete.json
+            // Generated from example definition: specification/cosmos-db/resource-manager/Microsoft.DocumentDB/preview/2024-02-15-preview/examples/CosmosDBMongoDBCollectionDelete.json
             // this example is just showing the usage of "MongoDBResources_DeleteMongoDBCollection" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -203,7 +204,7 @@ Keys =
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetMongoDBCollectionPartitionMerge_CosmosDBMongoDBCollectionPartitionMerge()
         {
-            // Generated from example definition: specification/cosmos-db/resource-manager/Microsoft.DocumentDB/preview/2023-09-15-preview/examples/CosmosDBMongoDBCollectionPartitionMerge.json
+            // Generated from example definition: specification/cosmos-db/resource-manager/Microsoft.DocumentDB/preview/2024-02-15-preview/examples/CosmosDBMongoDBCollectionPartitionMerge.json
             // this example is just showing the usage of "MongoDBResources_ListMongoDBCollectionPartitionMerge" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -237,7 +238,7 @@ Keys =
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task RetrieveContinuousBackupInformation_CosmosDBMongoDBCollectionBackupInformation()
         {
-            // Generated from example definition: specification/cosmos-db/resource-manager/Microsoft.DocumentDB/preview/2023-09-15-preview/examples/CosmosDBMongoDBCollectionBackupInformation.json
+            // Generated from example definition: specification/cosmos-db/resource-manager/Microsoft.DocumentDB/preview/2024-02-15-preview/examples/CosmosDBMongoDBCollectionBackupInformation.json
             // this example is just showing the usage of "MongoDBResources_RetrieveContinuousBackupInformation" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

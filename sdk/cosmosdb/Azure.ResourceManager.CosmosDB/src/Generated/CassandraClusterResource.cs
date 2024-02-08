@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-15-preview</description>
+        /// <description>2024-02-15-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-15-preview</description>
+        /// <description>2024-02-15-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-15-preview</description>
+        /// <description>2024-02-15-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -215,7 +215,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-15-preview</description>
+        /// <description>2024-02-15-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -255,7 +255,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-15-preview</description>
+        /// <description>2024-02-15-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -297,7 +297,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-15-preview</description>
+        /// <description>2024-02-15-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -339,7 +339,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-15-preview</description>
+        /// <description>2024-02-15-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -385,7 +385,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-15-preview</description>
+        /// <description>2024-02-15-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -431,7 +431,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-15-preview</description>
+        /// <description>2024-02-15-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -477,7 +477,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-15-preview</description>
+        /// <description>2024-02-15-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -511,6 +511,224 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary>
+        /// Invoke a command like nodetool for cassandra maintenance asynchronously
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/cassandraClusters/{clusterName}/invokeCommandAsync</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>CassandraClusters_InvokeCommandAsync</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-02-15-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CassandraClusterResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="body"> Specification which command to run where. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
+        public virtual async Task<ArmOperation<CommandPublicResource>> InvokeCommandAsyncAsync(WaitUntil waitUntil, CassandraCommandPostBody body, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(body, nameof(body));
+
+            using var scope = _cassandraClusterClientDiagnostics.CreateScope("CassandraClusterResource.InvokeCommandAsync");
+            scope.Start();
+            try
+            {
+                var response = await _cassandraClusterRestClient.InvokeCommandAsyncAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, body, cancellationToken).ConfigureAwait(false);
+                var operation = new CosmosDBArmOperation<CommandPublicResource>(new CommandPublicResourceOperationSource(), _cassandraClusterClientDiagnostics, Pipeline, _cassandraClusterRestClient.CreateInvokeCommandAsyncRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, body).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Invoke a command like nodetool for cassandra maintenance asynchronously
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/cassandraClusters/{clusterName}/invokeCommandAsync</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>CassandraClusters_InvokeCommandAsync</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-02-15-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CassandraClusterResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="body"> Specification which command to run where. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
+        public virtual ArmOperation<CommandPublicResource> InvokeCommandAsync(WaitUntil waitUntil, CassandraCommandPostBody body, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(body, nameof(body));
+
+            using var scope = _cassandraClusterClientDiagnostics.CreateScope("CassandraClusterResource.InvokeCommandAsync");
+            scope.Start();
+            try
+            {
+                var response = _cassandraClusterRestClient.InvokeCommandAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, body, cancellationToken);
+                var operation = new CosmosDBArmOperation<CommandPublicResource>(new CommandPublicResourceOperationSource(), _cassandraClusterClientDiagnostics, Pipeline, _cassandraClusterRestClient.CreateInvokeCommandAsyncRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, body).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    operation.WaitForCompletion(cancellationToken);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// List all commands currently running on ring info
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/cassandraClusters/{clusterName}/commands</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>CassandraClusters_ListCommand</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-02-15-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CassandraClusterResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="CommandPublicResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<CommandPublicResource> GetCommandAsync(CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _cassandraClusterRestClient.CreateListCommandRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => CommandPublicResource.DeserializeCommandPublicResource(e), _cassandraClusterClientDiagnostics, Pipeline, "CassandraClusterResource.GetCommand", "value", null, cancellationToken);
+        }
+
+        /// <summary>
+        /// List all commands currently running on ring info
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/cassandraClusters/{clusterName}/commands</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>CassandraClusters_ListCommand</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-02-15-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CassandraClusterResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="CommandPublicResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<CommandPublicResource> GetCommand(CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _cassandraClusterRestClient.CreateListCommandRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => CommandPublicResource.DeserializeCommandPublicResource(e), _cassandraClusterClientDiagnostics, Pipeline, "CassandraClusterResource.GetCommand", "value", null, cancellationToken);
+        }
+
+        /// <summary>
+        /// Get details about a specified command that was run asynchronously.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/cassandraClusters/{clusterName}/commands/{commandId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>CassandraClusters_GetCommandAsync</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-02-15-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CassandraClusterResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="commandId"> Managed Cassandra cluster command id. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="commandId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="commandId"/> is null. </exception>
+        /// <returns> An async collection of <see cref="CommandPublicResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<CommandPublicResource> GetCommandAsyncAsync(string commandId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(commandId, nameof(commandId));
+
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _cassandraClusterRestClient.CreateGetCommandAsyncRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, commandId);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => CommandPublicResource.DeserializeCommandPublicResource(e), _cassandraClusterClientDiagnostics, Pipeline, "CassandraClusterResource.GetCommandAsync", "value", null, cancellationToken);
+        }
+
+        /// <summary>
+        /// Get details about a specified command that was run asynchronously.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/cassandraClusters/{clusterName}/commands/{commandId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>CassandraClusters_GetCommandAsync</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-02-15-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CassandraClusterResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="commandId"> Managed Cassandra cluster command id. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="commandId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="commandId"/> is null. </exception>
+        /// <returns> A collection of <see cref="CommandPublicResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<CommandPublicResource> GetCommandAsync(string commandId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(commandId, nameof(commandId));
+
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _cassandraClusterRestClient.CreateGetCommandAsyncRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, commandId);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => CommandPublicResource.DeserializeCommandPublicResource(e), _cassandraClusterClientDiagnostics, Pipeline, "CassandraClusterResource.GetCommandAsync", "value", null, cancellationToken);
+        }
+
+        /// <summary>
         /// List the backups of this cluster that are available to restore.
         /// <list type="bullet">
         /// <item>
@@ -523,7 +741,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-15-preview</description>
+        /// <description>2024-02-15-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -552,7 +770,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-15-preview</description>
+        /// <description>2024-02-15-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -581,7 +799,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-15-preview</description>
+        /// <description>2024-02-15-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -624,7 +842,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-15-preview</description>
+        /// <description>2024-02-15-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -667,7 +885,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-15-preview</description>
+        /// <description>2024-02-15-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -710,7 +928,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-15-preview</description>
+        /// <description>2024-02-15-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -753,7 +971,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-15-preview</description>
+        /// <description>2024-02-15-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -795,7 +1013,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-15-preview</description>
+        /// <description>2024-02-15-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -837,7 +1055,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-15-preview</description>
+        /// <description>2024-02-15-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -875,7 +1093,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-15-preview</description>
+        /// <description>2024-02-15-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -913,7 +1131,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-15-preview</description>
+        /// <description>2024-02-15-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -975,7 +1193,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-15-preview</description>
+        /// <description>2024-02-15-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1037,7 +1255,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-15-preview</description>
+        /// <description>2024-02-15-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1094,7 +1312,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-15-preview</description>
+        /// <description>2024-02-15-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1151,7 +1369,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-15-preview</description>
+        /// <description>2024-02-15-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1211,7 +1429,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-15-preview</description>
+        /// <description>2024-02-15-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>

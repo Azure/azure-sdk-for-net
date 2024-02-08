@@ -53,14 +53,18 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <summary> Initializes a new instance of <see cref="ExtendedRestorableMongoDBDatabaseResourceInfo"/>. </summary>
         /// <param name="rid"> A system generated property. A unique identifier. </param>
         /// <param name="operationType"> The operation type of this database event. </param>
+        /// <param name="canUndelete"> A state of this database to identify if this database is restorable in same account. </param>
+        /// <param name="canUndeleteReason"> The reason why this database can not be restored in same account. </param>
         /// <param name="eventTimestamp"> The time when this database event happened. </param>
         /// <param name="databaseName"> The name of this MongoDB database. </param>
         /// <param name="databaseId"> The resource ID of this MongoDB database. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ExtendedRestorableMongoDBDatabaseResourceInfo(string rid, CosmosDBOperationType? operationType, string eventTimestamp, string databaseName, string databaseId, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ExtendedRestorableMongoDBDatabaseResourceInfo(string rid, CosmosDBOperationType? operationType, string canUndelete, string canUndeleteReason, string eventTimestamp, string databaseName, string databaseId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Rid = rid;
             OperationType = operationType;
+            CanUndelete = canUndelete;
+            CanUndeleteReason = canUndeleteReason;
             EventTimestamp = eventTimestamp;
             DatabaseName = databaseName;
             DatabaseId = databaseId;
@@ -71,6 +75,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public string Rid { get; }
         /// <summary> The operation type of this database event. </summary>
         public CosmosDBOperationType? OperationType { get; }
+        /// <summary> A state of this database to identify if this database is restorable in same account. </summary>
+        public string CanUndelete { get; }
+        /// <summary> The reason why this database can not be restored in same account. </summary>
+        public string CanUndeleteReason { get; }
         /// <summary> The time when this database event happened. </summary>
         public string EventTimestamp { get; }
         /// <summary> The name of this MongoDB database. </summary>

@@ -53,15 +53,19 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <summary> Initializes a new instance of <see cref="ExtendedRestorableSqlContainerResourceInfo"/>. </summary>
         /// <param name="rid"> A system generated property. A unique identifier. </param>
         /// <param name="operationType"> The operation type of this container event. </param>
+        /// <param name="canUndelete"> A state of this container to identify if this container is restorable in same account. </param>
+        /// <param name="canUndeleteReason"> The reason why this container can not be restored in same account. </param>
         /// <param name="eventTimestamp"> The when this container event happened. </param>
         /// <param name="containerName"> The name of this SQL container. </param>
         /// <param name="containerId"> The resource ID of this SQL container. </param>
         /// <param name="container"> Cosmos DB SQL container resource object. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ExtendedRestorableSqlContainerResourceInfo(string rid, CosmosDBOperationType? operationType, string eventTimestamp, string containerName, string containerId, RestorableSqlContainerPropertiesResourceContainer container, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ExtendedRestorableSqlContainerResourceInfo(string rid, CosmosDBOperationType? operationType, string canUndelete, string canUndeleteReason, string eventTimestamp, string containerName, string containerId, RestorableSqlContainerPropertiesResourceContainer container, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Rid = rid;
             OperationType = operationType;
+            CanUndelete = canUndelete;
+            CanUndeleteReason = canUndeleteReason;
             EventTimestamp = eventTimestamp;
             ContainerName = containerName;
             ContainerId = containerId;
@@ -73,6 +77,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public string Rid { get; }
         /// <summary> The operation type of this container event. </summary>
         public CosmosDBOperationType? OperationType { get; }
+        /// <summary> A state of this container to identify if this container is restorable in same account. </summary>
+        public string CanUndelete { get; }
+        /// <summary> The reason why this container can not be restored in same account. </summary>
+        public string CanUndeleteReason { get; }
         /// <summary> The when this container event happened. </summary>
         public string EventTimestamp { get; }
         /// <summary> The name of this SQL container. </summary>

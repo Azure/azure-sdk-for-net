@@ -239,7 +239,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             if (Optional.IsDefined(CustomerManagedKeyStatus))
             {
                 writer.WritePropertyName("customerManagedKeyStatus"u8);
-                writer.WriteStringValue(CustomerManagedKeyStatus.Value.ToString());
+                writer.WriteStringValue(CustomerManagedKeyStatus);
             }
             if (Optional.IsDefined(EnablePriorityBasedExecution))
             {
@@ -250,6 +250,11 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 writer.WritePropertyName("defaultPriorityLevel"u8);
                 writer.WriteStringValue(DefaultPriorityLevel.Value.ToString());
+            }
+            if (Optional.IsDefined(EnablePerRegionPerPartitionAutoscale))
+            {
+                writer.WritePropertyName("enablePerRegionPerPartitionAutoscale"u8);
+                writer.WriteBooleanValue(EnablePerRegionPerPartitionAutoscale.Value);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -323,9 +328,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
             Optional<bool> enablePartitionMerge = default;
             Optional<bool> enableBurstCapacity = default;
             Optional<CosmosDBMinimalTlsVersion> minimalTlsVersion = default;
-            Optional<CustomerManagedKeyStatus> customerManagedKeyStatus = default;
+            Optional<string> customerManagedKeyStatus = default;
             Optional<bool> enablePriorityBasedExecution = default;
             Optional<DefaultPriorityLevel> defaultPriorityLevel = default;
+            Optional<bool> enablePerRegionPerPartitionAutoscale = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -677,11 +683,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                         }
                         if (property0.NameEquals("customerManagedKeyStatus"u8))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            customerManagedKeyStatus = new CustomerManagedKeyStatus(property0.Value.GetString());
+                            customerManagedKeyStatus = property0.Value.GetString();
                             continue;
                         }
                         if (property0.NameEquals("enablePriorityBasedExecution"u8))
@@ -702,6 +704,15 @@ namespace Azure.ResourceManager.CosmosDB.Models
                             defaultPriorityLevel = new DefaultPriorityLevel(property0.Value.GetString());
                             continue;
                         }
+                        if (property0.NameEquals("enablePerRegionPerPartitionAutoscale"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            enablePerRegionPerPartitionAutoscale = property0.Value.GetBoolean();
+                            continue;
+                        }
                     }
                     continue;
                 }
@@ -711,7 +722,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CosmosDBAccountPatch(Optional.ToDictionary(tags), Optional.ToNullable(location), identity, consistencyPolicy.Value, Optional.ToList(locations), Optional.ToList(ipRules), Optional.ToNullable(isVirtualNetworkFilterEnabled), Optional.ToNullable(enableAutomaticFailover), Optional.ToList(capabilities), Optional.ToList(virtualNetworkRules), Optional.ToNullable(enableMultipleWriteLocations), Optional.ToNullable(enableCassandraConnector), Optional.ToNullable(connectorOffer), Optional.ToNullable(disableKeyBasedMetadataWriteAccess), keyVaultKeyUri.Value, defaultIdentity.Value, Optional.ToNullable(publicNetworkAccess), Optional.ToNullable(enableFreeTier), apiProperties.Value, Optional.ToNullable(enableAnalyticalStorage), analyticalStorageConfiguration.Value, backupPolicy.Value, Optional.ToList(cors), Optional.ToNullable(networkAclBypass), Optional.ToList(networkAclBypassResourceIds), diagnosticLogSettings.Value, Optional.ToNullable(disableLocalAuth), capacity.Value, Optional.ToNullable(enableMaterializedViews), keysMetadata.Value, Optional.ToNullable(enablePartitionMerge), Optional.ToNullable(enableBurstCapacity), Optional.ToNullable(minimalTlsVersion), Optional.ToNullable(customerManagedKeyStatus), Optional.ToNullable(enablePriorityBasedExecution), Optional.ToNullable(defaultPriorityLevel), serializedAdditionalRawData);
+            return new CosmosDBAccountPatch(Optional.ToDictionary(tags), Optional.ToNullable(location), identity, consistencyPolicy.Value, Optional.ToList(locations), Optional.ToList(ipRules), Optional.ToNullable(isVirtualNetworkFilterEnabled), Optional.ToNullable(enableAutomaticFailover), Optional.ToList(capabilities), Optional.ToList(virtualNetworkRules), Optional.ToNullable(enableMultipleWriteLocations), Optional.ToNullable(enableCassandraConnector), Optional.ToNullable(connectorOffer), Optional.ToNullable(disableKeyBasedMetadataWriteAccess), keyVaultKeyUri.Value, defaultIdentity.Value, Optional.ToNullable(publicNetworkAccess), Optional.ToNullable(enableFreeTier), apiProperties.Value, Optional.ToNullable(enableAnalyticalStorage), analyticalStorageConfiguration.Value, backupPolicy.Value, Optional.ToList(cors), Optional.ToNullable(networkAclBypass), Optional.ToList(networkAclBypassResourceIds), diagnosticLogSettings.Value, Optional.ToNullable(disableLocalAuth), capacity.Value, Optional.ToNullable(enableMaterializedViews), keysMetadata.Value, Optional.ToNullable(enablePartitionMerge), Optional.ToNullable(enableBurstCapacity), Optional.ToNullable(minimalTlsVersion), customerManagedKeyStatus.Value, Optional.ToNullable(enablePriorityBasedExecution), Optional.ToNullable(defaultPriorityLevel), Optional.ToNullable(enablePerRegionPerPartitionAutoscale), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CosmosDBAccountPatch>.Write(ModelReaderWriterOptions options)

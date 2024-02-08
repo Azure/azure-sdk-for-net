@@ -76,6 +76,11 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 writer.WritePropertyName("restoreTimestampInUtc"u8);
                 writer.WriteStringValue(RestoreTimestampInUtc.Value, "O");
             }
+            if (Optional.IsDefined(RestoreWithTtlDisabled))
+            {
+                writer.WritePropertyName("restoreWithTtlDisabled"u8);
+                writer.WriteBooleanValue(RestoreWithTtlDisabled.Value);
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -121,6 +126,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             Optional<string> sourceBackupLocation = default;
             Optional<string> restoreSource = default;
             Optional<DateTimeOffset> restoreTimestampInUtc = default;
+            Optional<bool> restoreWithTtlDisabled = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -195,13 +201,22 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     restoreTimestampInUtc = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
+                if (property.NameEquals("restoreWithTtlDisabled"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    restoreWithTtlDisabled = property.Value.GetBoolean();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CosmosDBAccountRestoreParameters(restoreSource.Value, Optional.ToNullable(restoreTimestampInUtc), serializedAdditionalRawData, Optional.ToNullable(restoreMode), Optional.ToList(databasesToRestore), Optional.ToList(gremlinDatabasesToRestore), Optional.ToList(tablesToRestore), sourceBackupLocation.Value);
+            return new CosmosDBAccountRestoreParameters(restoreSource.Value, Optional.ToNullable(restoreTimestampInUtc), Optional.ToNullable(restoreWithTtlDisabled), serializedAdditionalRawData, Optional.ToNullable(restoreMode), Optional.ToList(databasesToRestore), Optional.ToList(gremlinDatabasesToRestore), Optional.ToList(tablesToRestore), sourceBackupLocation.Value);
         }
 
         BinaryData IPersistableModel<CosmosDBAccountRestoreParameters>.Write(ModelReaderWriterOptions options)

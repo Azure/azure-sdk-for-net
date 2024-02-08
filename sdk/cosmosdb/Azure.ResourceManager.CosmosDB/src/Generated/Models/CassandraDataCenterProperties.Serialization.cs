@@ -106,6 +106,11 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 writer.WritePropertyName("provisionError"u8);
                 writer.WriteObjectValue(ProvisionError);
             }
+            if (Optional.IsDefined(PrivateEndpointIPAddress))
+            {
+                writer.WritePropertyName("privateEndpointIpAddress"u8);
+                writer.WriteStringValue(PrivateEndpointIPAddress);
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -159,6 +164,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             Optional<AuthenticationMethodLdapProperties> authenticationMethodLdapProperties = default;
             Optional<bool> deallocated = default;
             Optional<CassandraError> provisionError = default;
+            Optional<string> privateEndpointIPAddress = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -291,13 +297,18 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     provisionError = CassandraError.DeserializeCassandraError(property.Value);
                     continue;
                 }
+                if (property.NameEquals("privateEndpointIpAddress"u8))
+                {
+                    privateEndpointIPAddress = property.Value.GetString();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CassandraDataCenterProperties(Optional.ToNullable(provisioningState), Optional.ToNullable(dataCenterLocation), delegatedSubnetId.Value, Optional.ToNullable(nodeCount), Optional.ToList(seedNodes), base64EncodedCassandraYamlFragment.Value, managedDiskCustomerKeyUri.Value, backupStorageCustomerKeyUri.Value, sku.Value, diskSku.Value, Optional.ToNullable(diskCapacity), Optional.ToNullable(availabilityZone), authenticationMethodLdapProperties.Value, Optional.ToNullable(deallocated), provisionError.Value, serializedAdditionalRawData);
+            return new CassandraDataCenterProperties(Optional.ToNullable(provisioningState), Optional.ToNullable(dataCenterLocation), delegatedSubnetId.Value, Optional.ToNullable(nodeCount), Optional.ToList(seedNodes), base64EncodedCassandraYamlFragment.Value, managedDiskCustomerKeyUri.Value, backupStorageCustomerKeyUri.Value, sku.Value, diskSku.Value, Optional.ToNullable(diskCapacity), Optional.ToNullable(availabilityZone), authenticationMethodLdapProperties.Value, Optional.ToNullable(deallocated), provisionError.Value, privateEndpointIPAddress.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CassandraDataCenterProperties>.Write(ModelReaderWriterOptions options)

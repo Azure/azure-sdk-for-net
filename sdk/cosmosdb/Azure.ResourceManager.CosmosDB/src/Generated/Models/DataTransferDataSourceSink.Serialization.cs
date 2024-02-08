@@ -71,6 +71,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 switch (discriminator.GetString())
                 {
                     case "AzureBlobStorage": return AzureBlobDataTransferDataSourceSink.DeserializeAzureBlobDataTransferDataSourceSink(element);
+                    case "BaseCosmosDataTransferDataSourceSink": return BaseCosmosDataTransferDataSourceSink.DeserializeBaseCosmosDataTransferDataSourceSink(element);
                     case "CosmosDBCassandra": return CosmosCassandraDataTransferDataSourceSink.DeserializeCosmosCassandraDataTransferDataSourceSink(element);
                     case "CosmosDBMongo": return CosmosMongoDataTransferDataSourceSink.DeserializeCosmosMongoDataTransferDataSourceSink(element);
                     case "CosmosDBSql": return CosmosSqlDataTransferDataSourceSink.DeserializeCosmosSqlDataTransferDataSourceSink(element);

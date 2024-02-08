@@ -27,6 +27,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
         private const string InternallyReadyValue = "InternallyReady";
         private const string OnlineValue = "Online";
         private const string DeletingValue = "Deleting";
+        private const string SucceededValue = "Succeeded";
+        private const string FailedValue = "Failed";
+        private const string CanceledValue = "Canceled";
+        private const string UpdatingValue = "Updating";
 
         /// <summary> Uninitialized. </summary>
         public static CosmosDBStatus Uninitialized { get; } = new CosmosDBStatus(UninitializedValue);
@@ -38,6 +42,14 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public static CosmosDBStatus Online { get; } = new CosmosDBStatus(OnlineValue);
         /// <summary> Deleting. </summary>
         public static CosmosDBStatus Deleting { get; } = new CosmosDBStatus(DeletingValue);
+        /// <summary> Succeeded. </summary>
+        public static CosmosDBStatus Succeeded { get; } = new CosmosDBStatus(SucceededValue);
+        /// <summary> Failed. </summary>
+        public static CosmosDBStatus Failed { get; } = new CosmosDBStatus(FailedValue);
+        /// <summary> Canceled. </summary>
+        public static CosmosDBStatus Canceled { get; } = new CosmosDBStatus(CanceledValue);
+        /// <summary> Updating. </summary>
+        public static CosmosDBStatus Updating { get; } = new CosmosDBStatus(UpdatingValue);
         /// <summary> Determines if two <see cref="CosmosDBStatus"/> values are the same. </summary>
         public static bool operator ==(CosmosDBStatus left, CosmosDBStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="CosmosDBStatus"/> values are not the same. </summary>

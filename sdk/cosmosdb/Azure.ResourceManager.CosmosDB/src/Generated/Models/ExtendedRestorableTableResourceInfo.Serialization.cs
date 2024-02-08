@@ -36,6 +36,16 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 writer.WritePropertyName("operationType"u8);
                 writer.WriteStringValue(OperationType.Value.ToString());
             }
+            if (options.Format != "W" && Optional.IsDefined(CanUndelete))
+            {
+                writer.WritePropertyName("canUndelete"u8);
+                writer.WriteStringValue(CanUndelete);
+            }
+            if (options.Format != "W" && Optional.IsDefined(CanUndeleteReason))
+            {
+                writer.WritePropertyName("canUndeleteReason"u8);
+                writer.WriteStringValue(CanUndeleteReason);
+            }
             if (options.Format != "W" && Optional.IsDefined(EventTimestamp))
             {
                 writer.WritePropertyName("eventTimestamp"u8);
@@ -91,6 +101,8 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
             Optional<string> rid = default;
             Optional<CosmosDBOperationType> operationType = default;
+            Optional<string> canUndelete = default;
+            Optional<string> canUndeleteReason = default;
             Optional<string> eventTimestamp = default;
             Optional<string> ownerId = default;
             Optional<string> ownerResourceId = default;
@@ -110,6 +122,16 @@ namespace Azure.ResourceManager.CosmosDB.Models
                         continue;
                     }
                     operationType = new CosmosDBOperationType(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("canUndelete"u8))
+                {
+                    canUndelete = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("canUndeleteReason"u8))
+                {
+                    canUndeleteReason = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("eventTimestamp"u8))
@@ -133,7 +155,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ExtendedRestorableTableResourceInfo(rid.Value, Optional.ToNullable(operationType), eventTimestamp.Value, ownerId.Value, ownerResourceId.Value, serializedAdditionalRawData);
+            return new ExtendedRestorableTableResourceInfo(rid.Value, Optional.ToNullable(operationType), canUndelete.Value, canUndeleteReason.Value, eventTimestamp.Value, ownerId.Value, ownerResourceId.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ExtendedRestorableTableResourceInfo>.Write(ModelReaderWriterOptions options)

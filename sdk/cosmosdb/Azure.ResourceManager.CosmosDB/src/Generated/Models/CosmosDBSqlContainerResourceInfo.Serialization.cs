@@ -78,6 +78,16 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 writer.WritePropertyName("materializedViewDefinition"u8);
                 writer.WriteObjectValue(MaterializedViewDefinition);
             }
+            if (Optional.IsCollectionDefined(ComputedProperties))
+            {
+                writer.WritePropertyName("computedProperties"u8);
+                writer.WriteStartArray();
+                foreach (var item in ComputedProperties)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -127,6 +137,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             Optional<ResourceRestoreParameters> restoreParameters = default;
             Optional<CosmosDBAccountCreateMode> createMode = default;
             Optional<MaterializedViewDefinition> materializedViewDefinition = default;
+            Optional<IList<ComputedProperty>> computedProperties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -226,13 +237,27 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     materializedViewDefinition = MaterializedViewDefinition.DeserializeMaterializedViewDefinition(property.Value);
                     continue;
                 }
+                if (property.NameEquals("computedProperties"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<ComputedProperty> array = new List<ComputedProperty>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(ComputedProperty.DeserializeComputedProperty(item));
+                    }
+                    computedProperties = array;
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CosmosDBSqlContainerResourceInfo(id, indexingPolicy.Value, partitionKey.Value, Optional.ToNullable(defaultTtl), uniqueKeyPolicy.Value, conflictResolutionPolicy.Value, clientEncryptionPolicy.Value, Optional.ToNullable(analyticalStorageTtl), restoreParameters.Value, Optional.ToNullable(createMode), materializedViewDefinition.Value, serializedAdditionalRawData);
+            return new CosmosDBSqlContainerResourceInfo(id, indexingPolicy.Value, partitionKey.Value, Optional.ToNullable(defaultTtl), uniqueKeyPolicy.Value, conflictResolutionPolicy.Value, clientEncryptionPolicy.Value, Optional.ToNullable(analyticalStorageTtl), restoreParameters.Value, Optional.ToNullable(createMode), materializedViewDefinition.Value, Optional.ToList(computedProperties), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CosmosDBSqlContainerResourceInfo>.Write(ModelReaderWriterOptions options)

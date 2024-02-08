@@ -12,7 +12,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.CosmosDB.Models
 {
     /// <summary> A CosmosDB No Sql API data source/sink. </summary>
-    public partial class CosmosSqlDataTransferDataSourceSink : DataTransferDataSourceSink
+    public partial class CosmosSqlDataTransferDataSourceSink : BaseCosmosDataTransferDataSourceSink
     {
         /// <summary> Initializes a new instance of <see cref="CosmosSqlDataTransferDataSourceSink"/>. </summary>
         /// <param name="databaseName"></param>
@@ -31,14 +31,13 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <summary> Initializes a new instance of <see cref="CosmosSqlDataTransferDataSourceSink"/>. </summary>
         /// <param name="component"></param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="remoteAccountName"></param>
         /// <param name="databaseName"></param>
         /// <param name="containerName"></param>
-        /// <param name="remoteAccountName"></param>
-        internal CosmosSqlDataTransferDataSourceSink(DataTransferComponent component, IDictionary<string, BinaryData> serializedAdditionalRawData, string databaseName, string containerName, string remoteAccountName) : base(component, serializedAdditionalRawData)
+        internal CosmosSqlDataTransferDataSourceSink(DataTransferComponent component, IDictionary<string, BinaryData> serializedAdditionalRawData, string remoteAccountName, string databaseName, string containerName) : base(component, serializedAdditionalRawData, remoteAccountName)
         {
             DatabaseName = databaseName;
             ContainerName = containerName;
-            RemoteAccountName = remoteAccountName;
             Component = component;
         }
 
@@ -51,7 +50,5 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public string DatabaseName { get; set; }
         /// <summary> Gets or sets the container name. </summary>
         public string ContainerName { get; set; }
-        /// <summary> Gets or sets the remote account name. </summary>
-        public string RemoteAccountName { get; set; }
     }
 }

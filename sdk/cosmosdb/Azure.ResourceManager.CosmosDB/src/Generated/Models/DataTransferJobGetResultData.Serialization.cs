@@ -95,6 +95,16 @@ namespace Azure.ResourceManager.CosmosDB
                 writer.WritePropertyName("error"u8);
                 writer.WriteObjectValue(Error);
             }
+            if (options.Format != "W" && Optional.IsDefined(Duration))
+            {
+                writer.WritePropertyName("duration"u8);
+                writer.WriteStringValue(Duration.Value, "c");
+            }
+            if (Optional.IsDefined(Mode))
+            {
+                writer.WritePropertyName("mode"u8);
+                writer.WriteStringValue(Mode.Value.ToString());
+            }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -147,6 +157,8 @@ namespace Azure.ResourceManager.CosmosDB
             Optional<DateTimeOffset> lastUpdatedUtcTime = default;
             Optional<int> workerCount = default;
             Optional<ErrorResponse> error = default;
+            Optional<TimeSpan> duration = default;
+            Optional<DataTransferJobMode> mode = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -257,6 +269,24 @@ namespace Azure.ResourceManager.CosmosDB
                             error = ErrorResponse.DeserializeErrorResponse(property0.Value);
                             continue;
                         }
+                        if (property0.NameEquals("duration"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            duration = property0.Value.GetTimeSpan("c");
+                            continue;
+                        }
+                        if (property0.NameEquals("mode"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            mode = new DataTransferJobMode(property0.Value.GetString());
+                            continue;
+                        }
                     }
                     continue;
                 }
@@ -266,7 +296,7 @@ namespace Azure.ResourceManager.CosmosDB
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataTransferJobGetResultData(id, name, type, systemData.Value, jobName.Value, source.Value, destination.Value, status.Value, Optional.ToNullable(processedCount), Optional.ToNullable(totalCount), Optional.ToNullable(lastUpdatedUtcTime), Optional.ToNullable(workerCount), error.Value, serializedAdditionalRawData);
+            return new DataTransferJobGetResultData(id, name, type, systemData.Value, jobName.Value, source.Value, destination.Value, status.Value, Optional.ToNullable(processedCount), Optional.ToNullable(totalCount), Optional.ToNullable(lastUpdatedUtcTime), Optional.ToNullable(workerCount), error.Value, Optional.ToNullable(duration), Optional.ToNullable(mode), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataTransferJobGetResultData>.Write(ModelReaderWriterOptions options)
