@@ -102,7 +102,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests
 
                 Assert.NotNull(processor);
 
-                if (enableLogSampling.Equals("true" , StringComparison.OrdinalIgnoreCase))
+                if (enableLogSampling != null && enableLogSampling.Equals("true" , StringComparison.OrdinalIgnoreCase))
                 {
                     Assert.True(processor is LogFilteringProcessor);
                     Assert.True(processor is BatchLogRecordExportProcessor);
