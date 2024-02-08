@@ -33,6 +33,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Tests.DocumentTests
 
             var activitySourceName = $"activitySourceName{uniqueTestId}";
             using var activitySource = new ActivitySource(activitySourceName);
+            // TODO: Replace this ActivityListener with an OpenTelemetry provider.
             var listener = new ActivityListener
             {
                 ShouldListenTo = _ => true,
@@ -77,7 +78,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Tests.DocumentTests
             _ = app.RunAsync(TestServerUrl);
 
             // SETUP
-            var tracerProvider = Sdk.CreateTracerProviderBuilder()
+            using var tracerProvider = Sdk.CreateTracerProviderBuilder()
                 .AddHttpClientInstrumentation()
                 .AddInMemoryExporter(exportedActivities)
                 .Build();

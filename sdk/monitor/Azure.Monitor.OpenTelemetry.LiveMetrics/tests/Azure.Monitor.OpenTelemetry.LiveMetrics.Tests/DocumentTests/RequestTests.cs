@@ -33,6 +33,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Tests.DocumentTests
 
             var activitySourceName = $"activitySourceName{uniqueTestId}";
             using var activitySource = new ActivitySource(activitySourceName);
+            // TODO: Replace this ActivityListener with an OpenTelemetry provider.
             var listener = new ActivityListener
             {
                 ShouldListenTo = _ => true,

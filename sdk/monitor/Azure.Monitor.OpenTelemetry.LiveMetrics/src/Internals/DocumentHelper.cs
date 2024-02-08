@@ -21,6 +21,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals
 
         internal static RemoteDependency ConvertToRemoteDependency(Activity activity)
         {
+            // TODO: Investigate if we can have a minimal/optimized version of ActivityTagsProcessor for LiveMetric.
             var atp = new ActivityTagsProcessor();
             atp.CategorizeTags(activity);
 
