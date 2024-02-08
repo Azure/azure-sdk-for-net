@@ -23,11 +23,19 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
         internal static TimeSpan _cacheRefresh = new TimeSpan(0, 0, 5, 0);
         private static readonly SemaphoreSlim _semaphore = new SemaphoreSlim(1);
 
-        internal override async Task<(bool Valid, Dictionary<string, string> Claims)> GetClaimsAndValidate(HttpRequestMessage request, ConfigurationManager configurationManager)
+        internal override async Task<(bool Valid, Dictionary<string, string> Claims)> GetClaimsAndValidate(
+            HttpRequestMessage request,
+            ConfigurationManager configurationManager)
         {
-            if (string.IsNullOrEmpty(configurationManager.TenantId) || string.IsNullOrEmpty(configurationManager.AudienceAppId))
+            if (string.IsNullOrEmpty(configurationManager.TenantId) ||
+                string.IsNullOrEmpty(configurationManager.AudienceAppId))
             {
-                throw new MissingFieldException(string.Format(CultureInfo.CurrentCulture, AuthenticationEventResource.Ex_Trigger_Required_Attrs, ConfigurationManager.TENANT_ID, ConfigurationManager.AUDIENCE_APPID));
+                throw new MissingFieldException(
+                    string.Format(
+                        provider: CultureInfo.CurrentCulture,
+                        format: AuthenticationEventResource.Ex_Trigger_Required_Attrs,
+                        arg0: ConfigurationManager.TENANT_ID,
+                        arg1: ConfigurationManager.AUDIENCE_APPID));
             }
 
             string accessToken = request.Headers?.Authorization?.Parameter;
@@ -41,10 +49,17 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
 
             var handler = new JwtSecurityTokenHandler();
             JwtSecurityToken token = handler.ReadJwtToken(accessToken);
+
             SupportedTokenSchemaVersions tokenSchemaVersion = TokenValidatorHelper.ParseSupportedTokenVersion(token.Claims.First(x => x.Type.Equals("ver")).Value);
 
-            if (!ConfigurationManager.GetService(
-                serviceId: token.Payload[(tokenSchemaVersion == SupportedTokenSchemaVersions.V2_0 ? ConfigurationManager.TOKEN_V2_VERIFY : ConfigurationManager.TOKEN_V1_VERIFY)].ToString(),
+            string tokenAuthorizationPartyId = token.Payload[
+                tokenSchemaVersion == SupportedTokenSchemaVersions.V2_0 ?
+                    ConfigurationManager.TOKEN_V2_VERIFY :
+                    ConfigurationManager.TOKEN_V1_VERIFY]
+                    .ToString();
+
+            if (!ConfigurationManager.TryGetService(
+                serviceId: tokenAuthorizationPartyId,
                 serviceInfo: out ServiceInfo serviceInfo))
             {
                 return (false, null);
@@ -63,7 +78,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
 
                             using (HttpClient httpClient = new HttpClient())
                             {
-                                string openidConfiguration = httpClient.GetStringAsync(new Uri($"{serviceInfo.OpenIdConnectionHost}/common/v2.0/.well-known/openid-configuration", UriKind.Absolute)).Result;
+                                string openidConfiguration = httpClient.GetStringAsync(new Uri(serviceInfo.OpenIdConnectionHost, UriKind.Absolute)).Result;
 
                                 AuthenticationEventJsonElement openidConfigurationJson = new AuthenticationEventJsonElement(openidConfiguration);
                                 string jwksUri = openidConfigurationJson.GetPropertyValue("jwks_uri");
@@ -83,21 +98,28 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
                     }
                 }).ConfigureAwait(false);
 
-                var result = handler.ValidateToken(accessToken, new TokenValidationParameters
-                {
-                    ValidateIssuer = true,
-                    ValidateAudience = true,
-                    ValidateIssuerSigningKey = true,
-                    ValidateLifetime = true,
-                    ValidIssuer = string.Format(CultureInfo.CurrentCulture, tokenSchemaVersion == SupportedTokenSchemaVersions.V2_0 ?
-                       serviceInfo.TokenIssuerV2 :
-                       serviceInfo.TokenIssuerV1, configurationManager.TenantId),
-                    ValidAudiences = authenticationAppIds,
-                    IssuerSigningKeys = _cacheKeys
-                }, out _);
+                var result = handler.ValidateToken(
+                    token: accessToken,
+                    validationParameters: new TokenValidationParameters
+                    {
+                        ValidateIssuerSigningKey = true,
+                        ValidIssuer = string.Format(
+                            CultureInfo.CurrentCulture,
+                            tokenSchemaVersion == SupportedTokenSchemaVersions.V2_0 ?
+                                serviceInfo.TokenIssuerV2 :
+                                serviceInfo.TokenIssuerV1,
+                            configurationManager.TenantId),
+                        ValidAudiences = authenticationAppIds,
+                        IssuerSigningKeys = _cacheKeys
+                    },
+                    validatedToken: out _);
 
-                //Here we validate the version and for version 1 validate that the appid claim matches the authorization party, if version 2, we validate that the azp claim matches the authorization party.
-                return (result.Claims.VerifyClaim("ver", $"{tokenSchemaVersion.GetDescription()}"),
+                // Here we validate the version and for version 1 validate that the appid claim matches the authorization party,
+                // if version 2, we validate that the azp claim matches the authorization party.
+                return (
+                    result.Claims.VerifyClaim(
+                        type: "ver",
+                        value: $"{tokenSchemaVersion.GetDescription()}"),
                     result.Claims.ToDictionary(x => x.Type, x => x.Value));
             }
             catch (Exception)

@@ -27,6 +27,16 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
         /// <value>The audience application identifier.</value>
         public string AudienceAppId { get; set; }
 
+        /// <summary>
+        /// Well known OpenId configuration endpoint.
+        /// </summary>
+        public string OpenIdConnectionHost { get; set; }
+
+        /// <summary>
+        /// Token Issuer for all versions of tokens.
+        /// </summary>
+        public string TokenIssuer { get; set; }
+
         internal bool IsParameterString { get; set; } = true;
     }
 }
