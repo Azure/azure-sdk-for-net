@@ -42,6 +42,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             DatasetType = datasetType ?? "CustomDataset";
         }
 
+        /// <summary> Initializes a new instance of <see cref="CustomDataset"/> for deserialization. </summary>
+        internal CustomDataset()
+        {
+        }
+
         /// <summary>
         /// Custom dataset properties.
         /// <para>

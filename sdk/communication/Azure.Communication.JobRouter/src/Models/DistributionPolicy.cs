@@ -8,6 +8,7 @@ using Azure.Core;
 
 namespace Azure.Communication.JobRouter
 {
+    [CodeGenSerialization(nameof(OfferExpiresAfter), SerializationValueHook = nameof(WriteOfferExpiresAfter), DeserializationValueHook = nameof(ReadOfferExpiresAfter))]
     public partial class DistributionPolicy : IUtf8JsonSerializable
     {
         /// <summary> Initializes a new instance of distribution policy. </summary>
@@ -31,7 +32,6 @@ namespace Azure.Communication.JobRouter
 
         /// <summary> Length of time after which any offers created under this policy will be expired. </summary>
         [CodeGenMember("OfferExpiresAfterSeconds")]
-        [CodeGenMemberSerializationHooks(SerializationValueHook = nameof(WriteOfferExpiresAfter), DeserializationValueHook = nameof(ReadOfferExpiresAfter))]
         public TimeSpan? OfferExpiresAfter { get; set; }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]

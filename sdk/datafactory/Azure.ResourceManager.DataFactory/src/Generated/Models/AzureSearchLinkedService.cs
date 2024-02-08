@@ -44,6 +44,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             LinkedServiceType = linkedServiceType ?? "AzureSearch";
         }
 
+        /// <summary> Initializes a new instance of <see cref="AzureSearchLinkedService"/> for deserialization. </summary>
+        internal AzureSearchLinkedService()
+        {
+        }
+
         /// <summary> URL for Azure Search service. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> Uri { get; set; }
         /// <summary> Admin Key for Azure Search service. </summary>

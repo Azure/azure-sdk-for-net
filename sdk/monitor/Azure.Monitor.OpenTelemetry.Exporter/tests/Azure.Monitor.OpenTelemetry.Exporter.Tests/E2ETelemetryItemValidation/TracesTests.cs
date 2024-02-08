@@ -159,7 +159,10 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.E2ETelemetryItemValidation
                 catch (Exception ex)
                 {
                     activity?.SetStatus(ActivityStatusCode.Error);
-                    activity?.RecordException(ex);
+                    activity?.RecordException(ex, new TagList
+                    {
+                        { "someKey", "someValue" },
+                    });
                 }
             }
 
@@ -187,7 +190,14 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.E2ETelemetryItemValidation
                 expectedExceptionMessage: "Test exception",
                 expectedExceptionTypeName: "System.Exception",
                 expectedTraceId: traceId,
-                expectedSpanId: spanId);
+                expectedSpanId: spanId,
+                expectedProperties: new Dictionary<string, string> { { "someKey", "someValue" } },
+                additionalChecks: data =>
+                {
+                    Assert.False(data.Properties.ContainsKey("exception.type"));
+                    Assert.False(data.Properties.ContainsKey("exception.message"));
+                    Assert.False(data.Properties.ContainsKey("exception.stacktrace"));
+                });
         }
 
         [Theory]

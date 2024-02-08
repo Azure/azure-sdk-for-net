@@ -49,6 +49,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             TriggerType = triggerType ?? "BlobTrigger";
         }
 
+        /// <summary> Initializes a new instance of <see cref="DataFactoryBlobTrigger"/> for deserialization. </summary>
+        internal DataFactoryBlobTrigger()
+        {
+        }
+
         /// <summary> The path of the container/folder that will trigger the pipeline. </summary>
         public string FolderPath { get; set; }
         /// <summary> The max number of parallel files to handle when it is triggered. </summary>
