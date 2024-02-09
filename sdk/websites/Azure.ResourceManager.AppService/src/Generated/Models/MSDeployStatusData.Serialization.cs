@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.AppService.Models;
@@ -224,6 +225,134 @@ namespace Azure.ResourceManager.AppService
             return new MSDeployStatusData(id, name, type, systemData.Value, deployer.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(startTime), Optional.ToNullable(endTime), Optional.ToNullable(complete), kind.Value, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                if (Name.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{Name}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{Name}'");
+                }
+            }
+
+            if (Optional.IsDefined(Kind))
+            {
+                builder.Append("  kind:");
+                if (Kind.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{Kind}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{Kind}'");
+                }
+            }
+
+            if (Optional.IsDefined(Id))
+            {
+                builder.Append("  id:");
+                builder.AppendLine($" '{Id.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SystemData))
+            {
+                builder.Append("  systemData:");
+                builder.AppendLine($" '{SystemData.ToString()}'");
+            }
+
+            builder.Append("  properties:");
+            builder.AppendLine(" {");
+            if (Optional.IsDefined(Deployer))
+            {
+                builder.Append("    deployer:");
+                if (Deployer.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{Deployer}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{Deployer}'");
+                }
+            }
+
+            if (Optional.IsDefined(ProvisioningState))
+            {
+                builder.Append("    provisioningState:");
+                builder.AppendLine($" '{ProvisioningState.Value.ToSerialString()}'");
+            }
+
+            if (Optional.IsDefined(StartOn))
+            {
+                builder.Append("    startTime:");
+                var formattedDateTimeString = TypeFormatters.ToString(StartOn.Value, "o");
+                builder.AppendLine($" '{formattedDateTimeString}'");
+            }
+
+            if (Optional.IsDefined(EndOn))
+            {
+                builder.Append("    endTime:");
+                var formattedDateTimeString = TypeFormatters.ToString(EndOn.Value, "o");
+                builder.AppendLine($" '{formattedDateTimeString}'");
+            }
+
+            if (Optional.IsDefined(IsComplete))
+            {
+                builder.Append("    complete:");
+                var boolValue = IsComplete.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            builder.AppendLine("  }");
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            bool inMultilineString = false;
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (inMultilineString)
+                {
+                    if (line.Contains("'''"))
+                    {
+                        inMultilineString = false;
+                    }
+                    stringBuilder.AppendLine(line);
+                    continue;
+                }
+                if (line.Contains("'''"))
+                {
+                    inMultilineString = true;
+                    stringBuilder.AppendLine($"{indent}{line}");
+                    continue;
+                }
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<MSDeployStatusData>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<MSDeployStatusData>)this).GetFormatFromOptions(options) : options.Format;
@@ -232,6 +361,8 @@ namespace Azure.ResourceManager.AppService
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(MSDeployStatusData)} does not support '{options.Format}' format.");
             }
@@ -248,6 +379,8 @@ namespace Azure.ResourceManager.AppService
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeMSDeployStatusData(document.RootElement, options);
                     }
+                case "bicep":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(MSDeployStatusData)} does not support '{options.Format}' format.");
             }

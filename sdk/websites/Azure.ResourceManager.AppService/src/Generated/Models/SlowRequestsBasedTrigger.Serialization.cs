@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -125,6 +126,98 @@ namespace Azure.ResourceManager.AppService.Models
             return new SlowRequestsBasedTrigger(timeTaken.Value, path.Value, Optional.ToNullable(count), timeInterval.Value, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(TimeTaken))
+            {
+                builder.Append("  timeTaken:");
+                if (TimeTaken.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{TimeTaken}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{TimeTaken}'");
+                }
+            }
+
+            if (Optional.IsDefined(Path))
+            {
+                builder.Append("  path:");
+                if (Path.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{Path}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{Path}'");
+                }
+            }
+
+            if (Optional.IsDefined(Count))
+            {
+                builder.Append("  count:");
+                builder.AppendLine($" {Count.Value}");
+            }
+
+            if (Optional.IsDefined(TimeInterval))
+            {
+                builder.Append("  timeInterval:");
+                if (TimeInterval.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{TimeInterval}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{TimeInterval}'");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            bool inMultilineString = false;
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (inMultilineString)
+                {
+                    if (line.Contains("'''"))
+                    {
+                        inMultilineString = false;
+                    }
+                    stringBuilder.AppendLine(line);
+                    continue;
+                }
+                if (line.Contains("'''"))
+                {
+                    inMultilineString = true;
+                    stringBuilder.AppendLine($"{indent}{line}");
+                    continue;
+                }
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<SlowRequestsBasedTrigger>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<SlowRequestsBasedTrigger>)this).GetFormatFromOptions(options) : options.Format;
@@ -133,6 +226,8 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(SlowRequestsBasedTrigger)} does not support '{options.Format}' format.");
             }
@@ -149,6 +244,8 @@ namespace Azure.ResourceManager.AppService.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeSlowRequestsBasedTrigger(document.RootElement, options);
                     }
+                case "bicep":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(SlowRequestsBasedTrigger)} does not support '{options.Format}' format.");
             }

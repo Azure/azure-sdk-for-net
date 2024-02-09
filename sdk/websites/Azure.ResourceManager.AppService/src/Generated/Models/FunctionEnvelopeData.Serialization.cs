@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -325,6 +327,274 @@ namespace Azure.ResourceManager.AppService
             return new FunctionEnvelopeData(id, name, type, systemData.Value, functionAppId.Value, scriptRootPathHref.Value, scriptHref.Value, configHref.Value, testDataHref.Value, secretsFileHref.Value, href.Value, config.Value, Optional.ToDictionary(files), testData.Value, invokeUrlTemplate.Value, language.Value, Optional.ToNullable(isDisabled), kind.Value, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                if (Name.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{Name}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{Name}'");
+                }
+            }
+
+            if (Optional.IsDefined(Kind))
+            {
+                builder.Append("  kind:");
+                if (Kind.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{Kind}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{Kind}'");
+                }
+            }
+
+            if (Optional.IsDefined(Id))
+            {
+                builder.Append("  id:");
+                builder.AppendLine($" '{Id.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SystemData))
+            {
+                builder.Append("  systemData:");
+                builder.AppendLine($" '{SystemData.ToString()}'");
+            }
+
+            builder.Append("  properties:");
+            builder.AppendLine(" {");
+            if (Optional.IsDefined(FunctionAppId))
+            {
+                builder.Append("    function_app_id:");
+                if (FunctionAppId.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{FunctionAppId}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{FunctionAppId}'");
+                }
+            }
+
+            if (Optional.IsDefined(ScriptRootPathHref))
+            {
+                builder.Append("    script_root_path_href:");
+                if (ScriptRootPathHref.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{ScriptRootPathHref}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{ScriptRootPathHref}'");
+                }
+            }
+
+            if (Optional.IsDefined(ScriptHref))
+            {
+                builder.Append("    script_href:");
+                if (ScriptHref.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{ScriptHref}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{ScriptHref}'");
+                }
+            }
+
+            if (Optional.IsDefined(ConfigHref))
+            {
+                builder.Append("    config_href:");
+                if (ConfigHref.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{ConfigHref}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{ConfigHref}'");
+                }
+            }
+
+            if (Optional.IsDefined(TestDataHref))
+            {
+                builder.Append("    test_data_href:");
+                if (TestDataHref.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{TestDataHref}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{TestDataHref}'");
+                }
+            }
+
+            if (Optional.IsDefined(SecretsFileHref))
+            {
+                builder.Append("    secrets_file_href:");
+                if (SecretsFileHref.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{SecretsFileHref}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{SecretsFileHref}'");
+                }
+            }
+
+            if (Optional.IsDefined(Href))
+            {
+                builder.Append("    href:");
+                if (Href.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{Href}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{Href}'");
+                }
+            }
+
+            if (Optional.IsDefined(Config))
+            {
+                builder.Append("    config:");
+                builder.AppendLine($" '{Config.ToString()}'");
+            }
+
+            if (Optional.IsCollectionDefined(Files))
+            {
+                if (Files.Any())
+                {
+                    builder.Append("    files:");
+                    builder.AppendLine(" {");
+                    foreach (var item in Files)
+                    {
+                        builder.Append($"        {item.Key}:");
+                        if (item.Value == null)
+                        {
+                            builder.Append("null");
+                            continue;
+                        }
+                        if (item.Value.Contains(Environment.NewLine))
+                        {
+                            builder.AppendLine(" '''");
+                            builder.AppendLine($"{item.Value}'''");
+                        }
+                        else
+                        {
+                            builder.AppendLine($" '{item.Value}'");
+                        }
+                    }
+                    builder.AppendLine("    }");
+                }
+            }
+
+            if (Optional.IsDefined(TestData))
+            {
+                builder.Append("    test_data:");
+                if (TestData.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{TestData}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{TestData}'");
+                }
+            }
+
+            if (Optional.IsDefined(InvokeUrlTemplate))
+            {
+                builder.Append("    invoke_url_template:");
+                if (InvokeUrlTemplate.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{InvokeUrlTemplate}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{InvokeUrlTemplate}'");
+                }
+            }
+
+            if (Optional.IsDefined(Language))
+            {
+                builder.Append("    language:");
+                if (Language.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{Language}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{Language}'");
+                }
+            }
+
+            if (Optional.IsDefined(IsDisabled))
+            {
+                builder.Append("    isDisabled:");
+                var boolValue = IsDisabled.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            builder.AppendLine("  }");
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            bool inMultilineString = false;
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (inMultilineString)
+                {
+                    if (line.Contains("'''"))
+                    {
+                        inMultilineString = false;
+                    }
+                    stringBuilder.AppendLine(line);
+                    continue;
+                }
+                if (line.Contains("'''"))
+                {
+                    inMultilineString = true;
+                    stringBuilder.AppendLine($"{indent}{line}");
+                    continue;
+                }
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<FunctionEnvelopeData>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<FunctionEnvelopeData>)this).GetFormatFromOptions(options) : options.Format;
@@ -333,6 +603,8 @@ namespace Azure.ResourceManager.AppService
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(FunctionEnvelopeData)} does not support '{options.Format}' format.");
             }
@@ -349,6 +621,8 @@ namespace Azure.ResourceManager.AppService
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeFunctionEnvelopeData(document.RootElement, options);
                     }
+                case "bicep":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(FunctionEnvelopeData)} does not support '{options.Format}' format.");
             }

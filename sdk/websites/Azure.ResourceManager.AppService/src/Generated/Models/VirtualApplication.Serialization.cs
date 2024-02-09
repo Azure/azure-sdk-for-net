@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -139,6 +141,99 @@ namespace Azure.ResourceManager.AppService.Models
             return new VirtualApplication(virtualPath.Value, physicalPath.Value, Optional.ToNullable(preloadEnabled), Optional.ToList(virtualDirectories), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(VirtualPath))
+            {
+                builder.Append("  virtualPath:");
+                if (VirtualPath.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{VirtualPath}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{VirtualPath}'");
+                }
+            }
+
+            if (Optional.IsDefined(PhysicalPath))
+            {
+                builder.Append("  physicalPath:");
+                if (PhysicalPath.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{PhysicalPath}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{PhysicalPath}'");
+                }
+            }
+
+            if (Optional.IsDefined(IsPreloadEnabled))
+            {
+                builder.Append("  preloadEnabled:");
+                var boolValue = IsPreloadEnabled.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsCollectionDefined(VirtualDirectories))
+            {
+                if (VirtualDirectories.Any())
+                {
+                    builder.Append("  virtualDirectories:");
+                    builder.AppendLine(" [");
+                    foreach (var item in VirtualDirectories)
+                    {
+                        AppendChildObject(builder, item, options, 4, true);
+                    }
+                    builder.AppendLine("  ]");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            bool inMultilineString = false;
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (inMultilineString)
+                {
+                    if (line.Contains("'''"))
+                    {
+                        inMultilineString = false;
+                    }
+                    stringBuilder.AppendLine(line);
+                    continue;
+                }
+                if (line.Contains("'''"))
+                {
+                    inMultilineString = true;
+                    stringBuilder.AppendLine($"{indent}{line}");
+                    continue;
+                }
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<VirtualApplication>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<VirtualApplication>)this).GetFormatFromOptions(options) : options.Format;
@@ -147,6 +242,8 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(VirtualApplication)} does not support '{options.Format}' format.");
             }
@@ -163,6 +260,8 @@ namespace Azure.ResourceManager.AppService.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeVirtualApplication(document.RootElement, options);
                     }
+                case "bicep":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(VirtualApplication)} does not support '{options.Format}' format.");
             }

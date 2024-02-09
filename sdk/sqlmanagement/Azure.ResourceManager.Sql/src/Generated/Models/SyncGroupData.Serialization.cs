@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -325,6 +326,184 @@ namespace Azure.ResourceManager.Sql
             return new SyncGroupData(id, name, type, systemData.Value, sku.Value, Optional.ToNullable(interval), Optional.ToNullable(lastSyncTime), Optional.ToNullable(conflictResolutionPolicy), syncDatabaseId.Value, hubDatabaseUserName.Value, hubDatabasePassword.Value, Optional.ToNullable(syncState), schema.Value, Optional.ToNullable(enableConflictLogging), Optional.ToNullable(conflictLoggingRetentionInDays), Optional.ToNullable(usePrivateLinkConnection), privateEndpointName.Value, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                if (Name.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{Name}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{Name}'");
+                }
+            }
+
+            if (Optional.IsDefined(Sku))
+            {
+                builder.Append("  sku:");
+                AppendChildObject(builder, Sku, options, 2, false);
+            }
+
+            if (Optional.IsDefined(Id))
+            {
+                builder.Append("  id:");
+                builder.AppendLine($" '{Id.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SystemData))
+            {
+                builder.Append("  systemData:");
+                builder.AppendLine($" '{SystemData.ToString()}'");
+            }
+
+            builder.Append("  properties:");
+            builder.AppendLine(" {");
+            if (Optional.IsDefined(Interval))
+            {
+                builder.Append("    interval:");
+                builder.AppendLine($" {Interval.Value}");
+            }
+
+            if (Optional.IsDefined(LastSyncOn))
+            {
+                builder.Append("    lastSyncTime:");
+                var formattedDateTimeString = TypeFormatters.ToString(LastSyncOn.Value, "o");
+                builder.AppendLine($" '{formattedDateTimeString}'");
+            }
+
+            if (Optional.IsDefined(ConflictResolutionPolicy))
+            {
+                builder.Append("    conflictResolutionPolicy:");
+                builder.AppendLine($" '{ConflictResolutionPolicy.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SyncDatabaseId))
+            {
+                builder.Append("    syncDatabaseId:");
+                builder.AppendLine($" '{SyncDatabaseId.ToString()}'");
+            }
+
+            if (Optional.IsDefined(HubDatabaseUserName))
+            {
+                builder.Append("    hubDatabaseUserName:");
+                if (HubDatabaseUserName.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{HubDatabaseUserName}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{HubDatabaseUserName}'");
+                }
+            }
+
+            if (Optional.IsDefined(HubDatabasePassword))
+            {
+                builder.Append("    hubDatabasePassword:");
+                if (HubDatabasePassword.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{HubDatabasePassword}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{HubDatabasePassword}'");
+                }
+            }
+
+            if (Optional.IsDefined(SyncState))
+            {
+                builder.Append("    syncState:");
+                builder.AppendLine($" '{SyncState.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Schema))
+            {
+                builder.Append("    schema:");
+                AppendChildObject(builder, Schema, options, 4, false);
+            }
+
+            if (Optional.IsDefined(IsConflictLoggingEnabled))
+            {
+                builder.Append("    enableConflictLogging:");
+                var boolValue = IsConflictLoggingEnabled.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(ConflictLoggingRetentionInDays))
+            {
+                builder.Append("    conflictLoggingRetentionInDays:");
+                builder.AppendLine($" {ConflictLoggingRetentionInDays.Value}");
+            }
+
+            if (Optional.IsDefined(UsePrivateLinkConnection))
+            {
+                builder.Append("    usePrivateLinkConnection:");
+                var boolValue = UsePrivateLinkConnection.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(PrivateEndpointName))
+            {
+                builder.Append("    privateEndpointName:");
+                if (PrivateEndpointName.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{PrivateEndpointName}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{PrivateEndpointName}'");
+                }
+            }
+
+            builder.AppendLine("  }");
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            bool inMultilineString = false;
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (inMultilineString)
+                {
+                    if (line.Contains("'''"))
+                    {
+                        inMultilineString = false;
+                    }
+                    stringBuilder.AppendLine(line);
+                    continue;
+                }
+                if (line.Contains("'''"))
+                {
+                    inMultilineString = true;
+                    stringBuilder.AppendLine($"{indent}{line}");
+                    continue;
+                }
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<SyncGroupData>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<SyncGroupData>)this).GetFormatFromOptions(options) : options.Format;
@@ -333,6 +512,8 @@ namespace Azure.ResourceManager.Sql
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(SyncGroupData)} does not support '{options.Format}' format.");
             }
@@ -349,6 +530,8 @@ namespace Azure.ResourceManager.Sql
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeSyncGroupData(document.RootElement, options);
                     }
+                case "bicep":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(SyncGroupData)} does not support '{options.Format}' format.");
             }

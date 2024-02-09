@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.AppService.Models;
@@ -700,6 +702,483 @@ namespace Azure.ResourceManager.AppService
             return new ProcessInfoData(id, name, type, systemData.Value, Optional.ToNullable(identifier), deploymentName.Value, href.Value, minidump.Value, Optional.ToNullable(isProfileRunning), Optional.ToNullable(isIisProfileRunning), Optional.ToNullable(iisProfileTimeoutInSeconds), parent.Value, Optional.ToList(children), Optional.ToList(threads), Optional.ToList(openFileHandles), Optional.ToList(modules), fileName.Value, commandLine.Value, userName.Value, Optional.ToNullable(handleCount), Optional.ToNullable(moduleCount), Optional.ToNullable(threadCount), Optional.ToNullable(startTime), totalCpuTime.Value, userCpuTime.Value, privilegedCpuTime.Value, Optional.ToNullable(workingSet), Optional.ToNullable(peakWorkingSet), Optional.ToNullable(privateMemory), Optional.ToNullable(virtualMemory), Optional.ToNullable(peakVirtualMemory), Optional.ToNullable(pagedSystemMemory), Optional.ToNullable(nonPagedSystemMemory), Optional.ToNullable(pagedMemory), Optional.ToNullable(peakPagedMemory), Optional.ToNullable(timeStamp), Optional.ToDictionary(environmentVariables), Optional.ToNullable(isScmSite), Optional.ToNullable(isWebjob), description.Value, kind.Value, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                if (Name.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{Name}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{Name}'");
+                }
+            }
+
+            if (Optional.IsDefined(Kind))
+            {
+                builder.Append("  kind:");
+                if (Kind.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{Kind}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{Kind}'");
+                }
+            }
+
+            if (Optional.IsDefined(Id))
+            {
+                builder.Append("  id:");
+                builder.AppendLine($" '{Id.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SystemData))
+            {
+                builder.Append("  systemData:");
+                builder.AppendLine($" '{SystemData.ToString()}'");
+            }
+
+            builder.Append("  properties:");
+            builder.AppendLine(" {");
+            if (Optional.IsDefined(Identifier))
+            {
+                builder.Append("    identifier:");
+                builder.AppendLine($" {Identifier.Value}");
+            }
+
+            if (Optional.IsDefined(DeploymentName))
+            {
+                builder.Append("    deployment_name:");
+                if (DeploymentName.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{DeploymentName}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{DeploymentName}'");
+                }
+            }
+
+            if (Optional.IsDefined(Href))
+            {
+                builder.Append("    href:");
+                if (Href.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{Href}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{Href}'");
+                }
+            }
+
+            if (Optional.IsDefined(Minidump))
+            {
+                builder.Append("    minidump:");
+                if (Minidump.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{Minidump}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{Minidump}'");
+                }
+            }
+
+            if (Optional.IsDefined(IsProfileRunning))
+            {
+                builder.Append("    is_profile_running:");
+                var boolValue = IsProfileRunning.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(IsIisProfileRunning))
+            {
+                builder.Append("    is_iis_profile_running:");
+                var boolValue = IsIisProfileRunning.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(IisProfileTimeoutInSeconds))
+            {
+                builder.Append("    iis_profile_timeout_in_seconds:");
+                builder.AppendLine($" '{IisProfileTimeoutInSeconds.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Parent))
+            {
+                builder.Append("    parent:");
+                if (Parent.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{Parent}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{Parent}'");
+                }
+            }
+
+            if (Optional.IsCollectionDefined(Children))
+            {
+                if (Children.Any())
+                {
+                    builder.Append("    children:");
+                    builder.AppendLine(" [");
+                    foreach (var item in Children)
+                    {
+                        if (item == null)
+                        {
+                            builder.Append("null");
+                            continue;
+                        }
+                        if (item.Contains(Environment.NewLine))
+                        {
+                            builder.AppendLine("      '''");
+                            builder.AppendLine($"{item}'''");
+                        }
+                        else
+                        {
+                            builder.AppendLine($"      '{item}'");
+                        }
+                    }
+                    builder.AppendLine("    ]");
+                }
+            }
+
+            if (Optional.IsCollectionDefined(Threads))
+            {
+                if (Threads.Any())
+                {
+                    builder.Append("    threads:");
+                    builder.AppendLine(" [");
+                    foreach (var item in Threads)
+                    {
+                        AppendChildObject(builder, item, options, 6, true);
+                    }
+                    builder.AppendLine("    ]");
+                }
+            }
+
+            if (Optional.IsCollectionDefined(OpenFileHandles))
+            {
+                if (OpenFileHandles.Any())
+                {
+                    builder.Append("    open_file_handles:");
+                    builder.AppendLine(" [");
+                    foreach (var item in OpenFileHandles)
+                    {
+                        if (item == null)
+                        {
+                            builder.Append("null");
+                            continue;
+                        }
+                        if (item.Contains(Environment.NewLine))
+                        {
+                            builder.AppendLine("      '''");
+                            builder.AppendLine($"{item}'''");
+                        }
+                        else
+                        {
+                            builder.AppendLine($"      '{item}'");
+                        }
+                    }
+                    builder.AppendLine("    ]");
+                }
+            }
+
+            if (Optional.IsCollectionDefined(Modules))
+            {
+                if (Modules.Any())
+                {
+                    builder.Append("    modules:");
+                    builder.AppendLine(" [");
+                    foreach (var item in Modules)
+                    {
+                        AppendChildObject(builder, item, options, 6, true);
+                    }
+                    builder.AppendLine("    ]");
+                }
+            }
+
+            if (Optional.IsDefined(FileName))
+            {
+                builder.Append("    file_name:");
+                if (FileName.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{FileName}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{FileName}'");
+                }
+            }
+
+            if (Optional.IsDefined(CommandLine))
+            {
+                builder.Append("    command_line:");
+                if (CommandLine.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{CommandLine}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{CommandLine}'");
+                }
+            }
+
+            if (Optional.IsDefined(UserName))
+            {
+                builder.Append("    user_name:");
+                if (UserName.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{UserName}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{UserName}'");
+                }
+            }
+
+            if (Optional.IsDefined(HandleCount))
+            {
+                builder.Append("    handle_count:");
+                builder.AppendLine($" {HandleCount.Value}");
+            }
+
+            if (Optional.IsDefined(ModuleCount))
+            {
+                builder.Append("    module_count:");
+                builder.AppendLine($" {ModuleCount.Value}");
+            }
+
+            if (Optional.IsDefined(ThreadCount))
+            {
+                builder.Append("    thread_count:");
+                builder.AppendLine($" {ThreadCount.Value}");
+            }
+
+            if (Optional.IsDefined(StartOn))
+            {
+                builder.Append("    start_time:");
+                var formattedDateTimeString = TypeFormatters.ToString(StartOn.Value, "o");
+                builder.AppendLine($" '{formattedDateTimeString}'");
+            }
+
+            if (Optional.IsDefined(TotalCpuTime))
+            {
+                builder.Append("    total_cpu_time:");
+                if (TotalCpuTime.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{TotalCpuTime}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{TotalCpuTime}'");
+                }
+            }
+
+            if (Optional.IsDefined(UserCpuTime))
+            {
+                builder.Append("    user_cpu_time:");
+                if (UserCpuTime.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{UserCpuTime}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{UserCpuTime}'");
+                }
+            }
+
+            if (Optional.IsDefined(PrivilegedCpuTime))
+            {
+                builder.Append("    privileged_cpu_time:");
+                if (PrivilegedCpuTime.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{PrivilegedCpuTime}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{PrivilegedCpuTime}'");
+                }
+            }
+
+            if (Optional.IsDefined(WorkingSet))
+            {
+                builder.Append("    working_set:");
+                builder.AppendLine($" '{WorkingSet.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(PeakWorkingSet))
+            {
+                builder.Append("    peak_working_set:");
+                builder.AppendLine($" '{PeakWorkingSet.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(PrivateMemory))
+            {
+                builder.Append("    private_memory:");
+                builder.AppendLine($" '{PrivateMemory.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(VirtualMemory))
+            {
+                builder.Append("    virtual_memory:");
+                builder.AppendLine($" '{VirtualMemory.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(PeakVirtualMemory))
+            {
+                builder.Append("    peak_virtual_memory:");
+                builder.AppendLine($" '{PeakVirtualMemory.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(PagedSystemMemory))
+            {
+                builder.Append("    paged_system_memory:");
+                builder.AppendLine($" '{PagedSystemMemory.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(NonPagedSystemMemory))
+            {
+                builder.Append("    non_paged_system_memory:");
+                builder.AppendLine($" '{NonPagedSystemMemory.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(PagedMemory))
+            {
+                builder.Append("    paged_memory:");
+                builder.AppendLine($" '{PagedMemory.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(PeakPagedMemory))
+            {
+                builder.Append("    peak_paged_memory:");
+                builder.AppendLine($" '{PeakPagedMemory.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(TimeStamp))
+            {
+                builder.Append("    time_stamp:");
+                var formattedDateTimeString = TypeFormatters.ToString(TimeStamp.Value, "o");
+                builder.AppendLine($" '{formattedDateTimeString}'");
+            }
+
+            if (Optional.IsCollectionDefined(EnvironmentVariables))
+            {
+                if (EnvironmentVariables.Any())
+                {
+                    builder.Append("    environment_variables:");
+                    builder.AppendLine(" {");
+                    foreach (var item in EnvironmentVariables)
+                    {
+                        builder.Append($"        {item.Key}:");
+                        if (item.Value == null)
+                        {
+                            builder.Append("null");
+                            continue;
+                        }
+                        if (item.Value.Contains(Environment.NewLine))
+                        {
+                            builder.AppendLine(" '''");
+                            builder.AppendLine($"{item.Value}'''");
+                        }
+                        else
+                        {
+                            builder.AppendLine($" '{item.Value}'");
+                        }
+                    }
+                    builder.AppendLine("    }");
+                }
+            }
+
+            if (Optional.IsDefined(IsScmSite))
+            {
+                builder.Append("    is_scm_site:");
+                var boolValue = IsScmSite.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(IsWebjob))
+            {
+                builder.Append("    is_webjob:");
+                var boolValue = IsWebjob.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(Description))
+            {
+                builder.Append("    description:");
+                if (Description.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{Description}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{Description}'");
+                }
+            }
+
+            builder.AppendLine("  }");
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            bool inMultilineString = false;
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (inMultilineString)
+                {
+                    if (line.Contains("'''"))
+                    {
+                        inMultilineString = false;
+                    }
+                    stringBuilder.AppendLine(line);
+                    continue;
+                }
+                if (line.Contains("'''"))
+                {
+                    inMultilineString = true;
+                    stringBuilder.AppendLine($"{indent}{line}");
+                    continue;
+                }
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<ProcessInfoData>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ProcessInfoData>)this).GetFormatFromOptions(options) : options.Format;
@@ -708,6 +1187,8 @@ namespace Azure.ResourceManager.AppService
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(ProcessInfoData)} does not support '{options.Format}' format.");
             }
@@ -724,6 +1205,8 @@ namespace Azure.ResourceManager.AppService
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeProcessInfoData(document.RootElement, options);
                     }
+                case "bicep":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(ProcessInfoData)} does not support '{options.Format}' format.");
             }

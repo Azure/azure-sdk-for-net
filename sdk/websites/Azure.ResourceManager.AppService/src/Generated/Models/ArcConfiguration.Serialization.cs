@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -162,6 +163,132 @@ namespace Azure.ResourceManager.AppService.Models
             return new ArcConfiguration(Optional.ToNullable(artifactsStorageType), artifactStorageClassName.Value, artifactStorageMountPath.Value, artifactStorageNodeName.Value, artifactStorageAccessMode.Value, frontEndServiceConfiguration.Value, kubeConfig.Value, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(ArtifactsStorageType))
+            {
+                builder.Append("  artifactsStorageType:");
+                builder.AppendLine($" '{ArtifactsStorageType.Value.ToSerialString()}'");
+            }
+
+            if (Optional.IsDefined(ArtifactStorageClassName))
+            {
+                builder.Append("  artifactStorageClassName:");
+                if (ArtifactStorageClassName.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{ArtifactStorageClassName}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{ArtifactStorageClassName}'");
+                }
+            }
+
+            if (Optional.IsDefined(ArtifactStorageMountPath))
+            {
+                builder.Append("  artifactStorageMountPath:");
+                if (ArtifactStorageMountPath.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{ArtifactStorageMountPath}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{ArtifactStorageMountPath}'");
+                }
+            }
+
+            if (Optional.IsDefined(ArtifactStorageNodeName))
+            {
+                builder.Append("  artifactStorageNodeName:");
+                if (ArtifactStorageNodeName.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{ArtifactStorageNodeName}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{ArtifactStorageNodeName}'");
+                }
+            }
+
+            if (Optional.IsDefined(ArtifactStorageAccessMode))
+            {
+                builder.Append("  artifactStorageAccessMode:");
+                if (ArtifactStorageAccessMode.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{ArtifactStorageAccessMode}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{ArtifactStorageAccessMode}'");
+                }
+            }
+
+            if (Optional.IsDefined(FrontEndServiceConfiguration))
+            {
+                builder.Append("  frontEndServiceConfiguration:");
+                AppendChildObject(builder, FrontEndServiceConfiguration, options, 2, false);
+            }
+
+            if (Optional.IsDefined(KubeConfig))
+            {
+                builder.Append("  kubeConfig:");
+                if (KubeConfig.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{KubeConfig}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{KubeConfig}'");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            bool inMultilineString = false;
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (inMultilineString)
+                {
+                    if (line.Contains("'''"))
+                    {
+                        inMultilineString = false;
+                    }
+                    stringBuilder.AppendLine(line);
+                    continue;
+                }
+                if (line.Contains("'''"))
+                {
+                    inMultilineString = true;
+                    stringBuilder.AppendLine($"{indent}{line}");
+                    continue;
+                }
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<ArcConfiguration>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ArcConfiguration>)this).GetFormatFromOptions(options) : options.Format;
@@ -170,6 +297,8 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(ArcConfiguration)} does not support '{options.Format}' format.");
             }
@@ -186,6 +315,8 @@ namespace Azure.ResourceManager.AppService.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeArcConfiguration(document.RootElement, options);
                     }
+                case "bicep":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(ArcConfiguration)} does not support '{options.Format}' format.");
             }

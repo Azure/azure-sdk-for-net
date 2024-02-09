@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -224,6 +226,138 @@ namespace Azure.ResourceManager.Sql.Models
             return new ManagedInstanceVcoresCapability(name.Value, Optional.ToNullable(value), includedMaxSize.Value, Optional.ToList(supportedStorageSizes), Optional.ToNullable(instancePoolSupported), Optional.ToNullable(standaloneSupported), Optional.ToList(supportedMaintenanceConfigurations), Optional.ToNullable(status), reason.Value, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                if (Name.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{Name}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{Name}'");
+                }
+            }
+
+            if (Optional.IsDefined(Value))
+            {
+                builder.Append("  value:");
+                builder.AppendLine($" {Value.Value}");
+            }
+
+            if (Optional.IsDefined(IncludedMaxSize))
+            {
+                builder.Append("  includedMaxSize:");
+                AppendChildObject(builder, IncludedMaxSize, options, 2, false);
+            }
+
+            if (Optional.IsCollectionDefined(SupportedStorageSizes))
+            {
+                if (SupportedStorageSizes.Any())
+                {
+                    builder.Append("  supportedStorageSizes:");
+                    builder.AppendLine(" [");
+                    foreach (var item in SupportedStorageSizes)
+                    {
+                        AppendChildObject(builder, item, options, 4, true);
+                    }
+                    builder.AppendLine("  ]");
+                }
+            }
+
+            if (Optional.IsDefined(IsInstancePoolSupported))
+            {
+                builder.Append("  instancePoolSupported:");
+                var boolValue = IsInstancePoolSupported.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(IsStandaloneSupported))
+            {
+                builder.Append("  standaloneSupported:");
+                var boolValue = IsStandaloneSupported.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsCollectionDefined(SupportedMaintenanceConfigurations))
+            {
+                if (SupportedMaintenanceConfigurations.Any())
+                {
+                    builder.Append("  supportedMaintenanceConfigurations:");
+                    builder.AppendLine(" [");
+                    foreach (var item in SupportedMaintenanceConfigurations)
+                    {
+                        AppendChildObject(builder, item, options, 4, true);
+                    }
+                    builder.AppendLine("  ]");
+                }
+            }
+
+            if (Optional.IsDefined(Status))
+            {
+                builder.Append("  status:");
+                builder.AppendLine($" '{Status.Value.ToSerialString()}'");
+            }
+
+            if (Optional.IsDefined(Reason))
+            {
+                builder.Append("  reason:");
+                if (Reason.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{Reason}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{Reason}'");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            bool inMultilineString = false;
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (inMultilineString)
+                {
+                    if (line.Contains("'''"))
+                    {
+                        inMultilineString = false;
+                    }
+                    stringBuilder.AppendLine(line);
+                    continue;
+                }
+                if (line.Contains("'''"))
+                {
+                    inMultilineString = true;
+                    stringBuilder.AppendLine($"{indent}{line}");
+                    continue;
+                }
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<ManagedInstanceVcoresCapability>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ManagedInstanceVcoresCapability>)this).GetFormatFromOptions(options) : options.Format;
@@ -232,6 +366,8 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(ManagedInstanceVcoresCapability)} does not support '{options.Format}' format.");
             }
@@ -248,6 +384,8 @@ namespace Azure.ResourceManager.Sql.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeManagedInstanceVcoresCapability(document.RootElement, options);
                     }
+                case "bicep":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(ManagedInstanceVcoresCapability)} does not support '{options.Format}' format.");
             }

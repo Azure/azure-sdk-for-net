@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -169,6 +170,155 @@ namespace Azure.ResourceManager.AppService.Models
             return new StaticSiteBuildProperties(appLocation.Value, apiLocation.Value, appArtifactLocation.Value, outputLocation.Value, appBuildCommand.Value, apiBuildCommand.Value, Optional.ToNullable(skipGithubActionWorkflowGeneration), githubActionSecretNameOverride.Value, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(AppLocation))
+            {
+                builder.Append("  appLocation:");
+                if (AppLocation.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{AppLocation}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{AppLocation}'");
+                }
+            }
+
+            if (Optional.IsDefined(ApiLocation))
+            {
+                builder.Append("  apiLocation:");
+                if (ApiLocation.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{ApiLocation}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{ApiLocation}'");
+                }
+            }
+
+            if (Optional.IsDefined(AppArtifactLocation))
+            {
+                builder.Append("  appArtifactLocation:");
+                if (AppArtifactLocation.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{AppArtifactLocation}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{AppArtifactLocation}'");
+                }
+            }
+
+            if (Optional.IsDefined(OutputLocation))
+            {
+                builder.Append("  outputLocation:");
+                if (OutputLocation.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{OutputLocation}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{OutputLocation}'");
+                }
+            }
+
+            if (Optional.IsDefined(AppBuildCommand))
+            {
+                builder.Append("  appBuildCommand:");
+                if (AppBuildCommand.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{AppBuildCommand}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{AppBuildCommand}'");
+                }
+            }
+
+            if (Optional.IsDefined(ApiBuildCommand))
+            {
+                builder.Append("  apiBuildCommand:");
+                if (ApiBuildCommand.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{ApiBuildCommand}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{ApiBuildCommand}'");
+                }
+            }
+
+            if (Optional.IsDefined(SkipGithubActionWorkflowGeneration))
+            {
+                builder.Append("  skipGithubActionWorkflowGeneration:");
+                var boolValue = SkipGithubActionWorkflowGeneration.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(GithubActionSecretNameOverride))
+            {
+                builder.Append("  githubActionSecretNameOverride:");
+                if (GithubActionSecretNameOverride.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{GithubActionSecretNameOverride}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{GithubActionSecretNameOverride}'");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            bool inMultilineString = false;
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (inMultilineString)
+                {
+                    if (line.Contains("'''"))
+                    {
+                        inMultilineString = false;
+                    }
+                    stringBuilder.AppendLine(line);
+                    continue;
+                }
+                if (line.Contains("'''"))
+                {
+                    inMultilineString = true;
+                    stringBuilder.AppendLine($"{indent}{line}");
+                    continue;
+                }
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<StaticSiteBuildProperties>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<StaticSiteBuildProperties>)this).GetFormatFromOptions(options) : options.Format;
@@ -177,6 +327,8 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(StaticSiteBuildProperties)} does not support '{options.Format}' format.");
             }
@@ -193,6 +345,8 @@ namespace Azure.ResourceManager.AppService.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeStaticSiteBuildProperties(document.RootElement, options);
                     }
+                case "bicep":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(StaticSiteBuildProperties)} does not support '{options.Format}' format.");
             }

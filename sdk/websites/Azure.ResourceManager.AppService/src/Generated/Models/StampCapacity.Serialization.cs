@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -230,6 +231,143 @@ namespace Azure.ResourceManager.AppService.Models
             return new StampCapacity(name.Value, Optional.ToNullable(availableCapacity), Optional.ToNullable(totalCapacity), unit.Value, Optional.ToNullable(computeMode), Optional.ToNullable(workerSize), Optional.ToNullable(workerSizeId), Optional.ToNullable(excludeFromCapacityAllocation), Optional.ToNullable(isApplicableForAllComputeModes), siteMode.Value, Optional.ToNullable(isLinux), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                if (Name.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{Name}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{Name}'");
+                }
+            }
+
+            if (Optional.IsDefined(AvailableCapacity))
+            {
+                builder.Append("  availableCapacity:");
+                builder.AppendLine($" '{AvailableCapacity.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(TotalCapacity))
+            {
+                builder.Append("  totalCapacity:");
+                builder.AppendLine($" '{TotalCapacity.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Unit))
+            {
+                builder.Append("  unit:");
+                if (Unit.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{Unit}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{Unit}'");
+                }
+            }
+
+            if (Optional.IsDefined(ComputeMode))
+            {
+                builder.Append("  computeMode:");
+                builder.AppendLine($" '{ComputeMode.Value.ToSerialString()}'");
+            }
+
+            if (Optional.IsDefined(WorkerSize))
+            {
+                builder.Append("  workerSize:");
+                builder.AppendLine($" '{WorkerSize.Value.ToSerialString()}'");
+            }
+
+            if (Optional.IsDefined(WorkerSizeId))
+            {
+                builder.Append("  workerSizeId:");
+                builder.AppendLine($" {WorkerSizeId.Value}");
+            }
+
+            if (Optional.IsDefined(ExcludeFromCapacityAllocation))
+            {
+                builder.Append("  excludeFromCapacityAllocation:");
+                var boolValue = ExcludeFromCapacityAllocation.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(IsApplicableForAllComputeModes))
+            {
+                builder.Append("  isApplicableForAllComputeModes:");
+                var boolValue = IsApplicableForAllComputeModes.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(SiteMode))
+            {
+                builder.Append("  siteMode:");
+                if (SiteMode.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{SiteMode}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{SiteMode}'");
+                }
+            }
+
+            if (Optional.IsDefined(IsLinux))
+            {
+                builder.Append("  isLinux:");
+                var boolValue = IsLinux.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            bool inMultilineString = false;
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (inMultilineString)
+                {
+                    if (line.Contains("'''"))
+                    {
+                        inMultilineString = false;
+                    }
+                    stringBuilder.AppendLine(line);
+                    continue;
+                }
+                if (line.Contains("'''"))
+                {
+                    inMultilineString = true;
+                    stringBuilder.AppendLine($"{indent}{line}");
+                    continue;
+                }
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<StampCapacity>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<StampCapacity>)this).GetFormatFromOptions(options) : options.Format;
@@ -238,6 +376,8 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(StampCapacity)} does not support '{options.Format}' format.");
             }
@@ -254,6 +394,8 @@ namespace Azure.ResourceManager.AppService.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeStampCapacity(document.RootElement, options);
                     }
+                case "bicep":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(StampCapacity)} does not support '{options.Format}' format.");
             }

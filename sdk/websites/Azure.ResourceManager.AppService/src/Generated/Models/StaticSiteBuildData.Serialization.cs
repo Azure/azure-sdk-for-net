@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.AppService.Models;
@@ -267,6 +269,183 @@ namespace Azure.ResourceManager.AppService
             return new StaticSiteBuildData(id, name, type, systemData.Value, buildId.Value, sourceBranch.Value, pullRequestTitle.Value, hostname.Value, Optional.ToNullable(createdTimeUtc), Optional.ToNullable(lastUpdatedOn), Optional.ToNullable(status), Optional.ToList(userProvidedFunctionApps), kind.Value, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                if (Name.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{Name}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{Name}'");
+                }
+            }
+
+            if (Optional.IsDefined(Kind))
+            {
+                builder.Append("  kind:");
+                if (Kind.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{Kind}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{Kind}'");
+                }
+            }
+
+            if (Optional.IsDefined(Id))
+            {
+                builder.Append("  id:");
+                builder.AppendLine($" '{Id.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SystemData))
+            {
+                builder.Append("  systemData:");
+                builder.AppendLine($" '{SystemData.ToString()}'");
+            }
+
+            builder.Append("  properties:");
+            builder.AppendLine(" {");
+            if (Optional.IsDefined(BuildId))
+            {
+                builder.Append("    buildId:");
+                if (BuildId.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{BuildId}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{BuildId}'");
+                }
+            }
+
+            if (Optional.IsDefined(SourceBranch))
+            {
+                builder.Append("    sourceBranch:");
+                if (SourceBranch.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{SourceBranch}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{SourceBranch}'");
+                }
+            }
+
+            if (Optional.IsDefined(PullRequestTitle))
+            {
+                builder.Append("    pullRequestTitle:");
+                if (PullRequestTitle.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{PullRequestTitle}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{PullRequestTitle}'");
+                }
+            }
+
+            if (Optional.IsDefined(Hostname))
+            {
+                builder.Append("    hostname:");
+                if (Hostname.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{Hostname}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{Hostname}'");
+                }
+            }
+
+            if (Optional.IsDefined(CreatedOn))
+            {
+                builder.Append("    createdTimeUtc:");
+                var formattedDateTimeString = TypeFormatters.ToString(CreatedOn.Value, "o");
+                builder.AppendLine($" '{formattedDateTimeString}'");
+            }
+
+            if (Optional.IsDefined(LastUpdatedOn))
+            {
+                builder.Append("    lastUpdatedOn:");
+                var formattedDateTimeString = TypeFormatters.ToString(LastUpdatedOn.Value, "o");
+                builder.AppendLine($" '{formattedDateTimeString}'");
+            }
+
+            if (Optional.IsDefined(Status))
+            {
+                builder.Append("    status:");
+                builder.AppendLine($" '{Status.Value.ToString()}'");
+            }
+
+            if (Optional.IsCollectionDefined(UserProvidedFunctionApps))
+            {
+                if (UserProvidedFunctionApps.Any())
+                {
+                    builder.Append("    userProvidedFunctionApps:");
+                    builder.AppendLine(" [");
+                    foreach (var item in UserProvidedFunctionApps)
+                    {
+                        AppendChildObject(builder, item, options, 6, true);
+                    }
+                    builder.AppendLine("    ]");
+                }
+            }
+
+            builder.AppendLine("  }");
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            bool inMultilineString = false;
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (inMultilineString)
+                {
+                    if (line.Contains("'''"))
+                    {
+                        inMultilineString = false;
+                    }
+                    stringBuilder.AppendLine(line);
+                    continue;
+                }
+                if (line.Contains("'''"))
+                {
+                    inMultilineString = true;
+                    stringBuilder.AppendLine($"{indent}{line}");
+                    continue;
+                }
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<StaticSiteBuildData>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<StaticSiteBuildData>)this).GetFormatFromOptions(options) : options.Format;
@@ -275,6 +454,8 @@ namespace Azure.ResourceManager.AppService
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(StaticSiteBuildData)} does not support '{options.Format}' format.");
             }
@@ -291,6 +472,8 @@ namespace Azure.ResourceManager.AppService
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeStaticSiteBuildData(document.RootElement, options);
                     }
+                case "bicep":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(StaticSiteBuildData)} does not support '{options.Format}' format.");
             }

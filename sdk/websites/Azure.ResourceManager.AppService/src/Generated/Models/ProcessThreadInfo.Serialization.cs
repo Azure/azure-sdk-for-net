@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -300,6 +301,230 @@ namespace Azure.ResourceManager.AppService.Models
             return new ProcessThreadInfo(id, name, type, systemData.Value, Optional.ToNullable(identifier), href.Value, process.Value, startAddress.Value, Optional.ToNullable(currentPriority), priorityLevel.Value, Optional.ToNullable(basePriority), Optional.ToNullable(startTime), totalProcessorTime.Value, userProcessorTime.Value, state.Value, waitReason.Value, kind.Value, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                if (Name.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{Name}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{Name}'");
+                }
+            }
+
+            if (Optional.IsDefined(Kind))
+            {
+                builder.Append("  kind:");
+                if (Kind.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{Kind}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{Kind}'");
+                }
+            }
+
+            if (Optional.IsDefined(Id))
+            {
+                builder.Append("  id:");
+                builder.AppendLine($" '{Id.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SystemData))
+            {
+                builder.Append("  systemData:");
+                builder.AppendLine($" '{SystemData.ToString()}'");
+            }
+
+            builder.Append("  properties:");
+            builder.AppendLine(" {");
+            if (Optional.IsDefined(Identifier))
+            {
+                builder.Append("    identifier:");
+                builder.AppendLine($" {Identifier.Value}");
+            }
+
+            if (Optional.IsDefined(Href))
+            {
+                builder.Append("    href:");
+                if (Href.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{Href}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{Href}'");
+                }
+            }
+
+            if (Optional.IsDefined(Process))
+            {
+                builder.Append("    process:");
+                if (Process.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{Process}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{Process}'");
+                }
+            }
+
+            if (Optional.IsDefined(StartAddress))
+            {
+                builder.Append("    start_address:");
+                if (StartAddress.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{StartAddress}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{StartAddress}'");
+                }
+            }
+
+            if (Optional.IsDefined(CurrentPriority))
+            {
+                builder.Append("    current_priority:");
+                builder.AppendLine($" {CurrentPriority.Value}");
+            }
+
+            if (Optional.IsDefined(PriorityLevel))
+            {
+                builder.Append("    priority_level:");
+                if (PriorityLevel.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{PriorityLevel}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{PriorityLevel}'");
+                }
+            }
+
+            if (Optional.IsDefined(BasePriority))
+            {
+                builder.Append("    base_priority:");
+                builder.AppendLine($" {BasePriority.Value}");
+            }
+
+            if (Optional.IsDefined(StartOn))
+            {
+                builder.Append("    start_time:");
+                var formattedDateTimeString = TypeFormatters.ToString(StartOn.Value, "o");
+                builder.AppendLine($" '{formattedDateTimeString}'");
+            }
+
+            if (Optional.IsDefined(TotalProcessorTime))
+            {
+                builder.Append("    total_processor_time:");
+                if (TotalProcessorTime.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{TotalProcessorTime}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{TotalProcessorTime}'");
+                }
+            }
+
+            if (Optional.IsDefined(UserProcessorTime))
+            {
+                builder.Append("    user_processor_time:");
+                if (UserProcessorTime.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{UserProcessorTime}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{UserProcessorTime}'");
+                }
+            }
+
+            if (Optional.IsDefined(State))
+            {
+                builder.Append("    state:");
+                if (State.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{State}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{State}'");
+                }
+            }
+
+            if (Optional.IsDefined(WaitReason))
+            {
+                builder.Append("    wait_reason:");
+                if (WaitReason.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{WaitReason}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{WaitReason}'");
+                }
+            }
+
+            builder.AppendLine("  }");
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            bool inMultilineString = false;
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (inMultilineString)
+                {
+                    if (line.Contains("'''"))
+                    {
+                        inMultilineString = false;
+                    }
+                    stringBuilder.AppendLine(line);
+                    continue;
+                }
+                if (line.Contains("'''"))
+                {
+                    inMultilineString = true;
+                    stringBuilder.AppendLine($"{indent}{line}");
+                    continue;
+                }
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<ProcessThreadInfo>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ProcessThreadInfo>)this).GetFormatFromOptions(options) : options.Format;
@@ -308,6 +533,8 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(ProcessThreadInfo)} does not support '{options.Format}' format.");
             }
@@ -324,6 +551,8 @@ namespace Azure.ResourceManager.AppService.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeProcessThreadInfo(document.RootElement, options);
                     }
+                case "bicep":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(ProcessThreadInfo)} does not support '{options.Format}' format.");
             }

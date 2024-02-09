@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -137,6 +138,76 @@ namespace Azure.ResourceManager.AppService.Models
             return new GitHubActionConfiguration(codeConfiguration.Value, containerConfiguration.Value, Optional.ToNullable(isLinux), Optional.ToNullable(generateWorkflowFile), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(CodeConfiguration))
+            {
+                builder.Append("  codeConfiguration:");
+                AppendChildObject(builder, CodeConfiguration, options, 2, false);
+            }
+
+            if (Optional.IsDefined(ContainerConfiguration))
+            {
+                builder.Append("  containerConfiguration:");
+                AppendChildObject(builder, ContainerConfiguration, options, 2, false);
+            }
+
+            if (Optional.IsDefined(IsLinux))
+            {
+                builder.Append("  isLinux:");
+                var boolValue = IsLinux.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(GenerateWorkflowFile))
+            {
+                builder.Append("  generateWorkflowFile:");
+                var boolValue = GenerateWorkflowFile.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            bool inMultilineString = false;
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (inMultilineString)
+                {
+                    if (line.Contains("'''"))
+                    {
+                        inMultilineString = false;
+                    }
+                    stringBuilder.AppendLine(line);
+                    continue;
+                }
+                if (line.Contains("'''"))
+                {
+                    inMultilineString = true;
+                    stringBuilder.AppendLine($"{indent}{line}");
+                    continue;
+                }
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<GitHubActionConfiguration>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<GitHubActionConfiguration>)this).GetFormatFromOptions(options) : options.Format;
@@ -145,6 +216,8 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(GitHubActionConfiguration)} does not support '{options.Format}' format.");
             }
@@ -161,6 +234,8 @@ namespace Azure.ResourceManager.AppService.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeGitHubActionConfiguration(document.RootElement, options);
                     }
+                case "bicep":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(GitHubActionConfiguration)} does not support '{options.Format}' format.");
             }

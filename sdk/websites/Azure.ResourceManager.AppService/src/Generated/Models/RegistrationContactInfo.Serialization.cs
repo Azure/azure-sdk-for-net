@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -168,6 +169,168 @@ namespace Azure.ResourceManager.AppService.Models
             return new RegistrationContactInfo(addressMailing.Value, email, fax.Value, jobTitle.Value, nameFirst, nameLast, nameMiddle.Value, organization.Value, phone, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(AddressMailing))
+            {
+                builder.Append("  addressMailing:");
+                AppendChildObject(builder, AddressMailing, options, 2, false);
+            }
+
+            if (Optional.IsDefined(Email))
+            {
+                builder.Append("  email:");
+                if (Email.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{Email}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{Email}'");
+                }
+            }
+
+            if (Optional.IsDefined(Fax))
+            {
+                builder.Append("  fax:");
+                if (Fax.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{Fax}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{Fax}'");
+                }
+            }
+
+            if (Optional.IsDefined(JobTitle))
+            {
+                builder.Append("  jobTitle:");
+                if (JobTitle.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{JobTitle}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{JobTitle}'");
+                }
+            }
+
+            if (Optional.IsDefined(NameFirst))
+            {
+                builder.Append("  nameFirst:");
+                if (NameFirst.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{NameFirst}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{NameFirst}'");
+                }
+            }
+
+            if (Optional.IsDefined(NameLast))
+            {
+                builder.Append("  nameLast:");
+                if (NameLast.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{NameLast}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{NameLast}'");
+                }
+            }
+
+            if (Optional.IsDefined(NameMiddle))
+            {
+                builder.Append("  nameMiddle:");
+                if (NameMiddle.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{NameMiddle}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{NameMiddle}'");
+                }
+            }
+
+            if (Optional.IsDefined(Organization))
+            {
+                builder.Append("  organization:");
+                if (Organization.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{Organization}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{Organization}'");
+                }
+            }
+
+            if (Optional.IsDefined(Phone))
+            {
+                builder.Append("  phone:");
+                if (Phone.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{Phone}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{Phone}'");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            bool inMultilineString = false;
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (inMultilineString)
+                {
+                    if (line.Contains("'''"))
+                    {
+                        inMultilineString = false;
+                    }
+                    stringBuilder.AppendLine(line);
+                    continue;
+                }
+                if (line.Contains("'''"))
+                {
+                    inMultilineString = true;
+                    stringBuilder.AppendLine($"{indent}{line}");
+                    continue;
+                }
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<RegistrationContactInfo>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<RegistrationContactInfo>)this).GetFormatFromOptions(options) : options.Format;
@@ -176,6 +339,8 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(RegistrationContactInfo)} does not support '{options.Format}' format.");
             }
@@ -192,6 +357,8 @@ namespace Azure.ResourceManager.AppService.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeRegistrationContactInfo(document.RootElement, options);
                     }
+                case "bicep":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(RegistrationContactInfo)} does not support '{options.Format}' format.");
             }

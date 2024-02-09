@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
@@ -200,6 +202,125 @@ namespace Azure.ResourceManager.AppService.Models
             return new AppServiceOperation(id.Value, name.Value, Optional.ToNullable(status), Optional.ToList(errors), Optional.ToNullable(createdTime), Optional.ToNullable(modifiedTime), Optional.ToNullable(expirationTime), Optional.ToNullable(geoMasterOperationId), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                if (Name.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{Name}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{Name}'");
+                }
+            }
+
+            if (Optional.IsDefined(Id))
+            {
+                builder.Append("  id:");
+                if (Id.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{Id}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{Id}'");
+                }
+            }
+
+            if (Optional.IsDefined(Status))
+            {
+                builder.Append("  status:");
+                builder.AppendLine($" '{Status.Value.ToSerialString()}'");
+            }
+
+            if (Optional.IsCollectionDefined(Errors))
+            {
+                if (Errors.Any())
+                {
+                    builder.Append("  errors:");
+                    builder.AppendLine(" [");
+                    foreach (var item in Errors)
+                    {
+                        AppendChildObject(builder, item, options, 4, true);
+                    }
+                    builder.AppendLine("  ]");
+                }
+            }
+
+            if (Optional.IsDefined(CreatedOn))
+            {
+                builder.Append("  createdTime:");
+                var formattedDateTimeString = TypeFormatters.ToString(CreatedOn.Value, "o");
+                builder.AppendLine($" '{formattedDateTimeString}'");
+            }
+
+            if (Optional.IsDefined(ModifiedOn))
+            {
+                builder.Append("  modifiedTime:");
+                var formattedDateTimeString = TypeFormatters.ToString(ModifiedOn.Value, "o");
+                builder.AppendLine($" '{formattedDateTimeString}'");
+            }
+
+            if (Optional.IsDefined(ExpireOn))
+            {
+                builder.Append("  expirationTime:");
+                var formattedDateTimeString = TypeFormatters.ToString(ExpireOn.Value, "o");
+                builder.AppendLine($" '{formattedDateTimeString}'");
+            }
+
+            if (Optional.IsDefined(GeoMasterOperationId))
+            {
+                builder.Append("  geoMasterOperationId:");
+                builder.AppendLine($" '{GeoMasterOperationId.Value.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            bool inMultilineString = false;
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (inMultilineString)
+                {
+                    if (line.Contains("'''"))
+                    {
+                        inMultilineString = false;
+                    }
+                    stringBuilder.AppendLine(line);
+                    continue;
+                }
+                if (line.Contains("'''"))
+                {
+                    inMultilineString = true;
+                    stringBuilder.AppendLine($"{indent}{line}");
+                    continue;
+                }
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<AppServiceOperation>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<AppServiceOperation>)this).GetFormatFromOptions(options) : options.Format;
@@ -208,6 +329,8 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(AppServiceOperation)} does not support '{options.Format}' format.");
             }
@@ -224,6 +347,8 @@ namespace Azure.ResourceManager.AppService.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeAppServiceOperation(document.RootElement, options);
                     }
+                case "bicep":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(AppServiceOperation)} does not support '{options.Format}' format.");
             }

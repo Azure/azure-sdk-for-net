@@ -9,6 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Net;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -257,6 +258,174 @@ namespace Azure.ResourceManager.Sql.Models
             return new SecurityEvent(id, name, type, systemData.Value, Optional.ToNullable(eventTime), Optional.ToNullable(securityEventType), subscription.Value, server.Value, database.Value, clientIP.Value, applicationName.Value, principalName.Value, securityEventSqlInjectionAdditionalProperties.Value, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                if (Name.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{Name}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{Name}'");
+                }
+            }
+
+            if (Optional.IsDefined(Id))
+            {
+                builder.Append("  id:");
+                builder.AppendLine($" '{Id.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SystemData))
+            {
+                builder.Append("  systemData:");
+                builder.AppendLine($" '{SystemData.ToString()}'");
+            }
+
+            builder.Append("  properties:");
+            builder.AppendLine(" {");
+            if (Optional.IsDefined(EventOn))
+            {
+                builder.Append("    eventTime:");
+                var formattedDateTimeString = TypeFormatters.ToString(EventOn.Value, "o");
+                builder.AppendLine($" '{formattedDateTimeString}'");
+            }
+
+            if (Optional.IsDefined(SecurityEventType))
+            {
+                builder.Append("    securityEventType:");
+                builder.AppendLine($" '{SecurityEventType.Value.ToSerialString()}'");
+            }
+
+            if (Optional.IsDefined(Subscription))
+            {
+                builder.Append("    subscription:");
+                if (Subscription.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{Subscription}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{Subscription}'");
+                }
+            }
+
+            if (Optional.IsDefined(Server))
+            {
+                builder.Append("    server:");
+                if (Server.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{Server}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{Server}'");
+                }
+            }
+
+            if (Optional.IsDefined(Database))
+            {
+                builder.Append("    database:");
+                if (Database.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{Database}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{Database}'");
+                }
+            }
+
+            if (Optional.IsDefined(ClientIP))
+            {
+                builder.Append("    clientIp:");
+                builder.AppendLine($" '{ClientIP.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ApplicationName))
+            {
+                builder.Append("    applicationName:");
+                if (ApplicationName.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{ApplicationName}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{ApplicationName}'");
+                }
+            }
+
+            if (Optional.IsDefined(PrincipalName))
+            {
+                builder.Append("    principalName:");
+                if (PrincipalName.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{PrincipalName}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{PrincipalName}'");
+                }
+            }
+
+            if (Optional.IsDefined(SecurityEventSqlInjectionAdditionalProperties))
+            {
+                builder.Append("    securityEventSqlInjectionAdditionalProperties:");
+                AppendChildObject(builder, SecurityEventSqlInjectionAdditionalProperties, options, 4, false);
+            }
+
+            builder.AppendLine("  }");
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            bool inMultilineString = false;
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (inMultilineString)
+                {
+                    if (line.Contains("'''"))
+                    {
+                        inMultilineString = false;
+                    }
+                    stringBuilder.AppendLine(line);
+                    continue;
+                }
+                if (line.Contains("'''"))
+                {
+                    inMultilineString = true;
+                    stringBuilder.AppendLine($"{indent}{line}");
+                    continue;
+                }
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<SecurityEvent>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<SecurityEvent>)this).GetFormatFromOptions(options) : options.Format;
@@ -265,6 +434,8 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(SecurityEvent)} does not support '{options.Format}' format.");
             }
@@ -281,6 +452,8 @@ namespace Azure.ResourceManager.Sql.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeSecurityEvent(document.RootElement, options);
                     }
+                case "bicep":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(SecurityEvent)} does not support '{options.Format}' format.");
             }

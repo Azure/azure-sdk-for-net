@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -281,6 +282,232 @@ namespace Azure.ResourceManager.AppService
             return new ProcessModuleInfoData(id, name, type, systemData.Value, baseAddress.Value, fileName.Value, href.Value, filePath.Value, Optional.ToNullable(moduleMemorySize), fileVersion.Value, fileDescription.Value, product.Value, productVersion.Value, Optional.ToNullable(isDebug), language.Value, kind.Value, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                if (Name.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{Name}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{Name}'");
+                }
+            }
+
+            if (Optional.IsDefined(Kind))
+            {
+                builder.Append("  kind:");
+                if (Kind.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{Kind}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{Kind}'");
+                }
+            }
+
+            if (Optional.IsDefined(Id))
+            {
+                builder.Append("  id:");
+                builder.AppendLine($" '{Id.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SystemData))
+            {
+                builder.Append("  systemData:");
+                builder.AppendLine($" '{SystemData.ToString()}'");
+            }
+
+            builder.Append("  properties:");
+            builder.AppendLine(" {");
+            if (Optional.IsDefined(BaseAddress))
+            {
+                builder.Append("    base_address:");
+                if (BaseAddress.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{BaseAddress}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{BaseAddress}'");
+                }
+            }
+
+            if (Optional.IsDefined(FileName))
+            {
+                builder.Append("    file_name:");
+                if (FileName.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{FileName}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{FileName}'");
+                }
+            }
+
+            if (Optional.IsDefined(Href))
+            {
+                builder.Append("    href:");
+                if (Href.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{Href}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{Href}'");
+                }
+            }
+
+            if (Optional.IsDefined(FilePath))
+            {
+                builder.Append("    file_path:");
+                if (FilePath.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{FilePath}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{FilePath}'");
+                }
+            }
+
+            if (Optional.IsDefined(ModuleMemorySize))
+            {
+                builder.Append("    module_memory_size:");
+                builder.AppendLine($" {ModuleMemorySize.Value}");
+            }
+
+            if (Optional.IsDefined(FileVersion))
+            {
+                builder.Append("    file_version:");
+                if (FileVersion.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{FileVersion}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{FileVersion}'");
+                }
+            }
+
+            if (Optional.IsDefined(FileDescription))
+            {
+                builder.Append("    file_description:");
+                if (FileDescription.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{FileDescription}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{FileDescription}'");
+                }
+            }
+
+            if (Optional.IsDefined(Product))
+            {
+                builder.Append("    product:");
+                if (Product.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{Product}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{Product}'");
+                }
+            }
+
+            if (Optional.IsDefined(ProductVersion))
+            {
+                builder.Append("    product_version:");
+                if (ProductVersion.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{ProductVersion}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{ProductVersion}'");
+                }
+            }
+
+            if (Optional.IsDefined(IsDebug))
+            {
+                builder.Append("    is_debug:");
+                var boolValue = IsDebug.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(Language))
+            {
+                builder.Append("    language:");
+                if (Language.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{Language}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{Language}'");
+                }
+            }
+
+            builder.AppendLine("  }");
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            bool inMultilineString = false;
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (inMultilineString)
+                {
+                    if (line.Contains("'''"))
+                    {
+                        inMultilineString = false;
+                    }
+                    stringBuilder.AppendLine(line);
+                    continue;
+                }
+                if (line.Contains("'''"))
+                {
+                    inMultilineString = true;
+                    stringBuilder.AppendLine($"{indent}{line}");
+                    continue;
+                }
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<ProcessModuleInfoData>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ProcessModuleInfoData>)this).GetFormatFromOptions(options) : options.Format;
@@ -289,6 +516,8 @@ namespace Azure.ResourceManager.AppService
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(ProcessModuleInfoData)} does not support '{options.Format}' format.");
             }
@@ -305,6 +534,8 @@ namespace Azure.ResourceManager.AppService
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeProcessModuleInfoData(document.RootElement, options);
                     }
+                case "bicep":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(ProcessModuleInfoData)} does not support '{options.Format}' format.");
             }

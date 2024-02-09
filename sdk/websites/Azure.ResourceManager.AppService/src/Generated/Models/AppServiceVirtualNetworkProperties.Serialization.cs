@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -180,6 +182,126 @@ namespace Azure.ResourceManager.AppService.Models
             return new AppServiceVirtualNetworkProperties(vnetResourceId.Value, certThumbprint.Value, certBlob.Value, Optional.ToList(routes), Optional.ToNullable(resyncRequired), dnsServers.Value, Optional.ToNullable(isSwift), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(VnetResourceId))
+            {
+                builder.Append("  vnetResourceId:");
+                builder.AppendLine($" '{VnetResourceId.ToString()}'");
+            }
+
+            if (Optional.IsDefined(CertThumbprintString))
+            {
+                builder.Append("  certThumbprint:");
+                if (CertThumbprintString.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{CertThumbprintString}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{CertThumbprintString}'");
+                }
+            }
+
+            if (Optional.IsDefined(CertBlob))
+            {
+                builder.Append("  certBlob:");
+                if (CertBlob.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{CertBlob}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{CertBlob}'");
+                }
+            }
+
+            if (Optional.IsCollectionDefined(Routes))
+            {
+                if (Routes.Any())
+                {
+                    builder.Append("  routes:");
+                    builder.AppendLine(" [");
+                    foreach (var item in Routes)
+                    {
+                        AppendChildObject(builder, item, options, 4, true);
+                    }
+                    builder.AppendLine("  ]");
+                }
+            }
+
+            if (Optional.IsDefined(IsResyncRequired))
+            {
+                builder.Append("  resyncRequired:");
+                var boolValue = IsResyncRequired.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(DnsServers))
+            {
+                builder.Append("  dnsServers:");
+                if (DnsServers.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{DnsServers}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{DnsServers}'");
+                }
+            }
+
+            if (Optional.IsDefined(IsSwift))
+            {
+                builder.Append("  isSwift:");
+                var boolValue = IsSwift.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            bool inMultilineString = false;
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (inMultilineString)
+                {
+                    if (line.Contains("'''"))
+                    {
+                        inMultilineString = false;
+                    }
+                    stringBuilder.AppendLine(line);
+                    continue;
+                }
+                if (line.Contains("'''"))
+                {
+                    inMultilineString = true;
+                    stringBuilder.AppendLine($"{indent}{line}");
+                    continue;
+                }
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<AppServiceVirtualNetworkProperties>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<AppServiceVirtualNetworkProperties>)this).GetFormatFromOptions(options) : options.Format;
@@ -188,6 +310,8 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(AppServiceVirtualNetworkProperties)} does not support '{options.Format}' format.");
             }
@@ -204,6 +328,8 @@ namespace Azure.ResourceManager.AppService.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeAppServiceVirtualNetworkProperties(document.RootElement, options);
                     }
+                case "bicep":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(AppServiceVirtualNetworkProperties)} does not support '{options.Format}' format.");
             }

@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
@@ -169,6 +170,83 @@ namespace Azure.ResourceManager.KeyVault.Models
             return new ManagedHsmPrivateEndpointConnectionItemData(id.Value, Optional.ToNullable(etag), privateEndpoint, privateLinkServiceConnectionState.Value, Optional.ToNullable(provisioningState), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(Id))
+            {
+                builder.Append("  id:");
+                builder.AppendLine($" '{Id.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ETag))
+            {
+                builder.Append("  etag:");
+                builder.AppendLine($" '{ETag.Value.ToString()}'");
+            }
+
+            builder.Append("  properties:");
+            builder.AppendLine(" {");
+            if (Optional.IsDefined(PrivateEndpoint))
+            {
+                builder.Append("    privateEndpoint:");
+                AppendChildObject(builder, PrivateEndpoint, options, 4, false);
+            }
+
+            if (Optional.IsDefined(PrivateLinkServiceConnectionState))
+            {
+                builder.Append("    privateLinkServiceConnectionState:");
+                AppendChildObject(builder, PrivateLinkServiceConnectionState, options, 4, false);
+            }
+
+            if (Optional.IsDefined(ProvisioningState))
+            {
+                builder.Append("    provisioningState:");
+                builder.AppendLine($" '{ProvisioningState.Value.ToString()}'");
+            }
+
+            builder.AppendLine("  }");
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            bool inMultilineString = false;
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (inMultilineString)
+                {
+                    if (line.Contains("'''"))
+                    {
+                        inMultilineString = false;
+                    }
+                    stringBuilder.AppendLine(line);
+                    continue;
+                }
+                if (line.Contains("'''"))
+                {
+                    inMultilineString = true;
+                    stringBuilder.AppendLine($"{indent}{line}");
+                    continue;
+                }
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<ManagedHsmPrivateEndpointConnectionItemData>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ManagedHsmPrivateEndpointConnectionItemData>)this).GetFormatFromOptions(options) : options.Format;
@@ -177,6 +255,8 @@ namespace Azure.ResourceManager.KeyVault.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(ManagedHsmPrivateEndpointConnectionItemData)} does not support '{options.Format}' format.");
             }
@@ -193,6 +273,8 @@ namespace Azure.ResourceManager.KeyVault.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeManagedHsmPrivateEndpointConnectionItemData(document.RootElement, options);
                     }
+                case "bicep":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(ManagedHsmPrivateEndpointConnectionItemData)} does not support '{options.Format}' format.");
             }

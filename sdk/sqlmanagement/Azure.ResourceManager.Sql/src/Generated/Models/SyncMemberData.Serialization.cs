@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -302,6 +303,192 @@ namespace Azure.ResourceManager.Sql
             return new SyncMemberData(id, name, type, systemData.Value, Optional.ToNullable(databaseType), syncAgentId.Value, Optional.ToNullable(sqlServerDatabaseId), syncMemberAzureDatabaseResourceId.Value, Optional.ToNullable(usePrivateLinkConnection), privateEndpointName.Value, serverName.Value, databaseName.Value, userName.Value, password.Value, Optional.ToNullable(syncDirection), Optional.ToNullable(syncState), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                if (Name.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{Name}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{Name}'");
+                }
+            }
+
+            if (Optional.IsDefined(Id))
+            {
+                builder.Append("  id:");
+                builder.AppendLine($" '{Id.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SystemData))
+            {
+                builder.Append("  systemData:");
+                builder.AppendLine($" '{SystemData.ToString()}'");
+            }
+
+            builder.Append("  properties:");
+            builder.AppendLine(" {");
+            if (Optional.IsDefined(DatabaseType))
+            {
+                builder.Append("    databaseType:");
+                builder.AppendLine($" '{DatabaseType.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SyncAgentId))
+            {
+                builder.Append("    syncAgentId:");
+                builder.AppendLine($" '{SyncAgentId.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SqlServerDatabaseId))
+            {
+                builder.Append("    sqlServerDatabaseId:");
+                builder.AppendLine($" '{SqlServerDatabaseId.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SyncMemberAzureDatabaseResourceId))
+            {
+                builder.Append("    syncMemberAzureDatabaseResourceId:");
+                builder.AppendLine($" '{SyncMemberAzureDatabaseResourceId.ToString()}'");
+            }
+
+            if (Optional.IsDefined(UsePrivateLinkConnection))
+            {
+                builder.Append("    usePrivateLinkConnection:");
+                var boolValue = UsePrivateLinkConnection.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(PrivateEndpointName))
+            {
+                builder.Append("    privateEndpointName:");
+                if (PrivateEndpointName.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{PrivateEndpointName}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{PrivateEndpointName}'");
+                }
+            }
+
+            if (Optional.IsDefined(ServerName))
+            {
+                builder.Append("    serverName:");
+                if (ServerName.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{ServerName}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{ServerName}'");
+                }
+            }
+
+            if (Optional.IsDefined(DatabaseName))
+            {
+                builder.Append("    databaseName:");
+                if (DatabaseName.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{DatabaseName}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{DatabaseName}'");
+                }
+            }
+
+            if (Optional.IsDefined(UserName))
+            {
+                builder.Append("    userName:");
+                if (UserName.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{UserName}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{UserName}'");
+                }
+            }
+
+            if (Optional.IsDefined(Password))
+            {
+                builder.Append("    password:");
+                if (Password.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{Password}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{Password}'");
+                }
+            }
+
+            if (Optional.IsDefined(SyncDirection))
+            {
+                builder.Append("    syncDirection:");
+                builder.AppendLine($" '{SyncDirection.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SyncState))
+            {
+                builder.Append("    syncState:");
+                builder.AppendLine($" '{SyncState.Value.ToString()}'");
+            }
+
+            builder.AppendLine("  }");
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            bool inMultilineString = false;
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (inMultilineString)
+                {
+                    if (line.Contains("'''"))
+                    {
+                        inMultilineString = false;
+                    }
+                    stringBuilder.AppendLine(line);
+                    continue;
+                }
+                if (line.Contains("'''"))
+                {
+                    inMultilineString = true;
+                    stringBuilder.AppendLine($"{indent}{line}");
+                    continue;
+                }
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<SyncMemberData>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<SyncMemberData>)this).GetFormatFromOptions(options) : options.Format;
@@ -310,6 +497,8 @@ namespace Azure.ResourceManager.Sql
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(SyncMemberData)} does not support '{options.Format}' format.");
             }
@@ -326,6 +515,8 @@ namespace Azure.ResourceManager.Sql
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeSyncMemberData(document.RootElement, options);
                     }
+                case "bicep":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(SyncMemberData)} does not support '{options.Format}' format.");
             }

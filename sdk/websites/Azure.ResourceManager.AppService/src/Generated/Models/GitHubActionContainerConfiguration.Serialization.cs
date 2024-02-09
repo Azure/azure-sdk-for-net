@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -125,6 +126,98 @@ namespace Azure.ResourceManager.AppService.Models
             return new GitHubActionContainerConfiguration(serverUrl.Value, imageName.Value, username.Value, password.Value, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(ServerUri))
+            {
+                builder.Append("  serverUrl:");
+                builder.AppendLine($" '{ServerUri.AbsoluteUri}'");
+            }
+
+            if (Optional.IsDefined(ImageName))
+            {
+                builder.Append("  imageName:");
+                if (ImageName.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{ImageName}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{ImageName}'");
+                }
+            }
+
+            if (Optional.IsDefined(Username))
+            {
+                builder.Append("  username:");
+                if (Username.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{Username}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{Username}'");
+                }
+            }
+
+            if (Optional.IsDefined(Password))
+            {
+                builder.Append("  password:");
+                if (Password.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{Password}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{Password}'");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            bool inMultilineString = false;
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (inMultilineString)
+                {
+                    if (line.Contains("'''"))
+                    {
+                        inMultilineString = false;
+                    }
+                    stringBuilder.AppendLine(line);
+                    continue;
+                }
+                if (line.Contains("'''"))
+                {
+                    inMultilineString = true;
+                    stringBuilder.AppendLine($"{indent}{line}");
+                    continue;
+                }
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<GitHubActionContainerConfiguration>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<GitHubActionContainerConfiguration>)this).GetFormatFromOptions(options) : options.Format;
@@ -133,6 +226,8 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(GitHubActionContainerConfiguration)} does not support '{options.Format}' format.");
             }
@@ -149,6 +244,8 @@ namespace Azure.ResourceManager.AppService.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeGitHubActionContainerConfiguration(document.RootElement, options);
                     }
+                case "bicep":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(GitHubActionContainerConfiguration)} does not support '{options.Format}' format.");
             }

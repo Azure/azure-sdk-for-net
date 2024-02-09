@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -303,6 +305,171 @@ namespace Azure.ResourceManager.Sql.Models
             return new ElasticPoolPerformanceLevelCapability(performanceLevel.Value, sku.Value, Optional.ToList(supportedLicenseTypes), Optional.ToNullable(maxDatabaseCount), includedMaxSize.Value, Optional.ToList(supportedMaxSizes), Optional.ToList(supportedPerDatabaseMaxSizes), Optional.ToList(supportedPerDatabaseMaxPerformanceLevels), Optional.ToNullable(zoneRedundant), Optional.ToList(supportedMaintenanceConfigurations), Optional.ToNullable(status), reason.Value, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(PerformanceLevel))
+            {
+                builder.Append("  performanceLevel:");
+                AppendChildObject(builder, PerformanceLevel, options, 2, false);
+            }
+
+            if (Optional.IsDefined(Sku))
+            {
+                builder.Append("  sku:");
+                AppendChildObject(builder, Sku, options, 2, false);
+            }
+
+            if (Optional.IsCollectionDefined(SupportedLicenseTypes))
+            {
+                if (SupportedLicenseTypes.Any())
+                {
+                    builder.Append("  supportedLicenseTypes:");
+                    builder.AppendLine(" [");
+                    foreach (var item in SupportedLicenseTypes)
+                    {
+                        AppendChildObject(builder, item, options, 4, true);
+                    }
+                    builder.AppendLine("  ]");
+                }
+            }
+
+            if (Optional.IsDefined(MaxDatabaseCount))
+            {
+                builder.Append("  maxDatabaseCount:");
+                builder.AppendLine($" {MaxDatabaseCount.Value}");
+            }
+
+            if (Optional.IsDefined(IncludedMaxSize))
+            {
+                builder.Append("  includedMaxSize:");
+                AppendChildObject(builder, IncludedMaxSize, options, 2, false);
+            }
+
+            if (Optional.IsCollectionDefined(SupportedMaxSizes))
+            {
+                if (SupportedMaxSizes.Any())
+                {
+                    builder.Append("  supportedMaxSizes:");
+                    builder.AppendLine(" [");
+                    foreach (var item in SupportedMaxSizes)
+                    {
+                        AppendChildObject(builder, item, options, 4, true);
+                    }
+                    builder.AppendLine("  ]");
+                }
+            }
+
+            if (Optional.IsCollectionDefined(SupportedPerDatabaseMaxSizes))
+            {
+                if (SupportedPerDatabaseMaxSizes.Any())
+                {
+                    builder.Append("  supportedPerDatabaseMaxSizes:");
+                    builder.AppendLine(" [");
+                    foreach (var item in SupportedPerDatabaseMaxSizes)
+                    {
+                        AppendChildObject(builder, item, options, 4, true);
+                    }
+                    builder.AppendLine("  ]");
+                }
+            }
+
+            if (Optional.IsCollectionDefined(SupportedPerDatabaseMaxPerformanceLevels))
+            {
+                if (SupportedPerDatabaseMaxPerformanceLevels.Any())
+                {
+                    builder.Append("  supportedPerDatabaseMaxPerformanceLevels:");
+                    builder.AppendLine(" [");
+                    foreach (var item in SupportedPerDatabaseMaxPerformanceLevels)
+                    {
+                        AppendChildObject(builder, item, options, 4, true);
+                    }
+                    builder.AppendLine("  ]");
+                }
+            }
+
+            if (Optional.IsDefined(IsZoneRedundant))
+            {
+                builder.Append("  zoneRedundant:");
+                var boolValue = IsZoneRedundant.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsCollectionDefined(SupportedMaintenanceConfigurations))
+            {
+                if (SupportedMaintenanceConfigurations.Any())
+                {
+                    builder.Append("  supportedMaintenanceConfigurations:");
+                    builder.AppendLine(" [");
+                    foreach (var item in SupportedMaintenanceConfigurations)
+                    {
+                        AppendChildObject(builder, item, options, 4, true);
+                    }
+                    builder.AppendLine("  ]");
+                }
+            }
+
+            if (Optional.IsDefined(Status))
+            {
+                builder.Append("  status:");
+                builder.AppendLine($" '{Status.Value.ToSerialString()}'");
+            }
+
+            if (Optional.IsDefined(Reason))
+            {
+                builder.Append("  reason:");
+                if (Reason.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{Reason}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{Reason}'");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            bool inMultilineString = false;
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (inMultilineString)
+                {
+                    if (line.Contains("'''"))
+                    {
+                        inMultilineString = false;
+                    }
+                    stringBuilder.AppendLine(line);
+                    continue;
+                }
+                if (line.Contains("'''"))
+                {
+                    inMultilineString = true;
+                    stringBuilder.AppendLine($"{indent}{line}");
+                    continue;
+                }
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<ElasticPoolPerformanceLevelCapability>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ElasticPoolPerformanceLevelCapability>)this).GetFormatFromOptions(options) : options.Format;
@@ -311,6 +478,8 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(ElasticPoolPerformanceLevelCapability)} does not support '{options.Format}' format.");
             }
@@ -327,6 +496,8 @@ namespace Azure.ResourceManager.Sql.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeElasticPoolPerformanceLevelCapability(document.RootElement, options);
                     }
+                case "bicep":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(ElasticPoolPerformanceLevelCapability)} does not support '{options.Format}' format.");
             }

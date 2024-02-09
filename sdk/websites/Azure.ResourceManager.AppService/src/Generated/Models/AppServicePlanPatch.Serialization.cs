@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -466,6 +467,266 @@ namespace Azure.ResourceManager.AppService.Models
             return new AppServicePlanPatch(id, name, type, systemData.Value, workerTierName.Value, Optional.ToNullable(status), subscription.Value, hostingEnvironmentProfile.Value, Optional.ToNullable(maximumNumberOfWorkers), geoRegion.Value, Optional.ToNullable(perSiteScaling), Optional.ToNullable(elasticScaleEnabled), Optional.ToNullable(maximumElasticWorkerCount), Optional.ToNullable(numberOfSites), Optional.ToNullable(isSpot), Optional.ToNullable(spotExpirationTime), Optional.ToNullable(freeOfferExpirationTime), resourceGroup.Value, Optional.ToNullable(reserved), Optional.ToNullable(isXenon), Optional.ToNullable(hyperV), Optional.ToNullable(targetWorkerCount), Optional.ToNullable(targetWorkerSizeId), Optional.ToNullable(provisioningState), kubeEnvironmentProfile.Value, Optional.ToNullable(zoneRedundant), kind.Value, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                if (Name.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{Name}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{Name}'");
+                }
+            }
+
+            if (Optional.IsDefined(Kind))
+            {
+                builder.Append("  kind:");
+                if (Kind.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{Kind}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{Kind}'");
+                }
+            }
+
+            if (Optional.IsDefined(Id))
+            {
+                builder.Append("  id:");
+                builder.AppendLine($" '{Id.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SystemData))
+            {
+                builder.Append("  systemData:");
+                builder.AppendLine($" '{SystemData.ToString()}'");
+            }
+
+            builder.Append("  properties:");
+            builder.AppendLine(" {");
+            if (Optional.IsDefined(WorkerTierName))
+            {
+                builder.Append("    workerTierName:");
+                if (WorkerTierName.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{WorkerTierName}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{WorkerTierName}'");
+                }
+            }
+
+            if (Optional.IsDefined(Status))
+            {
+                builder.Append("    status:");
+                builder.AppendLine($" '{Status.Value.ToSerialString()}'");
+            }
+
+            if (Optional.IsDefined(Subscription))
+            {
+                builder.Append("    subscription:");
+                if (Subscription.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{Subscription}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{Subscription}'");
+                }
+            }
+
+            if (Optional.IsDefined(HostingEnvironmentProfile))
+            {
+                builder.Append("    hostingEnvironmentProfile:");
+                AppendChildObject(builder, HostingEnvironmentProfile, options, 4, false);
+            }
+
+            if (Optional.IsDefined(MaximumNumberOfWorkers))
+            {
+                builder.Append("    maximumNumberOfWorkers:");
+                builder.AppendLine($" {MaximumNumberOfWorkers.Value}");
+            }
+
+            if (Optional.IsDefined(GeoRegion))
+            {
+                builder.Append("    geoRegion:");
+                if (GeoRegion.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{GeoRegion}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{GeoRegion}'");
+                }
+            }
+
+            if (Optional.IsDefined(IsPerSiteScaling))
+            {
+                builder.Append("    perSiteScaling:");
+                var boolValue = IsPerSiteScaling.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(IsElasticScaleEnabled))
+            {
+                builder.Append("    elasticScaleEnabled:");
+                var boolValue = IsElasticScaleEnabled.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(MaximumElasticWorkerCount))
+            {
+                builder.Append("    maximumElasticWorkerCount:");
+                builder.AppendLine($" {MaximumElasticWorkerCount.Value}");
+            }
+
+            if (Optional.IsDefined(NumberOfSites))
+            {
+                builder.Append("    numberOfSites:");
+                builder.AppendLine($" {NumberOfSites.Value}");
+            }
+
+            if (Optional.IsDefined(IsSpot))
+            {
+                builder.Append("    isSpot:");
+                var boolValue = IsSpot.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(SpotExpirationOn))
+            {
+                builder.Append("    spotExpirationTime:");
+                var formattedDateTimeString = TypeFormatters.ToString(SpotExpirationOn.Value, "o");
+                builder.AppendLine($" '{formattedDateTimeString}'");
+            }
+
+            if (Optional.IsDefined(FreeOfferExpirationOn))
+            {
+                builder.Append("    freeOfferExpirationTime:");
+                var formattedDateTimeString = TypeFormatters.ToString(FreeOfferExpirationOn.Value, "o");
+                builder.AppendLine($" '{formattedDateTimeString}'");
+            }
+
+            if (Optional.IsDefined(ResourceGroup))
+            {
+                builder.Append("    resourceGroup:");
+                if (ResourceGroup.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{ResourceGroup}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{ResourceGroup}'");
+                }
+            }
+
+            if (Optional.IsDefined(IsReserved))
+            {
+                builder.Append("    reserved:");
+                var boolValue = IsReserved.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(IsXenon))
+            {
+                builder.Append("    isXenon:");
+                var boolValue = IsXenon.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(IsHyperV))
+            {
+                builder.Append("    hyperV:");
+                var boolValue = IsHyperV.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(TargetWorkerCount))
+            {
+                builder.Append("    targetWorkerCount:");
+                builder.AppendLine($" {TargetWorkerCount.Value}");
+            }
+
+            if (Optional.IsDefined(TargetWorkerSizeId))
+            {
+                builder.Append("    targetWorkerSizeId:");
+                builder.AppendLine($" {TargetWorkerSizeId.Value}");
+            }
+
+            if (Optional.IsDefined(ProvisioningState))
+            {
+                builder.Append("    provisioningState:");
+                builder.AppendLine($" '{ProvisioningState.Value.ToSerialString()}'");
+            }
+
+            if (Optional.IsDefined(KubeEnvironmentProfile))
+            {
+                builder.Append("    kubeEnvironmentProfile:");
+                AppendChildObject(builder, KubeEnvironmentProfile, options, 4, false);
+            }
+
+            if (Optional.IsDefined(IsZoneRedundant))
+            {
+                builder.Append("    zoneRedundant:");
+                var boolValue = IsZoneRedundant.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            builder.AppendLine("  }");
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            bool inMultilineString = false;
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (inMultilineString)
+                {
+                    if (line.Contains("'''"))
+                    {
+                        inMultilineString = false;
+                    }
+                    stringBuilder.AppendLine(line);
+                    continue;
+                }
+                if (line.Contains("'''"))
+                {
+                    inMultilineString = true;
+                    stringBuilder.AppendLine($"{indent}{line}");
+                    continue;
+                }
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<AppServicePlanPatch>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<AppServicePlanPatch>)this).GetFormatFromOptions(options) : options.Format;
@@ -474,6 +735,8 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(AppServicePlanPatch)} does not support '{options.Format}' format.");
             }
@@ -490,6 +753,8 @@ namespace Azure.ResourceManager.AppService.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeAppServicePlanPatch(document.RootElement, options);
                     }
+                case "bicep":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(AppServicePlanPatch)} does not support '{options.Format}' format.");
             }

@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -228,6 +229,126 @@ namespace Azure.ResourceManager.Sql
             return new SyncAgentData(id, name, type, systemData.Value, syncDatabaseId.Value, Optional.ToNullable(lastAliveTime), Optional.ToNullable(state), Optional.ToNullable(isUpToDate), Optional.ToNullable(expiryTime), version.Value, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                if (Name.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{Name}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{Name}'");
+                }
+            }
+
+            if (Optional.IsDefined(Id))
+            {
+                builder.Append("  id:");
+                builder.AppendLine($" '{Id.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SystemData))
+            {
+                builder.Append("  systemData:");
+                builder.AppendLine($" '{SystemData.ToString()}'");
+            }
+
+            builder.Append("  properties:");
+            builder.AppendLine(" {");
+            if (Optional.IsDefined(SyncDatabaseId))
+            {
+                builder.Append("    syncDatabaseId:");
+                builder.AppendLine($" '{SyncDatabaseId.ToString()}'");
+            }
+
+            if (Optional.IsDefined(LastAliveOn))
+            {
+                builder.Append("    lastAliveTime:");
+                var formattedDateTimeString = TypeFormatters.ToString(LastAliveOn.Value, "o");
+                builder.AppendLine($" '{formattedDateTimeString}'");
+            }
+
+            if (Optional.IsDefined(State))
+            {
+                builder.Append("    state:");
+                builder.AppendLine($" '{State.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(IsUpToDate))
+            {
+                builder.Append("    isUpToDate:");
+                var boolValue = IsUpToDate.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(ExpireOn))
+            {
+                builder.Append("    expiryTime:");
+                var formattedDateTimeString = TypeFormatters.ToString(ExpireOn.Value, "o");
+                builder.AppendLine($" '{formattedDateTimeString}'");
+            }
+
+            if (Optional.IsDefined(Version))
+            {
+                builder.Append("    version:");
+                if (Version.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{Version}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{Version}'");
+                }
+            }
+
+            builder.AppendLine("  }");
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            bool inMultilineString = false;
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (inMultilineString)
+                {
+                    if (line.Contains("'''"))
+                    {
+                        inMultilineString = false;
+                    }
+                    stringBuilder.AppendLine(line);
+                    continue;
+                }
+                if (line.Contains("'''"))
+                {
+                    inMultilineString = true;
+                    stringBuilder.AppendLine($"{indent}{line}");
+                    continue;
+                }
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<SyncAgentData>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<SyncAgentData>)this).GetFormatFromOptions(options) : options.Format;
@@ -236,6 +357,8 @@ namespace Azure.ResourceManager.Sql
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(SyncAgentData)} does not support '{options.Format}' format.");
             }
@@ -252,6 +375,8 @@ namespace Azure.ResourceManager.Sql
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeSyncAgentData(document.RootElement, options);
                     }
+                case "bicep":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(SyncAgentData)} does not support '{options.Format}' format.");
             }

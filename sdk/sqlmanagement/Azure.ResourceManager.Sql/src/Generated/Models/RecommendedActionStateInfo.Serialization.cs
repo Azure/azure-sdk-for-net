@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -115,6 +116,69 @@ namespace Azure.ResourceManager.Sql.Models
             return new RecommendedActionStateInfo(currentValue, Optional.ToNullable(actionInitiatedBy), Optional.ToNullable(lastModified), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(CurrentValue))
+            {
+                builder.Append("  currentValue:");
+                builder.AppendLine($" '{CurrentValue.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ActionInitiatedBy))
+            {
+                builder.Append("  actionInitiatedBy:");
+                builder.AppendLine($" '{ActionInitiatedBy.Value.ToSerialString()}'");
+            }
+
+            if (Optional.IsDefined(LastModified))
+            {
+                builder.Append("  lastModified:");
+                var formattedDateTimeString = TypeFormatters.ToString(LastModified.Value, "o");
+                builder.AppendLine($" '{formattedDateTimeString}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            bool inMultilineString = false;
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (inMultilineString)
+                {
+                    if (line.Contains("'''"))
+                    {
+                        inMultilineString = false;
+                    }
+                    stringBuilder.AppendLine(line);
+                    continue;
+                }
+                if (line.Contains("'''"))
+                {
+                    inMultilineString = true;
+                    stringBuilder.AppendLine($"{indent}{line}");
+                    continue;
+                }
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<RecommendedActionStateInfo>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<RecommendedActionStateInfo>)this).GetFormatFromOptions(options) : options.Format;
@@ -123,6 +187,8 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(RecommendedActionStateInfo)} does not support '{options.Format}' format.");
             }
@@ -139,6 +205,8 @@ namespace Azure.ResourceManager.Sql.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeRecommendedActionStateInfo(document.RootElement, options);
                     }
+                case "bicep":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(RecommendedActionStateInfo)} does not support '{options.Format}' format.");
             }

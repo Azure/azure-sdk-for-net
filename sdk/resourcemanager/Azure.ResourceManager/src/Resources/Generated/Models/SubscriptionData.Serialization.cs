@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
@@ -222,6 +224,158 @@ namespace Azure.ResourceManager.Resources
             return new SubscriptionData(id.Value, subscriptionId.Value, displayName.Value, Optional.ToNullable(tenantId), Optional.ToNullable(state), subscriptionPolicies.Value, authorizationSource.Value, Optional.ToList(managedByTenants), Optional.ToDictionary(tags), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsCollectionDefined(Tags))
+            {
+                if (Tags.Any())
+                {
+                    builder.Append("  tags:");
+                    builder.AppendLine(" {");
+                    foreach (var item in Tags)
+                    {
+                        builder.Append($"    {item.Key}:");
+                        if (item.Value == null)
+                        {
+                            builder.Append("null");
+                            continue;
+                        }
+                        if (item.Value.Contains(Environment.NewLine))
+                        {
+                            builder.AppendLine(" '''");
+                            builder.AppendLine($"{item.Value}'''");
+                        }
+                        else
+                        {
+                            builder.AppendLine($" '{item.Value}'");
+                        }
+                    }
+                    builder.AppendLine("  }");
+                }
+            }
+
+            if (Optional.IsDefined(Id))
+            {
+                builder.Append("  id:");
+                builder.AppendLine($" '{Id.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SubscriptionId))
+            {
+                builder.Append("  subscriptionId:");
+                if (SubscriptionId.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{SubscriptionId}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{SubscriptionId}'");
+                }
+            }
+
+            if (Optional.IsDefined(DisplayName))
+            {
+                builder.Append("  displayName:");
+                if (DisplayName.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{DisplayName}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{DisplayName}'");
+                }
+            }
+
+            if (Optional.IsDefined(TenantId))
+            {
+                builder.Append("  tenantId:");
+                builder.AppendLine($" '{TenantId.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(State))
+            {
+                builder.Append("  state:");
+                builder.AppendLine($" '{State.Value.ToSerialString()}'");
+            }
+
+            if (Optional.IsDefined(SubscriptionPolicies))
+            {
+                builder.Append("  subscriptionPolicies:");
+                AppendChildObject(builder, SubscriptionPolicies, options, 2, false);
+            }
+
+            if (Optional.IsDefined(AuthorizationSource))
+            {
+                builder.Append("  authorizationSource:");
+                if (AuthorizationSource.Contains(Environment.NewLine))
+                {
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{AuthorizationSource}'''");
+                }
+                else
+                {
+                    builder.AppendLine($" '{AuthorizationSource}'");
+                }
+            }
+
+            if (Optional.IsCollectionDefined(ManagedByTenants))
+            {
+                if (ManagedByTenants.Any())
+                {
+                    builder.Append("  managedByTenants:");
+                    builder.AppendLine(" [");
+                    foreach (var item in ManagedByTenants)
+                    {
+                        AppendChildObject(builder, item, options, 4, true);
+                    }
+                    builder.AppendLine("  ]");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            bool inMultilineString = false;
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (inMultilineString)
+                {
+                    if (line.Contains("'''"))
+                    {
+                        inMultilineString = false;
+                    }
+                    stringBuilder.AppendLine(line);
+                    continue;
+                }
+                if (line.Contains("'''"))
+                {
+                    inMultilineString = true;
+                    stringBuilder.AppendLine($"{indent}{line}");
+                    continue;
+                }
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<SubscriptionData>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<SubscriptionData>)this).GetFormatFromOptions(options) : options.Format;
@@ -230,6 +384,8 @@ namespace Azure.ResourceManager.Resources
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(SubscriptionData)} does not support '{options.Format}' format.");
             }
@@ -246,6 +402,8 @@ namespace Azure.ResourceManager.Resources
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeSubscriptionData(document.RootElement, options);
                     }
+                case "bicep":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(SubscriptionData)} does not support '{options.Format}' format.");
             }
