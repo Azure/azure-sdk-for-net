@@ -17,12 +17,11 @@ public partial class SpeechGeneration
     {
         string endpoint = "https://myaccount.openai.azure.com/";
         OpenAIClient client = new(new Uri(endpoint), new DefaultAzureCredential());
-        string text = "Hello World";
 
         #region Snippet:SpeechGeneration
         AudioSpeechOptions speechOptions = new()
         {
-            Input = text,
+            Input = "Hello World",
             DeploymentName = "my-tts-deployment", // tts-1 as model name for non-Azure OpenAI
             Voice = AudioSpeechVoice.Alloy,
             ResponseFormat = AudioSpeechOutputFormat.Mp3,
