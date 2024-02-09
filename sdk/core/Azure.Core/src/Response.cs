@@ -29,14 +29,6 @@ namespace Azure
         public new virtual ResponseHeaders Headers => new ResponseHeaders(this);
 
         /// <summary>
-        /// Gets the contents of HTTP response, if it is available.
-        /// </summary>
-        /// <remarks>
-        /// Throws <see cref="InvalidOperationException"/> when <see cref="PipelineResponse.ContentStream"/> is not a <see cref="MemoryStream"/>.
-        /// </remarks>
-        public new virtual BinaryData Content => base.Content;
-
-        /// <summary>
         /// TBD.
         /// </summary>
         /// <returns></returns>
