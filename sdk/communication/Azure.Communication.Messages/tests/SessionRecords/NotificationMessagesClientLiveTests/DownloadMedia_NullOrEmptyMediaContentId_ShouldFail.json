@@ -6,24 +6,23 @@
       "RequestHeaders": {
         "Accept": "application/octet-stream",
         "Authorization": "Sanitized",
-        "traceparent": "00-02269f2e74c2f0a70e798f4a86bbe109-76bf6702635334d3-00",
-        "User-Agent": "azsdk-net-Communication.Messages/1.0.0-alpha.20240209.1 (.NET 7.0.15; Microsoft Windows 10.0.22631)",
-        "x-ms-client-request-id": "d44935f13793abfd11d1ee6285837214",
+        "traceparent": "00-22b1b525cce1567af2cc257d21859a33-451a17de6ecf7490-00",
+        "User-Agent": "azsdk-net-Communication.Messages/1.0.0-alpha.20240209.1 (.NET Framework 4.8.9181.0; Microsoft Windows 10.0.22631 )",
+        "x-ms-client-request-id": "732dacbe91e84ea0e340f9e26555eb6d",
         "x-ms-content-sha256": "Sanitized",
-        "x-ms-date": "Fri, 09 Feb 2024 22:11:55 GMT",
+        "x-ms-date": "Fri, 09 Feb 2024 23:00:41 GMT",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 400,
       "ResponseHeaders": {
-        "Connection": "keep-alive",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 09 Feb 2024 22:11:57 GMT",
-        "MS-CV": "YM4\u002B1uZQrUSrDtKGsGE3Mw.0",
+        "Date": "Fri, 09 Feb 2024 23:00:43 GMT",
+        "MS-CV": "LPDXnQJE/UCHnQhKNYEe4g.0",
         "Request-Context": "appId=",
         "Strict-Transport-Security": "max-age=2592000",
         "Transfer-Encoding": "chunked",
-        "x-azure-ref": "20240209T221157Z-pfcn9br3b11kd2xessn2xp84ns000000030000000001kuh9",
+        "X-Azure-Ref": "0nK7GZQAAAAAYT5DBjnSkS7GtgWXd9e6JTU5aMjIxMDYwNjEyMDM3AGYwOWE0YzEzLTIxZjEtNDhlYy05Y2Y3LTY2NTQ1Njg0YjY0Mg==",
         "X-Cache": "CONFIG_NOCACHE",
         "X-Processing-Time": "5ms"
       },
@@ -38,6 +37,6 @@
   ],
   "Variables": {
     "COMMUNICATION_LIVETEST_DYNAMIC_CONNECTION_STRING": "endpoint=https://sanitized.communication.azure.com/;accesskey=Kg==",
-    "RandomSeed": "429221085"
+    "RandomSeed": "62708015"
   }
 }
