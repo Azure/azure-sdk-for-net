@@ -93,6 +93,7 @@ internal static class StreamExtensions
     public static async Task CopyToAsync(this Stream source, Stream destination, TimeSpan timeout, CancellationToken cancellationToken)
     {
         using CancellationTokenSource cts = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
+        cts.CancelAfter(timeout);
 
         // If cancellation is possible (whether due to network timeout or a user cancellation token being passed), then
         // register callback to dispose the stream on cancellation.
@@ -107,7 +108,6 @@ internal static class StreamExtensions
         {
             while (true)
             {
-                cts.CancelAfter(timeout);
 #pragma warning disable CA1835 // ReadAsync(Memory<>) overload is not available in all targets
                 int bytesRead = await source.ReadAsync(buffer, 0, buffer.Length, cts.Token).ConfigureAwait(false);
 #pragma warning restore // ReadAsync(Memory<>) overload is not available in all targets
@@ -116,9 +116,16 @@ internal static class StreamExtensions
                 await destination.WriteAsync(new ReadOnlyMemory<byte>(buffer, 0, bytesRead), cts.Token).ConfigureAwait(false);
             }
         }
+        catch (Exception ex) when (ex is ObjectDisposedException
+                                      or IOException
+                                      or OperationCanceledException
+                                      or NotSupportedException)
+        {
+            CancellationHelper.ThrowIfCancellationRequestedOrTimeout(cancellationToken, cts.Token, ex, timeout);
+            throw;
+        }
         finally
         {
-            cts.CancelAfter(Timeout.InfiniteTimeSpan);
             ArrayPool<byte>.Shared.Return(buffer);
         }
     }
@@ -126,6 +133,7 @@ internal static class StreamExtensions
     public static void CopyTo(this Stream source, Stream destination, TimeSpan timeout, CancellationToken cancellationToken)
     {
         using CancellationTokenSource cts = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
+        cts.CancelAfter(timeout);
 
         // If cancellation is possible (whether due to network timeout or a user cancellation token being passed), then
         // register callback to dispose the stream on cancellation.
@@ -142,13 +150,19 @@ internal static class StreamExtensions
             while ((read = source.Read(buffer, 0, buffer.Length)) != 0)
             {
                 cts.Token.ThrowIfCancellationRequested();
-                cts.CancelAfter(timeout);
                 destination.Write(buffer, 0, read);
             }
         }
+        catch (Exception ex) when (ex is ObjectDisposedException
+                                      or IOException
+                                      or OperationCanceledException
+                                      or NotSupportedException)
+        {
+            CancellationHelper.ThrowIfCancellationRequestedOrTimeout(cancellationToken, cts.Token, ex, timeout);
+            throw;
+        }
         finally
         {
-            cts.CancelAfter(Timeout.InfiniteTimeSpan);
             ArrayPool<byte>.Shared.Return(buffer);
         }
     }

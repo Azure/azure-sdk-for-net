@@ -68,18 +68,18 @@ internal class ReadTimeoutStream : Stream
         // We dispose stream on timeout so catch and check if cancellation token was cancelled
         catch (IOException ex)
         {
-            ResponseBufferingPolicy.ThrowIfCancellationRequestedOrTimeout(default, source.Token, ex, _readTimeout);
+            CancellationHelper.ThrowIfCancellationRequestedOrTimeout(default, source.Token, ex, _readTimeout);
             throw;
         }
         // We dispose stream on timeout so catch and check if cancellation token was cancelled
         catch (ObjectDisposedException ex)
         {
-            ResponseBufferingPolicy.ThrowIfCancellationRequestedOrTimeout(default, source.Token, ex, _readTimeout);
+            CancellationHelper.ThrowIfCancellationRequestedOrTimeout(default, source.Token, ex, _readTimeout);
             throw;
         }
         catch (OperationCanceledException ex)
         {
-            ResponseBufferingPolicy.ThrowIfCancellationRequestedOrTimeout(default, source.Token, ex, _readTimeout);
+            CancellationHelper.ThrowIfCancellationRequestedOrTimeout(default, source.Token, ex, _readTimeout);
             throw;
         }
         finally
@@ -100,18 +100,18 @@ internal class ReadTimeoutStream : Stream
         // We dispose stream on timeout so catch and check if cancellation token was cancelled
         catch (IOException ex)
         {
-            ResponseBufferingPolicy.ThrowIfCancellationRequestedOrTimeout(cancellationToken, source.Token, ex, _readTimeout);
+            CancellationHelper.ThrowIfCancellationRequestedOrTimeout(cancellationToken, source.Token, ex, _readTimeout);
             throw;
         }
         // We dispose stream on timeout so catch and check if cancellation token was cancelled
         catch (ObjectDisposedException ex)
         {
-            ResponseBufferingPolicy.ThrowIfCancellationRequestedOrTimeout(cancellationToken, source.Token, ex, _readTimeout);
+            CancellationHelper.ThrowIfCancellationRequestedOrTimeout(cancellationToken, source.Token, ex, _readTimeout);
             throw;
         }
         catch (OperationCanceledException ex)
         {
-            ResponseBufferingPolicy.ThrowIfCancellationRequestedOrTimeout(cancellationToken, source.Token, ex, _readTimeout);
+            CancellationHelper.ThrowIfCancellationRequestedOrTimeout(cancellationToken, source.Token, ex, _readTimeout);
             throw;
         }
         finally

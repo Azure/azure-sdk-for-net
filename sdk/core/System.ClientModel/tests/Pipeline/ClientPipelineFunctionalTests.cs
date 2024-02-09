@@ -216,6 +216,7 @@ public class ClientPipelineFunctionalTests : SyncAsyncTestBase
             NetworkTimeout = TimeSpan.FromMilliseconds(500),
             RetryPolicy = new MockRetryPolicy(maxRetries: 0, i => TimeSpan.FromMilliseconds(10)),
         };
+
         ClientPipeline pipeline = ClientPipeline.Create(options);
 
         using TestServer testServer = new TestServer(
