@@ -6,6 +6,10 @@
 
 ### Breaking Changes
 
+* Disable Performance Counters to prevent runtime exceptions.
+  This will be reenabled in a future release.
+  ([]())
+
 ### Bugs Fixed
 
 ### Other Changes
