@@ -85,11 +85,11 @@ namespace Azure.ResourceManager.KeyVault
     {
         public KeyVaultData(Azure.Core.AzureLocation location, Azure.ResourceManager.KeyVault.Models.KeyVaultProperties properties) { }
         public Azure.ResourceManager.KeyVault.Models.KeyVaultProperties Properties { get { throw null; } set { } }
-        System.BinaryData global::System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.KeyVault.KeyVaultData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.KeyVault.KeyVaultData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.KeyVault.KeyVaultData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.KeyVault.KeyVaultData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.KeyVault.KeyVaultData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.KeyVault.KeyVaultData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.KeyVault.KeyVaultData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.KeyVault.KeyVaultData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public static partial class KeyVaultExtensions
     {
@@ -242,11 +242,11 @@ namespace Azure.ResourceManager.KeyVault
         public Azure.Core.AzureLocation? Location { get { throw null; } }
         public Azure.ResourceManager.KeyVault.Models.SecretProperties Properties { get { throw null; } set { } }
         public System.Collections.Generic.IReadOnlyDictionary<string, string> Tags { get { throw null; } }
-        System.BinaryData global::System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.KeyVault.KeyVaultSecretData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.KeyVault.KeyVaultSecretData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.KeyVault.KeyVaultSecretData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.KeyVault.KeyVaultSecretData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.KeyVault.KeyVaultSecretData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.KeyVault.KeyVaultSecretData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.KeyVault.KeyVaultSecretData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.KeyVault.KeyVaultSecretData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class KeyVaultSecretResource : Azure.ResourceManager.ArmResource
     {
@@ -563,11 +563,11 @@ namespace Azure.ResourceManager.KeyVault.Models
         public System.Collections.Generic.IList<Azure.ResourceManager.KeyVault.Models.IdentityAccessKeyPermission> Keys { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.KeyVault.Models.IdentityAccessSecretPermission> Secrets { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.KeyVault.Models.IdentityAccessStoragePermission> Storage { get { throw null; } }
-        System.BinaryData global::System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.KeyVault.Models.IdentityAccessPermissions>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.KeyVault.Models.IdentityAccessPermissions System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.KeyVault.Models.IdentityAccessPermissions>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.KeyVault.Models.IdentityAccessPermissions>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.KeyVault.Models.IdentityAccessPermissions System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.KeyVault.Models.IdentityAccessPermissions>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.KeyVault.Models.IdentityAccessPermissions>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.KeyVault.Models.IdentityAccessPermissions>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct IdentityAccessSecretPermission : System.IEquatable<Azure.ResourceManager.KeyVault.Models.IdentityAccessSecretPermission>
@@ -632,32 +632,32 @@ namespace Azure.ResourceManager.KeyVault.Models
         public string ObjectId { get { throw null; } set { } }
         public Azure.ResourceManager.KeyVault.Models.IdentityAccessPermissions Permissions { get { throw null; } set { } }
         public System.Guid TenantId { get { throw null; } set { } }
-        System.BinaryData global::System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.KeyVault.Models.KeyVaultAccessPolicy>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.KeyVault.Models.KeyVaultAccessPolicy System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.KeyVault.Models.KeyVaultAccessPolicy>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.KeyVault.Models.KeyVaultAccessPolicy>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.KeyVault.Models.KeyVaultAccessPolicy System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.KeyVault.Models.KeyVaultAccessPolicy>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.KeyVault.Models.KeyVaultAccessPolicy>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.KeyVault.Models.KeyVaultAccessPolicy>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class KeyVaultAccessPolicyParameters : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.KeyVault.Models.KeyVaultAccessPolicyParameters>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.KeyVault.Models.KeyVaultAccessPolicyParameters>
     {
         public KeyVaultAccessPolicyParameters(Azure.ResourceManager.KeyVault.Models.KeyVaultAccessPolicyProperties properties) { }
         public System.Collections.Generic.IList<Azure.ResourceManager.KeyVault.Models.KeyVaultAccessPolicy> AccessPolicies { get { throw null; } set { } }
         public Azure.Core.AzureLocation? Location { get { throw null; } }
-        System.BinaryData global::System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.KeyVault.Models.KeyVaultAccessPolicyParameters>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.KeyVault.Models.KeyVaultAccessPolicyParameters System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.KeyVault.Models.KeyVaultAccessPolicyParameters>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.KeyVault.Models.KeyVaultAccessPolicyParameters>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.KeyVault.Models.KeyVaultAccessPolicyParameters System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.KeyVault.Models.KeyVaultAccessPolicyParameters>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.KeyVault.Models.KeyVaultAccessPolicyParameters>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.KeyVault.Models.KeyVaultAccessPolicyParameters>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class KeyVaultAccessPolicyProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.KeyVault.Models.KeyVaultAccessPolicyProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.KeyVault.Models.KeyVaultAccessPolicyProperties>
     {
         public KeyVaultAccessPolicyProperties(System.Collections.Generic.IEnumerable<Azure.ResourceManager.KeyVault.Models.KeyVaultAccessPolicy> accessPolicies) { }
         public System.Collections.Generic.IList<Azure.ResourceManager.KeyVault.Models.KeyVaultAccessPolicy> AccessPolicies { get { throw null; } }
-        System.BinaryData global::System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.KeyVault.Models.KeyVaultAccessPolicyProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.KeyVault.Models.KeyVaultAccessPolicyProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.KeyVault.Models.KeyVaultAccessPolicyProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.KeyVault.Models.KeyVaultAccessPolicyProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.KeyVault.Models.KeyVaultAccessPolicyProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.KeyVault.Models.KeyVaultAccessPolicyProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.KeyVault.Models.KeyVaultAccessPolicyProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.KeyVault.Models.KeyVaultAccessPolicyProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct KeyVaultActionsRequiredMessage : System.IEquatable<Azure.ResourceManager.KeyVault.Models.KeyVaultActionsRequiredMessage>
@@ -920,11 +920,11 @@ namespace Azure.ResourceManager.KeyVault.Models
         public int? SoftDeleteRetentionInDays { get { throw null; } set { } }
         public System.Guid TenantId { get { throw null; } set { } }
         public System.Uri VaultUri { get { throw null; } set { } }
-        System.BinaryData global::System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.KeyVault.Models.KeyVaultProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.KeyVault.Models.KeyVaultProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.KeyVault.Models.KeyVaultProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.KeyVault.Models.KeyVaultProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.KeyVault.Models.KeyVaultProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.KeyVault.Models.KeyVaultProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.KeyVault.Models.KeyVaultProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.KeyVault.Models.KeyVaultProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct KeyVaultProvisioningState : System.IEquatable<Azure.ResourceManager.KeyVault.Models.KeyVaultProvisioningState>
@@ -971,11 +971,11 @@ namespace Azure.ResourceManager.KeyVault.Models
         public KeyVaultSku(Azure.ResourceManager.KeyVault.Models.KeyVaultSkuFamily family, Azure.ResourceManager.KeyVault.Models.KeyVaultSkuName name) { }
         public Azure.ResourceManager.KeyVault.Models.KeyVaultSkuFamily Family { get { throw null; } set { } }
         public Azure.ResourceManager.KeyVault.Models.KeyVaultSkuName Name { get { throw null; } set { } }
-        System.BinaryData global::System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.KeyVault.Models.KeyVaultSku>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.KeyVault.Models.KeyVaultSku System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.KeyVault.Models.KeyVaultSku>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.KeyVault.Models.KeyVaultSku>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.KeyVault.Models.KeyVaultSku System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.KeyVault.Models.KeyVaultSku>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.KeyVault.Models.KeyVaultSku>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.KeyVault.Models.KeyVaultSku>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct KeyVaultSkuFamily : System.IEquatable<Azure.ResourceManager.KeyVault.Models.KeyVaultSkuFamily>
@@ -1430,10 +1430,10 @@ namespace Azure.ResourceManager.KeyVault.Models
         public System.Uri SecretUri { get { throw null; } }
         public string SecretUriWithVersion { get { throw null; } }
         public string Value { get { throw null; } set { } }
-        System.BinaryData global::System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.KeyVault.Models.SecretProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.KeyVault.Models.SecretProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.KeyVault.Models.SecretProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.KeyVault.Models.SecretProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.KeyVault.Models.SecretProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.KeyVault.Models.SecretProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.KeyVault.Models.SecretProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.KeyVault.Models.SecretProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
 }

@@ -1119,11 +1119,11 @@ namespace Azure.ResourceManager.Resources
         public ResourceGroupData(Azure.Core.AzureLocation location) { }
         public string ManagedBy { get { throw null; } set { } }
         public string ResourceGroupProvisioningState { get { throw null; } }
-        System.BinaryData global::System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.ResourceGroupData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Resources.ResourceGroupData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Resources.ResourceGroupData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Resources.ResourceGroupData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Resources.ResourceGroupData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.ResourceGroupData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.ResourceGroupData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.ResourceGroupData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class ResourceGroupResource : Azure.ResourceManager.ArmResource
     {
