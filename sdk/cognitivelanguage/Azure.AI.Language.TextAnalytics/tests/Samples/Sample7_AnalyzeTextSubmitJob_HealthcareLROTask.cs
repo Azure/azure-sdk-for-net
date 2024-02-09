@@ -17,8 +17,8 @@ namespace Azure.AI.Language.TextAnalytics.Tests.Samples
         public void HealthcareLROTask()
         {
             #region Snippet:Sample7_AnalyzeTextSubmitJob_HealthcareLROTask
-            Uri endpoint = new("<endpoint>");
-            AzureKeyCredential credential = new("<apiKey>");
+            Uri endpoint = TestEnvironment.Endpoint;
+            AzureKeyCredential credential = new(TestEnvironment.ApiKey);
             Text.Language client = new AnalyzeTextClient(endpoint, credential).GetLanguageClient(apiVersion: "2023-04-01");
 
             string documentA =
@@ -146,6 +146,5 @@ namespace Azure.AI.Language.TextAnalytics.Tests.Samples
             }
             #endregion
         }
-
     }
 }

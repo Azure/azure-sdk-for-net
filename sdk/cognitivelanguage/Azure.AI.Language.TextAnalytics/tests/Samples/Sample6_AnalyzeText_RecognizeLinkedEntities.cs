@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Azure.AI.Language.Text;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
@@ -14,11 +15,11 @@ namespace Azure.AI.Language.TextAnalytics.Tests.Samples
     {
         [Test]
         [AsyncOnly]
-        public async void RecognizeLinkedEntities()
+        public async Task RecognizeLinkedEntities()
         {
             #region Snippet:Sample6_AnalyzeTextAsync_RecognizeLinkedEntities
-            Uri endpoint = new("<endpoint>");
-            AzureKeyCredential credential = new("<apiKey>");
+            Uri endpoint = TestEnvironment.Endpoint;
+            AzureKeyCredential credential = new(TestEnvironment.ApiKey);
             Text.Language client = new AnalyzeTextClient(endpoint, credential).GetLanguageClient(apiVersion: "2023-04-01");
 
             string documentA =
@@ -48,7 +49,7 @@ namespace Azure.AI.Language.TextAnalytics.Tests.Samples
                         new MultiLanguageInput("A", documentA, "en"),
                         new MultiLanguageInput("B", documentB, "en"),
                         new MultiLanguageInput("C", documentC, "es"),
-                        new MultiLanguageInput("C", documentC),
+                        new MultiLanguageInput("D", documentD),
                     }
                 },
                 Parameters = new EntityLinkingTaskParameters()
@@ -92,10 +93,5 @@ namespace Azure.AI.Language.TextAnalytics.Tests.Samples
             }
             #endregion
         }
-
     }
 }
-
-
-
-

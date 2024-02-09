@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Azure.AI.Language.Text;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
@@ -14,11 +15,11 @@ namespace Azure.AI.Language.TextAnalytics.Tests.Samples
     {
         [Test]
         [AsyncOnly]
-        public async void Sentiment()
+        public async Task Sentiment()
         {
             #region Snippet:Sample2_AnalyzeTextAsync_Sentiment
-            Uri endpoint = new("<endpoint>");
-            AzureKeyCredential credential = new("<apiKey>");
+            Uri endpoint = TestEnvironment.Endpoint;
+            AzureKeyCredential credential = new(TestEnvironment.ApiKey);
             Text.Language client = new AnalyzeTextClient(endpoint, credential).GetLanguageClient(apiVersion: "2023-04-01");
 
             string documentA =
@@ -27,9 +28,9 @@ namespace Azure.AI.Language.TextAnalytics.Tests.Samples
                 + " restaurant and gave us a voucher for nearby restaurants.";
 
             string documentB =
-                "Nos hospedamos en el Hotel Foo la semana pasada por nuestro aniversario. La gerencia sabía de nuestra"
-                + " celebración y me ayudaron a tenerle una sorpresa a mi pareja. La habitación estaba limpia y"
-                + " decorada como yo había pedido. Una gran experiencia. El próximo año volveremos.";
+                "Nos hospedamos en el Hotel Foo la semana pasada por nuestro aniversario. La gerencia sabï¿½a de nuestra"
+                + " celebraciï¿½n y me ayudaron a tenerle una sorpresa a mi pareja. La habitaciï¿½n estaba limpia y"
+                + " decorada como yo habï¿½a pedido. Una gran experiencia. El prï¿½ximo aï¿½o volveremos.";
 
             string documentC =
                 "The rooms were beautiful. The AC was good and quiet, which was key for us as outside it was 100F and"
@@ -57,13 +58,10 @@ namespace Azure.AI.Language.TextAnalytics.Tests.Samples
 
                 foreach (SentimentResponseWithDocumentDetectedLanguage sentimentResponseWithDocumentDetectedLanguage in sentimentTaskResult.Results.Documents)
                 {
-                    foreach (SentimentDocumentResult sentimentDocumentResult in sentimentResponseWithDocumentDetectedLanguage.Documents)
-                    {
-                        Console.WriteLine($"Document {sentimentDocumentResult.Id} sentiment is {sentimentDocumentResult.Sentiment} with: ");
-                        Console.WriteLine($"  Positive confidence score: {sentimentDocumentResult.ConfidenceScores.Positive}");
-                        Console.WriteLine($"  Neutral confidence score: {sentimentDocumentResult.ConfidenceScores.Neutral}");
-                        Console.WriteLine($"  Negative confidence score: {sentimentDocumentResult.ConfidenceScores.Negative}");
-                    }
+                    Console.WriteLine($"Document {sentimentResponseWithDocumentDetectedLanguage.Id} sentiment is {sentimentResponseWithDocumentDetectedLanguage.Sentiment} with: ");
+                    Console.WriteLine($"  Positive confidence score: {sentimentResponseWithDocumentDetectedLanguage.ConfidenceScores.Positive}");
+                    Console.WriteLine($"  Neutral confidence score: {sentimentResponseWithDocumentDetectedLanguage.ConfidenceScores.Neutral}");
+                    Console.WriteLine($"  Negative confidence score: {sentimentResponseWithDocumentDetectedLanguage.ConfidenceScores.Negative}");
                 }
 
                 foreach (AnalyzeTextDocumentError analyzeTextDocumentError in sentimentTaskResult.Results.Errors)
@@ -85,11 +83,11 @@ namespace Azure.AI.Language.TextAnalytics.Tests.Samples
 
         [Test]
         [AsyncOnly]
-        public async void Sentiment_OpinionMining()
+        public async Task Sentiment_OpinionMining()
         {
             #region Snippet:Sample2_AnalyzeTextAsync_Sentiment_OpinionMining
-            Uri endpoint = new("<endpoint>");
-            AzureKeyCredential credential = new("<apiKey>");
+            Uri endpoint = TestEnvironment.Endpoint;
+            AzureKeyCredential credential = new(TestEnvironment.ApiKey);
             Text.Language client = new AnalyzeTextClient(endpoint, credential).GetLanguageClient(apiVersion: "2023-04-01");
 
             string reviewA =
@@ -157,17 +155,14 @@ namespace Azure.AI.Language.TextAnalytics.Tests.Samples
             Dictionary<string, int> complaints = new();
             foreach (SentimentResponseWithDocumentDetectedLanguage sentimentResponseWithDocumentDetectedLanguage in reviews.Results.Documents)
             {
-                foreach (SentimentDocumentResult review in sentimentResponseWithDocumentDetectedLanguage.Documents)
+                foreach (SentenceSentiment sentence in sentimentResponseWithDocumentDetectedLanguage.Sentences)
                 {
-                    foreach (SentenceSentiment sentence in review.Sentences)
+                    foreach (SentenceTarget target in sentence.Targets)
                     {
-                        foreach (SentenceTarget target in sentence.Targets)
+                        if (target.Sentiment == SentimentValue.Negative)
                         {
-                            if (target.Sentiment == SentimentValue.Negative)
-                            {
-                                complaints.TryGetValue(target.Text, out int value);
-                                complaints[target.Text] = value + 1;
-                            }
+                            complaints.TryGetValue(target.Text, out int value);
+                            complaints[target.Text] = value + 1;
                         }
                     }
                 }

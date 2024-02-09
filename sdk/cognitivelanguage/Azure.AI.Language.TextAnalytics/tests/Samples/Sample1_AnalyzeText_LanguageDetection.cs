@@ -12,11 +12,11 @@ namespace Azure.AI.Language.TextAnalytics.Tests.Samples
     {
         [Test]
         [SyncOnly]
-        public async void LanguageDetection()
+        public void LanguageDetection()
         {
             #region Snippet:Sample1_AnalyzeTextAsync_LanguageDetection
-            Uri endpoint = new("<endpoint>");
-            AzureKeyCredential credential = new("<apiKey>");
+            Uri endpoint = TestEnvironment.Endpoint;
+            AzureKeyCredential credential = new(TestEnvironment.ApiKey);
             Text.Language client = new AnalyzeTextClient(endpoint, credential).GetLanguageClient(apiVersion: "2023-04-01");
 
             string documentA =
@@ -57,7 +57,7 @@ namespace Azure.AI.Language.TextAnalytics.Tests.Samples
                     }
                 };
 
-                Response<AnalyzeTextTaskResult> response = await client.AnalyzeTextAsync(body);
+                Response<AnalyzeTextTaskResult> response = client.AnalyzeText(body);
                 LanguageDetectionTaskResult languageDetectionTaskResult = (LanguageDetectionTaskResult)response.Value;
 
                 foreach (LanguageDetectionDocumentResult document in languageDetectionTaskResult.Results.Documents)
@@ -75,11 +75,11 @@ namespace Azure.AI.Language.TextAnalytics.Tests.Samples
 
         [Test]
         [SyncOnly]
-        public async void LanguageDetection_CountryHint()
+        public void LanguageDetection_CountryHint()
         {
             #region Snippet:Sample1_AnalyzeTextAsync_LanguageDetection_CountryHint
-            Uri endpoint = new("<endpoint>");
-            AzureKeyCredential credential = new("<apiKey>");
+            Uri endpoint = TestEnvironment.Endpoint;
+            AzureKeyCredential credential = new(TestEnvironment.ApiKey);
             Text.Language client = new AnalyzeTextClient(endpoint, credential).GetLanguageClient(apiVersion: "2023-04-01");
 
             string documentA =
@@ -120,7 +120,7 @@ namespace Azure.AI.Language.TextAnalytics.Tests.Samples
                     }
                 };
 
-                Response<AnalyzeTextTaskResult> response = await client.AnalyzeTextAsync(body);
+                Response<AnalyzeTextTaskResult> response = client.AnalyzeText(body);
                 LanguageDetectionTaskResult languageDetectionTaskResult = (LanguageDetectionTaskResult)response.Value;
 
                 foreach (LanguageDetectionDocumentResult document in languageDetectionTaskResult.Results.Documents)

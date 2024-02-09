@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Azure.AI.Language.Text;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
@@ -14,11 +15,11 @@ namespace Azure.AI.Language.TextAnalytics.Tests.Samples
     {
         [Test]
         [AsyncOnly]
-        public async void CustomEntitiesLROTask()
+        public async Task CustomEntitiesLROTask()
         {
             #region Snippet:Sample8_AnalyzeTextSubmitJob_CustomEntitiesLROTask
-            Uri endpoint = new("<endpoint>");
-            AzureKeyCredential credential = new("<apiKey>");
+            Uri endpoint = TestEnvironment.Endpoint;
+            AzureKeyCredential credential = new(TestEnvironment.ApiKey);
             Text.Language client = new AnalyzeTextClient(endpoint, credential).GetLanguageClient(apiVersion: "2023-04-01");
 
             string documentA =
@@ -45,8 +46,8 @@ namespace Azure.AI.Language.TextAnalytics.Tests.Samples
 
             // Specify the project and deployment names of the desired custom model. To train your own custom model to
             // recognize custom entities, see https://aka.ms/azsdk/textanalytics/customentityrecognition.
-            string projectName = "<projectName>";
-            string deploymentName = "<deploymentName>";
+            string projectName = TestEnvironment.CTProjectName;
+            string deploymentName = TestEnvironment.CTDeploymentName;
 
             // Perform the text analysis operation.
             AnalyzeTextJobsInput analyzeTextJobsInput = new AnalyzeTextJobsInput(multiLanguageAnalysisInput, new AnalyzeTextLROTask[]
@@ -95,6 +96,5 @@ namespace Azure.AI.Language.TextAnalytics.Tests.Samples
             }
             #endregion
         }
-
     }
 }

@@ -17,8 +17,8 @@ namespace Azure.AI.Language.TextAnalytics.Tests.Samples
         public void Sentiment()
         {
             #region Snippet:Sample2_AnalyzeText_Sentiment
-            Uri endpoint = new("<endpoint>");
-            AzureKeyCredential credential = new("<apiKey>");
+            Uri endpoint = TestEnvironment.Endpoint;
+            AzureKeyCredential credential = new(TestEnvironment.ApiKey);
             Text.Language client = new AnalyzeTextClient(endpoint, credential).GetLanguageClient(apiVersion: "2023-04-01");
 
             string documentA =
@@ -57,13 +57,13 @@ namespace Azure.AI.Language.TextAnalytics.Tests.Samples
 
                 foreach (SentimentResponseWithDocumentDetectedLanguage sentimentResponseWithDocumentDetectedLanguage in sentimentTaskResult.Results.Documents)
                 {
-                    foreach (SentimentDocumentResult sentimentDocumentResult in sentimentResponseWithDocumentDetectedLanguage.Documents)
-                    {
-                        Console.WriteLine($"Document {sentimentDocumentResult.Id} sentiment is {sentimentDocumentResult.Sentiment} with: ");
-                        Console.WriteLine($"  Positive confidence score: {sentimentDocumentResult.ConfidenceScores.Positive}");
-                        Console.WriteLine($"  Neutral confidence score: {sentimentDocumentResult.ConfidenceScores.Neutral}");
-                        Console.WriteLine($"  Negative confidence score: {sentimentDocumentResult.ConfidenceScores.Negative}");
-                    }
+                    //foreach (SentimentDocumentResult sentimentDocumentResult in sentimentResponseWithDocumentDetectedLanguage.Documents)
+                    //{
+                    //    Console.WriteLine($"Document {sentimentDocumentResult.Id} sentiment is {sentimentDocumentResult.Sentiment} with: ");
+                    //    Console.WriteLine($"  Positive confidence score: {sentimentDocumentResult.ConfidenceScores.Positive}");
+                    //    Console.WriteLine($"  Neutral confidence score: {sentimentDocumentResult.ConfidenceScores.Neutral}");
+                    //    Console.WriteLine($"  Negative confidence score: {sentimentDocumentResult.ConfidenceScores.Negative}");
+                    //}
                 }
 
                 foreach (AnalyzeTextDocumentError analyzeTextDocumentError in sentimentTaskResult.Results.Errors)
@@ -88,8 +88,8 @@ namespace Azure.AI.Language.TextAnalytics.Tests.Samples
         public void Sentiment_OpinionMining()
         {
             #region Snippet:Sample2_AnalyzeText_Sentiment_OpinionMining
-            Uri endpoint = new("<endpoint>");
-            AzureKeyCredential credential = new("<apiKey>");
+            Uri endpoint = TestEnvironment.Endpoint;
+            AzureKeyCredential credential = new(TestEnvironment.ApiKey);
             Text.Language client = new AnalyzeTextClient(endpoint, credential).GetLanguageClient(apiVersion: "2023-04-01");
 
             string reviewA =
@@ -157,17 +157,14 @@ namespace Azure.AI.Language.TextAnalytics.Tests.Samples
             Dictionary<string, int> complaints = new();
             foreach (SentimentResponseWithDocumentDetectedLanguage sentimentResponseWithDocumentDetectedLanguage in reviews.Results.Documents)
             {
-                foreach (SentimentDocumentResult review in sentimentResponseWithDocumentDetectedLanguage.Documents)
+                foreach (SentenceSentiment sentence in sentimentResponseWithDocumentDetectedLanguage.Sentences)
                 {
-                    foreach (SentenceSentiment sentence in review.Sentences)
+                    foreach (SentenceTarget target in sentence.Targets)
                     {
-                        foreach (SentenceTarget target in sentence.Targets)
+                        if (target.Sentiment == SentimentValue.Negative)
                         {
-                            if (target.Sentiment == SentimentValue.Negative)
-                            {
-                                complaints.TryGetValue(target.Text, out int value);
-                                complaints[target.Text] = value + 1;
-                            }
+                            complaints.TryGetValue(target.Text, out int value);
+                            complaints[target.Text] = value + 1;
                         }
                     }
                 }

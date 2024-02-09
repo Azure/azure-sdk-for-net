@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Azure.AI.Language.Text;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
@@ -14,11 +15,11 @@ namespace Azure.AI.Language.TextAnalytics.Tests.Samples
     {
         [Test]
         [AsyncOnly]
-        public async void ExtractKeyPhrases()
+        public async Task ExtractKeyPhrases()
         {
             #region Snippet:Sample3_AnalyzeTextAsync_ExtractKeyPhrases
-            Uri endpoint = new("<endpoint>");
-            AzureKeyCredential credential = new("<apiKey>");
+            Uri endpoint = TestEnvironment.Endpoint;
+            AzureKeyCredential credential = new(TestEnvironment.ApiKey);
             Text.Language client = new AnalyzeTextClient(endpoint, credential).GetLanguageClient(apiVersion: "2023-04-01");
 
             string documentA =
@@ -82,6 +83,5 @@ namespace Azure.AI.Language.TextAnalytics.Tests.Samples
             }
             #endregion
         }
-
     }
 }

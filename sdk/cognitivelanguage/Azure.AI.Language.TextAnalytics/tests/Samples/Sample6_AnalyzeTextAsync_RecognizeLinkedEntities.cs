@@ -17,15 +17,15 @@ namespace Azure.AI.Language.TextAnalytics.Tests.Samples
         public void RecognizeLinkedEntities()
         {
             #region Snippet:Sample6_AnalyzeText_RecognizeLinkedEntities
-            Uri endpoint = new("<endpoint>");
-            AzureKeyCredential credential = new("<apiKey>");
+            Uri endpoint = TestEnvironment.Endpoint;
+            AzureKeyCredential credential = new(TestEnvironment.ApiKey);
             Text.Language client = new AnalyzeTextClient(endpoint, credential).GetLanguageClient(apiVersion: "2023-04-01");
 
             string documentA =
-    "Microsoft was founded by Bill Gates with some friends he met at Harvard. One of his friends, Steve"
-    + " Ballmer, eventually became CEO after Bill Gates as well.Steve Ballmer eventually stepped down as"
-    + " CEO of Microsoft, and was succeeded by Satya Nadella. Microsoft originally moved its headquarters"
-    + " to Bellevue, Washington in Januaray 1979, but is now headquartered in Redmond";
+                "Microsoft was founded by Bill Gates with some friends he met at Harvard. One of his friends, Steve"
+                + " Ballmer, eventually became CEO after Bill Gates as well.Steve Ballmer eventually stepped down as"
+                + " CEO of Microsoft, and was succeeded by Satya Nadella. Microsoft originally moved its headquarters"
+                + " to Bellevue, Washington in Januaray 1979, but is now headquartered in Redmond";
 
             string documentB =
                 "Microsoft was founded by Bill Gates and Paul Allen on April 4, 1975, to develop and sell BASIC"
@@ -48,7 +48,7 @@ namespace Azure.AI.Language.TextAnalytics.Tests.Samples
                         new MultiLanguageInput("A", documentA, "en"),
                         new MultiLanguageInput("B", documentB, "en"),
                         new MultiLanguageInput("C", documentC, "es"),
-                        new MultiLanguageInput("C", documentC),
+                        new MultiLanguageInput("D", documentD),
                     }
                 },
                 Parameters = new EntityLinkingTaskParameters()
@@ -92,6 +92,5 @@ namespace Azure.AI.Language.TextAnalytics.Tests.Samples
             }
             #endregion
         }
-
     }
 }

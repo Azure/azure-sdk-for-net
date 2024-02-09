@@ -7,8 +7,8 @@ This sample demonstrates how to detect the language of one or more documents.
 To create a new `AnalyzeTextClient`, you will need the service endpoint and credentials of your Language resource. To authenticate, you can use the [`DefaultAzureCredential`][DefaultAzureCredential], which combines credentials commonly used to authenticate when deployed on Azure, with credentials used to authenticate in a development environment. In this sample, however, you will use an `AzureKeyCredential`, which you can create with an API key.
 
 ```C# Snippet:CreateAnalyzeTextClient
-Uri endpoint = new("<endpoint>");
-AzureKeyCredential credential = new("<apiKey>");
+Uri endpoint = TestEnvironment.Endpoint;
+AzureKeyCredential credential = new(TestEnvironment.ApiKey);
 Language client = new AnalyzeTextClient(endpoint, credential).GetLanguageClient(apiVersion: "2023-04-01");
 ```
 

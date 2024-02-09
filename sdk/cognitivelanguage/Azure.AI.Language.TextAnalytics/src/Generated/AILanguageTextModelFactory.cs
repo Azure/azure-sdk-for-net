@@ -969,34 +969,20 @@ namespace Azure.AI.Language.Text
         }
 
         /// <summary> Initializes a new instance of <see cref="Text.SentimentResponseWithDocumentDetectedLanguage"/>. </summary>
-        /// <param name="errors"> Errors by document id. </param>
-        /// <param name="statistics"></param>
-        /// <param name="modelVersion"> This field indicates which model is used for scoring. </param>
-        /// <param name="detectedLanguage"> If 'language' is set to 'auto' for the document in the request this field will contain a 2 letter ISO 639-1 representation of the language detected for this document. </param>
-        /// <param name="documents"></param>
-        /// <returns> A new <see cref="Text.SentimentResponseWithDocumentDetectedLanguage"/> instance for mocking. </returns>
-        public static SentimentResponseWithDocumentDetectedLanguage SentimentResponseWithDocumentDetectedLanguage(IEnumerable<AnalyzeTextDocumentError> errors = null, RequestStatistics statistics = null, string modelVersion = null, string detectedLanguage = null, IEnumerable<SentimentDocumentResult> documents = null)
-        {
-            errors ??= new List<AnalyzeTextDocumentError>();
-            documents ??= new List<SentimentDocumentResult>();
-
-            return new SentimentResponseWithDocumentDetectedLanguage(errors?.ToList(), statistics, modelVersion, detectedLanguage, documents?.ToList());
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Text.SentimentDocumentResult"/>. </summary>
         /// <param name="id"> Unique, non-empty document identifier. </param>
         /// <param name="warnings"> Warnings encountered while processing document. </param>
         /// <param name="statistics"> if showStats=true was specified in the request this field will contain information about the document payload. </param>
         /// <param name="sentiment"> Predicted sentiment for document (Negative, Neutral, Positive, or Mixed). </param>
         /// <param name="confidenceScores"></param>
         /// <param name="sentences"></param>
-        /// <returns> A new <see cref="Text.SentimentDocumentResult"/> instance for mocking. </returns>
-        public static SentimentDocumentResult SentimentDocumentResult(string id = null, IEnumerable<DocumentWarning> warnings = null, DocumentStatistics statistics = null, Sentiment sentiment = default, SentimentConfidenceScores confidenceScores = null, IEnumerable<SentenceSentiment> sentences = null)
+        /// <param name="detectedLanguage"> If 'language' is set to 'auto' for the document in the request this field will contain a 2 letter ISO 639-1 representation of the language detected for this document. </param>
+        /// <returns> A new <see cref="Text.SentimentResponseWithDocumentDetectedLanguage"/> instance for mocking. </returns>
+        public static SentimentResponseWithDocumentDetectedLanguage SentimentResponseWithDocumentDetectedLanguage(string id = null, IEnumerable<DocumentWarning> warnings = null, DocumentStatistics statistics = null, Sentiment sentiment = default, SentimentConfidenceScores confidenceScores = null, IEnumerable<SentenceSentiment> sentences = null, string detectedLanguage = null)
         {
             warnings ??= new List<DocumentWarning>();
             sentences ??= new List<SentenceSentiment>();
 
-            return new SentimentDocumentResult(id, warnings?.ToList(), statistics, sentiment, confidenceScores, sentences?.ToList());
+            return new SentimentResponseWithDocumentDetectedLanguage(id, warnings?.ToList(), statistics, sentiment, confidenceScores, sentences?.ToList(), detectedLanguage);
         }
 
         /// <summary> Initializes a new instance of <see cref="Text.SentenceSentiment"/>. </summary>

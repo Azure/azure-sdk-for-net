@@ -20,21 +20,28 @@ namespace Azure.AI.Language.Text
             {
                 return null;
             }
-            IReadOnlyList<AnalyzeTextDocumentError> errors = default;
-            Optional<RequestStatistics> statistics = default;
-            string modelVersion = default;
+            string id = default;
+            IReadOnlyList<DocumentWarning> warnings = default;
+            Optional<DocumentStatistics> statistics = default;
+            Sentiment sentiment = default;
+            SentimentConfidenceScores confidenceScores = default;
+            IReadOnlyList<SentenceSentiment> sentences = default;
             Optional<string> detectedLanguage = default;
-            IReadOnlyList<SentimentDocumentResult> documents = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("errors"u8))
+                if (property.NameEquals("id"u8))
                 {
-                    List<AnalyzeTextDocumentError> array = new List<AnalyzeTextDocumentError>();
+                    id = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("warnings"u8))
+                {
+                    List<DocumentWarning> array = new List<DocumentWarning>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AnalyzeTextDocumentError.DeserializeAnalyzeTextDocumentError(item));
+                        array.Add(DocumentWarning.DeserializeDocumentWarning(item));
                     }
-                    errors = array;
+                    warnings = array;
                     continue;
                 }
                 if (property.NameEquals("statistics"u8))
@@ -43,12 +50,27 @@ namespace Azure.AI.Language.Text
                     {
                         continue;
                     }
-                    statistics = RequestStatistics.DeserializeRequestStatistics(property.Value);
+                    statistics = DocumentStatistics.DeserializeDocumentStatistics(property.Value);
                     continue;
                 }
-                if (property.NameEquals("modelVersion"u8))
+                if (property.NameEquals("sentiment"u8))
                 {
-                    modelVersion = property.Value.GetString();
+                    sentiment = new Sentiment(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("confidenceScores"u8))
+                {
+                    confidenceScores = SentimentConfidenceScores.DeserializeSentimentConfidenceScores(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("sentences"u8))
+                {
+                    List<SentenceSentiment> array = new List<SentenceSentiment>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(SentenceSentiment.DeserializeSentenceSentiment(item));
+                    }
+                    sentences = array;
                     continue;
                 }
                 if (property.NameEquals("detectedLanguage"u8))
@@ -56,18 +78,8 @@ namespace Azure.AI.Language.Text
                     detectedLanguage = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("documents"u8))
-                {
-                    List<SentimentDocumentResult> array = new List<SentimentDocumentResult>();
-                    foreach (var item in property.Value.EnumerateArray())
-                    {
-                        array.Add(SentimentDocumentResult.DeserializeSentimentDocumentResult(item));
-                    }
-                    documents = array;
-                    continue;
-                }
             }
-            return new SentimentResponseWithDocumentDetectedLanguage(errors, statistics.Value, modelVersion, detectedLanguage.Value, documents);
+            return new SentimentResponseWithDocumentDetectedLanguage(id, warnings, statistics.Value, sentiment, confidenceScores, sentences, detectedLanguage.Value);
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>

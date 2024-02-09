@@ -16,45 +16,58 @@ namespace Azure.AI.Language.Text
     public partial class SentimentResponseWithDocumentDetectedLanguage
     {
         /// <summary> Initializes a new instance of <see cref="SentimentResponseWithDocumentDetectedLanguage"/>. </summary>
-        /// <param name="errors"> Errors by document id. </param>
-        /// <param name="modelVersion"> This field indicates which model is used for scoring. </param>
-        /// <param name="documents"></param>
-        /// <exception cref="ArgumentNullException"> <paramref name="errors"/>, <paramref name="modelVersion"/> or <paramref name="documents"/> is null. </exception>
-        internal SentimentResponseWithDocumentDetectedLanguage(IEnumerable<AnalyzeTextDocumentError> errors, string modelVersion, IEnumerable<SentimentDocumentResult> documents)
+        /// <param name="id"> Unique, non-empty document identifier. </param>
+        /// <param name="warnings"> Warnings encountered while processing document. </param>
+        /// <param name="sentiment"> Predicted sentiment for document (Negative, Neutral, Positive, or Mixed). </param>
+        /// <param name="confidenceScores"></param>
+        /// <param name="sentences"></param>
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/>, <paramref name="warnings"/>, <paramref name="confidenceScores"/> or <paramref name="sentences"/> is null. </exception>
+        internal SentimentResponseWithDocumentDetectedLanguage(string id, IEnumerable<DocumentWarning> warnings, Sentiment sentiment, SentimentConfidenceScores confidenceScores, IEnumerable<SentenceSentiment> sentences)
         {
-            Argument.AssertNotNull(errors, nameof(errors));
-            Argument.AssertNotNull(modelVersion, nameof(modelVersion));
-            Argument.AssertNotNull(documents, nameof(documents));
+            Argument.AssertNotNull(id, nameof(id));
+            Argument.AssertNotNull(warnings, nameof(warnings));
+            Argument.AssertNotNull(confidenceScores, nameof(confidenceScores));
+            Argument.AssertNotNull(sentences, nameof(sentences));
 
-            Errors = errors.ToList();
-            ModelVersion = modelVersion;
-            Documents = documents.ToList();
+            Id = id;
+            Warnings = warnings.ToList();
+            Sentiment = sentiment;
+            ConfidenceScores = confidenceScores;
+            Sentences = sentences.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="SentimentResponseWithDocumentDetectedLanguage"/>. </summary>
-        /// <param name="errors"> Errors by document id. </param>
-        /// <param name="statistics"></param>
-        /// <param name="modelVersion"> This field indicates which model is used for scoring. </param>
+        /// <param name="id"> Unique, non-empty document identifier. </param>
+        /// <param name="warnings"> Warnings encountered while processing document. </param>
+        /// <param name="statistics"> if showStats=true was specified in the request this field will contain information about the document payload. </param>
+        /// <param name="sentiment"> Predicted sentiment for document (Negative, Neutral, Positive, or Mixed). </param>
+        /// <param name="confidenceScores"></param>
+        /// <param name="sentences"></param>
         /// <param name="detectedLanguage"> If 'language' is set to 'auto' for the document in the request this field will contain a 2 letter ISO 639-1 representation of the language detected for this document. </param>
-        /// <param name="documents"></param>
-        internal SentimentResponseWithDocumentDetectedLanguage(IReadOnlyList<AnalyzeTextDocumentError> errors, RequestStatistics statistics, string modelVersion, string detectedLanguage, IReadOnlyList<SentimentDocumentResult> documents)
+        internal SentimentResponseWithDocumentDetectedLanguage(string id, IReadOnlyList<DocumentWarning> warnings, DocumentStatistics statistics, Sentiment sentiment, SentimentConfidenceScores confidenceScores, IReadOnlyList<SentenceSentiment> sentences, string detectedLanguage)
         {
-            Errors = errors;
+            Id = id;
+            Warnings = warnings;
             Statistics = statistics;
-            ModelVersion = modelVersion;
+            Sentiment = sentiment;
+            ConfidenceScores = confidenceScores;
+            Sentences = sentences;
             DetectedLanguage = detectedLanguage;
-            Documents = documents;
         }
 
-        /// <summary> Errors by document id. </summary>
-        public IReadOnlyList<AnalyzeTextDocumentError> Errors { get; }
-        /// <summary> Gets the statistics. </summary>
-        public RequestStatistics Statistics { get; }
-        /// <summary> This field indicates which model is used for scoring. </summary>
-        public string ModelVersion { get; }
+        /// <summary> Unique, non-empty document identifier. </summary>
+        public string Id { get; }
+        /// <summary> Warnings encountered while processing document. </summary>
+        public IReadOnlyList<DocumentWarning> Warnings { get; }
+        /// <summary> if showStats=true was specified in the request this field will contain information about the document payload. </summary>
+        public DocumentStatistics Statistics { get; }
+        /// <summary> Predicted sentiment for document (Negative, Neutral, Positive, or Mixed). </summary>
+        public Sentiment Sentiment { get; }
+        /// <summary> Gets the confidence scores. </summary>
+        public SentimentConfidenceScores ConfidenceScores { get; }
+        /// <summary> Gets the sentences. </summary>
+        public IReadOnlyList<SentenceSentiment> Sentences { get; }
         /// <summary> If 'language' is set to 'auto' for the document in the request this field will contain a 2 letter ISO 639-1 representation of the language detected for this document. </summary>
         public string DetectedLanguage { get; }
-        /// <summary> Gets the documents. </summary>
-        public IReadOnlyList<SentimentDocumentResult> Documents { get; }
     }
 }

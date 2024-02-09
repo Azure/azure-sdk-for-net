@@ -7,8 +7,8 @@ This sample demonstrates how to analyze the sentiment in one or more documents.
 To create a new `AnalyzeTextClient`, you will need the service endpoint and credentials of your Language resource. To authenticate, you can use the [`DefaultAzureCredential`][DefaultAzureCredential], which combines credentials commonly used to authenticate when deployed on Azure, with credentials used to authenticate in a development environment. In this sample, however, you will use an `AzureKeyCredential`, which you can create with an API key.
 
 ```C# Snippet:CreateAnalyzeTextClient
-Uri endpoint = new("<endpoint>");
-AzureKeyCredential credential = new("<apiKey>");
+Uri endpoint = TestEnvironment.Endpoint;
+AzureKeyCredential credential = new(TestEnvironment.ApiKey);
 Language client = new AnalyzeTextClient(endpoint, credential).GetLanguageClient(apiVersion: "2023-04-01");
 ```
 
@@ -55,13 +55,10 @@ try
 
     foreach (SentimentResponseWithDocumentDetectedLanguage sentimentResponseWithDocumentDetectedLanguage in sentimentTaskResult.Results.Documents)
     {
-        foreach (SentimentDocumentResult sentimentDocumentResult in sentimentResponseWithDocumentDetectedLanguage.Documents)
-        {
-            Console.WriteLine($"Document {sentimentDocumentResult.Id} sentiment is {sentimentDocumentResult.Sentiment} with: ");
-            Console.WriteLine($"  Positive confidence score: {sentimentDocumentResult.ConfidenceScores.Positive}");
-            Console.WriteLine($"  Neutral confidence score: {sentimentDocumentResult.ConfidenceScores.Neutral}");
-            Console.WriteLine($"  Negative confidence score: {sentimentDocumentResult.ConfidenceScores.Negative}");
-        }
+        Console.WriteLine($"Document {sentimentResponseWithDocumentDetectedLanguage.Id} sentiment is {sentimentResponseWithDocumentDetectedLanguage.Sentiment} with: ");
+        Console.WriteLine($"  Positive confidence score: {sentimentResponseWithDocumentDetectedLanguage.ConfidenceScores.Positive}");
+        Console.WriteLine($"  Neutral confidence score: {sentimentResponseWithDocumentDetectedLanguage.ConfidenceScores.Neutral}");
+        Console.WriteLine($"  Negative confidence score: {sentimentResponseWithDocumentDetectedLanguage.ConfidenceScores.Negative}");
     }
 
     foreach (AnalyzeTextDocumentError analyzeTextDocumentError in sentimentTaskResult.Results.Errors)
@@ -171,19 +168,16 @@ Implementation for calculating complaints:
 private Dictionary<string, int> GetComplaints(SentimentTaskResult reviews)
 {
     Dictionary<string, int> complaints = new();
-    foreach (SentimentResponseWithDocumentDetectedLanguage sentimentResponseWithDocument in reviews.Results.Documents)
+    foreach (SentimentResponseWithDocumentDetectedLanguage sentimentResponseWithDocumentDetectedLanguage in reviews.Results.Documents)
     {
-        foreach (SentimentDocumentResult review in sentimentResponseWithDocument.Documents)
+        foreach (SentenceSentiment sentence in sentimentResponseWithDocumentDetectedLanguage.Sentences)
         {
-            foreach (SentenceSentiment sentence in review.Sentences)
+            foreach (SentenceTarget target in sentence.Targets)
             {
-                foreach (SentenceTarget target in sentence.Targets)
+                if (target.Sentiment == SentimentValue.Negative)
                 {
-                    if (target.Sentiment == SentimentValue.Negative)
-                    {
-                        complaints.TryGetValue(target.Text, out int value);
-                        complaints[target.Text] = value + 1;
-                    }
+                    complaints.TryGetValue(target.Text, out int value);
+                    complaints[target.Text] = value + 1;
                 }
             }
         }
