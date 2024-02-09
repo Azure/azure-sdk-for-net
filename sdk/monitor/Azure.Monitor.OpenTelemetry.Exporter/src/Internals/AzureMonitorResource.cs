@@ -21,10 +21,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
         {
             foreach (var userDefinedTag in UserDefinedAttributes)
             {
+                // Note: if Key exceeds MaxLength or if Value is null, the entire KVP will be dropped.
                 if (userDefinedTag.Key.Length <= SchemaConstants.MessageData_Properties_MaxKeyLength)
                 {
-                    // Note: if Key exceeds MaxLength or if Value is null, the entire KVP will be dropped.
-
                     var value = userDefinedTag.Value?.ToString();
 
                     if (value is null)
