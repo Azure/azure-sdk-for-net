@@ -13,7 +13,11 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
     {
         private const string azureMonitorResourceKey = "_OTELRESOURCE_";
 
-        public MetricsData(int version, Metric metric, MetricPoint metricPoint, AzureMonitorResource? azureMonitorResource = null) : base(version)
+        public MetricsData(
+            int version,
+            Metric metric,
+            MetricPoint metricPoint,
+            AzureMonitorResource? azureMonitorResource = null) : base(version)
         {
             if (metric == null)
             {

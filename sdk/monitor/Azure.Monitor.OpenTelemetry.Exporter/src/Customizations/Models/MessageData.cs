@@ -12,7 +12,10 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
 {
     internal partial class MessageData
     {
-        public MessageData(int version, LogRecord logRecord, AzureMonitorResource? azureMonitorResource = null) : base(version)
+        public MessageData(
+            int version,
+            LogRecord logRecord,
+            AzureMonitorResource? azureMonitorResource = null) : base(version)
         {
             Properties = new ChangeTrackingDictionary<string, string>();
 

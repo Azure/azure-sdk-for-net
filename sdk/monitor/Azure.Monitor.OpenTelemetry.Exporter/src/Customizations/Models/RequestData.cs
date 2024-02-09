@@ -11,7 +11,11 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
 {
     internal partial class RequestData
     {
-        public RequestData(int version, Activity activity, ref ActivityTagsProcessor activityTagsProcessor, AzureMonitorResource? azureMonitorResource = null) : base(version)
+        public RequestData(
+            int version,
+            Activity activity,
+            ref ActivityTagsProcessor activityTagsProcessor,
+            AzureMonitorResource? azureMonitorResource = null) : base(version)
         {
             string? responseCode = null;
             Properties = new ChangeTrackingDictionary<string, string>();
