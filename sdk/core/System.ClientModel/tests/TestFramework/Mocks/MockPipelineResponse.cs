@@ -15,6 +15,7 @@ public class MockPipelineResponse : PipelineResponse
     private int _status;
     private string _reasonPhrase;
     private Stream? _contentStream;
+    private BinaryData? _bufferedContent;
 
     private readonly PipelineResponseHeaders _headers;
 
@@ -61,7 +62,19 @@ public class MockPipelineResponse : PipelineResponse
                 return BinaryData.FromString("");
             }
 
-            return BinaryData.FromStream(_contentStream);
+            if (ContentStream is not MemoryStream memoryContent)
+            {
+                throw new InvalidOperationException($"The response is not buffered.");
+            }
+
+            if (memoryContent.TryGetBuffer(out ArraySegment<byte> segment))
+            {
+                return new BinaryData(segment.AsMemory());
+            }
+            else
+            {
+                return new BinaryData(memoryContent.ToArray());
+            }
         }
     }
 
@@ -91,11 +104,45 @@ public class MockPipelineResponse : PipelineResponse
 
     protected override BinaryData ReadContent(CancellationToken cancellationToken = default)
     {
-        throw new NotImplementedException();
+        if (_bufferedContent is not null)
+        {
+            return _bufferedContent;
+        }
+
+        if (_contentStream is null)
+        {
+            _bufferedContent = BinaryData.FromString(string.Empty);
+            return _bufferedContent;
+        }
+
+        MemoryStream bufferStream = new();
+        _contentStream.CopyTo(bufferStream);
+        _contentStream.Dispose();
+        _contentStream = bufferStream;
+
+        _bufferedContent = BinaryData.FromStream(bufferStream);
+        return _bufferedContent;
     }
 
-    protected override ValueTask<BinaryData> ReadContentAsync(CancellationToken cancellationToken = default)
+    protected override async ValueTask<BinaryData> ReadContentAsync(CancellationToken cancellationToken = default)
     {
-        throw new NotImplementedException();
+        if (_bufferedContent is not null)
+        {
+            return _bufferedContent;
+        }
+
+        if (_contentStream is null)
+        {
+            _bufferedContent = BinaryData.FromString(string.Empty);
+            return _bufferedContent;
+        }
+
+        MemoryStream bufferStream = new();
+        await _contentStream.CopyToAsync(bufferStream).ConfigureAwait(false);
+        _contentStream.Dispose();
+        _contentStream = bufferStream;
+
+        _bufferedContent = BinaryData.FromStream(bufferStream);
+        return _bufferedContent;
     }
 }
