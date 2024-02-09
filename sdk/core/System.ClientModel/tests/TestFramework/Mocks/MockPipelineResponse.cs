@@ -13,6 +13,7 @@ public class MockPipelineResponse : PipelineResponse
     private int _status;
     private string _reasonPhrase;
     private Stream? _contentStream;
+    private BinaryData? _content;
 
     private readonly PipelineResponseHeaders _headers;
 
@@ -42,7 +43,7 @@ public class MockPipelineResponse : PipelineResponse
 
     protected override void SetContent(BinaryData? content)
     {
-        throw new NotImplementedException();
+        _content = content;
     }
 
     public override bool IsBuffered => throw new NotImplementedException();
