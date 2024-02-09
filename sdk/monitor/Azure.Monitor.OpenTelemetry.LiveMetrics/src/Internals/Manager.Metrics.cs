@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals;
 using Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Diagnostics;
 using Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Filtering;
@@ -45,7 +46,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals
 
             CollectionConfigurationError[] filteringErrors;
             string projectionError = string.Empty;
-            Dictionary<string, AccumulatedValues> metricAccumulators = new();
+            Dictionary<string, AccumulatedValues> metricAccumulators = CreateMetricAccumulators(_collectionConfiguration);
             LiveMetricsBuffer liveMetricsBuffer = new();
             DocumentBuffer filledBuffer = _documentBuffer.FlipDocumentBuffers();
             foreach (var item in filledBuffer.ReadAllAndClear())
@@ -151,6 +152,30 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals
             }
 
             return metrics;
+        }
+
+        private Dictionary<string, AccumulatedValues> CreateMetricAccumulators(CollectionConfiguration collectionConfiguration)
+        {
+            Dictionary<string, AccumulatedValues> metricAccumulators = new();
+
+            // prepare the accumulators based on the collection configuration
+            IEnumerable<Tuple<string, DerivedMetricInfoAggregation?>> allMetrics = collectionConfiguration.TelemetryMetadata;
+            foreach (Tuple<string, DerivedMetricInfoAggregation?> metricId in allMetrics ?? Enumerable.Empty<Tuple<string, DerivedMetricInfoAggregation?>>())
+            {
+                var derivedMetricInfoAggregation = metricId.Item2;
+                if (!derivedMetricInfoAggregation.HasValue)
+                {
+                    continue;
+                }
+
+                if (Enum.TryParse(derivedMetricInfoAggregation.ToString(), out AggregationType aggregationType))
+                {
+                    var accumulatedValues = new AccumulatedValues(metricId.Item1, aggregationType);
+
+                    metricAccumulators.Add(metricId.Item1, accumulatedValues);
+                }
+            }
+            return metricAccumulators;
         }
 
         private void ApplyFilters<TTelemetry>(
