@@ -694,6 +694,25 @@ Console.WriteLine($"Translation ({translation.Duration.Value.TotalSeconds}s):");
 Console.WriteLine(translation.Text);
 ```
 
+
+### Generate Speech with Text-to-Speech (TTS) models
+
+```C# Snippet:SpeechGeneration
+string text = "Hello World";
+AudioSpeechOptions speechOptions = new()
+{
+    Input = text,
+    DeploymentName = "my-tts-deployment", // tts-1 as model name for non-Azure OpenAI
+    Voice = AudioSpeechVoice.Alloy,
+    ResponseFormat = AudioSpeechOutputFormat.Mp3,
+    Speed = 0.8f
+};
+
+Response<BinaryData> response = await client.GetAudioSpeechAsync(speechOptions);
+
+File.WriteAllBytes("myAudioFile.mp3", response.Value.ToArray());
+```
+
 ### Chat with images using gpt-4-vision-preview
 
 The `gpt-4-vision-preview` model allows you to use images as input components into chat completions.
