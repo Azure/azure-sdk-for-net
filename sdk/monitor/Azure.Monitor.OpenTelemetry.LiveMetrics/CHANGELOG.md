@@ -6,6 +6,10 @@
 
 ### Breaking Changes
 
+* Disable Performance Counters to prevent runtime exceptions.
+  CPU and Memory will no longer be displayed on the LiveMetrics chart.
+  ([#41878](https://github.com/Azure/azure-sdk-for-net/pull/41878))
+
 ### Bugs Fixed
 
 ### Other Changes

@@ -24,11 +24,11 @@
 
     <!-- FOR PUBLIC RELEASES, MUST USE PackageReference. THIS REQUIRES A STAGGERED RELEASE IF SHIPPING A NEW EXPORTER. -->
     <PackageReference Include="Azure.Monitor.OpenTelemetry.Exporter" />
-    <PackageReference Include="Azure.Monitor.OpenTelemetry.LiveMetrics" />
+    <!--<PackageReference Include="Azure.Monitor.OpenTelemetry.LiveMetrics" />-->
 
     <!-- FOR LOCAL DEV, ProjectReference IS PREFERRED. -->
     <!--<ProjectReference Include="..\..\Azure.Monitor.OpenTelemetry.Exporter\src\Azure.Monitor.OpenTelemetry.Exporter.csproj" />-->
-    <!--<ProjectReference Include="..\..\Azure.Monitor.OpenTelemetry.LiveMetrics\src\Azure.Monitor.OpenTelemetry.LiveMetrics.csproj" />-->
+    <ProjectReference Include="..\..\Azure.Monitor.OpenTelemetry.LiveMetrics\src\Azure.Monitor.OpenTelemetry.LiveMetrics.csproj" />
   </ItemGroup>
   
   <!-- Shared source from Exporter -->
