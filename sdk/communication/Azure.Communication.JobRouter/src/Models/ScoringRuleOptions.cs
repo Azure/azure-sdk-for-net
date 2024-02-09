@@ -2,12 +2,11 @@
 // Licensed under the MIT License.
 
 using System.Collections.Generic;
-using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.Communication.JobRouter
 {
-    public partial class ScoringRuleOptions : IUtf8JsonSerializable
+    public partial class ScoringRuleOptions
     {
         /// <summary> Initializes a new instance of ScoringRuleOptions. </summary>
         public ScoringRuleOptions()
@@ -39,36 +38,5 @@ namespace Azure.Communication.JobRouter
         /// If false, will sort scores by ascending order. By default, set to true.
         /// </summary>
         public bool? DescendingOrder { get; set; }
-
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
-        {
-            writer.WriteStartObject();
-            if (Optional.IsDefined(BatchSize))
-            {
-                writer.WritePropertyName("batchSize"u8);
-                writer.WriteNumberValue(BatchSize.Value);
-            }
-            if (Optional.IsCollectionDefined(ScoringParameters))
-            {
-                writer.WritePropertyName("scoringParameters"u8);
-                writer.WriteStartArray();
-                foreach (var item in ScoringParameters)
-                {
-                    writer.WriteStringValue(item.ToString());
-                }
-                writer.WriteEndArray();
-            }
-            if (Optional.IsDefined(IsBatchScoringEnabled))
-            {
-                writer.WritePropertyName("isBatchScoringEnabled"u8);
-                writer.WriteBooleanValue(IsBatchScoringEnabled.Value);
-            }
-            if (Optional.IsDefined(DescendingOrder))
-            {
-                writer.WritePropertyName("descendingOrder"u8);
-                writer.WriteBooleanValue(DescendingOrder.Value);
-            }
-            writer.WriteEndObject();
-        }
     }
 }
