@@ -17,6 +17,23 @@ namespace Azure.ResourceManager.NotificationHubs.Models
     /// <summary> Model factory for models. </summary>
     public static partial class ArmNotificationHubsModelFactory
     {
+        /// <summary> Initializes a new instance of <see cref="Models.NotificationHubAvailabilityContent"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="tags"> The tags. </param>
+        /// <param name="location"> The location. </param>
+        /// <param name="sku"> The sku of the created namespace. </param>
+        /// <param name="isAvailiable"> True if the name is available and can be used to create new Namespace/NotificationHub. Otherwise false. </param>
+        /// <returns> A new <see cref="Models.NotificationHubAvailabilityContent"/> instance for mocking. </returns>
+        public static NotificationHubAvailabilityContent NotificationHubAvailabilityContent(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, NotificationHubSku sku = null, bool? isAvailiable = null)
+        {
+            tags ??= new Dictionary<string, string>();
+
+            return new NotificationHubAvailabilityContent(id, name, resourceType, systemData, tags, location, sku, isAvailiable, serializedAdditionalRawData: null);
+        }
+
         /// <summary> Initializes a new instance of <see cref="Models.NotificationHubAvailabilityResult"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -31,7 +48,7 @@ namespace Azure.ResourceManager.NotificationHubs.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new NotificationHubAvailabilityResult(id, name, resourceType, systemData, tags, location, isAvailiable, sku);
+            return new NotificationHubAvailabilityResult(id, name, resourceType, systemData, tags, location, isAvailiable, sku, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.NotificationHubNamespaceCreateOrUpdateContent"/>. </summary>
@@ -61,7 +78,7 @@ namespace Azure.ResourceManager.NotificationHubs.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new NotificationHubNamespaceCreateOrUpdateContent(id, name, resourceType, systemData, tags, location, namespaceName, provisioningState, region, metricId, status, createdOn, updatedOn, serviceBusEndpoint, subscriptionId, scaleUnit, isEnabled, isCritical, dataCenter, namespaceType, sku);
+            return new NotificationHubNamespaceCreateOrUpdateContent(id, name, resourceType, systemData, tags, location, namespaceName, provisioningState, region, metricId, status, createdOn, updatedOn, serviceBusEndpoint, subscriptionId, scaleUnit, isEnabled, isCritical, dataCenter, namespaceType, sku, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="NotificationHubs.NotificationHubNamespaceData"/>. </summary>
@@ -91,7 +108,7 @@ namespace Azure.ResourceManager.NotificationHubs.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new NotificationHubNamespaceData(id, name, resourceType, systemData, tags, location, namespaceName, provisioningState, region, metricId, status, createdOn, updatedOn, serviceBusEndpoint, subscriptionId, scaleUnit, isEnabled, isCritical, dataCenter, namespaceType, sku);
+            return new NotificationHubNamespaceData(id, name, resourceType, systemData, tags, location, namespaceName, provisioningState, region, metricId, status, createdOn, updatedOn, serviceBusEndpoint, subscriptionId, scaleUnit, isEnabled, isCritical, dataCenter, namespaceType, sku, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.SharedAccessAuthorizationRuleProperties"/>. </summary>
@@ -109,7 +126,7 @@ namespace Azure.ResourceManager.NotificationHubs.Models
         {
             rights ??= new List<AuthorizationRuleAccessRight>();
 
-            return new SharedAccessAuthorizationRuleProperties(rights?.ToList(), primaryKey, secondaryKey, keyName, claimType, claimValue, modifiedOn, createdOn, revision);
+            return new SharedAccessAuthorizationRuleProperties(rights?.ToList(), primaryKey, secondaryKey, keyName, claimType, claimValue, modifiedOn, createdOn, revision, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="NotificationHubs.NotificationHubAuthorizationRuleData"/>. </summary>
@@ -135,7 +152,7 @@ namespace Azure.ResourceManager.NotificationHubs.Models
             tags ??= new Dictionary<string, string>();
             rights ??= new List<AuthorizationRuleAccessRight>();
 
-            return new NotificationHubAuthorizationRuleData(id, name, resourceType, systemData, tags, location, rights?.ToList(), primaryKey, secondaryKey, keyName, claimType, claimValue, modifiedOn, createdOn, revision, sku);
+            return new NotificationHubAuthorizationRuleData(id, name, resourceType, systemData, tags, location, rights?.ToList(), primaryKey, secondaryKey, keyName, claimType, claimValue, modifiedOn, createdOn, revision, sku, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.NotificationHubResourceKeys"/>. </summary>
@@ -147,7 +164,7 @@ namespace Azure.ResourceManager.NotificationHubs.Models
         /// <returns> A new <see cref="Models.NotificationHubResourceKeys"/> instance for mocking. </returns>
         public static NotificationHubResourceKeys NotificationHubResourceKeys(string primaryConnectionString = null, string secondaryConnectionString = null, string primaryKey = null, string secondaryKey = null, string keyName = null)
         {
-            return new NotificationHubResourceKeys(primaryConnectionString, secondaryConnectionString, primaryKey, secondaryKey, keyName);
+            return new NotificationHubResourceKeys(primaryConnectionString, secondaryConnectionString, primaryKey, secondaryKey, keyName, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.NotificationHubCreateOrUpdateContent"/>. </summary>
@@ -173,7 +190,7 @@ namespace Azure.ResourceManager.NotificationHubs.Models
             tags ??= new Dictionary<string, string>();
             authorizationRules ??= new List<SharedAccessAuthorizationRuleProperties>();
 
-            return new NotificationHubCreateOrUpdateContent(id, name, resourceType, systemData, tags, location, notificationHubName, registrationTtl, authorizationRules?.ToList(), apnsCredential, wnsCredential, gcmCredential, mpnsCredential, admCredential, baiduCredential, sku);
+            return new NotificationHubCreateOrUpdateContent(id, name, resourceType, systemData, tags, location, notificationHubName, registrationTtl, authorizationRules?.ToList(), apnsCredential, wnsCredential, gcmCredential, mpnsCredential, admCredential, baiduCredential, sku, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="NotificationHubs.NotificationHubData"/>. </summary>
@@ -199,7 +216,7 @@ namespace Azure.ResourceManager.NotificationHubs.Models
             tags ??= new Dictionary<string, string>();
             authorizationRules ??= new List<SharedAccessAuthorizationRuleProperties>();
 
-            return new NotificationHubData(id, name, resourceType, systemData, tags, location, notificationHubName, registrationTtl, authorizationRules?.ToList(), apnsCredential, wnsCredential, gcmCredential, mpnsCredential, admCredential, baiduCredential, sku);
+            return new NotificationHubData(id, name, resourceType, systemData, tags, location, notificationHubName, registrationTtl, authorizationRules?.ToList(), apnsCredential, wnsCredential, gcmCredential, mpnsCredential, admCredential, baiduCredential, sku, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.NotificationHubPatch"/>. </summary>
@@ -225,7 +242,7 @@ namespace Azure.ResourceManager.NotificationHubs.Models
             tags ??= new Dictionary<string, string>();
             authorizationRules ??= new List<SharedAccessAuthorizationRuleProperties>();
 
-            return new NotificationHubPatch(id, name, resourceType, systemData, tags, location, notificationHubName, registrationTtl, authorizationRules?.ToList(), apnsCredential, wnsCredential, gcmCredential, mpnsCredential, admCredential, baiduCredential, sku);
+            return new NotificationHubPatch(id, name, resourceType, systemData, tags, location, notificationHubName, registrationTtl, authorizationRules?.ToList(), apnsCredential, wnsCredential, gcmCredential, mpnsCredential, admCredential, baiduCredential, sku, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.NotificationHubTestSendResult"/>. </summary>
@@ -244,7 +261,7 @@ namespace Azure.ResourceManager.NotificationHubs.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new NotificationHubTestSendResult(id, name, resourceType, systemData, tags, location, success, failure, results, sku);
+            return new NotificationHubTestSendResult(id, name, resourceType, systemData, tags, location, success, failure, results, sku, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.NotificationHubPnsCredentials"/>. </summary>
@@ -266,7 +283,7 @@ namespace Azure.ResourceManager.NotificationHubs.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new NotificationHubPnsCredentials(id, name, resourceType, systemData, tags, location, apnsCredential, wnsCredential, gcmCredential, mpnsCredential, admCredential, baiduCredential, sku);
+            return new NotificationHubPnsCredentials(id, name, resourceType, systemData, tags, location, apnsCredential, wnsCredential, gcmCredential, mpnsCredential, admCredential, baiduCredential, sku, serializedAdditionalRawData: null);
         }
     }
 }

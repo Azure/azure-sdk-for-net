@@ -47,6 +47,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             DatasetType = datasetType ?? "Office365Table";
         }
 
+        /// <summary> Initializes a new instance of <see cref="Office365Dataset"/> for deserialization. </summary>
+        internal Office365Dataset()
+        {
+        }
+
         /// <summary> Name of the dataset to extract from Office 365. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> TableName { get; set; }
         /// <summary> A predicate expression that can be used to filter the specific rows to extract from Office 365. Type: string (or Expression with resultType string). </summary>

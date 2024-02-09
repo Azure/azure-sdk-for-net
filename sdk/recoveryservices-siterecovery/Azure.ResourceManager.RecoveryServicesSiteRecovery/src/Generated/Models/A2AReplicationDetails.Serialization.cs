@@ -6,16 +6,352 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    public partial class A2AReplicationDetails
+    public partial class A2AReplicationDetails : IUtf8JsonSerializable, IJsonModel<A2AReplicationDetails>
     {
-        internal static A2AReplicationDetails DeserializeA2AReplicationDetails(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<A2AReplicationDetails>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<A2AReplicationDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<A2AReplicationDetails>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(A2AReplicationDetails)} does not support '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(FabricObjectId))
+            {
+                writer.WritePropertyName("fabricObjectId"u8);
+                writer.WriteStringValue(FabricObjectId);
+            }
+            if (options.Format != "W" && Optional.IsDefined(InitialPrimaryZone))
+            {
+                writer.WritePropertyName("initialPrimaryZone"u8);
+                writer.WriteStringValue(InitialPrimaryZone);
+            }
+            if (options.Format != "W" && Optional.IsDefined(InitialPrimaryFabricLocation))
+            {
+                writer.WritePropertyName("initialPrimaryFabricLocation"u8);
+                writer.WriteStringValue(InitialPrimaryFabricLocation.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(InitialRecoveryZone))
+            {
+                writer.WritePropertyName("initialRecoveryZone"u8);
+                writer.WriteStringValue(InitialRecoveryZone);
+            }
+            if (Optional.IsDefined(InitialPrimaryExtendedLocation))
+            {
+                writer.WritePropertyName("initialPrimaryExtendedLocation"u8);
+                writer.WriteObjectValue(InitialPrimaryExtendedLocation);
+            }
+            if (Optional.IsDefined(InitialRecoveryExtendedLocation))
+            {
+                writer.WritePropertyName("initialRecoveryExtendedLocation"u8);
+                writer.WriteObjectValue(InitialRecoveryExtendedLocation);
+            }
+            if (options.Format != "W" && Optional.IsDefined(InitialRecoveryFabricLocation))
+            {
+                writer.WritePropertyName("initialRecoveryFabricLocation"u8);
+                writer.WriteStringValue(InitialRecoveryFabricLocation.Value);
+            }
+            if (Optional.IsDefined(MultiVmGroupId))
+            {
+                writer.WritePropertyName("multiVmGroupId"u8);
+                writer.WriteStringValue(MultiVmGroupId);
+            }
+            if (Optional.IsDefined(MultiVmGroupName))
+            {
+                writer.WritePropertyName("multiVmGroupName"u8);
+                writer.WriteStringValue(MultiVmGroupName);
+            }
+            if (Optional.IsDefined(MultiVmGroupCreateOption))
+            {
+                writer.WritePropertyName("multiVmGroupCreateOption"u8);
+                writer.WriteStringValue(MultiVmGroupCreateOption.Value.ToString());
+            }
+            if (Optional.IsDefined(ManagementId))
+            {
+                writer.WritePropertyName("managementId"u8);
+                writer.WriteStringValue(ManagementId);
+            }
+            if (Optional.IsCollectionDefined(ProtectedDisks))
+            {
+                writer.WritePropertyName("protectedDisks"u8);
+                writer.WriteStartArray();
+                foreach (var item in ProtectedDisks)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(UnprotectedDisks))
+            {
+                writer.WritePropertyName("unprotectedDisks"u8);
+                writer.WriteStartArray();
+                foreach (var item in UnprotectedDisks)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(ProtectedManagedDisks))
+            {
+                writer.WritePropertyName("protectedManagedDisks"u8);
+                writer.WriteStartArray();
+                foreach (var item in ProtectedManagedDisks)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(RecoveryBootDiagStorageAccountId))
+            {
+                writer.WritePropertyName("recoveryBootDiagStorageAccountId"u8);
+                writer.WriteStringValue(RecoveryBootDiagStorageAccountId);
+            }
+            if (Optional.IsDefined(PrimaryFabricLocation))
+            {
+                writer.WritePropertyName("primaryFabricLocation"u8);
+                writer.WriteStringValue(PrimaryFabricLocation.Value);
+            }
+            if (Optional.IsDefined(RecoveryFabricLocation))
+            {
+                writer.WritePropertyName("recoveryFabricLocation"u8);
+                writer.WriteStringValue(RecoveryFabricLocation.Value);
+            }
+            if (Optional.IsDefined(OSType))
+            {
+                writer.WritePropertyName("osType"u8);
+                writer.WriteStringValue(OSType);
+            }
+            if (Optional.IsDefined(RecoveryAzureVmSize))
+            {
+                writer.WritePropertyName("recoveryAzureVMSize"u8);
+                writer.WriteStringValue(RecoveryAzureVmSize);
+            }
+            if (Optional.IsDefined(RecoveryAzureVmName))
+            {
+                writer.WritePropertyName("recoveryAzureVMName"u8);
+                writer.WriteStringValue(RecoveryAzureVmName);
+            }
+            if (Optional.IsDefined(RecoveryAzureResourceGroupId))
+            {
+                writer.WritePropertyName("recoveryAzureResourceGroupId"u8);
+                writer.WriteStringValue(RecoveryAzureResourceGroupId);
+            }
+            if (Optional.IsDefined(RecoveryCloudService))
+            {
+                writer.WritePropertyName("recoveryCloudService"u8);
+                writer.WriteStringValue(RecoveryCloudService);
+            }
+            if (Optional.IsDefined(RecoveryAvailabilitySet))
+            {
+                writer.WritePropertyName("recoveryAvailabilitySet"u8);
+                writer.WriteStringValue(RecoveryAvailabilitySet);
+            }
+            if (Optional.IsDefined(SelectedRecoveryAzureNetworkId))
+            {
+                writer.WritePropertyName("selectedRecoveryAzureNetworkId"u8);
+                writer.WriteStringValue(SelectedRecoveryAzureNetworkId);
+            }
+            if (Optional.IsDefined(SelectedTfoAzureNetworkId))
+            {
+                writer.WritePropertyName("selectedTfoAzureNetworkId"u8);
+                writer.WriteStringValue(SelectedTfoAzureNetworkId);
+            }
+            if (Optional.IsCollectionDefined(VmNics))
+            {
+                writer.WritePropertyName("vmNics"u8);
+                writer.WriteStartArray();
+                foreach (var item in VmNics)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(VmSyncedConfigDetails))
+            {
+                writer.WritePropertyName("vmSyncedConfigDetails"u8);
+                writer.WriteObjectValue(VmSyncedConfigDetails);
+            }
+            if (Optional.IsDefined(MonitoringPercentageCompletion))
+            {
+                writer.WritePropertyName("monitoringPercentageCompletion"u8);
+                writer.WriteNumberValue(MonitoringPercentageCompletion.Value);
+            }
+            if (Optional.IsDefined(MonitoringJobType))
+            {
+                writer.WritePropertyName("monitoringJobType"u8);
+                writer.WriteStringValue(MonitoringJobType);
+            }
+            if (Optional.IsDefined(LastHeartbeat))
+            {
+                writer.WritePropertyName("lastHeartbeat"u8);
+                writer.WriteStringValue(LastHeartbeat.Value, "O");
+            }
+            if (Optional.IsDefined(AgentVersion))
+            {
+                writer.WritePropertyName("agentVersion"u8);
+                writer.WriteStringValue(AgentVersion);
+            }
+            if (Optional.IsDefined(AgentExpireOn))
+            {
+                writer.WritePropertyName("agentExpiryDate"u8);
+                writer.WriteStringValue(AgentExpireOn.Value, "O");
+            }
+            if (Optional.IsDefined(IsReplicationAgentUpdateRequired))
+            {
+                writer.WritePropertyName("isReplicationAgentUpdateRequired"u8);
+                writer.WriteBooleanValue(IsReplicationAgentUpdateRequired.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(AgentCertificateExpireOn))
+            {
+                writer.WritePropertyName("agentCertificateExpiryDate"u8);
+                writer.WriteStringValue(AgentCertificateExpireOn.Value, "O");
+            }
+            if (Optional.IsDefined(IsReplicationAgentCertificateUpdateRequired))
+            {
+                writer.WritePropertyName("isReplicationAgentCertificateUpdateRequired"u8);
+                writer.WriteBooleanValue(IsReplicationAgentCertificateUpdateRequired.Value);
+            }
+            if (Optional.IsDefined(RecoveryFabricObjectId))
+            {
+                writer.WritePropertyName("recoveryFabricObjectId"u8);
+                writer.WriteStringValue(RecoveryFabricObjectId);
+            }
+            if (Optional.IsDefined(VmProtectionState))
+            {
+                writer.WritePropertyName("vmProtectionState"u8);
+                writer.WriteStringValue(VmProtectionState);
+            }
+            if (Optional.IsDefined(VmProtectionStateDescription))
+            {
+                writer.WritePropertyName("vmProtectionStateDescription"u8);
+                writer.WriteStringValue(VmProtectionStateDescription);
+            }
+            if (Optional.IsDefined(LifecycleId))
+            {
+                writer.WritePropertyName("lifecycleId"u8);
+                writer.WriteStringValue(LifecycleId);
+            }
+            if (Optional.IsDefined(TestFailoverRecoveryFabricObjectId))
+            {
+                writer.WritePropertyName("testFailoverRecoveryFabricObjectId"u8);
+                writer.WriteStringValue(TestFailoverRecoveryFabricObjectId);
+            }
+            if (Optional.IsDefined(RpoInSeconds))
+            {
+                writer.WritePropertyName("rpoInSeconds"u8);
+                writer.WriteNumberValue(RpoInSeconds.Value);
+            }
+            if (Optional.IsDefined(LastRpoCalculatedOn))
+            {
+                writer.WritePropertyName("lastRpoCalculatedTime"u8);
+                writer.WriteStringValue(LastRpoCalculatedOn.Value, "O");
+            }
+            if (Optional.IsDefined(PrimaryAvailabilityZone))
+            {
+                writer.WritePropertyName("primaryAvailabilityZone"u8);
+                writer.WriteStringValue(PrimaryAvailabilityZone);
+            }
+            if (Optional.IsDefined(RecoveryAvailabilityZone))
+            {
+                writer.WritePropertyName("recoveryAvailabilityZone"u8);
+                writer.WriteStringValue(RecoveryAvailabilityZone);
+            }
+            if (Optional.IsDefined(PrimaryExtendedLocation))
+            {
+                writer.WritePropertyName("primaryExtendedLocation"u8);
+                writer.WriteObjectValue(PrimaryExtendedLocation);
+            }
+            if (Optional.IsDefined(RecoveryExtendedLocation))
+            {
+                writer.WritePropertyName("recoveryExtendedLocation"u8);
+                writer.WriteObjectValue(RecoveryExtendedLocation);
+            }
+            if (options.Format != "W" && Optional.IsDefined(VmEncryptionType))
+            {
+                writer.WritePropertyName("vmEncryptionType"u8);
+                writer.WriteStringValue(VmEncryptionType.Value.ToString());
+            }
+            if (Optional.IsDefined(TfoAzureVmName))
+            {
+                writer.WritePropertyName("tfoAzureVMName"u8);
+                writer.WriteStringValue(TfoAzureVmName);
+            }
+            if (options.Format != "W" && Optional.IsDefined(RecoveryAzureGeneration))
+            {
+                writer.WritePropertyName("recoveryAzureGeneration"u8);
+                writer.WriteStringValue(RecoveryAzureGeneration);
+            }
+            if (Optional.IsDefined(RecoveryProximityPlacementGroupId))
+            {
+                writer.WritePropertyName("recoveryProximityPlacementGroupId"u8);
+                writer.WriteStringValue(RecoveryProximityPlacementGroupId);
+            }
+            if (Optional.IsDefined(AutoProtectionOfDataDisk))
+            {
+                writer.WritePropertyName("autoProtectionOfDataDisk"u8);
+                writer.WriteStringValue(AutoProtectionOfDataDisk.Value.ToString());
+            }
+            if (Optional.IsDefined(RecoveryVirtualMachineScaleSetId))
+            {
+                writer.WritePropertyName("recoveryVirtualMachineScaleSetId"u8);
+                writer.WriteStringValue(RecoveryVirtualMachineScaleSetId);
+            }
+            if (Optional.IsDefined(RecoveryCapacityReservationGroupId))
+            {
+                writer.WritePropertyName("recoveryCapacityReservationGroupId"u8);
+                writer.WriteStringValue(RecoveryCapacityReservationGroupId);
+            }
+            if (options.Format != "W" && Optional.IsDefined(ChurnOptionSelected))
+            {
+                writer.WritePropertyName("churnOptionSelected"u8);
+                writer.WriteStringValue(ChurnOptionSelected.Value.ToString());
+            }
+            writer.WritePropertyName("instanceType"u8);
+            writer.WriteStringValue(InstanceType);
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        A2AReplicationDetails IJsonModel<A2AReplicationDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<A2AReplicationDetails>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(A2AReplicationDetails)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeA2AReplicationDetails(document.RootElement, options);
+        }
+
+        internal static A2AReplicationDetails DeserializeA2AReplicationDetails(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -75,6 +411,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             Optional<ResourceIdentifier> recoveryCapacityReservationGroupId = default;
             Optional<ChurnOptionSelected> churnOptionSelected = default;
             string instanceType = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("fabricObjectId"u8))
@@ -512,8 +850,44 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     instanceType = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new A2AReplicationDetails(instanceType, fabricObjectId.Value, initialPrimaryZone.Value, Optional.ToNullable(initialPrimaryFabricLocation), initialRecoveryZone.Value, initialPrimaryExtendedLocation.Value, initialRecoveryExtendedLocation.Value, Optional.ToNullable(initialRecoveryFabricLocation), multiVmGroupId.Value, multiVmGroupName.Value, Optional.ToNullable(multiVmGroupCreateOption), managementId.Value, Optional.ToList(protectedDisks), Optional.ToList(unprotectedDisks), Optional.ToList(protectedManagedDisks), recoveryBootDiagStorageAccountId.Value, Optional.ToNullable(primaryFabricLocation), Optional.ToNullable(recoveryFabricLocation), osType.Value, recoveryAzureVmSize.Value, recoveryAzureVmName.Value, recoveryAzureResourceGroupId.Value, recoveryCloudService.Value, recoveryAvailabilitySet.Value, selectedRecoveryAzureNetworkId.Value, selectedTfoAzureNetworkId.Value, Optional.ToList(vmNics), vmSyncedConfigDetails.Value, Optional.ToNullable(monitoringPercentageCompletion), monitoringJobType.Value, Optional.ToNullable(lastHeartbeat), agentVersion.Value, Optional.ToNullable(agentExpireOn), Optional.ToNullable(isReplicationAgentUpdateRequired), Optional.ToNullable(agentCertificateExpireOn), Optional.ToNullable(isReplicationAgentCertificateUpdateRequired), recoveryFabricObjectId.Value, vmProtectionState.Value, vmProtectionStateDescription.Value, lifecycleId.Value, testFailoverRecoveryFabricObjectId.Value, Optional.ToNullable(rpoInSeconds), Optional.ToNullable(lastRpoCalculatedTime), primaryAvailabilityZone.Value, recoveryAvailabilityZone.Value, primaryExtendedLocation.Value, recoveryExtendedLocation.Value, Optional.ToNullable(vmEncryptionType), tfoAzureVmName.Value, recoveryAzureGeneration.Value, recoveryProximityPlacementGroupId.Value, Optional.ToNullable(autoProtectionOfDataDisk), recoveryVirtualMachineScaleSetId.Value, recoveryCapacityReservationGroupId.Value, Optional.ToNullable(churnOptionSelected));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new A2AReplicationDetails(instanceType, serializedAdditionalRawData, fabricObjectId.Value, initialPrimaryZone.Value, Optional.ToNullable(initialPrimaryFabricLocation), initialRecoveryZone.Value, initialPrimaryExtendedLocation.Value, initialRecoveryExtendedLocation.Value, Optional.ToNullable(initialRecoveryFabricLocation), multiVmGroupId.Value, multiVmGroupName.Value, Optional.ToNullable(multiVmGroupCreateOption), managementId.Value, Optional.ToList(protectedDisks), Optional.ToList(unprotectedDisks), Optional.ToList(protectedManagedDisks), recoveryBootDiagStorageAccountId.Value, Optional.ToNullable(primaryFabricLocation), Optional.ToNullable(recoveryFabricLocation), osType.Value, recoveryAzureVmSize.Value, recoveryAzureVmName.Value, recoveryAzureResourceGroupId.Value, recoveryCloudService.Value, recoveryAvailabilitySet.Value, selectedRecoveryAzureNetworkId.Value, selectedTfoAzureNetworkId.Value, Optional.ToList(vmNics), vmSyncedConfigDetails.Value, Optional.ToNullable(monitoringPercentageCompletion), monitoringJobType.Value, Optional.ToNullable(lastHeartbeat), agentVersion.Value, Optional.ToNullable(agentExpireOn), Optional.ToNullable(isReplicationAgentUpdateRequired), Optional.ToNullable(agentCertificateExpireOn), Optional.ToNullable(isReplicationAgentCertificateUpdateRequired), recoveryFabricObjectId.Value, vmProtectionState.Value, vmProtectionStateDescription.Value, lifecycleId.Value, testFailoverRecoveryFabricObjectId.Value, Optional.ToNullable(rpoInSeconds), Optional.ToNullable(lastRpoCalculatedTime), primaryAvailabilityZone.Value, recoveryAvailabilityZone.Value, primaryExtendedLocation.Value, recoveryExtendedLocation.Value, Optional.ToNullable(vmEncryptionType), tfoAzureVmName.Value, recoveryAzureGeneration.Value, recoveryProximityPlacementGroupId.Value, Optional.ToNullable(autoProtectionOfDataDisk), recoveryVirtualMachineScaleSetId.Value, recoveryCapacityReservationGroupId.Value, Optional.ToNullable(churnOptionSelected));
         }
+
+        BinaryData IPersistableModel<A2AReplicationDetails>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<A2AReplicationDetails>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(A2AReplicationDetails)} does not support '{options.Format}' format.");
+            }
+        }
+
+        A2AReplicationDetails IPersistableModel<A2AReplicationDetails>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<A2AReplicationDetails>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeA2AReplicationDetails(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(A2AReplicationDetails)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<A2AReplicationDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

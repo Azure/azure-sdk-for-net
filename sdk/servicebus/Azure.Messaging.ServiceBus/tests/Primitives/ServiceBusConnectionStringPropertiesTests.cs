@@ -4,7 +4,6 @@
 using System;
 using System.Collections.Generic;
 using System.Reflection;
-using Azure.Messaging.ServiceBus;
 using NUnit.Framework;
 using NUnit.Framework.Constraints;
 
@@ -22,7 +21,7 @@ namespace Azure.Messaging.ServiceBus.Tests
         ///   Provides the reordered token test cases for the <see cref="ServiceBusConnectionStringProperties.Parse" /> tests.
         /// </summary>
         ///
-        public static IEnumerable<object[]> ParseDoesNotforceTokenOrderingCases()
+        public static IEnumerable<object[]> ParseDoesNotForceTokenOrderingCases()
         {
             var endpoint = "test.endpoint.com";
             var eventHub = "some-path";
@@ -62,7 +61,7 @@ namespace Azure.Messaging.ServiceBus.Tests
         }
 
         /// <summary>
-        ///   Provides the invalid properties argument cases for the <see cref="ServiceBusConnectionStringProperties.Create" /> tests.
+        ///   Provides the invalid properties argument cases for the <see cref="ServiceBusConnectionStringProperties.Parse" /> tests.
         /// </summary>
         ///
         public static IEnumerable<object[]> ToConnectionStringValidatesPropertiesCases()
@@ -183,7 +182,7 @@ namespace Azure.Messaging.ServiceBus.Tests
         /// </summary>
         ///
         [Test]
-        [TestCaseSource(nameof(ParseDoesNotforceTokenOrderingCases))]
+        [TestCaseSource(nameof(ParseDoesNotForceTokenOrderingCases))]
         public void ParseCorrectlyParsesPartialConnectionStrings(string connectionString,
                                                                  string endpoint,
                                                                  string eventHub,
@@ -290,7 +289,7 @@ namespace Azure.Messaging.ServiceBus.Tests
         /// </summary>
         ///
         [Test]
-        [TestCaseSource(nameof(ParseDoesNotforceTokenOrderingCases))]
+        [TestCaseSource(nameof(ParseDoesNotForceTokenOrderingCases))]
         public void ParseDoesNotForceTokenOrdering(string connectionString,
                                                    string endpoint,
                                                    string eventHub,
@@ -350,7 +349,7 @@ namespace Azure.Messaging.ServiceBus.Tests
                 valueUri = new Uri($"fake://{ endpointValue }");
             }
 
-            Assert.That(parsed.Endpoint.Port, Is.EqualTo(-1), "The default port should be used.");
+            Assert.That(parsed.Endpoint.Port, Is.EqualTo(valueUri.IsDefaultPort ? -1 : valueUri.Port), "The default port should be used.");
             Assert.That(parsed.Endpoint.Host, Does.Not.Contain(" "), "The host name should not contain any spaces.");
             Assert.That(parsed.Endpoint.Host, Does.Not.Contain(":"), "The host name should not contain any port separators (:).");
             Assert.That(parsed.Endpoint.Host, Does.Not.Contain(valueUri.Port), "The host name should not contain the port.");
@@ -384,13 +383,59 @@ namespace Azure.Messaging.ServiceBus.Tests
         [TestCase("Endpoint=value.com;SharedAccessKeyName=[value];SharedAccessKey=[value];EntityPath")]
         [TestCase("Endpoint;SharedAccessKeyName=;SharedAccessKey;EntityPath=")]
         [TestCase("Endpoint=;SharedAccessKeyName;SharedAccessKey;EntityPath=")]
+        [TestCase("Endpoint=value.com;SharedAccessKeyName=[value];SharedAccessKey=[value];UseDevelopmentEmulator")]
         public void ParseConsidersMissingValuesAsMalformed(string connectionString)
         {
             Assert.That(() => ServiceBusConnectionStringProperties.Parse(connectionString), Throws.InstanceOf<FormatException>());
         }
 
         /// <summary>
-        ///   Verifies functionality of the <see cref="ServiceBusConnectionStringProperties.Create" />
+        ///   Verifies functionality of the <see cref="ServiceBusConnectionStringProperties.Parse" />
+        ///   method.
+        /// </summary>
+        ///
+        public void ParseDetectsDevelopmentEmulatorUse()
+        {
+            var connectionString = "Endpoint=localhost:1234;SharedAccessKeyName=[name];SharedAccessKey=[value];UseDevelopmentEmulator=true";
+            var parsed = ServiceBusConnectionStringProperties.Parse(connectionString);
+
+            Assert.That(parsed.Endpoint.IsLoopback, Is.True, "The endpoint should be a local address.");
+            Assert.That(parsed.UseDevelopmentEmulator, Is.True, "The development emulator flag should have been set.");
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="ServiceBusConnectionStringProperties.Parse" />
+        ///   method.
+        /// </summary>
+        ///
+        public void ParseRespectsDevelopmentEmulatorValue()
+        {
+            var connectionString = "Endpoint=localhost:1234;SharedAccessKeyName=[name];SharedAccessKey=[value];UseDevelopmentEmulator=false";
+            var parsed = ServiceBusConnectionStringProperties.Parse(connectionString);
+
+            Assert.That(parsed.Endpoint.IsLoopback, Is.True, "The endpoint should be a local address.");
+            Assert.That(parsed.UseDevelopmentEmulator, Is.False, "The development emulator flag should have been unset.");
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="ServiceBusConnectionStringProperties.Parse" />
+        ///   method.
+        /// </summary>
+        ///
+        [TestCase("1")]
+        [TestCase("Unset")]
+        [TestCase("|")]
+        public void ParseToleratesDevelopmentEmulatorInvalidValues(string emulatorValue)
+        {
+            var connectionString = $"Endpoint=sb://localhost:1234;SharedAccessKeyName=[name];SharedAccessKey=[value];UseDevelopmentEmulator={ emulatorValue }";
+            var parsed = ServiceBusConnectionStringProperties.Parse(connectionString);
+
+            Assert.That(parsed.Endpoint.IsLoopback, Is.True, "The endpoint should be a local address.");
+            Assert.That(parsed.UseDevelopmentEmulator, Is.False, $"The development emulator flag should have been unset because { emulatorValue } is not a boolean.");
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="ServiceBusConnectionStringProperties.Parse" />
         ///   method.
         /// </summary>
         ///
@@ -402,7 +447,33 @@ namespace Azure.Messaging.ServiceBus.Tests
         }
 
         /// <summary>
-        ///   Verifies functionality of the <see cref="ServiceBusConnectionStringProperties.Create" />
+        ///   Verifies functionality of the <see cref="ServiceBusConnectionStringProperties.Parse" />
+        ///   method.
+        /// </summary>
+        ///
+        [Test]
+        public void ToConnectionStringProducesTheConnectionStringForTheLocalEmulator()
+        {
+            var properties = new ServiceBusConnectionStringProperties
+            {
+                Endpoint = new Uri("sb://127.0.0.1"),
+                EntityPath = "QueueName",
+                SharedAccessKey = "FaKe#$1324@@",
+                SharedAccessKeyName = "RootSharedAccessManagementKey",
+                UseDevelopmentEmulator = true
+            };
+
+            var connectionString = properties.ToConnectionString();
+            Assert.That(connectionString, Is.Not.Null, "The connection string should not be null.");
+            Assert.That(connectionString.Length, Is.GreaterThan(0), "The connection string should have content.");
+
+            var parsed = ServiceBusConnectionStringProperties.Parse(connectionString);
+            Assert.That(parsed, Is.Not.Null, "The connection string should be parsable.");
+            Assert.That(PropertiesAreEquivalent(properties, parsed), Is.True, "The connection string should parse into the source properties.");
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="ServiceBusConnectionStringProperties.Parse" />
         ///   method.
         /// </summary>
         ///
@@ -426,7 +497,7 @@ namespace Azure.Messaging.ServiceBus.Tests
         }
 
         /// <summary>
-        ///   Verifies functionality of the <see cref="ServiceBusConnectionStringProperties.Create" />
+        ///   Verifies functionality of the <see cref="ServiceBusConnectionStringProperties.Parse" />
         ///   method.
         /// </summary>
         ///
@@ -451,7 +522,7 @@ namespace Azure.Messaging.ServiceBus.Tests
         }
 
         /// <summary>
-        ///   Verifies functionality of the <see cref="ServiceBusConnectionStringProperties.Create" />
+        ///   Verifies functionality of the <see cref="ServiceBusConnectionStringProperties.Parse" />
         ///   method.
         /// </summary>
         ///
@@ -513,6 +584,32 @@ namespace Azure.Messaging.ServiceBus.Tests
         }
 
         /// <summary>
+        ///    Verifies functionality of the <see cref="ServiceBusConnectionStringProperties.Validate" />
+        ///    method.
+        /// </summary>
+        ///
+        [Test]
+        [TestCase("localhost", true)]
+        [TestCase("127.0.0.1", true)]
+        [TestCase("www.microsoft.com", false)]
+        [TestCase("fake.servicebus.windows.net", false)]
+        [TestCase("weirdname:8080", false)]
+        public void ValidateRequiresLocalEndpointForDevelopmentEmulator(string endpoint,
+                                                                        bool isValid)
+        {
+            var fakeConnection = $"Endpoint=sb://{ endpoint };SharedAccessSignature=[not_real];UseDevelopmentEmulator=true";
+
+            if (isValid)
+            {
+                Assert.That(() =>  ServiceBusConnectionStringProperties.Parse(fakeConnection), Throws.Nothing, "Validation should allow a local endpoint.");
+            }
+            else
+            {
+                Assert.That(() =>  ServiceBusConnectionStringProperties.Parse(fakeConnection), Throws.ArgumentException.And.Message.Contains("local"), "Parse should enforce that the endpoint is a local address.");
+            }
+        }
+
+        /// <summary>
         ///   Compares two <see cref="ServiceBusConnectionStringProperties" /> instances for
         ///   structural equality.
         /// </summary>
@@ -539,7 +636,9 @@ namespace Azure.Messaging.ServiceBus.Tests
                 && string.Equals(first.EntityPath, second.EntityPath, StringComparison.OrdinalIgnoreCase)
                 && string.Equals(first.SharedAccessSignature, second.SharedAccessSignature, StringComparison.OrdinalIgnoreCase)
                 && string.Equals(first.SharedAccessKeyName, second.SharedAccessKeyName, StringComparison.OrdinalIgnoreCase)
-                && string.Equals(first.SharedAccessKey, second.SharedAccessKey, StringComparison.OrdinalIgnoreCase);
+                && string.Equals(first.SharedAccessKey, second.SharedAccessKey, StringComparison.OrdinalIgnoreCase)
+                && string.Equals(first.SharedAccessKey, second.SharedAccessKey, StringComparison.OrdinalIgnoreCase)
+                && (first.UseDevelopmentEmulator == second.UseDevelopmentEmulator);
         }
 
         /// <summary>

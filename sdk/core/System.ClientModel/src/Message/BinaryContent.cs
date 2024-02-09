@@ -40,14 +40,14 @@ public abstract class BinaryContent : IDisposable
     /// </summary>
     /// <param name="stream">The stream to write to.</param>
     /// <param name="cancellationToken">To cancellation token to use.</param>
-    public abstract Task WriteToAsync(Stream stream, CancellationToken cancellationToken);
+    public abstract Task WriteToAsync(Stream stream, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Writes contents of this object to an instance of <see cref="Stream"/>.
     /// </summary>
     /// <param name="stream">The stream to write to.</param>
     /// <param name="cancellationToken">To cancellation token to use.</param>
-    public abstract void WriteTo(Stream stream, CancellationToken cancellationToken);
+    public abstract void WriteTo(Stream stream, CancellationToken cancellationToken = default);
 
     /// <inheritdoc/>
     public abstract void Dispose();
@@ -85,7 +85,7 @@ public abstract class BinaryContent : IDisposable
         private readonly ModelReaderWriterOptions _options;
 
         // Used when _model is an IJsonModel
-        private ModelWriter? _writer;
+        private UnsafeBufferSequence.Reader? _sequenceReader;
 
         // Used when _model is an IModel
         private BinaryData? _data;
@@ -96,7 +96,7 @@ public abstract class BinaryContent : IDisposable
             _options = options;
         }
 
-        private ModelWriter Writer
+        private UnsafeBufferSequence.Reader SequenceReader
         {
             get
             {
@@ -105,8 +105,11 @@ public abstract class BinaryContent : IDisposable
                     throw new InvalidOperationException("Cannot use Writer with non-IJsonModel model type.");
                 }
 
-                _writer ??= new ModelWriter((IJsonModel<object>)jsonModel, _options);
-                return _writer;
+                if (_sequenceReader == null)
+                {
+                    _sequenceReader = new ModelWriter<T>(jsonModel, _options).ExtractReader();
+                }
+                return _sequenceReader;
             }
         }
 
@@ -126,12 +129,8 @@ public abstract class BinaryContent : IDisposable
 
         public override bool TryComputeLength(out long length)
         {
-            if (ModelReaderWriter.ShouldWriteAsJson(_model, _options))
-            {
-                return Writer.TryComputeLength(out length);
-            }
+            length = ModelReaderWriter.ShouldWriteAsJson(_model, _options) ? SequenceReader.Length : Data.ToMemory().Length;
 
-            length = Data.ToMemory().Length;
             return true;
         }
 
@@ -144,7 +143,7 @@ public abstract class BinaryContent : IDisposable
         {
             if (ModelReaderWriter.ShouldWriteAsJson(_model, _options))
             {
-                Writer.CopyTo(stream, cancellation);
+                SequenceReader.CopyTo(stream, cancellation);
                 return;
             }
 
@@ -159,7 +158,7 @@ public abstract class BinaryContent : IDisposable
         {
             if (ModelReaderWriter.ShouldWriteAsJson(_model, _options))
             {
-                await Writer.CopyToAsync(stream, cancellation).ConfigureAwait(false);
+                await SequenceReader.CopyToAsync(stream, cancellation).ConfigureAwait(false);
                 return;
             }
 
@@ -168,11 +167,11 @@ public abstract class BinaryContent : IDisposable
 
         public override void Dispose()
         {
-            var writer = _writer;
-            if (writer != null)
+            var sequenceReader = _sequenceReader;
+            if (sequenceReader != null)
             {
-                _writer = null;
-                writer.Dispose();
+                _sequenceReader = null;
+                sequenceReader.Dispose();
             }
         }
     }

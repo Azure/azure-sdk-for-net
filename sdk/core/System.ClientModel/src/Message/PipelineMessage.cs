@@ -19,6 +19,7 @@ public class PipelineMessage : IDisposable
         _propertyBag = new ArrayBackedPropertyBag<ulong, object>();
 
         BufferResponse = true;
+        ResponseClassifier = PipelineMessageClassifier.Default;
     }
 
     public PipelineRequest Request { get; }
@@ -29,6 +30,21 @@ public class PipelineMessage : IDisposable
 
         // Set internally by the transport.
         protected internal set;
+    }
+
+    public PipelineResponse? ExtractResponse()
+    {
+        PipelineResponse? response = Response;
+        Response = null;
+        return response;
+    }
+
+    internal void AssertResponse()
+    {
+        if (Response is null)
+        {
+            throw new InvalidOperationException($"'{nameof(Response)}' property is not set on message.");
+        }
     }
 
     #region Pipeline invocation options
@@ -64,7 +80,7 @@ public class PipelineMessage : IDisposable
     // the client-provided classifier or compose a chain of classification
     // handlers that preserve the functionality of the client-provided classifier
     // at the end of the chain.
-    public PipelineMessageClassifier? MessageClassifier { get; set; }
+    public PipelineMessageClassifier ResponseClassifier { get; set; }
 
     public void Apply(RequestOptions options)
     {
@@ -116,40 +132,29 @@ public class PipelineMessage : IDisposable
 
     #endregion
 
-    internal void AssertResponse()
-    {
-        if (Response is null)
-        {
-            throw new InvalidOperationException("Response is not set on message.");
-        }
-    }
-
     #region IDisposable
-
-    protected virtual void Dispose(bool disposing)
-    {
-        if (disposing && !_disposed)
-        {
-            var request = Request;
-            request?.Dispose();
-
-            _propertyBag.Dispose();
-
-            var response = Response;
-            if (response != null)
-            {
-                response.Dispose();
-                Response = null;
-            }
-
-            _disposed = true;
-        }
-    }
 
     public void Dispose()
     {
         Dispose(true);
         GC.SuppressFinalize(this);
+    }
+
+    protected virtual void Dispose(bool disposing)
+    {
+        if (disposing && !_disposed)
+        {
+            PipelineResponse? response = Response;
+            response?.Dispose();
+            Response = null;
+
+            PipelineRequest request = Request;
+            request?.Dispose();
+
+            _propertyBag.Dispose();
+
+            _disposed = true;
+        }
     }
 
     #endregion

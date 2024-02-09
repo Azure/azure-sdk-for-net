@@ -1,5 +1,22 @@
 # Release History
 
+## 1.2.0-beta.1 (Unreleased)
+
+### Features Added
+
+* Added Azure Container Apps resource detector.
+  ([#41803](https://github.com/Azure/azure-sdk-for-net/pull/41803))
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+* Updated the vendored code in the `OpenTelemetry.ResourceDetectors.Azure`
+  resource detector to include the Azure Container Apps resource detector.
+  ([#41803](https://github.com/Azure/azure-sdk-for-net/pull/41803))
+
 ## 1.1.0 (2024-01-25)
 
 ### Other Changes

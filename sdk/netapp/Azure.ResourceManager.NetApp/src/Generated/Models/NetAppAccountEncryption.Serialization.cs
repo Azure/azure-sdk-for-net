@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
-    public partial class NetAppAccountEncryption : IUtf8JsonSerializable
+    public partial class NetAppAccountEncryption : IUtf8JsonSerializable, IJsonModel<NetAppAccountEncryption>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NetAppAccountEncryption>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<NetAppAccountEncryption>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<NetAppAccountEncryption>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(NetAppAccountEncryption)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(KeySource))
             {
@@ -30,11 +41,40 @@ namespace Azure.ResourceManager.NetApp.Models
                 writer.WritePropertyName("identity"u8);
                 writer.WriteObjectValue(Identity);
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static NetAppAccountEncryption DeserializeNetAppAccountEncryption(JsonElement element)
+        NetAppAccountEncryption IJsonModel<NetAppAccountEncryption>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<NetAppAccountEncryption>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(NetAppAccountEncryption)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeNetAppAccountEncryption(document.RootElement, options);
+        }
+
+        internal static NetAppAccountEncryption DeserializeNetAppAccountEncryption(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -42,6 +82,8 @@ namespace Azure.ResourceManager.NetApp.Models
             Optional<NetAppKeySource> keySource = default;
             Optional<NetAppKeyVaultProperties> keyVaultProperties = default;
             Optional<NetAppEncryptionIdentity> identity = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("keySource"u8))
@@ -71,8 +113,44 @@ namespace Azure.ResourceManager.NetApp.Models
                     identity = NetAppEncryptionIdentity.DeserializeNetAppEncryptionIdentity(property.Value);
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new NetAppAccountEncryption(Optional.ToNullable(keySource), keyVaultProperties.Value, identity.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new NetAppAccountEncryption(Optional.ToNullable(keySource), keyVaultProperties.Value, identity.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<NetAppAccountEncryption>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<NetAppAccountEncryption>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(NetAppAccountEncryption)} does not support '{options.Format}' format.");
+            }
+        }
+
+        NetAppAccountEncryption IPersistableModel<NetAppAccountEncryption>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<NetAppAccountEncryption>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeNetAppAccountEncryption(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(NetAppAccountEncryption)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<NetAppAccountEncryption>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

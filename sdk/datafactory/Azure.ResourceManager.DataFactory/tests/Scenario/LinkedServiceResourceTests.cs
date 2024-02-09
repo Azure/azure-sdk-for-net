@@ -497,7 +497,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
                 string linkedServiceHDInsightName = Recording.GenerateAssetName("adf_linkedservice_");
                 DataFactoryLinkedServiceData lkHDInsight = new DataFactoryLinkedServiceData(new HDInsightLinkedService("https://test.azurehdinsight.net"));
                 _ = dataFactory.GetDataFactoryLinkedServices().CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceHDInsightName, lkHDInsight);
-                return new DataFactoryLinkedServiceData(new HDInsightOnDemandLinkedService("4", "01:30:00", "3.5", new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceHDInsightName), "hostSubscriptionId", "72f988bf-86f1-41af-91ab-2d7cd011db47", "ADF")
+                return new DataFactoryLinkedServiceData(new HDInsightOnDemandLinkedService(4, "01:30:00", "3.5", new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceHDInsightName), "hostSubscriptionId", "72f988bf-86f1-41af-91ab-2d7cd011db47", "ADF")
                 {
                     ServicePrincipalId = "servicePrincipalId",
                     ServicePrincipalKey = new DataFactorySecretString("fakeKey"),
@@ -844,7 +844,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
         {
             await LinkedSerivceCreate("web", (dataFactory, linkedServiceKeyVaultName, integrationRuntimeName) =>
             {
-                WebLinkedServiceTypeProperties webLinkedServiceTypeProperties = new UnknownWebLinkedServiceTypeProperties("http://localhost", WebAuthenticationType.ClientCertificate);
+                WebLinkedServiceTypeProperties webLinkedServiceTypeProperties = new UnknownWebLinkedServiceTypeProperties("http://localhost", WebAuthenticationType.ClientCertificate, null);
                 return new DataFactoryLinkedServiceData(new WebLinkedService(webLinkedServiceTypeProperties)
                 {
                     LinkedServiceType = "Web",
@@ -858,7 +858,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
         {
             await LinkedSerivceCreate("web", (dataFactory, linkedServiceKeyVaultName, integrationRuntimeName) =>
             {
-                WebLinkedServiceTypeProperties webLinkedServiceTypeProperties = new UnknownWebLinkedServiceTypeProperties("http://localhost", WebAuthenticationType.ClientCertificate);
+                WebLinkedServiceTypeProperties webLinkedServiceTypeProperties = new UnknownWebLinkedServiceTypeProperties("http://localhost", WebAuthenticationType.ClientCertificate, null);
                 return new DataFactoryLinkedServiceData(new WebLinkedService(webLinkedServiceTypeProperties)
                 {
                     LinkedServiceType = "Web",
@@ -2535,8 +2535,9 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
         {
             await LinkedSerivceCreate("mysql", (dataFactory, linkedServiceKeyVaultName, integrationRuntimeName) =>
             {
-                return new DataFactoryLinkedServiceData(new MySqlLinkedService(DataFactoryElement<string>.FromSecretString("Fakeconnstring"))
+                return new DataFactoryLinkedServiceData(new MySqlLinkedService()
                 {
+                    ConnectionString = DataFactoryElement<string>.FromSecretString("Fakeconnstring"),
                     Password = new DataFactoryKeyVaultSecretReference(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceKeyVaultName), "fakeSecretName1")
                 });
             });

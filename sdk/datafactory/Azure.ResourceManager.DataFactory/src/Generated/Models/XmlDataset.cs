@@ -52,6 +52,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             DatasetType = datasetType ?? "Xml";
         }
 
+        /// <summary> Initializes a new instance of <see cref="XmlDataset"/> for deserialization. </summary>
+        internal XmlDataset()
+        {
+        }
+
         /// <summary>
         /// The location of the json data storage.
         /// Please note <see cref="DatasetLocation"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
