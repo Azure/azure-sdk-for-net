@@ -29,7 +29,6 @@ public partial class SpeechGeneration
         };
 
         Response<BinaryData> response = await client.GetAudioSpeechAsync(speechOptions);
-
         File.WriteAllBytes("myAudioFile.mp3", response.Value.ToArray());
         #endregion
     }
