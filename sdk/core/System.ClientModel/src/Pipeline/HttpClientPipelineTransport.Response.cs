@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System.ClientModel.Internal;
-using System.Diagnostics;
 using System.IO;
 using System.Net.Http;
 using System.Threading;
@@ -44,7 +43,20 @@ public partial class HttpClientPipelineTransport
 
         public override Stream? ContentStream
         {
-            get => _contentStream;
+            get
+            {
+                if (_contentStream is not null)
+                {
+                    return _contentStream;
+                }
+
+                if (_bufferedContent is not null)
+                {
+                    return _bufferedContent.ToStream();
+                }
+
+                return null;
+            }
             set
             {
                 // Don't dispose the content if the stream is replaced.
@@ -62,8 +74,15 @@ public partial class HttpClientPipelineTransport
         {
             get
             {
+                // TODO: Consolidate with part of ReadContent implementation?
                 if (_bufferedContent is not null)
                 {
+                    return _bufferedContent;
+                }
+
+                if (_contentStream == null)
+                {
+                    _bufferedContent = s_EmptyBinaryData;
                     return _bufferedContent;
                 }
 
@@ -122,7 +141,7 @@ public partial class HttpClientPipelineTransport
             }
 
             _contentStream.Dispose();
-            _contentStream = bufferStream;
+            _contentStream = null;
 
             bufferStream.Position = 0;
 
@@ -146,6 +165,14 @@ public partial class HttpClientPipelineTransport
             {
                 HttpResponseMessage httpResponse = _httpResponse;
                 httpResponse?.Dispose();
+
+                // This response type has two states:
+                //   1. _contentStream holds a "source stream" which has not
+                //      been buffered; _bufferedContent is null.
+                //   2. _bufferedContent is set and _contentStream is null.
+                //
+                // Given this, if _contentStream is not null, we are holding
+                // a source stream and will dispose it.
 
                 Stream? contentStream = _contentStream;
                 contentStream?.Dispose();
