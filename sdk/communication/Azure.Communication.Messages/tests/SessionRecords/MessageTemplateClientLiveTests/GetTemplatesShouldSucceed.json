@@ -6,26 +6,28 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-32790e43463521a6c134179de7d5148a-3841c5621c5ab7db-00",
+        "traceparent": "00-6c287f0f10167c6b3a59a10c4adc40df-399ca24ecdec1ff3-00",
         "User-Agent": "azsdk-net-Communication.Messages/1.0.0-alpha.20240209.1 (.NET 7.0.15; Microsoft Windows 10.0.22631)",
-        "x-ms-client-request-id": "b7363cd8ee01821514b176937fbd7851",
+        "x-ms-client-request-id": "e0a917c6119fc30872f5c0ac9346b92a",
         "x-ms-content-sha256": "Sanitized",
-        "x-ms-date": "Fri, 09 Feb 2024 20:55:26 GMT",
+        "x-ms-date": "Fri, 09 Feb 2024 22:11:49 GMT",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
+        "Accept-Ranges": "bytes",
         "api-supported-versions": "2023-08-24-preview, 2024-02-01",
+        "Connection": "keep-alive",
         "Content-Length": "8368",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 09 Feb 2024 20:55:29 GMT",
-        "MS-CV": "ep37uZZf/EuxqEmpm9YbEw.0",
+        "Date": "Fri, 09 Feb 2024 22:11:54 GMT",
+        "MS-CV": "hpXlaDfpO0O41XtkmL9D6w.0",
         "Request-Context": "appId=",
         "Strict-Transport-Security": "max-age=2592000",
-        "X-Azure-Ref": "0QZHGZQAAAADwHatJ6RIqQ4caGD52rN\u002BSTU5aMjIxMDYwNjEyMDQ5AGYwOWE0YzEzLTIxZjEtNDhlYy05Y2Y3LTY2NTQ1Njg0YjY0Mg==",
+        "x-azure-ref": "20240209T221153Z-pfcn9br3b11kd2xessn2xp84ns000000030000000001ktsf",
         "X-Cache": "CONFIG_NOCACHE",
-        "X-Processing-Time": "545ms"
+        "X-Processing-Time": "416ms"
       },
       "ResponseBody": {
         "value": [
@@ -574,6 +576,8 @@
     }
   ],
   "Variables": {
-    "RandomSeed": "907613136"
+    "COMMUNICATION_LIVETEST_DYNAMIC_CONNECTION_STRING": "endpoint=https://sanitized.communication.azure.com/;accesskey=Kg==",
+    "RandomSeed": "1101540093",
+    "SENDER_CHANNEL_REGISTRATION_ID": "77ffd898-ec44-42cd-b560-57a8903d05c7"
   }
 }

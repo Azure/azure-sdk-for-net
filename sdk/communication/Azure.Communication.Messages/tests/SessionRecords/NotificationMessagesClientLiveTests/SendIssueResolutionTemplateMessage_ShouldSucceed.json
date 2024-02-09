@@ -10,11 +10,11 @@
         "Content-Type": "application/json",
         "Repeatability-First-Sent": "Sanitized",
         "Repeatability-Request-ID": "Sanitized",
-        "traceparent": "00-96d82cc45b673ba73750b6d54c325112-34879e24769db4ef-00",
+        "traceparent": "00-17df4c7c9df331f48bf988f647b11674-0343369f6171a8d6-00",
         "User-Agent": "azsdk-net-Communication.Messages/1.0.0-alpha.20240209.1 (.NET 7.0.15; Microsoft Windows 10.0.22631)",
-        "x-ms-client-request-id": "a43aaa91fd06e3b623684215c3edc68a",
+        "x-ms-client-request-id": "920a679b772463dc4a8a408aff27341d",
         "x-ms-content-sha256": "Sanitized",
-        "x-ms-date": "Fri, 09 Feb 2024 20:55:34 GMT",
+        "x-ms-date": "Fri, 09 Feb 2024 22:12:00 GMT",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -66,21 +66,22 @@
       "StatusCode": 202,
       "ResponseHeaders": {
         "api-supported-versions": "2023-08-24-preview, 2024-02-01",
+        "Connection": "keep-alive",
         "Content-Length": "87",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 09 Feb 2024 20:55:36 GMT",
-        "MS-CV": "HP1Z64mca0mRY3y32DjLuQ.0",
+        "Date": "Fri, 09 Feb 2024 22:12:03 GMT",
+        "MS-CV": "Pfw/vjC1AEWaIqt62JFyZw.0",
         "Repeatability-Result": "accepted",
         "Request-Context": "appId=",
         "Strict-Transport-Security": "max-age=2592000",
-        "X-Azure-Ref": "0SZHGZQAAAAD/eqo\u002B4KIhRJBm2rNTGxiXTU5aMjIxMDYwNjEyMDQ5AGYwOWE0YzEzLTIxZjEtNDhlYy05Y2Y3LTY2NTQ1Njg0YjY0Mg==",
+        "x-azure-ref": "20240209T221203Z-pfcn9br3b11kd2xessn2xp84ns000000030000000001kvb0",
         "X-Cache": "CONFIG_NOCACHE",
-        "X-Processing-Time": "366ms"
+        "X-Processing-Time": "354ms"
       },
       "ResponseBody": {
         "receipts": [
           {
-            "messageId": "5b67c2e6-9452-4197-8981-fd2177fffe70",
+            "messageId": "3572fabc-048a-425c-a75a-cc5305f53975",
             "to": "\u002B16041234567"
           }
         ]
@@ -88,6 +89,9 @@
     }
   ],
   "Variables": {
-    "RandomSeed": "2117664088"
+    "COMMUNICATION_LIVETEST_DYNAMIC_CONNECTION_STRING": "endpoint=https://sanitized.communication.azure.com/;accesskey=Kg==",
+    "RandomSeed": "355521749",
+    "RECIPIENT_IDENTIFIER": "\u002B16041234567",
+    "SENDER_CHANNEL_REGISTRATION_ID": "77ffd898-ec44-42cd-b560-57a8903d05c7"
   }
 }

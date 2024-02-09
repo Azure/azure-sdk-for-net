@@ -10,11 +10,11 @@
         "Content-Type": "application/json",
         "Repeatability-First-Sent": "Sanitized",
         "Repeatability-Request-ID": "Sanitized",
-        "traceparent": "00-dcb284d843a8589a9f0e83f71673b5b9-67a0c1320eef65a8-00",
+        "traceparent": "00-b9670ca5dba7cd081b2ce7a340361392-673a31447f20d862-00",
         "User-Agent": "azsdk-net-Communication.Messages/1.0.0-alpha.20240209.1 (.NET 7.0.15; Microsoft Windows 10.0.22631)",
-        "x-ms-client-request-id": "ff951b044b0b852761d8bac1cbe33bd8",
+        "x-ms-client-request-id": "399c5d5e277995d5ea4eb4170e9c23c9",
         "x-ms-content-sha256": "Sanitized",
-        "x-ms-date": "Fri, 09 Feb 2024 20:55:47 GMT",
+        "x-ms-date": "Fri, 09 Feb 2024 22:12:19 GMT",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -28,16 +28,17 @@
       "StatusCode": 400,
       "ResponseHeaders": {
         "api-supported-versions": "2023-08-24-preview, 2024-02-01",
+        "Connection": "keep-alive",
         "Content-Type": "application/json",
-        "Date": "Fri, 09 Feb 2024 20:55:50 GMT",
-        "MS-CV": "VzDCOhlXyky9KXJhym8SIg.0",
+        "Date": "Fri, 09 Feb 2024 22:12:22 GMT",
+        "MS-CV": "1GqadPEnV0uVJZqMoy7y2A.0",
         "Repeatability-Result": "accepted",
         "Request-Context": "appId=",
         "Strict-Transport-Security": "max-age=2592000",
         "Transfer-Encoding": "chunked",
-        "X-Azure-Ref": "0VpHGZQAAAABszvPS2LgHTJKzzjY73irGTU5aMjIxMDYwNjEyMDQ5AGYwOWE0YzEzLTIxZjEtNDhlYy05Y2Y3LTY2NTQ1Njg0YjY0Mg==",
+        "x-azure-ref": "20240209T221221Z-pfcn9br3b11kd2xessn2xp84ns000000030000000001kxzb",
         "X-Cache": "CONFIG_NOCACHE",
-        "X-Processing-Time": "1058ms"
+        "X-Processing-Time": "665ms"
       },
       "ResponseBody": {
         "error": {
@@ -52,6 +53,9 @@
     }
   ],
   "Variables": {
-    "RandomSeed": "1452695872"
+    "COMMUNICATION_LIVETEST_DYNAMIC_CONNECTION_STRING": "endpoint=https://sanitized.communication.azure.com/;accesskey=Kg==",
+    "RandomSeed": "1077087818",
+    "RECIPIENT_IDENTIFIER": "\u002B16041234567",
+    "SENDER_CHANNEL_REGISTRATION_ID": "77ffd898-ec44-42cd-b560-57a8903d05c7"
   }
 }

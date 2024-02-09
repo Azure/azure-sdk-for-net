@@ -10,11 +10,11 @@
         "Content-Type": "application/json",
         "Repeatability-First-Sent": "Sanitized",
         "Repeatability-Request-ID": "Sanitized",
-        "traceparent": "00-424a96f5df92ebce1c57180a164c6bb4-2d48cea875dd2344-00",
+        "traceparent": "00-49c46fe4a5e389e67c30259c75c0c1de-b3403f7911c9d5b9-00",
         "User-Agent": "azsdk-net-Communication.Messages/1.0.0-alpha.20240209.1 (.NET 7.0.15; Microsoft Windows 10.0.22631)",
-        "x-ms-client-request-id": "2330baa54bb4ca0d4ab9d7ed011807bc",
+        "x-ms-client-request-id": "3a8846548014a030554e772afeea9719",
         "x-ms-content-sha256": "Sanitized",
-        "x-ms-date": "Fri, 09 Feb 2024 20:55:49 GMT",
+        "x-ms-date": "Fri, 09 Feb 2024 22:12:20 GMT",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -31,16 +31,17 @@
       "StatusCode": 404,
       "ResponseHeaders": {
         "api-supported-versions": "2023-08-24-preview, 2024-02-01",
+        "Connection": "keep-alive",
         "Content-Type": "application/json",
-        "Date": "Fri, 09 Feb 2024 20:55:51 GMT",
-        "MS-CV": "K\u002BXuWvatB0\u002B2ercmpeYvoA.0",
+        "Date": "Fri, 09 Feb 2024 22:12:23 GMT",
+        "MS-CV": "HMLzHv8rO02z4cSmM2s4Zw.0",
         "Repeatability-Result": "accepted",
         "Request-Context": "appId=",
         "Strict-Transport-Security": "max-age=2592000",
         "Transfer-Encoding": "chunked",
-        "X-Azure-Ref": "0V5HGZQAAAAAffWtDDltMR6srGx2oJTigTU5aMjIxMDYwNjEyMDQ5AGYwOWE0YzEzLTIxZjEtNDhlYy05Y2Y3LTY2NTQ1Njg0YjY0Mg==",
+        "x-azure-ref": "20240209T221223Z-pfcn9br3b11kd2xessn2xp84ns000000030000000001ky5d",
         "X-Cache": "CONFIG_NOCACHE",
-        "X-Processing-Time": "173ms"
+        "X-Processing-Time": "222ms"
       },
       "ResponseBody": {
         "error": {
@@ -55,6 +56,9 @@
     }
   ],
   "Variables": {
-    "RandomSeed": "843409454"
+    "COMMUNICATION_LIVETEST_DYNAMIC_CONNECTION_STRING": "endpoint=https://sanitized.communication.azure.com/;accesskey=Kg==",
+    "RandomSeed": "861353958",
+    "RECIPIENT_IDENTIFIER": "\u002B16041234567",
+    "SENDER_CHANNEL_REGISTRATION_ID": "77ffd898-ec44-42cd-b560-57a8903d05c7"
   }
 }
