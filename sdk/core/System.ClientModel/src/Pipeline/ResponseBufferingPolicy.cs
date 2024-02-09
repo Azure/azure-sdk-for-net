@@ -65,11 +65,9 @@ public class ResponseBufferingPolicy : PipelinePolicy
         message.Response!.NetworkTimeout = invocationNetworkTimeout;
 
         Stream? responseContentStream = message.Response!.ContentStream;
-        if (responseContentStream is null ||
-            message.Response.TryGetBufferedContent(out var _))
+        if (responseContentStream is null)
         {
-            // There is either no content on the response, or the content has already
-            // been buffered.
+            // There is no content to buffer.
             return;
         }
 
@@ -87,22 +85,15 @@ public class ResponseBufferingPolicy : PipelinePolicy
 
         // If we got this far, buffer the response.
 
-        // If cancellation is possible (whether due to network timeout or a user cancellation token being passed), then
-        // register callback to dispose the stream on cancellation.
-        if (invocationNetworkTimeout != Timeout.InfiniteTimeSpan || oldToken.CanBeCanceled)
-        {
-            cts.Token.Register(state => ((Stream?)state)?.Dispose(), responseContentStream);
-        }
-
         try
         {
             if (async)
             {
-                await message.Response.BufferContentAsync(invocationNetworkTimeout, cts).ConfigureAwait(false);
+                await message.Response.ReadContentAsync(cts.Token).ConfigureAwait(false);
             }
             else
             {
-                message.Response.BufferContent(invocationNetworkTimeout, cts);
+                message.Response.ReadContent(cts.Token);
             }
         }
         // We dispose stream on timeout or user cancellation so catch and check if cancellation token was cancelled

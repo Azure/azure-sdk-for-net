@@ -90,45 +90,65 @@ internal static class StreamExtensions
         }
     }
 
-    public static async Task CopyToAsync(this Stream source, Stream destination, TimeSpan timeout, CancellationTokenSource cancellationTokenSource)
+    public static async Task CopyToAsync(this Stream source, Stream destination, TimeSpan timeout, CancellationToken cancellationToken)
     {
+        using CancellationTokenSource cts = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
+
+        // If cancellation is possible (whether due to network timeout or a user cancellation token being passed), then
+        // register callback to dispose the stream on cancellation.
+        if (timeout != Timeout.InfiniteTimeSpan || cancellationToken.CanBeCanceled)
+        {
+            cts.Token.Register(state => ((Stream?)state)?.Dispose(), source);
+        }
+
         byte[] buffer = ArrayPool<byte>.Shared.Rent(DefaultCopyBufferSize);
+
         try
         {
             while (true)
             {
-                cancellationTokenSource.CancelAfter(timeout);
+                cts.CancelAfter(timeout);
 #pragma warning disable CA1835 // ReadAsync(Memory<>) overload is not available in all targets
-                int bytesRead = await source.ReadAsync(buffer, 0, buffer.Length, cancellationTokenSource.Token).ConfigureAwait(false);
+                int bytesRead = await source.ReadAsync(buffer, 0, buffer.Length, cts.Token).ConfigureAwait(false);
 #pragma warning restore // ReadAsync(Memory<>) overload is not available in all targets
                 if (bytesRead == 0)
                     break;
-                await destination.WriteAsync(new ReadOnlyMemory<byte>(buffer, 0, bytesRead), cancellationTokenSource.Token).ConfigureAwait(false);
+                await destination.WriteAsync(new ReadOnlyMemory<byte>(buffer, 0, bytesRead), cts.Token).ConfigureAwait(false);
             }
         }
         finally
         {
-            cancellationTokenSource.CancelAfter(Timeout.InfiniteTimeSpan);
+            cts.CancelAfter(Timeout.InfiniteTimeSpan);
             ArrayPool<byte>.Shared.Return(buffer);
         }
     }
 
-    public static void CopyTo(this Stream source, Stream destination, TimeSpan timeout, CancellationTokenSource cancellationTokenSource)
+    public static void CopyTo(this Stream source, Stream destination, TimeSpan timeout, CancellationToken cancellationToken)
     {
+        using CancellationTokenSource cts = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
+
+        // If cancellation is possible (whether due to network timeout or a user cancellation token being passed), then
+        // register callback to dispose the stream on cancellation.
+        if (timeout != Timeout.InfiniteTimeSpan || cancellationToken.CanBeCanceled)
+        {
+            cts.Token.Register(state => ((Stream?)state)?.Dispose(), source);
+        }
+
         byte[] buffer = ArrayPool<byte>.Shared.Rent(DefaultCopyBufferSize);
+
         try
         {
             int read;
             while ((read = source.Read(buffer, 0, buffer.Length)) != 0)
             {
-                cancellationTokenSource.Token.ThrowIfCancellationRequested();
-                cancellationTokenSource.CancelAfter(timeout);
+                cts.Token.ThrowIfCancellationRequested();
+                cts.CancelAfter(timeout);
                 destination.Write(buffer, 0, read);
             }
         }
         finally
         {
-            cancellationTokenSource.CancelAfter(Timeout.InfiniteTimeSpan);
+            cts.CancelAfter(Timeout.InfiniteTimeSpan);
             ArrayPool<byte>.Shared.Return(buffer);
         }
     }

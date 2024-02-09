@@ -41,6 +41,8 @@ namespace Azure.Core.Pipeline
                 set => _pipelineResponse.ContentStream = value;
             }
 
+            // TODO: Implement Content and ReadContent
+
             protected internal override bool ContainsHeader(string name)
                 => _pipelineResponse.Headers.TryGetValue(name, out _);
 

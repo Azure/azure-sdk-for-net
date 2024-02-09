@@ -10,7 +10,7 @@ namespace System.ClientModel.Primitives;
 public abstract class PipelineResponse : IDisposable
 {
     // TODO(matell): The .NET Framework team plans to add BinaryData.Empty in dotnet/runtime#49670, and we can use it then.
-    private static readonly BinaryData s_emptyBinaryData = new(Array.Empty<byte>());
+    internal static readonly BinaryData s_EmptyBinaryData = new(Array.Empty<byte>());
 
     private bool _isError = false;
 
@@ -35,9 +35,9 @@ public abstract class PipelineResponse : IDisposable
 
     public abstract BinaryData Content { get; }
 
-    public abstract BinaryData ReadContent(CancellationToken cancellationToken = default);
+    protected internal abstract BinaryData ReadContent(CancellationToken cancellationToken = default);
 
-    public abstract ValueTask<BinaryData> ReadContentAsync(CancellationToken cancellationToken = default);
+    protected internal abstract ValueTask<BinaryData> ReadContentAsync(CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Indicates whether the status code of the returned response is considered

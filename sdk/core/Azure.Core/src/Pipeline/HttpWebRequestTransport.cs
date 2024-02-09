@@ -328,6 +328,8 @@ namespace Azure.Core.Pipeline
                 }
             }
 
+            // TODO: Implement Content and ReadContent
+
             public override string ClientRequestId { get; set; }
 
             public override void Dispose()
