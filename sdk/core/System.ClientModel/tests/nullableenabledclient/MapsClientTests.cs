@@ -407,12 +407,24 @@ public class MapsClientTests
                 set => _stream = value;
             }
 
+            public override BinaryData Content => BinaryData.FromStream(_stream!);
+
             public override void Dispose()
             {
                 _stream?.Dispose();
             }
 
             protected override PipelineResponseHeaders GetHeadersCore()
+            {
+                throw new NotImplementedException();
+            }
+
+            protected override BinaryData ReadContent(CancellationToken cancellationToken = default)
+            {
+                throw new NotImplementedException();
+            }
+
+            protected override ValueTask<BinaryData> ReadContentAsync(CancellationToken cancellationToken = default)
             {
                 throw new NotImplementedException();
             }

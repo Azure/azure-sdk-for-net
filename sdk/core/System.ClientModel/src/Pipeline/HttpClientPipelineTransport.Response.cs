@@ -125,8 +125,10 @@ public partial class HttpClientPipelineTransport
             _contentStream = bufferStream;
 
             bufferStream.Position = 0;
-            Debug.Assert(bufferStream.TryGetBuffer(out ArraySegment<byte> buffer));
-            _bufferedContent = new BinaryData(buffer);
+
+            _bufferedContent = bufferStream.TryGetBuffer(out ArraySegment<byte> segment) ?
+                new BinaryData(segment.AsMemory()) :
+                new BinaryData(bufferStream.ToArray());
 
             return _bufferedContent;
         }

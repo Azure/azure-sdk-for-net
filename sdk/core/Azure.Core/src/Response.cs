@@ -23,8 +23,6 @@ namespace Azure
         // TODO(matell): The .NET Framework team plans to add BinaryData.Empty in dotnet/runtime#49670, and we can use it then.
         private static readonly BinaryData s_EmptyBinaryData = new(Array.Empty<byte>());
 
-        private BinaryData? _bufferedContent;
-
         /// <summary>
         /// Gets the client request id that was sent to the server as <c>x-ms-client-request-id</c> headers.
         /// </summary>

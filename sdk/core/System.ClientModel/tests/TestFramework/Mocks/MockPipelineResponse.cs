@@ -5,6 +5,8 @@ using System;
 using System.ClientModel.Primitives;
 using System.IO;
 using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace ClientModel.Tests.Mocks;
 
@@ -50,6 +52,19 @@ public class MockPipelineResponse : PipelineResponse
         set => _contentStream = value;
     }
 
+    public override BinaryData Content
+    {
+        get
+        {
+            if (_contentStream is null)
+            {
+                return BinaryData.FromString("");
+            }
+
+            return BinaryData.FromStream(_contentStream);
+        }
+    }
+
     protected override PipelineResponseHeaders GetHeadersCore() => _headers;
 
     public sealed override void Dispose()
@@ -72,5 +87,15 @@ public class MockPipelineResponse : PipelineResponse
 
             _disposed = true;
         }
+    }
+
+    protected override BinaryData ReadContent(CancellationToken cancellationToken = default)
+    {
+        throw new NotImplementedException();
+    }
+
+    protected override ValueTask<BinaryData> ReadContentAsync(CancellationToken cancellationToken = default)
+    {
+        throw new NotImplementedException();
     }
 }
