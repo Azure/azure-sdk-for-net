@@ -694,7 +694,6 @@ Console.WriteLine($"Translation ({translation.Duration.Value.TotalSeconds}s):");
 Console.WriteLine(translation.Text);
 ```
 
-
 ### Generate Speech with Text-to-Speech (TTS) models
 
 ```C# Snippet:SpeechGeneration

@@ -33,6 +33,5 @@ public partial class SpeechGeneration
 
         File.WriteAllBytes("myAudioFile.mp3", response.Value.ToArray());
         #endregion
-
     }
 }
