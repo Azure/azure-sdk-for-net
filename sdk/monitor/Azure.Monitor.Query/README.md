@@ -604,6 +604,8 @@ foreach (MetricResult metric in result.Value.Metrics)
 }
 ```
 
+For an inventory of metrics and dimensions available for each Azure resource type, see [Supported metrics with Azure Monitor](https://learn.microsoft.com/azure/azure-monitor/essentials/metrics-supported).
+
 #### Register the client with dependency injection
 
 To register `LogsQueryClient` with the dependency injection (DI) container, invoke the `AddLogsQueryClient` method. To register `MetricsQueryClient` with the dependency injection (DI) container, invoke the `AddMetricsQueryClient` method. For more information, see [Register client](https://learn.microsoft.com/dotnet/azure/sdk/dependency-injection#register-client).

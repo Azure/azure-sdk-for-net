@@ -62,6 +62,22 @@ namespace Azure.Monitor.Query
         public bool IncludeVisualization { get { throw null; } set { } }
         public System.TimeSpan? ServerTimeout { get { throw null; } set { } }
     }
+    public partial class MetricsBatchQueryClient
+    {
+        protected MetricsBatchQueryClient() { }
+        public MetricsBatchQueryClient(System.Uri endpoint, Azure.Core.TokenCredential credential, Azure.Monitor.Query.MetricsBatchQueryClientOptions options = null) { }
+        public System.Uri Endpoint { get { throw null; } }
+        public virtual Azure.Response<Azure.Monitor.Query.Models.MetricsBatchResult> QueryBatch(System.Collections.Generic.List<string> resourceIds, System.Collections.Generic.List<string> metricNames, string metricNamespace, Azure.Monitor.Query.MetricsQueryOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Monitor.Query.Models.MetricsBatchResult>> QueryBatchAsync(System.Collections.Generic.List<string> resourceIds, System.Collections.Generic.List<string> metricNames, string metricNamespace, Azure.Monitor.Query.MetricsQueryOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class MetricsBatchQueryClientOptions : Azure.Core.ClientOptions
+    {
+        public MetricsBatchQueryClientOptions(Azure.Monitor.Query.MetricsBatchQueryClientOptions.ServiceVersion version = Azure.Monitor.Query.MetricsBatchQueryClientOptions.ServiceVersion.V2023_05_01_PREVIEW) { }
+        public enum ServiceVersion
+        {
+            V2023_05_01_PREVIEW = 1,
+        }
+    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct MetricsQueryAudience : System.IEquatable<Azure.Monitor.Query.MetricsQueryAudience>
     {

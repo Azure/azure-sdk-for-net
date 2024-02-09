@@ -322,8 +322,7 @@ namespace Azure.Monitor.Query.Tests
             Assert.Throws<KeyNotFoundException>(() => { results.Value.GetMetricByName("Guinness"); });
         }
 
-        [Test]
-        [Ignore("Will replace when Swagger GAs")]
+        [RecordedTest]
         public async Task MetricsBatchQueryAsync()
         {
             // MetricsBatch endpoint currently exists only for Azure Public Cloud, so we do not want to run this test when we are in other clouds
@@ -356,7 +355,7 @@ namespace Azure.Monitor.Query.Tests
         }
 
         [Test]
-        [Ignore("Will replace when Swagger GAs")]
+        [SyncOnly]
         public void MetricsBatchInvalid()
         {
             // MetricsBatch endpoint currently exists only for Azure Public Cloud, so we do not want to run this test when we are in other clouds
@@ -365,12 +364,10 @@ namespace Azure.Monitor.Query.Tests
                 MetricsBatchQueryClient client = CreateBatchClient();
 
                 Assert.Throws<ArgumentException>(() =>
-                {
                     client.QueryBatch(
                     resourceIds: new List<string>(),
                     metricNames: new List<string> { "Ingress" },
-                    metricNamespace: "Microsoft.Storage/storageAccounts");
-                });
+                    metricNamespace: "Microsoft.Storage/storageAccounts"));
             }
         }
     }
