@@ -109,7 +109,7 @@ try
             Documents =
             {
                 new LanguageInput("A", documentA, "es"),
-                new LanguageInput("B", documentB, "us")
+                new LanguageInput("B", documentB, "us"),
                 new LanguageInput("C", documentC, "fr"),
             }
         }
