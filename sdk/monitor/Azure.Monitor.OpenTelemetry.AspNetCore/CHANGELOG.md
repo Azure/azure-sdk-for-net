@@ -13,6 +13,12 @@
   property can be set to `false` to disable live metrics.
   ([#41872](https://github.com/Azure/azure-sdk-for-net/pull/41872))
 
+- Added an experimental feature for logs emitted within an active tracing
+  context to follow the Activity's sampling decision. The feature can be enabled
+  by setting `OTEL_DOTNET_AZURE_MONITOR_EXPERIMENTAL_ENABLE_LOG_SAMPLING`
+  environment variable to `true`.
+  ([#41665](https://github.com/Azure/azure-sdk-for-net/pull/41665))
+
 ### Breaking Changes
 
 ### Bugs Fixed
