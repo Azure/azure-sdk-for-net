@@ -10,11 +10,11 @@
         "Content-Type": "application/json",
         "Repeatability-First-Sent": "Sanitized",
         "Repeatability-Request-ID": "Sanitized",
-        "traceparent": "00-19e803a5d7a22909c162761c620b3c5c-6d0964bc91ac37c3-00",
-        "User-Agent": "azsdk-net-Communication.Messages/1.0.0-alpha.20240205.1 (.NET 7.0.15; Microsoft Windows 10.0.22631)",
-        "x-ms-client-request-id": "035d4c31ca46d71b598627772c2afce7",
+        "traceparent": "00-d1d316da017ef2de02184d68e0eed9d8-12dc37a5abe55fb0-00",
+        "User-Agent": "azsdk-net-Communication.Messages/1.0.0-alpha.20240209.1 (.NET 7.0.15; Microsoft Windows 10.0.22631)",
+        "x-ms-client-request-id": "ae7b0027dfc69a69a738741d0ddd4723",
         "x-ms-content-sha256": "Sanitized",
-        "x-ms-date": "Tue, 06 Feb 2024 07:08:24 GMT",
+        "x-ms-date": "Fri, 09 Feb 2024 20:55:45 GMT",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -56,22 +56,21 @@
       "StatusCode": 202,
       "ResponseHeaders": {
         "api-supported-versions": "2023-08-24-preview, 2024-02-01",
-        "Connection": "keep-alive",
         "Content-Length": "87",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 06 Feb 2024 07:08:25 GMT",
-        "MS-CV": "i8c6s1dGWkGO\u002BDCY8CJXDw.0",
+        "Date": "Fri, 09 Feb 2024 20:55:48 GMT",
+        "MS-CV": "z2Xv\u002BsMys0qSIQCe6W5TqA.0",
         "Repeatability-Result": "accepted",
         "Request-Context": "appId=",
         "Strict-Transport-Security": "max-age=2592000",
-        "x-azure-ref": "20240206T070824Z-61cmrwvmbh7v9az4pvzdmug0b000000006m0000000002g90",
+        "X-Azure-Ref": "0VJHGZQAAAAAWjQFnv5sbSJIjnISaceHnTU5aMjIxMDYwNjEyMDQ5AGYwOWE0YzEzLTIxZjEtNDhlYy05Y2Y3LTY2NTQ1Njg0YjY0Mg==",
         "X-Cache": "CONFIG_NOCACHE",
-        "X-Processing-Time": "397ms"
+        "X-Processing-Time": "379ms"
       },
       "ResponseBody": {
         "receipts": [
           {
-            "messageId": "2834ea2d-2d18-4124-b2b9-24d5c1120405",
+            "messageId": "51cf164b-2a33-4226-95dc-4996a6802fdb",
             "to": "\u002B16041234567"
           }
         ]
@@ -79,6 +78,6 @@
     }
   ],
   "Variables": {
-    "RandomSeed": "1794162620"
+    "RandomSeed": "1273743575"
   }
 }

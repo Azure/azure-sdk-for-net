@@ -10,11 +10,11 @@
         "Content-Type": "application/json",
         "Repeatability-First-Sent": "Sanitized",
         "Repeatability-Request-ID": "Sanitized",
-        "traceparent": "00-c45f527282f48e785596f43a852cd2bd-b6d4abdb83d92ecc-00",
-        "User-Agent": "azsdk-net-Communication.Messages/1.0.0-alpha.20240205.1 (.NET 7.0.15; Microsoft Windows 10.0.22631)",
-        "x-ms-client-request-id": "8fa8fe7e5e45ad9eec0acf93468eed6c",
+        "traceparent": "00-8227b19eace3f319df8673e74bc7bb55-8de009db8c5f00d3-00",
+        "User-Agent": "azsdk-net-Communication.Messages/1.0.0-alpha.20240209.1 (.NET 7.0.15; Microsoft Windows 10.0.22631)",
+        "x-ms-client-request-id": "16772e5e629e845e46bb8a90da88201e",
         "x-ms-content-sha256": "Sanitized",
-        "x-ms-date": "Tue, 06 Feb 2024 07:08:19 GMT",
+        "x-ms-date": "Fri, 09 Feb 2024 20:55:38 GMT",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -31,17 +31,16 @@
       "StatusCode": 404,
       "ResponseHeaders": {
         "api-supported-versions": "2023-08-24-preview, 2024-02-01",
-        "Connection": "keep-alive",
         "Content-Type": "application/json",
-        "Date": "Tue, 06 Feb 2024 07:08:19 GMT",
-        "MS-CV": "BSlnzrcCTkajo8hi0k89Zg.0",
+        "Date": "Fri, 09 Feb 2024 20:55:41 GMT",
+        "MS-CV": "hExiuALD/Uuh\u002Bo45Ym6w7g.0",
         "Repeatability-Result": "accepted",
         "Request-Context": "appId=",
         "Strict-Transport-Security": "max-age=2592000",
         "Transfer-Encoding": "chunked",
-        "x-azure-ref": "20240206T070819Z-61cmrwvmbh7v9az4pvzdmug0b000000006m0000000002g2u",
+        "X-Azure-Ref": "0TZHGZQAAAAD69X0wLdBbTb0eGF4y9XRbTU5aMjIxMDYwNjEyMDQ5AGYwOWE0YzEzLTIxZjEtNDhlYy05Y2Y3LTY2NTQ1Njg0YjY0Mg==",
         "X-Cache": "CONFIG_NOCACHE",
-        "X-Processing-Time": "192ms"
+        "X-Processing-Time": "206ms"
       },
       "ResponseBody": {
         "error": {
@@ -56,6 +55,6 @@
     }
   ],
   "Variables": {
-    "RandomSeed": "195667298"
+    "RandomSeed": "1556729647"
   }
 }

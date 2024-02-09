@@ -10,11 +10,11 @@
         "Content-Type": "application/json",
         "Repeatability-First-Sent": "Sanitized",
         "Repeatability-Request-ID": "Sanitized",
-        "traceparent": "00-daea59cebe1a0b9714162d3898576861-5f1fba282c9e0965-00",
-        "User-Agent": "azsdk-net-Communication.Messages/1.0.0-alpha.20240205.1 (.NET 7.0.15; Microsoft Windows 10.0.22631)",
-        "x-ms-client-request-id": "e2e7d0c6ce4b2aeaf4b769b3913b75c1",
+        "traceparent": "00-dd1b3510d8d51efe7cf9df40877fc609-c27a73d100ffa559-00",
+        "User-Agent": "azsdk-net-Communication.Messages/1.0.0-alpha.20240209.1 (.NET 7.0.15; Microsoft Windows 10.0.22631)",
+        "x-ms-client-request-id": "9cfee3a18f2159b9c888a5620b63b86c",
         "x-ms-content-sha256": "Sanitized",
-        "x-ms-date": "Tue, 06 Feb 2024 07:08:26 GMT",
+        "x-ms-date": "Fri, 09 Feb 2024 20:55:50 GMT",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -28,17 +28,16 @@
       "StatusCode": 400,
       "ResponseHeaders": {
         "api-supported-versions": "2023-08-24-preview, 2024-02-01",
-        "Connection": "keep-alive",
         "Content-Type": "application/json",
-        "Date": "Tue, 06 Feb 2024 07:08:27 GMT",
-        "MS-CV": "GFaxYA/hdEKY8VHTsmNmTg.0",
+        "Date": "Fri, 09 Feb 2024 20:55:52 GMT",
+        "MS-CV": "jk0MddkNFUyw84I/0UAcvQ.0",
         "Repeatability-Result": "accepted",
         "Request-Context": "appId=",
         "Strict-Transport-Security": "max-age=2592000",
         "Transfer-Encoding": "chunked",
-        "x-azure-ref": "20240206T070827Z-61cmrwvmbh7v9az4pvzdmug0b000000006m0000000002gbk",
+        "X-Azure-Ref": "0WJHGZQAAAACZR4eGQIBXRL\u002BQMQ2aXXSyTU5aMjIxMDYwNjEyMDQ5AGYwOWE0YzEzLTIxZjEtNDhlYy05Y2Y3LTY2NTQ1Njg0YjY0Mg==",
         "X-Cache": "CONFIG_NOCACHE",
-        "X-Processing-Time": "24ms"
+        "X-Processing-Time": "22ms"
       },
       "ResponseBody": {
         "error": {
@@ -49,6 +48,6 @@
     }
   ],
   "Variables": {
-    "RandomSeed": "1681536647"
+    "RandomSeed": "780144209"
   }
 }

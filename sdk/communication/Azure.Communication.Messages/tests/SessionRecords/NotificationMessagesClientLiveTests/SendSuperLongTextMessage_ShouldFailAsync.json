@@ -10,11 +10,11 @@
         "Content-Type": "application/json",
         "Repeatability-First-Sent": "Sanitized",
         "Repeatability-Request-ID": "Sanitized",
-        "traceparent": "00-b328a893f2f925423725d5502638cabb-8878524ca9c0b30a-00",
-        "User-Agent": "azsdk-net-Communication.Messages/1.0.0-alpha.20240205.1 (.NET 7.0.15; Microsoft Windows 10.0.22631)",
-        "x-ms-client-request-id": "e13cbdf2a5b98c2f11511faaa0ca18de",
+        "traceparent": "00-dcb284d843a8589a9f0e83f71673b5b9-67a0c1320eef65a8-00",
+        "User-Agent": "azsdk-net-Communication.Messages/1.0.0-alpha.20240209.1 (.NET 7.0.15; Microsoft Windows 10.0.22631)",
+        "x-ms-client-request-id": "ff951b044b0b852761d8bac1cbe33bd8",
         "x-ms-content-sha256": "Sanitized",
-        "x-ms-date": "Tue, 06 Feb 2024 07:08:25 GMT",
+        "x-ms-date": "Fri, 09 Feb 2024 20:55:47 GMT",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -28,17 +28,16 @@
       "StatusCode": 400,
       "ResponseHeaders": {
         "api-supported-versions": "2023-08-24-preview, 2024-02-01",
-        "Connection": "keep-alive",
         "Content-Type": "application/json",
-        "Date": "Tue, 06 Feb 2024 07:08:26 GMT",
-        "MS-CV": "lwyR6jcLXEOdYUOP9ol4og.0",
+        "Date": "Fri, 09 Feb 2024 20:55:50 GMT",
+        "MS-CV": "VzDCOhlXyky9KXJhym8SIg.0",
         "Repeatability-Result": "accepted",
         "Request-Context": "appId=",
         "Strict-Transport-Security": "max-age=2592000",
         "Transfer-Encoding": "chunked",
-        "x-azure-ref": "20240206T070825Z-61cmrwvmbh7v9az4pvzdmug0b000000006m0000000002ga0",
+        "X-Azure-Ref": "0VpHGZQAAAABszvPS2LgHTJKzzjY73irGTU5aMjIxMDYwNjEyMDQ5AGYwOWE0YzEzLTIxZjEtNDhlYy05Y2Y3LTY2NTQ1Njg0YjY0Mg==",
         "X-Cache": "CONFIG_NOCACHE",
-        "X-Processing-Time": "272ms"
+        "X-Processing-Time": "1058ms"
       },
       "ResponseBody": {
         "error": {
@@ -53,6 +52,6 @@
     }
   ],
   "Variables": {
-    "RandomSeed": "1989484210"
+    "RandomSeed": "1452695872"
   }
 }

@@ -6,28 +6,26 @@
       "RequestHeaders": {
         "Accept": "application/octet-stream",
         "Authorization": "Sanitized",
-        "Connection": "keep-alive",
-        "traceparent": "00-3c6c99a050c168f0cba9875b15d192e3-3a64b872bcf24e66-00",
-        "User-Agent": "azsdk-net-Communication.Messages/1.0.0-alpha.20240206.1 (.NET Framework 4.8.9181.0; Microsoft Windows 10.0.22631 )",
-        "x-ms-client-request-id": "3e2bc057c92bca148fb0d416749d5565",
+        "traceparent": "00-6ac85a965492c59837d35b1883132239-968fc7a60214b12e-00",
+        "User-Agent": "azsdk-net-Communication.Messages/1.0.0-alpha.20240209.1 (.NET 7.0.15; Microsoft Windows 10.0.22631)",
+        "x-ms-client-request-id": "c5cf35c650345b4243d296c981c0d629",
         "x-ms-content-sha256": "Sanitized",
-        "x-ms-date": "Tue, 06 Feb 2024 16:05:28 GMT",
+        "x-ms-date": "Fri, 09 Feb 2024 20:55:29 GMT",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 404,
       "ResponseHeaders": {
         "api-supported-versions": "2023-08-24-preview, 2024-02-01",
-        "Connection": "keep-alive",
         "Content-Type": "application/json",
-        "Date": "Tue, 06 Feb 2024 16:05:30 GMT",
-        "MS-CV": "gNjZHctqZEKr3A1\u002BuIC8KQ.0",
+        "Date": "Fri, 09 Feb 2024 20:55:31 GMT",
+        "MS-CV": "VK1MDsIy\u002B061GGeHS0\u002BCkA.0",
         "Request-Context": "appId=",
         "Strict-Transport-Security": "max-age=2592000",
         "Transfer-Encoding": "chunked",
-        "x-azure-ref": "20240206T160530Z-xhkbvcbuh904z65z6s670wdw5w0000000cv0000000001qmx",
+        "X-Azure-Ref": "0RJHGZQAAAAAOS\u002BCXaVrmR5EdgVfSuf\u002BQTU5aMjIxMDYwNjEyMDQ5AGYwOWE0YzEzLTIxZjEtNDhlYy05Y2Y3LTY2NTQ1Njg0YjY0Mg==",
         "X-Cache": "CONFIG_NOCACHE",
-        "X-Processing-Time": "67ms"
+        "X-Processing-Time": "42ms"
       },
       "ResponseBody": {
         "error": {
@@ -42,6 +40,6 @@
     }
   ],
   "Variables": {
-    "RandomSeed": "104164120"
+    "RandomSeed": "62050493"
   }
 }

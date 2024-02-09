@@ -10,11 +10,11 @@
         "Content-Type": "application/json",
         "Repeatability-First-Sent": "Sanitized",
         "Repeatability-Request-ID": "Sanitized",
-        "traceparent": "00-0b7a0854e794fab22e13b5b9ed0ed8e8-fb81650c5dce9a45-00",
-        "User-Agent": "azsdk-net-Communication.Messages/1.0.0-alpha.20240205.1 (.NET 7.0.15; Microsoft Windows 10.0.22631)",
-        "x-ms-client-request-id": "c6a6c5f6830fce56c51d036142c0eb7c",
+        "traceparent": "00-424a96f5df92ebce1c57180a164c6bb4-2d48cea875dd2344-00",
+        "User-Agent": "azsdk-net-Communication.Messages/1.0.0-alpha.20240209.1 (.NET 7.0.15; Microsoft Windows 10.0.22631)",
+        "x-ms-client-request-id": "2330baa54bb4ca0d4ab9d7ed011807bc",
         "x-ms-content-sha256": "Sanitized",
-        "x-ms-date": "Tue, 06 Feb 2024 07:08:25 GMT",
+        "x-ms-date": "Fri, 09 Feb 2024 20:55:49 GMT",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -31,17 +31,16 @@
       "StatusCode": 404,
       "ResponseHeaders": {
         "api-supported-versions": "2023-08-24-preview, 2024-02-01",
-        "Connection": "keep-alive",
         "Content-Type": "application/json",
-        "Date": "Tue, 06 Feb 2024 07:08:26 GMT",
-        "MS-CV": "DCR\u002BHTNS5UaO/cGuLto0aQ.0",
+        "Date": "Fri, 09 Feb 2024 20:55:51 GMT",
+        "MS-CV": "K\u002BXuWvatB0\u002B2ercmpeYvoA.0",
         "Repeatability-Result": "accepted",
         "Request-Context": "appId=",
         "Strict-Transport-Security": "max-age=2592000",
         "Transfer-Encoding": "chunked",
-        "x-azure-ref": "20240206T070826Z-61cmrwvmbh7v9az4pvzdmug0b000000006m0000000002gad",
+        "X-Azure-Ref": "0V5HGZQAAAAAffWtDDltMR6srGx2oJTigTU5aMjIxMDYwNjEyMDQ5AGYwOWE0YzEzLTIxZjEtNDhlYy05Y2Y3LTY2NTQ1Njg0YjY0Mg==",
         "X-Cache": "CONFIG_NOCACHE",
-        "X-Processing-Time": "192ms"
+        "X-Processing-Time": "173ms"
       },
       "ResponseBody": {
         "error": {
@@ -56,6 +55,6 @@
     }
   ],
   "Variables": {
-    "RandomSeed": "1996340728"
+    "RandomSeed": "843409454"
   }
 }

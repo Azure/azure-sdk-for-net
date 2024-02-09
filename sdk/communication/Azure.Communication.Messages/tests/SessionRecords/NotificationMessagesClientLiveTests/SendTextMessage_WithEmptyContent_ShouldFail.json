@@ -10,11 +10,11 @@
         "Content-Type": "application/json",
         "Repeatability-First-Sent": "Sanitized",
         "Repeatability-Request-ID": "Sanitized",
-        "traceparent": "00-2d7213bcfe5b81b6339797f45d40fd15-6d95018af1fc5c11-00",
-        "User-Agent": "azsdk-net-Communication.Messages/1.0.0-alpha.20240205.1 (.NET 7.0.15; Microsoft Windows 10.0.22631)",
-        "x-ms-client-request-id": "92c6c8ec0ecf778d74c5a31752f36e20",
+        "traceparent": "00-19792d85a98c06875f28995347ad733d-905e18fced71aba9-00",
+        "User-Agent": "azsdk-net-Communication.Messages/1.0.0-alpha.20240209.1 (.NET 7.0.15; Microsoft Windows 10.0.22631)",
+        "x-ms-client-request-id": "0787c12bb4837d84eb224ca40c9b46f7",
         "x-ms-content-sha256": "Sanitized",
-        "x-ms-date": "Tue, 06 Feb 2024 07:08:20 GMT",
+        "x-ms-date": "Fri, 09 Feb 2024 20:55:40 GMT",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -28,17 +28,16 @@
       "StatusCode": 400,
       "ResponseHeaders": {
         "api-supported-versions": "2023-08-24-preview, 2024-02-01",
-        "Connection": "keep-alive",
         "Content-Type": "application/json",
-        "Date": "Tue, 06 Feb 2024 07:08:21 GMT",
-        "MS-CV": "sAUSoyhmwUClmvlssxAEEw.0",
+        "Date": "Fri, 09 Feb 2024 20:55:42 GMT",
+        "MS-CV": "n613j/xxVUese/\u002BJwG2/4g.0",
         "Repeatability-Result": "accepted",
         "Request-Context": "appId=",
         "Strict-Transport-Security": "max-age=2592000",
         "Transfer-Encoding": "chunked",
-        "x-azure-ref": "20240206T070821Z-61cmrwvmbh7v9az4pvzdmug0b000000006m0000000002g4r",
+        "X-Azure-Ref": "0TpHGZQAAAABOoSv6BXJlQYYLohJE/6FOTU5aMjIxMDYwNjEyMDQ5AGYwOWE0YzEzLTIxZjEtNDhlYy05Y2Y3LTY2NTQ1Njg0YjY0Mg==",
         "X-Cache": "CONFIG_NOCACHE",
-        "X-Processing-Time": "23ms"
+        "X-Processing-Time": "21ms"
       },
       "ResponseBody": {
         "error": {
@@ -49,6 +48,6 @@
     }
   ],
   "Variables": {
-    "RandomSeed": "533769535"
+    "RandomSeed": "1637152911"
   }
 }
