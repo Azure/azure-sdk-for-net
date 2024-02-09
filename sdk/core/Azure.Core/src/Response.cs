@@ -18,6 +18,15 @@ namespace Azure
     public abstract class Response : PipelineResponse
 #pragma warning restore AZC0012 // Avoid single word type names
     {
+        private Stream? _contentStream;
+
+        /// <summary>
+        /// TBD.
+        /// </summary>
+        protected Response() : base(_contentStream)
+        {
+        }
+
         /// <summary>
         /// Gets the client request id that was sent to the server as <c>x-ms-client-request-id</c> headers.
         /// </summary>
@@ -29,12 +38,13 @@ namespace Azure
         public new virtual ResponseHeaders Headers => new ResponseHeaders(this);
 
         /// <summary>
-        /// Gets the contents of HTTP response, if it is available.
+        /// TBD.
         /// </summary>
-        /// <remarks>
-        /// Throws <see cref="InvalidOperationException"/> when <see cref="PipelineResponse.ContentStream"/> is not a <see cref="MemoryStream"/>.
-        /// </remarks>
-        public new virtual BinaryData Content => base.Content;
+        public virtual Stream? ContentStream
+        {
+            get => _contentStream;
+            set => _contentStream = value;
+        }
 
         /// <summary>
         /// TBD.

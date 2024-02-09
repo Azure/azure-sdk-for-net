@@ -147,20 +147,25 @@ public partial class HttpClientPipelineTransport : PipelineTransport, IDisposabl
             throw new ClientResultException(e.Message, response: default, e);
         }
 
-        message.Response = new HttpPipelineResponse(responseMessage);
+        // Wrap in a read timeout stream if needed
+        if (!message.BufferResponse)
+        {
+            if (contentStream is not null)
+            {
+                // TODO: check network timeout.
+                //    if (invocationNetworkTimeout != Timeout.InfiniteTimeSpan)
+                //    {
+                contentStream = new ReadTimeoutStream(contentStream, ClientPipeline.DefaultNetworkTimeout);
+                //    }
+            }
+        }
+
+        message.Response = new HttpPipelineResponse(responseMessage, contentStream);
 
         // This extensibility point lets derived types do the following:
         //   1. Set message.Response to an implementation-specific type, e.g. Azure.Core.Response.
         //   2. Make any necessary modifications based on the System.Net.Http.HttpResponseMessage.
         OnReceivedResponse(message, responseMessage);
-
-        // We set derived values on the MessageResponse here, including Content and IsError
-        // to ensure these things happen in the transport.  If derived implementations need
-        // to override these default transport values, they can do so in pipeline policies.
-        if (contentStream is not null)
-        {
-            message.Response.ContentStream = contentStream;
-        }
     }
 
     /// <summary>

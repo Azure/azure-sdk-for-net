@@ -4,6 +4,7 @@
 using System.ClientModel.Internal;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Runtime.ExceptionServices;
 using System.Threading;
 using System.Threading.Tasks;
@@ -97,7 +98,7 @@ public class ClientRetryPolicy : PipelinePolicy
                 }
 
                 // Dispose the content stream to free up a connection if the request has any
-                message.Response?.ContentStream?.Dispose();
+                using Stream? contentStream = message.Response?.ExtractContentStream();
 
                 message.RetryCount++;
                 OnTryComplete(message);

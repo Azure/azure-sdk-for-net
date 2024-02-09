@@ -204,14 +204,15 @@ namespace System.ClientModel.Primitives
     }
     public abstract partial class PipelineResponse : System.IDisposable
     {
-        protected PipelineResponse() { }
+        public PipelineResponse(System.IO.Stream? contentStream) { }
         public virtual System.BinaryData Content { get { throw null; } }
-        public abstract System.IO.Stream? ContentStream { get; set; }
         public System.ClientModel.Primitives.PipelineResponseHeaders Headers { get { throw null; } }
+        public bool IsBuffered { get { throw null; } }
         public virtual bool IsError { get { throw null; } }
         public abstract string ReasonPhrase { get; }
         public abstract int Status { get; }
         public abstract void Dispose();
+        public virtual System.IO.Stream? ExtractContentStream() { throw null; }
         protected abstract System.ClientModel.Primitives.PipelineResponseHeaders GetHeadersCore();
         protected virtual void SetIsErrorCore(bool isError) { }
     }

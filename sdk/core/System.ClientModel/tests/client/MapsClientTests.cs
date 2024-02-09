@@ -357,27 +357,23 @@ public class MapsClientTests
 
         private class CustomTransportResponse : PipelineResponse
         {
-            private Stream _stream;
-
-            public CustomTransportResponse()
+            public CustomTransportResponse() : base(BinaryData.FromString("{}").ToStream())
             {
-                // Add fake response content
-                _stream = BinaryData.FromString("{}").ToStream();
             }
 
             public override int Status => 200;
 
             public override string ReasonPhrase => "CustomTransportResponse";
 
-            public override Stream ContentStream
-            {
-                get => _stream;
-                set => _stream = value;
-            }
+            //public override Stream ContentStream
+            //{
+            //    get => _stream;
+            //    set => _stream = value;
+            //}
 
             public override void Dispose()
             {
-                _stream?.Dispose();
+                //_stream?.Dispose();
             }
 
             protected override PipelineResponseHeaders GetHeadersCore()

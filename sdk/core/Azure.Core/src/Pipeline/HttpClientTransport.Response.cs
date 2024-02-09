@@ -18,11 +18,13 @@ namespace Azure.Core.Pipeline
         {
             private string _clientRequestId;
             private readonly PipelineResponse _pipelineResponse;
+            private Stream? _contentStream;
 
             public HttpClientTransportResponse(string clientRequestId, PipelineResponse pipelineResponse)
             {
                 _clientRequestId = clientRequestId;
                 _pipelineResponse = pipelineResponse;
+                _contentStream = _pipelineResponse.ExtractContentStream();
             }
 
             public override int Status => _pipelineResponse.Status;
@@ -37,8 +39,8 @@ namespace Azure.Core.Pipeline
 
             public override Stream? ContentStream
             {
-                get => _pipelineResponse.ContentStream;
-                set => _pipelineResponse.ContentStream = value;
+                get => _contentStream;
+                set => _contentStream = value;
             }
 
             protected internal override bool ContainsHeader(string name)

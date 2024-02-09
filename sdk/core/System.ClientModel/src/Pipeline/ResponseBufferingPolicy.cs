@@ -64,35 +64,34 @@ public class ResponseBufferingPolicy : PipelinePolicy
         message.AssertResponse();
         message.Response!.NetworkTimeout = invocationNetworkTimeout;
 
-        Stream? responseContentStream = message.Response!.ContentStream;
-        if (responseContentStream is null ||
-            message.Response.TryGetBufferedContent(out var _))
+        if (message.Response!.IsBuffered)
         {
             // There is either no content on the response, or the content has already
             // been buffered.
             return;
         }
 
-        if (!message.BufferResponse)
-        {
-            // Client has requested not to buffer the message response content.
-            // If applicable, wrap it in a read-timeout stream.
-            if (invocationNetworkTimeout != Timeout.InfiniteTimeSpan)
-            {
-                message.Response.ContentStream = new ReadTimeoutStream(responseContentStream, invocationNetworkTimeout);
-            }
+        //if (!message.BufferResponse)
+        //{
+        //    // Client has requested not to buffer the message response content.
+        //    // If applicable, wrap it in a read-timeout stream.
+        //    if (invocationNetworkTimeout != Timeout.InfiniteTimeSpan)
+        //    {
+        //        message.Response.ContentStream = new ReadTimeoutStream(responseContentStream, invocationNetworkTimeout);
+        //    }
 
-            return;
-        }
+        //    return;
+        //}
 
         // If we got this far, buffer the response.
 
+        // TODO: Register the cancellation token on the stream before buffering
         // If cancellation is possible (whether due to network timeout or a user cancellation token being passed), then
         // register callback to dispose the stream on cancellation.
-        if (invocationNetworkTimeout != Timeout.InfiniteTimeSpan || oldToken.CanBeCanceled)
-        {
-            cts.Token.Register(state => ((Stream?)state)?.Dispose(), responseContentStream);
-        }
+        //if (invocationNetworkTimeout != Timeout.InfiniteTimeSpan || oldToken.CanBeCanceled)
+        //{
+        //    cts.Token.Register(state => ((Stream?)state)?.Dispose(), responseContentStream);
+        //}
 
         try
         {
