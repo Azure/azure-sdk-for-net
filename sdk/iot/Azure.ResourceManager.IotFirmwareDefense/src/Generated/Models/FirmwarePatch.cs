@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
         /// <summary> Initializes a new instance of <see cref="FirmwarePatch"/>. </summary>
         public FirmwarePatch()
         {
-            StatusMessages = new ChangeTrackingList<BinaryData>();
+            StatusMessages = new ChangeTrackingList<StatusMessage>();
         }
 
         /// <summary> Initializes a new instance of <see cref="FirmwarePatch"/>. </summary>
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
         /// <param name="statusMessages"> A list of errors or other messages generated during firmware analysis. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal FirmwarePatch(string fileName, string vendor, string model, string version, string description, long? fileSize, Status? status, IList<BinaryData> statusMessages, ProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal FirmwarePatch(string fileName, string vendor, string model, string version, string description, long? fileSize, Status? status, IList<StatusMessage> statusMessages, ProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             FileName = fileName;
             Vendor = vendor;
@@ -91,37 +91,8 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
         public long? FileSize { get; set; }
         /// <summary> The status of firmware scan. </summary>
         public Status? Status { get; set; }
-        /// <summary>
-        /// A list of errors or other messages generated during firmware analysis
-        /// <para>
-        /// To assign an object to the element of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        public IList<BinaryData> StatusMessages { get; }
+        /// <summary> A list of errors or other messages generated during firmware analysis. </summary>
+        public IList<StatusMessage> StatusMessages { get; }
         /// <summary> Provisioning state of the resource. </summary>
         public ProvisioningState? ProvisioningState { get; }
     }

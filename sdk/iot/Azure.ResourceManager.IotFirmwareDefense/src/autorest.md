@@ -71,8 +71,15 @@ acronym-mapping:
 rename-mapping:
   GenerateUploadUrlRequest: UploadUrlRequest
   Models.Status: AnalysisStatus
-  Component: SbomComponent
   Workspace: FirmwareWorkspace
-  Cve: FirmwareCve
+  BinaryHardeningResource: BinaryHardeningResult
+  BinaryHardeningSummaryResource: BinaryHardeningSummary
+  CveResource: CveResult
+  CryptoCertificateResource: CryptoCertificateResult
+  CryptoCertificateSummaryResource: CryptoCertificateSummary
+  CryptoKeyResource: CryptoKeyResult
+  CryptoKeySummaryResource: CryptoKeySummary
+  PasswordHashResource: PasswordHashResult
+  SbomComponentResource: SbomComponentResult
 
 ```

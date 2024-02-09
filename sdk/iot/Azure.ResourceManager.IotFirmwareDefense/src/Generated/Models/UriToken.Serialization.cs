@@ -31,11 +31,6 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                 writer.WritePropertyName("url"u8);
                 writer.WriteStringValue(Uri.AbsoluteUri);
             }
-            if (options.Format != "W" && Optional.IsDefined(UploadUri))
-            {
-                writer.WritePropertyName("uploadUrl"u8);
-                writer.WriteStringValue(UploadUri.AbsoluteUri);
-            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -75,7 +70,6 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                 return null;
             }
             Optional<Uri> url = default;
-            Optional<Uri> uploadUrl = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,22 +83,13 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                     url = new Uri(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("uploadUrl"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    uploadUrl = new Uri(property.Value.GetString());
-                    continue;
-                }
                 if (options.Format != "W")
                 {
                     additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new UriToken(url.Value, uploadUrl.Value, serializedAdditionalRawData);
+            return new UriToken(url.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<UriToken>.Write(ModelReaderWriterOptions options)

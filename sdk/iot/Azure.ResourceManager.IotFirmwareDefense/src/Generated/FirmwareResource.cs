@@ -38,7 +38,19 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         }
 
         private readonly ClientDiagnostics _firmwareClientDiagnostics;
-        private readonly FirmwareRestOperations _firmwareRestClient;
+        private readonly FirmwaresRestOperations _firmwareRestClient;
+        private readonly ClientDiagnostics _binaryHardeningClientDiagnostics;
+        private readonly BinaryHardeningRestOperations _binaryHardeningRestClient;
+        private readonly ClientDiagnostics _cryptoCertificatesClientDiagnostics;
+        private readonly CryptoCertificatesRestOperations _cryptoCertificatesRestClient;
+        private readonly ClientDiagnostics _cryptoKeysClientDiagnostics;
+        private readonly CryptoKeysRestOperations _cryptoKeysRestClient;
+        private readonly ClientDiagnostics _cvesClientDiagnostics;
+        private readonly CvesRestOperations _cvesRestClient;
+        private readonly ClientDiagnostics _passwordHashesClientDiagnostics;
+        private readonly PasswordHashesRestOperations _passwordHashesRestClient;
+        private readonly ClientDiagnostics _sbomComponentsClientDiagnostics;
+        private readonly SbomComponentsRestOperations _sbomComponentsRestClient;
         private readonly FirmwareData _data;
 
         /// <summary> Gets the resource type for the operations. </summary>
@@ -65,7 +77,19 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         {
             _firmwareClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.IotFirmwareDefense", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string firmwareApiVersion);
-            _firmwareRestClient = new FirmwareRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, firmwareApiVersion);
+            _firmwareRestClient = new FirmwaresRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, firmwareApiVersion);
+            _binaryHardeningClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.IotFirmwareDefense", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+            _binaryHardeningRestClient = new BinaryHardeningRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
+            _cryptoCertificatesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.IotFirmwareDefense", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+            _cryptoCertificatesRestClient = new CryptoCertificatesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
+            _cryptoKeysClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.IotFirmwareDefense", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+            _cryptoKeysRestClient = new CryptoKeysRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
+            _cvesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.IotFirmwareDefense", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+            _cvesRestClient = new CvesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
+            _passwordHashesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.IotFirmwareDefense", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+            _passwordHashesRestClient = new PasswordHashesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
+            _sbomComponentsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.IotFirmwareDefense", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+            _sbomComponentsRestClient = new SbomComponentsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -92,6 +116,71 @@ namespace Azure.ResourceManager.IotFirmwareDefense
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
+        /// <summary> Gets a collection of SummaryResources in the Firmware. </summary>
+        /// <returns> An object representing collection of SummaryResources and their operations over a SummaryResource. </returns>
+        public virtual SummaryResourceCollection GetSummaryResources()
+        {
+            return GetCachedClient(client => new SummaryResourceCollection(client, Id));
+        }
+
+        /// <summary>
+        /// Get an analysis result summary of a firmware by name.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.IoTFirmwareDefense/workspaces/{workspaceName}/firmwares/{firmwareId}/summaries/{summaryName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Summaries_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-01-10</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SummaryResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="summaryName"> The Firmware analysis summary name describing the type of summary. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<SummaryResource>> GetSummaryResourceAsync(SummaryName summaryName, CancellationToken cancellationToken = default)
+        {
+            return await GetSummaryResources().GetAsync(summaryName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get an analysis result summary of a firmware by name.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.IoTFirmwareDefense/workspaces/{workspaceName}/firmwares/{firmwareId}/summaries/{summaryName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Summaries_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-01-10</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SummaryResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="summaryName"> The Firmware analysis summary name describing the type of summary. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [ForwardsClientCalls]
+        public virtual Response<SummaryResource> GetSummaryResource(SummaryName summaryName, CancellationToken cancellationToken = default)
+        {
+            return GetSummaryResources().Get(summaryName, cancellationToken);
+        }
+
         /// <summary>
         /// Get firmware.
         /// <list type="bullet">
@@ -101,11 +190,11 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Firmware_Get</description>
+        /// <description>Firmwares_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-02-08-preview</description>
+        /// <description>2024-01-10</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -141,11 +230,11 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Firmware_Get</description>
+        /// <description>Firmwares_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-02-08-preview</description>
+        /// <description>2024-01-10</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -181,11 +270,11 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Firmware_Delete</description>
+        /// <description>Firmwares_Delete</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-02-08-preview</description>
+        /// <description>2024-01-10</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -223,11 +312,11 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Firmware_Delete</description>
+        /// <description>Firmwares_Delete</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-02-08-preview</description>
+        /// <description>2024-01-10</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -265,11 +354,11 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Firmware_Update</description>
+        /// <description>Firmwares_Update</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-02-08-preview</description>
+        /// <description>2024-01-10</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -307,11 +396,11 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Firmware_Update</description>
+        /// <description>Firmwares_Update</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-02-08-preview</description>
+        /// <description>2024-01-10</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -341,6 +430,214 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         }
 
         /// <summary>
+        /// Lists binary hardening analysis results of a firmware.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.IoTFirmwareDefense/workspaces/{workspaceName}/firmwares/{firmwareId}/binaryHardeningResults</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>BinaryHardening_ListByFirmware</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-01-10</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="BinaryHardeningResult"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<BinaryHardeningResult> GetBinaryHardeningsAsync(CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _binaryHardeningRestClient.CreateListByFirmwareRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _binaryHardeningRestClient.CreateListByFirmwareNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryHardeningResult.DeserializeBinaryHardeningResult(e), _binaryHardeningClientDiagnostics, Pipeline, "FirmwareResource.GetBinaryHardenings", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
+        /// Lists binary hardening analysis results of a firmware.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.IoTFirmwareDefense/workspaces/{workspaceName}/firmwares/{firmwareId}/binaryHardeningResults</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>BinaryHardening_ListByFirmware</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-01-10</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="BinaryHardeningResult"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<BinaryHardeningResult> GetBinaryHardenings(CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _binaryHardeningRestClient.CreateListByFirmwareRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _binaryHardeningRestClient.CreateListByFirmwareNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryHardeningResult.DeserializeBinaryHardeningResult(e), _binaryHardeningClientDiagnostics, Pipeline, "FirmwareResource.GetBinaryHardenings", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
+        /// Lists cryptographic certificate analysis results found in a firmware.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.IoTFirmwareDefense/workspaces/{workspaceName}/firmwares/{firmwareId}/cryptoCertificates</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>CryptoCertificates_ListByFirmware</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-01-10</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="FirmwareCryptoCertificateResult"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<FirmwareCryptoCertificateResult> GetCryptoCertificatesAsync(CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _cryptoCertificatesRestClient.CreateListByFirmwareRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _cryptoCertificatesRestClient.CreateListByFirmwareNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => FirmwareCryptoCertificateResult.DeserializeFirmwareCryptoCertificateResult(e), _cryptoCertificatesClientDiagnostics, Pipeline, "FirmwareResource.GetCryptoCertificates", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
+        /// Lists cryptographic certificate analysis results found in a firmware.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.IoTFirmwareDefense/workspaces/{workspaceName}/firmwares/{firmwareId}/cryptoCertificates</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>CryptoCertificates_ListByFirmware</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-01-10</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="FirmwareCryptoCertificateResult"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<FirmwareCryptoCertificateResult> GetCryptoCertificates(CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _cryptoCertificatesRestClient.CreateListByFirmwareRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _cryptoCertificatesRestClient.CreateListByFirmwareNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => FirmwareCryptoCertificateResult.DeserializeFirmwareCryptoCertificateResult(e), _cryptoCertificatesClientDiagnostics, Pipeline, "FirmwareResource.GetCryptoCertificates", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
+        /// Lists cryptographic key analysis results found in a firmware.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.IoTFirmwareDefense/workspaces/{workspaceName}/firmwares/{firmwareId}/cryptoKeys</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>CryptoKeys_ListByFirmware</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-01-10</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="FirmwareCryptoKeyResult"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<FirmwareCryptoKeyResult> GetCryptoKeysAsync(CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _cryptoKeysRestClient.CreateListByFirmwareRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _cryptoKeysRestClient.CreateListByFirmwareNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => FirmwareCryptoKeyResult.DeserializeFirmwareCryptoKeyResult(e), _cryptoKeysClientDiagnostics, Pipeline, "FirmwareResource.GetCryptoKeys", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
+        /// Lists cryptographic key analysis results found in a firmware.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.IoTFirmwareDefense/workspaces/{workspaceName}/firmwares/{firmwareId}/cryptoKeys</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>CryptoKeys_ListByFirmware</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-01-10</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="FirmwareCryptoKeyResult"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<FirmwareCryptoKeyResult> GetCryptoKeys(CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _cryptoKeysRestClient.CreateListByFirmwareRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _cryptoKeysRestClient.CreateListByFirmwareNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => FirmwareCryptoKeyResult.DeserializeFirmwareCryptoKeyResult(e), _cryptoKeysClientDiagnostics, Pipeline, "FirmwareResource.GetCryptoKeys", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
+        /// Lists CVE analysis results of a firmware.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.IoTFirmwareDefense/workspaces/{workspaceName}/firmwares/{firmwareId}/cves</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Cves_ListByFirmware</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-01-10</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="CveResult"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<CveResult> GetCvesAsync(CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _cvesRestClient.CreateListByFirmwareRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _cvesRestClient.CreateListByFirmwareNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => CveResult.DeserializeCveResult(e), _cvesClientDiagnostics, Pipeline, "FirmwareResource.GetCves", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
+        /// Lists CVE analysis results of a firmware.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.IoTFirmwareDefense/workspaces/{workspaceName}/firmwares/{firmwareId}/cves</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Cves_ListByFirmware</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-01-10</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="CveResult"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<CveResult> GetCves(CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _cvesRestClient.CreateListByFirmwareRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _cvesRestClient.CreateListByFirmwareNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => CveResult.DeserializeCveResult(e), _cvesClientDiagnostics, Pipeline, "FirmwareResource.GetCves", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
         /// The operation to a url for file download.
         /// <list type="bullet">
         /// <item>
@@ -349,11 +646,11 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Firmware_GenerateDownloadUrl</description>
+        /// <description>Firmwares_GenerateDownloadUrl</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-02-08-preview</description>
+        /// <description>2024-01-10</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -387,11 +684,11 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Firmware_GenerateDownloadUrl</description>
+        /// <description>Firmwares_GenerateDownloadUrl</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-02-08-preview</description>
+        /// <description>2024-01-10</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -425,11 +722,11 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Firmware_GenerateFilesystemDownloadUrl</description>
+        /// <description>Firmwares_GenerateFilesystemDownloadUrl</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-02-08-preview</description>
+        /// <description>2024-01-10</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -463,11 +760,11 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Firmware_GenerateFilesystemDownloadUrl</description>
+        /// <description>Firmwares_GenerateFilesystemDownloadUrl</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-02-08-preview</description>
+        /// <description>2024-01-10</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -493,895 +790,107 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         }
 
         /// <summary>
-        /// The operation to get a scan summary.
+        /// Lists password hash analysis results of a firmware.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.IoTFirmwareDefense/workspaces/{workspaceName}/firmwares/{firmwareId}/generateSummary</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.IoTFirmwareDefense/workspaces/{workspaceName}/firmwares/{firmwareId}/passwordHashes</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Firmware_GenerateSummary</description>
+        /// <description>PasswordHashes_ListByFirmware</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-02-08-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="FirmwareResource"/></description>
+        /// <description>2024-01-10</description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<FirmwareSummary>> GetFirmwareSummaryAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="PasswordHashResult"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<PasswordHashResult> GetPasswordHashesAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _firmwareClientDiagnostics.CreateScope("FirmwareResource.GetFirmwareSummary");
-            scope.Start();
-            try
-            {
-                var response = await _firmwareRestClient.GetFirmwareSummaryAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _passwordHashesRestClient.CreateListByFirmwareRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _passwordHashesRestClient.CreateListByFirmwareNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => PasswordHashResult.DeserializePasswordHashResult(e), _passwordHashesClientDiagnostics, Pipeline, "FirmwareResource.GetPasswordHashes", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
-        /// The operation to get a scan summary.
+        /// Lists password hash analysis results of a firmware.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.IoTFirmwareDefense/workspaces/{workspaceName}/firmwares/{firmwareId}/generateSummary</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.IoTFirmwareDefense/workspaces/{workspaceName}/firmwares/{firmwareId}/passwordHashes</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Firmware_GenerateSummary</description>
+        /// <description>PasswordHashes_ListByFirmware</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-02-08-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="FirmwareResource"/></description>
+        /// <description>2024-01-10</description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<FirmwareSummary> GetFirmwareSummary(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="PasswordHashResult"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<PasswordHashResult> GetPasswordHashes(CancellationToken cancellationToken = default)
         {
-            using var scope = _firmwareClientDiagnostics.CreateScope("FirmwareResource.GetFirmwareSummary");
-            scope.Start();
-            try
-            {
-                var response = _firmwareRestClient.GetFirmwareSummary(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _passwordHashesRestClient.CreateListByFirmwareRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _passwordHashesRestClient.CreateListByFirmwareNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => PasswordHashResult.DeserializePasswordHashResult(e), _passwordHashesClientDiagnostics, Pipeline, "FirmwareResource.GetPasswordHashes", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
-        /// The operation to list all components result for a firmware.
+        /// Lists SBOM analysis results of a firmware.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.IoTFirmwareDefense/workspaces/{workspaceName}/firmwares/{firmwareId}/generateComponentList</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.IoTFirmwareDefense/workspaces/{workspaceName}/firmwares/{firmwareId}/sbomComponents</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Firmware_ListGenerateComponentList</description>
+        /// <description>SbomComponents_ListByFirmware</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-02-08-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="FirmwareResource"/></description>
+        /// <description>2024-01-10</description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SbomComponent"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<SbomComponent> GetSbomComponentsAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="SbomComponentResult"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<SbomComponentResult> GetSbomComponentsAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _firmwareRestClient.CreateListSbomComponentsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _firmwareRestClient.CreateListSbomComponentsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => SbomComponent.DeserializeSbomComponent(e), _firmwareClientDiagnostics, Pipeline, "FirmwareResource.GetSbomComponents", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _sbomComponentsRestClient.CreateListByFirmwareRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _sbomComponentsRestClient.CreateListByFirmwareNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => SbomComponentResult.DeserializeSbomComponentResult(e), _sbomComponentsClientDiagnostics, Pipeline, "FirmwareResource.GetSbomComponents", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
-        /// The operation to list all components result for a firmware.
+        /// Lists SBOM analysis results of a firmware.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.IoTFirmwareDefense/workspaces/{workspaceName}/firmwares/{firmwareId}/generateComponentList</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.IoTFirmwareDefense/workspaces/{workspaceName}/firmwares/{firmwareId}/sbomComponents</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Firmware_ListGenerateComponentList</description>
+        /// <description>SbomComponents_ListByFirmware</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-02-08-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="FirmwareResource"/></description>
+        /// <description>2024-01-10</description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SbomComponent"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<SbomComponent> GetSbomComponents(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="SbomComponentResult"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<SbomComponentResult> GetSbomComponents(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _firmwareRestClient.CreateListSbomComponentsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _firmwareRestClient.CreateListSbomComponentsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => SbomComponent.DeserializeSbomComponent(e), _firmwareClientDiagnostics, Pipeline, "FirmwareResource.GetSbomComponents", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// The operation to get component details for a firmware.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.IoTFirmwareDefense/workspaces/{workspaceName}/firmwares/{firmwareId}/generateComponentDetails</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Firmware_GenerateComponentDetails</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-02-08-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="FirmwareResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<SbomComponent>> GetComponentDetailsAsync(CancellationToken cancellationToken = default)
-        {
-            using var scope = _firmwareClientDiagnostics.CreateScope("FirmwareResource.GetComponentDetails");
-            scope.Start();
-            try
-            {
-                var response = await _firmwareRestClient.GetComponentDetailsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// The operation to get component details for a firmware.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.IoTFirmwareDefense/workspaces/{workspaceName}/firmwares/{firmwareId}/generateComponentDetails</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Firmware_GenerateComponentDetails</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-02-08-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="FirmwareResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<SbomComponent> GetComponentDetails(CancellationToken cancellationToken = default)
-        {
-            using var scope = _firmwareClientDiagnostics.CreateScope("FirmwareResource.GetComponentDetails");
-            scope.Start();
-            try
-            {
-                var response = _firmwareRestClient.GetComponentDetails(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// The operation to list all binary hardening result for a firmware.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.IoTFirmwareDefense/workspaces/{workspaceName}/firmwares/{firmwareId}/generateBinaryHardeningList</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Firmware_ListGenerateBinaryHardeningList</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-02-08-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="FirmwareResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="BinaryHardening"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<BinaryHardening> GetBinaryHardeningResultsAsync(CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _firmwareRestClient.CreateListBinaryHardeningResultsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _firmwareRestClient.CreateListBinaryHardeningResultsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryHardening.DeserializeBinaryHardening(e), _firmwareClientDiagnostics, Pipeline, "FirmwareResource.GetBinaryHardeningResults", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// The operation to list all binary hardening result for a firmware.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.IoTFirmwareDefense/workspaces/{workspaceName}/firmwares/{firmwareId}/generateBinaryHardeningList</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Firmware_ListGenerateBinaryHardeningList</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-02-08-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="FirmwareResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="BinaryHardening"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<BinaryHardening> GetBinaryHardeningResults(CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _firmwareRestClient.CreateListBinaryHardeningResultsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _firmwareRestClient.CreateListBinaryHardeningResultsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryHardening.DeserializeBinaryHardening(e), _firmwareClientDiagnostics, Pipeline, "FirmwareResource.GetBinaryHardeningResults", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// The operation to list the binary hardening summary percentages for a firmware.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.IoTFirmwareDefense/workspaces/{workspaceName}/firmwares/{firmwareId}/generateBinaryHardeningSummary</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Firmware_GenerateBinaryHardeningSummary</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-02-08-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="FirmwareResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<BinaryHardeningSummary>> GetBinaryHardeningSummaryAsync(CancellationToken cancellationToken = default)
-        {
-            using var scope = _firmwareClientDiagnostics.CreateScope("FirmwareResource.GetBinaryHardeningSummary");
-            scope.Start();
-            try
-            {
-                var response = await _firmwareRestClient.GetBinaryHardeningSummaryAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// The operation to list the binary hardening summary percentages for a firmware.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.IoTFirmwareDefense/workspaces/{workspaceName}/firmwares/{firmwareId}/generateBinaryHardeningSummary</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Firmware_GenerateBinaryHardeningSummary</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-02-08-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="FirmwareResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<BinaryHardeningSummary> GetBinaryHardeningSummary(CancellationToken cancellationToken = default)
-        {
-            using var scope = _firmwareClientDiagnostics.CreateScope("FirmwareResource.GetBinaryHardeningSummary");
-            scope.Start();
-            try
-            {
-                var response = _firmwareRestClient.GetBinaryHardeningSummary(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// The operation to get binary hardening details for a firmware.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.IoTFirmwareDefense/workspaces/{workspaceName}/firmwares/{firmwareId}/generateBinaryHardeningDetails</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Firmware_GenerateBinaryHardeningDetails</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-02-08-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="FirmwareResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<BinaryHardening>> GetBinaryHardeningDetailsAsync(CancellationToken cancellationToken = default)
-        {
-            using var scope = _firmwareClientDiagnostics.CreateScope("FirmwareResource.GetBinaryHardeningDetails");
-            scope.Start();
-            try
-            {
-                var response = await _firmwareRestClient.GetBinaryHardeningDetailsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// The operation to get binary hardening details for a firmware.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.IoTFirmwareDefense/workspaces/{workspaceName}/firmwares/{firmwareId}/generateBinaryHardeningDetails</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Firmware_GenerateBinaryHardeningDetails</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-02-08-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="FirmwareResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<BinaryHardening> GetBinaryHardeningDetails(CancellationToken cancellationToken = default)
-        {
-            using var scope = _firmwareClientDiagnostics.CreateScope("FirmwareResource.GetBinaryHardeningDetails");
-            scope.Start();
-            try
-            {
-                var response = _firmwareRestClient.GetBinaryHardeningDetails(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// The operation to list all password hashes for a firmware.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.IoTFirmwareDefense/workspaces/{workspaceName}/firmwares/{firmwareId}/generatePasswordHashList</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Firmware_ListGeneratePasswordHashList</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-02-08-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="FirmwareResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="PasswordHash"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<PasswordHash> GetPasswordHashesAsync(CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _firmwareRestClient.CreateListPasswordHashesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _firmwareRestClient.CreateListPasswordHashesNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => PasswordHash.DeserializePasswordHash(e), _firmwareClientDiagnostics, Pipeline, "FirmwareResource.GetPasswordHashes", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// The operation to list all password hashes for a firmware.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.IoTFirmwareDefense/workspaces/{workspaceName}/firmwares/{firmwareId}/generatePasswordHashList</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Firmware_ListGeneratePasswordHashList</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-02-08-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="FirmwareResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="PasswordHash"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<PasswordHash> GetPasswordHashes(CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _firmwareRestClient.CreateListPasswordHashesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _firmwareRestClient.CreateListPasswordHashesNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => PasswordHash.DeserializePasswordHash(e), _firmwareClientDiagnostics, Pipeline, "FirmwareResource.GetPasswordHashes", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// The operation to list all cve results for a firmware.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.IoTFirmwareDefense/workspaces/{workspaceName}/firmwares/{firmwareId}/generateCveList</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Firmware_ListGenerateCveList</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-02-08-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="FirmwareResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="FirmwareCve"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<FirmwareCve> GetCvesAsync(CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _firmwareRestClient.CreateListCvesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _firmwareRestClient.CreateListCvesNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => FirmwareCve.DeserializeFirmwareCve(e), _firmwareClientDiagnostics, Pipeline, "FirmwareResource.GetCves", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// The operation to list all cve results for a firmware.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.IoTFirmwareDefense/workspaces/{workspaceName}/firmwares/{firmwareId}/generateCveList</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Firmware_ListGenerateCveList</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-02-08-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="FirmwareResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="FirmwareCve"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<FirmwareCve> GetCves(CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _firmwareRestClient.CreateListCvesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _firmwareRestClient.CreateListCvesNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => FirmwareCve.DeserializeFirmwareCve(e), _firmwareClientDiagnostics, Pipeline, "FirmwareResource.GetCves", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// The operation to provide a high level summary of the CVEs reported for the firmware image.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.IoTFirmwareDefense/workspaces/{workspaceName}/firmwares/{firmwareId}/generateCveSummary</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Firmware_GenerateCveSummary</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-02-08-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="FirmwareResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<CveSummary>> GetCveSummaryAsync(CancellationToken cancellationToken = default)
-        {
-            using var scope = _firmwareClientDiagnostics.CreateScope("FirmwareResource.GetCveSummary");
-            scope.Start();
-            try
-            {
-                var response = await _firmwareRestClient.GetCveSummaryAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// The operation to provide a high level summary of the CVEs reported for the firmware image.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.IoTFirmwareDefense/workspaces/{workspaceName}/firmwares/{firmwareId}/generateCveSummary</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Firmware_GenerateCveSummary</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-02-08-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="FirmwareResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<CveSummary> GetCveSummary(CancellationToken cancellationToken = default)
-        {
-            using var scope = _firmwareClientDiagnostics.CreateScope("FirmwareResource.GetCveSummary");
-            scope.Start();
-            try
-            {
-                var response = _firmwareRestClient.GetCveSummary(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// The operation to provide a high level summary of the discovered cryptographic certificates reported for the firmware image.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.IoTFirmwareDefense/workspaces/{workspaceName}/firmwares/{firmwareId}/generateCryptoCertificateSummary</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Firmware_GenerateCryptoCertificateSummary</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-02-08-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="FirmwareResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<FirmwareCryptoCertificateSummary>> GetCryptoCertificateSummaryAsync(CancellationToken cancellationToken = default)
-        {
-            using var scope = _firmwareClientDiagnostics.CreateScope("FirmwareResource.GetCryptoCertificateSummary");
-            scope.Start();
-            try
-            {
-                var response = await _firmwareRestClient.GetCryptoCertificateSummaryAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// The operation to provide a high level summary of the discovered cryptographic certificates reported for the firmware image.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.IoTFirmwareDefense/workspaces/{workspaceName}/firmwares/{firmwareId}/generateCryptoCertificateSummary</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Firmware_GenerateCryptoCertificateSummary</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-02-08-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="FirmwareResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<FirmwareCryptoCertificateSummary> GetCryptoCertificateSummary(CancellationToken cancellationToken = default)
-        {
-            using var scope = _firmwareClientDiagnostics.CreateScope("FirmwareResource.GetCryptoCertificateSummary");
-            scope.Start();
-            try
-            {
-                var response = _firmwareRestClient.GetCryptoCertificateSummary(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// The operation to provide a high level summary of the discovered cryptographic keys reported for the firmware image.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.IoTFirmwareDefense/workspaces/{workspaceName}/firmwares/{firmwareId}/generateCryptoKeySummary</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Firmware_GenerateCryptoKeySummary</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-02-08-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="FirmwareResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<FirmwareCryptoKeySummary>> GetCryptoKeySummaryAsync(CancellationToken cancellationToken = default)
-        {
-            using var scope = _firmwareClientDiagnostics.CreateScope("FirmwareResource.GetCryptoKeySummary");
-            scope.Start();
-            try
-            {
-                var response = await _firmwareRestClient.GetCryptoKeySummaryAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// The operation to provide a high level summary of the discovered cryptographic keys reported for the firmware image.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.IoTFirmwareDefense/workspaces/{workspaceName}/firmwares/{firmwareId}/generateCryptoKeySummary</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Firmware_GenerateCryptoKeySummary</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-02-08-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="FirmwareResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<FirmwareCryptoKeySummary> GetCryptoKeySummary(CancellationToken cancellationToken = default)
-        {
-            using var scope = _firmwareClientDiagnostics.CreateScope("FirmwareResource.GetCryptoKeySummary");
-            scope.Start();
-            try
-            {
-                var response = _firmwareRestClient.GetCryptoKeySummary(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// The operation to list all crypto certificates for a firmware.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.IoTFirmwareDefense/workspaces/{workspaceName}/firmwares/{firmwareId}/generateCryptoCertificateList</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Firmware_ListGenerateCryptoCertificateList</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-02-08-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="FirmwareResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="FirmwareCryptoCertificate"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<FirmwareCryptoCertificate> GetCryptoCertificatesAsync(CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _firmwareRestClient.CreateListCryptoCertificatesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _firmwareRestClient.CreateListCryptoCertificatesNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => FirmwareCryptoCertificate.DeserializeFirmwareCryptoCertificate(e), _firmwareClientDiagnostics, Pipeline, "FirmwareResource.GetCryptoCertificates", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// The operation to list all crypto certificates for a firmware.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.IoTFirmwareDefense/workspaces/{workspaceName}/firmwares/{firmwareId}/generateCryptoCertificateList</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Firmware_ListGenerateCryptoCertificateList</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-02-08-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="FirmwareResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="FirmwareCryptoCertificate"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<FirmwareCryptoCertificate> GetCryptoCertificates(CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _firmwareRestClient.CreateListCryptoCertificatesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _firmwareRestClient.CreateListCryptoCertificatesNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => FirmwareCryptoCertificate.DeserializeFirmwareCryptoCertificate(e), _firmwareClientDiagnostics, Pipeline, "FirmwareResource.GetCryptoCertificates", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// The operation to list all crypto keys for a firmware.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.IoTFirmwareDefense/workspaces/{workspaceName}/firmwares/{firmwareId}/generateCryptoKeyList</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Firmware_ListGenerateCryptoKeyList</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-02-08-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="FirmwareResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="FirmwareCryptoKey"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<FirmwareCryptoKey> GetCryptoKeysAsync(CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _firmwareRestClient.CreateListCryptoKeysRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _firmwareRestClient.CreateListCryptoKeysNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => FirmwareCryptoKey.DeserializeFirmwareCryptoKey(e), _firmwareClientDiagnostics, Pipeline, "FirmwareResource.GetCryptoKeys", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// The operation to list all crypto keys for a firmware.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.IoTFirmwareDefense/workspaces/{workspaceName}/firmwares/{firmwareId}/generateCryptoKeyList</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Firmware_ListGenerateCryptoKeyList</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-02-08-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="FirmwareResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="FirmwareCryptoKey"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<FirmwareCryptoKey> GetCryptoKeys(CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _firmwareRestClient.CreateListCryptoKeysRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _firmwareRestClient.CreateListCryptoKeysNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => FirmwareCryptoKey.DeserializeFirmwareCryptoKey(e), _firmwareClientDiagnostics, Pipeline, "FirmwareResource.GetCryptoKeys", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _sbomComponentsRestClient.CreateListByFirmwareRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _sbomComponentsRestClient.CreateListByFirmwareNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => SbomComponentResult.DeserializeSbomComponentResult(e), _sbomComponentsClientDiagnostics, Pipeline, "FirmwareResource.GetSbomComponents", "value", "nextLink", cancellationToken);
         }
     }
 }

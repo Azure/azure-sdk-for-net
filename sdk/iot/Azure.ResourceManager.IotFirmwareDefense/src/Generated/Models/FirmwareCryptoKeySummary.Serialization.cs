@@ -51,6 +51,8 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                 writer.WritePropertyName("shortKeySize"u8);
                 writer.WriteNumberValue(ShortKeySize.Value);
             }
+            writer.WritePropertyName("summaryType"u8);
+            writer.WriteStringValue(SummaryType.ToString());
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -94,6 +96,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             Optional<long> privateKeys = default;
             Optional<long> pairedKeys = default;
             Optional<long> shortKeySize = default;
+            SummaryType summaryType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -143,13 +146,18 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                     shortKeySize = property.Value.GetInt64();
                     continue;
                 }
+                if (property.NameEquals("summaryType"u8))
+                {
+                    summaryType = new SummaryType(property.Value.GetString());
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FirmwareCryptoKeySummary(Optional.ToNullable(totalKeys), Optional.ToNullable(publicKeys), Optional.ToNullable(privateKeys), Optional.ToNullable(pairedKeys), Optional.ToNullable(shortKeySize), serializedAdditionalRawData);
+            return new FirmwareCryptoKeySummary(summaryType, serializedAdditionalRawData, Optional.ToNullable(totalKeys), Optional.ToNullable(publicKeys), Optional.ToNullable(privateKeys), Optional.ToNullable(pairedKeys), Optional.ToNullable(shortKeySize));
         }
 
         BinaryData IPersistableModel<FirmwareCryptoKeySummary>.Write(ModelReaderWriterOptions options)

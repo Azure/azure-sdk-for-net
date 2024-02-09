@@ -36,25 +36,6 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(PairedKeyType);
             }
-            if (Optional.IsDefined(AdditionalProperties))
-            {
-                if (AdditionalProperties != null)
-                {
-                    writer.WritePropertyName("additionalProperties"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(AdditionalProperties);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(AdditionalProperties))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
-                }
-                else
-                {
-                    writer.WriteNull("additionalProperties");
-                }
-            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -95,7 +76,6 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             }
             Optional<string> id = default;
             Optional<string> type = default;
-            Optional<BinaryData> additionalProperties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -110,23 +90,13 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                     type = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("additionalProperties"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        additionalProperties = null;
-                        continue;
-                    }
-                    additionalProperties = BinaryData.FromString(property.Value.GetRawText());
-                    continue;
-                }
                 if (options.Format != "W")
                 {
                     additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PairedKey(id.Value, type.Value, additionalProperties.Value, serializedAdditionalRawData);
+            return new PairedKey(id.Value, type.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PairedKey>.Write(ModelReaderWriterOptions options)

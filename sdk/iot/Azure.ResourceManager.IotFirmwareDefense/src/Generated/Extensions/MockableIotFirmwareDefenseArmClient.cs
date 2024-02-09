@@ -49,6 +49,18 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Mocking
         }
 
         /// <summary>
+        /// Gets an object representing a <see cref="SummaryResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SummaryResource.CreateResourceIdentifier" /> to create a <see cref="SummaryResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="SummaryResource"/> object. </returns>
+        public virtual SummaryResource GetSummaryResource(ResourceIdentifier id)
+        {
+            SummaryResource.ValidateResourceId(id);
+            return new SummaryResource(Client, id);
+        }
+
+        /// <summary>
         /// Gets an object representing a <see cref="FirmwareWorkspaceResource"/> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="FirmwareWorkspaceResource.CreateResourceIdentifier" /> to create a <see cref="FirmwareWorkspaceResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>

@@ -76,19 +76,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                 writer.WriteStartArray();
                 foreach (var item in StatusMessages)
                 {
-                    if (item == null)
-                    {
-                        writer.WriteNullValue();
-                        continue;
-                    }
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(item);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(item))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
+                    writer.WriteObjectValue(item);
                 }
                 writer.WriteEndArray();
             }
@@ -143,7 +131,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             Optional<string> description = default;
             Optional<long?> fileSize = default;
             Optional<Status> status = default;
-            Optional<IList<BinaryData>> statusMessages = default;
+            Optional<IList<StatusMessage>> statusMessages = default;
             Optional<ProvisioningState> provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -208,17 +196,10 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                             {
                                 continue;
                             }
-                            List<BinaryData> array = new List<BinaryData>();
+                            List<StatusMessage> array = new List<StatusMessage>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                if (item.ValueKind == JsonValueKind.Null)
-                                {
-                                    array.Add(null);
-                                }
-                                else
-                                {
-                                    array.Add(BinaryData.FromString(item.GetRawText()));
-                                }
+                                array.Add(StatusMessage.DeserializeStatusMessage(item));
                             }
                             statusMessages = array;
                             continue;

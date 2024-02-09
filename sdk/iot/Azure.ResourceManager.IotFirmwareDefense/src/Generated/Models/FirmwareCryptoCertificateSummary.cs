@@ -10,47 +10,18 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.IotFirmwareDefense.Models
 {
-    /// <summary> Cryptographic certificate summary values. </summary>
-    public partial class FirmwareCryptoCertificateSummary
+    /// <summary> Properties for cryptographic certificate summary. </summary>
+    public partial class FirmwareCryptoCertificateSummary : SummaryResourceProperties
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
-
         /// <summary> Initializes a new instance of <see cref="FirmwareCryptoCertificateSummary"/>. </summary>
         internal FirmwareCryptoCertificateSummary()
         {
+            SummaryType = SummaryType.FirmwareCryptoCertificate;
         }
 
         /// <summary> Initializes a new instance of <see cref="FirmwareCryptoCertificateSummary"/>. </summary>
+        /// <param name="summaryType"> Describes the type of summary. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="totalCertificates"> Total number of certificates found. </param>
         /// <param name="pairedKeys"> Total number of paired private keys found for the certificates. </param>
         /// <param name="expired"> Total number of expired certificates found. </param>
@@ -58,8 +29,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
         /// <param name="weakSignature"> Total number of certificates found using a weak signature algorithm. </param>
         /// <param name="selfSigned"> Total number of certificates found that are self-signed. </param>
         /// <param name="shortKeySize"> Total number of certificates found that have an insecure key size for the key algorithm. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal FirmwareCryptoCertificateSummary(long? totalCertificates, long? pairedKeys, long? expired, long? expiringSoon, long? weakSignature, long? selfSigned, long? shortKeySize, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal FirmwareCryptoCertificateSummary(SummaryType summaryType, IDictionary<string, BinaryData> serializedAdditionalRawData, long? totalCertificates, long? pairedKeys, long? expired, long? expiringSoon, long? weakSignature, long? selfSigned, long? shortKeySize) : base(summaryType, serializedAdditionalRawData)
         {
             TotalCertificates = totalCertificates;
             PairedKeys = pairedKeys;
@@ -68,7 +38,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             WeakSignature = weakSignature;
             SelfSigned = selfSigned;
             ShortKeySize = shortKeySize;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            SummaryType = summaryType;
         }
 
         /// <summary> Total number of certificates found. </summary>

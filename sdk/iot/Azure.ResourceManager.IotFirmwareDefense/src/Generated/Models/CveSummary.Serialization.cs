@@ -86,18 +86,8 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                     writer.WriteNull("unknown");
                 }
             }
-            if (Optional.IsDefined(Undefined))
-            {
-                if (Undefined != null)
-                {
-                    writer.WritePropertyName("undefined"u8);
-                    writer.WriteNumberValue(Undefined.Value);
-                }
-                else
-                {
-                    writer.WriteNull("undefined");
-                }
-            }
+            writer.WritePropertyName("summaryType"u8);
+            writer.WriteStringValue(SummaryType.ToString());
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -141,7 +131,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             Optional<long?> medium = default;
             Optional<long?> low = default;
             Optional<long?> unknown = default;
-            Optional<long?> undefined = default;
+            SummaryType summaryType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -196,14 +186,9 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                     unknown = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("undefined"u8))
+                if (property.NameEquals("summaryType"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        undefined = null;
-                        continue;
-                    }
-                    undefined = property.Value.GetInt64();
+                    summaryType = new SummaryType(property.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
@@ -212,7 +197,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CveSummary(Optional.ToNullable(critical), Optional.ToNullable(high), Optional.ToNullable(medium), Optional.ToNullable(low), Optional.ToNullable(unknown), Optional.ToNullable(undefined), serializedAdditionalRawData);
+            return new CveSummary(summaryType, serializedAdditionalRawData, Optional.ToNullable(critical), Optional.ToNullable(high), Optional.ToNullable(medium), Optional.ToNullable(low), Optional.ToNullable(unknown));
         }
 
         BinaryData IPersistableModel<CveSummary>.Write(ModelReaderWriterOptions options)

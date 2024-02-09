@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.IotFirmwareDefense.Models
 {
-    /// <summary> Link for CVE. </summary>
+    /// <summary> Properties of a reference link for a CVE. </summary>
     public partial class CveLink
     {
         /// <summary>
@@ -51,19 +51,19 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="CveLink"/>. </summary>
-        /// <param name="href"> Href of CVE link. </param>
-        /// <param name="label"> Label of CVE link. </param>
+        /// <param name="href"> The destination of the reference link. </param>
+        /// <param name="label"> The label of the reference link. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CveLink(string href, string label, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal CveLink(Uri href, string label, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Href = href;
             Label = label;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Href of CVE link. </summary>
-        public string Href { get; }
-        /// <summary> Label of CVE link. </summary>
+        /// <summary> The destination of the reference link. </summary>
+        public Uri Href { get; }
+        /// <summary> The label of the reference link. </summary>
         public string Label { get; }
     }
 }

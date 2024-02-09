@@ -52,18 +52,14 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
 
         /// <summary> Initializes a new instance of <see cref="UriToken"/>. </summary>
         /// <param name="uri"> SAS URL for creating or accessing a blob file. </param>
-        /// <param name="uploadUri"> SAS URL for file uploading. Kept for backwards compatibility. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal UriToken(Uri uri, Uri uploadUri, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal UriToken(Uri uri, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Uri = uri;
-            UploadUri = uploadUri;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> SAS URL for creating or accessing a blob file. </summary>
         public Uri Uri { get; }
-        /// <summary> SAS URL for file uploading. Kept for backwards compatibility. </summary>
-        public Uri UploadUri { get; }
     }
 }

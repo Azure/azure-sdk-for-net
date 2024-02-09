@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         public string Model { get { throw null; } set { } }
         public Azure.ResourceManager.IotFirmwareDefense.Models.ProvisioningState? ProvisioningState { get { throw null; } }
         public Azure.ResourceManager.IotFirmwareDefense.Models.Status? Status { get { throw null; } set { } }
-        public System.Collections.Generic.IList<System.BinaryData> StatusMessages { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.IotFirmwareDefense.Models.StatusMessage> StatusMessages { get { throw null; } }
         public string Vendor { get { throw null; } set { } }
         public string Version { get { throw null; } set { } }
         Azure.ResourceManager.IotFirmwareDefense.FirmwareData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.IotFirmwareDefense.FirmwareData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -50,32 +50,21 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.IotFirmwareDefense.Models.UriToken>> GenerateFilesystemDownloadUrlAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.IotFirmwareDefense.FirmwareResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.IotFirmwareDefense.FirmwareResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.IotFirmwareDefense.Models.BinaryHardening> GetBinaryHardeningDetails(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.IotFirmwareDefense.Models.BinaryHardening>> GetBinaryHardeningDetailsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.IotFirmwareDefense.Models.BinaryHardening> GetBinaryHardeningResults(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.IotFirmwareDefense.Models.BinaryHardening> GetBinaryHardeningResultsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.IotFirmwareDefense.Models.BinaryHardeningSummary> GetBinaryHardeningSummary(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.IotFirmwareDefense.Models.BinaryHardeningSummary>> GetBinaryHardeningSummaryAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.IotFirmwareDefense.Models.SbomComponent> GetComponentDetails(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.IotFirmwareDefense.Models.SbomComponent>> GetComponentDetailsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.IotFirmwareDefense.Models.FirmwareCryptoCertificate> GetCryptoCertificates(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.IotFirmwareDefense.Models.FirmwareCryptoCertificate> GetCryptoCertificatesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.IotFirmwareDefense.Models.FirmwareCryptoCertificateSummary> GetCryptoCertificateSummary(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.IotFirmwareDefense.Models.FirmwareCryptoCertificateSummary>> GetCryptoCertificateSummaryAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.IotFirmwareDefense.Models.FirmwareCryptoKey> GetCryptoKeys(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.IotFirmwareDefense.Models.FirmwareCryptoKey> GetCryptoKeysAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.IotFirmwareDefense.Models.FirmwareCryptoKeySummary> GetCryptoKeySummary(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.IotFirmwareDefense.Models.FirmwareCryptoKeySummary>> GetCryptoKeySummaryAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.IotFirmwareDefense.Models.FirmwareCve> GetCves(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.IotFirmwareDefense.Models.FirmwareCve> GetCvesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.IotFirmwareDefense.Models.CveSummary> GetCveSummary(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.IotFirmwareDefense.Models.CveSummary>> GetCveSummaryAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.IotFirmwareDefense.Models.FirmwareSummary> GetFirmwareSummary(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.IotFirmwareDefense.Models.FirmwareSummary>> GetFirmwareSummaryAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.IotFirmwareDefense.Models.PasswordHash> GetPasswordHashes(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.IotFirmwareDefense.Models.PasswordHash> GetPasswordHashesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.IotFirmwareDefense.Models.SbomComponent> GetSbomComponents(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.IotFirmwareDefense.Models.SbomComponent> GetSbomComponentsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.IotFirmwareDefense.Models.BinaryHardeningResource> GetBinaryHardenings(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.IotFirmwareDefense.Models.BinaryHardeningResource> GetBinaryHardeningsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.IotFirmwareDefense.Models.FirmwareCryptoCertificateResource> GetCryptoCertificates(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.IotFirmwareDefense.Models.FirmwareCryptoCertificateResource> GetCryptoCertificatesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.IotFirmwareDefense.Models.FirmwareCryptoKeyResource> GetCryptoKeys(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.IotFirmwareDefense.Models.FirmwareCryptoKeyResource> GetCryptoKeysAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.IotFirmwareDefense.Models.CveResource> GetCves(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.IotFirmwareDefense.Models.CveResource> GetCvesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.IotFirmwareDefense.Models.PasswordHashResource> GetPasswordHashes(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.IotFirmwareDefense.Models.PasswordHashResource> GetPasswordHashesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.IotFirmwareDefense.Models.SbomComponentResource> GetSbomComponents(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.IotFirmwareDefense.Models.SbomComponentResource> GetSbomComponentsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.IotFirmwareDefense.SummaryResource> GetSummaryResource(Azure.ResourceManager.IotFirmwareDefense.Models.SummaryName summaryName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.IotFirmwareDefense.SummaryResource>> GetSummaryResourceAsync(Azure.ResourceManager.IotFirmwareDefense.Models.SummaryName summaryName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.IotFirmwareDefense.SummaryResourceCollection GetSummaryResources() { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.IotFirmwareDefense.FirmwareResource> Update(Azure.ResourceManager.IotFirmwareDefense.Models.FirmwarePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.IotFirmwareDefense.FirmwareResource>> UpdateAsync(Azure.ResourceManager.IotFirmwareDefense.Models.FirmwarePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
@@ -134,6 +123,42 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         public static Azure.ResourceManager.IotFirmwareDefense.FirmwareWorkspaceCollection GetFirmwareWorkspaces(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource) { throw null; }
         public static Azure.Pageable<Azure.ResourceManager.IotFirmwareDefense.FirmwareWorkspaceResource> GetFirmwareWorkspaces(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.AsyncPageable<Azure.ResourceManager.IotFirmwareDefense.FirmwareWorkspaceResource> GetFirmwareWorkspacesAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.ResourceManager.IotFirmwareDefense.SummaryResource GetSummaryResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+    }
+    public partial class SummaryResource : Azure.ResourceManager.ArmResource
+    {
+        public static readonly Azure.Core.ResourceType ResourceType;
+        protected SummaryResource() { }
+        public virtual Azure.ResourceManager.IotFirmwareDefense.SummaryResourceData Data { get { throw null; } }
+        public virtual bool HasData { get { throw null; } }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string workspaceName, string firmwareName, Azure.ResourceManager.IotFirmwareDefense.Models.SummaryName summaryName) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.IotFirmwareDefense.SummaryResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.IotFirmwareDefense.SummaryResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class SummaryResourceCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.IotFirmwareDefense.SummaryResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.IotFirmwareDefense.SummaryResource>, System.Collections.IEnumerable
+    {
+        protected SummaryResourceCollection() { }
+        public virtual Azure.Response<bool> Exists(Azure.ResourceManager.IotFirmwareDefense.Models.SummaryName summaryName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(Azure.ResourceManager.IotFirmwareDefense.Models.SummaryName summaryName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.IotFirmwareDefense.SummaryResource> Get(Azure.ResourceManager.IotFirmwareDefense.Models.SummaryName summaryName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.IotFirmwareDefense.SummaryResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.IotFirmwareDefense.SummaryResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.IotFirmwareDefense.SummaryResource>> GetAsync(Azure.ResourceManager.IotFirmwareDefense.Models.SummaryName summaryName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.IotFirmwareDefense.SummaryResource> GetIfExists(Azure.ResourceManager.IotFirmwareDefense.Models.SummaryName summaryName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.IotFirmwareDefense.SummaryResource>> GetIfExistsAsync(Azure.ResourceManager.IotFirmwareDefense.Models.SummaryName summaryName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.IotFirmwareDefense.SummaryResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.IotFirmwareDefense.SummaryResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
+        System.Collections.Generic.IEnumerator<Azure.ResourceManager.IotFirmwareDefense.SummaryResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.IotFirmwareDefense.SummaryResource>.GetEnumerator() { throw null; }
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
+    }
+    public partial class SummaryResourceData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.IotFirmwareDefense.SummaryResourceData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.IotFirmwareDefense.SummaryResourceData>
+    {
+        public SummaryResourceData() { }
+        public Azure.ResourceManager.IotFirmwareDefense.Models.SummaryResourceProperties Properties { get { throw null; } }
+        Azure.ResourceManager.IotFirmwareDefense.SummaryResourceData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.IotFirmwareDefense.SummaryResourceData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.IotFirmwareDefense.SummaryResourceData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.IotFirmwareDefense.SummaryResourceData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.IotFirmwareDefense.SummaryResourceData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.IotFirmwareDefense.SummaryResourceData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.IotFirmwareDefense.SummaryResourceData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
 }
 namespace Azure.ResourceManager.IotFirmwareDefense.Mocking
@@ -143,6 +168,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Mocking
         protected MockableIotFirmwareDefenseArmClient() { }
         public virtual Azure.ResourceManager.IotFirmwareDefense.FirmwareResource GetFirmwareResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.IotFirmwareDefense.FirmwareWorkspaceResource GetFirmwareWorkspaceResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.IotFirmwareDefense.SummaryResource GetSummaryResource(Azure.Core.ResourceIdentifier id) { throw null; }
     }
     public partial class MockableIotFirmwareDefenseResourceGroupResource : Azure.ResourceManager.ArmResource
     {
@@ -162,47 +188,46 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
 {
     public static partial class ArmIotFirmwareDefenseModelFactory
     {
-        public static Azure.ResourceManager.IotFirmwareDefense.Models.BinaryHardening BinaryHardening(string binaryHardeningId = null, string architecture = null, string path = null, string @class = null, string runpath = null, string rpath = null, Azure.ResourceManager.IotFirmwareDefense.Models.NxFlag? nx = default(Azure.ResourceManager.IotFirmwareDefense.Models.NxFlag?), Azure.ResourceManager.IotFirmwareDefense.Models.PieFlag? pie = default(Azure.ResourceManager.IotFirmwareDefense.Models.PieFlag?), Azure.ResourceManager.IotFirmwareDefense.Models.RelroFlag? relro = default(Azure.ResourceManager.IotFirmwareDefense.Models.RelroFlag?), Azure.ResourceManager.IotFirmwareDefense.Models.CanaryFlag? canary = default(Azure.ResourceManager.IotFirmwareDefense.Models.CanaryFlag?), Azure.ResourceManager.IotFirmwareDefense.Models.StrippedFlag? stripped = default(Azure.ResourceManager.IotFirmwareDefense.Models.StrippedFlag?)) { throw null; }
+        public static Azure.ResourceManager.IotFirmwareDefense.Models.BinaryHardeningResource BinaryHardeningResource(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string binaryHardeningId = null, string architecture = null, string filePath = null, string @class = null, string runpath = null, string rpath = null, bool? nx = default(bool?), bool? pie = default(bool?), bool? relro = default(bool?), bool? canary = default(bool?), bool? stripped = default(bool?)) { throw null; }
         public static Azure.ResourceManager.IotFirmwareDefense.Models.BinaryHardeningSummary BinaryHardeningSummary(long? totalFiles = default(long?), int? nx = default(int?), int? pie = default(int?), int? relro = default(int?), int? canary = default(int?), int? stripped = default(int?)) { throw null; }
-        public static Azure.ResourceManager.IotFirmwareDefense.Models.CveLink CveLink(string href = null, string label = null) { throw null; }
-        public static Azure.ResourceManager.IotFirmwareDefense.Models.CveSummary CveSummary(long? critical = default(long?), long? high = default(long?), long? medium = default(long?), long? low = default(long?), long? unknown = default(long?), long? undefined = default(long?)) { throw null; }
-        public static Azure.ResourceManager.IotFirmwareDefense.Models.FirmwareCryptoCertificate FirmwareCryptoCertificate(string cryptoCertId = null, string name = null, Azure.ResourceManager.IotFirmwareDefense.Models.FirmwareCryptoCertificateEntity subject = null, Azure.ResourceManager.IotFirmwareDefense.Models.FirmwareCryptoCertificateEntity issuer = null, System.DateTimeOffset? issuedOn = default(System.DateTimeOffset?), System.DateTimeOffset? expireOn = default(System.DateTimeOffset?), string role = null, string signatureAlgorithm = null, long? keySize = default(long?), string keyAlgorithm = null, string encoding = null, string serialNumber = null, string fingerprint = null, System.Collections.Generic.IEnumerable<string> usage = null, System.Collections.Generic.IEnumerable<string> filePaths = null, Azure.ResourceManager.IotFirmwareDefense.Models.PairedKey pairedKey = null, Azure.ResourceManager.IotFirmwareDefense.Models.IsExpired? isExpired = default(Azure.ResourceManager.IotFirmwareDefense.Models.IsExpired?), Azure.ResourceManager.IotFirmwareDefense.Models.IsSelfSigned? isSelfSigned = default(Azure.ResourceManager.IotFirmwareDefense.Models.IsSelfSigned?), Azure.ResourceManager.IotFirmwareDefense.Models.IsWeakSignature? isWeakSignature = default(Azure.ResourceManager.IotFirmwareDefense.Models.IsWeakSignature?), Azure.ResourceManager.IotFirmwareDefense.Models.IsShortKeySize? isShortKeySize = default(Azure.ResourceManager.IotFirmwareDefense.Models.IsShortKeySize?)) { throw null; }
-        public static Azure.ResourceManager.IotFirmwareDefense.Models.FirmwareCryptoCertificateEntity FirmwareCryptoCertificateEntity(string commonName = null, string organization = null, string organizationalUnit = null, string state = null, string country = null) { throw null; }
-        public static Azure.ResourceManager.IotFirmwareDefense.Models.FirmwareCryptoCertificateSummary FirmwareCryptoCertificateSummary(long? totalCertificates = default(long?), long? pairedKeys = default(long?), long? expired = default(long?), long? expiringSoon = default(long?), long? weakSignature = default(long?), long? selfSigned = default(long?), long? shortKeySize = default(long?)) { throw null; }
-        public static Azure.ResourceManager.IotFirmwareDefense.Models.FirmwareCryptoKey FirmwareCryptoKey(string firmwareCryptoKeyId = null, string keyType = null, long? keySize = default(long?), string keyAlgorithm = null, System.Collections.Generic.IEnumerable<string> usage = null, System.Collections.Generic.IEnumerable<string> filePaths = null, Azure.ResourceManager.IotFirmwareDefense.Models.PairedKey pairedKey = null, Azure.ResourceManager.IotFirmwareDefense.Models.IsShortKeySize? isShortKeySize = default(Azure.ResourceManager.IotFirmwareDefense.Models.IsShortKeySize?)) { throw null; }
-        public static Azure.ResourceManager.IotFirmwareDefense.Models.FirmwareCryptoKeySummary FirmwareCryptoKeySummary(long? totalKeys = default(long?), long? publicKeys = default(long?), long? privateKeys = default(long?), long? pairedKeys = default(long?), long? shortKeySize = default(long?)) { throw null; }
-        public static Azure.ResourceManager.IotFirmwareDefense.Models.FirmwareCve FirmwareCve(string cveId = null, System.BinaryData component = null, string severity = null, string name = null, string cvssScore = null, string cvssVersion = null, string cvssV2Score = null, string cvssV3Score = null, System.DateTimeOffset? publishOn = default(System.DateTimeOffset?), System.DateTimeOffset? updatedOn = default(System.DateTimeOffset?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.IotFirmwareDefense.Models.CveLink> links = null, string description = null) { throw null; }
-        public static Azure.ResourceManager.IotFirmwareDefense.FirmwareData FirmwareData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string fileName = null, string vendor = null, string model = null, string version = null, string description = null, long? fileSize = default(long?), Azure.ResourceManager.IotFirmwareDefense.Models.Status? status = default(Azure.ResourceManager.IotFirmwareDefense.Models.Status?), System.Collections.Generic.IEnumerable<System.BinaryData> statusMessages = null, Azure.ResourceManager.IotFirmwareDefense.Models.ProvisioningState? provisioningState = default(Azure.ResourceManager.IotFirmwareDefense.Models.ProvisioningState?)) { throw null; }
-        public static Azure.ResourceManager.IotFirmwareDefense.Models.FirmwarePatch FirmwarePatch(string fileName = null, string vendor = null, string model = null, string version = null, string description = null, long? fileSize = default(long?), Azure.ResourceManager.IotFirmwareDefense.Models.Status? status = default(Azure.ResourceManager.IotFirmwareDefense.Models.Status?), System.Collections.Generic.IEnumerable<System.BinaryData> statusMessages = null, Azure.ResourceManager.IotFirmwareDefense.Models.ProvisioningState? provisioningState = default(Azure.ResourceManager.IotFirmwareDefense.Models.ProvisioningState?)) { throw null; }
+        public static Azure.ResourceManager.IotFirmwareDefense.Models.CveLink CveLink(System.Uri href = null, string label = null) { throw null; }
+        public static Azure.ResourceManager.IotFirmwareDefense.Models.CveResource CveResource(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string cveId = null, Azure.ResourceManager.IotFirmwareDefense.Models.CveComponent component = null, string severity = null, string namePropertiesName = null, string cvssScore = null, string cvssVersion = null, string cvssV2Score = null, string cvssV3Score = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.IotFirmwareDefense.Models.CveLink> links = null, string description = null) { throw null; }
+        public static Azure.ResourceManager.IotFirmwareDefense.Models.CveSummary CveSummary(long? critical = default(long?), long? high = default(long?), long? medium = default(long?), long? low = default(long?), long? unknown = default(long?)) { throw null; }
+        public static Azure.ResourceManager.IotFirmwareDefense.Models.FirmwareCryptoCertificateResource FirmwareCryptoCertificateResource(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string cryptoCertId = null, string namePropertiesName = null, Azure.ResourceManager.IotFirmwareDefense.Models.FirmwareCryptoCertificateEntity subject = null, Azure.ResourceManager.IotFirmwareDefense.Models.FirmwareCryptoCertificateEntity issuer = null, System.DateTimeOffset? issuedOn = default(System.DateTimeOffset?), System.DateTimeOffset? expireOn = default(System.DateTimeOffset?), string role = null, string signatureAlgorithm = null, long? keySize = default(long?), string keyAlgorithm = null, string encoding = null, string serialNumber = null, string fingerprint = null, System.Collections.Generic.IEnumerable<string> usage = null, System.Collections.Generic.IEnumerable<string> filePaths = null, Azure.ResourceManager.IotFirmwareDefense.Models.PairedKey pairedKey = null, bool? isExpired = default(bool?), bool? isSelfSigned = default(bool?), bool? isWeakSignature = default(bool?), bool? isShortKeySize = default(bool?)) { throw null; }
+        public static Azure.ResourceManager.IotFirmwareDefense.Models.FirmwareCryptoCertificateSummaryResource FirmwareCryptoCertificateSummaryResource(long? totalCertificates = default(long?), long? pairedKeys = default(long?), long? expired = default(long?), long? expiringSoon = default(long?), long? weakSignature = default(long?), long? selfSigned = default(long?), long? shortKeySize = default(long?)) { throw null; }
+        public static Azure.ResourceManager.IotFirmwareDefense.Models.FirmwareCryptoKeyResource FirmwareCryptoKeyResource(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string firmwareCryptoKeyId = null, string keyType = null, long? keySize = default(long?), string keyAlgorithm = null, System.Collections.Generic.IEnumerable<string> usage = null, System.Collections.Generic.IEnumerable<string> filePaths = null, Azure.ResourceManager.IotFirmwareDefense.Models.PairedKey pairedKey = null, bool? isShortKeySize = default(bool?)) { throw null; }
+        public static Azure.ResourceManager.IotFirmwareDefense.Models.FirmwareCryptoKeySummaryResource FirmwareCryptoKeySummaryResource(long? totalKeys = default(long?), long? publicKeys = default(long?), long? privateKeys = default(long?), long? pairedKeys = default(long?), long? shortKeySize = default(long?)) { throw null; }
+        public static Azure.ResourceManager.IotFirmwareDefense.FirmwareData FirmwareData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string fileName = null, string vendor = null, string model = null, string version = null, string description = null, long? fileSize = default(long?), Azure.ResourceManager.IotFirmwareDefense.Models.Status? status = default(Azure.ResourceManager.IotFirmwareDefense.Models.Status?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.IotFirmwareDefense.Models.StatusMessage> statusMessages = null, Azure.ResourceManager.IotFirmwareDefense.Models.ProvisioningState? provisioningState = default(Azure.ResourceManager.IotFirmwareDefense.Models.ProvisioningState?)) { throw null; }
+        public static Azure.ResourceManager.IotFirmwareDefense.Models.FirmwarePatch FirmwarePatch(string fileName = null, string vendor = null, string model = null, string version = null, string description = null, long? fileSize = default(long?), Azure.ResourceManager.IotFirmwareDefense.Models.Status? status = default(Azure.ResourceManager.IotFirmwareDefense.Models.Status?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.IotFirmwareDefense.Models.StatusMessage> statusMessages = null, Azure.ResourceManager.IotFirmwareDefense.Models.ProvisioningState? provisioningState = default(Azure.ResourceManager.IotFirmwareDefense.Models.ProvisioningState?)) { throw null; }
         public static Azure.ResourceManager.IotFirmwareDefense.Models.FirmwareSummary FirmwareSummary(long? extractedSize = default(long?), long? fileSize = default(long?), long? extractedFileCount = default(long?), long? componentCount = default(long?), long? binaryCount = default(long?), long? analysisTimeSeconds = default(long?), long? rootFileSystems = default(long?)) { throw null; }
         public static Azure.ResourceManager.IotFirmwareDefense.FirmwareWorkspaceData FirmwareWorkspaceData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.IotFirmwareDefense.Models.ProvisioningState? provisioningState = default(Azure.ResourceManager.IotFirmwareDefense.Models.ProvisioningState?)) { throw null; }
         public static Azure.ResourceManager.IotFirmwareDefense.Models.FirmwareWorkspacePatch FirmwareWorkspacePatch(Azure.ResourceManager.IotFirmwareDefense.Models.ProvisioningState? provisioningState = default(Azure.ResourceManager.IotFirmwareDefense.Models.ProvisioningState?)) { throw null; }
-        public static Azure.ResourceManager.IotFirmwareDefense.Models.PairedKey PairedKey(string id = null, string pairedKeyType = null, System.BinaryData additionalProperties = null) { throw null; }
-        public static Azure.ResourceManager.IotFirmwareDefense.Models.PasswordHash PasswordHash(string passwordHashId = null, string filePath = null, string salt = null, string hash = null, string context = null, string username = null, string algorithm = null) { throw null; }
-        public static Azure.ResourceManager.IotFirmwareDefense.Models.SbomComponent SbomComponent(string componentId = null, string componentName = null, string version = null, string license = null, System.DateTimeOffset? releaseOn = default(System.DateTimeOffset?), System.Collections.Generic.IEnumerable<string> paths = null, Azure.ResourceManager.IotFirmwareDefense.Models.IsUpdateAvailable? isUpdateAvailable = default(Azure.ResourceManager.IotFirmwareDefense.Models.IsUpdateAvailable?)) { throw null; }
-        public static Azure.ResourceManager.IotFirmwareDefense.Models.UriToken UriToken(System.Uri uri = null, System.Uri uploadUri = null) { throw null; }
+        public static Azure.ResourceManager.IotFirmwareDefense.Models.PasswordHashResource PasswordHashResource(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string passwordHashId = null, string filePath = null, string salt = null, string hash = null, string context = null, string username = null, string algorithm = null) { throw null; }
+        public static Azure.ResourceManager.IotFirmwareDefense.Models.SbomComponentResource SbomComponentResource(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string componentId = null, string componentName = null, string version = null, string license = null, System.Collections.Generic.IEnumerable<string> filePaths = null) { throw null; }
+        public static Azure.ResourceManager.IotFirmwareDefense.SummaryResourceData SummaryResourceData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.IotFirmwareDefense.Models.SummaryResourceProperties properties = null) { throw null; }
+        public static Azure.ResourceManager.IotFirmwareDefense.Models.UriToken UriToken(System.Uri uri = null) { throw null; }
     }
-    public partial class BinaryHardening : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.IotFirmwareDefense.Models.BinaryHardening>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.IotFirmwareDefense.Models.BinaryHardening>
+    public partial class BinaryHardeningResource : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.IotFirmwareDefense.Models.BinaryHardeningResource>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.IotFirmwareDefense.Models.BinaryHardeningResource>
     {
-        internal BinaryHardening() { }
-        public string Architecture { get { throw null; } }
-        public string BinaryHardeningId { get { throw null; } }
-        public Azure.ResourceManager.IotFirmwareDefense.Models.CanaryFlag? Canary { get { throw null; } }
-        public string Class { get { throw null; } }
-        public Azure.ResourceManager.IotFirmwareDefense.Models.NxFlag? Nx { get { throw null; } }
-        public string Path { get { throw null; } }
-        public Azure.ResourceManager.IotFirmwareDefense.Models.PieFlag? Pie { get { throw null; } }
-        public Azure.ResourceManager.IotFirmwareDefense.Models.RelroFlag? Relro { get { throw null; } }
-        public string Rpath { get { throw null; } }
-        public string Runpath { get { throw null; } }
-        public Azure.ResourceManager.IotFirmwareDefense.Models.StrippedFlag? Stripped { get { throw null; } }
-        Azure.ResourceManager.IotFirmwareDefense.Models.BinaryHardening System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.IotFirmwareDefense.Models.BinaryHardening>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.IotFirmwareDefense.Models.BinaryHardening>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.IotFirmwareDefense.Models.BinaryHardening System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.IotFirmwareDefense.Models.BinaryHardening>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.IotFirmwareDefense.Models.BinaryHardening>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.IotFirmwareDefense.Models.BinaryHardening>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        public BinaryHardeningResource() { }
+        public string Architecture { get { throw null; } set { } }
+        public string BinaryHardeningId { get { throw null; } set { } }
+        public bool? Canary { get { throw null; } set { } }
+        public string Class { get { throw null; } set { } }
+        public string FilePath { get { throw null; } set { } }
+        public bool? Nx { get { throw null; } set { } }
+        public bool? Pie { get { throw null; } set { } }
+        public bool? Relro { get { throw null; } set { } }
+        public string Rpath { get { throw null; } set { } }
+        public string Runpath { get { throw null; } set { } }
+        public bool? Stripped { get { throw null; } set { } }
+        Azure.ResourceManager.IotFirmwareDefense.Models.BinaryHardeningResource System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.IotFirmwareDefense.Models.BinaryHardeningResource>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.IotFirmwareDefense.Models.BinaryHardeningResource>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.IotFirmwareDefense.Models.BinaryHardeningResource System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.IotFirmwareDefense.Models.BinaryHardeningResource>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.IotFirmwareDefense.Models.BinaryHardeningResource>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.IotFirmwareDefense.Models.BinaryHardeningResource>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class BinaryHardeningSummary : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.IotFirmwareDefense.Models.BinaryHardeningSummary>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.IotFirmwareDefense.Models.BinaryHardeningSummary>
+    public partial class BinaryHardeningSummary : Azure.ResourceManager.IotFirmwareDefense.Models.SummaryResourceProperties, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.IotFirmwareDefense.Models.BinaryHardeningSummary>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.IotFirmwareDefense.Models.BinaryHardeningSummary>
     {
         internal BinaryHardeningSummary() { }
         public int? Canary { get { throw null; } }
@@ -217,28 +242,22 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.IotFirmwareDefense.Models.BinaryHardeningSummary>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.IotFirmwareDefense.Models.BinaryHardeningSummary>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct CanaryFlag : System.IEquatable<Azure.ResourceManager.IotFirmwareDefense.Models.CanaryFlag>
+    public partial class CveComponent : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.IotFirmwareDefense.Models.CveComponent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.IotFirmwareDefense.Models.CveComponent>
     {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public CanaryFlag(string value) { throw null; }
-        public static Azure.ResourceManager.IotFirmwareDefense.Models.CanaryFlag False { get { throw null; } }
-        public static Azure.ResourceManager.IotFirmwareDefense.Models.CanaryFlag True { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.IotFirmwareDefense.Models.CanaryFlag other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.IotFirmwareDefense.Models.CanaryFlag left, Azure.ResourceManager.IotFirmwareDefense.Models.CanaryFlag right) { throw null; }
-        public static implicit operator Azure.ResourceManager.IotFirmwareDefense.Models.CanaryFlag (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.IotFirmwareDefense.Models.CanaryFlag left, Azure.ResourceManager.IotFirmwareDefense.Models.CanaryFlag right) { throw null; }
-        public override string ToString() { throw null; }
+        public CveComponent() { }
+        public string ComponentId { get { throw null; } set { } }
+        public string Name { get { throw null; } set { } }
+        public string Version { get { throw null; } set { } }
+        Azure.ResourceManager.IotFirmwareDefense.Models.CveComponent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.IotFirmwareDefense.Models.CveComponent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.IotFirmwareDefense.Models.CveComponent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.IotFirmwareDefense.Models.CveComponent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.IotFirmwareDefense.Models.CveComponent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.IotFirmwareDefense.Models.CveComponent>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.IotFirmwareDefense.Models.CveComponent>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class CveLink : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.IotFirmwareDefense.Models.CveLink>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.IotFirmwareDefense.Models.CveLink>
     {
         internal CveLink() { }
-        public string Href { get { throw null; } }
+        public System.Uri Href { get { throw null; } }
         public string Label { get { throw null; } }
         Azure.ResourceManager.IotFirmwareDefense.Models.CveLink System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.IotFirmwareDefense.Models.CveLink>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.IotFirmwareDefense.Models.CveLink>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -246,14 +265,32 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.IotFirmwareDefense.Models.CveLink>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.IotFirmwareDefense.Models.CveLink>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class CveSummary : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.IotFirmwareDefense.Models.CveSummary>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.IotFirmwareDefense.Models.CveSummary>
+    public partial class CveResource : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.IotFirmwareDefense.Models.CveResource>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.IotFirmwareDefense.Models.CveResource>
+    {
+        public CveResource() { }
+        public Azure.ResourceManager.IotFirmwareDefense.Models.CveComponent Component { get { throw null; } set { } }
+        public string CveId { get { throw null; } set { } }
+        public string CvssScore { get { throw null; } set { } }
+        public string CvssV2Score { get { throw null; } set { } }
+        public string CvssV3Score { get { throw null; } set { } }
+        public string CvssVersion { get { throw null; } set { } }
+        public string Description { get { throw null; } set { } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.IotFirmwareDefense.Models.CveLink> Links { get { throw null; } }
+        public string NamePropertiesName { get { throw null; } set { } }
+        public string Severity { get { throw null; } set { } }
+        Azure.ResourceManager.IotFirmwareDefense.Models.CveResource System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.IotFirmwareDefense.Models.CveResource>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.IotFirmwareDefense.Models.CveResource>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.IotFirmwareDefense.Models.CveResource System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.IotFirmwareDefense.Models.CveResource>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.IotFirmwareDefense.Models.CveResource>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.IotFirmwareDefense.Models.CveResource>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class CveSummary : Azure.ResourceManager.IotFirmwareDefense.Models.SummaryResourceProperties, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.IotFirmwareDefense.Models.CveSummary>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.IotFirmwareDefense.Models.CveSummary>
     {
         internal CveSummary() { }
         public long? Critical { get { throw null; } }
         public long? High { get { throw null; } }
         public long? Low { get { throw null; } }
         public long? Medium { get { throw null; } }
-        public long? Undefined { get { throw null; } }
         public long? Unknown { get { throw null; } }
         Azure.ResourceManager.IotFirmwareDefense.Models.CveSummary System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.IotFirmwareDefense.Models.CveSummary>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.IotFirmwareDefense.Models.CveSummary>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -261,52 +298,52 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.IotFirmwareDefense.Models.CveSummary>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.IotFirmwareDefense.Models.CveSummary>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class FirmwareCryptoCertificate : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.IotFirmwareDefense.Models.FirmwareCryptoCertificate>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.IotFirmwareDefense.Models.FirmwareCryptoCertificate>
-    {
-        internal FirmwareCryptoCertificate() { }
-        public string CryptoCertId { get { throw null; } }
-        public string Encoding { get { throw null; } }
-        public System.DateTimeOffset? ExpireOn { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<string> FilePaths { get { throw null; } }
-        public string Fingerprint { get { throw null; } }
-        public Azure.ResourceManager.IotFirmwareDefense.Models.IsExpired? IsExpired { get { throw null; } }
-        public Azure.ResourceManager.IotFirmwareDefense.Models.IsSelfSigned? IsSelfSigned { get { throw null; } }
-        public Azure.ResourceManager.IotFirmwareDefense.Models.IsShortKeySize? IsShortKeySize { get { throw null; } }
-        public System.DateTimeOffset? IssuedOn { get { throw null; } }
-        public Azure.ResourceManager.IotFirmwareDefense.Models.FirmwareCryptoCertificateEntity Issuer { get { throw null; } }
-        public Azure.ResourceManager.IotFirmwareDefense.Models.IsWeakSignature? IsWeakSignature { get { throw null; } }
-        public string KeyAlgorithm { get { throw null; } }
-        public long? KeySize { get { throw null; } }
-        public string Name { get { throw null; } }
-        public Azure.ResourceManager.IotFirmwareDefense.Models.PairedKey PairedKey { get { throw null; } }
-        public string Role { get { throw null; } }
-        public string SerialNumber { get { throw null; } }
-        public string SignatureAlgorithm { get { throw null; } }
-        public Azure.ResourceManager.IotFirmwareDefense.Models.FirmwareCryptoCertificateEntity Subject { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<string> Usage { get { throw null; } }
-        Azure.ResourceManager.IotFirmwareDefense.Models.FirmwareCryptoCertificate System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.IotFirmwareDefense.Models.FirmwareCryptoCertificate>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.IotFirmwareDefense.Models.FirmwareCryptoCertificate>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.IotFirmwareDefense.Models.FirmwareCryptoCertificate System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.IotFirmwareDefense.Models.FirmwareCryptoCertificate>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.IotFirmwareDefense.Models.FirmwareCryptoCertificate>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.IotFirmwareDefense.Models.FirmwareCryptoCertificate>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
     public partial class FirmwareCryptoCertificateEntity : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.IotFirmwareDefense.Models.FirmwareCryptoCertificateEntity>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.IotFirmwareDefense.Models.FirmwareCryptoCertificateEntity>
     {
-        internal FirmwareCryptoCertificateEntity() { }
-        public string CommonName { get { throw null; } }
-        public string Country { get { throw null; } }
-        public string Organization { get { throw null; } }
-        public string OrganizationalUnit { get { throw null; } }
-        public string State { get { throw null; } }
+        public FirmwareCryptoCertificateEntity() { }
+        public string CommonName { get { throw null; } set { } }
+        public string Country { get { throw null; } set { } }
+        public string Organization { get { throw null; } set { } }
+        public string OrganizationalUnit { get { throw null; } set { } }
+        public string State { get { throw null; } set { } }
         Azure.ResourceManager.IotFirmwareDefense.Models.FirmwareCryptoCertificateEntity System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.IotFirmwareDefense.Models.FirmwareCryptoCertificateEntity>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.IotFirmwareDefense.Models.FirmwareCryptoCertificateEntity>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.IotFirmwareDefense.Models.FirmwareCryptoCertificateEntity System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.IotFirmwareDefense.Models.FirmwareCryptoCertificateEntity>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.IotFirmwareDefense.Models.FirmwareCryptoCertificateEntity>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.IotFirmwareDefense.Models.FirmwareCryptoCertificateEntity>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class FirmwareCryptoCertificateSummary : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.IotFirmwareDefense.Models.FirmwareCryptoCertificateSummary>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.IotFirmwareDefense.Models.FirmwareCryptoCertificateSummary>
+    public partial class FirmwareCryptoCertificateResource : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.IotFirmwareDefense.Models.FirmwareCryptoCertificateResource>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.IotFirmwareDefense.Models.FirmwareCryptoCertificateResource>
     {
-        internal FirmwareCryptoCertificateSummary() { }
+        public FirmwareCryptoCertificateResource() { }
+        public string CryptoCertId { get { throw null; } set { } }
+        public string Encoding { get { throw null; } set { } }
+        public System.DateTimeOffset? ExpireOn { get { throw null; } set { } }
+        public System.Collections.Generic.IReadOnlyList<string> FilePaths { get { throw null; } }
+        public string Fingerprint { get { throw null; } set { } }
+        public bool? IsExpired { get { throw null; } set { } }
+        public bool? IsSelfSigned { get { throw null; } set { } }
+        public bool? IsShortKeySize { get { throw null; } set { } }
+        public System.DateTimeOffset? IssuedOn { get { throw null; } set { } }
+        public Azure.ResourceManager.IotFirmwareDefense.Models.FirmwareCryptoCertificateEntity Issuer { get { throw null; } set { } }
+        public bool? IsWeakSignature { get { throw null; } set { } }
+        public string KeyAlgorithm { get { throw null; } set { } }
+        public long? KeySize { get { throw null; } set { } }
+        public string NamePropertiesName { get { throw null; } set { } }
+        public Azure.ResourceManager.IotFirmwareDefense.Models.PairedKey PairedKey { get { throw null; } set { } }
+        public string Role { get { throw null; } set { } }
+        public string SerialNumber { get { throw null; } set { } }
+        public string SignatureAlgorithm { get { throw null; } set { } }
+        public Azure.ResourceManager.IotFirmwareDefense.Models.FirmwareCryptoCertificateEntity Subject { get { throw null; } set { } }
+        public System.Collections.Generic.IList<string> Usage { get { throw null; } set { } }
+        Azure.ResourceManager.IotFirmwareDefense.Models.FirmwareCryptoCertificateResource System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.IotFirmwareDefense.Models.FirmwareCryptoCertificateResource>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.IotFirmwareDefense.Models.FirmwareCryptoCertificateResource>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.IotFirmwareDefense.Models.FirmwareCryptoCertificateResource System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.IotFirmwareDefense.Models.FirmwareCryptoCertificateResource>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.IotFirmwareDefense.Models.FirmwareCryptoCertificateResource>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.IotFirmwareDefense.Models.FirmwareCryptoCertificateResource>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class FirmwareCryptoCertificateSummaryResource : Azure.ResourceManager.IotFirmwareDefense.Models.SummaryResourceProperties, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.IotFirmwareDefense.Models.FirmwareCryptoCertificateSummaryResource>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.IotFirmwareDefense.Models.FirmwareCryptoCertificateSummaryResource>
+    {
+        internal FirmwareCryptoCertificateSummaryResource() { }
         public long? Expired { get { throw null; } }
         public long? ExpiringSoon { get { throw null; } }
         public long? PairedKeys { get { throw null; } }
@@ -314,63 +351,42 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
         public long? ShortKeySize { get { throw null; } }
         public long? TotalCertificates { get { throw null; } }
         public long? WeakSignature { get { throw null; } }
-        Azure.ResourceManager.IotFirmwareDefense.Models.FirmwareCryptoCertificateSummary System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.IotFirmwareDefense.Models.FirmwareCryptoCertificateSummary>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.IotFirmwareDefense.Models.FirmwareCryptoCertificateSummary>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.IotFirmwareDefense.Models.FirmwareCryptoCertificateSummary System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.IotFirmwareDefense.Models.FirmwareCryptoCertificateSummary>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.IotFirmwareDefense.Models.FirmwareCryptoCertificateSummary>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.IotFirmwareDefense.Models.FirmwareCryptoCertificateSummary>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.IotFirmwareDefense.Models.FirmwareCryptoCertificateSummaryResource System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.IotFirmwareDefense.Models.FirmwareCryptoCertificateSummaryResource>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.IotFirmwareDefense.Models.FirmwareCryptoCertificateSummaryResource>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.IotFirmwareDefense.Models.FirmwareCryptoCertificateSummaryResource System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.IotFirmwareDefense.Models.FirmwareCryptoCertificateSummaryResource>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.IotFirmwareDefense.Models.FirmwareCryptoCertificateSummaryResource>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.IotFirmwareDefense.Models.FirmwareCryptoCertificateSummaryResource>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class FirmwareCryptoKey : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.IotFirmwareDefense.Models.FirmwareCryptoKey>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.IotFirmwareDefense.Models.FirmwareCryptoKey>
+    public partial class FirmwareCryptoKeyResource : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.IotFirmwareDefense.Models.FirmwareCryptoKeyResource>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.IotFirmwareDefense.Models.FirmwareCryptoKeyResource>
     {
-        internal FirmwareCryptoKey() { }
+        public FirmwareCryptoKeyResource() { }
         public System.Collections.Generic.IReadOnlyList<string> FilePaths { get { throw null; } }
-        public string FirmwareCryptoKeyId { get { throw null; } }
-        public Azure.ResourceManager.IotFirmwareDefense.Models.IsShortKeySize? IsShortKeySize { get { throw null; } }
-        public string KeyAlgorithm { get { throw null; } }
-        public long? KeySize { get { throw null; } }
-        public string KeyType { get { throw null; } }
-        public Azure.ResourceManager.IotFirmwareDefense.Models.PairedKey PairedKey { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<string> Usage { get { throw null; } }
-        Azure.ResourceManager.IotFirmwareDefense.Models.FirmwareCryptoKey System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.IotFirmwareDefense.Models.FirmwareCryptoKey>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.IotFirmwareDefense.Models.FirmwareCryptoKey>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.IotFirmwareDefense.Models.FirmwareCryptoKey System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.IotFirmwareDefense.Models.FirmwareCryptoKey>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.IotFirmwareDefense.Models.FirmwareCryptoKey>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.IotFirmwareDefense.Models.FirmwareCryptoKey>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        public string FirmwareCryptoKeyId { get { throw null; } set { } }
+        public bool? IsShortKeySize { get { throw null; } set { } }
+        public string KeyAlgorithm { get { throw null; } set { } }
+        public long? KeySize { get { throw null; } set { } }
+        public string KeyType { get { throw null; } set { } }
+        public Azure.ResourceManager.IotFirmwareDefense.Models.PairedKey PairedKey { get { throw null; } set { } }
+        public System.Collections.Generic.IList<string> Usage { get { throw null; } set { } }
+        Azure.ResourceManager.IotFirmwareDefense.Models.FirmwareCryptoKeyResource System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.IotFirmwareDefense.Models.FirmwareCryptoKeyResource>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.IotFirmwareDefense.Models.FirmwareCryptoKeyResource>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.IotFirmwareDefense.Models.FirmwareCryptoKeyResource System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.IotFirmwareDefense.Models.FirmwareCryptoKeyResource>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.IotFirmwareDefense.Models.FirmwareCryptoKeyResource>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.IotFirmwareDefense.Models.FirmwareCryptoKeyResource>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class FirmwareCryptoKeySummary : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.IotFirmwareDefense.Models.FirmwareCryptoKeySummary>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.IotFirmwareDefense.Models.FirmwareCryptoKeySummary>
+    public partial class FirmwareCryptoKeySummaryResource : Azure.ResourceManager.IotFirmwareDefense.Models.SummaryResourceProperties, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.IotFirmwareDefense.Models.FirmwareCryptoKeySummaryResource>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.IotFirmwareDefense.Models.FirmwareCryptoKeySummaryResource>
     {
-        internal FirmwareCryptoKeySummary() { }
+        internal FirmwareCryptoKeySummaryResource() { }
         public long? PairedKeys { get { throw null; } }
         public long? PrivateKeys { get { throw null; } }
         public long? PublicKeys { get { throw null; } }
         public long? ShortKeySize { get { throw null; } }
         public long? TotalKeys { get { throw null; } }
-        Azure.ResourceManager.IotFirmwareDefense.Models.FirmwareCryptoKeySummary System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.IotFirmwareDefense.Models.FirmwareCryptoKeySummary>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.IotFirmwareDefense.Models.FirmwareCryptoKeySummary>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.IotFirmwareDefense.Models.FirmwareCryptoKeySummary System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.IotFirmwareDefense.Models.FirmwareCryptoKeySummary>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.IotFirmwareDefense.Models.FirmwareCryptoKeySummary>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.IotFirmwareDefense.Models.FirmwareCryptoKeySummary>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class FirmwareCve : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.IotFirmwareDefense.Models.FirmwareCve>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.IotFirmwareDefense.Models.FirmwareCve>
-    {
-        internal FirmwareCve() { }
-        public System.BinaryData Component { get { throw null; } }
-        public string CveId { get { throw null; } }
-        public string CvssScore { get { throw null; } }
-        public string CvssV2Score { get { throw null; } }
-        public string CvssV3Score { get { throw null; } }
-        public string CvssVersion { get { throw null; } }
-        public string Description { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.IotFirmwareDefense.Models.CveLink> Links { get { throw null; } }
-        public string Name { get { throw null; } }
-        public System.DateTimeOffset? PublishOn { get { throw null; } }
-        public string Severity { get { throw null; } }
-        public System.DateTimeOffset? UpdatedOn { get { throw null; } }
-        Azure.ResourceManager.IotFirmwareDefense.Models.FirmwareCve System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.IotFirmwareDefense.Models.FirmwareCve>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.IotFirmwareDefense.Models.FirmwareCve>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.IotFirmwareDefense.Models.FirmwareCve System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.IotFirmwareDefense.Models.FirmwareCve>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.IotFirmwareDefense.Models.FirmwareCve>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.IotFirmwareDefense.Models.FirmwareCve>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.IotFirmwareDefense.Models.FirmwareCryptoKeySummaryResource System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.IotFirmwareDefense.Models.FirmwareCryptoKeySummaryResource>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.IotFirmwareDefense.Models.FirmwareCryptoKeySummaryResource>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.IotFirmwareDefense.Models.FirmwareCryptoKeySummaryResource System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.IotFirmwareDefense.Models.FirmwareCryptoKeySummaryResource>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.IotFirmwareDefense.Models.FirmwareCryptoKeySummaryResource>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.IotFirmwareDefense.Models.FirmwareCryptoKeySummaryResource>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class FirmwarePatch : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.IotFirmwareDefense.Models.FirmwarePatch>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.IotFirmwareDefense.Models.FirmwarePatch>
     {
@@ -381,7 +397,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
         public string Model { get { throw null; } set { } }
         public Azure.ResourceManager.IotFirmwareDefense.Models.ProvisioningState? ProvisioningState { get { throw null; } }
         public Azure.ResourceManager.IotFirmwareDefense.Models.Status? Status { get { throw null; } set { } }
-        public System.Collections.Generic.IList<System.BinaryData> StatusMessages { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.IotFirmwareDefense.Models.StatusMessage> StatusMessages { get { throw null; } }
         public string Vendor { get { throw null; } set { } }
         public string Version { get { throw null; } set { } }
         Azure.ResourceManager.IotFirmwareDefense.Models.FirmwarePatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.IotFirmwareDefense.Models.FirmwarePatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -390,7 +406,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.IotFirmwareDefense.Models.FirmwarePatch>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.IotFirmwareDefense.Models.FirmwarePatch>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class FirmwareSummary : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.IotFirmwareDefense.Models.FirmwareSummary>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.IotFirmwareDefense.Models.FirmwareSummary>
+    public partial class FirmwareSummary : Azure.ResourceManager.IotFirmwareDefense.Models.SummaryResourceProperties, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.IotFirmwareDefense.Models.FirmwareSummary>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.IotFirmwareDefense.Models.FirmwareSummary>
     {
         internal FirmwareSummary() { }
         public long? AnalysisTimeSeconds { get { throw null; } }
@@ -416,159 +432,32 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.IotFirmwareDefense.Models.FirmwareWorkspacePatch>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.IotFirmwareDefense.Models.FirmwareWorkspacePatch>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct IsExpired : System.IEquatable<Azure.ResourceManager.IotFirmwareDefense.Models.IsExpired>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public IsExpired(string value) { throw null; }
-        public static Azure.ResourceManager.IotFirmwareDefense.Models.IsExpired False { get { throw null; } }
-        public static Azure.ResourceManager.IotFirmwareDefense.Models.IsExpired True { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.IotFirmwareDefense.Models.IsExpired other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.IotFirmwareDefense.Models.IsExpired left, Azure.ResourceManager.IotFirmwareDefense.Models.IsExpired right) { throw null; }
-        public static implicit operator Azure.ResourceManager.IotFirmwareDefense.Models.IsExpired (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.IotFirmwareDefense.Models.IsExpired left, Azure.ResourceManager.IotFirmwareDefense.Models.IsExpired right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct IsSelfSigned : System.IEquatable<Azure.ResourceManager.IotFirmwareDefense.Models.IsSelfSigned>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public IsSelfSigned(string value) { throw null; }
-        public static Azure.ResourceManager.IotFirmwareDefense.Models.IsSelfSigned False { get { throw null; } }
-        public static Azure.ResourceManager.IotFirmwareDefense.Models.IsSelfSigned True { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.IotFirmwareDefense.Models.IsSelfSigned other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.IotFirmwareDefense.Models.IsSelfSigned left, Azure.ResourceManager.IotFirmwareDefense.Models.IsSelfSigned right) { throw null; }
-        public static implicit operator Azure.ResourceManager.IotFirmwareDefense.Models.IsSelfSigned (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.IotFirmwareDefense.Models.IsSelfSigned left, Azure.ResourceManager.IotFirmwareDefense.Models.IsSelfSigned right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct IsShortKeySize : System.IEquatable<Azure.ResourceManager.IotFirmwareDefense.Models.IsShortKeySize>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public IsShortKeySize(string value) { throw null; }
-        public static Azure.ResourceManager.IotFirmwareDefense.Models.IsShortKeySize False { get { throw null; } }
-        public static Azure.ResourceManager.IotFirmwareDefense.Models.IsShortKeySize True { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.IotFirmwareDefense.Models.IsShortKeySize other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.IotFirmwareDefense.Models.IsShortKeySize left, Azure.ResourceManager.IotFirmwareDefense.Models.IsShortKeySize right) { throw null; }
-        public static implicit operator Azure.ResourceManager.IotFirmwareDefense.Models.IsShortKeySize (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.IotFirmwareDefense.Models.IsShortKeySize left, Azure.ResourceManager.IotFirmwareDefense.Models.IsShortKeySize right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct IsUpdateAvailable : System.IEquatable<Azure.ResourceManager.IotFirmwareDefense.Models.IsUpdateAvailable>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public IsUpdateAvailable(string value) { throw null; }
-        public static Azure.ResourceManager.IotFirmwareDefense.Models.IsUpdateAvailable False { get { throw null; } }
-        public static Azure.ResourceManager.IotFirmwareDefense.Models.IsUpdateAvailable True { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.IotFirmwareDefense.Models.IsUpdateAvailable other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.IotFirmwareDefense.Models.IsUpdateAvailable left, Azure.ResourceManager.IotFirmwareDefense.Models.IsUpdateAvailable right) { throw null; }
-        public static implicit operator Azure.ResourceManager.IotFirmwareDefense.Models.IsUpdateAvailable (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.IotFirmwareDefense.Models.IsUpdateAvailable left, Azure.ResourceManager.IotFirmwareDefense.Models.IsUpdateAvailable right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct IsWeakSignature : System.IEquatable<Azure.ResourceManager.IotFirmwareDefense.Models.IsWeakSignature>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public IsWeakSignature(string value) { throw null; }
-        public static Azure.ResourceManager.IotFirmwareDefense.Models.IsWeakSignature False { get { throw null; } }
-        public static Azure.ResourceManager.IotFirmwareDefense.Models.IsWeakSignature True { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.IotFirmwareDefense.Models.IsWeakSignature other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.IotFirmwareDefense.Models.IsWeakSignature left, Azure.ResourceManager.IotFirmwareDefense.Models.IsWeakSignature right) { throw null; }
-        public static implicit operator Azure.ResourceManager.IotFirmwareDefense.Models.IsWeakSignature (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.IotFirmwareDefense.Models.IsWeakSignature left, Azure.ResourceManager.IotFirmwareDefense.Models.IsWeakSignature right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct NxFlag : System.IEquatable<Azure.ResourceManager.IotFirmwareDefense.Models.NxFlag>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public NxFlag(string value) { throw null; }
-        public static Azure.ResourceManager.IotFirmwareDefense.Models.NxFlag False { get { throw null; } }
-        public static Azure.ResourceManager.IotFirmwareDefense.Models.NxFlag True { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.IotFirmwareDefense.Models.NxFlag other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.IotFirmwareDefense.Models.NxFlag left, Azure.ResourceManager.IotFirmwareDefense.Models.NxFlag right) { throw null; }
-        public static implicit operator Azure.ResourceManager.IotFirmwareDefense.Models.NxFlag (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.IotFirmwareDefense.Models.NxFlag left, Azure.ResourceManager.IotFirmwareDefense.Models.NxFlag right) { throw null; }
-        public override string ToString() { throw null; }
-    }
     public partial class PairedKey : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.IotFirmwareDefense.Models.PairedKey>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.IotFirmwareDefense.Models.PairedKey>
     {
-        internal PairedKey() { }
-        public System.BinaryData AdditionalProperties { get { throw null; } }
-        public string Id { get { throw null; } }
-        public string PairedKeyType { get { throw null; } }
+        public PairedKey() { }
+        public string Id { get { throw null; } set { } }
+        public string PairedKeyType { get { throw null; } set { } }
         Azure.ResourceManager.IotFirmwareDefense.Models.PairedKey System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.IotFirmwareDefense.Models.PairedKey>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.IotFirmwareDefense.Models.PairedKey>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.IotFirmwareDefense.Models.PairedKey System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.IotFirmwareDefense.Models.PairedKey>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.IotFirmwareDefense.Models.PairedKey>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.IotFirmwareDefense.Models.PairedKey>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class PasswordHash : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.IotFirmwareDefense.Models.PasswordHash>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.IotFirmwareDefense.Models.PasswordHash>
+    public partial class PasswordHashResource : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.IotFirmwareDefense.Models.PasswordHashResource>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.IotFirmwareDefense.Models.PasswordHashResource>
     {
-        internal PasswordHash() { }
-        public string Algorithm { get { throw null; } }
-        public string Context { get { throw null; } }
-        public string FilePath { get { throw null; } }
-        public string Hash { get { throw null; } }
-        public string PasswordHashId { get { throw null; } }
-        public string Salt { get { throw null; } }
-        public string Username { get { throw null; } }
-        Azure.ResourceManager.IotFirmwareDefense.Models.PasswordHash System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.IotFirmwareDefense.Models.PasswordHash>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.IotFirmwareDefense.Models.PasswordHash>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.IotFirmwareDefense.Models.PasswordHash System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.IotFirmwareDefense.Models.PasswordHash>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.IotFirmwareDefense.Models.PasswordHash>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.IotFirmwareDefense.Models.PasswordHash>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct PieFlag : System.IEquatable<Azure.ResourceManager.IotFirmwareDefense.Models.PieFlag>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public PieFlag(string value) { throw null; }
-        public static Azure.ResourceManager.IotFirmwareDefense.Models.PieFlag False { get { throw null; } }
-        public static Azure.ResourceManager.IotFirmwareDefense.Models.PieFlag True { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.IotFirmwareDefense.Models.PieFlag other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.IotFirmwareDefense.Models.PieFlag left, Azure.ResourceManager.IotFirmwareDefense.Models.PieFlag right) { throw null; }
-        public static implicit operator Azure.ResourceManager.IotFirmwareDefense.Models.PieFlag (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.IotFirmwareDefense.Models.PieFlag left, Azure.ResourceManager.IotFirmwareDefense.Models.PieFlag right) { throw null; }
-        public override string ToString() { throw null; }
+        public PasswordHashResource() { }
+        public string Algorithm { get { throw null; } set { } }
+        public string Context { get { throw null; } set { } }
+        public string FilePath { get { throw null; } set { } }
+        public string Hash { get { throw null; } set { } }
+        public string PasswordHashId { get { throw null; } set { } }
+        public string Salt { get { throw null; } set { } }
+        public string Username { get { throw null; } set { } }
+        Azure.ResourceManager.IotFirmwareDefense.Models.PasswordHashResource System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.IotFirmwareDefense.Models.PasswordHashResource>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.IotFirmwareDefense.Models.PasswordHashResource>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.IotFirmwareDefense.Models.PasswordHashResource System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.IotFirmwareDefense.Models.PasswordHashResource>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.IotFirmwareDefense.Models.PasswordHashResource>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.IotFirmwareDefense.Models.PasswordHashResource>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ProvisioningState : System.IEquatable<Azure.ResourceManager.IotFirmwareDefense.Models.ProvisioningState>
@@ -590,39 +479,19 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
         public static bool operator !=(Azure.ResourceManager.IotFirmwareDefense.Models.ProvisioningState left, Azure.ResourceManager.IotFirmwareDefense.Models.ProvisioningState right) { throw null; }
         public override string ToString() { throw null; }
     }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct RelroFlag : System.IEquatable<Azure.ResourceManager.IotFirmwareDefense.Models.RelroFlag>
+    public partial class SbomComponentResource : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.IotFirmwareDefense.Models.SbomComponentResource>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.IotFirmwareDefense.Models.SbomComponentResource>
     {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public RelroFlag(string value) { throw null; }
-        public static Azure.ResourceManager.IotFirmwareDefense.Models.RelroFlag False { get { throw null; } }
-        public static Azure.ResourceManager.IotFirmwareDefense.Models.RelroFlag True { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.IotFirmwareDefense.Models.RelroFlag other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.IotFirmwareDefense.Models.RelroFlag left, Azure.ResourceManager.IotFirmwareDefense.Models.RelroFlag right) { throw null; }
-        public static implicit operator Azure.ResourceManager.IotFirmwareDefense.Models.RelroFlag (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.IotFirmwareDefense.Models.RelroFlag left, Azure.ResourceManager.IotFirmwareDefense.Models.RelroFlag right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    public partial class SbomComponent : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.IotFirmwareDefense.Models.SbomComponent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.IotFirmwareDefense.Models.SbomComponent>
-    {
-        internal SbomComponent() { }
-        public string ComponentId { get { throw null; } }
-        public string ComponentName { get { throw null; } }
-        public Azure.ResourceManager.IotFirmwareDefense.Models.IsUpdateAvailable? IsUpdateAvailable { get { throw null; } }
-        public string License { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<string> Paths { get { throw null; } }
-        public System.DateTimeOffset? ReleaseOn { get { throw null; } }
-        public string Version { get { throw null; } }
-        Azure.ResourceManager.IotFirmwareDefense.Models.SbomComponent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.IotFirmwareDefense.Models.SbomComponent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.IotFirmwareDefense.Models.SbomComponent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.IotFirmwareDefense.Models.SbomComponent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.IotFirmwareDefense.Models.SbomComponent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.IotFirmwareDefense.Models.SbomComponent>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.IotFirmwareDefense.Models.SbomComponent>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        public SbomComponentResource() { }
+        public string ComponentId { get { throw null; } set { } }
+        public string ComponentName { get { throw null; } set { } }
+        public System.Collections.Generic.IList<string> FilePaths { get { throw null; } }
+        public string License { get { throw null; } set { } }
+        public string Version { get { throw null; } set { } }
+        Azure.ResourceManager.IotFirmwareDefense.Models.SbomComponentResource System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.IotFirmwareDefense.Models.SbomComponentResource>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.IotFirmwareDefense.Models.SbomComponentResource>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.IotFirmwareDefense.Models.SbomComponentResource System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.IotFirmwareDefense.Models.SbomComponentResource>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.IotFirmwareDefense.Models.SbomComponentResource>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.IotFirmwareDefense.Models.SbomComponentResource>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct Status : System.IEquatable<Azure.ResourceManager.IotFirmwareDefense.Models.Status>
@@ -645,23 +514,46 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
         public static bool operator !=(Azure.ResourceManager.IotFirmwareDefense.Models.Status left, Azure.ResourceManager.IotFirmwareDefense.Models.Status right) { throw null; }
         public override string ToString() { throw null; }
     }
+    public partial class StatusMessage : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.IotFirmwareDefense.Models.StatusMessage>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.IotFirmwareDefense.Models.StatusMessage>
+    {
+        public StatusMessage() { }
+        public long? ErrorCode { get { throw null; } set { } }
+        public string Message { get { throw null; } set { } }
+        Azure.ResourceManager.IotFirmwareDefense.Models.StatusMessage System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.IotFirmwareDefense.Models.StatusMessage>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.IotFirmwareDefense.Models.StatusMessage>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.IotFirmwareDefense.Models.StatusMessage System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.IotFirmwareDefense.Models.StatusMessage>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.IotFirmwareDefense.Models.StatusMessage>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.IotFirmwareDefense.Models.StatusMessage>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct StrippedFlag : System.IEquatable<Azure.ResourceManager.IotFirmwareDefense.Models.StrippedFlag>
+    public readonly partial struct SummaryName : System.IEquatable<Azure.ResourceManager.IotFirmwareDefense.Models.SummaryName>
     {
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
-        public StrippedFlag(string value) { throw null; }
-        public static Azure.ResourceManager.IotFirmwareDefense.Models.StrippedFlag False { get { throw null; } }
-        public static Azure.ResourceManager.IotFirmwareDefense.Models.StrippedFlag True { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.IotFirmwareDefense.Models.StrippedFlag other) { throw null; }
+        public SummaryName(string value) { throw null; }
+        public static Azure.ResourceManager.IotFirmwareDefense.Models.SummaryName BinaryHardening { get { throw null; } }
+        public static Azure.ResourceManager.IotFirmwareDefense.Models.SummaryName CVE { get { throw null; } }
+        public static Azure.ResourceManager.IotFirmwareDefense.Models.SummaryName Firmware { get { throw null; } }
+        public static Azure.ResourceManager.IotFirmwareDefense.Models.SummaryName FirmwareCryptoCertificate { get { throw null; } }
+        public static Azure.ResourceManager.IotFirmwareDefense.Models.SummaryName FirmwareCryptoKey { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.IotFirmwareDefense.Models.SummaryName other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.IotFirmwareDefense.Models.StrippedFlag left, Azure.ResourceManager.IotFirmwareDefense.Models.StrippedFlag right) { throw null; }
-        public static implicit operator Azure.ResourceManager.IotFirmwareDefense.Models.StrippedFlag (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.IotFirmwareDefense.Models.StrippedFlag left, Azure.ResourceManager.IotFirmwareDefense.Models.StrippedFlag right) { throw null; }
+        public static bool operator ==(Azure.ResourceManager.IotFirmwareDefense.Models.SummaryName left, Azure.ResourceManager.IotFirmwareDefense.Models.SummaryName right) { throw null; }
+        public static implicit operator Azure.ResourceManager.IotFirmwareDefense.Models.SummaryName (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.IotFirmwareDefense.Models.SummaryName left, Azure.ResourceManager.IotFirmwareDefense.Models.SummaryName right) { throw null; }
         public override string ToString() { throw null; }
+    }
+    public abstract partial class SummaryResourceProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.IotFirmwareDefense.Models.SummaryResourceProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.IotFirmwareDefense.Models.SummaryResourceProperties>
+    {
+        protected SummaryResourceProperties() { }
+        Azure.ResourceManager.IotFirmwareDefense.Models.SummaryResourceProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.IotFirmwareDefense.Models.SummaryResourceProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.IotFirmwareDefense.Models.SummaryResourceProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.IotFirmwareDefense.Models.SummaryResourceProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.IotFirmwareDefense.Models.SummaryResourceProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.IotFirmwareDefense.Models.SummaryResourceProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.IotFirmwareDefense.Models.SummaryResourceProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class UploadUrlContent : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.IotFirmwareDefense.Models.UploadUrlContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.IotFirmwareDefense.Models.UploadUrlContent>
     {
@@ -676,7 +568,6 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
     public partial class UriToken : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.IotFirmwareDefense.Models.UriToken>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.IotFirmwareDefense.Models.UriToken>
     {
         internal UriToken() { }
-        public System.Uri UploadUri { get { throw null; } }
         public System.Uri Uri { get { throw null; } }
         Azure.ResourceManager.IotFirmwareDefense.Models.UriToken System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.IotFirmwareDefense.Models.UriToken>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.IotFirmwareDefense.Models.UriToken>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
