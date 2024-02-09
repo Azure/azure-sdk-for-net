@@ -31,23 +31,19 @@ public class MockPipelineResponse : PipelineResponse
 
     public override string ReasonPhrase => _reasonPhrase;
 
+    public override BinaryData Content => throw new NotImplementedException();
+
     public void SetReasonPhrase(string value) => _reasonPhrase = value;
 
     public void SetContent(byte[] content)
     {
-        ContentStream = new MemoryStream(content, 0, content.Length, false, true);
+        SetContentStream(new MemoryStream(content, 0, content.Length, false, true));
     }
 
     public MockPipelineResponse SetContent(string content)
     {
         SetContent(Encoding.UTF8.GetBytes(content));
         return this;
-    }
-
-    public override Stream? ContentStream
-    {
-        get => _contentStream;
-        set => _contentStream = value;
     }
 
     protected override PipelineResponseHeaders GetHeadersCore() => _headers;
@@ -72,5 +68,20 @@ public class MockPipelineResponse : PipelineResponse
 
             _disposed = true;
         }
+    }
+
+    public override bool TryGetContentStream(out Stream? stream)
+    {
+        throw new NotImplementedException();
+    }
+
+    protected override void SetContentStream(Stream? stream)
+    {
+        throw new NotImplementedException();
+    }
+
+    protected override void SetContent(BinaryData content)
+    {
+        throw new NotImplementedException();
     }
 }

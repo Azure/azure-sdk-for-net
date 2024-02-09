@@ -131,11 +131,7 @@ public class ObservableTransport : PipelineTransport
 
         public override string ReasonPhrase => throw new NotImplementedException();
 
-        public override Stream? ContentStream
-        {
-            get => null;
-            set => throw new NotImplementedException();
-        }
+        public override BinaryData Content => throw new NotImplementedException();
 
         protected override PipelineResponseHeaders GetHeadersCore()
         {
@@ -143,6 +139,21 @@ public class ObservableTransport : PipelineTransport
         }
 
         public override void Dispose()
+        {
+            throw new NotImplementedException();
+        }
+
+        public override bool TryGetContentStream(out Stream? stream)
+        {
+            throw new NotImplementedException();
+        }
+
+        protected override void SetContentStream(Stream? stream)
+        {
+            throw new NotImplementedException();
+        }
+
+        protected override void SetContent(BinaryData content)
         {
             throw new NotImplementedException();
         }

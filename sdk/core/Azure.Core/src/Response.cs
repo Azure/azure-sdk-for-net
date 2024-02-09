@@ -20,6 +20,7 @@ namespace Azure
     {
         // TODO(matell): The .NET Framework team plans to add BinaryData.Empty in dotnet/runtime#49670, and we can use it then.
         private static readonly BinaryData s_emptyBinaryData = new(Array.Empty<byte>());
+        private BinaryData? _bufferedContent;
 
         /// <summary>
         /// Gets the client request id that was sent to the server as <c>x-ms-client-request-id</c> headers.
@@ -34,10 +35,48 @@ namespace Azure
         /// <summary>
         /// TBD.
         /// </summary>
+        /// <param name="content"></param>
+        protected override void SetContent(BinaryData content)
+        {
+            _bufferedContent = content;
+        }
+
+        /// <summary>
+        /// TBD.
+        /// </summary>
+        /// <param name="stream"></param>
+        protected override void SetContentStream(Stream? stream)
+        {
+            ContentStream = stream;
+        }
+
+        /// <summary>
+        /// TBD.
+        /// </summary>
+        /// <param name="stream"></param>
+        /// <returns></returns>
+        public override bool TryGetContentStream(out Stream? stream)
+        {
+            stream = ContentStream;
+            return stream is not null;
+        }
+
+        /// <summary>
+        /// TBD.
+        /// </summary>
         public override BinaryData Content
         {
             get
             {
+                if (_bufferedContent is not null)
+                {
+                    return _bufferedContent;
+                }
+
+                // Preserve the old implementation to support back-compat with
+                // in-the-wild subtypes.  Internal derived types override this
+                // with better-performing implementations, and it is recommended
+                // that external derived types do so as well to improve performance.
                 if (ContentStream == null)
                 {
                     return s_emptyBinaryData;
@@ -177,6 +216,21 @@ namespace Azure
             {
                 get => throw new NotSupportedException(DefaultMessage);
                 set => throw new NotSupportedException(DefaultMessage);
+            }
+
+            public override bool TryGetContentStream(out Stream? stream)
+            {
+                throw new NotImplementedException();
+            }
+
+            protected override void SetContentStream(Stream? stream)
+            {
+                throw new NotImplementedException();
+            }
+
+            protected override void SetContent(BinaryData content)
+            {
+                throw new NotImplementedException();
             }
 
             protected override PipelineResponseHeaders GetHeadersCore()

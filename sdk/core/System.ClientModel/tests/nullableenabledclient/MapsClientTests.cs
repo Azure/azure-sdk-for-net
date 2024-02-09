@@ -401,18 +401,29 @@ public class MapsClientTests
 
             public override string ReasonPhrase => "CustomTransportResponse";
 
-            public override Stream? ContentStream
-            {
-                get => _stream;
-                set => _stream = value;
-            }
+            public override BinaryData Content => throw new NotImplementedException();
 
             public override void Dispose()
             {
                 _stream?.Dispose();
             }
 
+            public override bool TryGetContentStream(out Stream? stream)
+            {
+                throw new NotImplementedException();
+            }
+
             protected override PipelineResponseHeaders GetHeadersCore()
+            {
+                throw new NotImplementedException();
+            }
+
+            protected override void SetContent(BinaryData content)
+            {
+                throw new NotImplementedException();
+            }
+
+            protected override void SetContentStream(Stream? stream)
             {
                 throw new NotImplementedException();
             }

@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
@@ -34,12 +35,7 @@ namespace Azure.Core.Pipeline
                 get => _clientRequestId;
                 set => _clientRequestId = value;
             }
-
-            public override Stream? ContentStream
-            {
-                get => _pipelineResponse.ContentStream;
-                set => _pipelineResponse.ContentStream = value;
-            }
+            public override Stream? ContentStream { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
 
             protected internal override bool ContainsHeader(string name)
                 => _pipelineResponse.Headers.TryGetValue(name, out _);
@@ -62,6 +58,21 @@ namespace Azure.Core.Pipeline
             {
                 PipelineResponse response = _pipelineResponse;
                 response?.Dispose();
+            }
+
+            public override bool TryGetContentStream(out Stream? stream)
+            {
+                throw new NotImplementedException();
+            }
+
+            protected override void SetContentStream(Stream? stream)
+            {
+                throw new NotImplementedException();
+            }
+
+            protected override void SetContent(BinaryData content)
+            {
+                throw new NotImplementedException();
             }
         }
     }
