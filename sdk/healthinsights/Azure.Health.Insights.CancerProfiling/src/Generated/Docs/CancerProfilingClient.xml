@@ -29,7 +29,7 @@ OncoPhenotypeData oncoPhenotypeData = new OncoPhenotypeData(new PatientRecord[]
         Info = new PatientInfo
         {
             Sex = PatientInfoSex.Female,
-            BirthDate = DateTimeOffset.Parse("2022-05-10"),
+            BirthDate = new object(),
             ClinicalInfo = {new ClinicalCodedElement("<system>", "<code>")
             {
                 Name = "<name>",
@@ -85,7 +85,7 @@ OncoPhenotypeData oncoPhenotypeData = new OncoPhenotypeData(new PatientRecord[]
         Info = new PatientInfo
         {
             Sex = PatientInfoSex.Female,
-            BirthDate = DateTimeOffset.Parse("2022-05-10"),
+            BirthDate = new object(),
             ClinicalInfo = {new ClinicalCodedElement("<system>", "<code>")
             {
                 Name = "<name>",
@@ -156,7 +156,7 @@ using RequestContent content = RequestContent.Create(new
             info = new
             {
                 sex = "female",
-                birthDate = "2022-05-10",
+                birthDate = new object(),
                 clinicalInfo = new object[]
                 {
                     new
@@ -262,7 +262,7 @@ using RequestContent content = RequestContent.Create(new
             info = new
             {
                 sex = "female",
-                birthDate = "2022-05-10",
+                birthDate = new object(),
                 clinicalInfo = new object[]
                 {
                     new

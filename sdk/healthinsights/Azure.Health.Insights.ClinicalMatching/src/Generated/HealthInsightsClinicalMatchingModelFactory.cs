@@ -81,7 +81,7 @@ namespace Azure.Health.Insights.ClinicalMatching
         /// <param name="modelVersion"> The version of the model used for inference, expressed as the model date. </param>
         /// <param name="knowledgeGraphLastUpdateDate"> The date when the clinical trials knowledge graph was last updated. </param>
         /// <returns> A new <see cref="ClinicalMatching.TrialMatcherResults"/> instance for mocking. </returns>
-        public static TrialMatcherResults TrialMatcherResults(IEnumerable<TrialMatcherPatientResult> patients = null, string modelVersion = null, DateTimeOffset? knowledgeGraphLastUpdateDate = null)
+        public static TrialMatcherResults TrialMatcherResults(IEnumerable<TrialMatcherPatientResult> patients = null, string modelVersion = null, object knowledgeGraphLastUpdateDate = null)
         {
             patients ??= new List<TrialMatcherPatientResult>();
 

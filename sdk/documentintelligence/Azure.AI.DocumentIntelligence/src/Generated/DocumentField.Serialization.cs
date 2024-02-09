@@ -37,12 +37,12 @@ namespace Azure.AI.DocumentIntelligence
             if (Optional.IsDefined(ValueDate))
             {
                 writer.WritePropertyName("valueDate"u8);
-                writer.WriteStringValue(ValueDate.Value, "D");
+                writer.WriteObjectValue(ValueDate);
             }
             if (Optional.IsDefined(ValueTime))
             {
                 writer.WritePropertyName("valueTime"u8);
-                writer.WriteStringValue(ValueTime.Value, "T");
+                writer.WriteObjectValue(ValueTime);
             }
             if (Optional.IsDefined(ValuePhoneNumber))
             {
@@ -180,8 +180,8 @@ namespace Azure.AI.DocumentIntelligence
             }
             DocumentFieldType type = default;
             Optional<string> valueString = default;
-            Optional<DateTimeOffset> valueDate = default;
-            Optional<TimeSpan> valueTime = default;
+            Optional<object> valueDate = default;
+            Optional<object> valueTime = default;
             Optional<string> valuePhoneNumber = default;
             Optional<double> valueNumber = default;
             Optional<long> valueInteger = default;
@@ -217,7 +217,7 @@ namespace Azure.AI.DocumentIntelligence
                     {
                         continue;
                     }
-                    valueDate = property.Value.GetDateTimeOffset("D");
+                    valueDate = property.Value.GetObject();
                     continue;
                 }
                 if (property.NameEquals("valueTime"u8))
@@ -226,7 +226,7 @@ namespace Azure.AI.DocumentIntelligence
                     {
                         continue;
                     }
-                    valueTime = property.Value.GetTimeSpan("T");
+                    valueTime = property.Value.GetObject();
                     continue;
                 }
                 if (property.NameEquals("valuePhoneNumber"u8))
@@ -378,7 +378,7 @@ namespace Azure.AI.DocumentIntelligence
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DocumentField(type, valueString.Value, Optional.ToNullable(valueDate), Optional.ToNullable(valueTime), valuePhoneNumber.Value, Optional.ToNullable(valueNumber), Optional.ToNullable(valueInteger), Optional.ToNullable(valueSelectionMark), Optional.ToNullable(valueSignature), valueCountryRegion.Value, Optional.ToList(valueArray), Optional.ToDictionary(valueObject), valueCurrency.Value, valueAddress.Value, Optional.ToNullable(valueBoolean), content.Value, Optional.ToList(boundingRegions), Optional.ToList(spans), Optional.ToNullable(confidence), serializedAdditionalRawData);
+            return new DocumentField(type, valueString.Value, valueDate.Value, valueTime.Value, valuePhoneNumber.Value, Optional.ToNullable(valueNumber), Optional.ToNullable(valueInteger), Optional.ToNullable(valueSelectionMark), Optional.ToNullable(valueSignature), valueCountryRegion.Value, Optional.ToList(valueArray), Optional.ToDictionary(valueObject), valueCurrency.Value, valueAddress.Value, Optional.ToNullable(valueBoolean), content.Value, Optional.ToList(boundingRegions), Optional.ToList(spans), Optional.ToNullable(confidence), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DocumentField>.Write(ModelReaderWriterOptions options)
