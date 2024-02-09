@@ -13,7 +13,7 @@ public partial class SpeechGeneration
 {
     [Test]
     [Ignore("Only verifying that the sample builds")]
-    public async Task TranscribeAudio()
+    public async Task GenerateSpeech()
     {
         string endpoint = "https://myaccount.openai.azure.com/";
         OpenAIClient client = new(new Uri(endpoint), new DefaultAzureCredential());
