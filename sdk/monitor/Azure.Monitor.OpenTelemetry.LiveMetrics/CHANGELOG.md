@@ -8,7 +8,7 @@
 
 * Disable Performance Counters to prevent runtime exceptions.
   This will be reenabled in a future release.
-  ([]())
+  ([#41878](https://github.com/Azure/azure-sdk-for-net/pull/))
 
 ### Bugs Fixed
 
