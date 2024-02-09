@@ -7,6 +7,11 @@
 * Added Azure Container Apps resource detector.
   ([#41803](https://github.com/Azure/azure-sdk-for-net/pull/41803))
 
+* Added `Azure.Monitor.OpenTelemetry.LiveMetrics`, enabling the sending of live
+  metrics data. The newly added `EnableLiveMetrics` property is set to `true` by
+  default. This property can be set to `false` to disable live metrics.
+  ([#41872](https://github.com/Azure/azure-sdk-for-net/pull/41872))
+
 ### Breaking Changes
 
 ### Bugs Fixed

@@ -6,6 +6,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore
         public string ConnectionString { get { throw null; } set { } }
         public Azure.Core.TokenCredential Credential { get { throw null; } set { } }
         public bool DisableOfflineStorage { get { throw null; } set { } }
+        public bool EnableLiveMetrics { get { throw null; } set { } }
         public float SamplingRatio { get { throw null; } set { } }
         public string StorageDirectory { get { throw null; } set { } }
     }
