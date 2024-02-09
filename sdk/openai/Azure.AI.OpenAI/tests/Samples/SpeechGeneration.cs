@@ -17,9 +17,9 @@ public partial class SpeechGeneration
     {
         string endpoint = "https://myaccount.openai.azure.com/";
         OpenAIClient client = new(new Uri(endpoint), new DefaultAzureCredential());
+        string text = "Hello World";
 
         #region Snippet:SpeechGeneration
-        string text = "Hello World";
         AudioSpeechOptions speechOptions = new()
         {
             Input = text,
