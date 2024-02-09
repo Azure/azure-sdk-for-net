@@ -22,39 +22,6 @@ namespace Azure.Communication.Messages.Tests
         public const string DocumentUrl = "https://file-examples.com/storage/fe63e96e0365c0e1e99a842/2017/10/file-sample_150kB.pdf";
 
         [Test]
-        public void Constructor_NullEndpoint_ShouldThrowArgumentNullException()
-        {
-            // Arrange
-            Uri endpoint = null;
-            AzureKeyCredential credential = new AzureKeyCredential(TestEnvironment.LiveTestDynamicAccessKey);
-
-            // Act & Assert
-            Assert.Throws<ArgumentNullException>(() => new NotificationMessagesClient(endpoint, credential));
-        }
-
-        [Test]
-        public void Constructor_InvalidConnectionString_ShouldThrow()
-        {
-            Assert.Throws<ArgumentNullException>(() => new NotificationMessagesClient(null));
-            Assert.Throws<ArgumentException>(() => new NotificationMessagesClient(string.Empty));
-            Assert.Throws<ArgumentException>(() => new NotificationMessagesClient(""));
-            Assert.Throws<InvalidOperationException>(() => new NotificationMessagesClient("  "));
-            Assert.Throws<InvalidOperationException>(() => new NotificationMessagesClient("test"));
-        }
-
-        [Test]
-        public void CreateClient_InvalidCredential_ShouldThrow()
-        {
-            // Arrange
-            var validEndpoint = TestEnvironment.LiveTestDynamicEndpoint;
-
-            // Act and Assert
-            Assert.Throws<ArgumentNullException>(() => new NotificationMessagesClient(validEndpoint, new AzureKeyCredential(null)));
-            Assert.Throws<ArgumentException>(() => new NotificationMessagesClient(validEndpoint, new AzureKeyCredential(string.Empty)));
-            Assert.Throws<ArgumentException>(() => new NotificationMessagesClient(validEndpoint, new AzureKeyCredential("")));
-        }
-
-        [Test]
         public async Task SendTextMessage_ShouldSucceed()
         {
             // Arrange

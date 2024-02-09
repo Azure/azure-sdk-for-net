@@ -19,12 +19,56 @@ namespace Azure.Communication.Messages.Tests
         }
 
         [Test]
-        public void Constructor_InvalidParamsThrows()
+        public void Constructor_NullEndpoint_ShouldThrowArgumentNullException()
+        {
+            // Arrange
+            Uri endpoint = null;
+            AzureKeyCredential credential = new AzureKeyCredential("ZHVtbXlhY2Nlc3NrZXk=");
+
+            // Act & Assert
+            Assert.Throws<ArgumentNullException>(() => new MessageTemplateClient(endpoint, credential));
+        }
+
+        [Test]
+        public void Constructor_InvalidConnectionString_ShouldThrow()
         {
             Assert.Throws<ArgumentNullException>(() => new MessageTemplateClient(null));
             Assert.Throws<ArgumentException>(() => new MessageTemplateClient(string.Empty));
-            Assert.Throws<InvalidOperationException>(() => new MessageTemplateClient(" "));
+            Assert.Throws<ArgumentException>(() => new MessageTemplateClient(""));
+            Assert.Throws<InvalidOperationException>(() => new MessageTemplateClient("  "));
             Assert.Throws<InvalidOperationException>(() => new MessageTemplateClient("test"));
+        }
+
+        [Test]
+        public Task GetTemplates_InvalidChannelId_ShouldThrowBadRequestException()
+        {
+            //arrange
+            MessageTemplateClient messageTemplateClient = CreateMockMessageTemplateClient();
+
+            try
+            {
+                //act
+                messageTemplateClient.GetTemplatesAsync("invalidChannelRegistrationId");
+            }
+            catch (RequestFailedException requestFailedException)
+            {
+                //assert
+                Assert.AreEqual(400, requestFailedException.Status);
+            }
+
+            return Task.CompletedTask;
+        }
+
+        [Test]
+        public void GetTemplates_NullOrEmptyChannelId_ShouldThrowArgumentNullException()
+        {
+            // Arrange
+            MessageTemplateClient messageTemplateClient = CreateMockMessageTemplateClient();
+
+            // Act & Assert
+            Assert.Throws<ArgumentNullException>(() => messageTemplateClient.GetTemplatesAsync(null));
+            Assert.Throws<ArgumentException>(() => messageTemplateClient.GetTemplatesAsync(string.Empty));
+            Assert.Throws<ArgumentException>(() => messageTemplateClient.GetTemplatesAsync(""));
         }
 
         [Test]

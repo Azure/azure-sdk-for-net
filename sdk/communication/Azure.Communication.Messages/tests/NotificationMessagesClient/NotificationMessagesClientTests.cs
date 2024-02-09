@@ -20,12 +20,36 @@ namespace Azure.Communication.Messages.Tests
         }
 
         [Test]
-        public void Constructor_InvalidParamsThrows()
+        public void Constructor_InvalidConnectionString_ShouldThrow()
         {
             Assert.Throws<ArgumentNullException>(() => new NotificationMessagesClient(null));
             Assert.Throws<ArgumentException>(() => new NotificationMessagesClient(string.Empty));
-            Assert.Throws<InvalidOperationException>(() => new NotificationMessagesClient(" "));
+            Assert.Throws<ArgumentException>(() => new NotificationMessagesClient(""));
+            Assert.Throws<InvalidOperationException>(() => new NotificationMessagesClient("  "));
             Assert.Throws<InvalidOperationException>(() => new NotificationMessagesClient("test"));
+        }
+
+        [Test]
+        public void Constructor_NullEndpoint_ShouldThrowArgumentNullException()
+        {
+            // Arrange
+            Uri endpoint = null;
+            AzureKeyCredential credential = new AzureKeyCredential("ZHVtbXlhY2Nlc3NrZXk=");
+
+            // Act & Assert
+            Assert.Throws<ArgumentNullException>(() => new NotificationMessagesClient(endpoint, credential));
+        }
+
+        [Test]
+        public void CreateClient_InvalidCredential_ShouldThrow()
+        {
+            // Arrange
+            var validEndpoint = new Uri("https://contoso.azure.com/");
+
+            // Act and Assert
+            Assert.Throws<ArgumentNullException>(() => new NotificationMessagesClient(validEndpoint, new AzureKeyCredential(null)));
+            Assert.Throws<ArgumentException>(() => new NotificationMessagesClient(validEndpoint, new AzureKeyCredential(string.Empty)));
+            Assert.Throws<ArgumentException>(() => new NotificationMessagesClient(validEndpoint, new AzureKeyCredential("")));
         }
 
         [Test]

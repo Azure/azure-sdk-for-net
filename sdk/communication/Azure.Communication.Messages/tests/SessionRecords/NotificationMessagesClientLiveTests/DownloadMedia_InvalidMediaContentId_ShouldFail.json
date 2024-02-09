@@ -4,7 +4,7 @@
       "RequestUri": "https://sanitized.communication.azure.com/messages/streams/test?api-version=2024-02-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
-        "Accept": "application/json",
+        "Accept": "application/octet-stream",
         "Authorization": "Sanitized",
         "Connection": "keep-alive",
         "traceparent": "00-3c6c99a050c168f0cba9875b15d192e3-3a64b872bcf24e66-00",

@@ -64,58 +64,5 @@ namespace Azure.Communication.Messages.Tests
 
             return Task.CompletedTask;
         }
-
-        [Test]
-        public void Constructor_NullEndpoint_ShouldThrowArgumentNullException()
-        {
-            // Arrange
-            Uri endpoint = null;
-            AzureKeyCredential credential = new AzureKeyCredential(TestEnvironment.LiveTestDynamicAccessKey);
-
-            // Act & Assert
-            Assert.Throws<ArgumentNullException>(() => new MessageTemplateClient(endpoint, credential));
-        }
-
-        [Test]
-        public void Constructor_InvalidConnectionString_ShouldThrow()
-        {
-            Assert.Throws<ArgumentNullException>(() => new MessageTemplateClient(null));
-            Assert.Throws<ArgumentException>(() => new MessageTemplateClient(string.Empty));
-            Assert.Throws<ArgumentException>(() => new MessageTemplateClient(""));
-            Assert.Throws<InvalidOperationException>(() => new MessageTemplateClient("  "));
-            Assert.Throws<InvalidOperationException>(() => new MessageTemplateClient("test"));
-        }
-
-        [Test]
-        public void GetTemplates_NullOrEmptyChannelId_ShouldThrowArgumentNullException()
-        {
-            // Arrange
-            MessageTemplateClient messageTemplateClient = CreateInstrumentedMessageTemplateClient();
-
-            // Act & Assert
-            Assert.Throws<ArgumentNullException>(() => messageTemplateClient.GetTemplatesAsync(null));
-            Assert.Throws<ArgumentException>(() => messageTemplateClient.GetTemplatesAsync(string.Empty));
-            Assert.Throws<ArgumentException>(() => messageTemplateClient.GetTemplatesAsync(""));
-        }
-
-        [Test]
-        public Task GetTemplates_InvalidChannelId_ShouldThrowBadRequestException()
-        {
-            //arrange
-            MessageTemplateClient messageTemplateClient = CreateInstrumentedMessageTemplateClient();
-
-            try
-            {
-                //act
-                messageTemplateClient.GetTemplatesAsync("invalidChannelRegistrationId");
-            }
-            catch (RequestFailedException requestFailedException)
-            {
-                //assert
-                Assert.AreEqual(400, requestFailedException.Status);
-            }
-
-            return Task.CompletedTask;
-        }
     }
 }

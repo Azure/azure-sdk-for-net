@@ -4,7 +4,7 @@
       "RequestUri": "https://sanitized.communication.azure.com/messages/streams/%20%20?api-version=2024-02-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
-        "Accept": "application/json",
+        "Accept": "application/octet-stream",
         "Authorization": "Sanitized",
         "traceparent": "00-0cffbcd65cba8fdae7820a2e69e59f70-2e3fa15e4964ee1a-00",
         "User-Agent": "azsdk-net-Communication.Messages/1.0.0-alpha.20240206.1 (.NET Framework 4.8.9181.0; Microsoft Windows 10.0.22631 )",
