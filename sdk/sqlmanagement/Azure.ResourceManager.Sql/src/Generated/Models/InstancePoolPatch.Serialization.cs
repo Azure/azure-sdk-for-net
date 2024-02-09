@@ -26,6 +26,11 @@ namespace Azure.ResourceManager.Sql.Models
             }
 
             writer.WriteStartObject();
+            if (Optional.IsDefined(Sku))
+            {
+                writer.WritePropertyName("sku"u8);
+                writer.WriteObjectValue(Sku);
+            }
             if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
@@ -37,6 +42,34 @@ namespace Azure.ResourceManager.Sql.Models
                 }
                 writer.WriteEndObject();
             }
+            writer.WritePropertyName("properties"u8);
+            writer.WriteStartObject();
+            if (Optional.IsDefined(SubnetId))
+            {
+                writer.WritePropertyName("subnetId"u8);
+                writer.WriteStringValue(SubnetId);
+            }
+            if (Optional.IsDefined(VCores))
+            {
+                writer.WritePropertyName("vCores"u8);
+                writer.WriteNumberValue(VCores.Value);
+            }
+            if (Optional.IsDefined(LicenseType))
+            {
+                writer.WritePropertyName("licenseType"u8);
+                writer.WriteStringValue(LicenseType.Value.ToString());
+            }
+            if (options.Format != "W" && Optional.IsDefined(DnsZone))
+            {
+                writer.WritePropertyName("dnsZone"u8);
+                writer.WriteStringValue(DnsZone);
+            }
+            if (Optional.IsDefined(MaintenanceConfigurationId))
+            {
+                writer.WritePropertyName("maintenanceConfigurationId"u8);
+                writer.WriteStringValue(MaintenanceConfigurationId);
+            }
+            writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -75,11 +108,26 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 return null;
             }
+            Optional<SqlSku> sku = default;
             Optional<IDictionary<string, string>> tags = default;
+            Optional<ResourceIdentifier> subnetId = default;
+            Optional<int> vCores = default;
+            Optional<InstancePoolLicenseType> licenseType = default;
+            Optional<string> dnsZone = default;
+            Optional<ResourceIdentifier> maintenanceConfigurationId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("sku"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    sku = SqlSku.DeserializeSqlSku(property.Value);
+                    continue;
+                }
                 if (property.NameEquals("tags"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -94,13 +142,66 @@ namespace Azure.ResourceManager.Sql.Models
                     tags = dictionary;
                     continue;
                 }
+                if (property.NameEquals("properties"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        if (property0.NameEquals("subnetId"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            subnetId = new ResourceIdentifier(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("vCores"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            vCores = property0.Value.GetInt32();
+                            continue;
+                        }
+                        if (property0.NameEquals("licenseType"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            licenseType = new InstancePoolLicenseType(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("dnsZone"u8))
+                        {
+                            dnsZone = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("maintenanceConfigurationId"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            maintenanceConfigurationId = new ResourceIdentifier(property0.Value.GetString());
+                            continue;
+                        }
+                    }
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new InstancePoolPatch(Optional.ToDictionary(tags), serializedAdditionalRawData);
+            return new InstancePoolPatch(sku.Value, Optional.ToDictionary(tags), subnetId.Value, Optional.ToNullable(vCores), Optional.ToNullable(licenseType), dnsZone.Value, maintenanceConfigurationId.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<InstancePoolPatch>.Write(ModelReaderWriterOptions options)

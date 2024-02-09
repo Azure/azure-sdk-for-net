@@ -12,12 +12,14 @@ namespace Azure.Communication.JobRouter
 {
     /// <summary> Trigger for an exception action on exceeding wait time. </summary>
     [CodeGenSerialization(nameof(Threshold), SerializationValueHook = nameof(WriteThresholdSeconds), DeserializationValueHook = nameof(ReadThresholdSeconds))]
-    public partial class WaitTimeExceptionTrigger : IUtf8JsonSerializable
+    public partial class WaitTimeExceptionTrigger
     {
         /// <summary> Initializes a new instance of WaitTimeExceptionTrigger. </summary>
         /// <param name="threshold"> Threshold for wait time for this trigger. </param>
-        public WaitTimeExceptionTrigger(TimeSpan threshold) : this(ExceptionTriggerKind.WaitTime, threshold)
+        public WaitTimeExceptionTrigger(TimeSpan threshold)
         {
+            Kind = ExceptionTriggerKind.WaitTime;
+            Threshold = threshold;
         }
 
         /// <summary> Threshold for wait time for this trigger. </summary>
@@ -34,16 +36,6 @@ namespace Azure.Communication.JobRouter
         internal static void ReadThresholdSeconds(JsonProperty property, ref TimeSpan threshold)
         {
             threshold = TimeSpan.FromSeconds(property.Value.GetDouble());
-        }
-
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
-        {
-            writer.WriteStartObject();
-            writer.WritePropertyName("thresholdSeconds"u8);
-            WriteThresholdSeconds(writer);
-            writer.WritePropertyName("kind"u8);
-            writer.WriteStringValue(Kind.ToString());
-            writer.WriteEndObject();
         }
     }
 }

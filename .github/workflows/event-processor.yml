@@ -29,7 +29,7 @@ jobs:
     steps:
       - name: 'Az CLI login'
         if: ${{ github.event_name == 'issues' && github.event.action == 'opened' }}
-        uses: azure/login@v1
+        uses: azure/login@v1.5.1
         with:
             client-id: ${{ secrets.AZURE_CLIENT_ID }}
             tenant-id: ${{ secrets.AZURE_TENANT_ID }}

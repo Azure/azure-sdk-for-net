@@ -2,14 +2,13 @@
 // Licensed under the MIT License.
 
 #nullable enable
+
 using System;
 using System.Collections.Generic;
-using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.Communication.JobRouter
 {
-    public partial class ExceptionRule : IUtf8JsonSerializable
+    public partial class ExceptionRule
     {
         /// <summary> Initializes a new instance of an exception rule. </summary>
         /// <param name="id"> Id of an exception rule. </param>
@@ -23,22 +22,5 @@ namespace Azure.Communication.JobRouter
 
         /// <summary> A collection of actions to perform once the exception is triggered. </summary>
         public IList<ExceptionAction> Actions { get; } = new List<ExceptionAction>();
-
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
-        {
-            writer.WriteStartObject();
-            writer.WritePropertyName("id"u8);
-            writer.WriteStringValue(Id);
-            writer.WritePropertyName("trigger"u8);
-            writer.WriteObjectValue(Trigger);
-            writer.WritePropertyName("actions"u8);
-            writer.WriteStartArray();
-            foreach (var item in Actions)
-            {
-                writer.WriteObjectValue(item);
-            }
-            writer.WriteEndArray();
-            writer.WriteEndObject();
-        }
     }
 }
