@@ -697,10 +697,9 @@ Console.WriteLine(translation.Text);
 ### Generate Speech with Text-to-Speech (TTS) models
 
 ```C# Snippet:SpeechGeneration
-string text = "Hello World";
 AudioSpeechOptions speechOptions = new()
 {
-    Input = text,
+    Input = "Hello World",
     DeploymentName = "my-tts-deployment", // tts-1 as model name for non-Azure OpenAI
     Voice = AudioSpeechVoice.Alloy,
     ResponseFormat = AudioSpeechOutputFormat.Mp3,
@@ -708,7 +707,6 @@ AudioSpeechOptions speechOptions = new()
 };
 
 Response<BinaryData> response = await client.GetAudioSpeechAsync(speechOptions);
-
 File.WriteAllBytes("myAudioFile.mp3", response.Value.ToArray());
 ```
 
