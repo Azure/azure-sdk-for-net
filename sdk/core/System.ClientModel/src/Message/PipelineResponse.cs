@@ -12,7 +12,7 @@ namespace System.ClientModel.Primitives;
 public abstract class PipelineResponse : IDisposable
 {
     // TODO(matell): The .NET Framework team plans to add BinaryData.Empty in dotnet/runtime#49670, and we can use it then.
-    private static readonly BinaryData s_emptyBinaryData = new(Array.Empty<byte>());
+    internal static readonly BinaryData s_emptyBinaryData = new(Array.Empty<byte>());
 
     private bool _isError = false;
 
@@ -30,35 +30,35 @@ public abstract class PipelineResponse : IDisposable
 
     protected abstract PipelineResponseHeaders GetHeadersCore();
 
-    /// <summary>
-    /// Gets the contents of HTTP response. Returns <c>null</c> for responses without content.
-    /// </summary>
-    public abstract Stream? ContentStream { get; set; }
+    public abstract bool TryGetContentStream(out Stream? stream);
+    protected internal abstract void SetContentStream(Stream? stream);
 
-    public virtual BinaryData Content
-    {
-        get
-        {
-            if (ContentStream == null)
-            {
-                return s_emptyBinaryData;
-            }
+    public abstract BinaryData Content { get; }
+    //{
+    //    get
+    //    {
+    //        if (ContentStream == null)
+    //        {
+    //            return s_emptyBinaryData;
+    //        }
 
-            if (!TryGetBufferedContent(out MemoryStream bufferedContent))
-            {
-                throw new InvalidOperationException($"The response is not buffered.");
-            }
+    //        if (!TryGetBufferedContent(out MemoryStream bufferedContent))
+    //        {
+    //            throw new InvalidOperationException($"The response is not buffered.");
+    //        }
 
-            if (bufferedContent.TryGetBuffer(out ArraySegment<byte> segment))
-            {
-                return new BinaryData(segment.AsMemory());
-            }
-            else
-            {
-                return new BinaryData(bufferedContent.ToArray());
-            }
-        }
-    }
+    //        if (bufferedContent.TryGetBuffer(out ArraySegment<byte> segment))
+    //        {
+    //            return new BinaryData(segment.AsMemory());
+    //        }
+    //        else
+    //        {
+    //            return new BinaryData(bufferedContent.ToArray());
+    //        }
+    //    }
+    //}
+
+    protected abstract void SetContent(BinaryData content);
 
     /// <summary>
     /// Indicates whether the status code of the returned response is considered
@@ -82,48 +82,48 @@ public abstract class PipelineResponse : IDisposable
     // Same value as Stream.CopyTo uses by default
     private const int DefaultCopyBufferSize = 81920;
 
-    internal bool TryGetBufferedContent(out MemoryStream bufferedContent)
-    {
-        if (ContentStream is MemoryStream content)
-        {
-            bufferedContent = content;
-            return true;
-        }
+    //internal bool TryGetBufferedContent(out MemoryStream bufferedContent)
+    //{
+    //    if (ContentStream is MemoryStream content)
+    //    {
+    //        bufferedContent = content;
+    //        return true;
+    //    }
 
-        bufferedContent = default!;
-        return false;
-    }
+    //    bufferedContent = default!;
+    //    return false;
+    //}
 
     internal void BufferContent(TimeSpan? timeout = default, CancellationTokenSource? cts = default)
     {
-        Stream? responseContentStream = ContentStream;
-        if (responseContentStream == null || TryGetBufferedContent(out _))
+        if (!TryGetContentStream(out Stream? contentStream) || contentStream is null)
         {
             // No need to buffer content.
             return;
         }
 
         MemoryStream bufferStream = new();
-        CopyTo(responseContentStream, bufferStream, timeout ?? NetworkTimeout, cts ?? new CancellationTokenSource());
-        responseContentStream.Dispose();
+        CopyTo(contentStream, bufferStream, timeout ?? NetworkTimeout, cts ?? new CancellationTokenSource());
+        contentStream.Dispose();
         bufferStream.Position = 0;
-        ContentStream = bufferStream;
+
+        SetContent(BinaryData.FromStream(bufferStream));
     }
 
     internal async Task BufferContentAsync(TimeSpan? timeout = default, CancellationTokenSource? cts = default)
     {
-        Stream? responseContentStream = ContentStream;
-        if (responseContentStream == null || TryGetBufferedContent(out _))
+        if (!TryGetContentStream(out Stream? contentStream) || contentStream is null)
         {
             // No need to buffer content.
             return;
         }
 
         MemoryStream bufferStream = new();
-        await CopyToAsync(responseContentStream, bufferStream, timeout ?? NetworkTimeout, cts ?? new CancellationTokenSource()).ConfigureAwait(false);
-        responseContentStream.Dispose();
+        await CopyToAsync(contentStream, bufferStream, timeout ?? NetworkTimeout, cts ?? new CancellationTokenSource()).ConfigureAwait(false);
+        contentStream.Dispose();
         bufferStream.Position = 0;
-        ContentStream = bufferStream;
+
+        SetContent(BinaryData.FromStream(bufferStream));
     }
 
     private static async Task CopyToAsync(Stream source, Stream destination, TimeSpan timeout, CancellationTokenSource cancellationTokenSource)
@@ -137,7 +137,8 @@ public abstract class PipelineResponse : IDisposable
 #pragma warning disable CA1835 // ReadAsync(Memory<>) overload is not available in all targets
                 int bytesRead = await source.ReadAsync(buffer, 0, buffer.Length, cancellationTokenSource.Token).ConfigureAwait(false);
 #pragma warning restore // ReadAsync(Memory<>) overload is not available in all targets
-                if (bytesRead == 0) break;
+                if (bytesRead == 0)
+                    break;
                 await destination.WriteAsync(new ReadOnlyMemory<byte>(buffer, 0, bytesRead), cancellationTokenSource.Token).ConfigureAwait(false);
             }
         }

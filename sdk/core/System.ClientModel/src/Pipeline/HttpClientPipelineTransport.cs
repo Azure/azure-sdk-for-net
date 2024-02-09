@@ -159,7 +159,7 @@ public partial class HttpClientPipelineTransport : PipelineTransport, IDisposabl
         // to override these default transport values, they can do so in pipeline policies.
         if (contentStream is not null)
         {
-            message.Response.ContentStream = contentStream;
+            message.Response.SetContentStream(contentStream);
         }
     }
 

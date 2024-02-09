@@ -20,6 +20,7 @@ public partial class HttpClientPipelineTransport
         private readonly HttpContent _httpResponseContent;
 
         private Stream? _contentStream;
+        private BinaryData? _bufferedContent;
 
         private bool _disposed;
 
@@ -37,16 +38,61 @@ public partial class HttpClientPipelineTransport
         protected override PipelineResponseHeaders GetHeadersCore()
             => new HttpClientResponseHeaders(_httpResponse, _httpResponseContent);
 
-        public override Stream? ContentStream
+        public override bool TryGetContentStream(out Stream? stream)
         {
-            get => _contentStream;
-            set
-            {
-                // Make sure we don't dispose the content if the stream was replaced
-                _httpResponse.Content = null;
+            stream = _contentStream;
+            return _contentStream is not null;
+        }
 
-                _contentStream = value;
+        protected internal override void SetContentStream(Stream? stream)
+        {
+            // Make sure we don't dispose the content if the stream was replaced
+            _httpResponse.Content = null;
+
+            _contentStream = stream;
+
+            // Invalidate any cached content
+            _bufferedContent = null;
+        }
+
+        public override BinaryData Content
+        {
+            get
+            {
+                if (_bufferedContent is not null)
+                {
+                    return _bufferedContent;
+                }
+
+                if (_contentStream == null)
+                {
+                    return s_emptyBinaryData;
+                }
+
+                if (_contentStream is not MemoryStream memoryStream)
+                {
+                    throw new InvalidOperationException($"The response is not buffered.");
+                }
+
+                if (memoryStream.TryGetBuffer(out ArraySegment<byte> segment))
+                {
+                    _bufferedContent = new BinaryData(segment.AsMemory());
+                }
+                else
+                {
+                    _bufferedContent = new BinaryData(memoryStream.ToArray());
+                }
+
+                // Note: Call to Content will transition to "buffered" state if
+                // source stream is a MemoryStream.  This supports mocking.
+                _contentStream = null;
+                return _bufferedContent;
             }
+        }
+
+        protected override void SetContent(BinaryData content)
+        {
+            _bufferedContent = content;
         }
 
         #region IDisposable
@@ -62,37 +108,12 @@ public partial class HttpClientPipelineTransport
         {
             if (disposing && !_disposed)
             {
-                var httpResponse = _httpResponse;
+                HttpResponseMessage httpResponse = _httpResponse;
                 httpResponse?.Dispose();
 
-                // Some notes on this:
-                //
-                // 1. If the content is buffered, we want it to remain available to the
-                // client for model deserialization and in case the end user of the
-                // client calls OutputMessage.GetRawResponse. So, we don't dispose it.
-                //
-                // If the content is buffered, we assume that the entity that did the
-                // buffering took responsibility for disposing the network stream.
-                //
-                // 2. If the content is not buffered, we dispose it so that we don't leave
-                // a network connection open.
-                //
-                // One tricky piece here is that in some cases, we may not have buffered
-                // the content because we  wanted to pass the live network stream out of
-                // the client method and back to the end-user caller of the client e.g.
-                // for a streaming API.  If the latter is the case, the client should have
-                // called the HttpMessage.ExtractResponseContent method to obtain a reference
-                // to the network stream, and the response content was replaced by a stream
-                // that we are ok to dispose here.  In this case, the network stream is
-                // not disposed, because the entity that replaced the response content
-                // intentionally left the network stream undisposed.
-
-                var contentStream = _contentStream;
-                if (contentStream is not null && !TryGetBufferedContent(out _))
-                {
-                    contentStream?.Dispose();
-                    _contentStream = null;
-                }
+                Stream? contentStream = _contentStream;
+                contentStream?.Dispose();
+                _contentStream = null;
 
                 _disposed = true;
             }

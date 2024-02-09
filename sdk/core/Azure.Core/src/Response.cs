@@ -18,23 +18,51 @@ namespace Azure
     public abstract class Response : PipelineResponse
 #pragma warning restore AZC0012 // Avoid single word type names
     {
+        // TODO(matell): The .NET Framework team plans to add BinaryData.Empty in dotnet/runtime#49670, and we can use it then.
+        private static readonly BinaryData s_emptyBinaryData = new(Array.Empty<byte>());
+
         /// <summary>
         /// Gets the client request id that was sent to the server as <c>x-ms-client-request-id</c> headers.
         /// </summary>
         public abstract string ClientRequestId { get; set; }
 
         /// <summary>
+        /// Gets the contents of HTTP response. Returns <c>null</c> for responses without content.
+        /// </summary>
+        public abstract Stream? ContentStream { get; set; }
+
+        /// <summary>
+        /// TBD.
+        /// </summary>
+        public override BinaryData Content
+        {
+            get
+            {
+                if (ContentStream == null)
+                {
+                    return s_emptyBinaryData;
+                }
+
+                if (ContentStream is not MemoryStream bufferedContent)
+                {
+                    throw new InvalidOperationException($"The response is not buffered.");
+                }
+
+                if (bufferedContent.TryGetBuffer(out ArraySegment<byte> segment))
+                {
+                    return new BinaryData(segment.AsMemory());
+                }
+                else
+                {
+                    return new BinaryData(bufferedContent.ToArray());
+                }
+            }
+        }
+
+        /// <summary>
         /// Get the HTTP response headers.
         /// </summary>
         public new virtual ResponseHeaders Headers => new ResponseHeaders(this);
-
-        /// <summary>
-        /// Gets the contents of HTTP response, if it is available.
-        /// </summary>
-        /// <remarks>
-        /// Throws <see cref="InvalidOperationException"/> when <see cref="PipelineResponse.ContentStream"/> is not a <see cref="MemoryStream"/>.
-        /// </remarks>
-        public new virtual BinaryData Content => base.Content;
 
         /// <summary>
         /// TBD.

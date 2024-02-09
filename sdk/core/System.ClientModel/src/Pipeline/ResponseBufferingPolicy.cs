@@ -64,9 +64,8 @@ public class ResponseBufferingPolicy : PipelinePolicy
         message.AssertResponse();
         message.Response!.NetworkTimeout = invocationNetworkTimeout;
 
-        Stream? responseContentStream = message.Response!.ContentStream;
-        if (responseContentStream is null ||
-            message.Response.TryGetBufferedContent(out var _))
+        if (!message.Response.TryGetContentStream(out Stream? responseContentStream) ||
+            responseContentStream is null)
         {
             // There is either no content on the response, or the content has already
             // been buffered.
@@ -79,7 +78,8 @@ public class ResponseBufferingPolicy : PipelinePolicy
             // If applicable, wrap it in a read-timeout stream.
             if (invocationNetworkTimeout != Timeout.InfiniteTimeSpan)
             {
-                message.Response.ContentStream = new ReadTimeoutStream(responseContentStream, invocationNetworkTimeout);
+                Stream readTimeoutStream = new ReadTimeoutStream(responseContentStream, invocationNetworkTimeout);
+                message.Response.SetContentStream(readTimeoutStream);
             }
 
             return;
