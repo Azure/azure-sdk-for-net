@@ -317,8 +317,10 @@ namespace Azure.Core
         public static Azure.Core.AzureLocation CentralUS { get { throw null; } }
         public static Azure.Core.AzureLocation ChinaEast { get { throw null; } }
         public static Azure.Core.AzureLocation ChinaEast2 { get { throw null; } }
+        public static Azure.Core.AzureLocation ChinaEast3 { get { throw null; } }
         public static Azure.Core.AzureLocation ChinaNorth { get { throw null; } }
         public static Azure.Core.AzureLocation ChinaNorth2 { get { throw null; } }
+        public static Azure.Core.AzureLocation ChinaNorth3 { get { throw null; } }
         public string? DisplayName { get { throw null; } }
         public static Azure.Core.AzureLocation EastAsia { get { throw null; } }
         public static Azure.Core.AzureLocation EastUS { get { throw null; } }
@@ -329,6 +331,8 @@ namespace Azure.Core
         public static Azure.Core.AzureLocation GermanyNorth { get { throw null; } }
         public static Azure.Core.AzureLocation GermanyNorthEast { get { throw null; } }
         public static Azure.Core.AzureLocation GermanyWestCentral { get { throw null; } }
+        public static Azure.Core.AzureLocation IsraelCentral { get { throw null; } }
+        public static Azure.Core.AzureLocation ItalyNorth { get { throw null; } }
         public static Azure.Core.AzureLocation JapanEast { get { throw null; } }
         public static Azure.Core.AzureLocation JapanWest { get { throw null; } }
         public static Azure.Core.AzureLocation KoreaCentral { get { throw null; } }
@@ -338,6 +342,7 @@ namespace Azure.Core
         public static Azure.Core.AzureLocation NorthEurope { get { throw null; } }
         public static Azure.Core.AzureLocation NorwayEast { get { throw null; } }
         public static Azure.Core.AzureLocation NorwayWest { get { throw null; } }
+        public static Azure.Core.AzureLocation PolandCentral { get { throw null; } }
         public static Azure.Core.AzureLocation QatarCentral { get { throw null; } }
         public static Azure.Core.AzureLocation SouthAfricaNorth { get { throw null; } }
         public static Azure.Core.AzureLocation SouthAfricaWest { get { throw null; } }
@@ -345,6 +350,7 @@ namespace Azure.Core
         public static Azure.Core.AzureLocation SoutheastAsia { get { throw null; } }
         public static Azure.Core.AzureLocation SouthIndia { get { throw null; } }
         public static Azure.Core.AzureLocation SwedenCentral { get { throw null; } }
+        public static Azure.Core.AzureLocation SwedenSouth { get { throw null; } }
         public static Azure.Core.AzureLocation SwitzerlandNorth { get { throw null; } }
         public static Azure.Core.AzureLocation SwitzerlandWest { get { throw null; } }
         public static Azure.Core.AzureLocation UAECentral { get { throw null; } }
@@ -489,6 +495,7 @@ namespace Azure.Core
         public new Azure.Core.Request Request { get { throw null; } }
         public new Azure.Response Response { get { throw null; } set { } }
         public new Azure.Core.ResponseClassifier ResponseClassifier { get { throw null; } set { } }
+        public new Azure.Response? ExtractResponse() { throw null; }
         public System.IO.Stream? ExtractResponseContent() { throw null; }
         public void SetProperty(string name, object value) { }
         public bool TryGetProperty(string name, out object? value) { throw null; }

@@ -7,6 +7,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Net;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals;
+using Azure.Monitor.OpenTelemetry.Exporter.Internals.Platform;
 using Azure.Monitor.OpenTelemetry.Exporter.Models;
 using OpenTelemetry;
 using OpenTelemetry.Resources;
@@ -271,7 +272,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             var telemetryItems = TraceHelper.OtelToAzureMonitorTrace(new Batch<Activity>(new Activity[] { activity }, 1), null, "instrumentationKey", 1.0f);
             var telemetryItem = telemetryItems.FirstOrDefault();
 
-            Assert.False(telemetryItem?.Tags.TryGetValue(ContextTagKeys.AiLocationIp.ToString(),out _));
+            Assert.False(telemetryItem?.Tags.TryGetValue(ContextTagKeys.AiLocationIp.ToString(), out _));
         }
 
         [Fact]
@@ -406,6 +407,120 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             Assert.NotNull(requestData);
             Assert.Equal("displayname", requestData.Name);
             Assert.Equal(requestData.Name, telemetryItem?.Tags[ContextTagKeys.AiOperationName.ToString()]);
+        }
+
+        [Fact]
+        public void OTelResourceMetricTelemetryHasAllResourceAttributes()
+        {
+            try
+            {
+                Environment.SetEnvironmentVariable(EnvironmentVariableConstants.EXPORT_RESOURCE_METRIC, "true");
+                var instrumentationKey = "00000000-0000-0000-0000-000000000000";
+
+                var testAttributes = new Dictionary<string, object>
+                {
+                    {SemanticConventions.AttributeServiceName, "my-service" },
+                    {SemanticConventions.AttributeServiceNamespace, "my-namespace" },
+                    {SemanticConventions.AttributeServiceInstance, "my-instance" },
+                    {SemanticConventions.AttributeK8sDeployment, "my-deployment" },
+                    {SemanticConventions.AttributeK8sPod, "my-pod" },
+                    { "foo", "bar" }
+                };
+
+                using ActivitySource activitySource = new ActivitySource(ActivitySourceName);
+                using var activity = activitySource.StartActivity(
+                    ActivityName,
+                    ActivityKind.Server,
+                    null,
+                    startTime: DateTime.UtcNow);
+
+                Assert.NotNull(activity);
+
+                var resource = ResourceBuilder.CreateEmpty().AddAttributes(testAttributes).Build();
+                var azMonResource = resource.CreateAzureMonitorResource(instrumentationKey);
+
+                var telemetryItems = TraceHelper.OtelToAzureMonitorTrace(new Batch<Activity>(new Activity[] { activity }, 1), null, instrumentationKey, 1.0f);
+                var telemetryItem = telemetryItems.FirstOrDefault();
+
+                var monitorBase = telemetryItem?.Data;
+                var metricsData = monitorBase?.BaseData as MetricsData;
+
+                Assert.NotNull(metricsData?.Metrics);
+
+                var metricDataPoint = metricsData?.Metrics[0];
+                Assert.Equal("_OTELRESOURCE_", metricDataPoint?.Name);
+                Assert.Equal(0, metricDataPoint?.Value);
+
+                Assert.Equal(6, metricsData?.Properties.Count);
+
+                Assert.Equal("my-service", metricsData?.Properties[SemanticConventions.AttributeServiceName]);
+                Assert.Equal("my-namespace", metricsData?.Properties[SemanticConventions.AttributeServiceNamespace]);
+                Assert.Equal("my-instance", metricsData?.Properties[SemanticConventions.AttributeServiceInstance]);
+                Assert.Equal("my-deployment", metricsData?.Properties[SemanticConventions.AttributeK8sDeployment]);
+                Assert.Equal("my-pod", metricsData?.Properties[SemanticConventions.AttributeK8sPod]);
+                Assert.Equal("bar", metricsData?.Properties["foo"]);
+            }
+            catch (Exception)
+            {
+                Environment.SetEnvironmentVariable(EnvironmentVariableConstants.EXPORT_RESOURCE_METRIC, null);
+            }
+        }
+
+        [Fact]
+        public void OTelResourceMetricTimesAreDifferent()
+        {
+            try
+            {
+                Environment.SetEnvironmentVariable(EnvironmentVariableConstants.EXPORT_RESOURCE_METRIC, "true");
+                var instrumentationKey = "00000000-0000-0000-0000-000000000000";
+
+                var testAttributes = new Dictionary<string, object>
+                {
+                    { "foo", "bar" }
+                };
+
+                using ActivitySource activitySource = new ActivitySource(ActivitySourceName);
+                using var activity1 = activitySource.StartActivity(
+                    ActivityName,
+                    ActivityKind.Server,
+                    null,
+                    startTime: DateTime.UtcNow);
+
+                Assert.NotNull(activity1);
+
+                var resource = ResourceBuilder.CreateEmpty().AddAttributes(testAttributes).Build();
+                var azMonResource = resource.CreateAzureMonitorResource(instrumentationKey);
+
+                var telemetryItems = TraceHelper.OtelToAzureMonitorTrace(new Batch<Activity>(new Activity[] { activity1 }, 1), null, instrumentationKey, 1.0f);
+                var telemetryItem1 = telemetryItems.FirstOrDefault();
+
+                var monitorBase = telemetryItem1?.Data;
+                var metricsData = monitorBase?.BaseData as MetricsData;
+
+                Assert.NotNull(metricsData?.Metrics);
+
+                var metricDataPoint = metricsData?.Metrics[0];
+                Assert.Equal("_OTELRESOURCE_", metricDataPoint?.Name);
+                Assert.Equal(1, metricsData?.Properties.Count);
+                Assert.Equal("bar", metricsData?.Properties["foo"]);
+
+                using var activity2 = activitySource.StartActivity(
+                    ActivityName,
+                    ActivityKind.Server,
+                    null,
+                    startTime: DateTime.UtcNow);
+
+                Assert.NotNull(activity2);
+
+                telemetryItems = TraceHelper.OtelToAzureMonitorTrace(new Batch<Activity>(new Activity[] { activity2 }, 1), null, instrumentationKey, 1.0f);
+                var telemetryItem2 = telemetryItems.FirstOrDefault();
+
+                Assert.NotEqual(telemetryItem1?.Time, telemetryItem2?.Time);
+            }
+            catch (Exception)
+            {
+                Environment.SetEnvironmentVariable(EnvironmentVariableConstants.EXPORT_RESOURCE_METRIC, null);
+            }
         }
 
         /// <summary>

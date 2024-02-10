@@ -90,6 +90,16 @@ namespace Azure.ResourceManager.Sql
                 writer.WritePropertyName("requestedBackupStorageRedundancy"u8);
                 writer.WriteStringValue(RequestedBackupStorageRedundancy.Value.ToString());
             }
+            if (Optional.IsDefined(IsBackupImmutable))
+            {
+                writer.WritePropertyName("isBackupImmutable"u8);
+                writer.WriteBooleanValue(IsBackupImmutable.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(BackupStorageAccessTier))
+            {
+                writer.WritePropertyName("backupStorageAccessTier"u8);
+                writer.WriteStringValue(BackupStorageAccessTier.Value.ToString());
+            }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -141,6 +151,8 @@ namespace Azure.ResourceManager.Sql
             Optional<DateTimeOffset> backupExpirationTime = default;
             Optional<SqlBackupStorageRedundancy> backupStorageRedundancy = default;
             Optional<SqlBackupStorageRedundancy> requestedBackupStorageRedundancy = default;
+            Optional<bool> isBackupImmutable = default;
+            Optional<SqlBackupStorageAccessTier> backupStorageAccessTier = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -242,6 +254,24 @@ namespace Azure.ResourceManager.Sql
                             requestedBackupStorageRedundancy = new SqlBackupStorageRedundancy(property0.Value.GetString());
                             continue;
                         }
+                        if (property0.NameEquals("isBackupImmutable"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            isBackupImmutable = property0.Value.GetBoolean();
+                            continue;
+                        }
+                        if (property0.NameEquals("backupStorageAccessTier"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            backupStorageAccessTier = new SqlBackupStorageAccessTier(property0.Value.GetString());
+                            continue;
+                        }
                     }
                     continue;
                 }
@@ -251,7 +281,7 @@ namespace Azure.ResourceManager.Sql
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LongTermRetentionBackupData(id, name, type, systemData.Value, serverName.Value, Optional.ToNullable(serverCreateTime), databaseName.Value, Optional.ToNullable(databaseDeletionTime), Optional.ToNullable(backupTime), Optional.ToNullable(backupExpirationTime), Optional.ToNullable(backupStorageRedundancy), Optional.ToNullable(requestedBackupStorageRedundancy), serializedAdditionalRawData);
+            return new LongTermRetentionBackupData(id, name, type, systemData.Value, serverName.Value, Optional.ToNullable(serverCreateTime), databaseName.Value, Optional.ToNullable(databaseDeletionTime), Optional.ToNullable(backupTime), Optional.ToNullable(backupExpirationTime), Optional.ToNullable(backupStorageRedundancy), Optional.ToNullable(requestedBackupStorageRedundancy), Optional.ToNullable(isBackupImmutable), Optional.ToNullable(backupStorageAccessTier), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LongTermRetentionBackupData>.Write(ModelReaderWriterOptions options)

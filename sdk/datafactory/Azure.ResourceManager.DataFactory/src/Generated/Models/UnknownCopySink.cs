@@ -27,5 +27,10 @@ namespace Azure.ResourceManager.DataFactory.Models
         {
             CopySinkType = copySinkType ?? "Unknown";
         }
+
+        /// <summary> Initializes a new instance of <see cref="UnknownCopySink"/> for deserialization. </summary>
+        internal UnknownCopySink()
+        {
+        }
     }
 }

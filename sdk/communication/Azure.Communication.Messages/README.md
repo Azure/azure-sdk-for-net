@@ -39,14 +39,14 @@ MessageTemplateClient messageTemplateClient = new MessageTemplateClient(connecti
 
 ## Examples
 ### Send an Notification Message
-To send a notification message, call the `SendMessage` or `SendMessageAsync` function from the `NotificationMessagesClient`.
+To send a notification message, call the `Send` or `SendAsync` function from the `NotificationMessagesClient`.
 
 #### Send a text message
 ```C#
 // Create the recipient list, currently only one recipient is supported 
 var recipient = new List<string> { "<to-phone-number>" };
-var options = new SendMessageOptions("<channel-registration-id>", recipient, "Come on everyone, let's go for lunch together.");
-SendMessageResult result = await notificationMessagesClient.SendMessageAsync(options);
+var textContent = new = new TextNotificationContent(new Guid("<channel-registration-id>"), recipient, "Come on everyone, let's go for lunch together.");
+SendMessageResult result = await notificationMessagesClient.SendAsync(textContent);
 Console.WriteLine($"Message id: {result.Receipts[0].MessageId}");
 ```
 
@@ -57,8 +57,8 @@ var recipient = new List<string> { "<to-phone-number>" };
 string templateName = "sample_template";
 string templateLanguage = "en_us";
 var messageTemplate = new MessageTemplate(templateName, templateLanguage);
-var sendTemplateMessageOptions = new SendMessageOptions(channelRegistrationId, recipientList, messageTemplate);
-SendMessageResult result = await notificationMessagesClient.SendMessageAsync(sendTemplateMessageOptions);
+var templateContent = new TemplateNotificationContent(channelRegistrationId, recipientList, messageTemplate);
+SendMessageResult result = await notificationMessagesClient.SendAsync(templateContent);
 Console.WriteLine($"Message id: {result.Receipts[0].MessageId}");
 ```
 
@@ -67,8 +67,8 @@ Console.WriteLine($"Message id: {result.Receipts[0].MessageId}");
 // Create the recipient list, currently only one recipient is supported 
 var recipient = new List<string> { "<to-phone-number>" };
 var uri = new Uri("https://aka.ms/acsicon1");
-var sendMediaMessageOptions = new SendMessageOptions(channelRegistrationId, recipientList, uri);
-SendMessageResult result = await notificationMessagesClient.SendMessageAsync(sendMediaMessageOptions);
+var mediaContent = new MediaNotificationContent(channelRegistrationId, recipientList, uri);
+SendMessageResult result = await notificationMessagesClient.SendAsync(mediaContent);
 Console.WriteLine($"Message id: {result.Receipts[0].MessageId}");
 ```
 
@@ -101,14 +101,14 @@ This project has adopted the [Microsoft Open Source Code of Conduct][coc]. For m
 [source]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/communication/Azure.Communication.Messages/src
 [package]: https://www.nuget.org/packages/Azure.Communication.Messages
 [product_docs]: https://docs.microsoft.com/azure/communication-services/overview
-[nuget]: https://www.nuget.org.
+[nuget]: https://www.nuget.org
 [azure_sub]: https://azure.microsoft.com/free/dotnet/
 [communication_resource_docs]: https://docs.microsoft.com/azure/communication-services/quickstarts/create-communication-resource?tabs=windows&pivots=platform-azp
 [communication_resource_create_portal]:  https://docs.microsoft.com/azure/communication-services/quickstarts/create-communication-resource?tabs=windows&pivots=platform-azp
 [communication_resource_create_power_shell]: https://docs.microsoft.com/powershell/module/az.communication/new-azcommunicationservice
 [communication_resource_create_net]: https://docs.microsoft.com/azure/communication-services/quickstarts/create-communication-resource?tabs=windows&pivots=platform-net
-[azure_portal]: https://portal.azure.com.
+[azure_portal]: https://portal.azure.com
 [cla]: https://cla.microsoft.com
-[coc]: https://opensource.microsoft.com/codeofconduct/
-[coc_faq]: https://opensource.microsoft.com/codeofconduct/faq/
+[coc]: https://opensource.microsoft.com/codeofconduct
+[coc_faq]: https://opensource.microsoft.com/codeofconduct/faq
 [coc_contact]: mailto:opencode@microsoft.com

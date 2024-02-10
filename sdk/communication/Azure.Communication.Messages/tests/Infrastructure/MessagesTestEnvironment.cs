@@ -12,5 +12,7 @@ namespace Azure.Communication.Messages.Tests
     {
         public string SenderChannelRegistrationId => GetRecordedVariable("SENDER_CHANNEL_REGISTRATION_ID");
         public string RecipientIdentifier => GetRecordedVariable("RECIPIENT_IDENTIFIER");
+        public string MediaContentId => GetRecordedVariable("MEDIA_CONTENT_ID");
+        public string DownloadDestinationLocalPath => GetRecordedVariable("DOWNLOAD_DESTINATION_LOCAL_PATH");
     }
 }

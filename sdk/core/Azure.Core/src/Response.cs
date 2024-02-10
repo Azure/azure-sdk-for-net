@@ -26,7 +26,6 @@ namespace Azure
         /// <summary>
         /// Get the HTTP response headers.
         /// </summary>
-        // TODO: is is possible to not new-slot this?
         public new virtual ResponseHeaders Headers => new ResponseHeaders(this);
 
         /// <summary>

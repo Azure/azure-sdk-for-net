@@ -57,9 +57,9 @@ namespace Azure.Core.Sse
 
         public SseLine? TryReadLine()
         {
-            if (_reader.EndOfStream)
-                return null;
             string lineText = _reader.ReadLine();
+            if (lineText == null)
+                return null;
             if (lineText.Length == 0)
                 return SseLine.Empty;
             if (TryParseLine(lineText, out SseLine line))
@@ -70,9 +70,9 @@ namespace Azure.Core.Sse
         // TODO: we should support cancellation tokens, but StreamReader does not in NS2
         public async Task<SseLine?> TryReadLineAsync()
         {
-            if (_reader.EndOfStream)
-                return null;
             string lineText = await _reader.ReadLineAsync().ConfigureAwait(false);
+            if (lineText == null)
+                return null;
             if (lineText.Length == 0)
                 return SseLine.Empty;
             if (TryParseLine(lineText, out SseLine line))

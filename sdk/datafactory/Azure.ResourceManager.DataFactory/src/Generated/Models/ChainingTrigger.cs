@@ -49,6 +49,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             TriggerType = triggerType ?? "ChainingTrigger";
         }
 
+        /// <summary> Initializes a new instance of <see cref="ChainingTrigger"/> for deserialization. </summary>
+        internal ChainingTrigger()
+        {
+        }
+
         /// <summary> Pipeline for which runs are created when all upstream pipelines complete successfully. </summary>
         public TriggerPipelineReference Pipeline { get; set; }
         /// <summary> Upstream Pipelines. </summary>

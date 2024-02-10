@@ -46,6 +46,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             DatasetType = datasetType ?? "GreenplumTable";
         }
 
+        /// <summary> Initializes a new instance of <see cref="GreenplumTableDataset"/> for deserialization. </summary>
+        internal GreenplumTableDataset()
+        {
+        }
+
         /// <summary>
         /// This property will be retired. Please consider using schema + table properties instead.
         /// <para>

@@ -50,6 +50,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             LinkedServiceType = linkedServiceType ?? "AzureFunction";
         }
 
+        /// <summary> Initializes a new instance of <see cref="AzureFunctionLinkedService"/> for deserialization. </summary>
+        internal AzureFunctionLinkedService()
+        {
+        }
+
         /// <summary> The endpoint of the Azure Function App. URL will be in the format https://&lt;accountName&gt;.azurewebsites.net. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> FunctionAppUri { get; set; }
         /// <summary> Function or Host key for Azure Function App. </summary>

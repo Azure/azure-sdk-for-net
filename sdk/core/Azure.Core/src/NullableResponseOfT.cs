@@ -14,9 +14,10 @@ namespace Azure
     public abstract class NullableResponse<T> : ClientResult<T?>
 #pragma warning restore SA1649 // File name should match first type name
     {
+        private const string NoValue = "<null>";
+
         private readonly T? _value;
 
-        private const string NoValue = "<null>";
         internal static Response DefaultResponse = new Response.AzureCoreDefaultResponse();
 
         /// <summary>
@@ -44,18 +45,10 @@ namespace Azure
             _value = value;
         }
 
-        ///// <summary>
-        ///// Gets the value returned by the service. Accessing this property will throw if <see cref="HasValue"/> is false.
-        ///// </summary>
-        //public virtual T? Value => _value;
-
         /// <summary>
         /// Gets a value indicating whether the current instance has a non-null value.
         /// </summary>
         public virtual bool HasValue => _value != null;
-
-        private static Response ReplaceWithDefaultIfNull(Response? response)
-            => response ?? DefaultResponse;
 
         /// <summary>
         /// Returns the HTTP response returned by the service.
@@ -74,5 +67,8 @@ namespace Azure
         /// <inheritdoc />
         public override string ToString()
              => $"Status: {GetRawResponse()?.Status}, Value: {(HasValue ? Value : NoValue)}";
+
+        private static Response ReplaceWithDefaultIfNull(Response? response)
+            => response ?? DefaultResponse;
     }
 }

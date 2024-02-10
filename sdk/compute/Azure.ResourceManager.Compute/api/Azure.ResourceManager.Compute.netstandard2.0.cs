@@ -2321,8 +2321,8 @@ namespace Azure.ResourceManager.Compute
         public System.BinaryData Settings { get { throw null; } set { } }
         public bool? SuppressFailures { get { throw null; } set { } }
         public string TypeHandlerVersion { get { throw null; } set { } }
+        void global::System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.VirtualMachineScaleSetExtensionData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Compute.VirtualMachineScaleSetExtensionData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.VirtualMachineScaleSetExtensionData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.VirtualMachineScaleSetExtensionData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Compute.VirtualMachineScaleSetExtensionData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.VirtualMachineScaleSetExtensionData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.VirtualMachineScaleSetExtensionData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.VirtualMachineScaleSetExtensionData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }

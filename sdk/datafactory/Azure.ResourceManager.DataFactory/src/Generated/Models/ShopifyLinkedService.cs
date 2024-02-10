@@ -50,6 +50,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             LinkedServiceType = linkedServiceType ?? "Shopify";
         }
 
+        /// <summary> Initializes a new instance of <see cref="ShopifyLinkedService"/> for deserialization. </summary>
+        internal ShopifyLinkedService()
+        {
+        }
+
         /// <summary> The endpoint of the Shopify server. (i.e. mystore.myshopify.com). </summary>
         public DataFactoryElement<string> Host { get; set; }
         /// <summary> The API access token that can be used to access Shopify’s data. The token won't expire if it is offline mode. </summary>

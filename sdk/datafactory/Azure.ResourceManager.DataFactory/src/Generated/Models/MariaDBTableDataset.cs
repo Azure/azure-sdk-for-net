@@ -42,6 +42,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             DatasetType = datasetType ?? "MariaDBTable";
         }
 
+        /// <summary> Initializes a new instance of <see cref="MariaDBTableDataset"/> for deserialization. </summary>
+        internal MariaDBTableDataset()
+        {
+        }
+
         /// <summary> The table name. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> TableName { get; set; }
     }

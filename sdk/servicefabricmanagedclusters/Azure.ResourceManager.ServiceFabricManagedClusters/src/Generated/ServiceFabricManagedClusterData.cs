@@ -118,10 +118,15 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// <param name="serviceEndpoints"> Service endpoints for subnets in the cluster. </param>
         /// <param name="zonalUpdateMode"> Indicates the update mode for Cross Az clusters. </param>
         /// <param name="useCustomVnet"> For new clusters, this parameter indicates that it uses Bring your own VNet, but the subnet is specified at node type level; and for such clusters, the subnetId property is required for node types. </param>
-        /// <param name="publicIPPrefixId"> Specify the resource id of a public IP prefix that the load balancer will allocate a public IP address from. Only supports IPv4. </param>
+        /// <param name="publicIPPrefixId"> Specify the resource id of a public IPv4 prefix that the load balancer will allocate a public IPv4 address from. This setting cannot be changed once the cluster is created. </param>
+        /// <param name="publicIPv6PrefixId"> Specify the resource id of a public IPv6 prefix that the load balancer will allocate a public IPv6 address from. This setting cannot be changed once the cluster is created. </param>
+        /// <param name="ddosProtectionPlanId"> Specify the resource id of a DDoS network protection plan that will be associated with the virtual network of the cluster. </param>
+        /// <param name="upgradeDescription"> The policy to use when upgrading the cluster. </param>
+        /// <param name="httpGatewayTokenAuthConnectionPort"> The port used for token-auth based HTTPS connections to the cluster. Cannot be set to the same port as HttpGatewayEndpoint. </param>
+        /// <param name="isHttpGatewayExclusiveAuthModeEnabled"> If true, token-based authentication is not allowed on the HttpGatewayEndpoint. This is required to support TLS versions 1.3 and above. If token-based authentication is used, HttpGatewayTokenAuthConnectionPort must be defined. </param>
         /// <param name="etag"> Azure resource etag. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ServiceFabricManagedClusterData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ServiceFabricManagedClustersSku sku, string dnsName, string fqdn, IPAddress ipv4Address, Guid? clusterId, ServiceFabricManagedClusterState? clusterState, IReadOnlyList<BinaryData> clusterCertificateThumbprints, int? clientConnectionPort, int? httpGatewayConnectionPort, string adminUserName, string adminPassword, IList<ManagedClusterLoadBalancingRule> loadBalancingRules, bool? isRdpAccessAllowed, IList<ServiceFabricManagedNetworkSecurityRule> networkSecurityRules, IList<ManagedClusterClientCertificate> clients, ManagedClusterAzureActiveDirectory azureActiveDirectory, IList<ClusterFabricSettingsSection> fabricSettings, ServiceFabricManagedResourceProvisioningState? provisioningState, string clusterCodeVersion, ManagedClusterUpgradeMode? clusterUpgradeMode, ManagedClusterUpgradeCadence? clusterUpgradeCadence, IList<ManagedClusterAddOnFeature> addOnFeatures, bool? isAutoOSUpgradeEnabled, bool? hasZoneResiliency, ApplicationTypeVersionsCleanupPolicy applicationTypeVersionsCleanupPolicy, bool? isIPv6Enabled, string subnetId, IList<ManagedClusterIPTag> ipTags, IPAddress ipv6Address, bool? isServicePublicIPEnabled, IList<ManagedClusterSubnet> auxiliarySubnets, IList<ManagedClusterServiceEndpoint> serviceEndpoints, ZonalUpdateMode? zonalUpdateMode, bool? useCustomVnet, ResourceIdentifier publicIPPrefixId, ETag? etag, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal ServiceFabricManagedClusterData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ServiceFabricManagedClustersSku sku, string dnsName, string fqdn, IPAddress ipv4Address, Guid? clusterId, ServiceFabricManagedClusterState? clusterState, IReadOnlyList<BinaryData> clusterCertificateThumbprints, int? clientConnectionPort, int? httpGatewayConnectionPort, string adminUserName, string adminPassword, IList<ManagedClusterLoadBalancingRule> loadBalancingRules, bool? isRdpAccessAllowed, IList<ServiceFabricManagedNetworkSecurityRule> networkSecurityRules, IList<ManagedClusterClientCertificate> clients, ManagedClusterAzureActiveDirectory azureActiveDirectory, IList<ClusterFabricSettingsSection> fabricSettings, ServiceFabricManagedResourceProvisioningState? provisioningState, string clusterCodeVersion, ManagedClusterUpgradeMode? clusterUpgradeMode, ManagedClusterUpgradeCadence? clusterUpgradeCadence, IList<ManagedClusterAddOnFeature> addOnFeatures, bool? isAutoOSUpgradeEnabled, bool? hasZoneResiliency, ApplicationTypeVersionsCleanupPolicy applicationTypeVersionsCleanupPolicy, bool? isIPv6Enabled, string subnetId, IList<ManagedClusterIPTag> ipTags, IPAddress ipv6Address, bool? isServicePublicIPEnabled, IList<ManagedClusterSubnet> auxiliarySubnets, IList<ManagedClusterServiceEndpoint> serviceEndpoints, ZonalUpdateMode? zonalUpdateMode, bool? useCustomVnet, ResourceIdentifier publicIPPrefixId, ResourceIdentifier publicIPv6PrefixId, ResourceIdentifier ddosProtectionPlanId, ManagedClusterUpgradePolicy upgradeDescription, int? httpGatewayTokenAuthConnectionPort, bool? isHttpGatewayExclusiveAuthModeEnabled, ETag? etag, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             Sku = sku;
             DnsName = dnsName;
@@ -158,6 +163,11 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
             ZonalUpdateMode = zonalUpdateMode;
             UseCustomVnet = useCustomVnet;
             PublicIPPrefixId = publicIPPrefixId;
+            PublicIPv6PrefixId = publicIPv6PrefixId;
+            DdosProtectionPlanId = ddosProtectionPlanId;
+            UpgradeDescription = upgradeDescription;
+            HttpGatewayTokenAuthConnectionPort = httpGatewayTokenAuthConnectionPort;
+            IsHttpGatewayExclusiveAuthModeEnabled = isHttpGatewayExclusiveAuthModeEnabled;
             ETag = etag;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
@@ -287,8 +297,18 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         public ZonalUpdateMode? ZonalUpdateMode { get; set; }
         /// <summary> For new clusters, this parameter indicates that it uses Bring your own VNet, but the subnet is specified at node type level; and for such clusters, the subnetId property is required for node types. </summary>
         public bool? UseCustomVnet { get; set; }
-        /// <summary> Specify the resource id of a public IP prefix that the load balancer will allocate a public IP address from. Only supports IPv4. </summary>
+        /// <summary> Specify the resource id of a public IPv4 prefix that the load balancer will allocate a public IPv4 address from. This setting cannot be changed once the cluster is created. </summary>
         public ResourceIdentifier PublicIPPrefixId { get; set; }
+        /// <summary> Specify the resource id of a public IPv6 prefix that the load balancer will allocate a public IPv6 address from. This setting cannot be changed once the cluster is created. </summary>
+        public ResourceIdentifier PublicIPv6PrefixId { get; set; }
+        /// <summary> Specify the resource id of a DDoS network protection plan that will be associated with the virtual network of the cluster. </summary>
+        public ResourceIdentifier DdosProtectionPlanId { get; set; }
+        /// <summary> The policy to use when upgrading the cluster. </summary>
+        public ManagedClusterUpgradePolicy UpgradeDescription { get; set; }
+        /// <summary> The port used for token-auth based HTTPS connections to the cluster. Cannot be set to the same port as HttpGatewayEndpoint. </summary>
+        public int? HttpGatewayTokenAuthConnectionPort { get; set; }
+        /// <summary> If true, token-based authentication is not allowed on the HttpGatewayEndpoint. This is required to support TLS versions 1.3 and above. If token-based authentication is used, HttpGatewayTokenAuthConnectionPort must be defined. </summary>
+        public bool? IsHttpGatewayExclusiveAuthModeEnabled { get; set; }
         /// <summary> Azure resource etag. </summary>
         public ETag? ETag { get; }
     }
