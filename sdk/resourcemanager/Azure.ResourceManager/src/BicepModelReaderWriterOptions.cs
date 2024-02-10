@@ -21,6 +21,6 @@ namespace Azure.ResourceManager
         /// <summary>
         ///
         /// </summary>
-        public Dictionary<object, Dictionary<string, object>> ParameterOverrides { get; } = new();
+        public Dictionary<object, Dictionary<string, string>> ParameterOverrides { get; } = new();
     }
 }
