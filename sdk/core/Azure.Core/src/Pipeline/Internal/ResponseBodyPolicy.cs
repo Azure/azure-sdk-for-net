@@ -50,6 +50,8 @@ namespace Azure.Core.Pipeline
                 {
                     _policy.Process(message, processor, -1);
                 }
+
+                message.Response.NetworkTimeout = invocationNetworkTimeout;
             }
             catch (TaskCanceledException e)
             {

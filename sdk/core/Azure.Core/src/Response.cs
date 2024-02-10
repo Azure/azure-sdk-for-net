@@ -82,7 +82,7 @@ namespace Azure
             }
         }
 
-        internal TimeSpan NetworkTimeout {  get; set; }
+        internal TimeSpan NetworkTimeout { get; set; }
 
         internal HttpMessageSanitizer Sanitizer { get; set; } = HttpMessageSanitizer.Default;
 

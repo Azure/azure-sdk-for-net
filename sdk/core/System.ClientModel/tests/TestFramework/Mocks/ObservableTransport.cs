@@ -150,12 +150,12 @@ public class ObservableTransport : PipelineTransport
             throw new NotImplementedException();
         }
 
-        protected override BinaryData ReadContent(CancellationToken cancellationToken = default)
+        public override BinaryData ReadContent(CancellationToken cancellationToken = default)
         {
             throw new NotImplementedException();
         }
 
-        protected override ValueTask<BinaryData> ReadContentAsync(CancellationToken cancellationToken = default)
+        public override ValueTask<BinaryData> ReadContentAsync(CancellationToken cancellationToken = default)
         {
             throw new NotImplementedException();
         }
