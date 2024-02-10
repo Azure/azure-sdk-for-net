@@ -213,8 +213,8 @@ namespace System.ClientModel.Primitives
         public abstract int Status { get; }
         public abstract void Dispose();
         protected abstract System.ClientModel.Primitives.PipelineResponseHeaders GetHeadersCore();
-        protected internal abstract System.BinaryData ReadContent(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
-        protected internal abstract System.Threading.Tasks.ValueTask<System.BinaryData> ReadContentAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        public abstract System.BinaryData ReadContent(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        public abstract System.Threading.Tasks.ValueTask<System.BinaryData> ReadContentAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
         protected virtual void SetIsErrorCore(bool isError) { }
     }
     public abstract partial class PipelineResponseHeaders : System.Collections.Generic.IEnumerable<System.Collections.Generic.KeyValuePair<string, string>>, System.Collections.IEnumerable

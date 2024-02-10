@@ -1,11 +1,14 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Net.Http;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace Azure.Core.Pipeline
 {
@@ -41,7 +44,13 @@ namespace Azure.Core.Pipeline
                 set => _pipelineResponse.ContentStream = value;
             }
 
-            // TODO: Implement Content and ReadContent
+            public override BinaryData Content => _pipelineResponse.Content;
+
+            public override BinaryData ReadContent(CancellationToken cancellationToken = default)
+                => _pipelineResponse.ReadContent(cancellationToken);
+
+            public override async ValueTask<BinaryData> ReadContentAsync(CancellationToken cancellationToken = default)
+                => await base.ReadContentAsync(cancellationToken).ConfigureAwait(false);
 
             protected internal override bool ContainsHeader(string name)
                 => _pipelineResponse.Headers.TryGetValue(name, out _);
@@ -66,5 +75,48 @@ namespace Azure.Core.Pipeline
                 response?.Dispose();
             }
         }
+
+        //// Derived type that lets us call protected methods.
+        //private class AzureCorePipelineResponse : PipelineResponse
+        //{
+        //    private readonly PipelineResponse _pipelineResponse;
+
+        //    public AzureCorePipelineResponse(PipelineResponse response)
+        //    {
+        //        _pipelineResponse = response;
+        //    }
+
+        //    public override int Status => _pipelineResponse.Status;
+
+        //    public override string ReasonPhrase => _pipelineResponse.ReasonPhrase;
+
+        //    public override Stream? ContentStream
+        //    {
+        //        get => _pipelineResponse.ContentStream;
+        //        set => _pipelineResponse.ContentStream = value;
+        //    }
+
+        //    public override BinaryData Content => _pipelineResponse.Content;
+
+        //    public override void Dispose()
+        //    {
+        //        _pipelineResponse?.Dispose();
+        //    }
+
+        //    protected override PipelineResponseHeaders GetHeadersCore()
+        //    {
+        //        _pipelineResponse.Get
+        //    }
+
+        //    protected override BinaryData ReadContent(CancellationToken cancellationToken = default)
+        //    {
+        //        throw new NotImplementedException();
+        //    }
+
+        //    protected override ValueTask<BinaryData> ReadContentAsync(CancellationToken cancellationToken = default)
+        //    {
+        //        throw new NotImplementedException();
+        //    }
+        //}
     }
 }

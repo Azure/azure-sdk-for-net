@@ -105,10 +105,10 @@ public partial class HttpClientPipelineTransport
             }
         }
 
-        protected internal override BinaryData ReadContent(CancellationToken cancellationToken = default)
+        public override BinaryData ReadContent(CancellationToken cancellationToken = default)
             => ReadContentSyncOrAsync(cancellationToken, async: false).EnsureCompleted();
 
-        protected internal override async ValueTask<BinaryData> ReadContentAsync(CancellationToken cancellationToken = default)
+        public override async ValueTask<BinaryData> ReadContentAsync(CancellationToken cancellationToken = default)
             => await ReadContentSyncOrAsync(cancellationToken, async: true).ConfigureAwait(false);
 
         private async ValueTask<BinaryData> ReadContentSyncOrAsync(CancellationToken cancellationToken, bool async)

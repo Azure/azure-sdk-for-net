@@ -10,6 +10,7 @@ using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
+using Azure.Core.Buffers;
 
 namespace Azure
 {
@@ -80,6 +81,8 @@ namespace Azure
                 }
             }
         }
+
+        internal TimeSpan NetworkTimeout {  get; set; }
 
         internal HttpMessageSanitizer Sanitizer { get; set; } = HttpMessageSanitizer.Default;
 
@@ -163,9 +166,25 @@ namespace Azure
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
         /// <exception cref="NotImplementedException"></exception>
-        protected override BinaryData ReadContent(CancellationToken cancellationToken = default)
+        public override BinaryData ReadContent(CancellationToken cancellationToken = default)
         {
-            throw new InvalidOperationException($"Derived type has not provided an implementation of {nameof(ReadContent)}");
+            // Derived types should provide an implementation that allows caching
+            // to improve performance.
+            if (ContentStream is null)
+            {
+                return s_EmptyBinaryData;
+            }
+
+            MemoryStream bufferStream = new();
+
+            Stream? contentStream = ContentStream;
+            contentStream.CopyTo(bufferStream, NetworkTimeout, cancellationToken);
+            contentStream.Dispose();
+
+            bufferStream.Position = 0;
+            ContentStream = bufferStream;
+
+            return BinaryData.FromStream(bufferStream);
         }
 
         /// <summary>
@@ -174,9 +193,25 @@ namespace Azure
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
         /// <exception cref="NotImplementedException"></exception>
-        protected override ValueTask<BinaryData> ReadContentAsync(CancellationToken cancellationToken = default)
+        public override async ValueTask<BinaryData> ReadContentAsync(CancellationToken cancellationToken = default)
         {
-            throw new InvalidOperationException($"Derived type has not provided an implementation of {nameof(ReadContentAsync)}");
+            // Derived types should provide an implementation that allows caching
+            // to improve performance.
+            if (ContentStream is null)
+            {
+                return s_EmptyBinaryData;
+            }
+
+            MemoryStream bufferStream = new();
+
+            Stream? contentStream = ContentStream;
+            await contentStream.CopyToAsync(bufferStream, NetworkTimeout, cancellationToken).ConfigureAwait(false);
+            contentStream.Dispose();
+
+            bufferStream.Position = 0;
+            ContentStream = bufferStream;
+
+            return BinaryData.FromStream(bufferStream);
         }
 
         private class BufferedContentStream : MemoryStream { }
@@ -238,12 +273,12 @@ namespace Azure
                 throw new NotSupportedException(DefaultMessage);
             }
 
-            protected override BinaryData ReadContent(CancellationToken cancellationToken = default)
+            public override BinaryData ReadContent(CancellationToken cancellationToken = default)
             {
                 throw new NotSupportedException(DefaultMessage);
             }
 
-            protected override ValueTask<BinaryData> ReadContentAsync(CancellationToken cancellationToken = default)
+            public override ValueTask<BinaryData> ReadContentAsync(CancellationToken cancellationToken = default)
             {
                 throw new NotSupportedException(DefaultMessage);
             }

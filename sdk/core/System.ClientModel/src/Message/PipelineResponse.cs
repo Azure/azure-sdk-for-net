@@ -35,9 +35,9 @@ public abstract class PipelineResponse : IDisposable
 
     public abstract BinaryData Content { get; }
 
-    protected internal abstract BinaryData ReadContent(CancellationToken cancellationToken = default);
+    public abstract BinaryData ReadContent(CancellationToken cancellationToken = default);
 
-    protected internal abstract ValueTask<BinaryData> ReadContentAsync(CancellationToken cancellationToken = default);
+    public abstract ValueTask<BinaryData> ReadContentAsync(CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Indicates whether the status code of the returned response is considered
