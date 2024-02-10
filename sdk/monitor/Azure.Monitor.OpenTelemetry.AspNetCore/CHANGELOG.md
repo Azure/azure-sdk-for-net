@@ -1,11 +1,12 @@
 # Release History
 
-## 1.2.0-beta.1 (Unreleased)
+## 1.2.0-beta.1 (2024-02-09)
 
 ### Features Added
 
 * Added Azure Container Apps resource detector.
   ([#41803](https://github.com/Azure/azure-sdk-for-net/pull/41803))
+
 * Added `Azure.Monitor.OpenTelemetry.LiveMetrics`, enabling the sending of [live
   metrics
   data](https://learn.microsoft.com/azure/azure-monitor/app/live-stream).
@@ -18,10 +19,6 @@
   by setting `OTEL_DOTNET_AZURE_MONITOR_EXPERIMENTAL_ENABLE_LOG_SAMPLING`
   environment variable to `true`.
   ([#41665](https://github.com/Azure/azure-sdk-for-net/pull/41665))
-
-### Breaking Changes
-
-### Bugs Fixed
 
 ### Other Changes
 
