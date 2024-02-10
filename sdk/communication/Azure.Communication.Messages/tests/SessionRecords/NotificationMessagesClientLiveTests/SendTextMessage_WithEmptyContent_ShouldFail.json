@@ -1,0 +1,57 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://sanitized.communication.azure.com/messages/notifications:send?api-version=2024-02-01",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "118",
+        "Content-Type": "application/json",
+        "Repeatability-First-Sent": "Sanitized",
+        "Repeatability-Request-ID": "Sanitized",
+        "traceparent": "00-7538d6a7b807555d05a20dc835b65f36-8c408d369ab8125e-00",
+        "User-Agent": "azsdk-net-Communication.Messages/1.0.0-alpha.20240209.1 (.NET 7.0.15; Microsoft Windows 10.0.22631)",
+        "x-ms-client-request-id": "b7449a8b792b61e3bc4f388f27fb52b9",
+        "x-ms-content-sha256": "Sanitized",
+        "x-ms-date": "Fri, 09 Feb 2024 22:12:09 GMT",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "content": "",
+        "channelRegistrationId": "77ffd898-ec44-42cd-b560-57a8903d05c7",
+        "to": [
+          "\u002B16041234567"
+        ],
+        "kind": "text"
+      },
+      "StatusCode": 400,
+      "ResponseHeaders": {
+        "api-supported-versions": "2023-08-24-preview, 2024-02-01",
+        "Connection": "keep-alive",
+        "Content-Type": "application/json",
+        "Date": "Fri, 09 Feb 2024 22:12:12 GMT",
+        "MS-CV": "bmJ0fNORJU296B43fs9PrA.0",
+        "Repeatability-Result": "accepted",
+        "Request-Context": "appId=",
+        "Strict-Transport-Security": "max-age=2592000",
+        "Transfer-Encoding": "chunked",
+        "x-azure-ref": "20240209T221212Z-pfcn9br3b11kd2xessn2xp84ns000000030000000001kwhr",
+        "X-Cache": "CONFIG_NOCACHE",
+        "X-Processing-Time": "69ms"
+      },
+      "ResponseBody": {
+        "error": {
+          "code": "BadRequest",
+          "message": "A non-empty \u0022Content\u0022 is required when message type is Text."
+        }
+      }
+    }
+  ],
+  "Variables": {
+    "COMMUNICATION_LIVETEST_DYNAMIC_CONNECTION_STRING": "endpoint=https://sanitized.communication.azure.com/;accesskey=Kg==",
+    "RandomSeed": "789368965",
+    "RECIPIENT_IDENTIFIER": "\u002B16041234567",
+    "SENDER_CHANNEL_REGISTRATION_ID": "77ffd898-ec44-42cd-b560-57a8903d05c7"
+  }
+}

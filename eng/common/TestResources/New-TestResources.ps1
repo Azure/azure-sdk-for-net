@@ -67,7 +67,7 @@ param (
     [string] $Environment = 'AzureCloud',
 
     [Parameter()]
-    [ValidateSet('test', 'perf')]
+    [ValidateSet('test', 'perf', 'stress-test')]
     [string] $ResourceType = 'test',
 
     [Parameter()]
