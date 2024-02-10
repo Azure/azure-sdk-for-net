@@ -117,7 +117,7 @@
     <PackageReference Update="Microsoft.Identity.Client.Broker" Version="4.56.0" />
 
     <!-- TODO: Make sure this package is arch-board approved -->
-    <PackageReference Update="System.IdentityModel.Tokens.Jwt" Version="6.5.0" />
+    <PackageReference Update="System.IdentityModel.Tokens.Jwt" Version="6.35.0" />
 
   </ItemGroup>
 
