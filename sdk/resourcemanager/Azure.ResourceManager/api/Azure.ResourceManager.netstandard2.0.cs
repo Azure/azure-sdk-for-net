@@ -124,7 +124,7 @@ namespace Azure.ResourceManager
     public partial class BicepModelReaderWriterOptions : System.ClientModel.Primitives.ModelReaderWriterOptions
     {
         public BicepModelReaderWriterOptions() : base (default(string)) { }
-        public System.Collections.Generic.Dictionary<object, System.Collections.Generic.Dictionary<string, string>> ParameterOverrides { get { throw null; } }
+        public System.Collections.Generic.IDictionary<object, System.Collections.Generic.IDictionary<string, string>> ParameterOverrides { get { throw null; } }
     }
 }
 namespace Azure.ResourceManager.ManagementGroups
