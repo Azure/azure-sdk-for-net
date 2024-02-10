@@ -75,48 +75,5 @@ namespace Azure.Core.Pipeline
                 response?.Dispose();
             }
         }
-
-        //// Derived type that lets us call protected methods.
-        //private class AzureCorePipelineResponse : PipelineResponse
-        //{
-        //    private readonly PipelineResponse _pipelineResponse;
-
-        //    public AzureCorePipelineResponse(PipelineResponse response)
-        //    {
-        //        _pipelineResponse = response;
-        //    }
-
-        //    public override int Status => _pipelineResponse.Status;
-
-        //    public override string ReasonPhrase => _pipelineResponse.ReasonPhrase;
-
-        //    public override Stream? ContentStream
-        //    {
-        //        get => _pipelineResponse.ContentStream;
-        //        set => _pipelineResponse.ContentStream = value;
-        //    }
-
-        //    public override BinaryData Content => _pipelineResponse.Content;
-
-        //    public override void Dispose()
-        //    {
-        //        _pipelineResponse?.Dispose();
-        //    }
-
-        //    protected override PipelineResponseHeaders GetHeadersCore()
-        //    {
-        //        _pipelineResponse.Get
-        //    }
-
-        //    protected override BinaryData ReadContent(CancellationToken cancellationToken = default)
-        //    {
-        //        throw new NotImplementedException();
-        //    }
-
-        //    protected override ValueTask<BinaryData> ReadContentAsync(CancellationToken cancellationToken = default)
-        //    {
-        //        throw new NotImplementedException();
-        //    }
-        //}
     }
 }
