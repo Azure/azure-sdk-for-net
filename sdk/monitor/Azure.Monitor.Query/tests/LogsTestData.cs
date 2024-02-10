@@ -123,7 +123,7 @@ namespace Azure.Monitor.Query.Tests
 
         private async Task<int> QueryCount(string workspaceId)
         {
-            var logsClient = new LogsQueryClient(_testEnvironment.LogsEndpoint, _testEnvironment.Credential);
+            var logsClient = new LogsQueryClient(new Uri(_testEnvironment.GetLogsAudience() + "/v1"), _testEnvironment.Credential);
             try
             {
                 var query = $"{TableAName}" +

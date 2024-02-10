@@ -39,11 +39,11 @@ namespace Azure.Monitor.Query
         }
 
         /// <summary>
-        /// Initializes a new instance of <see cref="LogsQueryClient"/>. Uses the default 'https://api.loganalytics.io' endpoint.
+        /// Initializes a new instance of <see cref="LogsQueryClient"/>. Uses the default 'https://api.loganalytics.io' endpoint if Audience is not set in LogsQueryClientOptions.
         /// </summary>
         /// <param name="credential">The <see cref="TokenCredential"/> instance to use for authentication.</param>
         /// <param name="options">The <see cref="LogsQueryClientOptions"/> instance to use as client configuration.</param>
-        public LogsQueryClient(TokenCredential credential, LogsQueryClientOptions options) : this(_defaultEndpoint, credential, options)
+        public LogsQueryClient(TokenCredential credential, LogsQueryClientOptions options) : this(string.IsNullOrEmpty(options.Audience?.ToString()) ? _defaultEndpoint : new Uri(options.Audience.ToString()), credential, options)
         {
         }
 
@@ -69,11 +69,13 @@ namespace Azure.Monitor.Query
 
             Endpoint = endpoint;
             options ??= new LogsQueryClientOptions();
-            var scope = $"{endpoint.AbsoluteUri}/.default";
+            var authorizationScope = $"{(string.IsNullOrEmpty(options.Audience?.ToString()) ? LogsQueryAudience.AzurePublicCloud : options.Audience)}";
+            authorizationScope += "//.default";
+            var scopes = new List<string> { authorizationScope };
 
             endpoint = new Uri(endpoint, options.GetVersionString());
             _clientDiagnostics = new ClientDiagnostics(options);
-            _pipeline = HttpPipelineBuilder.Build(options, new BearerTokenAuthenticationPolicy(credential, scope));
+            _pipeline = HttpPipelineBuilder.Build(options, new BearerTokenAuthenticationPolicy(credential, scopes));
             _queryClient = new QueryRestClient(_clientDiagnostics, _pipeline, endpoint);
         }
 
