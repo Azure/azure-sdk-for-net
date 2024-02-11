@@ -8,13 +8,13 @@ using NUnit.Framework;
 
 namespace Azure.Health.Insights.RadiologyInsights.Tests
 {
-    internal class RadiologyInsightsClientCriticalResultSample
+    internal class Sample01_CriticalResultSample
     {
         [Test]
         public void RadiologyInsightsCriticalResultScenario()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            Uri endpoint = new Uri("AZURE_HEALTH_INSIGHTS_ENDPOINT");
+            AzureKeyCredential credential = new AzureKeyCredential("AZURE_HEALTH_INSIGHTS_KEY");
             RadiologyInsightsClient client = new RadiologyInsightsClient(endpoint, credential);
 
             RadiologyInsightsData radiologyInsightsData = GetRadiologyInsightsData();
