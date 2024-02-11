@@ -121,6 +121,11 @@ namespace Azure.ResourceManager
     {
         Profile20200901Hybrid = 0,
     }
+    public partial class BicepModelReaderWriterOptions : System.ClientModel.Primitives.ModelReaderWriterOptions
+    {
+        public BicepModelReaderWriterOptions() : base (default(string)) { }
+        public System.Collections.Generic.IDictionary<object, System.Collections.Generic.IDictionary<string, string>> ParameterOverrides { get { throw null; } }
+    }
 }
 namespace Azure.ResourceManager.ManagementGroups
 {

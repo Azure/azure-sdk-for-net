@@ -4,6 +4,8 @@
 
 ### Features Added
 
+- Added `BicepModelReaderWriterOptions` to support writing Bicep.
+
 ### Breaking Changes
 
 ### Bugs Fixed
