@@ -49,19 +49,19 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
         /// <summary> Initializes a new instance of <see cref="FlushRedisEnterpriseDatabaseContent"/>. </summary>
         public FlushRedisEnterpriseDatabaseContent()
         {
-            Ids = new ChangeTrackingList<string>();
+            Ids = new ChangeTrackingList<ResourceIdentifier>();
         }
 
         /// <summary> Initializes a new instance of <see cref="FlushRedisEnterpriseDatabaseContent"/>. </summary>
-        /// <param name="ids"> The resource identifiers of all the other database resources in the georeplication group to be flushed. </param>
+        /// <param name="ids"> The identifiers of all the other database resources in the georeplication group to be flushed. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal FlushRedisEnterpriseDatabaseContent(IList<string> ids, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal FlushRedisEnterpriseDatabaseContent(IList<ResourceIdentifier> ids, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Ids = ids;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The resource identifiers of all the other database resources in the georeplication group to be flushed. </summary>
-        public IList<string> Ids { get; }
+        /// <summary> The identifiers of all the other database resources in the georeplication group to be flushed. </summary>
+        public IList<ResourceIdentifier> Ids { get; }
     }
 }

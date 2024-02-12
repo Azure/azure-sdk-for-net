@@ -176,35 +176,5 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
 
             return new RedisEnterprisePrivateLinkResource(id, name, resourceType, systemData, groupId, requiredMembers?.ToList(), requiredZoneNames?.ToList(), serializedAdditionalRawData: null);
         }
-
-        /// <summary> Initializes a new instance of <see cref="Models.RedisEnterpriseRegionSkuDetail"/>. </summary>
-        /// <param name="resourceType"> Resource type which has the SKU, such as Microsoft.Cache/redisEnterprise. </param>
-        /// <param name="locationInfo"> Details about location and its capabilities. </param>
-        /// <param name="skuDetailsName"> Details about available skus. </param>
-        /// <returns> A new <see cref="Models.RedisEnterpriseRegionSkuDetail"/> instance for mocking. </returns>
-        public static RedisEnterpriseRegionSkuDetail RedisEnterpriseRegionSkuDetail(ResourceType? resourceType = null, RedisEnterpriseLocationInfo locationInfo = null, RedisEnterpriseSkuName? skuDetailsName = null)
-        {
-            return new RedisEnterpriseRegionSkuDetail(resourceType, locationInfo, skuDetailsName != null ? new SkuDetail(skuDetailsName, serializedAdditionalRawData: null) : null, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.RedisEnterpriseLocationInfo"/>. </summary>
-        /// <param name="location"> Location name. </param>
-        /// <param name="capabilities"> List of capabilities. </param>
-        /// <returns> A new <see cref="Models.RedisEnterpriseLocationInfo"/> instance for mocking. </returns>
-        public static RedisEnterpriseLocationInfo RedisEnterpriseLocationInfo(AzureLocation? location = null, IEnumerable<RedisEnterpriseCapability> capabilities = null)
-        {
-            capabilities ??= new List<RedisEnterpriseCapability>();
-
-            return new RedisEnterpriseLocationInfo(location, capabilities?.ToList(), serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.RedisEnterpriseCapability"/>. </summary>
-        /// <param name="name"> Feature name. </param>
-        /// <param name="value"> Indicates whether feature is supported or not. </param>
-        /// <returns> A new <see cref="Models.RedisEnterpriseCapability"/> instance for mocking. </returns>
-        public static RedisEnterpriseCapability RedisEnterpriseCapability(string name = null, bool? value = null)
-        {
-            return new RedisEnterpriseCapability(name, value, serializedAdditionalRawData: null);
-        }
     }
 }
