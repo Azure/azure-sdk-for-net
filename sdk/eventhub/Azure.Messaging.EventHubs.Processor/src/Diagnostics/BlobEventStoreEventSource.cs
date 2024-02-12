@@ -261,13 +261,13 @@ namespace Azure.Messaging.EventHubs.Processor.Diagnostics
                                                   string eventHubName,
                                                   string consumerGroup,
                                                   string clientIdentifier,
-                                                  long sequenceNumber,
+                                                  long? sequenceNumber,
                                                   int replicationSegment,
-                                                  long offset)
+                                                  long? offset)
         {
             if (IsEnabled())
             {
-                WriteEvent(32, partitionId ?? string.Empty, fullyQualifiedNamespace ?? string.Empty, eventHubName ?? string.Empty, consumerGroup ?? string.Empty, clientIdentifier ?? string.Empty, sequenceNumber, replicationSegment, offset);
+                WriteEvent(32, partitionId ?? string.Empty, fullyQualifiedNamespace ?? string.Empty, eventHubName ?? string.Empty, consumerGroup ?? string.Empty, clientIdentifier ?? string.Empty, sequenceNumber ?? -1, replicationSegment, offset ?? -1);
             }
         }
 
@@ -290,13 +290,13 @@ namespace Azure.Messaging.EventHubs.Processor.Diagnostics
                                                      string eventHubName,
                                                      string consumerGroup,
                                                      string clientIdentifier,
-                                                     long sequenceNumber,
+                                                     long? sequenceNumber,
                                                      int replicationSegment,
-                                                     long offset)
+                                                     long? offset)
         {
             if (IsEnabled())
             {
-                WriteEvent(33, partitionId ?? string.Empty, fullyQualifiedNamespace ?? string.Empty, eventHubName ?? string.Empty, consumerGroup ?? string.Empty, clientIdentifier ?? string.Empty, sequenceNumber, replicationSegment, offset);
+                WriteEvent(33, partitionId ?? string.Empty, fullyQualifiedNamespace ?? string.Empty, eventHubName ?? string.Empty, consumerGroup ?? string.Empty, clientIdentifier ?? string.Empty, sequenceNumber ?? -1, replicationSegment, offset ?? -1);
             }
         }
 
@@ -321,13 +321,13 @@ namespace Azure.Messaging.EventHubs.Processor.Diagnostics
                                                   string consumerGroup,
                                                   string clientIdentifier,
                                                   string errorMessage,
-                                                  long sequenceNumber,
+                                                  long? sequenceNumber,
                                                   int replicationSegment,
-                                                  long offset)
+                                                  long? offset)
         {
             if (IsEnabled())
             {
-                WriteEvent(34, partitionId ?? string.Empty, fullyQualifiedNamespace ?? string.Empty, eventHubName ?? string.Empty, consumerGroup ?? string.Empty, errorMessage ?? string.Empty, clientIdentifier ?? string.Empty, sequenceNumber, replicationSegment, offset);
+                WriteEvent(34, partitionId ?? string.Empty, fullyQualifiedNamespace ?? string.Empty, eventHubName ?? string.Empty, consumerGroup ?? string.Empty, errorMessage ?? string.Empty, clientIdentifier ?? string.Empty, sequenceNumber ?? -1, replicationSegment, offset ?? -1);
             }
         }
 
