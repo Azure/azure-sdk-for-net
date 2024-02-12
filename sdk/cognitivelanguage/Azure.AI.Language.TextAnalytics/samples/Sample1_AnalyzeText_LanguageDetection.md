@@ -129,3 +129,8 @@ catch (RequestFailedException exception)
     Console.WriteLine($"Message: {exception.Message}");
 }
 ```
+
+See the [README] of the Text Analytics client library for more information, including useful links and instructions.
+
+[DefaultAzureCredential]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/identity/Azure.Identity/README.md
+[README]: https://github.com/quentinRobinson/azure-sdk-for-net/blob/qrobinson/analyze-text-sdk/sdk/cognitivelanguage/Azure.AI.Language.TextAnalytics/samples/README.md
