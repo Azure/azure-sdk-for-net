@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using NUnit.Framework;
 
 namespace Azure.Health.Insights.RadiologyInsights.Tests
@@ -11,7 +12,7 @@ namespace Azure.Health.Insights.RadiologyInsights.Tests
     internal class Sample01_CriticalResultSampleAsync
     {
         [Test]
-        public async void RadiologyInsightsCriticalResultScenario()
+        public async Task RadiologyInsightsCriticalResultScenario()
         {
             Uri endpoint = new Uri("AZURE_HEALTH_INSIGHTS_ENDPOINT");
             AzureKeyCredential credential = new AzureKeyCredential("AZURE_HEALTH_INSIGHTS_KEY");
