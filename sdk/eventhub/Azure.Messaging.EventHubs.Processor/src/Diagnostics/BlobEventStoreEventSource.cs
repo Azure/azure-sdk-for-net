@@ -251,9 +251,9 @@ namespace Azure.Messaging.EventHubs.Processor.Diagnostics
         /// <param name="eventHubName">The name of the specific Event Hub the checkpoint is associated with, relative to the Event Hubs namespace that contains it.</param>
         /// <param name="consumerGroup">The name of the consumer group the checkpoint is associated with.</param>
         /// <param name="clientIdentifier">The unique identifier of the client that authored this checkpoint.</param>
-        /// <param name="sequenceNumber">The sequence number associated with this checkpoint.</param>
-        /// <param name="replicationSegment">The replication segment associated with this checkpoint.</param>
-        /// <param name="offset">The offset associated with this checkpoint.</param>
+        /// <param name="sequenceNumber">The sequence number associated with this checkpoint. This value is set to <c>-1</c> if one is not provided.</param>
+        /// <param name="replicationSegment">The replication segment associated with this checkpoint. This value is set to <c>-1</c> if one is not provided.</param>
+        /// <param name="offset">The offset associated with this checkpoint. This value is set to <c>-1</c> if one is not provided.</param>
         ///
         [Event(32, Level = EventLevel.Verbose, Message = "Starting to create/update a checkpoint for partition: `{0}` of FullyQualifiedNamespace: '{1}'; EventHubName: '{2}'; ConsumerGroup: '{3}'; ClientIdentifier: '{4}'; at SequenceNumber: '{5}' ReplicationSegment: '{6}' Offset: '{7}'.")]
         public virtual void UpdateCheckpointStart(string partitionId,
@@ -280,9 +280,9 @@ namespace Azure.Messaging.EventHubs.Processor.Diagnostics
         /// <param name="eventHubName">The name of the specific Event Hub the checkpoint is associated with, relative to the Event Hubs namespace that contains it.</param>
         /// <param name="consumerGroup">The name of the consumer group the checkpoint is associated with.</param>
         /// <param name="clientIdentifier">The unique identifier of the client that authored this checkpoint.</param>
-        /// <param name="sequenceNumber">The sequence number associated with this checkpoint.</param>
-        /// <param name="replicationSegment">The replication segment associated with this checkpoint.</param>
-        /// <param name="offset">The offset associated with this checkpoint.</param>
+        /// <param name="sequenceNumber">The sequence number associated with this checkpoint. This value is set to <c>-1</c> if one is not provided.</param>
+        /// <param name="replicationSegment">The replication segment associated with this checkpoint. This value is set to <c>-1</c> if one is not provided.</param>
+        /// <param name="offset">The offset associated with this checkpoint. This value is set to <c>-1</c> if one is not provided.</param>
         ///
         [Event(33, Level = EventLevel.Verbose, Message = "Completed the attempt to create/update a checkpoint for partition: `{0}` of FullyQualifiedNamespace: '{1}'; EventHubName: '{2}'; ConsumerGroup: '{3}'; ClientIdentifier: '{4}'; at SequenceNumber: '{5}' ReplicationSegment: '{6}' Offset: '{7}'.")]
         public virtual void UpdateCheckpointComplete(string partitionId,
@@ -310,9 +310,9 @@ namespace Azure.Messaging.EventHubs.Processor.Diagnostics
         /// <param name="consumerGroup">The name of the consumer group the checkpoint is associated with.</param>
         /// <param name="clientIdentifier">The unique identifier of the processor that authored this checkpoint.</param>
         /// <param name="sequenceNumber">The sequence number associated with this checkpoint.</param>
-        /// <param name="replicationSegment">The replication segment associated with this checkpoint.</param>
-        /// <param name="offset">The offset associated with this checkpoint.</param>
-        /// <param name="errorMessage">The message for the exception that occurred.</param>
+        /// <param name="replicationSegment">The replication segment associated with this checkpoint. This value is set to <c>-1</c> if one is not provided.</param>
+        /// <param name="offset">The offset associated with this checkpoint. This value is set to <c>-1</c> if one is not provided.</param>
+        /// <param name="errorMessage">The message for the exception that occurred. This value is set to <c>-1</c> if one is not provided.</param>
         ///
         [Event(34, Level = EventLevel.Error, Message = "An exception occurred when creating/updating a checkpoint for  partition: `{0}` of FullyQualifiedNamespace: '{1}'; EventHubName: '{2}'; ConsumerGroup: '{3}'; ClientIdentifier: '{5}'; at SequenceNumber: '{6}' ReplicationSegment '{7}' Offset '{8}'.  ErrorMessage: '{4}'.")]
         public virtual void UpdateCheckpointError(string partitionId,

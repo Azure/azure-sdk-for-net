@@ -115,9 +115,9 @@ namespace Azure.Messaging.EventHubs.Tests
         /// <param name="eventHubName">The name of the specific Event Hub the checkpoint is associated with, relative to the Event Hubs namespace that contains it.</param>
         /// <param name="consumerGroup">The name of the consumer group the checkpoint is associated with.</param>
         /// <param name="clientIdentifier">The unique identifier of the client that authored this checkpoint.</param>
-        /// <param name="sequenceNumber">The sequence number associated with this checkpoint.</param>
-        /// <param name="replicationSegment">The replication segment associated with this checkpoint.</param>
-        /// <param name="offset">The offset associated with this checkpoint.</param>
+        /// <param name="sequenceNumber">The sequence number associated with this checkpoint. This value is set to <c>-1</c> if one is not provided.</param>
+        /// <param name="replicationSegment">The replication segment associated with this checkpoint. This value is set to <c>-1</c> if one is not provided.</param>
+        /// <param name="offset">The offset associated with this checkpoint. This value is set to <c>-1</c> if one is not provided.</param>
         /// <param name="exception">The exception that occurred.</param>
         ///
         void UpdateCheckpointError(string partitionId,
@@ -138,9 +138,9 @@ namespace Azure.Messaging.EventHubs.Tests
         /// <param name="fullyQualifiedNamespace">The fully qualified Event Hubs namespace the checkpoint is associated with.  This is likely to be similar to <c>{yournamespace}.servicebus.windows.net</c>.</param>
         /// <param name="eventHubName">The name of the specific Event Hub the checkpoint is associated with, relative to the Event Hubs namespace that contains it.</param>
         /// <param name="consumerGroup">The name of the consumer group the checkpoint is associated with.</param>
-        /// <param name="clientIdentifier">The unique identifier of the client that authored this checkpoint.</param>
-        /// <param name="sequenceNumber">The sequence number associated with this checkpoint.</param>
-        /// <param name="replicationSegment">The replication segment associated with this checkpoint.</param>
+        /// <param name="clientIdentifier">The unique identifier of the client that authored this checkpoint. This value is set to <c>-1</c> if one is not provided.</param>
+        /// <param name="sequenceNumber">The sequence number associated with this checkpoint. This value is set to <c>-1</c> if one is not provided.</param>
+        /// <param name="replicationSegment">The replication segment associated with this checkpoint. This value is set to <c>-1</c> if one is not provided.</param>
         /// <param name="offset">The offset associated with this checkpoint.</param>
         ///
         void UpdateCheckpointComplete(string partitionId,
@@ -160,9 +160,9 @@ namespace Azure.Messaging.EventHubs.Tests
         /// <param name="fullyQualifiedNamespace">The fully qualified Event Hubs namespace the checkpoint is associated with.  This is likely to be similar to <c>{yournamespace}.servicebus.windows.net</c>.</param>
         /// <param name="eventHubName">The name of the specific Event Hub the checkpoint is associated with, relative to the Event Hubs namespace that contains it.</param>
         /// <param name="consumerGroup">The name of the consumer group the checkpoint is associated with.</param>
-        /// <param name="clientIdentifier">The unique identifier of the client that authored this checkpoint.</param>
-        /// <param name="sequenceNumber">The sequence number associated with this checkpoint.</param>
-        /// <param name="replicationSegment">The replication segment associated with this checkpoint.</param>
+        /// <param name="clientIdentifier">The unique identifier of the client that authored this checkpoint. This value is set to <c>-1</c> if one is not provided.</param>
+        /// <param name="sequenceNumber">The sequence number associated with this checkpoint. This value is set to <c>-1</c> if one is not provided.</param>
+        /// <param name="replicationSegment">The replication segment associated with this checkpoint. This value is set to <c>-1</c> if one is not provided.</param>
         /// <param name="offset">The offset associated with this checkpoint.</param>
         ///
         void UpdateCheckpointStart(string partitionId,
