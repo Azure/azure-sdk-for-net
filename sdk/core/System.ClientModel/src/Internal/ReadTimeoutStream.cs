@@ -1,7 +1,6 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System.ClientModel.Primitives;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
@@ -60,7 +59,7 @@ internal class ReadTimeoutStream : Stream
 
     public override int Read(byte[] buffer, int offset, int count)
     {
-        var source = StartTimeout(default, out bool dispose);
+        CancellationTokenSource source = StartTimeout(default, out bool dispose);
         try
         {
             return _stream.Read(buffer, offset, count);
@@ -90,7 +89,7 @@ internal class ReadTimeoutStream : Stream
 
     public override async Task<int> ReadAsync(byte[] buffer, int offset, int count, CancellationToken cancellationToken)
     {
-        var source = StartTimeout(cancellationToken, out bool dispose);
+        CancellationTokenSource source = StartTimeout(cancellationToken, out bool dispose);
         try
         {
 #pragma warning disable CA1835 // ReadAsync(Memory<>) overload is not available in all targets
