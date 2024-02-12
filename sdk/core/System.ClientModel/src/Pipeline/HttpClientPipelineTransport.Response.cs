@@ -32,8 +32,7 @@ public partial class HttpClientPipelineTransport
             _httpResponse = httpResponse ?? throw new ArgumentNullException(nameof(httpResponse));
             _httpResponseContent = _httpResponse.Content;
 
-            // Don't dispose the content if the stream is replaced.
-            // This means the content remains available for reading headers.
+            // Don't dispose the content so it remains available for reading headers.
             _httpResponse.Content = null;
         }
 
@@ -79,28 +78,12 @@ public partial class HttpClientPipelineTransport
                     return _bufferedContent;
                 }
 
-                if (_contentStream == null)
+                if (_contentStream is null || _contentStream is MemoryStream)
                 {
-                    _bufferedContent = s_EmptyBinaryData;
-                    return _bufferedContent;
+                    ReadContent();
                 }
 
-                if (_contentStream is not MemoryStream memoryStream)
-                {
-                    throw new InvalidOperationException($"The response is not buffered.");
-                }
-
-                // Support mock responses that don't use the transport to buffer.
-                if (memoryStream.TryGetBuffer(out ArraySegment<byte> segment))
-                {
-                    _bufferedContent = new BinaryData(segment.AsMemory());
-                }
-                else
-                {
-                    _bufferedContent = new BinaryData(memoryStream.ToArray());
-                }
-
-                return _bufferedContent;
+                throw new InvalidOperationException($"The response is not buffered.");
             }
         }
 
@@ -121,7 +104,7 @@ public partial class HttpClientPipelineTransport
             if (_contentStream == null)
             {
                 // Content is not buffered but there is no source stream.
-                // Our contract from Azure.Core is to return empty BinaryData in this case.
+                // Our contract from Azure.Core is to return BinaryData.Empty in this case.
                 _bufferedContent = s_EmptyBinaryData;
                 return _bufferedContent;
             }
@@ -172,10 +155,12 @@ public partial class HttpClientPipelineTransport
                 //
                 // Given this, if _contentStream is not null, we are holding
                 // a source stream and will dispose it.
+                //
+                // If the source stream is a memory stream, it's likely a mock,
+                // so buffer it prior to disposing so the content remains available.
 
                 if (ContentStream is MemoryStream)
                 {
-                    // Support mocks
                     ReadContent();
                 }
 

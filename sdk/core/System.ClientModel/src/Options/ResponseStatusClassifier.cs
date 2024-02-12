@@ -39,7 +39,7 @@ internal class ResponseStatusClassifier : PipelineMessageClassifier
     {
         bool classified = Default.TryClassify(message, exception, out isRetriable);
 
-        Debug.Assert(classified, "Retry classifier did not classify message.");
+        Debug.Assert(classified);
 
         // BitVector-based classifiers should always end any chain.
         return true;

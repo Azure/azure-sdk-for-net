@@ -122,6 +122,7 @@ public abstract class PipelineTransport : PipelinePolicy
             if (networkTimeout != Timeout.InfiniteTimeSpan || messageToken.CanBeCanceled)
             {
                 timeoutTokenSource.Token.Register(state => ((Stream?)state)?.Dispose(), contentStream);
+                timeoutTokenSource.CancelAfter(networkTimeout);
             }
 
             if (async)

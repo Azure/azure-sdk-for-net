@@ -169,7 +169,7 @@ public class ClientRetryPolicy : PipelinePolicy
         {
             bool classified = PipelineMessageClassifier.Default.TryClassify(message, exception, out isRetriable);
 
-            Debug.Assert(classified, "Error classifier did not classify message.");
+            Debug.Assert(classified);
         }
 
         return isRetriable;
