@@ -154,7 +154,7 @@ namespace Azure.Core.Pipeline
             // We must set NetworkTimeout here because the documentation for
             // HttpMessage states that if a user sets this value to null, the
             // pipeline will use the value set on ClientOptions.
-            message.NetworkTimeout = _networkTimeout;
+            message.NetworkTimeout ??= _networkTimeout;
             AddHttpMessageProperties(message);
 
             if (message.Policies == null || message.Policies.Count == 0)
@@ -190,7 +190,7 @@ namespace Azure.Core.Pipeline
         {
             message.SetCancellationToken(cancellationToken);
             message.ProcessingStartTime = DateTimeOffset.UtcNow;
-            message.NetworkTimeout = _networkTimeout;
+            message.NetworkTimeout ??= _networkTimeout;
             AddHttpMessageProperties(message);
 
             if (message.Policies == null || message.Policies.Count == 0)
