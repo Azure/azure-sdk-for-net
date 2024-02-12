@@ -4,6 +4,7 @@
 using System.ClientModel.Internal;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -61,12 +62,12 @@ public abstract class PipelineTransport : PipelinePolicy
         // Implement network timeout behavior around call to ProcessCore.
         TimeSpan networkTimeout = (TimeSpan)message.NetworkTimeout!;
         CancellationToken messageToken = message.CancellationToken;
-        using CancellationTokenSource joinedTokenSource = CancellationTokenSource.CreateLinkedTokenSource(messageToken);
-        joinedTokenSource.CancelAfter(networkTimeout);
+        using CancellationTokenSource timeoutTokenSource = CancellationTokenSource.CreateLinkedTokenSource(messageToken);
+        timeoutTokenSource.CancelAfter(networkTimeout);
 
         try
         {
-            message.CancellationToken = joinedTokenSource.Token;
+            message.CancellationToken = timeoutTokenSource.Token;
 
             if (async)
             {
@@ -79,31 +80,69 @@ public abstract class PipelineTransport : PipelinePolicy
         }
         catch (OperationCanceledException ex)
         {
-            CancellationHelper.ThrowIfCancellationRequestedOrTimeout(messageToken, joinedTokenSource.Token, ex, networkTimeout);
+            CancellationHelper.ThrowIfCancellationRequestedOrTimeout(messageToken, timeoutTokenSource.Token, ex, networkTimeout);
             throw;
         }
         finally
         {
             message.CancellationToken = messageToken;
-            joinedTokenSource.CancelAfter(Timeout.Infinite);
+            timeoutTokenSource.CancelAfter(Timeout.Infinite);
         }
 
-        if (message.Response is null)
+        message.AssertResponse();
+        message.Response!.SetIsError(ClassifyResponse(message));
+
+        // The remainder of the method handles response content according to
+        // buffering logic specified by value of message.BufferResponse.
+
+        Stream? contentStream = message.Response!.ContentStream;
+        if (contentStream is null)
         {
-            throw new InvalidOperationException("Response was not set by transport.");
+            // There is no response content.
+            return;
         }
 
-        message.Response.SetIsError(ClassifyResponse(message));
-        message.Response.NetworkTimeout = networkTimeout;
+        if (!message.BufferResponse)
+        {
+            // Client has requested not to buffer the message response content.
+            // If applicable, wrap it in a read-timeout stream.
+            if (networkTimeout != Timeout.InfiniteTimeSpan)
+            {
+                message.Response.ContentStream = new ReadTimeoutStream(contentStream, networkTimeout);
+            }
 
-        // Either buffer the response, or wrap it in a timeout stream.
-        if (async)
-        {
-            await message.Response.ProcessContentAsync(message.BufferResponse, messageToken, joinedTokenSource).ConfigureAwait(false);
+            return;
         }
-        else
+
+        try
         {
-            message.Response.ProcessContent(message.BufferResponse, messageToken, joinedTokenSource);
+            // If cancellation is possible (whether due to network timeout or a user
+            // cancellation token being passed), then register callback to dispose the
+            // stream on cancellation.
+            if (networkTimeout != Timeout.InfiniteTimeSpan || messageToken.CanBeCanceled)
+            {
+                timeoutTokenSource.Token.Register(state => ((Stream?)state)?.Dispose(), contentStream);
+                timeoutTokenSource.CancelAfter(networkTimeout);
+            }
+
+            if (async)
+            {
+                await message.Response.ReadContentAsync(timeoutTokenSource.Token).ConfigureAwait(false);
+            }
+            else
+            {
+                message.Response.ReadContent(timeoutTokenSource.Token);
+            }
+        }
+        // We dispose stream on timeout or user cancellation so catch and check if
+        // cancellation token was cancelled
+        catch (Exception ex) when (ex is ObjectDisposedException
+                                      or IOException
+                                      or OperationCanceledException
+                                      or NotSupportedException)
+        {
+            CancellationHelper.ThrowIfCancellationRequestedOrTimeout(messageToken, timeoutTokenSource.Token, ex, networkTimeout);
+            throw;
         }
     }
 

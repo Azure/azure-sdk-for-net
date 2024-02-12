@@ -67,7 +67,7 @@ public class ClientResultException : Exception, ISerializable
 
     private static string CreateMessage(PipelineResponse response)
     {
-        response.BufferContent();
+        response.ReadContent();
 
         StringBuilder messageBuilder = new();
 
