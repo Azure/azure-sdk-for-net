@@ -6,15 +6,16 @@ using System.Collections.Generic;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core.Pipeline;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
 using NUnit.Framework.Internal;
 
 namespace Azure.Core.Tests;
 
-public class ResponseBodyPolicyTests : SyncAsyncPolicyTestBase
+public class ResponseBufferingTests : SyncAsyncPolicyTestBase
 {
-    public ResponseBodyPolicyTests(bool isAsync) : base(isAsync)
+    public ResponseBufferingTests(bool isAsync) : base(isAsync)
     {
     }
 
@@ -26,7 +27,7 @@ public class ResponseBodyPolicyTests : SyncAsyncPolicyTestBase
         mockResponse.ContentStream = readTrackingStream;
 
         MockTransport mockTransport = CreateMockTransport(mockResponse);
-        Response response = await SendGetRequest(mockTransport, Timeout.InfiniteTimeSpan);
+        Response response = await SendGetRequestAsync(mockTransport, Timeout.InfiniteTimeSpan);
 
         Assert.IsInstanceOf<MemoryStream>(response.ContentStream);
         var ms = (MemoryStream)response.ContentStream;
@@ -49,7 +50,7 @@ public class ResponseBodyPolicyTests : SyncAsyncPolicyTestBase
         };
 
         MockTransport mockTransport = CreateMockTransport(mockResponse);
-        Assert.ThrowsAsync<IOException>(async () => await SendGetRequest(mockTransport, Timeout.InfiniteTimeSpan));
+        Assert.ThrowsAsync<IOException>(async () => await SendGetRequestAsync(mockTransport, Timeout.InfiniteTimeSpan));
     }
 
     [Test]
@@ -58,7 +59,7 @@ public class ResponseBodyPolicyTests : SyncAsyncPolicyTestBase
         MockResponse mockResponse = new MockResponse(200);
 
         MockTransport mockTransport = CreateMockTransport(mockResponse);
-        Response response = await SendGetRequest(mockTransport, Timeout.InfiniteTimeSpan);
+        Response response = await SendGetRequestAsync(mockTransport, Timeout.InfiniteTimeSpan);
         Assert.Null(response.ContentStream);
     }
 
@@ -72,7 +73,7 @@ public class ResponseBodyPolicyTests : SyncAsyncPolicyTestBase
         };
 
         MockTransport mockTransport = CreateMockTransport(mockResponse);
-        await SendGetRequest(mockTransport, Timeout.InfiniteTimeSpan);
+        await SendGetRequestAsync(mockTransport, Timeout.InfiniteTimeSpan);
 
         Assert.True(readTrackingStream.IsClosed);
     }
@@ -87,7 +88,7 @@ public class ResponseBodyPolicyTests : SyncAsyncPolicyTestBase
         };
 
         MockTransport mockTransport = CreateMockTransport(mockResponse);
-        Response response = await SendGetRequest(mockTransport, Timeout.InfiniteTimeSpan, bufferResponse: false);
+        Response response = await SendGetRequestAsync(mockTransport, Timeout.InfiniteTimeSpan, bufferResponse: false);
 
         Assert.IsNotInstanceOf<MemoryStream>(response.ContentStream);
     }
@@ -103,7 +104,7 @@ public class ResponseBodyPolicyTests : SyncAsyncPolicyTestBase
         };
 
         MockTransport mockTransport = new MockTransport(mockResponse);
-        Response response = await SendGetRequest(mockTransport, TimeSpan.FromMilliseconds(50), bufferResponse: false);
+        Response response = await SendGetRequestAsync(mockTransport, TimeSpan.FromMilliseconds(50), bufferResponse: false);
 
         var buffer = new byte[100];
         Assert.ThrowsAsync<TaskCanceledException>(async () => await response.ContentStream.ReadAsync(buffer, 0, 100));
@@ -121,7 +122,7 @@ public class ResponseBodyPolicyTests : SyncAsyncPolicyTestBase
         };
 
         MockTransport mockTransport = new MockTransport(mockResponse);
-        Response response = await SendGetRequest(mockTransport, TimeSpan.FromMilliseconds(50), bufferResponse: false);
+        Response response = await SendGetRequestAsync(mockTransport, TimeSpan.FromMilliseconds(50), bufferResponse: false);
 
         var memoryStream = new MemoryStream();
         Assert.ThrowsAsync<TaskCanceledException>(async () => await response.ContentStream.CopyToAsync(memoryStream));
@@ -139,7 +140,7 @@ public class ResponseBodyPolicyTests : SyncAsyncPolicyTestBase
         };
 
         MockTransport mockTransport = new MockTransport(mockResponse);
-        Response response = await SendGetRequest(mockTransport, TimeSpan.FromMilliseconds(1234567), bufferResponse: false);
+        Response response = await SendGetRequestAsync(mockTransport, TimeSpan.FromMilliseconds(1234567), bufferResponse: false);
 
         //Assert.IsInstanceOf<ReadTimeoutStream>(response.ContentStream);
         Assert.IsFalse(response.ContentStream.CanWrite);
@@ -159,7 +160,7 @@ public class ResponseBodyPolicyTests : SyncAsyncPolicyTestBase
         MockTransport mockTransport = CreateMockTransport(mockResponse);
         CancellationTokenSource cts = new CancellationTokenSource(100);
 
-        Task<Response> getRequestTask = Task.Run(async () => await SendGetRequest(mockTransport, Timeout.InfiniteTimeSpan, bufferResponse: true, cancellationToken: cts.Token));
+        Task<Response> getRequestTask = Task.Run(async () => await SendGetRequestAsync(mockTransport, Timeout.InfiniteTimeSpan, bufferResponse: true, cancellationToken: cts.Token));
 
         await slowReadStream.StartedReader.Task;
 
@@ -179,7 +180,7 @@ public class ResponseBodyPolicyTests : SyncAsyncPolicyTestBase
             return null;
         });
 
-        var exception = Assert.ThrowsAsync<TaskCanceledException>(async () => await SendGetRequest(mockTransport, TimeSpan.FromMilliseconds(30), bufferResponse: false));
+        var exception = Assert.ThrowsAsync<TaskCanceledException>(async () => await SendGetRequestAsync(mockTransport, TimeSpan.FromMilliseconds(30), bufferResponse: false));
         Assert.AreEqual("The operation was cancelled because it exceeded the configured timeout of 0:00:00.03. ",
             exception.Message);
     }
@@ -207,7 +208,7 @@ public class ResponseBodyPolicyTests : SyncAsyncPolicyTestBase
         };
 
         MockTransport mockTransport = CreateMockTransport(mockResponse);
-        Assert.ThrowsAsync<TaskCanceledException>(async () => await SendGetRequest(mockTransport, timeout, cancellationToken: cts.Token));
+        Assert.ThrowsAsync<TaskCanceledException>(async () => await SendGetRequestAsync(mockTransport, timeout, cancellationToken: cts.Token));
         Assert.IsTrue(stream.IsClosed);
     }
 
@@ -222,7 +223,7 @@ public class ResponseBodyPolicyTests : SyncAsyncPolicyTestBase
         };
 
         MockTransport mockTransport = CreateMockTransport(mockResponse);
-        var thrown = Assert.CatchAsync(async () => await SendGetRequest(mockTransport, timeout, cancellationToken: cts.Token));
+        var thrown = Assert.CatchAsync(async () => await SendGetRequestAsync(mockTransport, timeout, cancellationToken: cts.Token));
         Assert.AreSame(exception, thrown);
         Assert.IsFalse(stream.IsClosed);
     }
@@ -238,7 +239,7 @@ public class ResponseBodyPolicyTests : SyncAsyncPolicyTestBase
         };
 
         MockTransport mockTransport = new MockTransport(mockResponse);
-        Response response = await SendGetRequest(mockTransport, TimeSpan.FromMilliseconds(30), bufferResponse: false);
+        Response response = await SendGetRequestAsync(mockTransport, TimeSpan.FromMilliseconds(30), bufferResponse: false);
 
         //Assert.IsInstanceOf<ReadTimeoutStream>(response.ContentStream);
         Assert.IsFalse(response.ContentStream.CanWrite);
@@ -246,6 +247,25 @@ public class ResponseBodyPolicyTests : SyncAsyncPolicyTestBase
     }
 
     #region Helpers
+
+    protected async Task<Response> SendGetRequestAsync(HttpPipelineTransport transport, TimeSpan networkTimeout, bool bufferResponse = true, CancellationToken cancellationToken = default)
+    {
+        HttpPipeline pipeline = new(transport);
+        HttpMessage message = pipeline.CreateMessage();
+        message.NetworkTimeout = networkTimeout;
+        message.BufferResponse = bufferResponse;
+
+        if (IsAsync)
+        {
+            await pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+        }
+        else
+        {
+            pipeline.Send(message, cancellationToken);
+        }
+
+        return message.Response;
+    }
 
     private class SlowReadStream : TestReadStream
     {

@@ -92,14 +92,22 @@ namespace Azure.Core.Pipeline
         /// </summary>
         /// <returns>The request.</returns>
         public Request CreateRequest()
-            => _transport.CreateRequest();
+        {
+            Request request = _transport.CreateRequest();
+            request.NetworkTimeout = _networkTimeout;
+            return request;
+        }
 
         /// <summary>
         /// Creates a new <see cref="HttpMessage"/> instance.
         /// </summary>
         /// <returns>The message.</returns>
         public HttpMessage CreateMessage()
-            => new(CreateRequest(), ResponseClassifier);
+        {
+            Request request = CreateRequest();
+            HttpMessage message = new(request, ResponseClassifier);
+            return message;
+        }
 
         /// <summary>
         /// </summary>
@@ -116,7 +124,8 @@ namespace Azure.Core.Pipeline
         /// <returns>The message.</returns>
         public HttpMessage CreateMessage(RequestContext? context, ResponseClassifier? classifier = default)
         {
-            HttpMessage message = new(CreateRequest(), classifier ?? ResponseClassifier);
+            Request request = CreateRequest();
+            HttpMessage message = new(request, classifier ?? ResponseClassifier);
 
             if (context != null)
             {
@@ -141,7 +150,6 @@ namespace Azure.Core.Pipeline
         {
             message.SetCancellationToken(cancellationToken);
             message.ProcessingStartTime = DateTimeOffset.UtcNow;
-            message.NetworkTimeout ??= _networkTimeout;
             AddHttpMessageProperties(message);
 
             if (message.Policies == null || message.Policies.Count == 0)
@@ -177,7 +185,6 @@ namespace Azure.Core.Pipeline
         {
             message.SetCancellationToken(cancellationToken);
             message.ProcessingStartTime = DateTimeOffset.UtcNow;
-            message.NetworkTimeout ??= _networkTimeout;
             AddHttpMessageProperties(message);
 
             if (message.Policies == null || message.Policies.Count == 0)

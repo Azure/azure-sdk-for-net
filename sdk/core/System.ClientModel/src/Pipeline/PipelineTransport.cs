@@ -19,6 +19,7 @@ public abstract class PipelineTransport : PipelinePolicy
     public PipelineMessage CreateMessage()
     {
         PipelineMessage message = CreateMessageCore();
+        message.NetworkTimeout ??= ClientPipeline.DefaultNetworkTimeout;
 
         if (message.Request is null)
         {

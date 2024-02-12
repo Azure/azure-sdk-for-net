@@ -27,7 +27,7 @@ namespace Azure.Core.Tests
             var stream1 = new MockReadStream(100, throwAfter: 50, canSeek: true);
             var stream2 = new MockReadStream(50, offset: 50);
 
-            MockTransport mockTransport = CreateNonBufferingTransport(
+            MockTransport mockTransport = CreateMockTransport(
                 new MockResponse(200) { ContentStream = stream1 },
                 new MockResponse(200) { ContentStream = stream2 }
             );
@@ -60,7 +60,7 @@ namespace Azure.Core.Tests
             var stream1 = new MockReadStream(100, throwAfter: 50);
             var stream2 = new MockReadStream(50, offset: 50);
 
-            MockTransport mockTransport = CreateNonBufferingTransport(
+            MockTransport mockTransport = CreateMockTransport(
                 new MockResponse(200) { ContentStream = stream1 },
                 new MockResponse(200) { ContentStream = stream2 }
             );
@@ -91,7 +91,7 @@ namespace Azure.Core.Tests
             var stream1 = new MockReadStream(100, throwAfter: 50, canSeek: true);
             var stream2 = new MockReadStream(50, offset: 50, throwAfter: 0, exceptionType: typeof(InvalidOperationException));
 
-            MockTransport mockTransport = CreateNonBufferingTransport(
+            MockTransport mockTransport = CreateMockTransport(
                 new MockResponse(200) { ContentStream = stream1 },
                 new MockResponse(200) { ContentStream = stream2 }
             );
@@ -130,7 +130,7 @@ namespace Azure.Core.Tests
 
             var stream1 = new MockReadStream(100, throwAfter: 25, canSeek: true, exceptionType: initial);
 
-            MockTransport mockTransport = CreateNonBufferingTransport(
+            MockTransport mockTransport = CreateMockTransport(
                 new MockResponse(200) { ContentStream = stream1 });
             var pipeline = new HttpPipeline(mockTransport);
 
@@ -157,7 +157,7 @@ namespace Azure.Core.Tests
             var stream1 = new MockReadStream(100, throwAfter: 50, exceptionType: typeof(OperationCanceledException), canSeek: true);
             var stream2 = new MockReadStream(50, offset: 50);
 
-            MockTransport mockTransport = CreateNonBufferingTransport(
+            MockTransport mockTransport = CreateMockTransport(
                 new MockResponse(200) { ContentStream = stream1 },
                 new MockResponse(200) { ContentStream = stream2 }
             );
@@ -190,7 +190,7 @@ namespace Azure.Core.Tests
             var stream1 = new NoLengthStream();
             var stream2 = new MockReadStream(50);
 
-            MockTransport mockTransport = CreateNonBufferingTransport(
+            MockTransport mockTransport = CreateMockTransport(
                 new MockResponse(200) { ContentStream = stream1 },
                 new MockResponse(200) { ContentStream = stream2 }
             );
@@ -217,7 +217,7 @@ namespace Azure.Core.Tests
         public async Task ThrowsIfSendingRetryRequestThrows()
         {
             var stream1 = new MockReadStream(100, throwAfter: 50);
-            MockTransport mockTransport = CreateNonBufferingTransport(new MockResponse(200) { ContentStream = stream1 });
+            MockTransport mockTransport = CreateMockTransport(new MockResponse(200) { ContentStream = stream1 });
 
             var pipeline = new HttpPipeline(mockTransport);
 
@@ -255,7 +255,7 @@ namespace Azure.Core.Tests
         [Test]
         public async Task RetriesMaxCountAndThrowsAggregateException()
         {
-            MockTransport mockTransport = CreateNonBufferingTransport(
+            MockTransport mockTransport = CreateMockTransport(
                 new MockResponse(200) { ContentStream = new MockReadStream(100, throwAfter: 1) },
                 new MockResponse(200) { ContentStream = new MockReadStream(100, throwAfter: 1, offset: 1) },
                 new MockResponse(200) { ContentStream = new MockReadStream(100, throwAfter: 1, offset: 2) },
@@ -370,27 +370,42 @@ namespace Azure.Core.Tests
 
         private static Stream SendTestRequest(HttpPipeline pipeline, long offset)
         {
-            using Request request = CreateRequest(pipeline, offset);
+            using HttpMessage message = CreateMessage(pipeline, offset);
 
-            Response response = pipeline.SendRequest(request, CancellationToken.None);
-            return response.ContentStream;
+            pipeline.Send(message, CancellationToken.None);
+            Response response = message.Response;
+            Stream stream = message.ExtractResponseContent();
+
+            return stream;
         }
 
         private static async ValueTask<Stream> SendTestRequestAsync(HttpPipeline pipeline, long offset)
         {
-            using Request request = CreateRequest(pipeline, offset);
+            using HttpMessage message = CreateMessage(pipeline, offset);
 
-            Response response = await pipeline.SendRequestAsync(request, CancellationToken.None);
-            return response.ContentStream;
+            await pipeline.SendAsync(message, CancellationToken.None);
+            Response response = message.Response;
+            Stream stream = message.ExtractResponseContent();
+
+            return stream;
         }
 
-        private static Request CreateRequest(HttpPipeline pipeline, long offset)
+        private static HttpMessage CreateMessage(HttpPipeline pipeline, long offset)
         {
             Request request = pipeline.CreateRequest();
             request.Method = RequestMethod.Get;
             request.Uri.Reset(new Uri("https://example.com"));
             request.Headers.Add("Range", "bytes=" + offset);
-            return request;
+            HttpMessage message = new(request, ResponseClassifier.Shared);
+
+            // RetriableStream is only used in clients where streaming APIs
+            // return the network stream to the end-user.  RetriableStream lets
+            // us do this in a way that if a request fails, it can be retried
+            // according to the retry logic configured for the client's pipeline.
+            // As such, when it is used clients must set message.BufferResponse
+            // to false, so we do this in the validation tests as well.
+            message.BufferResponse = false;
+            return message;
         }
 
         private class NoLengthStream : ReadOnlyStream

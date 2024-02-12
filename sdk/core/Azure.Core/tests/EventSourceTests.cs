@@ -647,14 +647,19 @@ namespace Azure.Core.Tests
             }
             setupRequest?.Invoke(mockResponse);
 
-            MockTransport mockTransport = CreateNonBufferingTransport(mockResponse);
+            MockTransport mockTransport = CreateMockTransport(mockResponse);
             var pipeline = new HttpPipeline(mockTransport, new[] { new LoggingPolicy(logContent: true, maxLength, _sanitizer, "Test-SDK") });
 
             Response response = await SendRequestAsync(pipeline, request =>
             {
                 request.Method = RequestMethod.Get;
                 request.Uri.Reset(new Uri("https://contoso.a.io"));
-            });
+            },
+            // These tests are essentially testing whether the logging policy works
+            // correctly when responses are buffered (memory stream) and unbuffered
+            // (non-seekable). In order to validate the intent of the test, we set
+            // message.BufferResponse accordingly here.
+            bufferResponse: isSeekable);
 
             var buffer = new byte[11];
 

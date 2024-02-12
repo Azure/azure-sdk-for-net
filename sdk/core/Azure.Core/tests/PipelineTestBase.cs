@@ -29,15 +29,9 @@ namespace Azure.Core.Tests
             }
         }
 
-        protected async Task<Response> ExecuteRequest(Request request, HttpPipelineTransport transport, CancellationToken cancellationToken = default, bool? bufferResponse = default)
+        protected async Task<Response> ExecuteRequest(Request request, HttpPipelineTransport transport, CancellationToken cancellationToken = default)
         {
             var message = new HttpMessage(request, ResponseClassifier.Shared);
-
-            if (bufferResponse is not null)
-            {
-                message.BufferResponse = bufferResponse.Value;
-            }
-
             message.SetCancellationToken(cancellationToken);
             if (_isAsync)
             {
