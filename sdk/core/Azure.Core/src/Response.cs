@@ -173,6 +173,13 @@ namespace Azure
                 return s_EmptyBinaryData;
             }
 
+            if (ContentStream is MemoryStream memoryStream)
+            {
+                return memoryStream.TryGetBuffer(out ArraySegment<byte> segment) ?
+                    new BinaryData(segment.AsMemory()) :
+                    new BinaryData(memoryStream.ToArray());
+            }
+
             MemoryStream bufferStream = new();
 
             Stream? contentStream = ContentStream;
@@ -202,6 +209,13 @@ namespace Azure
                 return s_EmptyBinaryData;
             }
 
+            if (ContentStream is MemoryStream memoryStream)
+            {
+                return memoryStream.TryGetBuffer(out ArraySegment<byte> segment) ?
+                    new BinaryData(segment.AsMemory()) :
+                    new BinaryData(memoryStream.ToArray());
+            }
+
             MemoryStream bufferStream = new();
 
             Stream? contentStream = ContentStream;
@@ -215,8 +229,6 @@ namespace Azure
             bufferStream.Position = 0;
             return content;
         }
-
-        private class BufferedContentStream : MemoryStream { }
 
         #region Private implementation subtypes of abstract Response types
         private class AzureCoreResponse<T> : Response<T>
