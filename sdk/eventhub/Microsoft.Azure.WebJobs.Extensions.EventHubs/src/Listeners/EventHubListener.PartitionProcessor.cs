@@ -140,7 +140,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Listeners
                             TriggerDetails = eventHubTriggerInput.GetTriggerDetails(context)
                         };
 
-                        await _executor.TryExecuteAsync(input, _functionExecutionToken).ConfigureAwait(false);
+                        await _executor.TryExecuteAsync(input, linkedCts.Token).ConfigureAwait(false);
                         _firstFunctionInvocation = false;
                         eventToCheckpoint = events[i];
                     }
