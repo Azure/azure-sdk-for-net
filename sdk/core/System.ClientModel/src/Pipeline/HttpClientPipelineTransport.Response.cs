@@ -31,6 +31,10 @@ public partial class HttpClientPipelineTransport
         {
             _httpResponse = httpResponse ?? throw new ArgumentNullException(nameof(httpResponse));
             _httpResponseContent = _httpResponse.Content;
+
+            // Don't dispose the content if the stream is replaced.
+            // This means the content remains available for reading headers.
+            _httpResponse.Content = null;
         }
 
         public override int Status => (int)_httpResponse.StatusCode;
@@ -59,10 +63,6 @@ public partial class HttpClientPipelineTransport
             }
             set
             {
-                // Don't dispose the content if the stream is replaced.
-                // This means the content remains available for reading headers.
-                _httpResponse.Content = null;
-
                 _contentStream = value;
 
                 // Invalidate the cache since the source-stream has been replaced.
