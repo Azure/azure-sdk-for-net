@@ -5,7 +5,9 @@
 ### Features Added
 
 ### Breaking Changes
-
+The imageContent parameter for the Analyze(BinaryData imageData, ...) method has been renamed to imageData.
+The imageContent parameter for the Analyze(Uri imageUri, ...) method has been renamed to imageUri
+.
 ### Bugs Fixed
 
 ### Other Changes
