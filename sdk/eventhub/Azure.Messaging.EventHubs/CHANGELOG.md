@@ -1,6 +1,6 @@
 # Release History
 
-## 5.11.0-beta.1 (Unreleased)
+## 5.11.0 (2024-02-13)
 
 ### Features Added
 
