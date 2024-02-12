@@ -82,8 +82,6 @@ namespace Azure
             }
         }
 
-        internal TimeSpan NetworkTimeout { get; set; }
-
         internal HttpMessageSanitizer Sanitizer { get; set; } = HttpMessageSanitizer.Default;
 
         internal RequestFailedDetailsParser? RequestFailedDetailsParser { get; set; }
@@ -178,7 +176,7 @@ namespace Azure
             MemoryStream bufferStream = new();
 
             Stream? contentStream = ContentStream;
-            contentStream.CopyTo(bufferStream, NetworkTimeout, cancellationToken);
+            contentStream.CopyTo(bufferStream, cancellationToken);
             contentStream.Dispose();
 
             bufferStream.Position = 0;
@@ -205,7 +203,7 @@ namespace Azure
             MemoryStream bufferStream = new();
 
             Stream? contentStream = ContentStream;
-            await contentStream.CopyToAsync(bufferStream, NetworkTimeout, cancellationToken).ConfigureAwait(false);
+            await contentStream.CopyToAsync(bufferStream, cancellationToken).ConfigureAwait(false);
             contentStream.Dispose();
 
             bufferStream.Position = 0;

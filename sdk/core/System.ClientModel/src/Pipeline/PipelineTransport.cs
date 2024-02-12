@@ -91,7 +91,6 @@ public abstract class PipelineTransport : PipelinePolicy
 
         message.AssertResponse();
         message.Response!.SetIsError(ClassifyResponse(message));
-        message.Response!.NetworkTimeout = networkTimeout;
 
         // The remainder of the method handles response content according to
         // buffering logic specified by value of message.BufferResponse.
@@ -117,6 +116,14 @@ public abstract class PipelineTransport : PipelinePolicy
 
         try
         {
+            // If cancellation is possible (whether due to network timeout or a user
+            // cancellation token being passed), then register callback to dispose the
+            // stream on cancellation.
+            if (networkTimeout != Timeout.InfiniteTimeSpan || messageToken.CanBeCanceled)
+            {
+                timeoutTokenSource.Token.Register(state => ((Stream?)state)?.Dispose(), contentStream);
+            }
+
             if (async)
             {
                 await message.Response.ReadContentAsync(timeoutTokenSource.Token).ConfigureAwait(false);

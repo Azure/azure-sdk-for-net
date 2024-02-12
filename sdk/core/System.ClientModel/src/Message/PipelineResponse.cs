@@ -52,7 +52,5 @@ public abstract class PipelineResponse : IDisposable
     // setter doesn't become virtual when we make the getter virtual.
     internal void SetIsError(bool isError) => SetIsErrorCore(isError);
 
-    internal TimeSpan NetworkTimeout { get; set; }
-
     public abstract void Dispose();
 }

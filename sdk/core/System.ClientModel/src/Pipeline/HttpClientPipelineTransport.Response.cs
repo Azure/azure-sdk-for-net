@@ -133,11 +133,11 @@ public partial class HttpClientPipelineTransport
 
             if (async)
             {
-                await _contentStream.CopyToAsync(bufferStream, NetworkTimeout, cancellationToken).ConfigureAwait(false);
+                await _contentStream.CopyToAsync(bufferStream, cancellationToken).ConfigureAwait(false);
             }
             else
             {
-                _contentStream.CopyTo(bufferStream, NetworkTimeout, cancellationToken);
+                _contentStream.CopyTo(bufferStream, cancellationToken);
             }
 
             _contentStream.Dispose();
