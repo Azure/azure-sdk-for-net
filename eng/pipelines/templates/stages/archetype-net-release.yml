@@ -21,6 +21,7 @@ stages:
             deploy:
               steps:
                 - checkout: azure-sdk-build-tools
+                  path: azure-sdk-build-tools
 
                 - download: current
                   artifact: ${{parameters.ArtifactName}}
@@ -141,6 +142,8 @@ stages:
                     deploy:
                       steps:
                         - checkout: azure-sdk-build-tools
+                          path: azure-sdk-build-tools
+
                         - task: MSBuild@1
                           displayName: 'Upload Symbols for ${{artifact.name}}'
                           inputs:
@@ -259,6 +262,8 @@ stages:
         vmImage: windows-2022
       steps:
       - checkout: azure-sdk-build-tools
+        path: azure-sdk-build-tools
+
       - download: current
         artifact: ${{parameters.ArtifactName}}-signed
       - pwsh: |
