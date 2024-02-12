@@ -93,7 +93,9 @@ public abstract class PipelineTransport : PipelinePolicy
         message.Response!.SetIsError(ClassifyResponse(message));
         message.Response!.NetworkTimeout = networkTimeout;
 
-        // Handle response content.
+        // The remainder of the method handles response content according to
+        // buffering logic specified by value of message.BufferResponse.
+
         Stream? contentStream = message.Response!.ContentStream;
         if (contentStream is null)
         {
