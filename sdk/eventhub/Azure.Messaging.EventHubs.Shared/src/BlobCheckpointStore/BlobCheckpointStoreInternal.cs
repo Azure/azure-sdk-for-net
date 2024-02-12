@@ -787,9 +787,9 @@ namespace Azure.Messaging.EventHubs.Primitives
                                            string eventHubName,
                                            string consumerGroup,
                                            string clientIdentifier,
-                                           long sequenceNumber,
+                                           long? sequenceNumber,
                                            int replicationSegment,
-                                           long offset,
+                                           long? offset,
                                            Exception exception);
 
         /// <summary>
@@ -810,9 +810,9 @@ namespace Azure.Messaging.EventHubs.Primitives
                                               string eventHubName,
                                               string consumerGroup,
                                               string clientIdentifier,
-                                              long sequenceNumber,
+                                              long? sequenceNumber,
                                               int replicationSegment,
-                                              long offset);
+                                              long? offset);
 
         /// <summary>
         ///   Indicates that an attempt to create/update a checkpoint has started.
@@ -832,9 +832,9 @@ namespace Azure.Messaging.EventHubs.Primitives
                                            string eventHubName,
                                            string consumerGroup,
                                            string clientIdentifier,
-                                           long sequenceNumber,
+                                           long? sequenceNumber,
                                            int replicationSegment,
-                                           long offset);
+                                           long? offset);
 
         /// <summary>
         ///   Indicates that an attempt to retrieve claim partition ownership has completed.
