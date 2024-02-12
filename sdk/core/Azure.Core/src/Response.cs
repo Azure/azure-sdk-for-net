@@ -182,7 +182,9 @@ namespace Azure
             bufferStream.Position = 0;
             ContentStream = bufferStream;
 
-            return BinaryData.FromStream(bufferStream);
+            BinaryData content = BinaryData.FromStream(bufferStream);
+            bufferStream.Position = 0;
+            return content;
         }
 
         /// <summary>
@@ -209,7 +211,9 @@ namespace Azure
             bufferStream.Position = 0;
             ContentStream = bufferStream;
 
-            return BinaryData.FromStream(bufferStream);
+            BinaryData content = BinaryData.FromStream(bufferStream);
+            bufferStream.Position = 0;
+            return content;
         }
 
         private class BufferedContentStream : MemoryStream { }
