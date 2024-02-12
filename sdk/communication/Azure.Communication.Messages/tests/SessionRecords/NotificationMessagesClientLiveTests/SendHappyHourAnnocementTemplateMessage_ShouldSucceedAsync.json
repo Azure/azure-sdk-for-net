@@ -1,0 +1,95 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://sanitized.communication.azure.com/messages/notifications:send?api-version=2024-02-01",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "517",
+        "Content-Type": "application/json",
+        "Repeatability-First-Sent": "Sanitized",
+        "Repeatability-Request-ID": "Sanitized",
+        "traceparent": "00-d0b5ef62546379878b1a1086db8084d2-1370990dfbf1e3b3-00",
+        "User-Agent": "azsdk-net-Communication.Messages/1.0.0-alpha.20240209.1 (.NET 7.0.15; Microsoft Windows 10.0.22631)",
+        "x-ms-client-request-id": "3f637267b2ddf948b5bfd55175e6da23",
+        "x-ms-content-sha256": "Sanitized",
+        "x-ms-date": "Fri, 09 Feb 2024 22:12:16 GMT",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "template": {
+          "name": "sample_happy_hour_announcement",
+          "language": "en_us",
+          "values": [
+            {
+              "text": "Starbucks",
+              "name": "venue",
+              "kind": "text"
+            },
+            {
+              "text": "Today 2-4PM",
+              "name": "time",
+              "kind": "text"
+            },
+            {
+              "url": "https://sample-videos.com/video321/mp4/720/big_buck_bunny_720p_1mb.mp4",
+              "name": "video",
+              "kind": "video"
+            }
+          ],
+          "bindings": {
+            "header": [
+              {
+                "refValue": "video"
+              }
+            ],
+            "body": [
+              {
+                "refValue": "venue"
+              },
+              {
+                "refValue": "time"
+              }
+            ],
+            "kind": "whatsApp"
+          }
+        },
+        "channelRegistrationId": "77ffd898-ec44-42cd-b560-57a8903d05c7",
+        "to": [
+          "\u002B16041234567"
+        ],
+        "kind": "template"
+      },
+      "StatusCode": 202,
+      "ResponseHeaders": {
+        "api-supported-versions": "2023-08-24-preview, 2024-02-01",
+        "Connection": "keep-alive",
+        "Content-Length": "87",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 09 Feb 2024 22:12:18 GMT",
+        "MS-CV": "9xVFoKvuE02h/MHfcY17DQ.0",
+        "Repeatability-Result": "accepted",
+        "Request-Context": "appId=",
+        "Strict-Transport-Security": "max-age=2592000",
+        "x-azure-ref": "20240209T221218Z-pfcn9br3b11kd2xessn2xp84ns000000030000000001kxes",
+        "X-Cache": "CONFIG_NOCACHE",
+        "X-Processing-Time": "420ms"
+      },
+      "ResponseBody": {
+        "receipts": [
+          {
+            "messageId": "5f52cea0-0646-46ad-b023-a3a73de8096c",
+            "to": "\u002B16041234567"
+          }
+        ]
+      }
+    }
+  ],
+  "Variables": {
+    "COMMUNICATION_LIVETEST_DYNAMIC_CONNECTION_STRING": "endpoint=https://sanitized.communication.azure.com/;accesskey=Kg==",
+    "RandomSeed": "248569814",
+    "RECIPIENT_IDENTIFIER": "\u002B16041234567",
+    "SENDER_CHANNEL_REGISTRATION_ID": "77ffd898-ec44-42cd-b560-57a8903d05c7"
+  }
+}
