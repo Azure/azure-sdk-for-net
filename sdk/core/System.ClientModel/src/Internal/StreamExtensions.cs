@@ -12,6 +12,9 @@ namespace System.ClientModel.Internal;
 
 internal static class StreamExtensions
 {
+    // Same value as Stream.CopyTo uses by default
+    private const int DefaultCopyBufferSize = 81920;
+
     public static async Task WriteAsync(this Stream stream, ReadOnlyMemory<byte> buffer, CancellationToken cancellation = default)
     {
         Argument.AssertNotNull(stream, nameof(stream));
@@ -84,6 +87,83 @@ internal static class StreamExtensions
         {
             if (array != null)
                 ArrayPool<byte>.Shared.Return(array);
+        }
+    }
+
+    public static async Task CopyToAsync(this Stream source, Stream destination, TimeSpan timeout, CancellationToken cancellationToken)
+    {
+        using CancellationTokenSource cts = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
+        cts.CancelAfter(timeout);
+
+        // If cancellation is possible (whether due to network timeout or a user cancellation token being passed), then
+        // register callback to dispose the stream on cancellation.
+        if (timeout != Timeout.InfiniteTimeSpan || cancellationToken.CanBeCanceled)
+        {
+            cts.Token.Register(state => ((Stream?)state)?.Dispose(), source);
+        }
+
+        byte[] buffer = ArrayPool<byte>.Shared.Rent(DefaultCopyBufferSize);
+
+        try
+        {
+            while (true)
+            {
+#pragma warning disable CA1835 // ReadAsync(Memory<>) overload is not available in all targets
+                int bytesRead = await source.ReadAsync(buffer, 0, buffer.Length, cts.Token).ConfigureAwait(false);
+#pragma warning restore // ReadAsync(Memory<>) overload is not available in all targets
+                if (bytesRead == 0)
+                    break;
+                await destination.WriteAsync(new ReadOnlyMemory<byte>(buffer, 0, bytesRead), cts.Token).ConfigureAwait(false);
+            }
+        }
+        catch (Exception ex) when (ex is ObjectDisposedException
+                                      or IOException
+                                      or OperationCanceledException
+                                      or NotSupportedException)
+        {
+            CancellationHelper.ThrowIfCancellationRequestedOrTimeout(cancellationToken, cts.Token, ex, timeout);
+            throw;
+        }
+        finally
+        {
+            ArrayPool<byte>.Shared.Return(buffer);
+        }
+    }
+
+    public static void CopyTo(this Stream source, Stream destination, TimeSpan timeout, CancellationToken cancellationToken)
+    {
+        using CancellationTokenSource cts = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
+        cts.CancelAfter(timeout);
+
+        // If cancellation is possible (whether due to network timeout or a user cancellation token being passed), then
+        // register callback to dispose the stream on cancellation.
+        if (timeout != Timeout.InfiniteTimeSpan || cancellationToken.CanBeCanceled)
+        {
+            cts.Token.Register(state => ((Stream?)state)?.Dispose(), source);
+        }
+
+        byte[] buffer = ArrayPool<byte>.Shared.Rent(DefaultCopyBufferSize);
+
+        try
+        {
+            int read;
+            while ((read = source.Read(buffer, 0, buffer.Length)) != 0)
+            {
+                cts.Token.ThrowIfCancellationRequested();
+                destination.Write(buffer, 0, read);
+            }
+        }
+        catch (Exception ex) when (ex is ObjectDisposedException
+                                      or IOException
+                                      or OperationCanceledException
+                                      or NotSupportedException)
+        {
+            CancellationHelper.ThrowIfCancellationRequestedOrTimeout(cancellationToken, cts.Token, ex, timeout);
+            throw;
+        }
+        finally
+        {
+            ArrayPool<byte>.Shared.Return(buffer);
         }
     }
 }
