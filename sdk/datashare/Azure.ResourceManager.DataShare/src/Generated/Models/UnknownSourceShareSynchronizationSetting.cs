@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.DataShare.Models
 {
     /// <summary> The UnknownSourceShareSynchronizationSetting. </summary>
@@ -12,9 +15,15 @@ namespace Azure.ResourceManager.DataShare.Models
     {
         /// <summary> Initializes a new instance of <see cref="UnknownSourceShareSynchronizationSetting"/>. </summary>
         /// <param name="kind"> Kind of synchronization setting on share. </param>
-        internal UnknownSourceShareSynchronizationSetting(SourceShareSynchronizationSettingKind kind) : base(kind)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal UnknownSourceShareSynchronizationSetting(SourceShareSynchronizationSettingKind kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(kind, serializedAdditionalRawData)
         {
             Kind = kind;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="UnknownSourceShareSynchronizationSetting"/> for deserialization. </summary>
+        internal UnknownSourceShareSynchronizationSetting()
+        {
         }
     }
 }

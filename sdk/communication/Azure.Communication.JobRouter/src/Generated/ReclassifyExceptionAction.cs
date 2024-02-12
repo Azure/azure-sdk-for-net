@@ -17,9 +17,10 @@ namespace Azure.Communication.JobRouter
         /// <summary> Initializes a new instance of <see cref="ReclassifyExceptionAction"/>. </summary>
         /// <param name="id"> Unique Id of the exception action. </param>
         /// <param name="kind"> The type discriminator describing a sub-type of ExceptionAction. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="classificationPolicyId"> The new classification policy that will determine queue, priority and worker selectors. </param>
         /// <param name="labelsToUpsert"> Dictionary containing the labels to update (or add if not existing) in key-value pairs.  Values must be primitive values - number, string, boolean. </param>
-        internal ReclassifyExceptionAction(string id, ExceptionActionKind kind, string classificationPolicyId, IDictionary<string, BinaryData> labelsToUpsert) : base(id, kind)
+        internal ReclassifyExceptionAction(string id, ExceptionActionKind kind, IDictionary<string, BinaryData> serializedAdditionalRawData, string classificationPolicyId, IDictionary<string, BinaryData> labelsToUpsert) : base(id, kind, serializedAdditionalRawData)
         {
             ClassificationPolicyId = classificationPolicyId;
             _labelsToUpsert = labelsToUpsert;

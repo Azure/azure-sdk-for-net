@@ -23,5 +23,10 @@ namespace Azure.ResourceManager.DataFactory.Models
         {
             DatasetStorageFormatType = datasetStorageFormatType ?? "Unknown";
         }
+
+        /// <summary> Initializes a new instance of <see cref="UnknownDatasetStorageFormat"/> for deserialization. </summary>
+        internal UnknownDatasetStorageFormat()
+        {
+        }
     }
 }

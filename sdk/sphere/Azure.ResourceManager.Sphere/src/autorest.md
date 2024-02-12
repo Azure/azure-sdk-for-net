@@ -16,9 +16,7 @@ sample-gen:
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
-
-mgmt-debug:
-  show-serialized-names: true
+use-model-reader-writer: true
 
 format-by-name-rules:
   'tenantId': 'uuid'

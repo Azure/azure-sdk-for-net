@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -14,13 +15,46 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Marketplace
 {
-    public partial class PrivateStoreCollectionInfoData : IUtf8JsonSerializable
+    public partial class PrivateStoreCollectionInfoData : IUtf8JsonSerializable, IJsonModel<PrivateStoreCollectionInfoData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PrivateStoreCollectionInfoData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<PrivateStoreCollectionInfoData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<PrivateStoreCollectionInfoData>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(PrivateStoreCollectionInfoData)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(ResourceType);
+            }
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            {
+                writer.WritePropertyName("systemData"u8);
+                JsonSerializer.Serialize(writer, SystemData);
+            }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
+            if (options.Format != "W" && Optional.IsDefined(CollectionId))
+            {
+                writer.WritePropertyName("collectionId"u8);
+                writer.WriteStringValue(CollectionId.Value);
+            }
             if (Optional.IsDefined(CollectionName))
             {
                 writer.WritePropertyName("collectionName"u8);
@@ -35,6 +69,16 @@ namespace Azure.ResourceManager.Marketplace
             {
                 writer.WritePropertyName("allSubscriptions"u8);
                 writer.WriteBooleanValue(AreAllSubscriptionsSelected.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(AreAllItemsApproved))
+            {
+                writer.WritePropertyName("approveAllItems"u8);
+                writer.WriteBooleanValue(AreAllItemsApproved.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(ApproveAllItemsModifiedOn))
+            {
+                writer.WritePropertyName("approveAllItemsModifiedAt"u8);
+                writer.WriteStringValue(ApproveAllItemsModifiedOn.Value, "O");
             }
             if (Optional.IsCollectionDefined(SubscriptionsList))
             {
@@ -51,12 +95,56 @@ namespace Azure.ResourceManager.Marketplace
                 writer.WritePropertyName("enabled"u8);
                 writer.WriteBooleanValue(IsEnabled.Value);
             }
+            if (options.Format != "W" && Optional.IsDefined(NumberOfOffers))
+            {
+                writer.WritePropertyName("numberOfOffers"u8);
+                writer.WriteNumberValue(NumberOfOffers.Value);
+            }
+            if (options.Format != "W" && Optional.IsCollectionDefined(AppliedRules))
+            {
+                writer.WritePropertyName("appliedRules"u8);
+                writer.WriteStartArray();
+                foreach (var item in AppliedRules)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
             writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static PrivateStoreCollectionInfoData DeserializePrivateStoreCollectionInfoData(JsonElement element)
+        PrivateStoreCollectionInfoData IJsonModel<PrivateStoreCollectionInfoData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<PrivateStoreCollectionInfoData>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(PrivateStoreCollectionInfoData)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializePrivateStoreCollectionInfoData(document.RootElement, options);
+        }
+
+        internal static PrivateStoreCollectionInfoData DeserializePrivateStoreCollectionInfoData(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -75,6 +163,8 @@ namespace Azure.ResourceManager.Marketplace
             Optional<bool> enabled = default;
             Optional<long> numberOfOffers = default;
             Optional<IReadOnlyList<MarketplaceRule>> appliedRules = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -205,8 +295,44 @@ namespace Azure.ResourceManager.Marketplace
                     }
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new PrivateStoreCollectionInfoData(id, name, type, systemData.Value, Optional.ToNullable(collectionId), collectionName.Value, claim.Value, Optional.ToNullable(allSubscriptions), Optional.ToNullable(approveAllItems), Optional.ToNullable(approveAllItemsModifiedAt), Optional.ToList(subscriptionsList), Optional.ToNullable(enabled), Optional.ToNullable(numberOfOffers), Optional.ToList(appliedRules));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new PrivateStoreCollectionInfoData(id, name, type, systemData.Value, Optional.ToNullable(collectionId), collectionName.Value, claim.Value, Optional.ToNullable(allSubscriptions), Optional.ToNullable(approveAllItems), Optional.ToNullable(approveAllItemsModifiedAt), Optional.ToList(subscriptionsList), Optional.ToNullable(enabled), Optional.ToNullable(numberOfOffers), Optional.ToList(appliedRules), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<PrivateStoreCollectionInfoData>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<PrivateStoreCollectionInfoData>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(PrivateStoreCollectionInfoData)} does not support '{options.Format}' format.");
+            }
+        }
+
+        PrivateStoreCollectionInfoData IPersistableModel<PrivateStoreCollectionInfoData>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<PrivateStoreCollectionInfoData>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializePrivateStoreCollectionInfoData(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(PrivateStoreCollectionInfoData)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<PrivateStoreCollectionInfoData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -60,6 +60,14 @@ namespace Azure.ResourceManager.HDInsight.Mocking
         /// <term>Operation Id</term>
         /// <description>Clusters_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-15-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HDInsightClusterResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -82,6 +90,14 @@ namespace Azure.ResourceManager.HDInsight.Mocking
         /// <term>Operation Id</term>
         /// <description>Clusters_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-15-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HDInsightClusterResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -103,6 +119,10 @@ namespace Azure.ResourceManager.HDInsight.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Locations_GetCapabilities</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-15-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -135,6 +155,10 @@ namespace Azure.ResourceManager.HDInsight.Mocking
         /// <term>Operation Id</term>
         /// <description>Locations_GetCapabilities</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-15-preview</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="location"> The Azure location (region) for which to make the request. </param>
@@ -166,6 +190,10 @@ namespace Azure.ResourceManager.HDInsight.Mocking
         /// <term>Operation Id</term>
         /// <description>Locations_ListUsages</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-15-preview</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="location"> The Azure location (region) for which to make the request. </param>
@@ -174,7 +202,7 @@ namespace Azure.ResourceManager.HDInsight.Mocking
         public virtual AsyncPageable<HDInsightUsage> GetHDInsightUsagesAsync(AzureLocation location, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => LocationsRestClient.CreateListUsagesRequest(Id.SubscriptionId, location);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, HDInsightUsage.DeserializeHDInsightUsage, LocationsClientDiagnostics, Pipeline, "MockableHDInsightSubscriptionResource.GetHDInsightUsages", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => HDInsightUsage.DeserializeHDInsightUsage(e), LocationsClientDiagnostics, Pipeline, "MockableHDInsightSubscriptionResource.GetHDInsightUsages", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -188,6 +216,10 @@ namespace Azure.ResourceManager.HDInsight.Mocking
         /// <term>Operation Id</term>
         /// <description>Locations_ListUsages</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-15-preview</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="location"> The Azure location (region) for which to make the request. </param>
@@ -196,7 +228,7 @@ namespace Azure.ResourceManager.HDInsight.Mocking
         public virtual Pageable<HDInsightUsage> GetHDInsightUsages(AzureLocation location, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => LocationsRestClient.CreateListUsagesRequest(Id.SubscriptionId, location);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, HDInsightUsage.DeserializeHDInsightUsage, LocationsClientDiagnostics, Pipeline, "MockableHDInsightSubscriptionResource.GetHDInsightUsages", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => HDInsightUsage.DeserializeHDInsightUsage(e), LocationsClientDiagnostics, Pipeline, "MockableHDInsightSubscriptionResource.GetHDInsightUsages", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -209,6 +241,10 @@ namespace Azure.ResourceManager.HDInsight.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Locations_ListBillingSpecs</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-15-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -241,6 +277,10 @@ namespace Azure.ResourceManager.HDInsight.Mocking
         /// <term>Operation Id</term>
         /// <description>Locations_ListBillingSpecs</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-15-preview</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="location"> The Azure location (region) for which to make the request. </param>
@@ -271,6 +311,10 @@ namespace Azure.ResourceManager.HDInsight.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Locations_CheckNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-15-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -307,6 +351,10 @@ namespace Azure.ResourceManager.HDInsight.Mocking
         /// <term>Operation Id</term>
         /// <description>Locations_CheckNameAvailability</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-15-preview</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="location"> The Azure location (region) for which to make the request. </param>
@@ -342,6 +390,10 @@ namespace Azure.ResourceManager.HDInsight.Mocking
         /// <term>Operation Id</term>
         /// <description>Locations_ValidateClusterCreateRequest</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-15-preview</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="location"> The Azure location (region) for which to make the request. </param>
@@ -376,6 +428,10 @@ namespace Azure.ResourceManager.HDInsight.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Locations_ValidateClusterCreateRequest</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-15-preview</description>
         /// </item>
         /// </list>
         /// </summary>

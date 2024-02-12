@@ -1,3 +1,13 @@
+namespace Azure.Storage.Blobs.Batch.Models
+{
+    public partial class DeleteBlobOptions
+    {
+        public DeleteBlobOptions() { }
+        public Azure.Storage.Blobs.Models.BlobRequestConditions Conditions { get { throw null; } set { } }
+        public Azure.Storage.Blobs.Models.DeleteSnapshotsOption SnapshotsOption { get { throw null; } set { } }
+        public string VersionID { get { throw null; } set { } }
+    }
+}
 namespace Azure.Storage.Blobs.Specialized
 {
     public partial class BlobBatch : System.IDisposable
@@ -5,7 +15,9 @@ namespace Azure.Storage.Blobs.Specialized
         protected BlobBatch() { }
         public BlobBatch(Azure.Storage.Blobs.Specialized.BlobBatchClient client) { }
         public int RequestCount { get { throw null; } }
-        public virtual Azure.Response DeleteBlob(string blobContainerName, string blobName, Azure.Storage.Blobs.Models.DeleteSnapshotsOption snapshotsOption = Azure.Storage.Blobs.Models.DeleteSnapshotsOption.None, Azure.Storage.Blobs.Models.BlobRequestConditions conditions = null) { throw null; }
+        public virtual Azure.Response DeleteBlob(string blobContainerName, string blobName, Azure.Storage.Blobs.Batch.Models.DeleteBlobOptions options = null) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public virtual Azure.Response DeleteBlob(string blobContainerName, string blobName, Azure.Storage.Blobs.Models.DeleteSnapshotsOption snapshotsOption, Azure.Storage.Blobs.Models.BlobRequestConditions conditions) { throw null; }
         public virtual Azure.Response DeleteBlob(System.Uri blobUri, Azure.Storage.Blobs.Models.DeleteSnapshotsOption snapshotsOption = Azure.Storage.Blobs.Models.DeleteSnapshotsOption.None, Azure.Storage.Blobs.Models.BlobRequestConditions conditions = null) { throw null; }
         public void Dispose() { }
         public virtual Azure.Response SetBlobAccessTier(string blobContainerName, string blobName, Azure.Storage.Blobs.Models.AccessTier accessTier, Azure.Storage.Blobs.Models.RehydratePriority? rehydratePriority = default(Azure.Storage.Blobs.Models.RehydratePriority?), Azure.Storage.Blobs.Models.BlobRequestConditions leaseAccessConditions = null) { throw null; }

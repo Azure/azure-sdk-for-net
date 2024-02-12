@@ -48,6 +48,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             ActivityType = activityType ?? "Script";
         }
 
+        /// <summary> Initializes a new instance of <see cref="DataFactoryScriptActivity"/> for deserialization. </summary>
+        internal DataFactoryScriptActivity()
+        {
+        }
+
         /// <summary> ScriptBlock execution timeout. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </summary>
         public DataFactoryElement<string> ScriptBlockExecutionTimeout { get; set; }
         /// <summary> Array of script blocks. Type: array. </summary>

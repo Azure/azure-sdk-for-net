@@ -1,0 +1,103 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://sanitized.communication.azure.com/messages/notifications:send?api-version=2024-02-01",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "617",
+        "Content-Type": "application/json",
+        "Repeatability-First-Sent": "Sanitized",
+        "Repeatability-Request-ID": "Sanitized",
+        "traceparent": "00-1b87e81ed9286fa77b4d122afc85907c-1ac22cd40a23d44a-00",
+        "User-Agent": "azsdk-net-Communication.Messages/1.0.0-alpha.20240209.1 (.NET 7.0.15; Microsoft Windows 10.0.22631)",
+        "x-ms-client-request-id": "5cee58dabb4b86339b90ceff0e1f0867",
+        "x-ms-content-sha256": "Sanitized",
+        "x-ms-date": "Fri, 09 Feb 2024 22:12:15 GMT",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "template": {
+          "name": "sample_flight_confirmation",
+          "language": "en_us",
+          "values": [
+            {
+              "url": "https://file-examples.com/storage/fe63e96e0365c0e1e99a842/2017/10/file-sample_150kB.pdf",
+              "name": "document",
+              "kind": "document"
+            },
+            {
+              "text": "Gloria",
+              "name": "firstName",
+              "kind": "text"
+            },
+            {
+              "text": "Li",
+              "name": "lastName",
+              "kind": "text"
+            },
+            {
+              "text": "July 1st, 2023",
+              "name": "date",
+              "kind": "text"
+            }
+          ],
+          "bindings": {
+            "header": [
+              {
+                "refValue": "document"
+              }
+            ],
+            "body": [
+              {
+                "refValue": "firstName"
+              },
+              {
+                "refValue": "lastName"
+              },
+              {
+                "refValue": "date"
+              }
+            ],
+            "kind": "whatsApp"
+          }
+        },
+        "channelRegistrationId": "77ffd898-ec44-42cd-b560-57a8903d05c7",
+        "to": [
+          "\u002B16041234567"
+        ],
+        "kind": "template"
+      },
+      "StatusCode": 202,
+      "ResponseHeaders": {
+        "api-supported-versions": "2023-08-24-preview, 2024-02-01",
+        "Connection": "keep-alive",
+        "Content-Length": "87",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 09 Feb 2024 22:12:18 GMT",
+        "MS-CV": "0OvDkKEsFEe0eDET9rU1mw.0",
+        "Repeatability-Result": "accepted",
+        "Request-Context": "appId=",
+        "Strict-Transport-Security": "max-age=2592000",
+        "x-azure-ref": "20240209T221217Z-pfcn9br3b11kd2xessn2xp84ns000000030000000001kxa5",
+        "X-Cache": "CONFIG_NOCACHE",
+        "X-Processing-Time": "482ms"
+      },
+      "ResponseBody": {
+        "receipts": [
+          {
+            "messageId": "bd90cd11-84a0-42f7-b85f-cb52857c3676",
+            "to": "\u002B16041234567"
+          }
+        ]
+      }
+    }
+  ],
+  "Variables": {
+    "COMMUNICATION_LIVETEST_DYNAMIC_CONNECTION_STRING": "endpoint=https://sanitized.communication.azure.com/;accesskey=Kg==",
+    "RandomSeed": "1056756748",
+    "RECIPIENT_IDENTIFIER": "\u002B16041234567",
+    "SENDER_CHANNEL_REGISTRATION_ID": "77ffd898-ec44-42cd-b560-57a8903d05c7"
+  }
+}

@@ -2,7 +2,10 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Net;
+using System.Threading.Tasks;
 using Azure.Core.TestFramework;
+using Azure.Identity;
 
 namespace Azure.Monitor.Query.Tests
 {
@@ -25,5 +28,49 @@ namespace Azure.Monitor.Query.Tests
         public string ConnectionString => GetRecordedOptionalVariable("CONNECTION_STRING");
         public string StorageAccountId => GetRecordedOptionalVariable("STORAGE_ID");
         public string StorageAccountConnectionString => GetRecordedOptionalVariable("STORAGE_CONNECTION_STRING");
+        public string MetricsLocation => GetRecordedVariable("METRICS_LOCATION");
+        public string GetLogsAudience()
+        {
+            Uri authorityHost = new(AuthorityHostUrl);
+
+            if (authorityHost == AzureAuthorityHosts.AzurePublicCloud)
+            {
+                return LogsQueryAudience.AzurePublicCloud.ToString();
+            }
+
+            else if (authorityHost == AzureAuthorityHosts.AzureChina)
+            {
+                return LogsQueryAudience.AzureChina.ToString();
+            }
+
+            else if (authorityHost == AzureAuthorityHosts.AzureGovernment)
+            {
+                return LogsQueryAudience.AzureGovernment.ToString();
+            }
+
+            throw new NotSupportedException($"Cloud for authority host {authorityHost} is not supported.");
+        }
+
+        public string GetMetricsAudience()
+        {
+            Uri authorityHost = new(AuthorityHostUrl);
+
+            if (authorityHost == AzureAuthorityHosts.AzurePublicCloud)
+            {
+                return MetricsQueryAudience.AzurePublicCloud.ToString();
+            }
+
+            else if (authorityHost == AzureAuthorityHosts.AzureChina)
+            {
+                return MetricsQueryAudience.AzureChina.ToString();
+            }
+
+            else if (authorityHost == AzureAuthorityHosts.AzureGovernment)
+            {
+                return MetricsQueryAudience.AzureGovernment.ToString();
+            }
+
+            throw new NotSupportedException($"Cloud for authority host {authorityHost} is not supported.");
+        }
     }
 }

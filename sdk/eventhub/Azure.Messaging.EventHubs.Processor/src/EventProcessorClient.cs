@@ -42,6 +42,9 @@ namespace Azure.Messaging.EventHubs
     ///   <see cref="StopProcessingAsync" /> or <see cref="StopProcessing" /> when processing is complete or as the application is shutting down will ensure
     ///   that network resources and other unmanaged objects are properly cleaned up.
     /// </remarks>
+    ///
+    /// <seealso href="https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/eventhub/Azure.Messaging.EventHubs/samples">Event Hubs samples and discussion</seealso>
+    /// <seealso href="https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/eventhub/Azure.Messaging.EventHubs.Processor/samples">Event Hubs event processor samples and discussion</seealso>
     ///
     [SuppressMessage("Usage", "CA1001:Types that own disposable fields should be disposable.", Justification = "Disposal is managed internally as part of the Stop operation.")]
     [SuppressMessage("Usage", "AZC0007:DO provide a minimal constructor that takes only the parameters required to connect to the service.", Justification = "Event Hubs are AMQP-based services and don't use ClientOptions functionality")]
@@ -331,6 +334,17 @@ namespace Azure.Messaging.EventHubs
         ///   A unique name used to identify this event processor.
         /// </summary>
         ///
+        /// <remarks>
+        ///   The identifier can be set using the <see cref="EventProcessorClientOptions.Identifier"/> property on the
+        ///   <see cref="EventProcessorClientOptions"/> passed when constructing the processor.  If not specified, a
+        ///   random identifier will be generated.
+        ///
+        ///   It is recommended that you set a stable unique identifier for processor instances, as this allows
+        ///   the processor to recover partition ownership when an application or host instance is restarted.  It
+        ///   also aids readability in Azure SDK logs and allows for more easily correlating logs to a specific
+        ///   processor instance.
+        /// </remarks>
+        ///
         public new string Identifier => base.Identifier;
 
         /// <summary>
@@ -452,7 +466,7 @@ namespace Azure.Messaging.EventHubs
         /// <remarks>
         ///   <para>The container associated with the <paramref name="checkpointStore" /> is expected to exist; the <see cref="EventProcessorClient" />
         ///   does not assume the ability to manage the storage account and is safe to run with only read/write permission for blobs in the container.  It is
-        ///   recommended that this container be unique to the Event Hub and consumer group used by the processor and that it not conain other blobs.</para>
+        ///   recommended that this container be unique to the Event Hub and consumer group used by the processor and that it not contain other blobs.</para>
         ///
         ///   <para>If the connection string is copied from the Event Hub itself, it will contain the name of the desired Event Hub,
         ///   and can be used directly without passing the <paramref name="eventHubName" />.  The name of the Event Hub should be
@@ -493,7 +507,7 @@ namespace Azure.Messaging.EventHubs
         /// <remarks>
         ///   The container associated with the <paramref name="checkpointStore" /> is expected to exist; the <see cref="EventProcessorClient" />
         ///   does not assume the ability to manage the storage account and is safe to run with only read/write permission for blobs in the container.  It is
-        ///   recommended that this container be unique to the Event Hub and consumer group used by the processor and that it not conain other blobs.
+        ///   recommended that this container be unique to the Event Hub and consumer group used by the processor and that it not contain other blobs.
         /// </remarks>
         ///
         public EventProcessorClient(BlobContainerClient checkpointStore,
@@ -878,39 +892,17 @@ namespace Azure.Messaging.EventHubs
         /// </summary>
         ///
         /// <param name="partitionId">The identifier of the partition the checkpoint is for.</param>
-        /// <param name="offset">The offset to associate with the checkpoint, indicating that a processor should begin reading form the next event in the stream.</param>
-        /// <param name="sequenceNumber">An optional sequence number to associate with the checkpoint, intended as informational metadata.  The <paramref name="offset" /> will be used for positioning when events are read.</param>
+        /// <param name="offset">The offset to associate with the checkpoint, intended as informational metadata. This will only be used for positioning if there is no value provided for <paramref name="sequenceNumber"/>.</param>
+        /// <param name="sequenceNumber">The sequence number to associate with the checkpoint, indicating that a processor should begin reading from the next event in the stream.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken" /> instance to signal a request to cancel the operation.</param>
         ///
-        [EditorBrowsable(EditorBrowsableState.Never)]
         protected override Task UpdateCheckpointAsync(string partitionId,
                                                       long offset,
                                                       long? sequenceNumber,
-                                                      CancellationToken cancellationToken) => UpdateCheckpointAsync(partitionId, new CheckpointPosition(sequenceNumber ?? long.MinValue, offset), cancellationToken);
-
-        /// <summary>
-        ///   Creates or updates a checkpoint for a specific partition, identifying a position in the partition's event stream
-        ///   that an event processor should begin reading from.
-        /// </summary>
-        ///
-        /// <param name="partitionId">The identifier of the partition the checkpoint is for.</param>
-        /// <param name="checkpointStartingPosition">The starting position to associate with the checkpoint, indicating that a processor should begin reading from the next event in the stream.</param>
-        /// <param name="cancellationToken">A <see cref="CancellationToken" /> instance to signal a request to cancel the operation.</param>
-        ///
-        protected override Task UpdateCheckpointAsync(string partitionId,
-                                                      CheckpointPosition checkpointStartingPosition,
                                                       CancellationToken cancellationToken)
         {
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
-
             Argument.AssertNotNull(partitionId, nameof(partitionId));
-
-            // The default value for sequence number is long.MinValue to provide backwards compatibility. Ensure that if one was not provided, an offset was provided.
-            if (checkpointStartingPosition.SequenceNumber == long.MinValue)
-            {
-                Argument.AssertNotNull(checkpointStartingPosition.Offset, nameof(checkpointStartingPosition.Offset));
-                Argument.AssertInRange(checkpointStartingPosition.Offset.Value, long.MinValue + 1, long.MaxValue, nameof(checkpointStartingPosition.Offset));
-            }
 
             Logger.UpdateCheckpointStart(partitionId, Identifier, EventHubName, ConsumerGroup);
 
@@ -919,7 +911,50 @@ namespace Azure.Messaging.EventHubs
 
             try
             {
-                return CheckpointStore.UpdateCheckpointAsync(FullyQualifiedNamespace, EventHubName, ConsumerGroup, partitionId, Identifier, checkpointStartingPosition, cancellationToken);
+                return CheckpointStore.UpdateCheckpointAsync(FullyQualifiedNamespace, EventHubName, ConsumerGroup, partitionId, offset, sequenceNumber, cancellationToken);
+            }
+            catch (Exception ex)
+            {
+                // In case of failure, there is no need to call the error handler because the exception can
+                // be thrown directly to the caller here.
+
+                scope.Failed(ex);
+                Logger.UpdateCheckpointError(partitionId, Identifier, EventHubName, ConsumerGroup, ex.Message);
+
+                throw;
+            }
+            finally
+            {
+                Logger.UpdateCheckpointComplete(partitionId, Identifier, EventHubName, ConsumerGroup);
+            }
+        }
+
+        /// <summary>
+        ///   Creates or updates a checkpoint for a specific partition, identifying a position in the partition's event stream
+        ///   that an event processor should begin reading from.
+        /// </summary>
+        ///
+        /// <param name="partitionId">The identifier of the partition the checkpoint is for.</param>
+        /// <param name="startingPosition">The starting position to associate with the checkpoint, indicating that a processor should begin reading from the next event in the stream.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken" /> instance to signal a request to cancel the operation.</param>
+        ///
+        protected override Task UpdateCheckpointAsync(string partitionId,
+                                                      CheckpointPosition startingPosition,
+                                                      CancellationToken cancellationToken)
+        {
+            cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
+
+            Argument.AssertNotNull(partitionId, nameof(partitionId));
+            Argument.AssertAtLeast(startingPosition.SequenceNumber, 0, nameof(startingPosition.SequenceNumber));
+
+            Logger.UpdateCheckpointStart(partitionId, Identifier, EventHubName, ConsumerGroup);
+
+            using var scope = ClientDiagnostics.CreateScope(DiagnosticProperty.EventProcessorCheckpointActivityName, ActivityKind.Internal);
+            scope.Start();
+
+            try
+            {
+                return CheckpointStore.UpdateCheckpointAsync(FullyQualifiedNamespace, EventHubName, ConsumerGroup, partitionId, Identifier, startingPosition, cancellationToken);
             }
             catch (Exception ex)
             {
@@ -1044,7 +1079,13 @@ namespace Azure.Messaging.EventHubs
                                                                   EventProcessorPartition partition,
                                                                   CancellationToken cancellationToken)
         {
-            cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
+            // If cancellation was requested, then do not dispatch the events to be handled.  This
+            // is considered a normal exit condition, rather than an exceptional case.
+
+            if (cancellationToken.IsCancellationRequested)
+            {
+                return;
+            }
 
             var operation = Guid.NewGuid().ToString("D", CultureInfo.InvariantCulture);
             var context = default(PartitionContext);

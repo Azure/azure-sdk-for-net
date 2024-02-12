@@ -42,6 +42,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             DatasetType = datasetType ?? "ConcurObject";
         }
 
+        /// <summary> Initializes a new instance of <see cref="ConcurObjectDataset"/> for deserialization. </summary>
+        internal ConcurObjectDataset()
+        {
+        }
+
         /// <summary> The table name. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> TableName { get; set; }
     }

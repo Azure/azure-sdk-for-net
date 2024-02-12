@@ -6,15 +6,25 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.IotHub.Models
 {
-    public partial class CloudToDeviceFeedbackQueueProperties : IUtf8JsonSerializable
+    public partial class CloudToDeviceFeedbackQueueProperties : IUtf8JsonSerializable, IJsonModel<CloudToDeviceFeedbackQueueProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CloudToDeviceFeedbackQueueProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<CloudToDeviceFeedbackQueueProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<CloudToDeviceFeedbackQueueProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(CloudToDeviceFeedbackQueueProperties)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(LockDurationAsIso8601))
             {
@@ -31,11 +41,40 @@ namespace Azure.ResourceManager.IotHub.Models
                 writer.WritePropertyName("maxDeliveryCount"u8);
                 writer.WriteNumberValue(MaxDeliveryCount.Value);
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static CloudToDeviceFeedbackQueueProperties DeserializeCloudToDeviceFeedbackQueueProperties(JsonElement element)
+        CloudToDeviceFeedbackQueueProperties IJsonModel<CloudToDeviceFeedbackQueueProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<CloudToDeviceFeedbackQueueProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(CloudToDeviceFeedbackQueueProperties)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeCloudToDeviceFeedbackQueueProperties(document.RootElement, options);
+        }
+
+        internal static CloudToDeviceFeedbackQueueProperties DeserializeCloudToDeviceFeedbackQueueProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -43,6 +82,8 @@ namespace Azure.ResourceManager.IotHub.Models
             Optional<TimeSpan> lockDurationAsIso8601 = default;
             Optional<TimeSpan> ttlAsIso8601 = default;
             Optional<int> maxDeliveryCount = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("lockDurationAsIso8601"u8))
@@ -72,8 +113,44 @@ namespace Azure.ResourceManager.IotHub.Models
                     maxDeliveryCount = property.Value.GetInt32();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new CloudToDeviceFeedbackQueueProperties(Optional.ToNullable(lockDurationAsIso8601), Optional.ToNullable(ttlAsIso8601), Optional.ToNullable(maxDeliveryCount));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new CloudToDeviceFeedbackQueueProperties(Optional.ToNullable(lockDurationAsIso8601), Optional.ToNullable(ttlAsIso8601), Optional.ToNullable(maxDeliveryCount), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<CloudToDeviceFeedbackQueueProperties>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<CloudToDeviceFeedbackQueueProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(CloudToDeviceFeedbackQueueProperties)} does not support '{options.Format}' format.");
+            }
+        }
+
+        CloudToDeviceFeedbackQueueProperties IPersistableModel<CloudToDeviceFeedbackQueueProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<CloudToDeviceFeedbackQueueProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeCloudToDeviceFeedbackQueueProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(CloudToDeviceFeedbackQueueProperties)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<CloudToDeviceFeedbackQueueProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

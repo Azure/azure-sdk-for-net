@@ -4,6 +4,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 // The Id of content type does not meet the criteria of ResourceIdentifier.
@@ -15,12 +16,15 @@ namespace Azure.ResourceManager.ApiManagement.Models
     /// <summary> Content type contract details. </summary>
     public partial class ApiManagementContentType
     {
-        /// <summary> Initializes a new instance of ApiManagementContentType. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ApiManagementContentType"/>. </summary>
         public ApiManagementContentType()
         {
         }
 
-        /// <summary> Initializes a new instance of ApiManagementContentType. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApiManagementContentType"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -29,7 +33,8 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <param name="description"> Content type description. </param>
         /// <param name="schema"> Content type schema. </param>
         /// <param name="version"> Content type version. </param>
-        internal ApiManagementContentType(string id, string name, ResourceType resourceType, string contentTypeIdentifier, string contentTypeName, string description, BinaryData schema, string version)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ApiManagementContentType(string id, string name, ResourceType resourceType, string contentTypeIdentifier, string contentTypeName, string description, BinaryData schema, string version, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ContentTypeId = id;
             Name = name;
@@ -39,6 +44,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             Description = description;
             Schema = schema;
             Version = version;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Content Type ID. </summary>
@@ -59,7 +65,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
         /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
         /// </para>
         /// <para>
         /// Examples:

@@ -11,60 +11,42 @@ namespace Azure.Storage.DataMovement
     public class StorageResourceReadStreamResult
     {
         /// <summary>
-        /// Content
+        /// Content.
         /// </summary>
         public readonly Stream Content;
 
         /// <summary>
-        /// Indicates the range of bytes returned if the client requested a subset of the storage resource by setting the Range request header.
-        ///
-        /// The format of the Content-Range is expected to comeback in the following format.
-        /// [unit] [start]-[end]/[fileSize]
-        /// (e.g. bytes 1024-3071/10240)
-        ///
-        /// The [end] value will be the inclusive last byte (e.g. header "bytes 0-7/8" is the entire 8-byte storage resource).
+        /// Length of the content.
         /// </summary>
-        public readonly string ContentRange;
+        public readonly long? ContentLength;
 
         /// <summary>
-        /// Indicates that the service supports requests for partial storage resource content.
+        /// Length of the resource.
         /// </summary>
-        public readonly string AcceptRanges;
+        public readonly long? ResourceLength;
 
         /// <summary>
-        /// If the storage resource has a MD5 hash, and if request contains range header (Range or x-ms-range), this response header is returned with the value of the whole storage resource's MD5 value. This value may or may not be equal to the value returned in Content-MD5 header, with the latter calculated from the requested range.
+        /// The ETag of the result.
         /// </summary>
-#pragma warning disable CA1819 // Properties should not return arrays
-        public readonly byte[] RangeContentHash;
-#pragma warning restore CA1819 // Properties should not return arrays
-
-        /// <summary>
-        /// The properties for the storage resource
-        /// </summary>
-        internal StorageResourceProperties Properties { get; set; }
+        public readonly ETag? ETag;
 
         internal StorageResourceReadStreamResult() { }
 
         /// <summary>
-        /// Constructor for ReadStreamStorageResourceInfo
+        /// Constructor for StorageResourceReadStreamResult
         /// </summary>
         /// <param name="content"></param>
-        /// <param name="contentRange"></param>
-        /// <param name="acceptRanges"></param>
-        /// <param name="rangeContentHash"></param>
+        /// <param name="range"></param>
         /// <param name="properties"></param>
         public StorageResourceReadStreamResult(
             Stream content,
-            string contentRange,
-            string acceptRanges,
-            byte[] rangeContentHash,
-            StorageResourceProperties properties)
+            HttpRange range,
+            StorageResourceItemProperties properties)
         {
             Content = content;
-            ContentRange = contentRange;
-            AcceptRanges = acceptRanges;
-            RangeContentHash = rangeContentHash;
-            Properties = properties;
+            ContentLength = range != default ? range.Length : 0;
+            ResourceLength = properties.ResourceLength;
+            ETag = properties.ETag;
         }
 
         /// <summary>
@@ -75,6 +57,8 @@ namespace Azure.Storage.DataMovement
             Stream content)
         {
             Content = content;
+            ContentLength = content.Length;
+            ResourceLength = content.Length;
         }
     }
 }

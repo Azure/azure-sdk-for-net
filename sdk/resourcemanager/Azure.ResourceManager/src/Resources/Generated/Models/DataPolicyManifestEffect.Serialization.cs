@@ -6,21 +6,85 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Resources.Models
 {
-    public partial class DataPolicyManifestEffect
+    public partial class DataPolicyManifestEffect : IUtf8JsonSerializable, IJsonModel<DataPolicyManifestEffect>
     {
-        internal static DataPolicyManifestEffect DeserializeDataPolicyManifestEffect(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataPolicyManifestEffect>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<DataPolicyManifestEffect>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<DataPolicyManifestEffect>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DataPolicyManifestEffect)} does not support '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(Name))
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (Optional.IsDefined(DetailsSchema))
+            {
+                writer.WritePropertyName("detailsSchema"u8);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(DetailsSchema);
+#else
+                using (JsonDocument document = JsonDocument.Parse(DetailsSchema))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        DataPolicyManifestEffect IJsonModel<DataPolicyManifestEffect>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DataPolicyManifestEffect>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DataPolicyManifestEffect)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeDataPolicyManifestEffect(document.RootElement, options);
+        }
+
+        internal static DataPolicyManifestEffect DeserializeDataPolicyManifestEffect(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<string> name = default;
             Optional<BinaryData> detailsSchema = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -37,8 +101,44 @@ namespace Azure.ResourceManager.Resources.Models
                     detailsSchema = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new DataPolicyManifestEffect(name.Value, detailsSchema.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new DataPolicyManifestEffect(name.Value, detailsSchema.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<DataPolicyManifestEffect>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DataPolicyManifestEffect>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(DataPolicyManifestEffect)} does not support '{options.Format}' format.");
+            }
+        }
+
+        DataPolicyManifestEffect IPersistableModel<DataPolicyManifestEffect>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DataPolicyManifestEffect>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeDataPolicyManifestEffect(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(DataPolicyManifestEffect)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<DataPolicyManifestEffect>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -5,22 +5,79 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Purview.Models
 {
-    public partial class PurviewAccountEndpoint
+    public partial class PurviewAccountEndpoint : IUtf8JsonSerializable, IJsonModel<PurviewAccountEndpoint>
     {
-        internal static PurviewAccountEndpoint DeserializePurviewAccountEndpoint(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PurviewAccountEndpoint>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<PurviewAccountEndpoint>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<PurviewAccountEndpoint>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(PurviewAccountEndpoint)} does not support '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (options.Format != "W" && Optional.IsDefined(Catalog))
+            {
+                writer.WritePropertyName("catalog"u8);
+                writer.WriteStringValue(Catalog);
+            }
+            if (options.Format != "W" && Optional.IsDefined(Scan))
+            {
+                writer.WritePropertyName("scan"u8);
+                writer.WriteStringValue(Scan);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        PurviewAccountEndpoint IJsonModel<PurviewAccountEndpoint>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<PurviewAccountEndpoint>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(PurviewAccountEndpoint)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializePurviewAccountEndpoint(document.RootElement, options);
+        }
+
+        internal static PurviewAccountEndpoint DeserializePurviewAccountEndpoint(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<string> catalog = default;
-            Optional<string> guardian = default;
             Optional<string> scan = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("catalog"u8))
@@ -28,18 +85,49 @@ namespace Azure.ResourceManager.Purview.Models
                     catalog = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("guardian"u8))
-                {
-                    guardian = property.Value.GetString();
-                    continue;
-                }
                 if (property.NameEquals("scan"u8))
                 {
                     scan = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new PurviewAccountEndpoint(catalog.Value, guardian.Value, scan.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new PurviewAccountEndpoint(catalog.Value, scan.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<PurviewAccountEndpoint>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<PurviewAccountEndpoint>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(PurviewAccountEndpoint)} does not support '{options.Format}' format.");
+            }
+        }
+
+        PurviewAccountEndpoint IPersistableModel<PurviewAccountEndpoint>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<PurviewAccountEndpoint>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializePurviewAccountEndpoint(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(PurviewAccountEndpoint)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<PurviewAccountEndpoint>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

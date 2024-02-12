@@ -54,6 +54,14 @@ namespace Azure.ResourceManager.DevTestLabs.Mocking
         /// <term>Operation Id</term>
         /// <description>Labs_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-09-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DevTestLabResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="name"> The name of the lab. </param>
@@ -77,6 +85,14 @@ namespace Azure.ResourceManager.DevTestLabs.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Labs_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-09-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DevTestLabResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -109,6 +125,14 @@ namespace Azure.ResourceManager.DevTestLabs.Mocking
         /// <term>Operation Id</term>
         /// <description>GlobalSchedules_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-09-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DevTestLabGlobalScheduleResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="name"> The name of the schedule. </param>
@@ -132,6 +156,14 @@ namespace Azure.ResourceManager.DevTestLabs.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>GlobalSchedules_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-09-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DevTestLabGlobalScheduleResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

@@ -54,6 +54,14 @@ namespace Azure.ResourceManager.FrontDoor.Mocking
         /// <term>Operation Id</term>
         /// <description>Policies_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="FrontDoorWebApplicationFirewallPolicyResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="policyName"> The name of the Web Application Firewall Policy. </param>
@@ -76,6 +84,14 @@ namespace Azure.ResourceManager.FrontDoor.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Policies_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="FrontDoorWebApplicationFirewallPolicyResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -107,6 +123,14 @@ namespace Azure.ResourceManager.FrontDoor.Mocking
         /// <term>Operation Id</term>
         /// <description>FrontDoors_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="FrontDoorResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="frontDoorName"> Name of the Front Door which is globally unique. </param>
@@ -129,6 +153,14 @@ namespace Azure.ResourceManager.FrontDoor.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>FrontDoors_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="FrontDoorResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -160,6 +192,14 @@ namespace Azure.ResourceManager.FrontDoor.Mocking
         /// <term>Operation Id</term>
         /// <description>NetworkExperimentProfiles_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2019-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="FrontDoorNetworkExperimentProfileResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="profileName"> The Profile identifier associated with the Tenant and Partner. </param>
@@ -182,6 +222,14 @@ namespace Azure.ResourceManager.FrontDoor.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>NetworkExperimentProfiles_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2019-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="FrontDoorNetworkExperimentProfileResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

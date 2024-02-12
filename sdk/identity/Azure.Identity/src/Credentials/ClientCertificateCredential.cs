@@ -13,9 +13,9 @@ using System.Threading.Tasks;
 namespace Azure.Identity
 {
     /// <summary>
-    /// Enables authentication of a service principal to Microsoft Entra ID using a X509 certificate that is assigned to it's App Registration. More information
-    /// on how to configure certificate authentication can be found here:
-    /// https://learn.microsoft.com/azure/active-directory/develop/active-directory-certificate-credentials#register-your-certificate-with-azure-ad
+    /// Enables authentication of a service principal to Microsoft Entra ID using a X509 certificate that is assigned to its App Registration. More information
+    /// on how to configure certificate authentication can be found at
+    /// <see href="https://learn.microsoft.com/entra/identity-platform/certificate-credentials#register-your-certificate-with-microsoft-identity-platform"/>.
     /// </summary>
     public class ClientCertificateCredential : TokenCredential
     {

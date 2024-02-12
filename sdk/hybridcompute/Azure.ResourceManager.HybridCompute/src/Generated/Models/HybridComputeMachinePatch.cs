@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -21,16 +22,19 @@ namespace Azure.ResourceManager.HybridCompute.Models
 
         /// <summary> Initializes a new instance of <see cref="HybridComputeMachinePatch"/>. </summary>
         /// <param name="tags"> Resource tags. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="identity"> Identity for the resource. Current supported identity types: SystemAssigned. </param>
+        /// <param name="kind"> Indicates which kind of Arc machine placement on-premises, such as HCI, SCVMM or VMware etc. </param>
         /// <param name="locationData"> Metadata pertaining to the geographic location of the resource. </param>
         /// <param name="osProfile"> Specifies the operating system settings for the hybrid machine. </param>
         /// <param name="cloudMetadata"> The metadata of the cloud environment (Azure/GCP/AWS/OCI...). </param>
         /// <param name="agentUpgrade"> The info of the machine w.r.t Agent Upgrade. </param>
         /// <param name="parentClusterResourceId"> The resource id of the parent cluster (Azure HCI) this machine is assigned to, if any. </param>
         /// <param name="privateLinkScopeResourceId"> The resource id of the private link scope this machine is assigned to, if any. </param>
-        internal HybridComputeMachinePatch(IDictionary<string, string> tags, ManagedServiceIdentity identity, LocationData locationData, OSProfile osProfile, CloudMetadata cloudMetadata, AgentUpgrade agentUpgrade, ResourceIdentifier parentClusterResourceId, ResourceIdentifier privateLinkScopeResourceId) : base(tags)
+        internal HybridComputeMachinePatch(IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData, ManagedServiceIdentity identity, ArcKindEnum? kind, HybridComputeLocation locationData, HybridComputeOSProfile osProfile, HybridComputeCloudMetadata cloudMetadata, AgentUpgrade agentUpgrade, ResourceIdentifier parentClusterResourceId, ResourceIdentifier privateLinkScopeResourceId) : base(tags, serializedAdditionalRawData)
         {
             Identity = identity;
+            Kind = kind;
             LocationData = locationData;
             OSProfile = osProfile;
             CloudMetadata = cloudMetadata;
@@ -41,12 +45,14 @@ namespace Azure.ResourceManager.HybridCompute.Models
 
         /// <summary> Identity for the resource. Current supported identity types: SystemAssigned. </summary>
         public ManagedServiceIdentity Identity { get; set; }
+        /// <summary> Indicates which kind of Arc machine placement on-premises, such as HCI, SCVMM or VMware etc. </summary>
+        public ArcKindEnum? Kind { get; set; }
         /// <summary> Metadata pertaining to the geographic location of the resource. </summary>
-        public LocationData LocationData { get; set; }
+        public HybridComputeLocation LocationData { get; set; }
         /// <summary> Specifies the operating system settings for the hybrid machine. </summary>
-        public OSProfile OSProfile { get; set; }
+        public HybridComputeOSProfile OSProfile { get; set; }
         /// <summary> The metadata of the cloud environment (Azure/GCP/AWS/OCI...). </summary>
-        internal CloudMetadata CloudMetadata { get; set; }
+        internal HybridComputeCloudMetadata CloudMetadata { get; set; }
         /// <summary> Specifies the cloud provider (Azure/AWS/GCP...). </summary>
         public string CloudMetadataProvider
         {

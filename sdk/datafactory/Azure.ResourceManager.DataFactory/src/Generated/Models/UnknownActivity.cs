@@ -26,5 +26,10 @@ namespace Azure.ResourceManager.DataFactory.Models
         {
             ActivityType = activityType ?? "Unknown";
         }
+
+        /// <summary> Initializes a new instance of <see cref="UnknownActivity"/> for deserialization. </summary>
+        internal UnknownActivity()
+        {
+        }
     }
 }

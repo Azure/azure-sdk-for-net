@@ -536,8 +536,8 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
             ShareFileStorageResource storageResource = new ShareFileStorageResource(mock.Object);
 
             // Act
-            StorageResourceProperties result = await storageResource.GetPropertiesInternalAsync();
-            Mock<StorageResourceProperties> properties = new Mock<StorageResourceProperties>(result);
+            StorageResourceItemProperties result = await storageResource.GetPropertiesInternalAsync();
+            Mock<StorageResourceItemProperties> properties = new Mock<StorageResourceItemProperties>(result);
 
             // Assert
             Assert.NotNull(result);

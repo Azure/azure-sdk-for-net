@@ -61,6 +61,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             ActivityType = activityType ?? "ForEach";
         }
 
+        /// <summary> Initializes a new instance of <see cref="ForEachActivity"/> for deserialization. </summary>
+        internal ForEachActivity()
+        {
+        }
+
         /// <summary> Should the loop be executed in sequence or in parallel (max 50). </summary>
         public bool? IsSequential { get; set; }
         /// <summary> Batch count to be used for controlling the number of parallel execution (when isSequential is set to false). </summary>

@@ -10,6 +10,12 @@
 
 ### Other Changes
 
+## 12.8.3 (2024-02-06)
+
+### Bugs Fixed
+- `TableEntity` string properties will correctly handle type coercion from `DateTime` and `DateTimeOffset` types. ([#40775](https://github.com/Azure/azure-sdk-for-net/issues/40775))
+- Fixed an error handling bug that could result in an `ArgumentNullException` when calling `CreateIfNotExistsAsync`. ([#41463](https://github.com/Azure/azure-sdk-for-net/issues/41463))
+
 ## 12.8.2 (2023-11-13)
 
 ### Acknowledgments

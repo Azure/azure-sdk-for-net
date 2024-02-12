@@ -8,11 +8,11 @@ using Azure.Core;
 
 namespace Azure.Communication.JobRouter
 {
-    public partial class RouterWorkerSelector : IUtf8JsonSerializable
+    [CodeGenSerialization(nameof(ExpiresAfter), SerializationValueHook = nameof(WriteExpiresAfter), DeserializationValueHook = nameof(ReadExpiresAfter))]
+    public partial class RouterWorkerSelector
     {
         /// <summary> Describes how long this label selector is valid for. </summary>
         [CodeGenMember("ExpiresAfterSeconds")]
-        [CodeGenMemberSerializationHooks(SerializationValueHook = nameof(WriteExpiresAfter), DeserializationValueHook = nameof(ReadExpiresAfter))]
         public TimeSpan? ExpiresAfter { get; set; }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -60,31 +60,6 @@ namespace Azure.Communication.JobRouter
             Key = key;
             LabelOperator = labelOperator;
             Value = value;
-        }
-
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
-        {
-            writer.WriteStartObject();
-            writer.WritePropertyName("key"u8);
-            writer.WriteStringValue(Key);
-            writer.WritePropertyName("labelOperator"u8);
-            writer.WriteStringValue(LabelOperator.ToString());
-            if (Optional.IsDefined(_value))
-            {
-                writer.WritePropertyName("value"u8);
-                writer.WriteObjectValue(_value.ToObjectFromJson<object>());
-            }
-            if (Optional.IsDefined(ExpiresAfter))
-            {
-                writer.WritePropertyName("expiresAfterSeconds"u8);
-                WriteExpiresAfter(writer);
-            }
-            if (Optional.IsDefined(Expedite))
-            {
-                writer.WritePropertyName("expedite"u8);
-                writer.WriteBooleanValue(Expedite.Value);
-            }
-            writer.WriteEndObject();
         }
     }
 }

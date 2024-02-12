@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Messaging.EventHubs.Processor;
@@ -77,18 +78,17 @@ namespace Azure.Messaging.EventHubs.Primitives
         /// <param name="eventHubName">The name of the specific Event Hub the ownership are associated with, relative to the Event Hubs namespace that contains it.</param>
         /// <param name="consumerGroup">The name of the consumer group the checkpoint is associated with.</param>
         /// <param name="partitionId">The identifier of the partition the checkpoint is for.</param>
-        /// <param name="offset">The offset to associate with the checkpoint, indicating that a processor should begin reading form the next event in the stream.</param>
-        /// <param name="sequenceNumber">An optional sequence number to associate with the checkpoint, intended as informational metadata.  The <paramref name="offset" /> will be used for positioning when events are read.</param>
+        /// <param name="offset">The offset to associate with the checkpoint, intended as informational metadata. This will only be used from positioning if there is no value provided for <paramref name="sequenceNumber"/>.</param>
+        /// <param name="sequenceNumber">The sequence number to associate with the checkpoint, indicating that a processor should begin reading from the next event in the stream.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken" /> instance to signal a request to cancel the operation.</param>
         ///
-        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Task UpdateCheckpointAsync(string fullyQualifiedNamespace,
-                                                   string eventHubName,
-                                                   string consumerGroup,
-                                                   string partitionId,
-                                                   long offset,
-                                                   long? sequenceNumber,
-                                                   CancellationToken cancellationToken) => UpdateCheckpointAsync(fullyQualifiedNamespace, eventHubName, consumerGroup, partitionId, null, new CheckpointPosition(sequenceNumber ?? long.MinValue, offset), cancellationToken);
+                                                  string eventHubName,
+                                                  string consumerGroup,
+                                                  string partitionId,
+                                                  long offset,
+                                                  long? sequenceNumber,
+                                                  CancellationToken cancellationToken) => throw new NotImplementedException();
 
         /// <summary>
         ///   Creates or updates a checkpoint for a specific partition, identifying a position in the partition's event stream
@@ -99,7 +99,7 @@ namespace Azure.Messaging.EventHubs.Primitives
         /// <param name="consumerGroup">The name of the consumer group the checkpoint is associated with.</param>
         /// <param name="partitionId">The identifier of the partition the checkpoint is for.</param>
         /// <param name="clientIdentifier">The unique identifier of the client that authored this checkpoint.</param>
-        /// <param name="checkpointStartingPosition">The starting position to associate with the checkpoint, indicating that a processor should begin reading from the next event in the stream.</param>
+        /// <param name="startingPosition">The starting position to associate with the checkpoint, indicating that a processor should begin reading from the next event in the stream.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken" /> instance to signal a request to cancel the operation.</param>
         ///
         public virtual Task UpdateCheckpointAsync(string fullyQualifiedNamespace,
@@ -107,7 +107,7 @@ namespace Azure.Messaging.EventHubs.Primitives
                                                   string consumerGroup,
                                                   string partitionId,
                                                   string clientIdentifier,
-                                                  CheckpointPosition checkpointStartingPosition,
+                                                  CheckpointPosition startingPosition,
                                                   CancellationToken cancellationToken) => throw new NotImplementedException();
     }
 }

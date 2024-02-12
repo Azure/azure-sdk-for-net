@@ -65,6 +65,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             ActivityType = activityType ?? "HDInsightSpark";
         }
 
+        /// <summary> Initializes a new instance of <see cref="HDInsightSparkActivity"/> for deserialization. </summary>
+        internal HDInsightSparkActivity()
+        {
+        }
+
         /// <summary> The root path in 'sparkJobLinkedService' for all the job’s files. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> RootPath { get; set; }
         /// <summary> The relative path to the root folder of the code/package to be executed. Type: string (or Expression with resultType string). </summary>

@@ -6,16 +6,182 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    public partial class InMageRcmFabricSpecificDetails
+    public partial class InMageRcmFabricSpecificDetails : IUtf8JsonSerializable, IJsonModel<InMageRcmFabricSpecificDetails>
     {
-        internal static InMageRcmFabricSpecificDetails DeserializeInMageRcmFabricSpecificDetails(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<InMageRcmFabricSpecificDetails>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<InMageRcmFabricSpecificDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<InMageRcmFabricSpecificDetails>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(InMageRcmFabricSpecificDetails)} does not support '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (options.Format != "W" && Optional.IsDefined(VMwareSiteId))
+            {
+                writer.WritePropertyName("vmwareSiteId"u8);
+                writer.WriteStringValue(VMwareSiteId);
+            }
+            if (options.Format != "W" && Optional.IsDefined(PhysicalSiteId))
+            {
+                writer.WritePropertyName("physicalSiteId"u8);
+                writer.WriteStringValue(PhysicalSiteId);
+            }
+            if (options.Format != "W" && Optional.IsDefined(ServiceEndpoint))
+            {
+                writer.WritePropertyName("serviceEndpoint"u8);
+                writer.WriteStringValue(ServiceEndpoint);
+            }
+            if (options.Format != "W" && Optional.IsDefined(ServiceResourceId))
+            {
+                writer.WritePropertyName("serviceResourceId"u8);
+                writer.WriteStringValue(ServiceResourceId);
+            }
+            if (options.Format != "W" && Optional.IsDefined(ServiceContainerId))
+            {
+                writer.WritePropertyName("serviceContainerId"u8);
+                writer.WriteStringValue(ServiceContainerId);
+            }
+            if (options.Format != "W" && Optional.IsDefined(DataPlaneUri))
+            {
+                writer.WritePropertyName("dataPlaneUri"u8);
+                writer.WriteStringValue(DataPlaneUri.AbsoluteUri);
+            }
+            if (options.Format != "W" && Optional.IsDefined(ControlPlaneUri))
+            {
+                writer.WritePropertyName("controlPlaneUri"u8);
+                writer.WriteStringValue(ControlPlaneUri.AbsoluteUri);
+            }
+            if (Optional.IsDefined(SourceAgentIdentityDetails))
+            {
+                writer.WritePropertyName("sourceAgentIdentityDetails"u8);
+                writer.WriteObjectValue(SourceAgentIdentityDetails);
+            }
+            if (options.Format != "W" && Optional.IsCollectionDefined(ProcessServers))
+            {
+                writer.WritePropertyName("processServers"u8);
+                writer.WriteStartArray();
+                foreach (var item in ProcessServers)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (options.Format != "W" && Optional.IsCollectionDefined(RcmProxies))
+            {
+                writer.WritePropertyName("rcmProxies"u8);
+                writer.WriteStartArray();
+                foreach (var item in RcmProxies)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (options.Format != "W" && Optional.IsCollectionDefined(PushInstallers))
+            {
+                writer.WritePropertyName("pushInstallers"u8);
+                writer.WriteStartArray();
+                foreach (var item in PushInstallers)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (options.Format != "W" && Optional.IsCollectionDefined(ReplicationAgents))
+            {
+                writer.WritePropertyName("replicationAgents"u8);
+                writer.WriteStartArray();
+                foreach (var item in ReplicationAgents)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (options.Format != "W" && Optional.IsCollectionDefined(ReprotectAgents))
+            {
+                writer.WritePropertyName("reprotectAgents"u8);
+                writer.WriteStartArray();
+                foreach (var item in ReprotectAgents)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (options.Format != "W" && Optional.IsCollectionDefined(MarsAgents))
+            {
+                writer.WritePropertyName("marsAgents"u8);
+                writer.WriteStartArray();
+                foreach (var item in MarsAgents)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (options.Format != "W" && Optional.IsCollectionDefined(Dras))
+            {
+                writer.WritePropertyName("dras"u8);
+                writer.WriteStartArray();
+                foreach (var item in Dras)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (options.Format != "W" && Optional.IsCollectionDefined(AgentDetails))
+            {
+                writer.WritePropertyName("agentDetails"u8);
+                writer.WriteStartArray();
+                foreach (var item in AgentDetails)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            writer.WritePropertyName("instanceType"u8);
+            writer.WriteStringValue(InstanceType);
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        InMageRcmFabricSpecificDetails IJsonModel<InMageRcmFabricSpecificDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<InMageRcmFabricSpecificDetails>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(InMageRcmFabricSpecificDetails)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeInMageRcmFabricSpecificDetails(document.RootElement, options);
+        }
+
+        internal static InMageRcmFabricSpecificDetails DeserializeInMageRcmFabricSpecificDetails(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -37,6 +203,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             Optional<IReadOnlyList<SiteRecoveryDraDetails>> dras = default;
             Optional<IReadOnlyList<SiteRecoveryAgentDetails>> agentDetails = default;
             string instanceType = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("vmwareSiteId"u8))
@@ -220,8 +388,44 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     instanceType = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new InMageRcmFabricSpecificDetails(instanceType, vmwareSiteId.Value, physicalSiteId.Value, serviceEndpoint.Value, serviceResourceId.Value, serviceContainerId.Value, dataPlaneUri.Value, controlPlaneUri.Value, sourceAgentIdentityDetails.Value, Optional.ToList(processServers), Optional.ToList(rcmProxies), Optional.ToList(pushInstallers), Optional.ToList(replicationAgents), Optional.ToList(reprotectAgents), Optional.ToList(marsAgents), Optional.ToList(dras), Optional.ToList(agentDetails));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new InMageRcmFabricSpecificDetails(instanceType, serializedAdditionalRawData, vmwareSiteId.Value, physicalSiteId.Value, serviceEndpoint.Value, serviceResourceId.Value, serviceContainerId.Value, dataPlaneUri.Value, controlPlaneUri.Value, sourceAgentIdentityDetails.Value, Optional.ToList(processServers), Optional.ToList(rcmProxies), Optional.ToList(pushInstallers), Optional.ToList(replicationAgents), Optional.ToList(reprotectAgents), Optional.ToList(marsAgents), Optional.ToList(dras), Optional.ToList(agentDetails));
         }
+
+        BinaryData IPersistableModel<InMageRcmFabricSpecificDetails>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<InMageRcmFabricSpecificDetails>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(InMageRcmFabricSpecificDetails)} does not support '{options.Format}' format.");
+            }
+        }
+
+        InMageRcmFabricSpecificDetails IPersistableModel<InMageRcmFabricSpecificDetails>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<InMageRcmFabricSpecificDetails>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeInMageRcmFabricSpecificDetails(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(InMageRcmFabricSpecificDetails)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<InMageRcmFabricSpecificDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

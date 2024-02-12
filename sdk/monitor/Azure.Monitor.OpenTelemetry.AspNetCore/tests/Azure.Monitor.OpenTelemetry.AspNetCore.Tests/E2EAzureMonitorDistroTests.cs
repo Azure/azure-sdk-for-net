@@ -16,6 +16,9 @@ using System.Text.Json;
 using System.Collections.Generic;
 using System.Linq;
 using Xunit.Abstractions;
+using OpenTelemetry.Logs;
+using OpenTelemetry;
+using System.Reflection;
 
 namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests
 {
@@ -75,6 +78,45 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests
             Assert.Equal(1, summary["Request"]);
 
             // TODO: This test needs to assert telemetry content. (ie: sample rate)
+        }
+
+        [Theory]
+        [InlineData(null)]
+        [InlineData("true")]
+        [InlineData("True")]
+        [InlineData("False")]
+        [InlineData("false")]
+        public void ValidateLogFilteringProcessorIsAddedToLoggerProvider(string enableLogSampling)
+        {
+            try
+            {
+                Environment.SetEnvironmentVariable("OTEL_DOTNET_AZURE_MONITOR_EXPERIMENTAL_ENABLE_LOG_SAMPLING", enableLogSampling);
+
+                var sv = new ServiceCollection();
+                sv.AddOpenTelemetry().UseAzureMonitor(o => o.ConnectionString = "InstrumentationKey=00000000-0000-0000-0000-000000000000");
+
+                var sp = sv.BuildServiceProvider();
+                var loggerProvider = sp.GetRequiredService<ILoggerProvider>();
+                var sdkProvider = typeof(OpenTelemetryLoggerProvider).GetField("Provider", BindingFlags.Instance | BindingFlags.NonPublic)?.GetValue(loggerProvider);
+                var processor = sdkProvider?.GetType().GetProperty("Processor", BindingFlags.Instance | BindingFlags.Public)?.GetMethod?.Invoke(sdkProvider, null);
+
+                Assert.NotNull(processor);
+
+                if (enableLogSampling != null && enableLogSampling.Equals("true" , StringComparison.OrdinalIgnoreCase))
+                {
+                    Assert.True(processor is LogFilteringProcessor);
+                    Assert.True(processor is BatchLogRecordExportProcessor);
+                }
+                else
+                {
+                    Assert.True(processor is not LogFilteringProcessor);
+                    Assert.True(processor is BatchLogRecordExportProcessor);
+                }
+            }
+            finally
+            {
+                Environment.SetEnvironmentVariable("OTEL_DOTNET_AZURE_MONITOR_EXPERIMENTAL_ENABLE_LOG_SAMPLING", null);
+            }
         }
 
         private void WaitForRequest(MockTransport transport)

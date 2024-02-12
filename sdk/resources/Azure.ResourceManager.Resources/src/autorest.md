@@ -19,6 +19,7 @@ public-clients: false
 head-as-boolean: false
 modelerfour:
   lenient-model-deduplication: true
+use-model-reader-writer: true
 
 #mgmt-debug:
 #  show-serialized-names: true
@@ -97,6 +98,9 @@ acronym-mapping:
 
 models-to-treat-empty-string-as-null:
   - ArmApplicationPackageSupportUris
+
+suppress-abstract-base-class:
+- ArmDeploymentScriptData
 
 directive:
   - remove-operation: checkResourceName
