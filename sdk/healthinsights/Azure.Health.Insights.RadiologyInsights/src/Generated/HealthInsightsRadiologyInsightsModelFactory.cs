@@ -197,5 +197,61 @@ namespace Azure.Health.Insights.RadiologyInsights
 
             return new FhirR4Identifier(id, extension?.ToList(), serializedAdditionalRawData: null, use, type, system, value, period, assigner);
         }
+
+        /// <summary> Initializes a new instance of <see cref="RadiologyInsights.FhirR4Narrative"/>. </summary>
+        /// <param name="id"> Unique id for inter-element referencing. </param>
+        /// <param name="extension"> Additional Content defined by implementations. </param>
+        /// <param name="status"> generated, extensions, additional, empty. </param>
+        /// <param name="div"> xhtml. </param>
+        /// <returns> A new <see cref="RadiologyInsights.FhirR4Narrative"/> instance for mocking. </returns>
+        public static FhirR4Narrative FhirR4Narrative(string id = null, IEnumerable<FhirR4Extension> extension = null, string status = null, string div = null)
+        {
+            extension ??= new List<FhirR4Extension>();
+
+            return new FhirR4Narrative(id, extension?.ToList(), serializedAdditionalRawData: null, status, div);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="RadiologyInsights.FhirR4Annotation"/>. </summary>
+        /// <param name="id"> Unique id for inter-element referencing. </param>
+        /// <param name="extension"> Additional Content defined by implementations. </param>
+        /// <param name="authorString"> Individual responsible for the annotation. </param>
+        /// <param name="time"> When the annotation was made. </param>
+        /// <param name="text"> The annotation - text content (as markdown). </param>
+        /// <returns> A new <see cref="RadiologyInsights.FhirR4Annotation"/> instance for mocking. </returns>
+        public static FhirR4Annotation FhirR4Annotation(string id = null, IEnumerable<FhirR4Extension> extension = null, string authorString = null, string time = null, string text = null)
+        {
+            extension ??= new List<FhirR4Extension>();
+
+            return new FhirR4Annotation(id, extension?.ToList(), serializedAdditionalRawData: null, authorString, time, text);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="RadiologyInsights.FhirR4ObservationComponent"/>. </summary>
+        /// <param name="id"> Unique id for inter-element referencing. </param>
+        /// <param name="extension"> Additional Content defined by implementations. </param>
+        /// <param name="code"> Type of component observation (code / type). </param>
+        /// <param name="valueQuantity"> Value as Quantity. </param>
+        /// <param name="valueCodeableConcept"> Value as CodeableConcept. </param>
+        /// <param name="valueString"> Value as string. </param>
+        /// <param name="valueBoolean"> Value as boolean. </param>
+        /// <param name="valueInteger"> Value as integer. </param>
+        /// <param name="valueRange"> Value as Range. </param>
+        /// <param name="valueRatio"> Value as Ratio. </param>
+        /// <param name="valueSampledData"> Value as SampledData. </param>
+        /// <param name="valueTime"> Value as time (hh:mm:ss). </param>
+        /// <param name="valueDateTime"> Value as dateTime. </param>
+        /// <param name="valuePeriod"> Value as Period. </param>
+        /// <param name="valueReference"> Value as reference. </param>
+        /// <param name="dataAbsentReason"> Why the component result is missing. </param>
+        /// <param name="interpretation"> High, low, normal, etc. </param>
+        /// <param name="referenceRange"> Provides guide for interpretation of component result. </param>
+        /// <returns> A new <see cref="RadiologyInsights.FhirR4ObservationComponent"/> instance for mocking. </returns>
+        public static FhirR4ObservationComponent FhirR4ObservationComponent(string id = null, IEnumerable<FhirR4Extension> extension = null, FhirR4CodeableConcept code = null, FhirR4Quantity valueQuantity = null, FhirR4CodeableConcept valueCodeableConcept = null, string valueString = null, bool? valueBoolean = null, int? valueInteger = null, FhirR4Range valueRange = null, FhirR4Ratio valueRatio = null, FhirR4SampledData valueSampledData = null, TimeSpan? valueTime = null, string valueDateTime = null, FhirR4Period valuePeriod = null, FhirR4Reference valueReference = null, FhirR4CodeableConcept dataAbsentReason = null, IEnumerable<FhirR4CodeableConcept> interpretation = null, IEnumerable<FhirR4ObservationReferenceRange> referenceRange = null)
+        {
+            extension ??= new List<FhirR4Extension>();
+            interpretation ??= new List<FhirR4CodeableConcept>();
+            referenceRange ??= new List<FhirR4ObservationReferenceRange>();
+
+            return new FhirR4ObservationComponent(id, extension?.ToList(), serializedAdditionalRawData: null, code, valueQuantity, valueCodeableConcept, valueString, valueBoolean, valueInteger, valueRange, valueRatio, valueSampledData, valueTime, valueDateTime, valuePeriod, valueReference, dataAbsentReason, interpretation?.ToList(), referenceRange?.ToList());
+        }
     }
 }

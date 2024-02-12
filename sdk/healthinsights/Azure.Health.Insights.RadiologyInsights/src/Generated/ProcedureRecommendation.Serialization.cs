@@ -14,7 +14,7 @@ using Azure.Core;
 namespace Azure.Health.Insights.RadiologyInsights
 {
     [PersistableModelProxy(typeof(UnknownProcedureRecommendation))]
-    internal partial class ProcedureRecommendation : IUtf8JsonSerializable, IJsonModel<ProcedureRecommendation>
+    public partial class ProcedureRecommendation : IUtf8JsonSerializable, IJsonModel<ProcedureRecommendation>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ProcedureRecommendation>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -29,6 +29,16 @@ namespace Azure.Health.Insights.RadiologyInsights
             writer.WriteStartObject();
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind);
+            if (Optional.IsCollectionDefined(Extension))
+            {
+                writer.WritePropertyName("extension"u8);
+                writer.WriteStartArray();
+                foreach (var item in Extension)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)

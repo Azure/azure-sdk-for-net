@@ -15,7 +15,7 @@ namespace Azure.Health.Insights.RadiologyInsights
     /// Any resource that is a [DomainResource](https://www.hl7.org/fhir/domainresource.html) may include a human-readable narrative that contains a summary of the resource and may be used to represent the content of the resource to a human.
     /// Based on [FHIR Narrative](https://www.hl7.org/fhir/R4/narrative.html#Narrative)
     /// </summary>
-    internal partial class FhirR4Narrative : FhirR4Element
+    public partial class FhirR4Narrative : FhirR4Element
     {
         /// <summary> Initializes a new instance of <see cref="FhirR4Narrative"/>. </summary>
         /// <param name="status"> generated, extensions, additional, empty. </param>

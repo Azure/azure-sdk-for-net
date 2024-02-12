@@ -13,7 +13,7 @@ using Azure.Core;
 namespace Azure.Health.Insights.RadiologyInsights
 {
     /// <summary> Imaging procedures. </summary>
-    internal partial class ImagingProcedureRecommendation : ProcedureRecommendation
+    public partial class ImagingProcedureRecommendation : ProcedureRecommendation
     {
         /// <summary> Initializes a new instance of <see cref="ImagingProcedureRecommendation"/>. </summary>
         /// <param name="imagingProcedures"> Imaging procedures. </param>
@@ -29,10 +29,11 @@ namespace Azure.Health.Insights.RadiologyInsights
 
         /// <summary> Initializes a new instance of <see cref="ImagingProcedureRecommendation"/>. </summary>
         /// <param name="kind"> Discriminator. </param>
+        /// <param name="extension"> Additional Content defined by implementations. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="procedureCodes"> LOINC codes for the procedure. </param>
         /// <param name="imagingProcedures"> Imaging procedures. </param>
-        internal ImagingProcedureRecommendation(string kind, IDictionary<string, BinaryData> serializedAdditionalRawData, IList<FhirR4CodeableConcept> procedureCodes, IList<ImagingProcedure> imagingProcedures) : base(kind, serializedAdditionalRawData)
+        internal ImagingProcedureRecommendation(string kind, IList<FhirR4Extension> extension, IDictionary<string, BinaryData> serializedAdditionalRawData, IList<FhirR4CodeableConcept> procedureCodes, IList<ImagingProcedure> imagingProcedures) : base(kind, extension, serializedAdditionalRawData)
         {
             ProcedureCodes = procedureCodes;
             ImagingProcedures = imagingProcedures;

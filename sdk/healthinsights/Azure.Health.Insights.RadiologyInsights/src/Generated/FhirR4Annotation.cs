@@ -15,7 +15,7 @@ namespace Azure.Health.Insights.RadiologyInsights
     /// A text note which also  contains information about who made the statement and when
     /// Based on [FHIR Annotation](https://www.hl7.org/fhir/R4/datatypes.html#Annotation)
     /// </summary>
-    internal partial class FhirR4Annotation : FhirR4Element
+    public partial class FhirR4Annotation : FhirR4Element
     {
         /// <summary> Initializes a new instance of <see cref="FhirR4Annotation"/>. </summary>
         /// <param name="text"> The annotation - text content (as markdown). </param>

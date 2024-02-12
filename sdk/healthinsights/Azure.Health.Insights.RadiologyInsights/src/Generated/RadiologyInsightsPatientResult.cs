@@ -51,7 +51,7 @@ namespace Azure.Health.Insights.RadiologyInsights
         /// <param name="patientId"> Identifier given for the patient in the request. </param>
         /// <param name="inferences"> The model's inferences for the given patient. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patientId"/> or <paramref name="inferences"/> is null. </exception>
-        public RadiologyInsightsPatientResult(string patientId, IEnumerable<FhirR4Extendible> inferences)
+        public RadiologyInsightsPatientResult(string patientId, IEnumerable<RadiologyInsightsInference> inferences)
         {
             Argument.AssertNotNull(patientId, nameof(patientId));
             Argument.AssertNotNull(inferences, nameof(inferences));
@@ -64,7 +64,7 @@ namespace Azure.Health.Insights.RadiologyInsights
         /// <param name="patientId"> Identifier given for the patient in the request. </param>
         /// <param name="inferences"> The model's inferences for the given patient. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal RadiologyInsightsPatientResult(string patientId, IList<FhirR4Extendible> inferences, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal RadiologyInsightsPatientResult(string patientId, IList<RadiologyInsightsInference> inferences, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             PatientId = patientId;
             Inferences = inferences;
@@ -78,7 +78,11 @@ namespace Azure.Health.Insights.RadiologyInsights
 
         /// <summary> Identifier given for the patient in the request. </summary>
         public string PatientId { get; set; }
-        /// <summary> The model's inferences for the given patient. </summary>
-        public IList<FhirR4Extendible> Inferences { get; }
+        /// <summary>
+        /// The model's inferences for the given patient.
+        /// Please note <see cref="RadiologyInsightsInference"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="AgeMismatchInference"/>, <see cref="SexMismatchInference"/>, <see cref="LateralityDiscrepancyInference"/>, <see cref="CompleteOrderDiscrepancyInference"/>, <see cref="LimitedOrderDiscrepancyInference"/>, <see cref="FindingInference"/>, <see cref="CriticalResultInference"/>, <see cref="RadiologyProcedureInference"/>, <see cref="FollowupRecommendationInference"/> and <see cref="FollowupCommunicationInference"/>.
+        /// </summary>
+        public IList<RadiologyInsightsInference> Inferences { get; }
     }
 }

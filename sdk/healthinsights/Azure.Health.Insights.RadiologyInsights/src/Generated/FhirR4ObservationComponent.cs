@@ -15,7 +15,7 @@ namespace Azure.Health.Insights.RadiologyInsights
     /// Component results
     /// Based on [FHIR Observation.component](https://www.hl7.org/fhir/R4/observation.html)
     /// </summary>
-    internal partial class FhirR4ObservationComponent : FhirR4Element
+    public partial class FhirR4ObservationComponent : FhirR4Element
     {
         /// <summary> Initializes a new instance of <see cref="FhirR4ObservationComponent"/>. </summary>
         /// <param name="code"> Type of component observation (code / type). </param>

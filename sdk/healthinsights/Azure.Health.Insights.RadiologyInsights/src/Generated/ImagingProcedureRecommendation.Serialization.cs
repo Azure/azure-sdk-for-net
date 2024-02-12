@@ -14,7 +14,7 @@ using Azure.Core;
 
 namespace Azure.Health.Insights.RadiologyInsights
 {
-    internal partial class ImagingProcedureRecommendation : IUtf8JsonSerializable, IJsonModel<ImagingProcedureRecommendation>
+    public partial class ImagingProcedureRecommendation : IUtf8JsonSerializable, IJsonModel<ImagingProcedureRecommendation>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ImagingProcedureRecommendation>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -46,6 +46,16 @@ namespace Azure.Health.Insights.RadiologyInsights
             writer.WriteEndArray();
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind);
+            if (Optional.IsCollectionDefined(Extension))
+            {
+                writer.WritePropertyName("extension"u8);
+                writer.WriteStartArray();
+                foreach (var item in Extension)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -87,6 +97,7 @@ namespace Azure.Health.Insights.RadiologyInsights
             Optional<IList<FhirR4CodeableConcept>> procedureCodes = default;
             IList<ImagingProcedure> imagingProcedures = default;
             string kind = default;
+            Optional<IList<FhirR4Extension>> extension = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -120,13 +131,27 @@ namespace Azure.Health.Insights.RadiologyInsights
                     kind = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("extension"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<FhirR4Extension> array = new List<FhirR4Extension>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(FhirR4Extension.DeserializeFhirR4Extension(item));
+                    }
+                    extension = array;
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ImagingProcedureRecommendation(kind, serializedAdditionalRawData, Optional.ToList(procedureCodes), imagingProcedures);
+            return new ImagingProcedureRecommendation(kind, Optional.ToList(extension), serializedAdditionalRawData, Optional.ToList(procedureCodes), imagingProcedures);
         }
 
         BinaryData IPersistableModel<ImagingProcedureRecommendation>.Write(ModelReaderWriterOptions options)

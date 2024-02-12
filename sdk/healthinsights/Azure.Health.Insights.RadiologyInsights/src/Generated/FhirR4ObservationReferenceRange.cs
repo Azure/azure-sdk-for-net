@@ -15,7 +15,7 @@ namespace Azure.Health.Insights.RadiologyInsights
     /// Provides guide for interpretation of component result
     /// Based on [FHIR Observation.referenceRange](https://www.hl7.org/fhir/R4/observation.html)
     /// </summary>
-    internal partial class FhirR4ObservationReferenceRange
+    public partial class FhirR4ObservationReferenceRange
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.

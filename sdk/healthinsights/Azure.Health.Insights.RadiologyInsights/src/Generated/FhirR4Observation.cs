@@ -15,7 +15,7 @@ namespace Azure.Health.Insights.RadiologyInsights
     /// Detailed information about observations
     /// Based on [FHIR Observation](https://www.hl7.org/fhir/R4/observation.html)
     /// </summary>
-    internal partial class FhirR4Observation : FhirR4DomainResource
+    public partial class FhirR4Observation : FhirR4DomainResource
     {
         /// <summary> Initializes a new instance of <see cref="FhirR4Observation"/>. </summary>
         /// <param name="status"> registered | preliminary | final | amended +. </param>

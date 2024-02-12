@@ -12,7 +12,7 @@ using Azure.Core;
 namespace Azure.Health.Insights.RadiologyInsights
 {
     /// <summary> Generic procedure information. </summary>
-    internal partial class GenericProcedureRecommendation : ProcedureRecommendation
+    public partial class GenericProcedureRecommendation : ProcedureRecommendation
     {
         /// <summary> Initializes a new instance of <see cref="GenericProcedureRecommendation"/>. </summary>
         /// <param name="code"> Procedure modality : SNOMED CT code. </param>
@@ -27,10 +27,11 @@ namespace Azure.Health.Insights.RadiologyInsights
 
         /// <summary> Initializes a new instance of <see cref="GenericProcedureRecommendation"/>. </summary>
         /// <param name="kind"> Discriminator. </param>
+        /// <param name="extension"> Additional Content defined by implementations. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="code"> Procedure modality : SNOMED CT code. </param>
         /// <param name="description"> Procedure description : MANAGEMENT PROCEDURE (PROCEDURE) or CONSULTATION (PROCEDURE) based on SNOMED CT. </param>
-        internal GenericProcedureRecommendation(string kind, IDictionary<string, BinaryData> serializedAdditionalRawData, FhirR4CodeableConcept code, string description) : base(kind, serializedAdditionalRawData)
+        internal GenericProcedureRecommendation(string kind, IList<FhirR4Extension> extension, IDictionary<string, BinaryData> serializedAdditionalRawData, FhirR4CodeableConcept code, string description) : base(kind, extension, serializedAdditionalRawData)
         {
             Code = code;
             Description = description;

@@ -12,7 +12,7 @@ using Azure.Core;
 namespace Azure.Health.Insights.RadiologyInsights
 {
     /// <summary> Imaging procedure. </summary>
-    internal partial class ImagingProcedure
+    public partial class ImagingProcedure
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.

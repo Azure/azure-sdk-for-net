@@ -75,7 +75,7 @@ namespace Azure.Health.Insights.RadiologyInsights
                 return null;
             }
             string patientId = default;
-            IList<FhirR4Extendible> inferences = default;
+            IList<RadiologyInsightsInference> inferences = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -87,10 +87,10 @@ namespace Azure.Health.Insights.RadiologyInsights
                 }
                 if (property.NameEquals("inferences"u8))
                 {
-                    List<FhirR4Extendible> array = new List<FhirR4Extendible>();
+                    List<RadiologyInsightsInference> array = new List<RadiologyInsightsInference>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(FhirR4Extendible.DeserializeFhirR4Extendible(item));
+                        array.Add(RadiologyInsightsInference.DeserializeRadiologyInsightsInference(item));
                     }
                     inferences = array;
                     continue;

@@ -14,7 +14,7 @@ using Azure.Core;
 namespace Azure.Health.Insights.RadiologyInsights
 {
     [PersistableModelProxy(typeof(UnknownFhirR4DomainResource))]
-    internal partial class FhirR4DomainResource : IUtf8JsonSerializable, IJsonModel<FhirR4DomainResource>
+    public partial class FhirR4DomainResource : IUtf8JsonSerializable, IJsonModel<FhirR4DomainResource>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FhirR4DomainResource>)this).Write(writer, new ModelReaderWriterOptions("W"));
 

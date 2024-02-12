@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.Health.Insights.RadiologyInsights
 {
@@ -15,7 +16,7 @@ namespace Azure.Health.Insights.RadiologyInsights
     /// Please note <see cref="ProcedureRecommendation"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="GenericProcedureRecommendation"/> and <see cref="ImagingProcedureRecommendation"/>.
     /// </summary>
-    internal abstract partial class ProcedureRecommendation
+    public abstract partial class ProcedureRecommendation
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -52,18 +53,23 @@ namespace Azure.Health.Insights.RadiologyInsights
         /// <summary> Initializes a new instance of <see cref="ProcedureRecommendation"/>. </summary>
         protected ProcedureRecommendation()
         {
+            Extension = new ChangeTrackingList<FhirR4Extension>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ProcedureRecommendation"/>. </summary>
         /// <param name="kind"> Discriminator. </param>
+        /// <param name="extension"> Additional Content defined by implementations. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ProcedureRecommendation(string kind, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ProcedureRecommendation(string kind, IList<FhirR4Extension> extension, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Kind = kind;
+            Extension = extension;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Discriminator. </summary>
         internal string Kind { get; set; }
+        /// <summary> Additional Content defined by implementations. </summary>
+        public IList<FhirR4Extension> Extension { get; }
     }
 }
