@@ -373,7 +373,7 @@ namespace Azure.Messaging.EventHubs.Primitives
                                                          long offset,
                                                          long? sequenceNumber,
                                                          CancellationToken cancellationToken)
-            => await UpdateCheckpointInternalAsync(fullyQualifiedNamespace, eventHubName, consumerGroup, partitionId, string.Empty, offset, null, cancellationToken).ConfigureAwait(false);
+            => await UpdateCheckpointInternalAsync(fullyQualifiedNamespace, eventHubName, consumerGroup, partitionId, string.Empty, offset, sequenceNumber, cancellationToken).ConfigureAwait(false);
 
         /// <summary>
         ///   Creates or updates a checkpoint for a specific partition, identifying a position in the partition's event stream
@@ -400,7 +400,7 @@ namespace Azure.Messaging.EventHubs.Primitives
         private async Task UpdateCheckpointInternalAsync(string fullyQualifiedNamespace, string eventHubName, string consumerGroup, string partitionId, string clientIdentifier, long? offset, long? sequenceNumber, CancellationToken cancellationToken)
         {
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
-            UpdateCheckpointStart(partitionId, fullyQualifiedNamespace, eventHubName, consumerGroup, clientIdentifier, sequenceNumber, -1, offset);
+            UpdateCheckpointStart(partitionId, fullyQualifiedNamespace, eventHubName, consumerGroup, clientIdentifier, sequenceNumber.ToString(), -1, offset.ToString());
 
             var blobName = string.Format(CultureInfo.InvariantCulture, CheckpointPrefix + partitionId, fullyQualifiedNamespace.ToLowerInvariant(), eventHubName.ToLowerInvariant(), consumerGroup.ToLowerInvariant());
             var blobClient = ContainerClient.GetBlobClient(blobName);
@@ -430,17 +430,17 @@ namespace Azure.Messaging.EventHubs.Primitives
             }
             catch (RequestFailedException ex) when (ex.ErrorCode == BlobErrorCode.ContainerNotFound)
             {
-                UpdateCheckpointError(partitionId, fullyQualifiedNamespace, eventHubName, consumerGroup, clientIdentifier, sequenceNumber, -1, offset, ex);
+                UpdateCheckpointError(partitionId, fullyQualifiedNamespace, eventHubName, consumerGroup, clientIdentifier, sequenceNumber.ToString(), -1, offset.ToString(), ex);
                 throw new RequestFailedException(BlobsResourceDoesNotExist, ex);
             }
             catch (Exception ex)
             {
-                UpdateCheckpointError(partitionId, fullyQualifiedNamespace, eventHubName, consumerGroup, clientIdentifier, sequenceNumber, -1, offset, ex);
+                UpdateCheckpointError(partitionId, fullyQualifiedNamespace, eventHubName, consumerGroup, clientIdentifier, sequenceNumber.ToString(), -1, offset.ToString(), ex);
                 throw;
             }
             finally
             {
-                UpdateCheckpointComplete(partitionId, fullyQualifiedNamespace, eventHubName, consumerGroup, clientIdentifier, sequenceNumber, -1, offset);
+                UpdateCheckpointComplete(partitionId, fullyQualifiedNamespace, eventHubName, consumerGroup, clientIdentifier, sequenceNumber.ToString(), -1, offset.ToString());
             }
         }
 
@@ -777,9 +777,9 @@ namespace Azure.Messaging.EventHubs.Primitives
         /// <param name="eventHubName">The name of the specific Event Hub the checkpoint is associated with, relative to the Event Hubs namespace that contains it.</param>
         /// <param name="consumerGroup">The name of the consumer group the checkpoint is associated with.</param>
         /// <param name="clientIdentifier">The unique identifier of the client that authored the checkpoint.</param>
-        /// <param name="sequenceNumber">The sequence number associated with the checkpoint. This value is set to <c>-1</c> if one is not provided.</param>
-        /// <param name="replicationSegment">The replication segment associated with the checkpoint. This value is set to <c>-1</c> if one is not provided.</param>
-        /// <param name="offset">The offset associated with the checkpoint. This value is set to <c>-1</c> if one is not provided.</param>
+        /// <param name="sequenceNumber">The sequence number associated with the checkpoint.</param>
+        /// <param name="replicationSegment">The replication segment associated with the checkpoint.</param>
+        /// <param name="offset">The offset associated with the checkpoint.</param>
         /// <param name="exception">The message for the exception that occurred.</param>
         ///
         partial void UpdateCheckpointError(string partitionId,
@@ -787,9 +787,9 @@ namespace Azure.Messaging.EventHubs.Primitives
                                            string eventHubName,
                                            string consumerGroup,
                                            string clientIdentifier,
-                                           long? sequenceNumber,
+                                           string sequenceNumber,
                                            int replicationSegment,
-                                           long? offset,
+                                           string offset,
                                            Exception exception);
 
         /// <summary>
@@ -801,18 +801,18 @@ namespace Azure.Messaging.EventHubs.Primitives
         /// <param name="eventHubName">The name of the specific Event Hub the checkpoint is associated with, relative to the Event Hubs namespace that contains it.</param>
         /// <param name="consumerGroup">The name of the consumer group the checkpoint is associated with.</param>
         /// <param name="clientIdentifier">The unique identifier of the client that authored the checkpoint.</param>
-        /// <param name="sequenceNumber">The sequence number associated with the checkpoint. This value is set to <c>-1</c> if one is not provided.</param>
-        /// <param name="replicationSegment">The replication segment associated with the checkpoint. This value is set to <c>-1</c> if one is not provided.</param>
-        /// <param name="offset">The offset associated with the checkpoint. This value is set to <c>-1</c> if one is not provided.</param>
+        /// <param name="sequenceNumber">The sequence number associated with the checkpoint.</param>
+        /// <param name="replicationSegment">The replication segment associated with the checkpoint.</param>
+        /// <param name="offset">The offset associated with the checkpoint.</param>
         ///
         partial void UpdateCheckpointComplete(string partitionId,
                                               string fullyQualifiedNamespace,
                                               string eventHubName,
                                               string consumerGroup,
                                               string clientIdentifier,
-                                              long? sequenceNumber,
+                                              string sequenceNumber,
                                               int replicationSegment,
-                                              long? offset);
+                                              string offset);
 
         /// <summary>
         ///   Indicates that an attempt to create/update a checkpoint has started.
@@ -823,18 +823,18 @@ namespace Azure.Messaging.EventHubs.Primitives
         /// <param name="eventHubName">The name of the specific Event Hub the checkpoint is associated with, relative to the Event Hubs namespace that contains it.</param>
         /// <param name="consumerGroup">The name of the consumer group the checkpoint is associated with.</param>
         /// <param name="clientIdentifier">The unique identifier of the client that authored this checkpoint.</param>
-        /// <param name="sequenceNumber">The sequence number associated with the checkpoint. This value is set to <c>-1</c> if one is not provided.</param>
-        /// <param name="replicationSegment">The replication segment associated with the checkpoint. This value is set to <c>-1</c> if one is not provided.</param>
-        /// <param name="offset">The offset associated with the checkpoint. This value is set to <c>-1</c> if one is not provided.</param>
+        /// <param name="sequenceNumber">The sequence number associated with the checkpoint.</param>
+        /// <param name="replicationSegment">The replication segment associated with the checkpoint.</param>
+        /// <param name="offset">The offset associated with the checkpoint.</param>
         ///
         partial void UpdateCheckpointStart(string partitionId,
                                            string fullyQualifiedNamespace,
                                            string eventHubName,
                                            string consumerGroup,
                                            string clientIdentifier,
-                                           long? sequenceNumber,
+                                           string sequenceNumber,
                                            int replicationSegment,
-                                           long? offset);
+                                           string offset);
 
         /// <summary>
         ///   Indicates that an attempt to retrieve claim partition ownership has completed.

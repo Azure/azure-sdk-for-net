@@ -95,9 +95,9 @@ namespace Azure.Messaging.EventHubs.Primitives
         /// <param name="eventHubName">The name of the specific Event Hub the checkpoint is associated with, relative to the Event Hubs namespace that contains it.</param>
         /// <param name="consumerGroup">The name of the consumer group the checkpoint is associated with.</param>
         /// <param name="clientIdentifier">The unique identifier of the client that authored this checkpoint.</param>
-        /// <param name="sequenceNumber">The sequence number associated with the checkpoint. This value is set to <c>-1</c> if one is not provided.</param>
-        /// <param name="replicationSegment">The replication segment associated with the checkpoint. This value is set to <c>-1</c> if one is not provided.</param>
-        /// <param name="offset">The offset associated with the checkpoint. This value is set to <c>-1</c> if one is not provided.</param>
+        /// <param name="sequenceNumber">The sequence number associated with the checkpoint.</param>
+        /// <param name="replicationSegment">The replication segment associated with the checkpoint.</param>
+        /// <param name="offset">The offset associated with the checkpoint.</param>
         /// <param name="exception">The exception that occurred.</param>
         ///
         partial void UpdateCheckpointError(string partitionId,
@@ -105,9 +105,9 @@ namespace Azure.Messaging.EventHubs.Primitives
                                            string eventHubName,
                                            string consumerGroup,
                                            string clientIdentifier,
-                                           long? sequenceNumber,
+                                           string sequenceNumber,
                                            int replicationSegment,
-                                           long? offset,
+                                           string offset,
                                            Exception exception) =>
             Logger.UpdateCheckpointError(partitionId, fullyQualifiedNamespace, eventHubName, consumerGroup, clientIdentifier, exception.Message, sequenceNumber, replicationSegment, offset);
 
@@ -120,18 +120,18 @@ namespace Azure.Messaging.EventHubs.Primitives
         /// <param name="eventHubName">The name of the specific Event Hub the checkpoint is associated with, relative to the Event Hubs namespace that contains it.</param>
         /// <param name="consumerGroup">The name of the consumer group the checkpoint is associated with.</param>
         /// <param name="clientIdentifier">The unique identifier of the client that authored this checkpoint.</param>
-        /// <param name="sequenceNumber">The sequence number associated with this checkpoint. This value is set to <c>-1</c> if one is not provided.</param>
-        /// <param name="replicationSegment">The replication segment associated with this checkpoint. This value is set to <c>-1</c> if one is not provided.</param>
-        /// <param name="offset">The offset associated with this checkpoint. This value is set to <c>-1</c> if one is not provided.</param>
+        /// <param name="sequenceNumber">The sequence number associated with this checkpoint.</param>
+        /// <param name="replicationSegment">The replication segment associated with this checkpoint.</param>
+        /// <param name="offset">The offset associated with this checkpoint.</param>
         ///
         partial void UpdateCheckpointComplete(string partitionId,
                                               string fullyQualifiedNamespace,
                                               string eventHubName,
                                               string consumerGroup,
                                               string clientIdentifier,
-                                              long? sequenceNumber,
+                                              string sequenceNumber,
                                               int replicationSegment,
-                                              long? offset) =>
+                                              string offset) =>
             Logger.UpdateCheckpointComplete(partitionId, fullyQualifiedNamespace, eventHubName, consumerGroup, clientIdentifier, sequenceNumber, replicationSegment, offset);
 
         /// <summary>
@@ -143,18 +143,18 @@ namespace Azure.Messaging.EventHubs.Primitives
         /// <param name="eventHubName">The name of the specific Event Hub the checkpoint is associated with, relative to the Event Hubs namespace that contains it.</param>
         /// <param name="consumerGroup">The name of the consumer group the checkpoint is associated with.</param>
         /// <param name="clientIdentifier">The unique identifier of the client that authored this checkpoint.</param>
-        /// <param name="sequenceNumber">The sequence number associated with this checkpoint. This value is set to <c>-1</c> if one is not provided.</param>
-        /// <param name="replicationSegment">The replication segment associated with this checkpoint. This value is set to <c>-1</c> if one is not provided.</param>
-        /// <param name="offset">The offset associated with this checkpoint. This value is set to <c>-1</c> if one is not provided.</param>
+        /// <param name="sequenceNumber">The sequence number associated with this checkpoint.</param>
+        /// <param name="replicationSegment">The replication segment associated with this checkpoint.</param>
+        /// <param name="offset">The offset associated with this checkpoint.</param>
         ///
         partial void UpdateCheckpointStart(string partitionId,
                                            string fullyQualifiedNamespace,
                                            string eventHubName,
                                            string consumerGroup,
                                            string clientIdentifier,
-                                           long? sequenceNumber,
+                                           string sequenceNumber,
                                            int replicationSegment,
-                                           long? offset) =>
+                                           string offset) =>
             Logger.UpdateCheckpointStart(partitionId, fullyQualifiedNamespace, eventHubName, consumerGroup, clientIdentifier, sequenceNumber, replicationSegment, offset);
 
         /// <summary>
