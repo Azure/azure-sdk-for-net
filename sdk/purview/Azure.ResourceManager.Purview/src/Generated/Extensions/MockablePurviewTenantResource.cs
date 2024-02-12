@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Purview.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-07-01</description>
+        /// <description>2023-05-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Purview.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-07-01</description>
+        /// <description>2023-05-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -119,6 +119,80 @@ namespace Azure.ResourceManager.Purview.Mocking
         }
 
         /// <summary>
+        /// Removes the default account from the scope.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Purview/removeDefaultAccount</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DefaultAccounts_Remove</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01-preview</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="scopeTenantId"> The tenant ID. </param>
+        /// <param name="scopeType"> The scope for the default account. </param>
+        /// <param name="scope"> The Id of the scope object, for example if the scope is "Subscription" then it is the ID of that subscription. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response> RemoveDefaultAccountAsync(Guid scopeTenantId, PurviewAccountScopeType scopeType, string scope = null, CancellationToken cancellationToken = default)
+        {
+            using var scope0 = DefaultAccountsClientDiagnostics.CreateScope("MockablePurviewTenantResource.RemoveDefaultAccount");
+            scope0.Start();
+            try
+            {
+                var response = await DefaultAccountsRestClient.RemoveAsync(scopeTenantId, scopeType, scope, cancellationToken).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope0.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Removes the default account from the scope.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Purview/removeDefaultAccount</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DefaultAccounts_Remove</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01-preview</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="scopeTenantId"> The tenant ID. </param>
+        /// <param name="scopeType"> The scope for the default account. </param>
+        /// <param name="scope"> The Id of the scope object, for example if the scope is "Subscription" then it is the ID of that subscription. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response RemoveDefaultAccount(Guid scopeTenantId, PurviewAccountScopeType scopeType, string scope = null, CancellationToken cancellationToken = default)
+        {
+            using var scope0 = DefaultAccountsClientDiagnostics.CreateScope("MockablePurviewTenantResource.RemoveDefaultAccount");
+            scope0.Start();
+            try
+            {
+                var response = DefaultAccountsRestClient.Remove(scopeTenantId, scopeType, scope, cancellationToken);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope0.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
         /// Sets the default account for the scope.
         /// <list type="bullet">
         /// <item>
@@ -131,7 +205,7 @@ namespace Azure.ResourceManager.Purview.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-07-01</description>
+        /// <description>2023-05-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -169,7 +243,7 @@ namespace Azure.ResourceManager.Purview.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-07-01</description>
+        /// <description>2023-05-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -190,80 +264,6 @@ namespace Azure.ResourceManager.Purview.Mocking
             catch (Exception e)
             {
                 scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Removes the default account from the scope.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Purview/removeDefaultAccount</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DefaultAccounts_Remove</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2021-07-01</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="scopeTenantId"> The tenant ID. </param>
-        /// <param name="scopeType"> The scope for the default account. </param>
-        /// <param name="scope"> The Id of the scope object, for example if the scope is "Subscription" then it is the ID of that subscription. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response> RemoveDefaultAccountAsync(Guid scopeTenantId, PurviewAccountScopeType scopeType, string scope = null, CancellationToken cancellationToken = default)
-        {
-            using var scope0 = DefaultAccountsClientDiagnostics.CreateScope("MockablePurviewTenantResource.RemoveDefaultAccount");
-            scope0.Start();
-            try
-            {
-                var response = await DefaultAccountsRestClient.RemoveAsync(scopeTenantId, scopeType, scope, cancellationToken).ConfigureAwait(false);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope0.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Removes the default account from the scope.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Purview/removeDefaultAccount</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DefaultAccounts_Remove</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2021-07-01</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="scopeTenantId"> The tenant ID. </param>
-        /// <param name="scopeType"> The scope for the default account. </param>
-        /// <param name="scope"> The Id of the scope object, for example if the scope is "Subscription" then it is the ID of that subscription. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response RemoveDefaultAccount(Guid scopeTenantId, PurviewAccountScopeType scopeType, string scope = null, CancellationToken cancellationToken = default)
-        {
-            using var scope0 = DefaultAccountsClientDiagnostics.CreateScope("MockablePurviewTenantResource.RemoveDefaultAccount");
-            scope0.Start();
-            try
-            {
-                var response = DefaultAccountsRestClient.Remove(scopeTenantId, scopeType, scope, cancellationToken);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope0.Failed(e);
                 throw;
             }
         }

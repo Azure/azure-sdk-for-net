@@ -33,22 +33,22 @@ namespace Azure.Communication.CallAutomation.Tests.CallDialogs
             }
         };
 
-        private static readonly StartDialog _startDialogOptions = new StartDialog(new PowerVirtualAgentsDialog("botAppId", new Dictionary<string, object>()))
+        private static readonly StartDialogOptions _startDialogOptions = new StartDialogOptions(new PowerVirtualAgentsDialog("botAppId", new Dictionary<string, object>()))
         {
             OperationContext = "context"
         };
 
-        private static readonly StartDialog _startDialogWithCustomObjectOptions = new StartDialog(new PowerVirtualAgentsDialog("botAppId", dialogContextWithObject))
+        private static readonly StartDialogOptions _startDialogWithCustomObjectOptions = new StartDialogOptions(new PowerVirtualAgentsDialog("botAppId", dialogContextWithObject))
         {
             OperationContext = "context"
         };
 
-        private static readonly StartDialog _startDialogWithStringOptions = new StartDialog(new PowerVirtualAgentsDialog("botAppId", dialogContextWithString))
+        private static readonly StartDialogOptions _startDialogWithStringOptions = new StartDialogOptions(new PowerVirtualAgentsDialog("botAppId", dialogContextWithString))
         {
             OperationContext = "context"
         };
 
-        private static readonly StartDialog _startDialogWithIdOptions = new StartDialog(dialogId, new PowerVirtualAgentsDialog("botAppId", new Dictionary<string, object>()))
+        private static readonly StartDialogOptions _startDialogWithIdOptions = new StartDialogOptions(dialogId, new PowerVirtualAgentsDialog("botAppId", new Dictionary<string, object>()))
         {
             OperationContext = "context"
         };

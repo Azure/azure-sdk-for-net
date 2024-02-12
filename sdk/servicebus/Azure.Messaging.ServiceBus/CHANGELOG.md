@@ -10,6 +10,8 @@
 
 ### Other Changes
 
+- Loosened validation for the fully qualified namespace name passed to the `ServiceBusClient` constructor.  A URI is now also accepted as a valid format.  This is intended to improve the experience when using the management library, CLI, Bicep, or ARM template to create the namespace, as they return only an endpoint for the namespace.  Previously, callers were responsible for parsing the endpoint and extracting the host name for use with the client.
+
 ## 7.17.2 (2024-01-16)
 
 ### Bugs Fixed

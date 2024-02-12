@@ -66,6 +66,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             ActivityType = activityType ?? "ExecuteWranglingDataflow";
         }
 
+        /// <summary> Initializes a new instance of <see cref="ExecuteWranglingDataflowActivity"/> for deserialization. </summary>
+        internal ExecuteWranglingDataflowActivity()
+        {
+        }
+
         /// <summary> Activity policy. </summary>
         public PipelineActivityPolicy Policy { get; set; }
         /// <summary> Data flow reference. </summary>

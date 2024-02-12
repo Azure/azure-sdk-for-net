@@ -47,6 +47,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             LinkedServiceType = linkedServiceType ?? "MongoDbAtlas";
         }
 
+        /// <summary> Initializes a new instance of <see cref="MongoDBAtlasLinkedService"/> for deserialization. </summary>
+        internal MongoDBAtlasLinkedService()
+        {
+        }
+
         /// <summary> The MongoDB Atlas connection string. Type: string, SecureString or AzureKeyVaultSecretReference. Type: string, SecureString or AzureKeyVaultSecretReference. </summary>
         public DataFactoryElement<string> ConnectionString { get; set; }
         /// <summary> The name of the MongoDB Atlas database that you want to access. Type: string (or Expression with resultType string). </summary>

@@ -1,6 +1,6 @@
 # Release History
 
-## 5.11.0-beta.1 (Unreleased)
+## 5.11.0 (2024-02-13)
 
 ### Features Added
 
@@ -45,6 +45,8 @@
 - Improved the approach used by the processor to manage the background tasks for partition processing and load balancing.  These tasks are now marked as long-running and have improved error recovery.
 
 - Initialization of the load balancing task is now performed in the background and will no longer cause delays when starting the processor.
+
+- Loosened validation for the fully qualified namespace name passed to client constructors.  A URI is now also accepted as a valid format.  This is intended to improve the experience when using the management library, CLI, Bicep, or ARM template to create the namespace, as they return only an endpoint for the namespace.  Previously, callers were responsible for parsing the endpoint and extracting the host name for use with the clients.
 
 - In the rare case that an event processor's load balancing and health monitoring task cannot recover from an error, the processor now signals the error handler with a wrapped exception that makes clear that processing will terminate.  Previously, the source exception was surfaced to the error handler and the impact was not clear.
 

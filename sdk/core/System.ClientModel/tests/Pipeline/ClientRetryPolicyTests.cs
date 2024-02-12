@@ -345,7 +345,7 @@ public class ClientRetryPolicyTests : SyncAsyncTestBase
     [Test]
     public void WaitThrowsOnCancellation()
     {
-        ClientRetryPolicy retryPolicy = new();
+        MockRetryPolicy retryPolicy = new();
 
         CancellationTokenSource cts = new CancellationTokenSource();
 

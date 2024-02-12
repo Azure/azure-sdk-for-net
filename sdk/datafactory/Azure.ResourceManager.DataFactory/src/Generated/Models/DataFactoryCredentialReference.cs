@@ -38,6 +38,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             AdditionalProperties = additionalProperties;
         }
 
+        /// <summary> Initializes a new instance of <see cref="DataFactoryCredentialReference"/> for deserialization. </summary>
+        internal DataFactoryCredentialReference()
+        {
+        }
+
         /// <summary> Credential reference type. </summary>
         public DataFactoryCredentialReferenceType ReferenceType { get; set; }
         /// <summary> Reference credential name. </summary>

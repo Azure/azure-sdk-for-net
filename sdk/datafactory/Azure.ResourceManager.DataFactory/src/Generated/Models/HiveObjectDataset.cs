@@ -46,6 +46,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             DatasetType = datasetType ?? "HiveObject";
         }
 
+        /// <summary> Initializes a new instance of <see cref="HiveObjectDataset"/> for deserialization. </summary>
+        internal HiveObjectDataset()
+        {
+        }
+
         /// <summary>
         /// This property will be retired. Please consider using schema + table properties instead.
         /// <para>

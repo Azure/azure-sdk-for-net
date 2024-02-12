@@ -48,6 +48,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             ActivityType = activityType ?? "SqlServerStoredProcedure";
         }
 
+        /// <summary> Initializes a new instance of <see cref="SqlServerStoredProcedureActivity"/> for deserialization. </summary>
+        internal SqlServerStoredProcedureActivity()
+        {
+        }
+
         /// <summary> Stored procedure name. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> StoredProcedureName { get; set; }
         /// <summary>

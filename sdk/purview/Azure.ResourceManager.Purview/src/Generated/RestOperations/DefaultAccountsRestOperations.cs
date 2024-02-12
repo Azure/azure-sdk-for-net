@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Purview
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2021-07-01";
+            _apiVersion = apiVersion ?? "2023-05-01-preview";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -104,6 +104,65 @@ namespace Azure.ResourceManager.Purview
             }
         }
 
+        internal HttpMessage CreateRemoveRequest(Guid scopeTenantId, PurviewAccountScopeType scopeType, string scope)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/Microsoft.Purview/removeDefaultAccount", false);
+            uri.AppendQuery("scopeTenantId", scopeTenantId, true);
+            uri.AppendQuery("scopeType", scopeType.ToString(), true);
+            if (scope != null)
+            {
+                uri.AppendQuery("scope", scope, true);
+            }
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            _userAgent.Apply(message);
+            return message;
+        }
+
+        /// <summary> Removes the default account from the scope. </summary>
+        /// <param name="scopeTenantId"> The tenant ID. </param>
+        /// <param name="scopeType"> The scope for the default account. </param>
+        /// <param name="scope"> The Id of the scope object, for example if the scope is "Subscription" then it is the ID of that subscription. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public async Task<Response> RemoveAsync(Guid scopeTenantId, PurviewAccountScopeType scopeType, string scope = null, CancellationToken cancellationToken = default)
+        {
+            using var message = CreateRemoveRequest(scopeTenantId, scopeType, scope);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                case 204:
+                    return message.Response;
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        /// <summary> Removes the default account from the scope. </summary>
+        /// <param name="scopeTenantId"> The tenant ID. </param>
+        /// <param name="scopeType"> The scope for the default account. </param>
+        /// <param name="scope"> The Id of the scope object, for example if the scope is "Subscription" then it is the ID of that subscription. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public Response Remove(Guid scopeTenantId, PurviewAccountScopeType scopeType, string scope = null, CancellationToken cancellationToken = default)
+        {
+            using var message = CreateRemoveRequest(scopeTenantId, scopeType, scope);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                case 204:
+                    return message.Response;
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
         internal HttpMessage CreateSetRequest(DefaultPurviewAccountPayload defaultAccountPayload)
         {
             var message = _pipeline.CreateMessage();
@@ -166,65 +225,6 @@ namespace Azure.ResourceManager.Purview
                         value = DefaultPurviewAccountPayload.DeserializeDefaultPurviewAccountPayload(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal HttpMessage CreateRemoveRequest(Guid scopeTenantId, PurviewAccountScopeType scopeType, string scope)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Post;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/providers/Microsoft.Purview/removeDefaultAccount", false);
-            uri.AppendQuery("scopeTenantId", scopeTenantId, true);
-            uri.AppendQuery("scopeType", scopeType.ToString(), true);
-            if (scope != null)
-            {
-                uri.AppendQuery("scope", scope, true);
-            }
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            _userAgent.Apply(message);
-            return message;
-        }
-
-        /// <summary> Removes the default account from the scope. </summary>
-        /// <param name="scopeTenantId"> The tenant ID. </param>
-        /// <param name="scopeType"> The scope for the default account. </param>
-        /// <param name="scope"> The Id of the scope object, for example if the scope is "Subscription" then it is the ID of that subscription. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response> RemoveAsync(Guid scopeTenantId, PurviewAccountScopeType scopeType, string scope = null, CancellationToken cancellationToken = default)
-        {
-            using var message = CreateRemoveRequest(scopeTenantId, scopeType, scope);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                case 204:
-                    return message.Response;
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Removes the default account from the scope. </summary>
-        /// <param name="scopeTenantId"> The tenant ID. </param>
-        /// <param name="scopeType"> The scope for the default account. </param>
-        /// <param name="scope"> The Id of the scope object, for example if the scope is "Subscription" then it is the ID of that subscription. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response Remove(Guid scopeTenantId, PurviewAccountScopeType scopeType, string scope = null, CancellationToken cancellationToken = default)
-        {
-            using var message = CreateRemoveRequest(scopeTenantId, scopeType, scope);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                case 204:
-                    return message.Response;
                 default:
                     throw new RequestFailedException(message.Response);
             }

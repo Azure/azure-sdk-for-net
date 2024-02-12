@@ -1,0 +1,59 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://sanitized.communication.azure.com/messages/notifications:send?api-version=2024-02-01",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "126",
+        "Content-Type": "application/json",
+        "Repeatability-First-Sent": "Sanitized",
+        "Repeatability-Request-ID": "Sanitized",
+        "traceparent": "00-e26a741e71ce498873c5c0ee7346db4c-d51f2e990377800c-00",
+        "User-Agent": "azsdk-net-Communication.Messages/1.0.0-alpha.20240209.1 (.NET 7.0.15; Microsoft Windows 10.0.22631)",
+        "x-ms-client-request-id": "59e085df2d5fef421c310629e00ff718",
+        "x-ms-content-sha256": "Sanitized",
+        "x-ms-date": "Fri, 09 Feb 2024 22:12:21 GMT",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "content": "LiveTest",
+        "channelRegistrationId": "77ffd898-ec44-42cd-b560-57a8903d05c7",
+        "to": [
+          "\u002B16041234567"
+        ],
+        "kind": "text"
+      },
+      "StatusCode": 202,
+      "ResponseHeaders": {
+        "api-supported-versions": "2023-08-24-preview, 2024-02-01",
+        "Connection": "keep-alive",
+        "Content-Length": "87",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 09 Feb 2024 22:12:24 GMT",
+        "MS-CV": "rX433KfBXEuSdg2p7c9Gjw.0",
+        "Repeatability-Result": "accepted",
+        "Request-Context": "appId=",
+        "Strict-Transport-Security": "max-age=2592000",
+        "x-azure-ref": "20240209T221223Z-pfcn9br3b11kd2xessn2xp84ns000000030000000001ky7r",
+        "X-Cache": "CONFIG_NOCACHE",
+        "X-Processing-Time": "332ms"
+      },
+      "ResponseBody": {
+        "receipts": [
+          {
+            "messageId": "f6fb079a-c895-4d3d-bcb0-f5a5b93c9686",
+            "to": "\u002B16041234567"
+          }
+        ]
+      }
+    }
+  ],
+  "Variables": {
+    "COMMUNICATION_LIVETEST_DYNAMIC_CONNECTION_STRING": "endpoint=https://sanitized.communication.azure.com/;accesskey=Kg==",
+    "RandomSeed": "345238306",
+    "RECIPIENT_IDENTIFIER": "\u002B16041234567",
+    "SENDER_CHANNEL_REGISTRATION_ID": "77ffd898-ec44-42cd-b560-57a8903d05c7"
+  }
+}
