@@ -2,12 +2,8 @@
 // Licensed under the MIT License.
 
 using System;
-using System.IO;
-using System.Net.Http;
-using System.Text.Json;
 using System.Threading.Tasks;
 using Azure.AI.Language.Text;
-using Azure.Core.Pipeline;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
 
@@ -54,6 +50,9 @@ namespace Azure.AI.Language.TextAnalytics.Tests
             {
                 Assert.IsNotNull(document);
                 Assert.IsNotNull(document.DetectedLanguage);
+                Assert.IsNotNull(document.DetectedLanguage.Name);
+                Assert.IsNotNull(document.DetectedLanguage.Iso6391Name);
+                Assert.IsNotNull(document.DetectedLanguage.ConfidenceScore);
                 Assert.IsNotNull(document.Id);
             }
         }
@@ -91,6 +90,22 @@ namespace Azure.AI.Language.TextAnalytics.Tests
                 Assert.IsNotNull(sentimentResponseWithDocumentDetectedLanguage.Id);
                 Assert.IsNotNull(sentimentResponseWithDocumentDetectedLanguage.Sentiment);
                 Assert.IsNotNull(sentimentResponseWithDocumentDetectedLanguage.ConfidenceScores);
+                Assert.IsNotNull(sentimentResponseWithDocumentDetectedLanguage.ConfidenceScores.Positive);
+                Assert.IsNotNull(sentimentResponseWithDocumentDetectedLanguage.ConfidenceScores.Neutral);
+                Assert.IsNotNull(sentimentResponseWithDocumentDetectedLanguage.ConfidenceScores.Negative);
+                Assert.IsNotNull(sentimentResponseWithDocumentDetectedLanguage.Sentences);
+                foreach (SentenceSentiment sentenceSentiment in sentimentResponseWithDocumentDetectedLanguage.Sentences)
+                {
+                    Assert.IsNotNull(sentenceSentiment);
+                    Assert.IsNotNull(sentenceSentiment.Text);
+                    Assert.IsNotNull(sentenceSentiment.Sentiment);
+                    Assert.IsNotNull(sentenceSentiment.ConfidenceScores);
+                    Assert.IsNotNull(sentenceSentiment.ConfidenceScores.Positive);
+                    Assert.IsNotNull(sentenceSentiment.ConfidenceScores.Neutral);
+                    Assert.IsNotNull(sentenceSentiment.ConfidenceScores.Negative);
+                    Assert.IsNotNull(sentenceSentiment.Offset);
+                    Assert.IsNotNull(sentenceSentiment.Length);
+                }
             }
         }
 
@@ -132,6 +147,10 @@ namespace Azure.AI.Language.TextAnalytics.Tests
                 Assert.IsNotNull(kpeResult);
                 Assert.IsNotNull(kpeResult.Id);
                 Assert.IsNotNull(kpeResult.KeyPhrases);
+                foreach (string keyPhrase in kpeResult.KeyPhrases)
+                {
+                    Assert.IsNotNull(keyPhrase);
+                }
             }
         }
 
@@ -173,6 +192,15 @@ namespace Azure.AI.Language.TextAnalytics.Tests
                 Assert.IsNotNull(nerResult);
                 Assert.IsNotNull(nerResult.Id);
                 Assert.IsNotNull(nerResult.Entities);
+                foreach (EntityWithMetadata entity in nerResult.Entities)
+                {
+                    Assert.IsNotNull(entity);
+                    Assert.IsNotNull(entity.Text);
+                    Assert.IsNotNull(entity.Category);
+                    Assert.IsNotNull(entity.Offset);
+                    Assert.IsNotNull(entity.Length);
+                    Assert.IsNotNull(entity.ConfidenceScore);
+                }
             }
         }
 
@@ -206,10 +234,500 @@ namespace Azure.AI.Language.TextAnalytics.Tests
             Assert.IsNotNull(piiTaskResult.Results.Documents);
             foreach (PIIResultWithDetectedLanguage piiResult in piiTaskResult.Results.Documents)
             {
+                Assert.IsNotNull(piiResult.Id);
+                Assert.IsNotNull(piiResult.Entities);
                 foreach (Entity entity in piiResult.Entities)
                 {
+                    Assert.IsNotNull(entity);
                     Assert.IsNotNull(entity.Text);
                     Assert.IsNotNull(entity.Category);
+                    Assert.IsNotNull(entity.Offset);
+                    Assert.IsNotNull(entity.Length);
+                    Assert.IsNotNull(entity.ConfidenceScore);
+                }
+            }
+        }
+
+        [Test]
+        public async Task RecognizeLinkedEntities()
+        {
+            string documentA =
+                "Microsoft was founded by Bill Gates with some friends he met at Harvard. One of his friends, Steve"
+                + " Ballmer, eventually became CEO after Bill Gates as well.Steve Ballmer eventually stepped down as"
+                + " CEO of Microsoft, and was succeeded by Satya Nadella. Microsoft originally moved its headquarters"
+                + " to Bellevue, Washington in Januaray 1979, but is now headquartered in Redmond";
+
+            AnalyzeTextTask body = new AnalyzeTextEntityLinkingInput()
+            {
+                AnalysisInput = new MultiLanguageAnalysisInput()
+                {
+                    Documents =
+                    {
+                        new MultiLanguageInput("A", documentA, "en"),
+                    }
+                },
+                Parameters = new EntityLinkingTaskParameters()
+                {
+                    ModelVersion = "latest",
+                }
+            };
+
+            Response<AnalyzeTextTaskResult> response = await Client.AnalyzeTextAsync(body);
+            Assert.IsNotNull(response);
+            Assert.IsNotNull(response.Value);
+            EntityLinkingTaskResult entityLinkingTaskResult = (EntityLinkingTaskResult)response.Value;
+
+            Assert.IsNotNull(entityLinkingTaskResult);
+            Assert.IsNotNull(entityLinkingTaskResult.Results);
+            Assert.IsNotNull(entityLinkingTaskResult.Results.Documents);
+            foreach (EntityLinkingResultWithDetectedLanguage entityLinkingResult in entityLinkingTaskResult.Results.Documents)
+            {
+                Assert.IsNotNull(entityLinkingResult.Id);
+                Assert.IsNotNull(entityLinkingResult.Entities);
+                foreach (LinkedEntity linkedEntity in entityLinkingResult.Entities)
+                {
+                    Assert.IsNotNull(linkedEntity.Name);
+                    Assert.IsNotNull(linkedEntity.Language);
+                    Assert.IsNotNull(linkedEntity.DataSource);
+                    Assert.IsNotNull(linkedEntity.Url);
+                    Assert.IsNotNull(linkedEntity.Id);
+                    Assert.IsNotNull(linkedEntity.Matches);
+                    foreach (Match match in linkedEntity.Matches)
+                    {
+                        Assert.NotNull(match.ConfidenceScore);
+                        Assert.NotNull(match.Text);
+                        Assert.NotNull(match.Offset);
+                        Assert.NotNull(match.Length);
+                    }
+                }
+            }
+        }
+
+        [Test]
+        public void HealthcareLROTask()
+        {
+            string documentA = "Prescribed 100mg ibuprofen, taken twice daily.";
+
+            MultiLanguageAnalysisInput multiLanguageAnalysisInput = new MultiLanguageAnalysisInput()
+            {
+                Documents =
+                {
+                    new MultiLanguageInput("A", documentA, "en"),
+                }
+            };
+
+            AnalyzeTextJobsInput analyzeTextJobsInput = new AnalyzeTextJobsInput(multiLanguageAnalysisInput, new AnalyzeTextLROTask[]
+            {
+                new HealthcareLROTask()
+            });
+
+            Operation operation = Client.AnalyzeTextSubmitJob(WaitUntil.Completed, analyzeTextJobsInput);
+            Assert.IsNotNull(operation);
+            AnalyzeTextJobState analyzeTextJobState = AnalyzeTextJobState.FromResponse(operation.GetRawResponse());
+            Assert.IsNotNull(analyzeTextJobState);
+            Assert.IsNotNull(analyzeTextJobState.Tasks);
+            Assert.IsNotNull(analyzeTextJobState.Tasks.Items);
+
+            foreach (AnalyzeTextLROResult analyzeTextLROResult in analyzeTextJobState.Tasks.Items)
+            {
+                if (analyzeTextLROResult.Kind == AnalyzeTextLROResultsKind.HealthcareLROResults)
+                {
+                    HealthcareLROResult healthcareLROResult = (HealthcareLROResult)analyzeTextLROResult;
+                    Assert.IsNotNull(healthcareLROResult);
+                    Assert.IsNotNull(healthcareLROResult.Results);
+                    Assert.IsNotNull(healthcareLROResult.Results.Documents);
+
+                    foreach (HealthcareEntitiesDocumentResultWithDocumentDetectedLanguage healthcareEntitiesDocument in healthcareLROResult.Results.Documents)
+                    {
+                        Assert.IsNotNull(healthcareEntitiesDocument.Id);
+                        Assert.IsNotNull(healthcareEntitiesDocument.Entities);
+                        Assert.IsNotNull(healthcareEntitiesDocument.Relations);
+                        foreach (HealthcareEntity healthcareEntity in healthcareEntitiesDocument.Entities)
+                        {
+                            Assert.IsNotNull(healthcareEntity);
+                            Assert.IsNotNull(healthcareEntity.Text);
+                            Assert.IsNotNull(healthcareEntity.Category);
+                            Assert.IsNotNull(healthcareEntity.Offset);
+                            Assert.IsNotNull(healthcareEntity.Length);
+                            Assert.IsNotNull(healthcareEntity.ConfidenceScore);
+
+                            if (healthcareEntity.Links is not null)
+                            {
+                                foreach (HealthcareEntityLink healthcareEntityLink in healthcareEntity.Links)
+                                {
+                                    Assert.IsNotNull(healthcareEntityLink);
+                                    Assert.IsNotNull(healthcareEntityLink.Id);
+                                    Assert.IsNotNull(healthcareEntityLink.DataSource);
+                                }
+                            }
+                        }
+                        foreach (HealthcareRelation relation in healthcareEntitiesDocument.Relations)
+                        {
+                            Assert.IsNotNull(relation);
+                            Assert.IsNotNull(relation.RelationType);
+                            Assert.IsNotNull(relation.Entities);
+                            foreach (HealthcareRelationEntity healthcareRelationEntity in relation.Entities)
+                            {
+                                Assert.IsNotNull(healthcareRelationEntity.Role);
+                                Assert.IsNotNull(healthcareRelationEntity.Ref);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        [Test]
+        public void CustomEntitiesLROTask()
+        {
+            string documentA =
+                "We love this trail and make the trip every year. The views are breathtaking and well worth the hike!"
+                + " Yesterday was foggy though, so we missed the spectacular views. We tried again today and it was"
+                + " amazing. Everyone in my family liked the trail although it was too challenging for the less"
+                + " athletic among us.";
+
+            MultiLanguageAnalysisInput multiLanguageAnalysisInput = new MultiLanguageAnalysisInput()
+            {
+                Documents =
+                {
+                    new MultiLanguageInput("A", documentA, "en"),
+                }
+            };
+
+            string projectName = TestEnvironment.CTProjectName;
+            string deploymentName = TestEnvironment.CTDeploymentName;
+
+            AnalyzeTextJobsInput analyzeTextJobsInput = new AnalyzeTextJobsInput(multiLanguageAnalysisInput, new AnalyzeTextLROTask[]
+            {
+                new CustomEntitiesLROTask()
+                {
+                    Parameters = new CustomEntitiesTaskParameters(projectName, deploymentName)
+                }
+            });
+            Operation operation = Client.AnalyzeTextSubmitJob(WaitUntil.Completed, analyzeTextJobsInput);
+            Assert.IsNotNull(operation);
+            AnalyzeTextJobState analyzeTextJobState = AnalyzeTextJobState.FromResponse(operation.GetRawResponse());
+            Assert.IsNotNull(analyzeTextJobState);
+            Assert.IsNotNull(analyzeTextJobState.Tasks);
+            Assert.IsNotNull(analyzeTextJobState.Tasks.Items);
+
+            foreach (AnalyzeTextLROResult analyzeTextLROResult in analyzeTextJobState.Tasks.Items)
+            {
+                if (analyzeTextLROResult.Kind == AnalyzeTextLROResultsKind.CustomEntityRecognitionLROResults)
+                {
+                    CustomEntityRecognitionLROResult customClassificationResult = (CustomEntityRecognitionLROResult)analyzeTextLROResult;
+                    Assert.IsNotNull(customClassificationResult);
+                    Assert.IsNotNull(customClassificationResult.Results);
+                    Assert.IsNotNull(customClassificationResult.Results.Documents);
+
+                    foreach (EntitiesDocumentResult entitiesDocument in customClassificationResult.Results.Documents)
+                    {
+                        Assert.IsNotNull(entitiesDocument.Id);
+                        Assert.IsNotNull(entitiesDocument.Entities);
+
+                        foreach (Entity entity in entitiesDocument.Entities)
+                        {
+                            Assert.IsNotNull(entity);
+                            Assert.IsNotNull(entity.Text);
+                            Assert.IsNotNull(entity.Category);
+                            Assert.IsNotNull(entity.Offset);
+                            Assert.IsNotNull(entity.Length);
+                            Assert.IsNotNull(entity.ConfidenceScore);
+                        }
+                    }
+                }
+            }
+        }
+
+        [Test]
+        public void CustomSingleLabelClassificationLROTask()
+        {
+            string documentA =
+                "I need a reservation for an indoor restaurant in China. Please don't stop the music. Play music and"
+                + " add it to my playlist.";
+
+            MultiLanguageAnalysisInput multiLanguageAnalysisInput = new MultiLanguageAnalysisInput()
+            {
+                Documents =
+                {
+                    new MultiLanguageInput("A", documentA, "en"),
+                }
+            };
+
+            string projectName = TestEnvironment.CSCProjectName;
+            string deploymentName = TestEnvironment.CSCDeploymentName;
+
+            AnalyzeTextJobsInput analyzeTextJobsInput = new AnalyzeTextJobsInput(multiLanguageAnalysisInput, new AnalyzeTextLROTask[]
+            {
+                new CustomSingleLabelClassificationLROTask()
+                {
+                    Parameters = new CustomSingleLabelClassificationTaskParameters(projectName, deploymentName)
+                }
+            });
+            Operation operation = Client.AnalyzeTextSubmitJob(WaitUntil.Completed, analyzeTextJobsInput);
+            Assert.IsNotNull(operation);
+            AnalyzeTextJobState analyzeTextJobState = AnalyzeTextJobState.FromResponse(operation.GetRawResponse());
+            Assert.IsNotNull(analyzeTextJobState);
+            Assert.IsNotNull(analyzeTextJobState.Tasks);
+            Assert.IsNotNull(analyzeTextJobState.Tasks.Items);
+
+            foreach (AnalyzeTextLROResult analyzeTextLROResult in analyzeTextJobState.Tasks.Items)
+            {
+                if (analyzeTextLROResult.Kind == AnalyzeTextLROResultsKind.CustomSingleLabelClassificationLROResults)
+                {
+                    CustomSingleLabelClassificationLROResult customClassificationResult = (CustomSingleLabelClassificationLROResult)analyzeTextLROResult;
+                    Assert.IsNotNull(customClassificationResult);
+                    Assert.IsNotNull(customClassificationResult.Results);
+                    Assert.IsNotNull(customClassificationResult.Results.Documents);
+
+                    foreach (ClassificationDocumentResult customClassificationDocument in customClassificationResult.Results.Documents)
+                    {
+                        Assert.IsNotNull(customClassificationDocument.Id);
+                        Assert.IsNotNull(customClassificationDocument.Class);
+
+                        foreach (ClassificationResult classification in customClassificationDocument.Class)
+                        {
+                            Assert.IsNotNull(classification.Category);
+                            Assert.IsNotNull(classification.ConfidenceScore);
+                        }
+                    }
+                }
+            }
+        }
+
+        [Test]
+        public void CustomMultiLabelClassificationLROTask()
+        {
+            string documentA =
+                "I need a reservation for an indoor restaurant in China. Please don't stop the music. Play music and"
+                + " add it to my playlist.";
+
+            MultiLanguageAnalysisInput multiLanguageAnalysisInput = new MultiLanguageAnalysisInput()
+            {
+                Documents =
+        {
+            new MultiLanguageInput("A", documentA, "en"),
+        }
+            };
+
+            string projectName = TestEnvironment.CMCProjectName;
+            string deploymentName = TestEnvironment.CMCDeploymentName;
+
+            AnalyzeTextJobsInput analyzeTextJobsInput = new AnalyzeTextJobsInput(multiLanguageAnalysisInput, new AnalyzeTextLROTask[]
+            {
+                new CustomMultiLabelClassificationLROTask()
+                {
+                    Parameters = new CustomMultiLabelClassificationTaskParameters(projectName, deploymentName)
+                }
+            });
+            Operation operation = Client.AnalyzeTextSubmitJob(WaitUntil.Completed, analyzeTextJobsInput);
+            Assert.IsNotNull(operation);
+            AnalyzeTextJobState analyzeTextJobState = AnalyzeTextJobState.FromResponse(operation.GetRawResponse());
+            Assert.IsNotNull(analyzeTextJobState);
+            Assert.IsNotNull(analyzeTextJobState.Tasks);
+            Assert.IsNotNull(analyzeTextJobState.Tasks.Items);
+
+            foreach (AnalyzeTextLROResult analyzeTextLROResult in analyzeTextJobState.Tasks.Items)
+            {
+                if (analyzeTextLROResult.Kind == AnalyzeTextLROResultsKind.CustomSingleLabelClassificationLROResults)
+                {
+                    CustomMultiLabelClassificationLROResult customClassificationResult = (CustomMultiLabelClassificationLROResult)analyzeTextLROResult;
+                    Assert.IsNotNull(customClassificationResult);
+                    Assert.IsNotNull(customClassificationResult.Results);
+                    Assert.IsNotNull(customClassificationResult.Results.Documents);
+
+                    foreach (ClassificationDocumentResult customClassificationDocument in customClassificationResult.Results.Documents)
+                    {
+                        Assert.IsNotNull(customClassificationDocument.Id);
+                        Assert.IsNotNull(customClassificationDocument.Class);
+
+                        foreach (ClassificationResult classification in customClassificationDocument.Class)
+                        {
+                            Assert.IsNotNull(classification.Category);
+                            Assert.IsNotNull(classification.ConfidenceScore);
+                        }
+                    }
+                }
+            }
+        }
+
+        [Test]
+        [SyncOnly]
+        [ServiceVersion(Min = AnalyzeTextClientOptions.ServiceVersion.V2023_04_01)]
+        public void ExtractiveSummarizationLROTask()
+        {
+            string documentA =
+                "Windows 365 was in the works before COVID-19 sent companies around the world on a scramble to secure"
+                + " solutions to support employees suddenly forced to work from home, but “what really put the"
+                + " firecracker behind it was the pandemic, it accelerated everything,” McKelvey said. She explained"
+                + " that customers were asking, “How do we create an experience for people that makes them still feel"
+                + " connected to the company without the physical presence of being there?” In this new world of"
+                + " Windows 365, remote workers flip the lid on their laptop, boot up the family workstation or clip a"
+                + " keyboard onto a tablet, launch a native app or modern web browser and login to their Windows 365"
+                + " account. From there, their Cloud PC appears with their background, apps, settings and content just"
+                + " as they left it when they last were last there – in the office, at home or a coffee shop. And"
+                + " then, when you’re done, you’re done. You won’t have any issues around security because you’re not"
+                + " saving anything on your device,” McKelvey said, noting that all the data is stored in the cloud."
+                + " The ability to login to a Cloud PC from anywhere on any device is part of Microsoft’s larger"
+                + " strategy around tailoring products such as Microsoft Teams and Microsoft 365 for the post-pandemic"
+                + " hybrid workforce of the future, she added. It enables employees accustomed to working from home to"
+                + " continue working from home; it enables companies to hire interns from halfway around the world; it"
+                + " allows startups to scale without requiring IT expertise. “I think this will be interesting for"
+                + " those organizations who, for whatever reason, have shied away from virtualization. This is giving"
+                + " them an opportunity to try it in a way that their regular, everyday endpoint admin could manage,”"
+                + " McKelvey said. The simplicity of Windows 365 won over Dean Wells, the corporate chief information"
+                + " officer for the Government of Nunavut. His team previously attempted to deploy a traditional"
+                + " virtual desktop infrastructure and found it inefficient and unsustainable given the limitations of"
+                + " low-bandwidth satellite internet and the constant need for IT staff to manage the network and"
+                + " infrastructure. We didn’t run it for very long,” he said. “It didn’t turn out the way we had"
+                + " hoped. So, we actually had terminated the project and rolled back out to just regular PCs.” He"
+                + " re-evaluated this decision after the Government of Nunavut was hit by a ransomware attack in"
+                + " November 2019 that took down everything from the phone system to the government’s servers."
+                + " Microsoft helped rebuild the system, moving the government to Teams, SharePoint, OneDrive and"
+                + " Microsoft 365. Manchester’s team recruited the Government of Nunavut to pilot Windows 365. Wells"
+                + " was intrigued, especially by the ability to manage the elastic workforce securely and seamlessly."
+                + " “The impact that I believe we are finding, and the impact that we’re going to find going forward,"
+                + " is being able to access specialists from outside the territory and organizations outside the"
+                + " territory to come in and help us with our projects, being able to get people on staff with us to"
+                + " help us deliver the day-to-day expertise that we need to run the government,” he said. “Being able"
+                + " to improve healthcare, being able to improve education, economic development is going to improve"
+                + " the quality of life in the communities.”";
+
+            MultiLanguageAnalysisInput multiLanguageAnalysisInput = new MultiLanguageAnalysisInput()
+            {
+                Documents =
+                {
+                    new MultiLanguageInput("A", documentA, "en"),
+                }
+            };
+
+            AnalyzeTextJobsInput analyzeTextJobsInput = new AnalyzeTextJobsInput(multiLanguageAnalysisInput, new AnalyzeTextLROTask[]
+            {
+                new ExtractiveSummarizationLROTask()
+            });
+
+            Operation operation = Client.AnalyzeTextSubmitJob(WaitUntil.Completed, analyzeTextJobsInput);
+            Assert.IsNotNull(operation);
+            AnalyzeTextJobState analyzeTextJobState = AnalyzeTextJobState.FromResponse(operation.GetRawResponse());
+            Assert.IsNotNull(analyzeTextJobState);
+            Assert.IsNotNull(analyzeTextJobState.Tasks);
+            Assert.IsNotNull(analyzeTextJobState.Tasks.Items);
+
+            foreach (AnalyzeTextLROResult analyzeTextLROResult in analyzeTextJobState.Tasks.Items)
+            {
+                if (analyzeTextLROResult.Kind == AnalyzeTextLROResultsKind.ExtractiveSummarizationLROResults)
+                {
+                    ExtractiveSummarizationLROResult extractiveSummarizationLROResult = (ExtractiveSummarizationLROResult)analyzeTextLROResult;
+                    Assert.IsNotNull(extractiveSummarizationLROResult);
+                    Assert.IsNotNull(extractiveSummarizationLROResult.Results);
+                    Assert.IsNotNull(extractiveSummarizationLROResult.Results.Documents);
+
+                    foreach (ExtractedSummaryDocumentResultWithDetectedLanguage extractedSummaryDocument in extractiveSummarizationLROResult.Results.Documents)
+                    {
+                        Assert.IsNotNull(extractedSummaryDocument.Id);
+                        Assert.IsNotNull(extractedSummaryDocument.Sentences);
+                        foreach (ExtractedSummarySentence sentence in extractedSummaryDocument.Sentences)
+                        {
+                            Assert.IsNotNull(sentence.Text);
+                            Assert.IsNotNull(sentence.RankScore);
+                            Assert.IsNotNull(sentence.Offset);
+                            Assert.IsNotNull(sentence.Length);
+                        }
+                    }
+                }
+            }
+        }
+
+        [Test]
+        [ServiceVersion(Min = AnalyzeTextClientOptions.ServiceVersion.V2023_04_01)]
+        public void AbstractiveSummarizationLROTask()
+        {
+            string documentA =
+                "Windows 365 was in the works before COVID-19 sent companies around the world on a scramble to secure"
+                + " solutions to support employees suddenly forced to work from home, but “what really put the"
+                + " firecracker behind it was the pandemic, it accelerated everything,” McKelvey said. She explained"
+                + " that customers were asking, “How do we create an experience for people that makes them still feel"
+                + " connected to the company without the physical presence of being there?” In this new world of"
+                + " Windows 365, remote workers flip the lid on their laptop, boot up the family workstation or clip a"
+                + " keyboard onto a tablet, launch a native app or modern web browser and login to their Windows 365"
+                + " account. From there, their Cloud PC appears with their background, apps, settings and content just"
+                + " as they left it when they last were last there – in the office, at home or a coffee shop. And"
+                + " then, when you’re done, you’re done. You won’t have any issues around security because you’re not"
+                + " saving anything on your device,” McKelvey said, noting that all the data is stored in the cloud."
+                + " The ability to login to a Cloud PC from anywhere on any device is part of Microsoft’s larger"
+                + " strategy around tailoring products such as Microsoft Teams and Microsoft 365 for the post-pandemic"
+                + " hybrid workforce of the future, she added. It enables employees accustomed to working from home to"
+                + " continue working from home; it enables companies to hire interns from halfway around the world; it"
+                + " allows startups to scale without requiring IT expertise. “I think this will be interesting for"
+                + " those organizations who, for whatever reason, have shied away from virtualization. This is giving"
+                + " them an opportunity to try it in a way that their regular, everyday endpoint admin could manage,”"
+                + " McKelvey said. The simplicity of Windows 365 won over Dean Wells, the corporate chief information"
+                + " officer for the Government of Nunavut. His team previously attempted to deploy a traditional"
+                + " virtual desktop infrastructure and found it inefficient and unsustainable given the limitations of"
+                + " low-bandwidth satellite internet and the constant need for IT staff to manage the network and"
+                + " infrastructure. We didn’t run it for very long,” he said. “It didn’t turn out the way we had"
+                + " hoped. So, we actually had terminated the project and rolled back out to just regular PCs.” He"
+                + " re-evaluated this decision after the Government of Nunavut was hit by a ransomware attack in"
+                + " November 2019 that took down everything from the phone system to the government’s servers."
+                + " Microsoft helped rebuild the system, moving the government to Teams, SharePoint, OneDrive and"
+                + " Microsoft 365. Manchester’s team recruited the Government of Nunavut to pilot Windows 365. Wells"
+                + " was intrigued, especially by the ability to manage the elastic workforce securely and seamlessly."
+                + " “The impact that I believe we are finding, and the impact that we’re going to find going forward,"
+                + " is being able to access specialists from outside the territory and organizations outside the"
+                + " territory to come in and help us with our projects, being able to get people on staff with us to"
+                + " help us deliver the day-to-day expertise that we need to run the government,” he said. “Being able"
+                + " to improve healthcare, being able to improve education, economic development is going to improve"
+                + " the quality of life in the communities.”";
+
+            MultiLanguageAnalysisInput multiLanguageAnalysisInput = new MultiLanguageAnalysisInput()
+            {
+                Documents =
+                {
+                    new MultiLanguageInput("A", documentA, "en"),
+                }
+            };
+
+            AnalyzeTextJobsInput analyzeTextJobsInput = new AnalyzeTextJobsInput(multiLanguageAnalysisInput, new AnalyzeTextLROTask[]
+            {
+                new AbstractiveSummarizationLROTask()
+            });
+
+            Operation operation = Client.AnalyzeTextSubmitJob(WaitUntil.Completed, analyzeTextJobsInput);
+            Assert.IsNotNull(operation);
+            AnalyzeTextJobState analyzeTextJobState = AnalyzeTextJobState.FromResponse(operation.GetRawResponse());
+            Assert.IsNotNull(analyzeTextJobState);
+            Assert.IsNotNull(analyzeTextJobState.Tasks);
+            Assert.IsNotNull(analyzeTextJobState.Tasks.Items);
+
+            foreach (AnalyzeTextLROResult analyzeTextLROResult in analyzeTextJobState.Tasks.Items)
+            {
+                if (analyzeTextLROResult.Kind == AnalyzeTextLROResultsKind.AbstractiveSummarizationLROResults)
+                {
+                    AbstractiveSummarizationLROResult abstractiveSummarizationLROResult = (AbstractiveSummarizationLROResult)analyzeTextLROResult;
+                    Assert.IsNotNull(abstractiveSummarizationLROResult);
+                    Assert.IsNotNull(abstractiveSummarizationLROResult.Results);
+                    Assert.IsNotNull(abstractiveSummarizationLROResult.Results.Documents);
+
+                    foreach (AbstractiveSummaryDocumentResultWithDetectedLanguage extractedSummaryDocument in abstractiveSummarizationLROResult.Results.Documents)
+                    {
+                        Assert.IsNotNull(extractedSummaryDocument.Id);
+                        Assert.IsNotNull(extractedSummaryDocument.Summaries);
+
+                        foreach (AbstractiveSummary summary in extractedSummaryDocument.Summaries)
+                        {
+                            Assert.IsNotNull(summary.Text);
+                            if (summary.Contexts is not null)
+                            {
+                                foreach (SummaryContext context in summary.Contexts)
+                                {
+                                    Assert.IsNotNull(context.Offset);
+                                    Assert.IsNotNull(context.Length);
+                                }
+                            }
+
+                            Console.WriteLine();
+                        }
+                    }
                 }
             }
         }

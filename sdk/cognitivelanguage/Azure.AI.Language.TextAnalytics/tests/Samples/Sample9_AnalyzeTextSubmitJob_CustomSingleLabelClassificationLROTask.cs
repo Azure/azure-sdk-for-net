@@ -30,9 +30,9 @@ namespace Azure.AI.Language.TextAnalytics.Tests.Samples
             MultiLanguageAnalysisInput multiLanguageAnalysisInput = new MultiLanguageAnalysisInput()
             {
                 Documents =
-        {
-            new MultiLanguageInput("A", documentA, "en"),
-        }
+                {
+                    new MultiLanguageInput("A", documentA, "en"),
+                }
             };
 
             // Specify the project and deployment names of the desired custom model. To train your own custom model to

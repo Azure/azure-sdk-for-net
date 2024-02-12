@@ -55,13 +55,10 @@ try
 
     foreach (SentimentResponseWithDocumentDetectedLanguage sentimentResponseWithDocumentDetectedLanguage in sentimentTaskResult.Results.Documents)
     {
-        foreach (SentimentDocumentResult sentimentDocumentResult in sentimentResponseWithDocumentDetectedLanguage.Documents)
-        {
-            Console.WriteLine($"Document {sentimentDocumentResult.Id} sentiment is {sentimentDocumentResult.Sentiment} with: ");
-            Console.WriteLine($"  Positive confidence score: {sentimentDocumentResult.ConfidenceScores.Positive}");
-            Console.WriteLine($"  Neutral confidence score: {sentimentDocumentResult.ConfidenceScores.Neutral}");
-            Console.WriteLine($"  Negative confidence score: {sentimentDocumentResult.ConfidenceScores.Negative}");
-        }
+        Console.WriteLine($"Document {sentimentResponseWithDocumentDetectedLanguage.Id} sentiment is {sentimentResponseWithDocumentDetectedLanguage.Sentiment} with: ");
+        Console.WriteLine($"  Positive confidence score: {sentimentResponseWithDocumentDetectedLanguage.ConfidenceScores.Positive}");
+        Console.WriteLine($"  Neutral confidence score: {sentimentResponseWithDocumentDetectedLanguage.ConfidenceScores.Neutral}");
+        Console.WriteLine($"  Negative confidence score: {sentimentResponseWithDocumentDetectedLanguage.ConfidenceScores.Negative}");
     }
 
     foreach (AnalyzeTextDocumentError analyzeTextDocumentError in sentimentTaskResult.Results.Errors)
